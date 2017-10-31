@@ -21,6 +21,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    watchOptions: { poll: true },
     contentBase: './'
   }
 };
