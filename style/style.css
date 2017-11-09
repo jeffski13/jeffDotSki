@@ -1,0 +1,9 @@
+.titlePageWrapper{
+  background-color: #222;
+}
+
+.titleSlideShowImg{
+    diplay: block;
+    margin-left: auto;
+    margin-right: auto;
+}

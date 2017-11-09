@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import TitlePage from './title-page';
 
 export default class App extends Component {
   render() {
     return (
-      <div>React simple starter</div>
+      <div>
+        <TitlePage />
+      </div>
     );
   }
 }
