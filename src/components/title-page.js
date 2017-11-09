@@ -9,6 +9,7 @@ const TitlePage = () =>{
       Title Page
       <Banner />
       <TitleSlideShow />
+      Title Page End
     </div>
   );
 

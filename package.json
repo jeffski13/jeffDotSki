@@ -1,15 +1,13 @@
 {
-  "name": "redux-simple-starter",
+  "name": "jeff.ski",
   "version": "1.0.0",
-  "description": "Simple starter package for Redux with React and Babel support",
+  "description": "jeff.ski website source code",
   "main": "index.js",
-  "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
+  "repository": "git@github.com:jeffski13",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch"
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
   },
-  "author": "",
+  "author": "Jeff Szcinski",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.2.1",
@@ -31,6 +29,7 @@
     "react": "^0.14.9",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^0.14.9",
+    "react-loading": "^1.0.1",
     "react-redux": "4.3.0",
     "react-router": "^2.0.1",
     "redux": "^3.0.4"

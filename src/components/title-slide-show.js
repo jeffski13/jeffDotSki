@@ -7,8 +7,8 @@ const TitleSlideShow = () =>{
       <Carousel.Item>
         <img className='titleSlideShowImg' width={900} height={500} alt="900x500" src="/img/ChileSantiagoOverlook.jpg" />
         <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <h3>This is Me</h3>
+          <p>Hola from Chile!</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
