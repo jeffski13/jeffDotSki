@@ -1,7 +1,3 @@
-.titlePageWrapper{
-  background-color: #222;
-}
-
 .titleSlideShowImg{
     diplay: block;
     margin-left: auto;
@@ -10,4 +6,13 @@
 
 .titleOfWebsite{
   background-color: #f00;
+}
+
+.titlePageImg{
+  z-index: -1;
+}
+
+.bannerNavBar{
+  margin-top: 10px;
+  margin-bottom: 0;
 }

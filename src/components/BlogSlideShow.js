@@ -1,7 +1,7 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/lib/Carousel';
 
-const TitleSlideShow = () =>{
+const BlogSlideShow = () =>{
   return (
     <Carousel>
       <Carousel.Item>
@@ -29,4 +29,4 @@ const TitleSlideShow = () =>{
   );
 }
 
-export default TitleSlideShow;
+export default BlogSlideShow;

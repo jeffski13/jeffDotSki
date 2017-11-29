@@ -1,14 +1,48 @@
 import React from 'react';
-import Jumbotron from 'react-bootstrap/lib/Jumbotron';
-import Button from 'react-bootstrap/lib/Button';
+import Navbar from 'react-bootstrap/lib/Navbar'
+import NavItem from 'react-bootstrap/lib/NavItem'
+import MenuItem from 'react-bootstrap/lib/MenuItem'
+import NavDropdown from 'react-bootstrap/lib/NavDropdown'
+import Nav from 'react-bootstrap/lib/Nav'
 
 const Banner =()=>{
   return (
-    <Jumbotron>
-      <h1 className='titleOfWebsite' >JEFF.SKI</h1>
-      <p>Title Page for jeff.ski</p>
-      <p><Button bsStyle="primary">Learn more</Button></p>
-    </Jumbotron>
+    <div>
+      <Navbar className='bannerNavBar' inverse collapseOnSelect fixedTop >
+        <Navbar.Header>
+          <Navbar.Brand>
+            <a href="#">jeff.ski</a>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Nav>
+            <NavDropdown eventKey={3} title="Travel Blogs" id="basic-nav-dropdown">
+              <MenuItem eventKey={3.1}>Japan</MenuItem>
+              <MenuItem eventKey={3.2}>Chile</MenuItem>
+              <MenuItem eventKey={3.3}>Disney World</MenuItem>
+              <MenuItem divider />
+              <MenuItem eventKey={3.3}>The Chase for Chocolate</MenuItem>
+              <MenuItem divider />
+              <MenuItem eventKey={3.3}>Shot Glass Collection</MenuItem>
+            </NavDropdown>
+          </Nav>
+          <Nav>
+            <NavDropdown eventKey={3} title="Software Engineering" id="basic-nav-dropdown">
+              <MenuItem eventKey={3.1}>Resume</MenuItem>
+              <MenuItem eventKey={3.2}>Education Background</MenuItem>
+            </NavDropdown>
+            <NavDropdown eventKey={3} title="Community Involvement" id="basic-nav-dropdown">
+              <MenuItem eventKey={3.1}>Robotics</MenuItem>
+              <MenuItem eventKey={3.2}>Hour of Code</MenuItem>
+            </NavDropdown>
+          </Nav>
+          <Nav pullRight>
+            <NavItem eventKey={1} href="#">Bio</NavItem>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
   );
 }
 
