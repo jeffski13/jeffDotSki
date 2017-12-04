@@ -4,6 +4,7 @@ import NavItem from 'react-bootstrap/lib/NavItem'
 import MenuItem from 'react-bootstrap/lib/MenuItem'
 import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import Nav from 'react-bootstrap/lib/Nav'
+import {Link} from 'react-router-dom';
 
 const Banner =()=>{
   return (
@@ -19,7 +20,7 @@ const Banner =()=>{
           <Nav>
             <NavDropdown eventKey={3} title="Travel Blogs" id="basic-nav-dropdown">
               <MenuItem eventKey={3.1}>Japan</MenuItem>
-              <MenuItem eventKey={3.2}>Chile</MenuItem>
+              <MenuItem eventKey={3.2}><Link to="/blog/chile">Chile</Link></MenuItem>
               <MenuItem eventKey={3.3}>Disney World</MenuItem>
               <MenuItem divider />
               <MenuItem eventKey={3.3}>The Chase for Chocolate</MenuItem>

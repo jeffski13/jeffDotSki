@@ -16,3 +16,12 @@
   margin-top: 10px;
   margin-bottom: 0;
 }
+
+.blogimg1{
+  display: block;
+  margin: 0 auto;
+}
+
+.blogPargraph{
+  margin-top: 20px;
+}
