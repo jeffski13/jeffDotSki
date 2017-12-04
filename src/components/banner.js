@@ -12,7 +12,7 @@ const Banner =()=>{
       <Navbar className='bannerNavBar' inverse collapseOnSelect fixedTop >
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">jeff.ski</a>
+            <a href="/">jeff.ski</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
