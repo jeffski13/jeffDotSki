@@ -1,0 +1,17 @@
+---start up mongo
+/c/Program Files/MongoDB/Server/3.4/bin
+./mongod --dbpath /c/Users/Jeff/Documents/GitHub/jeffDotSki/server/data/
+./mongod --dbpath /c/Users/JeffskiTab/Documents/GitHub/jeffDotSki/server/data/
+
+
+NOTE: "/data" directory MUST exist, or database will not start
+
+---commands---
+/c/Program Files/MongoDB/Server/3.4/bin
+./mongo
+
+show dbs
+use bloglog1
+db.dropDatabase()
+db.blogs.insert({ "title" : "testTitle3", "categories" : "testCat3", "content" : "contentTest3" })
+db.blogs.find().pretty()
