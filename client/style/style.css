@@ -20,8 +20,13 @@
 .blogimg1{
   display: block;
   margin: 0 auto;
+  padding: 10px;
 }
 
 .blogPargraph{
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.blogTitle{
+  margin-top: 30px;
 }
