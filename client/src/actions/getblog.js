@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const GET_BLOG_ACTION='GET_BLOG_ACTION';
-const BLOG_URL = 'http://localhost:3000/blog/4';
+const BLOG_URL = 'http://localhost:3000/blog/1';
 
 export function getBlog1(){
   console.log('jeffski: getting blog');
