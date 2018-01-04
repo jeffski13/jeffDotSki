@@ -2,6 +2,7 @@
 /c/Program Files/MongoDB/Server/3.4/bin
 ./mongod --dbpath /c/Users/Jeff/Documents/GitHub/jeffDotSki/server/data/
 ./mongod --dbpath /c/Users/JeffskiTab/Documents/GitHub/jeffDotSki/server/data/
+./mongod --dbpath /c/Users/jeffs/Documents/GitHub/jeffDotSki/server/data/
 
 
 NOTE: "/data" directory MUST exist, or database will not start
