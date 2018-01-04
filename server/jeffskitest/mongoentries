@@ -15,3 +15,8 @@ use bloglog1
 db.dropDatabase()
 db.blogs.insert({ "title" : "testTitle3", "categories" : "testCat3", "content" : "contentTest3" })
 db.blogs.find().pretty()
+
+export reactski="/c/Users/Jeff/Documents/GitHub/Reactski/BlogDux"
+export jeffdotski="/c/Users/Jeff/Documents/GitHub/jeffDotSki"
+export nodeski="/c/Users/Jeff/Documents/GitHub/Reactski/NodeServer/bloglog"
+export mongoski="/c/Program Files/MongoDB/Server/3.4/bin"
