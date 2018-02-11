@@ -5,7 +5,7 @@ export default function (state={}, action){
 
   switch (action.type) {
     case GET_BLOG_ACTION:
-      console.log('jeffski, payload', action.payload);
+      console.log('jeffski, payload', action.payload.data);
       return action.payload.data;
       break;
     default:
