@@ -6,7 +6,6 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
-import Image from 'react-bootstrap/lib/Image';
 
 import { getCurrentBlog } from '../actions/getblog'
 import Banner from  './Banner';
@@ -65,7 +64,7 @@ class BlogPage extends Component {
       />
     );
   }
-  
+
   render(){
     //using a property to validate success of request...bad practice?
     if(this.props.currentBlog.title){

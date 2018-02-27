@@ -7,7 +7,6 @@ export default function (state={}, action){
     case GET_BLOG_ACTION:
       console.log('jeffski, payload', action.payload.data);
       return action.payload.data;
-      break;
     default:
   }
   return state;
