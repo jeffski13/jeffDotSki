@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 const Banner =()=>{
   return (
     <div>
-      <Navbar className='bannerNavBar' inverse collapseOnSelect fixedTop >
+      <Navbar className="bannerNavBar" inverse collapseOnSelect fixedTop >
         <Navbar.Header>
           <Navbar.Brand>
             <a href="/">jeff.ski</a>

@@ -4,6 +4,8 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import TitlePage from './TitlePage';
 import BlogPage from './BlogPage';
 
+import '../style/style.css';
+
 //eventually this will do all the routing...later not now,  someday
 export default class App extends Component {
   render() {
