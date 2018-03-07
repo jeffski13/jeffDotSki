@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import TitlePage from './TitlePage';
-import BlogPage from './BlogPage';
+import BlogBrowser from './BlogBrowser';
 
-import '../style/style.css';
+import './style/style.css';
 
 //eventually this will do all the routing...later not now,  someday
 export default class App extends Component {
@@ -15,7 +15,7 @@ export default class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={TitlePage}/>
-              <Route path="/blog/chile" component={BlogPage}/>
+              <Route path="/blog/chile" component={BlogBrowser}/>
             </Switch>
           </div>
         </BrowserRouter>

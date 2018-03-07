@@ -1,0 +1,35 @@
+{
+  "title" : "Chile",
+  "date": "10/14/17 - 10/28/17",
+  "blogText":[
+    {
+      "text" : "Forward:"
+    },
+    {
+      "text": "I went to Japan and had a truly amazing experience, but at the end of the day all I had was a few pictures and my memories. Not to say that there is anything wrong with that. Afterall, it is the experience of leaving one’s home country and witnessing another culture that is the true reward."
+    },
+    {
+      "text": "As someone who works in IT I have always had insecurities about not having my own website, particularly now that I claim to be a “web developer”. But I never created a website because I possessed no content that even I found to be interesting. Though I consider myself to be a bit of an artist, none of my hobbies have ever been immortalized into a digital form."
+    },
+    {
+      "text": "So this is the place where I would like to organize my adventures. I have been to amazing places and really enjoyed the people I have met and the things I have experienced. I consider my journeys to be one of the most rewarding things I have ever done."
+    },
+    {
+      "text": "So without further ado, two adventures behind (Japan and Cancun) but not a moment too late! It’s never too late to start loving, and never too late to forgive, and it’s never too late to make a travel blog!"
+    }
+  ],
+  "links": [
+    {
+      "rel": "2017/10/13 blog entry",
+      "href": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/2017_10_13.json",
+    },
+    {
+      "rel": "2017/10/14 blog entry",
+      "href": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/2017_10_14.json",
+    },
+    {
+      "rel": "2017/10/14 blog entry",
+      "href": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/2017_10_14_1.json",
+    }
+  ]
+}

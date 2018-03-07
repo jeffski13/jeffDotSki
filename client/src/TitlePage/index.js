@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Banner from './Banner';
+import Banner from '../Inf/Banner';
 import TitleImg from './TitleImg';
 import AboutMe from './AboutMe';
 

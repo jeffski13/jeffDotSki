@@ -23,13 +23,15 @@ class BlogTextItem extends Component {
   }
 
   renderList(){
-    if(this.props.blogTextData.list.style === "number"){
-      //console.log('jeffski rendering bullet with ', blogTextItem);
-      return(
-        <Col sm={8} >
-          <ul>{this.props.blogTextData.list.textItems.map(this.renderBulletList)}</ul>
-        </Col>
-      );
+
+    if(this.props.blogTextData.list){
+      if(this.props.blogTextData.list.style === "number"){
+        return(
+          <Col sm={8} >
+            <ul>{this.props.blogTextData.list.textItems.map(this.renderBulletList)}</ul>
+          </Col>
+        );
+      }
     }
     else{
       return null;

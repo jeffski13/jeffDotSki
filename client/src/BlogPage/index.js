@@ -7,9 +7,9 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 
-import { getCurrentBlog } from '../actions/getblog'
-import Banner from  './Banner';
-import Loadingski from './Loadingski';
+import { getCurrentBlog } from './redux/actions'
+import Banner from  '../Inf/Banner';
+import Loadingski from '../Inf/Loadingski';
 import BlogTextItem from './BlogTextItem';
 
 class BlogPage extends Component {
@@ -31,6 +31,7 @@ class BlogPage extends Component {
     const firstParagraph =  this.props.currentBlog.blogText[0];
     const remainingParagraphs = this.props.currentBlog.blogText.slice(1, this.props.currentBlog.blogText.length);
     console.log(remainingParagraphs);
+    console.log(this.props.currentBlog);
 
     return(
       <Grid>
@@ -46,7 +47,7 @@ class BlogPage extends Component {
         <Row className="show-grid blogPargraph">
           <Col sm={8} md={4} >{firstParagraph.text}</Col>
           <Col sm={8} md={4} >
-            <img className="blogimg1" src="/img/chileTripToast.jpg"  height={300} />
+            <img className="blogimg1" src={this.props.currentBlog.images.main}  height={300} />
           </Col>
         </Row>
         {remainingParagraphs.length > 0

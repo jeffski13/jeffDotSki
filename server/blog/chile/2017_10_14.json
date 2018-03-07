@@ -5,5 +5,13 @@
 	"blogText":[{
 		"text" : "I arrived early! Which I am definitely doing from now on. Instead of stressing out over flight times and security, I got to sit in the airport bar and watch the OSU cowboys dominate their homecoming (which I will be attending next year, and probably create an anniversary blog for that). And the early start was much needed, a week before they changed my flight time, so I would have a 16 hour layover in Mexico City. But definitely a great start to the trip! I say always toast the trip (:"
 		}
-	]
+	],
+  "images": {
+    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/+img/chileTripToast.jpg",
+    "slideshow": [
+      {
+        "rel": "Main Post Img"
+      }
+    ]
+  }
 }
