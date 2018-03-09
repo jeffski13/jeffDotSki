@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import TitlePage from './TitlePage';
 import BlogBrowser from './BlogBrowser';
+import BlogPage from './BlogPage';
 
 import './style/style.css';
 

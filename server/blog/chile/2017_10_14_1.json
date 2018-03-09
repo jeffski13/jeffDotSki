@@ -55,5 +55,19 @@
     {
       "text": "In retrospect, my extremely long layover may have been a blessing in disguise. While I was exhausted, I was not pressed for time. And in a place like Mexico City Airport, that is a good thing. Especially given my lack on confidence with spanish, if I only had my original layover I would have been a lot more stressed. There is something to be said for having a relaxed deadline, even if it does involve sleeping in an airport."
     }
-	]
+	],
+  "images": {
+    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/+img/mexicocityAirportDepart.jpg",
+    "slideshow": [
+      {
+        "rel": "Main Post Img"
+      }
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/2017_10_14_1.json"
+    }
+  ]
 }

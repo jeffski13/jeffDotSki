@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
-import BlogReducer from '../BlogPage/redux/reducer';
+import BlogReducer from '../Blog/reducer';
+import CurrentBlogReducer from '../BlogPage/redux/reducer';
 import BlogListReducer from '../BlogBrowser/redux/reducer';
 
 const rootReducer = combineReducers({
-  currentBlog: BlogReducer,
+  blogs: BlogReducer,
+  currentBlog: CurrentBlogReducer,
   blogList: BlogListReducer
 });
 

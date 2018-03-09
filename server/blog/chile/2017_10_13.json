@@ -82,5 +82,11 @@
         "rel": "Main Post Img"
       }
     ]
-  }
+  },
+  "links": [
+		{
+      "rel": "self",
+      "href": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/2017_10_13.json"
+    }
+  ]
 }
