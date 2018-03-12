@@ -1,21 +1,21 @@
 {
-  "title": "World Traveler",
+  "title": "World Traveler's Collection",
   "textItems": [
     {
-      "text": "While in college I lived in a different location every summer. I wanted some way to commemorate my travels and memories but as a student I couldnt afford souveniers from the places in  which I was visiting and working.",
+      "text": "While in college I lived in a different location every summer. I wanted some way to commemorate my travels and memories but as a student I couldnt afford souveniers from the places in  which I was visiting and working."
     },
     {
-      "text": "So I started collecting shot glasses! If you are a world traveler this is a great collectible. They are almost everywhere you go and they will be the cheapest thing in the gift shop. In my search for these glasses, I have gone into many shops that I would not have otherwise in search of a unique glass for the journey.",
+      "text": "So I started collecting shot glasses! If you are a world traveler this is a great collectible. They are almost everywhere you go and they will be the cheapest thing in the gift shop. In my search for these glasses, I have gone into many shops that I would not have otherwise in search of a unique glass for the journey."
     },
     {
-      "text": "Each glass is not only unique in its own artistic right, but they also hold memories of all the places I have seen and cultures I have experienced. I hope you enjoy!",
+      "text": "Each glass is not only unique in its own artistic right, but they also hold memories of all the places I have seen and cultures I have experienced. I hope you enjoy!"
     }
   ],
   "images": {
-    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/shotglassCollection_3_12_17.jpg",
+    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/shotglassCollection_3_12_17.jpg"
   },
   "links": [
-		{
+    {
       "rel": "self",
       "href": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/shotglass.json"
     }

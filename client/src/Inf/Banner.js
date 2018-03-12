@@ -29,11 +29,20 @@ const Banner =()=>{
                   Chile
                 </Link>
               </MenuItem>
+              <MenuItem divider />
+              <MenuItem eventKey={3.2}>
+                <Link
+                  className="navBarLink"
+                  to="/aboutme/shotglass"
+                >
+                  Shotglass Collection
+                </Link>
+              </MenuItem>
             </NavDropdown>
           </Nav>
           <Nav>
             <NavDropdown eventKey={3} title="Software Engineering" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1} href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume2018_3_9_SoftwareEng.pdf">
+              <MenuItem eventKey={3.3} href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume2018_3_9_SoftwareEng.pdf">
                 Resume
               </MenuItem>
             </NavDropdown>
