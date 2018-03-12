@@ -4,8 +4,8 @@ import {bindActionCreators} from 'redux';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-import { getBlog } from '../Blog/actions';
-import { readMoreBlogClicked } from '../Blog/actions';
+import { getBlog } from '../actions';
+import { readMoreBlogClicked } from './redux/actions';
 import './styles.css';
 
 class BlogSample extends Component {

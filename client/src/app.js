@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import TitlePage from './TitlePage';
-import BlogBrowser from './BlogBrowser';
-import BlogPage from './BlogPage';
+import BlogBrowser from './Blog/BlogBrowser';
+import BlogPage from './Blog/BlogPage';
 
 import './style/style.css';
 

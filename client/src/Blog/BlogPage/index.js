@@ -7,10 +7,12 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
+import Image  from 'react-bootstrap/lib/Image';
 
-import { getBlog } from '../Blog/actions';
-import Banner from  '../Inf/Banner';
-import Loadingski from '../Inf/Loadingski';
+
+import { getBlog } from '../actions';
+import Banner from  '../../Inf/Banner';
+import Loadingski from '../../Inf/Loadingski';
 import BlogTextItem from './BlogTextItem';
 
 class BlogPage extends Component {
@@ -49,7 +51,7 @@ class BlogPage extends Component {
         <Row className="show-grid blogPargraph">
           <Col sm={8} md={4} >{firstParagraph.text}</Col>
           <Col sm={8} md={4} >
-            <img className="blogimg1" src={blog.images.main}  height={300} />
+            <Image src={blog.images.main} responsive />
           </Col>
         </Row>
         {remainingParagraphs.length > 0
