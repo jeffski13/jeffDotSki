@@ -57,7 +57,7 @@
     }
 	],
   "images": {
-    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/+img/mexicocityAirportDepart.jpg",
+    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/img/mexicocityAirportDepart.jpg",
     "slideshow": [
       {
         "rel": "Main Post Img"

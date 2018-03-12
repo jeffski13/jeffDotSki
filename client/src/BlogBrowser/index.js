@@ -7,8 +7,8 @@ import PageHeader from 'react-bootstrap/lib/PageHeader';
 
 import Loadingski from '../Inf/Loadingski';
 import Banner from '../Inf/Banner';
-import { getBlogList } from './redux/actions';
-import BlogSample from './BlogSample';
+import { getBlogList } from '../Blog/actions';
+import BlogPage from '../BlogPage';
 import './styles.css';
 
 class BlogBrowser extends Component{
@@ -20,14 +20,13 @@ class BlogBrowser extends Component{
   }
 
   componentDidMount(){
-    console.log('jeffski making blog browser call')
     this.props.getBlogList();
   }
 
   //renders all paragraphs except the first
   renderSampleBlogItem(linkItem){
     return (
-      <BlogSample key={linkItem.href}
+      <BlogPage key={linkItem.href}
         blogUrl={linkItem.href}
       />
     );
@@ -35,15 +34,14 @@ class BlogBrowser extends Component{
 
   render(){
     if(this.props.blogList.title){
+      console.log('jeffski in the cage blog list', this.props.blogList);
       return (
         <div className="BlogBrowser">
+          <Banner />
           <Grid>
-            <Row className="show-grid blogTitle">
-              <PageHeader>{this.props.blogList.title}</PageHeader>
-            </Row>
-            <Row className="show-grid">
-              <div>{this.props.blogList.date}</div>
-            </Row>
+            <div className="blogBrowserTitle">
+              {this.props.blogList.title}
+            </div>
             {this.props.blogList.links.map(this.renderSampleBlogItem)}
           </Grid>
         </div>

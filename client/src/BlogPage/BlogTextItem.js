@@ -7,11 +7,11 @@ class BlogTextItem extends Component {
   constructor(props){
     super(props);
 
-    this.renderTitle = this.renderTitle.bind(this);
+    this.renderText = this.renderText.bind(this);
     this.renderList = this.renderList.bind(this);
   }
 
-  renderTitle(){
+  renderText(){
     if(this.props.blogTextData.text){
       return(
         <Col sm={8} >{this.props.blogTextData.text}</Col>
@@ -25,11 +25,31 @@ class BlogTextItem extends Component {
   renderList(){
 
     if(this.props.blogTextData.list){
+
       if(this.props.blogTextData.list.style === "number"){
         return(
           <Col sm={8} >
-            <ul>{this.props.blogTextData.list.textItems.map(this.renderBulletList)}</ul>
+            <ol>{this.props.blogTextData.list.textItems.map(this.renderTextListItem)}</ol>
           </Col>
+        );
+      }
+      else if(this.props.blogTextData.list.style === "bullet"){
+        return(
+          <Col sm={8} >
+            <ul>{this.props.blogTextData.list.textItems.map(this.renderTextListItem)}</ul>
+          </Col>
+        );
+      }
+      else if(this.props.blogTextData.list.style === "quote"){
+        return(
+          <div>
+            <Col sm={5} smOffset={1} >
+              {this.props.blogTextData.list.textItems[0].text}
+            </Col>
+            <Col sm={8} smOffset={2} >
+              {this.props.blogTextData.list.textItems[0].subText}
+            </Col>
+          </div>
         );
       }
     }
@@ -38,26 +58,29 @@ class BlogTextItem extends Component {
     }
   }
 
-  renderBulletList(bulletBlogStrArrItem){
+  renderTextListItem(textListItem, index){
+    let title = null;
+    if(textListItem.title){
+      let titleText = textListItem.title.trim();
+      title = (
+        <strong>{titleText}: </strong>
+      )
+    }
+
+    let subText = null;
+    if(textListItem.subText){
+      subText = (
+        <div>{textListItem.subText}</div>
+      );
+    }
+
     //add in subtext. bold title, add in text
      return(
-       <li>{bulletBlogStrArrItem.title}</li>
+         <li key={index}> {title}{textListItem.text}{subText}</li>
      );
   }
 
   render(){
-    // //bulletted list
-    // if(blogTextItem.style === "indent "){
-    //   return(
-    //     <Row className="show-grid blogPargraph" key={blogTextItem._id}>
-    //       <Col sm={8} smOffset={1} >
-    //         {blogTextItem.text}
-    //       </Col>
-    //     </Row>
-    //   );
-    // }
-    //
-
     //
     // //italicized quote
     // if(blogTextItem.style === "quote"){
@@ -72,12 +95,9 @@ class BlogTextItem extends Component {
     //     </Row>
     //   );
     // }
-
-    console.log('jeffski in blogTextData: ', this.props.blogTextData);
-
     return(
       <Row className="show-grid blogPargraph">
-        {this.renderTitle()}
+        {this.renderText()}
         {this.renderList()}
       </Row>
     );

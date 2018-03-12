@@ -9,11 +9,11 @@
     {
       "text": "Here are some things I had covered",
       "list": {
-        "style": "number",
+        "style": "bullet",
         "textItems": [
           {
             "title": "Electronics",
-            "text": "Here are some things I had covered",
+            "text": "International Power Supply and a Battery",
             "subText": "Find out what the voltage is in the country to which you are traveling. Go ahead and get an adapter set for all the different power outlet types. And I bought an external power brick (at least 20,000 mA), Anker is a pretty good brand if you can afford it."
           },
           {
@@ -35,22 +35,33 @@
     {
       "text": "Here are a few things I didn’t think about:",
       "list": {
-        "style": "numbered",
+        "style": "bullet",
         "textItems": [
           {
-            "title": "Vaccines ",
-            "text": "check for needed vaccines about a month before going.",
+            "title": "Vaccines",
+            "text": "Check for needed vaccines about a month before going.",
             "subText": "No matter what country you are going to you should check for needed vaccines about a month before going. I used a company called Passport Health. And for those of you that were stubborn like me remember this: "
-          },
+          }
+        ]
+      }
+    },
+    {
+      "list": {
+        "style": "quote",
+        "textItems": [
           {
-            "subText": "If you are going to fight alone, wear a mask. The mask isn’t for you; its to protect the ones you love.",
-            "style": "quote"
-          },
-          {
+            "text": "\"If you are going to fight alone, wear a mask. The mask isn’t for you; its to protect the ones you love.\"",
             "subText": "~Batman"
-          },
+          }
+        ]
+      }
+    },
+    {
+      "list": {
+        "style": "bullet",
+        "textItems": [
           {
-            "subText": "If you are traveling to a country alone, get vaccines and take mosquito repellent. Its not so much for you as for the ones you love."
+            "text": "If you are traveling to a country alone, get vaccines and take mosquito repellent. Its not so much for you as for the ones you love."
           },
           {
             "title": "Daily Drugs and Vitamins",
@@ -76,7 +87,7 @@
     }
   ],
   "images": {
-    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/+img/chileMap.png",
+    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/img/chileMap.png",
     "slideshow": [
       {
         "rel": "Main Post Img"

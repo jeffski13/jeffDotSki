@@ -6,6 +6,8 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import Nav from 'react-bootstrap/lib/Nav'
 import {Link} from 'react-router-dom';
 
+import './styles.css';
+
 const Banner =()=>{
   return (
     <div>
@@ -19,27 +21,22 @@ const Banner =()=>{
         <Navbar.Collapse>
           <Nav>
             <NavDropdown eventKey={3} title="Travel Blogs" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Japan</MenuItem>
-              <MenuItem eventKey={3.2}><Link to="/blog/chile">Chile</Link></MenuItem>
-              <MenuItem eventKey={3.3}>Disney World</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={3.3}>The Chase for Chocolate</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={3.3}>Shot Glass Collection</MenuItem>
+              <MenuItem eventKey={3.1}>
+                <Link
+                  className="navBarLink"
+                  to="/blog/chile"
+                >
+                  Chile
+                </Link>
+              </MenuItem>
             </NavDropdown>
           </Nav>
           <Nav>
             <NavDropdown eventKey={3} title="Software Engineering" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Resume</MenuItem>
-              <MenuItem eventKey={3.2}>Education Background</MenuItem>
+              <MenuItem eventKey={3.1} href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume2018_3_9_SoftwareEng.pdf">
+                Resume
+              </MenuItem>
             </NavDropdown>
-            <NavDropdown eventKey={3} title="Community Involvement" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Robotics</MenuItem>
-              <MenuItem eventKey={3.2}>Hour of Code</MenuItem>
-            </NavDropdown>
-          </Nav>
-          <Nav pullRight>
-            <NavItem eventKey={1} href="#">Bio</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

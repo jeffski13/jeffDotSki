@@ -1,9 +1,9 @@
-import { GET_BLOG_LIST } from './actions';
+import { READMORE_BLOG_CLICKED } from './actions';
 
 export default function (state={}, action){
   switch (action.type){
-    case `${GET_BLOG_LIST}_FULFILLED`:
-      return action.payload.data;
+    case READMORE_BLOG_CLICKED:
+      return action.payload;
     default:
   }
   return state;

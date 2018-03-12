@@ -1,5 +1,12 @@
 .BlogBrowser{
-  padding-left: 30px
+  padding-left: 30px;
+  padding-top: 75px;
+}
+
+.blogBrowserTitle{
+  font-size: 50px;
+  font-weight: bold;
+  
 }
 
 .BlogSample{

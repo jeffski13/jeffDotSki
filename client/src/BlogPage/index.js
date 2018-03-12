@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import _ from 'lodash';
@@ -7,7 +8,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 
-import { getCurrentBlog } from './redux/actions'
+import { getBlog } from '../Blog/actions';
 import Banner from  '../Inf/Banner';
 import Loadingski from '../Inf/Loadingski';
 import BlogTextItem from './BlogTextItem';
@@ -22,32 +23,33 @@ class BlogPage extends Component {
   }
 
   componentDidMount(){
-    this.props.getCurrentBlog();
+    this.props.getBlog(this.props.blogUrl);
   }
 
   renderBlogData(){
+
+    let blog = this.props.blogs[this.props.blogUrl];
+
     //get first paragraph data
     //then put the rest of the paragraphs into a separete array
-    const firstParagraph =  this.props.currentBlog.blogText[0];
-    const remainingParagraphs = this.props.currentBlog.blogText.slice(1, this.props.currentBlog.blogText.length);
-    console.log(remainingParagraphs);
-    console.log(this.props.currentBlog);
+    const firstParagraph =  blog.blogText[0];
+    const remainingParagraphs = blog.blogText.slice(1, blog.blogText.length);
 
     return(
       <Grid>
-        <Row className="show-grid blogTitle">
-          <PageHeader>{this.props.currentBlog.title}</PageHeader>
+        <Row className="show-grid">
+          <PageHeader>{blog.title}</PageHeader>
         </Row>
         <Row className="show-grid">
-          <div>{this.props.currentBlog.location}</div>
+          <div>{blog.location}</div>
         </Row>
         <Row className="show-grid">
-          <div>{this.props.currentBlog.date}</div>
+          <div>{blog.date}</div>
         </Row>
         <Row className="show-grid blogPargraph">
           <Col sm={8} md={4} >{firstParagraph.text}</Col>
           <Col sm={8} md={4} >
-            <img className="blogimg1" src={this.props.currentBlog.images.main}  height={300} />
+            <img className="blogimg1" src={blog.images.main}  height={300} />
           </Col>
         </Row>
         {remainingParagraphs.length > 0
@@ -67,18 +69,16 @@ class BlogPage extends Component {
   }
 
   render(){
+
     //using a property to validate success of request...bad practice?
-    if(this.props.currentBlog.title){
-      console.log('jeffski loaded: ', this.props.currentBlog);
+    if(this.props.blogs[this.props.blogUrl]){
       return (
         <div>
-          <Banner />
           <div>{this.renderBlogData()}</div>
         </div>
       );
     }
     else{
-      console.log('jeffski loading');
       return(
         <Loadingski />
       );
@@ -87,12 +87,16 @@ class BlogPage extends Component {
 
 }
 
-function mapStateToProps({ currentBlog }){
-  return { currentBlog };
+BlogPage.propTypes = {
+  blogUrl: PropTypes.string
+}
+
+function mapStateToProps({ blogs }){
+  return { blogs };
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({getCurrentBlog}, dispatch);
+  return bindActionCreators({getBlog}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPage);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactLoading from 'react-loading';
 
+import './loading-styles.css';
+
 class Loadingski extends Component {
   render(){
     return(

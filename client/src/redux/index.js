@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
-import BlogReducer from '../Blog/reducer';
-import CurrentBlogReducer from '../BlogPage/redux/reducer';
-import BlogListReducer from '../BlogBrowser/redux/reducer';
+import getBlogReducer from '../Blog/getBlogReducer';
+import getBlogListReducer from '../Blog/getBlogListReducer';
 
 const rootReducer = combineReducers({
-  blogs: BlogReducer,
-  currentBlog: CurrentBlogReducer,
-  blogList: BlogListReducer
+  blogs: getBlogReducer,
+  blogList: getBlogListReducer
 });
 
 export default rootReducer;

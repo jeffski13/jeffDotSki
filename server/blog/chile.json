@@ -2,7 +2,7 @@
 	"title" : "Chile",
 	"date": "10/14/17 - 10/28/17",
   "images": {
-    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/+img/Santiago_panorama.jpg",
+    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/img/Santiago_panorama.jpg",
     "slideshow": [
       {
         "rel": "Main Post Img"

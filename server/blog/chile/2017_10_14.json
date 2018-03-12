@@ -7,7 +7,7 @@
 		}
 	],
   "images": {
-    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/+img/chileTripToast.jpg",
+    "main": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/img/chileTripToast.jpg",
     "slideshow": [
       {
         "rel": "Main Post Img"
@@ -16,7 +16,7 @@
   },
 	"links": [
     {
-      "rel": "2017/10/14 blog entry",
+      "rel": "self",
       "href": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/chile/2017_10_14.json"
     }
   ]
