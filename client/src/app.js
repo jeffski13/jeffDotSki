@@ -11,17 +11,13 @@ import './style/style.css';
 export default class App extends Component {
   render() {
     return (
-      <div>
-        <BrowserRouter>
-          <div>
-            <Switch>
-              <Route exact path="/" component={TitlePage}/>
-                <Route path="/blog/chile" component={BlogBrowser}/>
-              <Route path="/aboutme/shotglass" component={Shotglass}/>
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={TitlePage}/>
+          <Route path="/blog/chile" component={BlogBrowser}/>
+          <Route path="/aboutme/shotglass" component={Shotglass}/>
+        </Switch>
+      </BrowserRouter>
     );
   }
 }

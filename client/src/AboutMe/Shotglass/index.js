@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import Image from 'react-bootstrap/lib/Image';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import Grid from 'react-bootstrap/lib/Grid';
 
 import { getShotGlassInfo } from './redux/actions';
 import Loadingski from '../../Inf/Loadingski';
@@ -15,6 +16,7 @@ class Shotglass extends Component {
     super(props);
 
     this.renderShotGlassInfoText = this.renderShotGlassInfoText.bind(this);
+    this.renderList = this.renderList.bind(this);
   }
 
   componentDidMount(){
@@ -23,23 +25,70 @@ class Shotglass extends Component {
 
   renderShotGlassInfoText(textItem, index){
     return(
-      <Col sm={8} key={index}>{textItem.text}</Col>
+      <Row key={index} className="show-grid shotGlassPargraph">
+        <Col sm={10} >{textItem.text}</Col>
+        {this.renderList(textItem.list)}
+      </Row>
     );
+  }
+
+  renderList(list){
+
+    if(list){
+
+      if(list.style === "bullet"){
+        return(
+          <Col sm={8} >
+            <ul>{list.textItems.map(this.renderTextListItem)}</ul>
+          </Col>
+        );
+      }
+    }
+    else{
+      return null;
+    }
+  }
+
+  renderTextListItem(textListItem, index){
+    let location = null;
+    if(textListItem.location){
+      location = (
+        <strong>{textListItem.location}: </strong>
+      );
+    }
+
+    let city = null;
+    if(textListItem.city){
+      city = (
+        <div>{textListItem.city}</div>
+      );
+    }
+
+    //add in subtext. bold title, add in text
+     return(
+         <li key={index}>{location}{textListItem.date}{city}</li>
+     );
   }
 
   render(){
     if(this.props.shotGlassInfo.title){
       console.log(this.props.shotGlassInfo);
       return(
-        <div className="TitlePage" >
+        <div>
           <Banner />
           <div className='titlePageImg' >
             <Image src={this.props.shotGlassInfo.images.main} responsive />
           </div>
-          <div className="shotGlassTitle" >{this.props.shotGlassInfo.title}</div>
-          <Row className="show-grid blogPargraph">
-            {this.props.shotGlassInfo.textItems.map(this.renderShotGlassInfoText)}
-          </Row>
+          <div className="shotGlassTextSection" >
+            <Grid>
+              <Col>
+                <div className="shotGlassTitle" >{this.props.shotGlassInfo.title}</div>
+              </Col>
+            </Grid>
+            <Grid>
+              {this.props.shotGlassInfo.textItems.map(this.renderShotGlassInfoText)}
+            </Grid>
+          </div>
         </div>
       );
     }

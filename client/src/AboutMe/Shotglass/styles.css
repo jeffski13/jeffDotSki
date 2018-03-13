@@ -3,7 +3,7 @@
 }
 
 .shotGlassTitle{
-  padding-top: 30px;
+  padding-top: 60px;
   padding-bottom: 15px;
   font-size: 50px;
   font-weight: bold;
@@ -11,4 +11,8 @@
 
 .shotGlassPargraph{
   padding-top: 10px;
+}
+
+.shotGlassTextSection{
+  padding-bottom: 60px;
 }
