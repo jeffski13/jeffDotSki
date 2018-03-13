@@ -6,7 +6,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 
 import Loadingski from '../../Inf/Loadingski';
-import Banner from '../../Inf/Banner';
+import NavigationBar from '../../Inf/NavigationBar';
 import { getBlogList } from '../actions';
 import BlogPage from '../BlogPage';
 import './styles.css';
@@ -37,7 +37,7 @@ class BlogBrowser extends Component{
       console.log('jeffski in the cage blog list', this.props.blogList);
       return (
         <div className="BlogBrowser">
-          <Banner />
+          <NavigationBar />
           <Grid>
             <div className="blogBrowserTitle">
               {this.props.blogList.title}

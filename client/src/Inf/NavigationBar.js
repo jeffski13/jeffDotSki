@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 
 import './styles.css';
 
-const Banner =()=>{
+const NavigationBar =()=>{
   return (
     <div>
       <Navbar className="bannerNavBar" inverse collapseOnSelect fixedTop >
@@ -53,4 +53,4 @@ const Banner =()=>{
   );
 }
 
-export default Banner;
+export default NavigationBar;

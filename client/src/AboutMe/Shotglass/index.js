@@ -8,7 +8,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 
 import { getShotGlassInfo } from './redux/actions';
 import Loadingski from '../../Inf/Loadingski';
-import Banner from '../../Inf/Banner';
+import NavigationBar from '../../Inf/NavigationBar';
 import './styles.css';
 
 class Shotglass extends Component {
@@ -75,7 +75,7 @@ class Shotglass extends Component {
       console.log(this.props.shotGlassInfo);
       return(
         <div>
-          <Banner />
+          <NavigationBar />
           <div className='titlePageImg' >
             <Image src={this.props.shotGlassInfo.images.main} responsive />
           </div>
