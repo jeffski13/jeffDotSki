@@ -9,7 +9,6 @@ import {BrowserRouter} from 'react-router-dom';
 
 import reducers from './redux';
 import App from './app';
-
 const jeffskiStore = createStore(reducers, applyMiddleware(reduxPromiseMiddleware(), thunk));
 
 ReactDOM.render(

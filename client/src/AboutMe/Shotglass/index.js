@@ -8,8 +8,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 
 import { getShotGlassInfo } from './redux/actions';
 import Loadingski from '../../Inf/Loadingski';
-import NavigationBar from '../../Inf/NavigationBar';
-import './styles.css';
+import '../styles.css';
 
 class Shotglass extends Component {
   constructor(props){
@@ -25,7 +24,7 @@ class Shotglass extends Component {
 
   renderShotGlassInfoText(textItem, index){
     return(
-      <Row key={index} className="show-grid shotGlassPargraph">
+      <Row key={index} className="show-grid aboutMePargraph">
         <Col sm={10} >{textItem.text}</Col>
         {this.renderList(textItem.list)}
       </Row>
@@ -75,14 +74,13 @@ class Shotglass extends Component {
       console.log(this.props.shotGlassInfo);
       return(
         <div>
-          <NavigationBar />
           <div className='titlePageImg' >
             <Image src={this.props.shotGlassInfo.images.main} responsive />
           </div>
-          <div className="shotGlassTextSection" >
+          <div className="aboutMeTextSection" >
             <Grid>
               <Col>
-                <div className="shotGlassTitle" >{this.props.shotGlassInfo.title}</div>
+                <div className="aboutMeTitle" >{this.props.shotGlassInfo.title}</div>
               </Col>
             </Grid>
             <Grid>

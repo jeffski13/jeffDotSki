@@ -1,18 +1,14 @@
-.shotGlassImage{
-
-}
-
-.shotGlassTitle{
+.aboutMeTitle{
   padding-top: 60px;
   padding-bottom: 15px;
   font-size: 50px;
   font-weight: bold;
 }
 
-.shotGlassPargraph{
+.aboutMePargraph{
   padding-top: 10px;
 }
 
-.shotGlassTextSection{
+.aboutMeTextSection{
   padding-bottom: 60px;
 }
