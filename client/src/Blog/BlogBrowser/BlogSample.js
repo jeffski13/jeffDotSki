@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/lib/Col';
 import { getBlog } from '../actions';
 import { readMoreBlogClicked } from './redux/actions';
 import './styles.css';
-
+import '../BlogPage/styles.css';
 class BlogSample extends Component {
 
   componentDidMount(){

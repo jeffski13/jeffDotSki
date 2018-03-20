@@ -4,6 +4,11 @@
     height:100%;
 }
 
+.NavigationBar{
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
 .brand {
 	cursor:pointer;
 }

@@ -1,3 +1,7 @@
 .TitlePage{
   background-color: #bbb;
 }
+
+.titlePageImg{
+  z-index: -1;
+}

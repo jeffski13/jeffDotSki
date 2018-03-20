@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
+import './styles.css';
+
 class BlogTextItem extends Component {
 
   constructor(props){
@@ -81,20 +83,6 @@ class BlogTextItem extends Component {
   }
 
   render(){
-    //
-    // //italicized quote
-    // if(blogTextItem.style === "quote"){
-    //   return(
-    //     <Row className="show-grid blogPargraph " key={blogTextItem._id}>
-    //       <Col className="blogPargraphQuote" sm={8} smOffset={1} >
-    //         {blogTextItem.text}
-    //       </Col>
-    //       <Col sm={8} smOffset={2} >
-    //         -{blogTextItem.subText}
-    //       </Col>
-    //     </Row>
-    //   );
-    // }
     return(
       <Row className="show-grid blogPargraph">
         {this.renderText()}

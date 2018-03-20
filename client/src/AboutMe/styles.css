@@ -1,3 +1,7 @@
+.aboutmeWrapper{
+  background-color: #f2f2f2;
+}
+
 .aboutMeTitle{
   padding-top: 60px;
   padding-bottom: 15px;
@@ -9,6 +13,18 @@
   padding-top: 10px;
 }
 
+.aboutMePargraphWithImage{
+  padding-bottom: 10px;
+}
+
 .aboutMeTextSection{
   padding-bottom: 60px;
+}
+
+.aboutmeImg{
+  z-index: -1;
+}
+
+.aboutMeSectionTitle{
+  font-weight: 600;
 }

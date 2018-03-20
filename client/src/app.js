@@ -7,7 +7,6 @@ import BlogPage from './Blog/BlogPage';
 import Shotglass from './AboutMe/Shotglass';
 import Bio from './AboutMe/Bio';
 import ErrorPage from './ErrorPage';
-import './style/style.css';
 import NavigationBar from './Inf/NavigationBar';
 
 

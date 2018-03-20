@@ -13,7 +13,7 @@ class NavigationBar extends Component {
   render(){
     return (
       <div>
-        <Navbar className="bannerNavBar" inverse collapseOnSelect fixedTop >
+        <Navbar className="NavigationBar" inverse collapseOnSelect fixedTop >
           <Navbar.Header>
             <LinkContainer to="/">
   				    <Navbar.Brand className="brand">
