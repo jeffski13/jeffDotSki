@@ -2,11 +2,39 @@ import React, {Component} from 'react';
 import {Grid, Row, Col, Image} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
-import githubLogo from './github-logo-light.png';
+import githubLogo from './github-logo.png';
+import githubLogoShadow from './github-logo-shadow.png';
 import './styles.css';
 
 class FooterBarski extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.githubImgMouseOver = this.githubImgMouseOver.bind(this);
+    this.gitihubImgMouseOut = this.gitihubImgMouseOut.bind(this);
+
+    this.state = {
+      isGithubMouseOver : false
+    }
+  }
+
+  githubImgMouseOver(){
+    this.setState({
+      isGithubMouseOver: true
+    });
+  }
+
+  gitihubImgMouseOut(){
+    this.setState({
+      isGithubMouseOver: false
+    });
+  }
+
   render(){
+    console.log('jeffski state', this.state);
+    let githubLogoImage = this.state.isGithubMouseOver ? githubLogoShadow : githubLogo;
+
     return(
       <Grid className="FooterBarski">
         <Row className="show-grid">
@@ -36,8 +64,10 @@ class FooterBarski extends Component {
             <a title="My Open Source Website!"
               href="https://github.com/jeffski13/jeffDotSki/tree/master/client"
             >
-              <Image src={githubLogo}
+              <Image src={githubLogoImage}
                 className="githubLogo"
+                onMouseOver={this.githubImgMouseOver}
+                onMouseOut={this.gitihubImgMouseOut}
               />
             </a>
           </Col>
