@@ -74,7 +74,7 @@ class Shotglass extends Component {
       console.log(this.props.shotGlassInfo);
       return(
         <div className="aboutmeWrapper" >
-          <div className='aboutmeImg' >
+          <div>
             <Image src={this.props.shotGlassInfo.images.main} responsive />
           </div>
           <div className="aboutMeTextSection" >

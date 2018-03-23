@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {Grid, Col, Row, Image} from 'react-bootstrap';
 
 import '../styles.css';
@@ -35,7 +34,7 @@ class Bio extends Component {
             <Row className="show-grid aboutMePargraph" >
               <Col sm={10} md={5} className="aboutMePargraphWithImage" >
                 <p>
-                I graduated from Claremore High School in 2009 and went to Oklahoma State University (Stillwater, OK). While in college I got a was lucky enough to get a job in a different city every summer. In 2010 was workin at the Ribcrib (Stillwater), 2011 was in Las Vegas, 2012 Cessna (Wichita), 2013 was ABB Totalflow in Bartlesville, and the summer of 2014 I interned at USAA in San Antonio.
+                  I graduated from Claremore High School in 2009 and went to Oklahoma State University (Stillwater, OK). While in college I was lucky enough to get a job in a different city every summer. In 2010 was "workin at the Ribcrib" (Stillwater), 2011 was in Las Vegas, 2012 Cessna (Wichita), 2013 was ABB Totalflow (Bartlesville, OK), and the summer of 2014 I interned at USAA in San Antonio, Texas.
                 </p>
                 <p>
                 I enjoyed my summer internship, but being ten hours away from home was a bit too much at the time. Fortunately USAA was opening an office in Dallas, and that's how I eneded up here!
@@ -49,13 +48,13 @@ class Bio extends Component {
               <Col sm={10} >
                 <h2 className="aboutMeSectionTitle">A Professional What?</h2>
                 <p>
-                  During college wrote my first line of code. As a mechanical engineer I took a course in VBA. I distincly remember the professor writing "x = x + 1" in front of the class. Everyone just stared in silence, wondering how such an algebraic conundrum could be so casually written in an engineering class (needless to say I had alot to learn!). I enjoyed VBA and Intro to Electrical Circuits so much I changed my major to electrical engineering.
+                  During college I wrote my first line of code. As a mechanical engineer I took a course in VBA. I distincly remember the professor writing "x = x + 1" in front of the class. Everyone just stared in silence, wondering how this algebraic conundrum could be so casually written in an engineering class (needless to say I had alot to learn!). I enjoyed VBA and intro to electrical circuits so much I changed my major to electrical engineering.
                 </p>
               </Col>
             </Row>
             <Row className="show-grid aboutMePargraph">
               <Col sm={10} md={5} className="aboutMePargraphWithImage" >
-                In the summer 2012 I moved to Bartlesville, Oklahoma. There I got my first "professional" job as a computer programmer. I put professional in quotes because I had absolutely no idea what I was doing. However, my dad had always said I needed to find something that I enjoyed, I was good at, and I could get paid for. I could get payed for it, and I definitely enjoyed it. And I was good...enough at it. It was the beginning of what I knew would be an exciting career!
+                In the summer 2012 I moved to Bartlesville, Oklahoma. There I snagged my first "professional" job as a computer programmer. I put professional in quotes because I had absolutely no idea what I was doing. However, my dad had always said I needed to find something that I enjoyed, I was good at, and I could get paid for. I could get payed for it, and I definitely enjoyed it. And I was good...enough at it. It was the beginning of what I knew would be an exciting career!
               </Col>
               <Col sm={10} md={5} >
                 <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/a-professional-what.jpg' responsive />
@@ -100,10 +99,6 @@ class Bio extends Component {
       </div>
     );
   }
-}
-
-Bio.propTypes = {
-
 }
 
 export default Bio;

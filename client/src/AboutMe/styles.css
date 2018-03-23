@@ -3,7 +3,6 @@
 }
 
 .aboutMeTitle{
-  padding-top: 60px;
   padding-bottom: 15px;
   font-size: 50px;
   font-weight: bold;
@@ -19,10 +18,6 @@
 
 .aboutMeTextSection{
   padding-bottom: 60px;
-}
-
-.aboutmeImg{
-  z-index: -1;
 }
 
 .aboutMeSectionTitle{

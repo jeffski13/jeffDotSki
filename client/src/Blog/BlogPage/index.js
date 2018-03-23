@@ -11,7 +11,6 @@ import Image  from 'react-bootstrap/lib/Image';
 
 
 import { getBlog } from '../actions';
-import NavigationBar from  '../../Inf/NavigationBar';
 import Loadingski from '../../Inf/Loadingski';
 import BlogTextItem from './BlogTextItem';
 import './styles.css';

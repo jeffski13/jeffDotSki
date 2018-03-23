@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Row from 'react-bootstrap/lib/Row';
 import Grid from 'react-bootstrap/lib/Grid';
-import PageHeader from 'react-bootstrap/lib/PageHeader';
 
 import Loadingski from '../../Inf/Loadingski';
 import { getBlogList } from '../actions';
