@@ -16,6 +16,12 @@
   font-weight: 700;
 }
 
+.techSupportLink:hover{
+  color: white;
+  text-decoration: none;
+  text-shadow: 2px 2px #444;
+}
+
 .githubLogo{
   margin-top: 15px;
   margin-bottom: 15px;
