@@ -19,12 +19,14 @@ class FooterBarski extends Component {
     }
   }
 
+  //on hover effect for the github logo link
   githubImgMouseOver(){
     this.setState({
       isGithubMouseOver: true
     });
   }
 
+  //on hover effect for the github logo link
   gitihubImgMouseOut(){
     this.setState({
       isGithubMouseOver: false
@@ -32,7 +34,6 @@ class FooterBarski extends Component {
   }
 
   render(){
-    console.log('jeffski state', this.state);
     let githubLogoImage = this.state.isGithubMouseOver ? githubLogoShadow : githubLogo;
 
     return(
@@ -47,8 +48,8 @@ class FooterBarski extends Component {
               >
                 Website Support
               </a>
-              <div>
-                &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+              <div className="footLinkDivider" >
+                &nbsp;&bull;&nbsp;
               </div>
               <LinkContainer to="/careers">
                 <a

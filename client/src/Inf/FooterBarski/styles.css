@@ -1,13 +1,13 @@
 .FooterBarski {
     background-color: grey;
     width:100%;
-    height:70px;
+    height:60px;
     padding: 0px;
 }
 
 .techSupportLinkWrapper{
   color: white;
-  line-height: 70px;
+  line-height: 60px;
 }
 
 .techSupportLink{
@@ -19,12 +19,17 @@
 .techSupportLink:hover{
   color: white;
   text-decoration: none;
-  text-shadow: 2px 2px #444;
+  text-shadow: 2px 1px #444;
+}
+
+.footLinkDivider{
+  width: 20px;
+  text-align: center;
 }
 
 .githubLogo{
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: 40px;
 }
 
