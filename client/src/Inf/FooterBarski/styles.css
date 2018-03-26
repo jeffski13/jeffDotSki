@@ -5,21 +5,35 @@
     padding: 0px;
 }
 
-.techSupportLinkWrapper{
+.footerBarskiLinkWrapper{
   color: white;
   line-height: 60px;
 }
 
-.techSupportLink{
+.footerLinksArea{
+  display: flex;
+}
+
+.footerBarskiLink{
   color: white;
   text-decoration: none;
   font-weight: 700;
 }
 
-.techSupportLink:hover{
+.footerBarskiLink:hover{
   color: white;
   text-decoration: none;
   text-shadow: 2px 1px #444;
+}
+
+.footerBarskiLink:visited{
+  text-decoration: none;
+  color: white;
+}
+
+.footerBarskiLink:focus{
+  text-decoration: none;
+  color: white;
 }
 
 .footLinkDivider{
@@ -31,8 +45,4 @@
   margin-top: 10px;
   margin-bottom: 10px;
   height: 40px;
-}
-
-.footerLinksArea{
-  display: flex;
 }

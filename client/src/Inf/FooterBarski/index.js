@@ -40,11 +40,11 @@ class FooterBarski extends Component {
       <Grid className="FooterBarski">
         <Row className="show-grid">
           <Col xs={2} sm={1} />
-          <Col xs={7} sm={10} className="techSupportLinkWrapper">
+          <Col xs={7} sm={10} className="footerBarskiLinkWrapper">
             <div className="footerLinksArea" >
               <a
                 href= "mailto:techsupport@jeff.ski"
-                className="techSupportLink"
+                className="footerBarskiLink"
               >
                 Website Support
               </a>
@@ -54,7 +54,7 @@ class FooterBarski extends Component {
               <LinkContainer to="/careers">
                 <a
                   href= "#"
-                  className="techSupportLink"
+                  className="footerBarskiLink"
                 >
                   Careers?
                 </a>
