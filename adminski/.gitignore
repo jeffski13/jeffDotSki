@@ -10,7 +10,7 @@
 /build
 
 # my stuffski
-/src/Configski
+*/src/Configski/*
 
 # misc
 .DS_Store
