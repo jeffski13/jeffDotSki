@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import TitleInput from './TitleInput';
+import BlogInput from './BlogInput';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <TitleInput />
+        <BlogInput />
       </div>
     );
   }
