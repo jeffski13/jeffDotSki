@@ -9,9 +9,6 @@
 # production
 /build
 
-# my stuffski
-*/src/Configski/*
-
 # misc
 .DS_Store
 .env.local
