@@ -19,8 +19,6 @@ class Bio extends Component {
               <Col sm={2} md={4}>
               </Col>
             </Row>
-            <Col>
-            </Col>
           </Grid>
           <Grid>
             <Row className="show-grid aboutMePargraph">

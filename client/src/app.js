@@ -9,6 +9,7 @@ import ErrorPage from './ErrorPage';
 import NavigationBar from './Inf/NavigationBar';
 import FooterBarski from './Inf/FooterBarski';
 import Careers from './Careers';
+import Hobbies from './AboutMe/Hobbies';
 import './styles.css';
 
 //eventually this will do all the routing...later not now,  someday
@@ -24,6 +25,7 @@ export default class App extends Component {
             <Route path="/aboutme/shotglass" component={Shotglass}/>
             <Route path="/aboutme/bio" component={Bio}/>
             <Route path="/careers" component={Careers}/>
+            <Route path="/aboutme/hobbies" component={Hobbies}/>
             <Route component={ ErrorPage } />
           </Switch>
           <FooterBarski />

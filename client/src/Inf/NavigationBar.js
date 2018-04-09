@@ -50,6 +50,13 @@ class NavigationBar extends Component {
 				      </NavItem>
 			      </LinkContainer>
           </Nav>
+          <Nav pullRight >
+            <LinkContainer to="/aboutme/hobbies">
+              <NavItem eventKey={3} href="#">
+                Hobbies
+				      </NavItem>
+			      </LinkContainer>
+          </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
