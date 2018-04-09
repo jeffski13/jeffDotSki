@@ -43,17 +43,17 @@ class NavigationBar extends Component {
               </MenuItem>
             </NavDropdown>
           </Nav>
-          <Nav pullRight >
-            <LinkContainer to="/aboutme/bio">
+          <Nav>
+            <LinkContainer to="/aboutme/hobbies">
               <NavItem eventKey={3} href="#">
-                Bio
+                Hobbies
 				      </NavItem>
 			      </LinkContainer>
           </Nav>
           <Nav pullRight >
-            <LinkContainer to="/aboutme/hobbies">
+            <LinkContainer to="/aboutme/bio">
               <NavItem eventKey={3} href="#">
-                Hobbies
+                Bio
 				      </NavItem>
 			      </LinkContainer>
           </Nav>

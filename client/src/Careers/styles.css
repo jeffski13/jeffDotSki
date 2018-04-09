@@ -1,0 +1,13 @@
+.Careers{
+    padding: 2em; 
+}
+
+.careersTitle{
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.careersText{
+    padding-top: 1em; 
+    padding-bottom: 1em; 
+}
