@@ -4,9 +4,9 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
-import {awsApiKey} from './Config/config';
+import {awsApiKey} from './configski';
 
-class TitleInput extends Component {
+class BlogInput extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -17,6 +17,7 @@ class TitleInput extends Component {
     this.onButtonClicked = this.onButtonClicked.bind(this);
 
     this.state = {
+      trip: 'Chile',
       location: 'Dallas',
       date: moment("2017-10-13"),
       title: 'going places',
@@ -58,9 +59,10 @@ class TitleInput extends Component {
     console.log('jeffski button clicked', this.state);
     axios({
       method: 'post',
-      url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs_write?title=${this.state.title}`,
+      url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs_write`,
       headers: { 'x-api-key': awsApiKey },
       data: {
+        trip: this.state.trip,
         title: this.state.title,
         location: this.state.location,
         date: this.state.date.valueOf(),
@@ -88,6 +90,19 @@ class TitleInput extends Component {
           />
         </div>
         <form>
+          <FormGroup
+            controlId="formBasicText"
+            validationState={this.getValidationState(this.state.location)}
+          >
+            <ControlLabel>Trip</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.trip}
+              placeholder="Enter text"
+              onChange={this.handleLocationChange}
+            />
+            <FormControl.Feedback />
+          </FormGroup>
           <FormGroup
             controlId="formBasicText"
             validationState={this.getValidationState(this.state.location)}
@@ -138,4 +153,4 @@ class TitleInput extends Component {
   }
 }
 
-export default TitleInput;
+export default BlogInput;
