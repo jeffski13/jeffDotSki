@@ -6,22 +6,23 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import {awsApiKey} from './configski';
 
-class BlogInput extends Component {
+class WriteBlog extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleTripChange = this.handleTripChange.bind(this);
     this.handleParagraphsChange = this.handleParagraphsChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
-    this.onButtonClicked = this.onButtonClicked.bind(this);
+    this.onSendClicked = this.onSendClicked.bind(this);
 
     this.state = {
-      trip: 'Chile',
+      trip: 'Chicago',
       location: 'Dallas',
-      date: moment("2017-10-13"),
+      date: moment().startOf('day'),
       title: 'going places',
-      paragraphs: 'i found a place to go one day'
+      paragraphs: 'We went to the airport. We stayed'
     };
   }
 
@@ -55,11 +56,15 @@ class BlogInput extends Component {
     this.setState({ location: e.target.value });
   }
 
-  onButtonClicked() {
+  handleTripChange(e) {
+    this.setState({ trip: e.target.value });
+  }
+
+  onSendClicked() {
     console.log('jeffski button clicked', this.state);
     axios({
       method: 'post',
-      url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs_write`,
+      url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs`,
       headers: { 'x-api-key': awsApiKey },
       data: {
         trip: this.state.trip,
@@ -92,14 +97,14 @@ class BlogInput extends Component {
         <form>
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState(this.state.location)}
+            validationState={this.getValidationState(this.state.trip)}
           >
             <ControlLabel>Trip</ControlLabel>
             <FormControl
               type="text"
               value={this.state.trip}
               placeholder="Enter text"
-              onChange={this.handleLocationChange}
+              onChange={this.handleTripChange}
             />
             <FormControl.Feedback />
           </FormGroup>
@@ -144,13 +149,13 @@ class BlogInput extends Component {
           </FormGroup>
         </form>
         <ButtonToolbar>
-          <Button bsStyle="primary" bsSize="large" onClick={this.onButtonClicked}>
-            Large button
-            </Button>
+          <Button bsStyle="primary" bsSize="large" onClick={this.onSendClicked}>
+            Send button
+          </Button>
         </ButtonToolbar>
       </div>
     );
   }
 }
 
-export default BlogInput;
+export default WriteBlog;
