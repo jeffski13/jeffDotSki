@@ -6,9 +6,9 @@ import { Tabs, Tab } from 'react-bootstrap';
 class App extends Component {
   render() {
     return (
-      <Tabs className="container" defaultActiveKey={2} id="uncontrolled-tab-example">
+      <Tabs className="container" defaultActiveKey={1} id="uncontrolled-tab-example">
         <Tab eventKey={1} title="Write Blog">
-         <WriteBlog />
+          <WriteBlog />
         </Tab>
         <Tab eventKey={2} title="View Blog">
           <ViewBlogs />

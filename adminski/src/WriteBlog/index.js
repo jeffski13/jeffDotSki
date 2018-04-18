@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, ButtonToolbar, Button } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, ButtonToolbar, Button } from 'react-bootstrap';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 import moment from 'moment';
-import {awsApiKey} from './configski';
+
+import BlogEntryText from './BlogEntryText';
+import BlogEntry from './BlogEntry';
+import {awsApiKey} from '../configski';
+import './styles.css';
 
 class WriteBlog extends Component {
   constructor(props, context) {
@@ -18,11 +23,12 @@ class WriteBlog extends Component {
     this.onSendClicked = this.onSendClicked.bind(this);
 
     this.state = {
-      trip: 'Chicago',
-      location: 'Dallas',
+      trip: 'TestAdmin',
+      location: 'Nerdvana',
       date: moment().startOf('day'),
-      title: 'going places',
-      paragraphs: 'We went to the airport. We stayed'
+      title: 'Working on json',
+      blogtext: '',
+      isLoading: false
     };
   }
 
@@ -61,7 +67,13 @@ class WriteBlog extends Component {
   }
 
   onSendClicked() {
-    console.log('jeffski button clicked', this.state);
+    //set state to loading so user cant submit blog twice
+    // and loading indicator appears
+    this.setState({isLoading: true});
+    
+    console.log('jeffski state before send:', this.state);
+    
+    //send request with new blog entry
     axios({
       method: 'post',
       url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs`,
@@ -71,20 +83,21 @@ class WriteBlog extends Component {
         title: this.state.title,
         location: this.state.location,
         date: this.state.date.valueOf(),
-        blogtext: this.state.paragraphs
+        blogtext: ''
       },
     })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    .then( (response) => {
+      console.log(response);
+      this.setState({isLoading: false});        
+    })
+    .catch( (error) => {
+      this.setState({isLoading: false});        
+      console.log(error);
+    });      
   }
 
   render() {
 
-    console.log('jeffski', this.state, this.state.date.valueOf());
     return (
       <div>
         <div class="form-group">
@@ -134,24 +147,17 @@ class WriteBlog extends Component {
             />
             <FormControl.Feedback />
           </FormGroup>
-          <FormGroup
-            controlId="formBasicText"
-            validationState={this.getValidationState(this.state.paragraphs)}
-          >
-            <ControlLabel>Paragraph</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.paragraphs}
-              placeholder="Enter text"
-              onChange={this.handleParagraphsChange}
-            />
-            <FormControl.Feedback />
-          </FormGroup>
         </form>
+        <BlogEntry />
         <ButtonToolbar>
-          <Button bsStyle="primary" bsSize="large" onClick={this.onSendClicked}>
+          <Button bsStyle="primary" bsSize="large" onClick={this.onSendClicked} disabled={this.state.isLoading} >
             Send button
           </Button>
+          {this.state.isLoading && 
+            <div className="loadingBar">
+              <CircularProgress />
+            </div>
+          }
         </ButtonToolbar>
       </div>
     );

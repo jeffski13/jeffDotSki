@@ -4,7 +4,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
-import {awsApiKey} from './configski';
+import {awsApiKey} from '../configski';
 import BlogList from './BlogList';
 
 class ViewBlogs extends Component {
