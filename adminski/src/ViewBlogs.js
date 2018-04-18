@@ -44,7 +44,7 @@ class ViewBlogs extends Component {
       headers: { 'x-api-key': awsApiKey }
     })
     .then( (response) => {
-      console.log(response.data);
+      console.log('jeffski blogs returned', response.data);
       this.setState({ blogData: response.data });
     })
       .catch(function (error) {

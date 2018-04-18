@@ -3,9 +3,9 @@ import moment from 'moment';
 import './styles.css';
 
 class BlogList extends React.Component {
-    renderBlog(blogItem){
+    renderBlog(blogItem, index){
         return(
-            <div className="blog">
+            <div className="blog" key={index}>
                 <div>Title: {blogItem.blogPostBody.title}</div>
                 <div>Location: {blogItem.blogPostBody.location}</div>
                 <div>Date: {moment.unix(blogItem.blogPostBody.date).format("MM/DD/YYYY")}</div>
