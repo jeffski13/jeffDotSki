@@ -6,7 +6,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 import moment from 'moment';
 
-import BlogEntryText from './BlogEntryText';
 import BlogEntry from './BlogEntry';
 import {awsApiKey} from '../configski';
 import './styles.css';

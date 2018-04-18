@@ -41,17 +41,20 @@ class BlogEntryText extends React.Component {
 
     render(){
         return(
-            <form>
-                <FormGroup controlId="formControlsTextarea">
-                    <ControlLabel>What Happened Today?</ControlLabel>
-                    <FormControl
-                        componentClass="textarea" 
-                        value={this.state.blogtext}
-                        placeholder="blog text"
-                        onChange={this.handleBlogTextChange}
-                        onblur={this.createBlogTextModel} />
-                </FormGroup>
-            </form>
+            <div>
+                <div>Blog Paragraphs</div>
+                <form>
+                    <FormGroup controlId="formControlsTextarea">
+                        <ControlLabel>What Happened Today?</ControlLabel>
+                        <FormControl
+                            componentClass="textarea" 
+                            value={this.state.blogtext}
+                            placeholder="blog text"
+                            onChange={this.handleBlogTextChange}
+                            onblur={this.createBlogTextModel} />
+                    </FormGroup>
+                </form>
+            </div>
         );
     }
 }
