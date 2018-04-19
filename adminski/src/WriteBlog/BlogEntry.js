@@ -1,19 +1,21 @@
 import React from 'react';
-import BlogEntryText from './BlogSections/BlogEntryText';
-import BulletList from './BlogSections/BulletList';
-import Quote from './BlogSections/Quote';
+import BlogEntryText from './BlogFormSections/BlogEntryText';
+import BulletList from './BlogFormSections/BulletList';
+import Quote from './BlogFormSections/Quote';
 import Button from 'material-ui/Button';
-
+import {Row} from 'react-bootstrap';
+import BlogFormSections from './BlogFormSections';
 class BlogEntry extends React.Component {
 
     constructor(props){
         super(props);
 
         this.createAddBlogSectionButtons = this.createAddBlogSectionButtons.bind(this);
+        this.formSectionDeletedCallback = this.formSectionDeletedCallback.bind(this);
+        this.renderBlogSections = this.renderBlogSections.bind(this);
 
         //add to entry boxes with more stuff
         this.state = {
-            blogEntrySections: [BlogEntryText],
             blogSectionsToolbox : [
                 {
                     label: 'Paragraphs',
@@ -27,22 +29,47 @@ class BlogEntry extends React.Component {
                     label: 'Quote',
                     component: Quote
                 }
-            ]
+            ],
+            blogEntrySections: [
+                {
+                    label: 'Paragraphs',
+                    component: BlogEntryText
+                }
+            ],
         }
     }
+    
+    //callback for when form section is deleted
+    formSectionDeletedCallback(idx){
+        let filteredBlogEntrySectionArr = this.state.blogEntrySections.filter(
+            (section, index)=>{
+                return index !== idx; //false if we find the index we want to remove
+            }
+        ) 
 
+        this.setState({ blogEntrySections: filteredBlogEntrySectionArr })
+    }
+    
     //render all blog sections here.
     // all blog sections are kept in state
-    renderBlogSections(SectionComponent){
+    renderBlogSections(sectionComponentInfo, index){
+        
+        //get title and component information
+        let SectionComponent = sectionComponentInfo.component;
         return(
-            <SectionComponent />
+            <BlogFormSections 
+                title={sectionComponentInfo.label}
+                deleteCallback={ () => {this.formSectionDeletedCallback(index)} }
+                >
+                <SectionComponent />
+            </BlogFormSections>
         );
     }
 
     //adds a component to the state array. 
     // adds different components to state depending on which button was clicked
     onAddBlogSectionButtonClicked(index){
-        let nextBlogSection = this.state.blogSectionsToolbox[index].component;
+        let nextBlogSection = this.state.blogSectionsToolbox[index];
         this.setState({blogEntrySections: [...this.state.blogEntrySections, nextBlogSection]},
         ()=>{
             //log state after setState is done

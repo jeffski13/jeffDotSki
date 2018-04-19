@@ -44,7 +44,7 @@ class Quote extends Component {
 
     return (
       <div>
-        <div>Quote</div>                    
+        <div>Quote</div>
         <form>
           <FormGroup
             controlId="formBasicText"
