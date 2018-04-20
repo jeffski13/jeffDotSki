@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 import moment from 'moment';
 
-import BlogEntry from './BlogEntry';
+import BlogEntryFormGenerator from './BlogEntryFormGenerator';
 import {awsApiKey} from '../configski';
 import './styles.css';
 
@@ -147,7 +147,7 @@ class WriteBlog extends Component {
             <FormControl.Feedback />
           </FormGroup>
         </form>
-        <BlogEntry />
+        <BlogEntryFormGenerator />
         <ButtonToolbar>
           <Button bsStyle="primary" bsSize="large" onClick={this.onSendClicked} disabled={this.state.isLoading} >
             Send button

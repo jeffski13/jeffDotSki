@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class BlogEntryText extends React.Component {
 
@@ -20,12 +21,19 @@ class BlogEntryText extends React.Component {
     }
 
     createBlogTextModel(){
+
+
+        console.log('jeffski onblur method in para');
+
+
         //create array of 
         let blogArr = this.state.blogtext.split('\n');
         //filter out empty text (the result of carriage returns)
         blogArr = blogArr.filter(str => str !== '');
         let blogTextArrModel = this.rawBlogToBlogTextModel(blogArr);
         this.setState({ blogtextrefined: blogTextArrModel });
+
+        this.props.formDataCallback(blogTextArrModel);
     }
 
     rawBlogToBlogTextModel(blogArr){
@@ -41,20 +49,21 @@ class BlogEntryText extends React.Component {
 
     render(){
         return(
-            <div>
-                <div>Blog Paragraphs</div>
-                <FormGroup controlId="formControlsTextarea">
-                    <ControlLabel>What Happened Today?</ControlLabel>
-                    <FormControl
-                        componentClass="textarea" 
-                        value={this.state.blogtext}
-                        placeholder="blog text"
-                        onChange={this.handleBlogTextChange}
-                        onblur={this.createBlogTextModel} />
-                </FormGroup>
-            </div>
+            <FormGroup controlId="formControlsTextarea">
+                <ControlLabel>What Happened Today?</ControlLabel>
+                <FormControl
+                    componentClass="textarea" 
+                    value={this.state.blogtext}
+                    placeholder="blog text"
+                    onChange={this.handleBlogTextChange}
+                    onBlur={this.createBlogTextModel} />
+            </FormGroup>
         );
     }
+}
+
+BlogEntryText.propTypes = {
+    formDataCallback: PropTypes.func
 }
 
 export default BlogEntryText;

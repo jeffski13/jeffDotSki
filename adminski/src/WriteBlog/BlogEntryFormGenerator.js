@@ -5,7 +5,9 @@ import Quote from './BlogFormSections/Quote';
 import Button from 'material-ui/Button';
 import {Row} from 'react-bootstrap';
 import BlogFormSections from './BlogFormSections';
-class BlogEntry extends React.Component {
+import './styles.css';
+
+class BlogEntryFormGenerator extends React.Component {
 
     constructor(props){
         super(props);
@@ -18,16 +20,19 @@ class BlogEntry extends React.Component {
         this.state = {
             blogSectionsToolbox : [
                 {
-                    label: 'Paragraphs',
-                    component: BlogEntryText
+                    label: 'Blog Paragraphs',
+                    component: BlogEntryText,
+                    blogData: null
                 },
                 {
-                    label: 'Bullet',
-                    component: BulletList
+                    label: 'Bullet List',
+                    component: BulletList,
+                    blogData: null
                 },
                 {
                     label: 'Quote',
-                    component: Quote
+                    component: Quote,
+                    blogData: null
                 }
             ],
             blogEntrySections: [
@@ -50,6 +55,13 @@ class BlogEntry extends React.Component {
         this.setState({ blogEntrySections: filteredBlogEntrySectionArr })
     }
     
+    //callback for when form section is deleted
+    storeFormSectionDataCallback(idx, newBlogData){
+        let sectionsArrWithData = [...this.state.blogEntrySections];
+        sectionsArrWithData[idx].blogData = newBlogData; 
+        this.setState({ blogEntrySections: sectionsArrWithData })
+    }
+    
     //render all blog sections here.
     // all blog sections are kept in state
     renderBlogSections(sectionComponentInfo, index){
@@ -61,7 +73,9 @@ class BlogEntry extends React.Component {
                 title={sectionComponentInfo.label}
                 deleteCallback={ () => {this.formSectionDeletedCallback(index)} }
                 >
-                <SectionComponent />
+                <SectionComponent
+                    formDataCallback={(data) => {this.storeFormSectionDataCallback(index, data)}}
+                />
             </BlogFormSections>
         );
     }
@@ -80,13 +94,20 @@ class BlogEntry extends React.Component {
     //shows all the buttons which allow you to add different sections of text
     createAddBlogSectionButtons(buttonInfo, index){
         return (
-            <Button key={index} variant="raised" onClick={()=> this.onAddBlogSectionButtonClicked(index)} >{buttonInfo.label}</Button>
+            <Button
+                className="sectionToolboxButton"
+                key={index} 
+                variant="raised"
+                onClick={()=> this.onAddBlogSectionButtonClicked(index)} 
+            >
+                {buttonInfo.label}
+            </Button>
         )
     }
     
     //the user can add fields of different types
     render(){
-
+        console.log('jeffski state', this.state)
         return(
             <div>
                 {this.state.blogEntrySections.map(this.renderBlogSections)}
@@ -96,4 +117,4 @@ class BlogEntry extends React.Component {
     }
 }
 
-export default BlogEntry;
+export default BlogEntryFormGenerator;

@@ -43,50 +43,47 @@ class Quote extends Component {
   render() {
 
     return (
-      <div>
-        <div>Quote</div>
-        <form>
-          <FormGroup
-            controlId="formBasicText"
-            validationState={this.getValidationState(this.state.title)}
-          >
-            <ControlLabel>Title</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.title}
-              placeholder="Enter Title"
-              onChange={this.handleTitleChange}
-            />
-            <FormControl.Feedback />
-          </FormGroup>
-          <FormGroup
-            controlId="formBasicText"
-            validationState={this.getValidationState(this.state.text)}
-          >
-            <ControlLabel>Text</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.text}
-              placeholder="Enter text"
-              onChange={this.handleTextChange}
-            />
-            <FormControl.Feedback />
-          </FormGroup>
-          <FormGroup
-            controlId="formBasicText"
-            validationState={this.getValidationState(this.state.subtext)}
-          >
-            <ControlLabel>Subtext</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.subtexttitle}
-              placeholder="Enter subtext"
-              onChange={this.handleSubtextChange}
-            />
-            <FormControl.Feedback />
-          </FormGroup>
-        </form>
-      </div>
+      <form>
+        <FormGroup
+          controlId="formBasicText"
+          validationState={this.getValidationState(this.state.title)}
+        >
+          <ControlLabel>Title</ControlLabel>
+          <FormControl
+            type="text"
+            value={this.state.title}
+            placeholder="Enter Title"
+            onChange={this.handleTitleChange}
+          />
+          <FormControl.Feedback />
+        </FormGroup>
+        <FormGroup
+          controlId="formBasicText"
+          validationState={this.getValidationState(this.state.text)}
+        >
+          <ControlLabel>Text</ControlLabel>
+          <FormControl
+            type="text"
+            value={this.state.text}
+            placeholder="Enter text"
+            onChange={this.handleTextChange}
+          />
+          <FormControl.Feedback />
+        </FormGroup>
+        <FormGroup
+          controlId="formBasicText"
+          validationState={this.getValidationState(this.state.subtext)}
+        >
+          <ControlLabel>Subtext</ControlLabel>
+          <FormControl
+            type="text"
+            value={this.state.subtexttitle}
+            placeholder="Enter subtext"
+            onChange={this.handleSubtextChange}
+          />
+          <FormControl.Feedback />
+        </FormGroup>
+      </form>
     );
   }
 }

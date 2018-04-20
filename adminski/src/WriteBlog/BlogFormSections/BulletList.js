@@ -44,58 +44,54 @@ class BulletList extends Component {
   render() {
 
     return (
-      <div>
-        <div>Bullet List</div>
-        <form>
-          <Col xs={12} sm={4} md={4} lg={4} >
-            <FormGroup
-              validationState={this.getValidationState(this.state.title)}
-              className="formInputSection"
-              >
-                <ControlLabel className="formInputLabel" >Title</ControlLabel>
-                <FormControl
-                  type="text"
-                  value={this.state.title}
-                  placeholder="Enter Title"
-                  onChange={this.handleTitleChange}
-                  />
-            </FormGroup>
-          </Col>
-          
-          <Col xs={12} sm={4} md={4} lg={4} >
-            <FormGroup
-              controlId="formBasicText"
-              validationState={this.getValidationState(this.state.text)}
-              >
-              <ControlLabel>Text</ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state.text}
-                placeholder="Enter text"
-                onChange={this.handleTextChange}
-                />
-              <FormControl.Feedback />
-            </FormGroup>
-          </Col>
+      <form>
 
-          <Col xs={12} sm={4} md={4} lg={4} >
-            <FormGroup
-              controlId="formBasicText"
-              validationState={this.getValidationState(this.state.subtext)}
-              >
-              <ControlLabel>Subtext</ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state.subtexttitle}
-                placeholder="Enter subtext"
-                onChange={this.handleSubtextChange}
-                />
-              <FormControl.Feedback />
-            </FormGroup>
-          </Col>
+        <Col xs={12} sm={4} md={4} lg={4} >
+          <FormGroup
+            validationState={this.getValidationState(this.state.title)}
+            className="formInputSection"
+            >
+            <ControlLabel className="formInputLabel" >Title</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.title}
+              placeholder="Enter Title"
+              onChange={this.handleTitleChange}
+              />
+          </FormGroup>
+        </Col>
+        <Col xs={12} sm={4} md={4} lg={4} >
+          <FormGroup
+            controlId="formBasicText"
+            validationState={this.getValidationState(this.state.text)}
+            >
+            <ControlLabel>Text</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.text}
+              placeholder="Enter text"
+              onChange={this.handleTextChange}
+              />
+            <FormControl.Feedback />
+          </FormGroup>
+        </Col>
+        <Col xs={12} sm={4} md={4} lg={4} >
+          <FormGroup
+            controlId="formBasicText"
+            validationState={this.getValidationState(this.state.subtext)}
+            >
+            <ControlLabel>Subtext</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.subtexttitle}
+              placeholder="Enter subtext"
+              onChange={this.handleSubtextChange}
+              />
+            <FormControl.Feedback />
+          </FormGroup>
+        </Col>
 
-        </form>
-      </div>
+      </form>
     );
   }
 }

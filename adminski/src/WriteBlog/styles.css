@@ -2,3 +2,7 @@
     display: inline-block;
     padding-left: 10px; 
 }
+
+.sectionToolboxButton{
+    padding: 5px;
+}
