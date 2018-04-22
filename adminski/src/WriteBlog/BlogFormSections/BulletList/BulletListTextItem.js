@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import Button from 'material-ui/Button';
 import { Glyphicon } from 'react-bootstrap';
+
+import { validateFormString } from '../../../formvalidation';
 import './styles.css';
 
+/*
+the individual bullet item (for the BulletList)
+*/
 class BulletListTextItem extends Component {
   constructor(props, context) {
     super(props, context);
@@ -15,22 +20,10 @@ class BulletListTextItem extends Component {
     this.returnBlogBulletListModelData = this.returnBlogBulletListModelData.bind(this);
     
     this.state = {
-      title: 'title here for bullet list text item',
-      text: 'this\'n here is text for bullet list text item',
-      subtext: 'here is subtext for bullet list text item'
+      title: null,
+      text: null,
+      subtext: null
     };
-  }
-
-  //validate string length of input
-  getValidationState(str) {
-    if (str.length > 0) {
-      //fire state valid action
-      return 'success';
-    }
-    else {
-      //fire state invalid action
-      return 'error';
-    }
   }
 
   handleTitleChange(e) {
@@ -68,7 +61,7 @@ class BulletListTextItem extends Component {
       <form>
         <Col xs={12} sm={4} md={4} lg={4} >
           <FormGroup
-            validationState={this.getValidationState(this.state.title)}
+            validationState={validateFormString(this.state.title)}
             className="formInputSection"
             >
             <ControlLabel className="formInputLabel" >Title</ControlLabel>
@@ -84,7 +77,7 @@ class BulletListTextItem extends Component {
         <Col xs={12} sm={4} md={4} lg={4} >
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState(this.state.text)}
+            validationState={validateFormString(this.state.text)}
             >
             <ControlLabel>Text</ControlLabel>
             <FormControl
@@ -100,7 +93,7 @@ class BulletListTextItem extends Component {
         <Col xs={10} sm={3} >
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState(this.state.subtext)}
+            validationState={validateFormString(this.state.subtext)}
             >
             <ControlLabel>Subtext</ControlLabel>
             <FormControl

@@ -2,6 +2,10 @@ import React from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
+/*
+normal paragraph text for the blog.
+Can contain multiple paragraphs
+*/
 class BlogEntryText extends React.Component {
 
     constructor(props, context) {
@@ -11,8 +15,7 @@ class BlogEntryText extends React.Component {
         this.createBlogTextModel = this.createBlogTextModel.bind(this);
     
         this.state = {
-          blogtext: '',
-          blogtextrefined: []
+          blogtext: null
         };
     }
 
@@ -22,16 +25,16 @@ class BlogEntryText extends React.Component {
 
     createBlogTextModel(){
 
-        //create array of 
+        //create string array. items are separated by carriage returns
         let blogArr = this.state.blogtext.split('\n');
-        //filter out empty text (the result of carriage returns)
+        //filter out empty text (empty string will be present if user used multiple carriage returns)
         blogArr = blogArr.filter(str => str !== '');
         let blogTextArrModel = this.rawBlogToBlogTextModel(blogArr);
-        this.setState({ blogtextrefined: blogTextArrModel });
 
         this.props.formDataCallback(blogTextArrModel);
     }
 
+    //returns an array of objects with a "text" field. 
     rawBlogToBlogTextModel(blogArr){
         let finalArr = [];
         blogArr.forEach(function(str) {

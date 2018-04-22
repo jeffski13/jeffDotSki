@@ -3,9 +3,16 @@ import { Col, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
  
+import { validateFormString } from '../../../formvalidation';
 import BulletListTextItem from './BulletListTextItem';
 import './styles.css';
 
+
+/*
+A bullet list for a blog.
+Consists of some header text and a list of bullet items.
+NOTE: header text is optional
+*/
 class BulletList extends Component {
   constructor(props, context) {
     super(props, context);
@@ -16,8 +23,9 @@ class BulletList extends Component {
     this.removeBulletListItem = this.removeBulletListItem.bind(this);
     this.renderBulletListItems = this.renderBulletListItems.bind(this);
 
+    //initial state with one bulletlist item
     this.state = {
-      text: 'This is sample text for a bullet list parent obj',
+      headertext: null,
       bulletListItems: [
         {
           title: null,
@@ -28,34 +36,21 @@ class BulletList extends Component {
     };
   }
 
-  //validate string length of input
-  getValidationState(str) {
-    if (str.length > 0) {
-      //fire state valid action
-      return 'success';
-    }
-    else {
-      //fire state invalid action
-      return 'error';
-    }
-  }
-
   handleTextChange(e) {
-    this.setState({ text: e.target.value });
+    this.setState({ headertext: e.target.value });
   }
 
   returnBlogBulletListModel(){
-    //create array of 
+    //create model for bullet list data
     let bulletListDataModel = {
-      text: this.state.text,
+      text: this.state.headertext,
       list: {
         style: 'bullet',
         textItems: this.state.bulletListItems
       }
     };
 
-    this.setState({ bulletListData: bulletListDataModel });
-
+    //hand data up to callback
     this.props.formDataCallback(bulletListDataModel);
   }
 
@@ -108,6 +103,8 @@ class BulletList extends Component {
     );
   }
 
+  //shows the header text entry form and the bullet list items.
+  //Bullet list items can be added and removed
   render() {
 
     return (
@@ -115,13 +112,13 @@ class BulletList extends Component {
         <form>
           <Col xs={12} >
             <FormGroup
-              validationState={this.getValidationState(this.state.text)}
+              validationState={validateFormString(this.state.headertext)}
               className="formInputSection"
               >
               <ControlLabel className="formInputLabel" >Bullet Section Text</ControlLabel>
               <FormControl
                 type="text"
-                value={this.state.text}
+                value={this.state.headertext}
                 placeholder="Enter Text"
                 onChange={this.handleTextChange}
                 onBlur={this.returnBlogBulletListModel}

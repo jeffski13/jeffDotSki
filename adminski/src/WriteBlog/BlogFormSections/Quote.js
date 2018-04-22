@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
+import { validateFormString } from '../../formvalidation';
+
+/*
+A quote for a blog, consists of the quote and the person who said those things
+*/
 class Quote extends Component {
   constructor(props, context) {
     super(props, context);
@@ -10,21 +15,9 @@ class Quote extends Component {
     this.returnBlogQuoteModel = this.returnBlogQuoteModel.bind(this);
 
     this.state = {
-      text: 'here is text for a vonderful quote',
-      subtext: '~subtext of quote'
+      text: null,
+      subtext: null
     };
-  }
-
-  //validate string length of input
-  getValidationState(str) {
-    if (str.length > 0) {
-      //fire state valid action
-      return 'success';
-    }
-    else {
-      //fire state invalid action
-      return 'error';
-    }
   }
 
   handleTitleChange(e) {
@@ -40,7 +33,7 @@ class Quote extends Component {
   }
 
   returnBlogQuoteModel(){
-    //create array of 
+    //create model for blog quote
     let quoteDataModel = {
       list: {
         style: 'quote',
@@ -53,6 +46,7 @@ class Quote extends Component {
       }
     };
 
+    //hand data up to callback
     this.props.formDataCallback(quoteDataModel);
   }
 
@@ -63,7 +57,7 @@ class Quote extends Component {
         <Col xs={12} >
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState(this.state.text)}
+            validationState={validateFormString(this.state.text)}
             >
             <ControlLabel>Text</ControlLabel>
             <FormControl
@@ -80,7 +74,7 @@ class Quote extends Component {
         <Col xs={8} sm={4} >
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState(this.state.subtext)}
+            validationState={validateFormString(this.state.subtext)}
             >
             <ControlLabel>Author</ControlLabel>
             <FormControl
