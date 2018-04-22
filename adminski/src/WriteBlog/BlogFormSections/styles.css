@@ -19,10 +19,3 @@ a.panel-toggle {
 	text-decoration: none;
 	/*color: black;*/
 }
-
-.BulletListItem-deleteButtonContainer{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 78px;
-}
