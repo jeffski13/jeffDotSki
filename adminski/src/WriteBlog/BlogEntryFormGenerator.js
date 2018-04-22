@@ -37,8 +37,14 @@ class BlogEntryFormGenerator extends React.Component {
             ],
             blogEntrySections: [
                 {
-                    label: 'Paragraphs',
-                    component: BlogEntryText
+                    label: 'Quote',
+                    component: Quote,
+                    blogData: null
+                },
+                {
+                    label: 'Bullet List',
+                    component: BulletList,
+                    blogData: null
                 }
             ],
         }
@@ -84,19 +90,19 @@ class BlogEntryFormGenerator extends React.Component {
     // adds different components to state depending on which button was clicked
     onAddBlogSectionButtonClicked(index){
         let nextBlogSection = this.state.blogSectionsToolbox[index];
-        this.setState({blogEntrySections: [...this.state.blogEntrySections, nextBlogSection]},
-        ()=>{
-            //log state after setState is done
-            console.log('jeffski clicked ', index, this.state);
-        });
+        this.setState( {blogEntrySections: [...this.state.blogEntrySections, nextBlogSection]} );
     }
 
     //shows all the buttons which allow you to add different sections of text
     createAddBlogSectionButtons(buttonInfo, index){
+        let addSectionButtonStyle = {
+            padding: "5px",
+            margin: "5px"
+        }
         return (
             <Button
-                className="sectionToolboxButton"
-                key={index} 
+                key={index}
+                style={addSectionButtonStyle}
                 variant="raised"
                 onClick={()=> this.onAddBlogSectionButtonClicked(index)} 
             >
@@ -111,7 +117,9 @@ class BlogEntryFormGenerator extends React.Component {
         return(
             <div>
                 {this.state.blogEntrySections.map(this.renderBlogSections)}
-                {this.state.blogSectionsToolbox.map(this.createAddBlogSectionButtons)}
+                <div className="addSectionButtonsContainer">
+                    {this.state.blogSectionsToolbox.map(this.createAddBlogSectionButtons)}
+                </div>
             </div>
         );
     }

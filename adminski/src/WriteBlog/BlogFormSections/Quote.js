@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 class Quote extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleSubtextChange = this.handleSubtextChange.bind(this);
+    this.returnBlogQuoteModel = this.returnBlogQuoteModel.bind(this);
 
     this.state = {
-      title: 'title here',
-      text: 'here is text',
-      subtext: 'here is subtext'
+      text: 'here is text for a vonderful quote',
+      subtext: '~subtext of quote'
     };
   }
 
@@ -40,49 +39,61 @@ class Quote extends Component {
     this.setState({ subtext: e.target.value });
   }
 
+  returnBlogQuoteModel(){
+    //create array of 
+    let quoteDataModel = {
+      list: {
+        style: 'quote',
+        textItems:[
+          {
+            text: this.state.text,
+            subtext: this.state.subtext
+          }
+        ]
+      }
+    };
+
+    this.props.formDataCallback(quoteDataModel);
+  }
+
   render() {
 
     return (
       <form>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={this.getValidationState(this.state.title)}
-        >
-          <ControlLabel>Title</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.state.title}
-            placeholder="Enter Title"
-            onChange={this.handleTitleChange}
-          />
-          <FormControl.Feedback />
-        </FormGroup>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={this.getValidationState(this.state.text)}
-        >
-          <ControlLabel>Text</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.state.text}
-            placeholder="Enter text"
-            onChange={this.handleTextChange}
-          />
-          <FormControl.Feedback />
-        </FormGroup>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={this.getValidationState(this.state.subtext)}
-        >
-          <ControlLabel>Subtext</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.state.subtexttitle}
-            placeholder="Enter subtext"
-            onChange={this.handleSubtextChange}
-          />
-          <FormControl.Feedback />
-        </FormGroup>
+        <Col xs={12} >
+          <FormGroup
+            controlId="formBasicText"
+            validationState={this.getValidationState(this.state.text)}
+            >
+            <ControlLabel>Text</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.text}
+              placeholder="Enter text"
+              onChange={this.handleTextChange}
+              onBlur={this.returnBlogQuoteModel}
+              />
+            <FormControl.Feedback />
+          </FormGroup>
+        </Col>
+
+        <Col xs={8} sm={4} >
+          <FormGroup
+            controlId="formBasicText"
+            validationState={this.getValidationState(this.state.subtext)}
+            >
+            <ControlLabel>Author</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.subtexttitle}
+              placeholder="Who said it?"
+              onChange={this.handleSubtextChange}
+              onBlur={this.returnBlogQuoteModel}
+              />
+            <FormControl.Feedback />
+          </FormGroup>
+        </Col>
+        <Col xs={4} sm={8} />
       </form>
     );
   }

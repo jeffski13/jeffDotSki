@@ -6,7 +6,7 @@ class BlogEntryText extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-    
+        
         this.handleBlogTextChange = this.handleBlogTextChange.bind(this);
         this.createBlogTextModel = this.createBlogTextModel.bind(this);
     
@@ -21,10 +21,6 @@ class BlogEntryText extends React.Component {
     }
 
     createBlogTextModel(){
-
-
-        console.log('jeffski onblur method in para');
-
 
         //create array of 
         let blogArr = this.state.blogtext.split('\n');
