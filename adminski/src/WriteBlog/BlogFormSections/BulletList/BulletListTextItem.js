@@ -18,6 +18,7 @@ class BulletListTextItem extends Component {
     this.handleSubtextChange = this.handleSubtextChange.bind(this);
     this.onDeleteBulletButtonClicked = this.onDeleteBulletButtonClicked.bind(this);
     this.returnBlogBulletListModelData = this.returnBlogBulletListModelData.bind(this);
+    this.isAnyFieldFilled = this.isAnyFieldFilled.bind(this);
     
     this.state = {
       title: null,
@@ -52,6 +53,11 @@ class BulletListTextItem extends Component {
     this.props.onDataUpdatedCallback(blogListTextItemModel);
   }
 
+  //true if any field has a value
+  isAnyFieldFilled(){
+    return (this.state.title || this.state.text || this.state.subtext);
+  }
+
   render() {
 
     let buttonStyles = {
@@ -61,7 +67,7 @@ class BulletListTextItem extends Component {
       <form>
         <Col xs={12} sm={4} md={4} lg={4} >
           <FormGroup
-            validationState={validateFormString(this.state.title)}
+            validationState={this.isAnyFieldFilled() ? null : validateFormString(this.state.title)}
             className="formInputSection"
             >
             <ControlLabel className="formInputLabel" >Title</ControlLabel>
@@ -77,7 +83,7 @@ class BulletListTextItem extends Component {
         <Col xs={12} sm={4} md={4} lg={4} >
           <FormGroup
             controlId="formBasicText"
-            validationState={validateFormString(this.state.text)}
+            validationState={this.isAnyFieldFilled() ? null : validateFormString(this.state.text)}
             >
             <ControlLabel>Text</ControlLabel>
             <FormControl
@@ -93,7 +99,7 @@ class BulletListTextItem extends Component {
         <Col xs={10} sm={3} >
           <FormGroup
             controlId="formBasicText"
-            validationState={validateFormString(this.state.subtext)}
+            validationState={this.isAnyFieldFilled() ? null : validateFormString(this.state.subtext)}
             >
             <ControlLabel>Subtext</ControlLabel>
             <FormControl
@@ -112,7 +118,7 @@ class BulletListTextItem extends Component {
             style={buttonStyles}
             variant="raised"
             >
-            <Glyphicon glyph="minus" />
+            <Glyphicon glyph="remove" />
           </Button>
         </Col>    
 

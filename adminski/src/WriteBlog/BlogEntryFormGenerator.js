@@ -36,17 +36,8 @@ class BlogEntryFormGenerator extends React.Component {
                 }
             ],
             blogEntrySections: [
-                {
-                    label: 'Quote',
-                    component: Quote,
-                    blogData: null
-                },
-                {
-                    label: 'Bullet List',
-                    component: BulletList,
-                    blogData: null
-                }
-            ],
+                
+            ]
         }
     }
     
@@ -75,7 +66,8 @@ class BlogEntryFormGenerator extends React.Component {
         //get title and component information
         let SectionComponent = sectionComponentInfo.component;
         return(
-            <BlogFormSections 
+            <BlogFormSections
+                key={index}
                 title={sectionComponentInfo.label}
                 deleteCallback={ () => {this.formSectionDeletedCallback(index)} }
                 >

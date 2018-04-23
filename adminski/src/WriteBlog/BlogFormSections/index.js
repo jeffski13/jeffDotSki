@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, Glyphicon } from 'react-bootstrap';
+import { Panel, Button, Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './styles.css';
 
@@ -21,9 +21,9 @@ class BlogFormSection extends React.Component {
             <Panel>
                 <Panel.Heading>
                     {this.props.title}
-                    <div className="panel-toggle btn btn-default btn-xs" onClick={this.minusClicked} >
-                        <Glyphicon glyph={"minus"} />
-                    </div>
+                    <Button bsStyle="danger" bsSize="xs" className="panel-toggle" onClick={this.minusClicked}>
+                        <Glyphicon glyph={"remove"} />
+                    </Button>
                 </Panel.Heading>
                 <Panel.Body>
                     {this.props.children}

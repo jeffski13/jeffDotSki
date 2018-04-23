@@ -112,10 +112,9 @@ class BulletList extends Component {
         <form>
           <Col xs={12} >
             <FormGroup
-              validationState={validateFormString(this.state.headertext)}
               className="formInputSection"
               >
-              <ControlLabel className="formInputLabel" >Bullet Section Text</ControlLabel>
+              <ControlLabel className="formInputLabel" >Bullet Section Text (Optional)</ControlLabel>
               <FormControl
                 type="text"
                 value={this.state.headertext}

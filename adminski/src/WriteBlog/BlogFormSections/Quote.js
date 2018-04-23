@@ -74,9 +74,8 @@ class Quote extends Component {
         <Col xs={8} sm={4} >
           <FormGroup
             controlId="formBasicText"
-            validationState={validateFormString(this.state.subtext)}
             >
-            <ControlLabel>Author</ControlLabel>
+            <ControlLabel>Author (Optional)</ControlLabel>
             <FormControl
               type="text"
               value={this.state.subtexttitle}

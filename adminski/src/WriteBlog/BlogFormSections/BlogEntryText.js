@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { validateFormString } from '../../formvalidation';
 
 /*
 normal paragraph text for the blog.
@@ -15,7 +16,7 @@ class BlogEntryText extends React.Component {
         this.createBlogTextModel = this.createBlogTextModel.bind(this);
     
         this.state = {
-          blogtext: null
+          blogtext: ''
         };
     }
 
@@ -48,7 +49,10 @@ class BlogEntryText extends React.Component {
 
     render(){
         return(
-            <FormGroup controlId="formControlsTextarea">
+            <FormGroup 
+                controlId="formControlsTextarea"
+                validationState={validateFormString(this.state.blogtext)}
+            >
                 <ControlLabel>What Happened Today?</ControlLabel>
                 <FormControl
                     componentClass="textarea" 
