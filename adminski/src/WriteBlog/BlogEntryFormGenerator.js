@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Button from 'material-ui/Button';
+import {Row} from 'react-bootstrap';
+
+import BlogFormSections from './BlogFormSections';
 import BlogEntryText from './BlogFormSections/BlogEntryText';
 import BulletList from './BlogFormSections/BulletList';
 import Quote from './BlogFormSections/Quote';
-import Button from 'material-ui/Button';
-import {Row} from 'react-bootstrap';
-import BlogFormSections from './BlogFormSections';
 import './styles.css';
 
 class BlogEntryFormGenerator extends React.Component {
@@ -14,7 +16,9 @@ class BlogEntryFormGenerator extends React.Component {
 
         this.createAddBlogSectionButtons = this.createAddBlogSectionButtons.bind(this);
         this.formSectionDeletedCallback = this.formSectionDeletedCallback.bind(this);
+        this.storeFormSectionDataCallback = this.storeFormSectionDataCallback.bind(this);
         this.renderBlogSections = this.renderBlogSections.bind(this);
+        this.createBlogDataModel = this.createBlogDataModel.bind(this);
 
         //add to entry boxes with more stuff
         this.state = {
@@ -52,11 +56,31 @@ class BlogEntryFormGenerator extends React.Component {
         this.setState({ blogEntrySections: filteredBlogEntrySectionArr })
     }
     
-    //callback for when form section is deleted
+    //callback for when child form is filled out
     storeFormSectionDataCallback(idx, newBlogData){
+        //set state for this object
         let sectionsArrWithData = [...this.state.blogEntrySections];
         sectionsArrWithData[idx].blogData = newBlogData; 
-        this.setState({ blogEntrySections: sectionsArrWithData })
+        this.setState({ blogEntrySections: sectionsArrWithData });
+
+        //hand combined state up to parent object
+        let blogtextdata = this.createBlogDataModel();
+        this.props.getBlogTextData(blogtextdata);
+    }
+
+    //returns a model with blog text data (server-ready)
+    createBlogDataModel(){
+        let blogTextData = [];
+        this.state.blogEntrySections.forEach((nextBlogSection) => {
+            if(Array.isArray(nextBlogSection.blogData)){
+                blogTextData = [...blogTextData, ...nextBlogSection.blogData];
+            }
+            else{
+                blogTextData = [...blogTextData, nextBlogSection.blogData];
+            }
+        });
+
+        return blogTextData;
     }
     
     //render all blog sections here.
@@ -70,7 +94,7 @@ class BlogEntryFormGenerator extends React.Component {
                 key={index}
                 title={sectionComponentInfo.label}
                 deleteCallback={ () => {this.formSectionDeletedCallback(index)} }
-                >
+            >
                 <SectionComponent
                     formDataCallback={(data) => {this.storeFormSectionDataCallback(index, data)}}
                 />
@@ -81,7 +105,7 @@ class BlogEntryFormGenerator extends React.Component {
     //adds a component to the state array. 
     // adds different components to state depending on which button was clicked
     onAddBlogSectionButtonClicked(index){
-        let nextBlogSection = this.state.blogSectionsToolbox[index];
+        let nextBlogSection = Object.assign({}, this.state.blogSectionsToolbox[index]);
         this.setState( {blogEntrySections: [...this.state.blogEntrySections, nextBlogSection]} );
     }
 
@@ -115,6 +139,11 @@ class BlogEntryFormGenerator extends React.Component {
             </div>
         );
     }
+}
+
+BlogEntryFormGenerator.propTypes = {
+    //callback with data parameter which will execute when blog data has been obtained
+    getBlogTextData: PropTypes.func
 }
 
 export default BlogEntryFormGenerator;

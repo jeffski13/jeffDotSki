@@ -19,6 +19,7 @@ class WriteBlog extends Component {
     this.handleTripChange = this.handleTripChange.bind(this);
     this.handleParagraphsChange = this.handleParagraphsChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.storeBlogTextFromChildForm = this.storeBlogTextFromChildForm.bind(this);
     this.onSendClicked = this.onSendClicked.bind(this);
 
     this.state = {
@@ -95,6 +96,15 @@ class WriteBlog extends Component {
     });      
   }
 
+  storeBlogTextFromChildForm(blogTextData){
+    console.log('storing blog state...');
+    this.setState({blogtext: blogTextData},
+      () => {
+        console.log('top level state', this.state);
+      }
+    );
+  }
+
   render() {
 
     return (
@@ -147,7 +157,9 @@ class WriteBlog extends Component {
             <FormControl.Feedback />
           </FormGroup>
         </form>
-        <BlogEntryFormGenerator />
+        <BlogEntryFormGenerator
+          getBlogTextData={(data) => {this.storeBlogTextFromChildForm(data)}}
+        />
         <ButtonToolbar>
           <Button bsStyle="primary" bsSize="large" onClick={this.onSendClicked} disabled={this.state.isLoading} >
             Send button
