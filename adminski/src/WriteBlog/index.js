@@ -98,7 +98,7 @@ class WriteBlog extends Component {
   render() {
 
     return (
-      <div>
+      <div className="WriteBlog">
         <div class="form-group">
           <DatePicker
             selected={this.state.date}
