@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 import moment from 'moment';
+import _ from 'lodash';
 
 import BlogEntryFormGenerator from './BlogEntryFormGenerator';
 import {awsApiKey} from '../configski';
@@ -23,12 +24,15 @@ class WriteBlog extends Component {
     this.onSendClicked = this.onSendClicked.bind(this);
 
     this.state = {
-      trip: 'TestAdmin',
+      trip: 'TestAdminski',
       location: 'Nerdvana',
       date: moment().startOf('day'),
       title: 'Working on json',
-      blogtext: '',
-      isLoading: false
+      blogtext: [],
+      isLoading: false,
+      isSuccessShowing: false,
+      isFailureShowing: false,
+      isStatusFading: false
     };
   }
 
@@ -45,9 +49,15 @@ class WriteBlog extends Component {
   }
 
   handleDateChange(date) {
-    this.setState({
-      date: date
-    });
+    this.setState({date: date},
+      () => {
+        console.log('jeffski date', this.state.date);
+        console.log('jeffski date valueof', this.state.date.valueOf());
+        console.log('jeffski moment to unix', moment(this.state.date.valueOf()).unix());
+        let valueToAndFromServer = moment(this.state.date.valueOf()).unix();
+        console.log('jeffski moment.unix to format', moment.unix(valueToAndFromServer).format("MM/DD/YYYY"));
+      }
+    );
   }
 
   handleTitleChange(e) {
@@ -82,17 +92,33 @@ class WriteBlog extends Component {
         trip: this.state.trip,
         title: this.state.title,
         location: this.state.location,
-        date: this.state.date.valueOf(),
-        blogtext: ''
+        date: moment(this.state.date.valueOf()).unix(),
+        blogtext: this.state.blogtext
       },
     })
     .then( (response) => {
-      console.log(response);
-      this.setState({isLoading: false});        
+      //loading done, start success fade in
+      this.setState({isLoading: false, isSuccessShowing: true});
+      _.delay(()=>{
+        //success showing, start fade out
+        this.setState({isStatusFading: true});
+        _.delay(()=>{
+          //success animation complete, reset all state to original
+          this.setState({isStatusFading: false, isSuccessShowing: false});
+        }, 2000)
+      }, 2000);
     })
     .catch( (error) => {
-      this.setState({isLoading: false});        
-      console.log(error);
+      //loading done, start failure fade in
+      this.setState({isLoading: false, isFailureShowing: true});
+      _.delay(()=>{
+        //faile showing, start fade animation
+        this.setState({isStatusFading: true});
+        _.delay(()=>{
+          //failure animation complete, reset all state to original
+          this.setState({isStatusFading: false, isFailureShowing: false});
+        }, 2000)
+      }, 2000);
     });      
   }
 
@@ -107,9 +133,22 @@ class WriteBlog extends Component {
 
   render() {
 
+    //status area will change class to trigger animation
+    //1. item not showing: class=hidden
+    //2. item showing/fading up: class=visible
+    //3. item fading out: class=hidden 
+    let statusAreaClass = "statusAreaHidden"
+    if(this.state.isSuccessShowing || this.state.isFailureShowing){
+      statusAreaClass = "statusAreaVisible"
+      if(this.state.isStatusFading){
+        statusAreaClass = "statusAreaHidden"
+      }
+    }
+
+
     return (
       <div className="WriteBlog">
-        <div class="form-group">
+        <div className="form-group">
           <DatePicker
             selected={this.state.date}
             onChange={this.handleDateChange}
@@ -164,11 +203,19 @@ class WriteBlog extends Component {
           <Button bsStyle="primary" bsSize="large" onClick={this.onSendClicked} disabled={this.state.isLoading} >
             Send button
           </Button>
-          {this.state.isLoading && 
-            <div className="loadingBar">
+          <div>
+            {this.state.isLoading && 
               <CircularProgress />
-            </div>
-          }
+            }
+          </div>
+          <div className={`statusArea ${statusAreaClass}`} >
+            {this.state.isSuccessShowing && 
+              <i className="material-icons successColor" >done</i>
+            }
+            {this.state.isFailureShowing && 
+              <i className="material-icons failureColor" >error</i>
+            }
+          </div>
         </ButtonToolbar>
       </div>
     );

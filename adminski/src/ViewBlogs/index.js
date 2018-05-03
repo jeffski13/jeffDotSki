@@ -1,42 +1,30 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, ButtonToolbar, Button } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, ButtonToolbar, Button } from 'react-bootstrap';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
 import {awsApiKey} from '../configski';
 import BlogList from './BlogList';
+import {validateFormString} from '../formvalidation';
 
 class ViewBlogs extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleTripChange = this.handleTripChange.bind(this);
-    this.onGetClicked = this.onGetClicked.bind(this);
+    this.handleTripInputChange = this.handleTripInputChange.bind(this);
+    this.onGetBlogsButtonClicked = this.onGetBlogsButtonClicked.bind(this);
 
     this.state = {
-      trip: 'Chicago',
+      trip: 'TestAdminski',
       blogData: []
     };
   }
-
-  //validate string length of input
-  getValidationState(str) {
-    if (str.length > 0) {
-      //fire state valid action
-      return 'success';
-    }
-    else {
-      //fire state invalid action
-      return 'error';
-    }
-  }
   
-  handleTripChange(e) {
+  handleTripInputChange(e) {
     this.setState({ trip: e.target.value });
   }
   
-  onGetClicked() {
+  //get list of blogs by trip name from server
+  onGetBlogsButtonClicked() {
     console.log('jeffski button clicked', this.state);
     axios({
       method: 'get',
@@ -53,26 +41,25 @@ class ViewBlogs extends Component {
   }
 
   render() {
-
     return (
       <div>
         <form>
           <FormGroup
             controlId="formBasicText"
-            validationState={this.getValidationState(this.state.trip)}
+            validationState={validateFormString(this.state.trip)}
           >
             <ControlLabel>Trip</ControlLabel>
             <FormControl
               type="text"
               value={this.state.trip}
               placeholder="Enter text"
-              onChange={this.handleTripChange}
+              onChange={this.handleTripInputChange}
             />
             <FormControl.Feedback />
           </FormGroup>
         </form>
         <ButtonToolbar>
-          <Button bsStyle="primary" bsSize="large" onClick={this.onGetClicked}>
+          <Button bsStyle="primary" bsSize="large" onClick={this.onGetBlogsButtonClicked}>
             Get Dem Blogs button
           </Button>
         </ButtonToolbar>

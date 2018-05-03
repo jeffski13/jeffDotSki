@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import {Row} from 'react-bootstrap';
 
 import BlogFormSections from './BlogFormSections';
 import BlogEntryText from './BlogFormSections/BlogEntryText';
@@ -105,7 +104,8 @@ class BlogEntryFormGenerator extends React.Component {
     //adds a component to the state array. 
     // adds different components to state depending on which button was clicked
     onAddBlogSectionButtonClicked(index){
-        let nextBlogSection = Object.assign({}, this.state.blogSectionsToolbox[index]);
+        //make a copy (NOT a reference) and put it in the state array of all the forms on the page
+        let nextBlogSection = {...this.state.blogSectionsToolbox[index]};
         this.setState( {blogEntrySections: [...this.state.blogEntrySections, nextBlogSection]} );
     }
 
@@ -129,7 +129,6 @@ class BlogEntryFormGenerator extends React.Component {
     
     //the user can add fields of different types
     render(){
-        console.log('jeffski state', this.state)
         return(
             <div>
                 {this.state.blogEntrySections.map(this.renderBlogSections)}

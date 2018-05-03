@@ -68,48 +68,58 @@ class BulletListTextItem extends Component {
         <Col xs={12} sm={4} md={4} lg={4} >
           <FormGroup
             validationState={this.isAnyFieldFilled() ? null : validateFormString(this.state.title)}
-            className="formInputSection"
+            className="formTitleInput"
             >
-            <ControlLabel className="formInputLabel" >Title</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.title}
-              placeholder="Enter Title"
-              onChange={this.handleTitleChange}
-              onBlur={this.returnBlogBulletListModelData}
-              />
+            <label className="has-float-label">
+              <FormControl
+                  type="text"
+                  value={this.state.title}
+                  onChange={this.handleTitleChange}
+                  onBlur={this.returnBlogBulletListModelData}
+                  name="title"
+                  className="form-label-group ability-input"
+                  placeholder="put title text here..."
+                  />
+              <span>Title</span>
+            </label>
           </FormGroup>
         </Col>
         <Col xs={12} sm={4} md={4} lg={4} >
           <FormGroup
-            controlId="formBasicText"
+            controlId="formTextInput"
             validationState={this.isAnyFieldFilled() ? null : validateFormString(this.state.text)}
             >
-            <ControlLabel>Text</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.text}
-              placeholder="Enter text"
-              onChange={this.handleTextChange}
-              onBlur={this.returnBlogBulletListModelData}
-              />
-            <FormControl.Feedback />
+            <label className="has-float-label">
+              <FormControl
+                  type="text"
+                  value={this.state.text}
+                  placeholder="Enter text"
+                  onChange={this.handleTextChange}
+                  onBlur={this.returnBlogBulletListModelData}
+                  name="text"
+                  className="form-label-group ability-input"
+                  />
+              <span>Text</span>
+            </label>
           </FormGroup>
         </Col>
         <Col xs={10} sm={3} >
           <FormGroup
-            controlId="formBasicText"
+            controlId="formSubtextInput"
             validationState={this.isAnyFieldFilled() ? null : validateFormString(this.state.subtext)}
             >
-            <ControlLabel>Subtext</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.subtexttitle}
-              placeholder="Enter subtext"
-              onChange={this.handleSubtextChange}
-              onBlur={this.returnBlogBulletListModelData}
-              />
-            <FormControl.Feedback />
+            <label className="has-float-label">
+              <FormControl
+                  type="text"
+                  value={this.state.subtexttitle}
+                  placeholder="Enter subtext"
+                  onChange={this.handleSubtextChange}
+                  onBlur={this.returnBlogBulletListModelData}
+                  name="subtext"
+                  className="form-label-group ability-input"
+                  />
+              <span>Subtext</span>
+            </label>
           </FormGroup>
         </Col>
         <Col xs={1} className="BulletListItem-deleteButtonContainer" >

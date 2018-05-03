@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Col, Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
  
-import { validateFormString } from '../../../formvalidation';
 import BulletListTextItem from './BulletListTextItem';
 import './styles.css';
 

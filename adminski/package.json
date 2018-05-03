@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aws-sdk": "^2.229.1",
     "axios": "^0.18.0",
+    "lodash": "^4.17.10",
     "material-ui": "^1.0.0-beta.42",
     "moment": "^2.21.0",
     "prop-types": "^15.6.1",

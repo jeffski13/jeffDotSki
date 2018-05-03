@@ -1,23 +1,61 @@
 import React from 'react';
 import moment from 'moment';
+
+import BlogTextItem from './BlogTextItem';
 import './styles.css';
 
 class BlogList extends React.Component {
-    renderBlog(blogItem, index){
-        return(
+
+    constructor(props) {
+        super(props);
+
+        this.renderBlog = this.renderBlog.bind(this);
+        this.renderBlogtextItem = this.renderBlogtextItem.bind(this);
+    }
+
+    renderBlogtextItem(blogPostBody) {
+        return (
+            <BlogTextItem
+                blogTextData={blogPostBody}
+            />
+        );
+    }
+
+    //render each blog here
+    // show Title, Location, Date, and 
+    renderBlog(blogItem, index) {
+        let blogPostBody = blogItem.blogPostBody;
+
+        if (!blogPostBody) {
+            return null;
+        }
+
+        return (
             <div className="blog" key={index}>
-                <div>Title: {blogItem.blogPostBody.title}</div>
-                <div>Location: {blogItem.blogPostBody.location}</div>
-                <div>Date: {moment.unix(blogItem.blogPostBody.date).format("MM/DD/YYYY")}</div>
-                <div>Text: {blogItem.blogPostBody.blogtext}</div>
+                <div>Title: {blogPostBody.title}</div>
+                <div>Location: {blogPostBody.location}</div>
+                <div>Date: {moment.unix(blogPostBody.date).format("MM/DD/YYYY")}</div>
+                {blogPostBody.blogtext.map(this.renderBlogtextItem)}
             </div>
         );
     }
 
     render(){
-        return(
+        //order blogs by date
+        let blogsArr = [...this.props.blogsArr];
+        blogsArr.sort((a,b)=>{
+            if (a.blogPostBody.date < b.blogPostBody.date){
+                return -1;
+            }
+            if (a.blogPostBody.date > b.blogPostBody.date){
+                return 1;
+            }
+            return 0;
+        });
+        
+        return (
             <div>
-                {this.props.blogsArr.map(this.renderBlog)}
+                {blogsArr.map(this.renderBlog)}
             </div>
         );
     }
