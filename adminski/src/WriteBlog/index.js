@@ -11,6 +11,11 @@ import BlogEntryFormGenerator from './BlogEntryFormGenerator';
 import {awsApiKey} from '../configski';
 import './styles.css';
 
+/*
+parent/master class for writing a blog.
+contains form elements required for a blog. (see other BlogEntryFormGenerator component for optional blog forms).
+in charge of finalizing all information and sending it to the server.
+*/
 class WriteBlog extends Component {
   constructor(props, context) {
     super(props, context);
@@ -133,21 +138,22 @@ class WriteBlog extends Component {
 
   render() {
 
-    //status area will change class to trigger animation
-    //1. item not showing: class=hidden
-    //2. item showing/fading up: class=visible
-    //3. item fading out: class=hidden 
-    let statusAreaClass = "statusAreaHidden"
+    //status area to show network request is happening and success/failure for thereof hitherto.
+    //Animation state machine with css classes is as follows 
+    // 1. item not showing: class=hidden
+    // 2. item showing/fading up: class=visible
+    // 3. item fading out: class=hidden 
+    let networkStatusAreaCssClass = "statusAreaHidden"
     if(this.state.isSuccessShowing || this.state.isFailureShowing){
-      statusAreaClass = "statusAreaVisible"
+      networkStatusAreaCssClass = "statusAreaVisible"
       if(this.state.isStatusFading){
-        statusAreaClass = "statusAreaHidden"
+        networkStatusAreaCssClass = "statusAreaHidden"
       }
     }
 
-
     return (
       <div className="WriteBlog">
+        {/* minimum information required for blog (trip, title, date, location) */}
         <div className="form-group">
           <DatePicker
             selected={this.state.date}
@@ -196,9 +202,13 @@ class WriteBlog extends Component {
             <FormControl.Feedback />
           </FormGroup>
         </form>
+        
+        {/* optional form with blog content (paragraphs, bullet list, etc.) */}
         <BlogEntryFormGenerator
           getBlogTextData={(data) => {this.storeBlogTextFromChildForm(data)}}
         />
+        
+        {/* submit button with network success/failure indicator */}
         <ButtonToolbar>
           <Button bsStyle="primary" bsSize="large" onClick={this.onSendClicked} disabled={this.state.isLoading} >
             Send button
@@ -208,7 +218,7 @@ class WriteBlog extends Component {
               <CircularProgress />
             }
           </div>
-          <div className={`statusArea ${statusAreaClass}`} >
+          <div className={`statusArea ${networkStatusAreaCssClass}`} >
             {this.state.isSuccessShowing && 
               <i className="material-icons successColor" >done</i>
             }
