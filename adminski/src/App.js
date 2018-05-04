@@ -7,7 +7,7 @@ import UploadImage from './UploadImage';
 class App extends Component {
   render() {
     return (
-      <Tabs className="container" defaultActiveKey={3} id="uncontrolled-tab-example">
+      <Tabs className="container" defaultActiveKey={1} id="uncontrolled-tab-example">
         <Tab eventKey={1} title="Write Blog">
           <WriteBlog />
         </Tab>

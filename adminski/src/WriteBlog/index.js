@@ -124,16 +124,11 @@ class WriteBlog extends Component {
           this.setState({isStatusFading: false, isFailureShowing: false});
         }, 2000)
       }, 2000);
-    });      
+    });
   }
 
   storeBlogTextFromChildForm(blogTextData){
-    console.log('storing blog state...');
-    this.setState({blogtext: blogTextData},
-      () => {
-        console.log('top level state', this.state);
-      }
-    );
+    this.setState({blogtext: blogTextData});
   }
 
   render() {

@@ -20,7 +20,7 @@ class BlogEntryText extends React.Component {
         };
     }
 
-    handleBlogTextChange(e){    
+    handleBlogTextChange(e){
         this.setState({ blogtext: e.target.value });
     }
 
@@ -48,12 +48,13 @@ class BlogEntryText extends React.Component {
     }
 
     render(){
+        console.log('good day jeffski. i am paragraph ', this.props.sectionOnScreen, '. My current value is ', this.state.blogtext);
         return(
             <FormGroup 
                 controlId="formControlsTextarea"
                 validationState={validateFormString(this.state.blogtext)}
             >
-                <ControlLabel>What Happened Today?</ControlLabel>
+                <ControlLabel>What Happened Today?{this.state.blogtext}</ControlLabel>
                 <FormControl
                     componentClass="textarea" 
                     value={this.state.blogtext}
