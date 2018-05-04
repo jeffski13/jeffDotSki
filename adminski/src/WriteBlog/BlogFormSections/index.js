@@ -17,7 +17,6 @@ class BlogFormSection extends React.Component {
     }
 
     render() {
-        console.log('hi! Blogformsection number ', this.props.sectionOnScreen, ' here!');
         return (
             <Panel>
                 <Panel.Heading>

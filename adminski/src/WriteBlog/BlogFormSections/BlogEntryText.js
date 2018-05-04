@@ -48,7 +48,6 @@ class BlogEntryText extends React.Component {
     }
 
     render(){
-        console.log('good day jeffski. i am paragraph ', this.props.sectionOnScreen, '. My current value is ', this.state.blogtext);
         return(
             <FormGroup 
                 controlId="formControlsTextarea"
