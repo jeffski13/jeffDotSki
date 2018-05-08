@@ -53,7 +53,7 @@ class BlogEntryText extends React.Component {
                 controlId="formControlsTextarea"
                 validationState={validateFormString(this.state.blogtext)}
             >
-                <ControlLabel>What Happened Today?{this.state.blogtext}</ControlLabel>
+                <ControlLabel>What Happened Today?</ControlLabel>
                 <FormControl
                     componentClass="textarea" 
                     value={this.state.blogtext}
