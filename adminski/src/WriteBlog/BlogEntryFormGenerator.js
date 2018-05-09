@@ -133,7 +133,7 @@ class BlogEntryFormGenerator extends React.Component {
     onAddBlogSectionButtonClicked = (index) => {
         //make a copy (NOT a reference) and put the new toolbox in the state array of all the forms on the page
         let nextBlogSection = {...this.state.blogSectionsToolbox[index]};
-        //add a unique id for blog entry
+        //add a unique id. the id will be the key when placed on screen
         nextBlogSection.id = this.state.blogSectionsToolbox[index].label +  (new Date()).getTime();
         this.setState( {blogSectionsOnscreen: [...this.state.blogSectionsOnscreen, nextBlogSection]} );
     }
