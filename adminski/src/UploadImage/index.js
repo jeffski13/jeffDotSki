@@ -22,99 +22,89 @@ class UploadImage extends React.Component {
             awsS3: s3,
             imgFile: '',
             blogDirectories: [],
-            isLoading: false
+            allDirectories: [],
+            isLoading: false,
+            status: ''
         };
     }
 
     componentDidMount(){
-        this.getS3List();
+        this.getBlogDirectories();
     }
     
     handleImgFileChange = (e) => {
         this.setState({ imgFile: e.target.files });
     }
     
-    getS3List = () => {
+    //fetch all blog directories/objects currently on S3 
+    getBlogDirectories = () => {
         let s3Params = {Bucket: AWS_S3_BUCKET_NAME};
+        this.setState({status: 'loading directory list...'});
+        
         this.state.awsS3.listObjects(s3Params, (err, data) => {
             if (err) {
                 console.log('There was an error listing your albums: ', err.message);
+                this.setState({status: 'Success'});
             }
             else {
-                console.log('jeffski did it good! s3 data', data);
                 //you got data! wonderful, now put it into a readable array
                 let rawContentsArr = data.Contents;
+
                 //turn into string array of directories
-                let directoriesArr = [];
+                let directoriesKeyArr = [];
                 rawContentsArr.forEach(function(contentsItem){
-                    directoriesArr.push(contentsItem.Key);
+                    directoriesKeyArr.push(contentsItem.Key);
                 });
-                let blogDirectoriesArr = directoriesArr.filter(directoryName => directoryName.startsWith("blog/"));
-                // callback(blogDirectoriesArr);
-                this.setState({blogDirectories: blogDirectoriesArr});
+                let blogDirectoriesArrRaw = directoriesKeyArr.filter(directoryKey => directoryKey.startsWith("blog/"));
+                this.setState({
+                    blogDirectories: blogDirectoriesArrRaw,
+                    allDirectories: directoriesKeyArr,
+                    status: 'Success'
+                });
             }
         });
     }
     
-    
-    onCreateClicked = () =>{
-        console.log('jeffski on create clicked');
-
-        //all to get album name
-        let albumName = 'testAlbumFromAdminski';
-        if (!albumName) {
-            return alert('Album names must contain at least one non-space character.');
-        }
-        if (albumName.indexOf('/') !== -1) {
-            return alert('Album names cannot contain slashes.');
-        }
-        var albumKey = encodeURIComponent(albumName) + '/';
+    uploadPhoto = () => {
+        //set state to loading so user cant submit blog twice, show loading indicator
+        this.setState({ 
+            isLoading: true,
+            status: 'Uploading photo...'
+         });
         
-        let s3Params = {
-            Key: albumKey,
-            Bucket: AWS_S3_BUCKET_NAME
-        };
-        this.state.awsS3.headObject(s3Params, (err, data) => {
-            if(!err) {
-                return console.log('Album already exists.');
-            }
-            if(err.code !== 'NotFound') {
-                return console.log('There was an error creating your album: ' + err.message);
-            }
-            this.state.awsS3.putObject(s3Params, (err, data) => {
-                if(err) {
-                    return console.log('There was an error creating your album: ' + err.message);
-                }
-                console.log('Successfully created album.');
-                // viewAlbum(albumName);
-            });
-        });
-    }
-    
-    onSendClicked = () => {
-        //set state to loading so user cant submit blog twice
-        // and loading indicator appears
-        this.setState({ isLoading: true });
-
         for(let i = 0; i < this.state.imgFile.length; i++){
             var file = this.state.imgFile[i];
             let fileName = file.name;
-            let albumName = 'testAlbumFromAdminski';
-            let albumPhotosKey = encodeURIComponent(albumName) + '/';
-    
-            let photoKey = albumPhotosKey + fileName;
-    
+            let tripName = 'Disney2018';
+            let blogImageUploadKey = `blog/${tripName}/${fileName}`;
+            
+            //check to see if item we are uploading already exists
+            if(this.state.allDirectories.includes(blogImageUploadKey)){
+                this.setState({
+                    status: `image ${blogImageUploadKey} exists on server`,
+                    isLoading: false
+                });
+                return;
+            }
+            
+            //upload photo
             let s3Params = {
-                Key: photoKey,
+                Key: blogImageUploadKey,
                 Body: file,
                 Bucket: AWS_S3_BUCKET_NAME,
                 ACL: 'public-read'
             };
-            this.state.awsS3.upload(s3Params, function(err, data) {
+            
+            this.state.awsS3.upload(s3Params, (err, data) => {
                 if (err) {
+                    this.setState({status: 'Error'});
                     console.log('There was an error listing your albums: ', err.message);
                 }
-                console.log('jeffski did it good! s3 data', data);
+                this.setState({
+                    status: 'Photo uploaded successful',
+                    isLoading: false
+                });
+                this.getBlogDirectories();
             });
         }
     }
@@ -138,7 +128,6 @@ class UploadImage extends React.Component {
                         <FormControl
                             multiple
                             type="file"
-                            value={this.state.image}
                             placeholder="Choose File"
                             onChange={this.handleImgFileChange}
                         />
@@ -149,18 +138,12 @@ class UploadImage extends React.Component {
                         bsStyle="primary" 
                         bsSize="large" 
                         disabled={this.state.isLoading || this.state.imgFile === ''} 
-                        onClick={this.onSendClicked}
+                        onClick={this.uploadPhoto}
                     >
                         Send Image
                     </Button>
-                    <Button 
-                        bsStyle="primary" 
-                        bsSize="large"
-                        onClick={this.onCreateClicked}
-                    >
-                        Create Album
-                    </Button>
                 </ButtonToolbar>
+                <div>Status: {this.state.status}</div>
                 {
                 this.state.blogDirectories.length > 0
                 ?
@@ -170,6 +153,7 @@ class UploadImage extends React.Component {
                 </div>
                 : null
                 }
+                
             </div>
         );
     }
