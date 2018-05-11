@@ -67,6 +67,7 @@ class WriteBlog extends Component {
 		);
 	}
 
+	//form data binding
 	handleTitleChange(e) {
 		this.setState({ title: e.target.value });
 	}
@@ -87,37 +88,13 @@ class WriteBlog extends Component {
 		this.setState({ titleImage: e.target.files[0] });
 	}
 
+	//upload photo/blog to server
 	onSendClicked() {
 		//set state to loading so user cant submit blog twice
 		// and loading indicator appears
-		this.setState({ 
+		this.setState({
 			blogStatus: STATUS_LOADING,
 			photoStatus: STATUS_LOADING
-		});
-
-		console.log('jeffski state before send:', this.state);
-
-		//send request with new blog entry
-		axios({
-			method: 'post',
-			url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs`,
-			headers: { 'x-api-key': awsApiKey },
-			data: {
-				trip: this.state.trip,
-				title: this.state.title,
-				location: this.state.location,
-				date: moment(this.state.date.valueOf()).unix(),
-				blogtext: this.state.blogtext,
-				titleImage: this.state.titleImage.name
-			}
-		})
-		.then((response) => {
-			//loading done, start success fade in
-			this.setState({ blogStatus: STATUS_SUCCESS });
-		})
-		.catch((error) => {
-			//loading done, start failure fade in
-			this.setState({ blogStatus: STATUS_FAILURE });
 		});
 
 		//upload the photo
@@ -128,9 +105,33 @@ class WriteBlog extends Component {
 				return;
 			}
 			//success: set status and fetch fresh list of all uploaded photos 
+			console.log('jeffski upload success: ', data);
 			this.setState({
 				photoStatus: STATUS_SUCCESS
 			});
+			//send request with new blog entry
+			axios({
+				method: 'post',
+				url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs`,
+				headers: { 'x-api-key': awsApiKey },
+				data: {
+					trip: this.state.trip,
+					title: this.state.title,
+					location: this.state.location,
+					date: moment(this.state.date.valueOf()).unix(),
+					blogtext: this.state.blogtext,
+					titleImage: data.Location
+				}
+			})
+			.then((response) => {
+				//loading done, start success fade in
+				this.setState({ blogStatus: STATUS_SUCCESS });
+			})
+			.catch((error) => {
+				//loading done, start failure fade in
+				this.setState({ blogStatus: STATUS_FAILURE });
+			});
+
 		});
 	}
 
@@ -231,11 +232,11 @@ class WriteBlog extends Component {
 						Send button
           			</Button>
 					<div>
-						{(this.state.blogStatus === STATUS_LOADING || this.state.photoStatus === STATUS_LOADING)  
+						{(this.state.blogStatus === STATUS_LOADING || this.state.photoStatus === STATUS_LOADING)
 							&& <CircularProgress />}
-						{(this.state.blogStatus === STATUS_SUCCESS && this.state.photoStatus === STATUS_SUCCESS) 
+						{(this.state.blogStatus === STATUS_SUCCESS && this.state.photoStatus === STATUS_SUCCESS)
 							&& <Indicator success={true} />}
-						{(this.state.blogStatus === STATUS_FAILURE || this.state.photoStatus === STATUS_FAILURE) 
+						{(this.state.blogStatus === STATUS_FAILURE || this.state.photoStatus === STATUS_FAILURE)
 							&& <Indicator success={false} />}
 					</div>
 				</ButtonToolbar>
