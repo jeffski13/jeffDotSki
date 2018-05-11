@@ -2,7 +2,7 @@ import React from 'react';
 import { FormGroup, FormControl, ButtonToolbar, Button } from 'react-bootstrap';
 import AWS from 'aws-sdk';
 
-import { uploadPhoto, fetchBlogObjects } from './uploadPhotoAwsS3';
+import { uploadPhoto, fetchBlogObjects } from '../aws/photo';
 import { AWS_S3_BUCKET_NAME, AWS_S3_REGION, AWS_IDENTITY_POOL_ID } from '../configski';
 //constants for AWS S3 SDK
 

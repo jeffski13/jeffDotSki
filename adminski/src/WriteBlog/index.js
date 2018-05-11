@@ -11,7 +11,8 @@ import { validateFormString, validateDate, FORM_SUCCESS } from '../formvalidatio
 import BlogEntryFormGenerator from './BlogEntryFormGenerator';
 import AWS from 'aws-sdk';
 import { AWS_S3_BUCKET_NAME, AWS_S3_REGION, AWS_IDENTITY_POOL_ID, awsApiKey } from '../configski';
-import { uploadPhoto, fetchBlogObjects } from '../UploadImage/uploadPhotoAwsS3';
+import { uploadPhoto } from '../aws/photo';
+import { uploadBlog } from '../aws/blog';
 import './styles.css';
 import Indicator from './Indicator';
 
@@ -29,11 +30,6 @@ class WriteBlog extends Component {
 	constructor(props, context) {
 		super(props, context);
 
-		this.handleTitleChange = this.handleTitleChange.bind(this);
-		this.handleLocationChange = this.handleLocationChange.bind(this);
-		this.handleTripChange = this.handleTripChange.bind(this);
-		this.handleParagraphsChange = this.handleParagraphsChange.bind(this);
-		this.handleDateChange = this.handleDateChange.bind(this);
 		this.storeBlogTextFromChildForm = this.storeBlogTextFromChildForm.bind(this);
 		this.onSendClicked = this.onSendClicked.bind(this);
 
@@ -59,28 +55,25 @@ class WriteBlog extends Component {
 		};
 	}
 
-	handleDateChange(date) {
-		this.setState({ date: date },
-			() => {
-				let valueToAndFromServer = moment(this.state.date.valueOf()).unix();
-			}
-		);
-	}
-
+	
 	//form data binding
-	handleTitleChange(e) {
+	handleDateChange(date) {
+		this.setState({ date: date });
+	}
+	
+	handleTitleChange = (e) => {
 		this.setState({ title: e.target.value });
 	}
 
-	handleParagraphsChange(e) {
+	handleParagraphsChange = (e) => {
 		this.setState({ paragraphs: e.target.value });
 	}
 
-	handleLocationChange(e) {
+	handleLocationChange = (e) => {
 		this.setState({ location: e.target.value });
 	}
 
-	handleTripChange(e) {
+	handleTripChange = (e) => {
 		this.setState({ trip: e.target.value });
 	}
 
@@ -97,41 +90,37 @@ class WriteBlog extends Component {
 			photoStatus: STATUS_LOADING
 		});
 
-		//upload the photo
+		//upload photo first, then include photo location when uploading blog 
 		uploadPhoto(this.state.titleImage, this.state.trip, this.state.awsS3, (err, data) => {
+			////////////////////////////////
+			//upload photo call complete
+			////////////////////////////////
 			//error handling
 			if (err) {
 				this.setState({ photoStatus: STATUS_FAILURE });
 				return;
 			}
-			//success: set status and fetch fresh list of all uploaded photos 
-			console.log('jeffski upload success: ', data);
-			this.setState({
-				photoStatus: STATUS_SUCCESS
-			});
+			this.setState({photoStatus: STATUS_SUCCESS});
+			
 			//send request with new blog entry
-			axios({
-				method: 'post',
-				url: `https://ctbw9plo6d.execute-api.us-east-2.amazonaws.com/Prod/blogs`,
-				headers: { 'x-api-key': awsApiKey },
-				data: {
-					trip: this.state.trip,
-					title: this.state.title,
-					location: this.state.location,
-					date: moment(this.state.date.valueOf()).unix(),
-					blogtext: this.state.blogtext,
-					titleImage: data.Location
+			let blogdata = {
+				trip: this.state.trip,
+				title: this.state.title,
+				location: this.state.location,
+				date: moment(this.state.date.valueOf()).unix(),
+				blogtext: this.state.blogtext,
+				titleImage: data.Location
+			}
+			
+			uploadBlog(blogdata, (err, data) => {
+				////////////////////////////////
+				//upload blog call complete
+				////////////////////////////////
+				if(err){
+					this.setState({ blogStatus: STATUS_FAILURE });
 				}
-			})
-			.then((response) => {
-				//loading done, start success fade in
 				this.setState({ blogStatus: STATUS_SUCCESS });
-			})
-			.catch((error) => {
-				//loading done, start failure fade in
-				this.setState({ blogStatus: STATUS_FAILURE });
 			});
-
 		});
 	}
 
@@ -140,7 +129,12 @@ class WriteBlog extends Component {
 	}
 
 	//returns true if the blog is ready to be submitted to the server
-	isFormReady() {
+	isFormSubmitAllowed() {
+		//form should not submit if we are currently uploading anything
+		if(this.state.blogStatus === STATUS_LOADING || this.state.photoStatus === STATUS_LOADING){
+			return false;
+		}
+
 		if (validateFormString(this.state.title) === FORM_SUCCESS &&
 			validateFormString(this.state.trip) === FORM_SUCCESS &&
 			validateFormString(this.state.titleImage.name) === FORM_SUCCESS &&
@@ -221,13 +215,13 @@ class WriteBlog extends Component {
 					getBlogTextData={(data) => { this.storeBlogTextFromChildForm(data) }}
 				/>
 
-				{/* submit button with network success/failure indicator */}
+				{/* submit button with network status indicators */}
 				<ButtonToolbar>
 					<Button
 						bsStyle="primary"
 						bsSize="large"
 						onClick={this.onSendClicked}
-						disabled={!this.isFormReady() || this.state.status === STATUS_LOADING}
+						disabled={!this.isFormSubmitAllowed()}
 					>
 						Send button
           			</Button>

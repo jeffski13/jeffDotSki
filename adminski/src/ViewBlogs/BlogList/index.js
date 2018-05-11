@@ -24,7 +24,7 @@ class BlogList extends React.Component {
     //render each blog here
     // show Title, Location, Date, and 
     renderBlog(blogItem, index) {
-        let blogPostBody = blogItem.blogPostBody;
+        let blogPostBody = blogItem;
 
         if (!blogPostBody) {
             return null;
@@ -44,11 +44,11 @@ class BlogList extends React.Component {
         //order blogs by date
         let blogsArr = [...this.props.blogsArr];
         blogsArr.sort((a,b)=>{
-            if (a.blogPostBody.date < b.blogPostBody.date){
-                return -1;
-            }
-            if (a.blogPostBody.date > b.blogPostBody.date){
+            if (a.date < b.date){
                 return 1;
+            }
+            if (a.date > b.date){
+                return -1;
             }
             return 0;
         });
