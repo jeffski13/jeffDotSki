@@ -9,10 +9,11 @@ import _ from 'lodash';
 
 import { validateFormString, validateDate, FORM_SUCCESS } from '../formvalidation';
 import BlogEntryFormGenerator from './BlogEntryFormGenerator';
-import { awsApiKey } from '../configski';
+import AWS from 'aws-sdk';
+import { AWS_S3_BUCKET_NAME, AWS_S3_REGION, AWS_IDENTITY_POOL_ID, awsApiKey } from '../configski';
+import { uploadPhoto, fetchBlogObjects } from '../UploadImage/uploadPhotoAwsS3';
 import './styles.css';
 import Indicator from './Indicator';
-
 
 const STATUS_SUCCESS = 'STATUS_SUCCESS';
 const STATUS_FAILURE = 'STATUS_FAILURE';
@@ -36,25 +37,32 @@ class WriteBlog extends Component {
 		this.storeBlogTextFromChildForm = this.storeBlogTextFromChildForm.bind(this);
 		this.onSendClicked = this.onSendClicked.bind(this);
 
+		//initialize the AWS S3 SDK connection object
+		AWS.config.update({
+			region: AWS_S3_REGION,
+			credentials: new AWS.CognitoIdentityCredentials({
+				IdentityPoolId: AWS_IDENTITY_POOL_ID
+			})
+		});
+		let s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
 		this.state = {
 			trip: 'TestAdminski',
 			location: 'Nerdvana',
 			date: moment().startOf('day'),
 			title: 'Working on json',
-			titleImage: '',
+			titleImage: {},
 			blogtext: [],
-			status: null
+			photoStatus: null,
+			blogStatus: null,
+			awsS3: s3
 		};
 	}
 
 	handleDateChange(date) {
 		this.setState({ date: date },
 			() => {
-				console.log('jeffski date', this.state.date);
-				console.log('jeffski date valueof', this.state.date.valueOf());
-				console.log('jeffski moment to unix', moment(this.state.date.valueOf()).unix());
 				let valueToAndFromServer = moment(this.state.date.valueOf()).unix();
-				console.log('jeffski moment.unix to format', moment.unix(valueToAndFromServer).format("MM/DD/YYYY"));
 			}
 		);
 	}
@@ -76,13 +84,16 @@ class WriteBlog extends Component {
 	}
 
 	handleImgFileChange = (e) => {
-		this.setState({ titleImage: e.target.files[0].name });
+		this.setState({ titleImage: e.target.files[0] });
 	}
 
 	onSendClicked() {
 		//set state to loading so user cant submit blog twice
 		// and loading indicator appears
-		this.setState({ status: STATUS_LOADING });
+		this.setState({ 
+			blogStatus: STATUS_LOADING,
+			photoStatus: STATUS_LOADING
+		});
 
 		console.log('jeffski state before send:', this.state);
 
@@ -96,17 +107,31 @@ class WriteBlog extends Component {
 				title: this.state.title,
 				location: this.state.location,
 				date: moment(this.state.date.valueOf()).unix(),
-				blogtext: this.state.blogtext
-			},
+				blogtext: this.state.blogtext,
+				titleImage: this.state.titleImage.name
+			}
 		})
-			.then((response) => {
-				//loading done, start success fade in
-				this.setState({ status: STATUS_SUCCESS });		
-			})
-			.catch((error) => {
-				//loading done, start failure fade in
-				this.setState({ status: STATUS_FAILURE });		
+		.then((response) => {
+			//loading done, start success fade in
+			this.setState({ blogStatus: STATUS_SUCCESS });
+		})
+		.catch((error) => {
+			//loading done, start failure fade in
+			this.setState({ blogStatus: STATUS_FAILURE });
+		});
+
+		//upload the photo
+		uploadPhoto(this.state.titleImage, this.state.trip, this.state.awsS3, (err, data) => {
+			//error handling
+			if (err) {
+				this.setState({ photoStatus: STATUS_FAILURE });
+				return;
+			}
+			//success: set status and fetch fresh list of all uploaded photos 
+			this.setState({
+				photoStatus: STATUS_SUCCESS
 			});
+		});
 	}
 
 	storeBlogTextFromChildForm(blogTextData) {
@@ -115,9 +140,9 @@ class WriteBlog extends Component {
 
 	//returns true if the blog is ready to be submitted to the server
 	isFormReady() {
-		if (validateFormString(this.state.title) === FORM_SUCCESS  &&
+		if (validateFormString(this.state.title) === FORM_SUCCESS &&
 			validateFormString(this.state.trip) === FORM_SUCCESS &&
-			validateFormString(this.state.titleImage) === FORM_SUCCESS &&
+			validateFormString(this.state.titleImage.name) === FORM_SUCCESS &&
 			validateDate(moment(this.state.date.valueOf()).unix()) === FORM_SUCCESS &&
 			validateFormString(this.state.location) === FORM_SUCCESS) {
 			return true;
@@ -127,7 +152,6 @@ class WriteBlog extends Component {
 
 	render() {
 
-		console.log('jeffski state', this.state);
 		return (
 			<div className="WriteBlog">
 				{/* minimum information required for blog (trip, title, date, location) */}
@@ -180,7 +204,7 @@ class WriteBlog extends Component {
 					</FormGroup>
 					<FormGroup
 						controlId="imageSelectForm"
-						validationState={validateFormString(this.state.titleImage)}
+						validationState={validateFormString(this.state.titleImage.name)}
 					>
 						<ControlLabel>Title Image</ControlLabel>
 						<FormControl
@@ -191,7 +215,7 @@ class WriteBlog extends Component {
 					</FormGroup>
 				</form>
 
-				{/* optional form with blog content (paragraphs, bullet list, etc.) */}
+				{/*form where you can dynamically create blog content (paragraphs, bullet list, etc.) */}
 				<BlogEntryFormGenerator
 					getBlogTextData={(data) => { this.storeBlogTextFromChildForm(data) }}
 				/>
@@ -207,9 +231,12 @@ class WriteBlog extends Component {
 						Send button
           			</Button>
 					<div>
-						{this.state.status === STATUS_LOADING && <CircularProgress />}
-						{this.state.status === STATUS_SUCCESS && <Indicator success={true} />}
-						{this.state.status === STATUS_FAILURE && <Indicator success={false} />}
+						{(this.state.blogStatus === STATUS_LOADING || this.state.photoStatus === STATUS_LOADING)  
+							&& <CircularProgress />}
+						{(this.state.blogStatus === STATUS_SUCCESS && this.state.photoStatus === STATUS_SUCCESS) 
+							&& <Indicator success={true} />}
+						{(this.state.blogStatus === STATUS_FAILURE || this.state.photoStatus === STATUS_FAILURE) 
+							&& <Indicator success={false} />}
 					</div>
 				</ButtonToolbar>
 			</div>
