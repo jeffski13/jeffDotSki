@@ -202,7 +202,7 @@ class WriteBlog extends Component {
 						bsStyle="primary"
 						bsSize="large"
 						onClick={this.onSendClicked}
-						disabled={!this.isFormReady()}
+						disabled={!this.isFormReady() || this.state.status === STATUS_LOADING}
 					>
 						Send button
           			</Button>
