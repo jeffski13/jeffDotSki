@@ -11,6 +11,12 @@ import { validateFormString, validateDate, FORM_SUCCESS } from '../formvalidatio
 import BlogEntryFormGenerator from './BlogEntryFormGenerator';
 import { awsApiKey } from '../configski';
 import './styles.css';
+import Indicator from './Indicator';
+
+
+const STATUS_SUCCESS = 'STATUS_SUCCESS';
+const STATUS_FAILURE = 'STATUS_FAILURE';
+const STATUS_LOADING = 'STATUS_LOADING';
 
 /*
 parent/master class for writing a blog.
@@ -18,6 +24,7 @@ contains form elements required for a blog. (see other BlogEntryFormGenerator co
 in charge of finalizing all information and sending it to the server.
 */
 class WriteBlog extends Component {
+
 	constructor(props, context) {
 		super(props, context);
 
@@ -36,10 +43,7 @@ class WriteBlog extends Component {
 			title: 'Working on json',
 			titleImage: '',
 			blogtext: [],
-			isLoading: false,
-			isSuccessShowing: false,
-			isFailureShowing: false,
-			isStatusFading: false
+			status: null
 		};
 	}
 
@@ -78,7 +82,7 @@ class WriteBlog extends Component {
 	onSendClicked() {
 		//set state to loading so user cant submit blog twice
 		// and loading indicator appears
-		this.setState({ isLoading: true });
+		this.setState({ status: STATUS_LOADING });
 
 		console.log('jeffski state before send:', this.state);
 
@@ -97,27 +101,11 @@ class WriteBlog extends Component {
 		})
 			.then((response) => {
 				//loading done, start success fade in
-				this.setState({ isLoading: false, isSuccessShowing: true });
-				_.delay(() => {
-					//success showing, start fade out
-					this.setState({ isStatusFading: true });
-					_.delay(() => {
-						//success animation complete, reset all state to original
-						this.setState({ isStatusFading: false, isSuccessShowing: false });
-					}, 2000)
-				}, 2000);
+				this.setState({ status: STATUS_SUCCESS });		
 			})
 			.catch((error) => {
 				//loading done, start failure fade in
-				this.setState({ isLoading: false, isFailureShowing: true });
-				_.delay(() => {
-					//faile showing, start fade animation
-					this.setState({ isStatusFading: true });
-					_.delay(() => {
-						//failure animation complete, reset all state to original
-						this.setState({ isStatusFading: false, isFailureShowing: false });
-					}, 2000)
-				}, 2000);
+				this.setState({ status: STATUS_FAILURE });		
 			});
 	}
 
@@ -139,19 +127,7 @@ class WriteBlog extends Component {
 
 	render() {
 
-		//status area to show network request is happening and success/failure for thereof hitherto.
-		//Animation state machine with css classes is as follows 
-		// 1. item not showing: class=hidden
-		// 2. item showing/fading up: class=visible
-		// 3. item fading out: class=hidden 
-		let networkStatusAreaCssClass = "statusAreaHidden"
-		if (this.state.isSuccessShowing || this.state.isFailureShowing) {
-			networkStatusAreaCssClass = "statusAreaVisible"
-			if (this.state.isStatusFading) {
-				networkStatusAreaCssClass = "statusAreaHidden"
-			}
-		}
-
+		console.log('jeffski state', this.state);
 		return (
 			<div className="WriteBlog">
 				{/* minimum information required for blog (trip, title, date, location) */}
@@ -231,17 +207,9 @@ class WriteBlog extends Component {
 						Send button
           			</Button>
 					<div>
-						{this.state.isLoading &&
-							<CircularProgress />
-						}
-					</div>
-					<div className={`statusArea ${networkStatusAreaCssClass}`} >
-						{this.state.isSuccessShowing &&
-							<i className="material-icons successColor" >done</i>
-						}
-						{this.state.isFailureShowing &&
-							<i className="material-icons failureColor" >error</i>
-						}
+						{this.state.status === STATUS_LOADING && <CircularProgress />}
+						{this.state.status === STATUS_SUCCESS && <Indicator success={true} />}
+						{this.state.status === STATUS_FAILURE && <Indicator success={false} />}
 					</div>
 				</ButtonToolbar>
 			</div>
