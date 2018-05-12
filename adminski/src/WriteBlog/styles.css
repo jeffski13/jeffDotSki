@@ -9,26 +9,3 @@
     padding-top: 25px;
     padding-bottom: 25px; 
 }
-
-.material-icons.successColor { 
-    color: rgb(62, 219, 0); 
-}
-
-.material-icons.failureColor { 
-    color: rgb(255, 51, 0); 
-}
-
-.statusArea {
-    display: inline-block;
-    padding-left: 10px;
-    -webkit-transition: opacity 1s;
-    transition: opacity 1s;
-}
-
-.statusAreaVisible {
-    opacity: 1;
-}
-
-.statusAreaHidden {
-    opacity: 0;
-}

@@ -12,7 +12,7 @@ import { AWS_S3_REGION, AWS_IDENTITY_POOL_ID } from '../configski';
 import { uploadPhoto } from '../aws/photo';
 import { uploadBlog } from '../aws/blog';
 import './styles.css';
-import Indicator from './Indicator';
+import Indicator from '../aws/Indicator';
 
 const STATUS_SUCCESS = 'STATUS_SUCCESS';
 const STATUS_FAILURE = 'STATUS_FAILURE';

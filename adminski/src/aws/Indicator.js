@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import './styles.css';
+import './Indicator-styles.css';
 
 //constants for fade in and fade out transition states
 const STAGE_FADE_IN = 'STAGE_FADE_IN';
