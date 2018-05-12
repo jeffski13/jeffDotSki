@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { validateFormString } from '../../formvalidation';
+import { validateFormString, FORM_SUCCESS } from '../../formvalidation';
 
 /*
 normal paragraph text for the blog.
@@ -12,19 +12,25 @@ class BlogEntryText extends React.Component {
     constructor(props, context) {
         super(props, context);
         
-        this.handleBlogTextChange = this.handleBlogTextChange.bind(this);
-        this.createBlogTextModel = this.createBlogTextModel.bind(this);
-    
         this.state = {
           blogtext: ''
         };
     }
 
-    handleBlogTextChange(e){
-        this.setState({ blogtext: e.target.value });
+    handleBlogTextChange = (e) => {
+        if(e.target.value === ''){
+            this.setState({ blogtext: null });
+        }else{
+            this.setState({ blogtext: e.target.value });
+        }
     }
 
-    createBlogTextModel(){
+    createBlogTextModel = () => {
+        //send up null if form is invalid
+        if(validateFormString(this.state.blogtext) !== FORM_SUCCESS){
+            this.props.formDataCallback(null);
+            return;
+        }
 
         //create string array. items are separated by carriage returns
         let blogArr = this.state.blogtext.split('\n');
@@ -66,7 +72,7 @@ class BlogEntryText extends React.Component {
 }
 
 BlogEntryText.propTypes = {
-    formDataCallback: PropTypes.func
+    formDataCallback: PropTypes.func //will be called with null if form data is invalid
 }
 
 export default BlogEntryText;

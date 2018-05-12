@@ -119,6 +119,7 @@ class WriteBlog extends Component {
 	}
 
 	storeBlogTextFromChildForm = (blogTextData) => {
+		console.log('storing stuff ', blogTextData);
 		this.setState({ blogtext: blogTextData });
 	}
 

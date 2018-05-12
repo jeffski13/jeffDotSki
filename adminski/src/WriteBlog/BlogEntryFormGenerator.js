@@ -59,7 +59,14 @@ class BlogEntryFormGenerator extends React.Component {
             }
         })
         
-        this.setState({ blogSectionsOnscreen: [...filteredBlogEntrySectionArr] });
+        this.setState({ blogSectionsOnscreen: [...filteredBlogEntrySectionArr] },
+            () => {
+                //hand combined state up to parent object
+                let blogtextdata = this.createBlogDataModel();
+                this.props.getBlogTextData(blogtextdata);
+            }
+        );
+        
     }
     
     //callback for when child form is filled out
@@ -67,25 +74,26 @@ class BlogEntryFormGenerator extends React.Component {
         //set state for this object
         let sectionsArrWithData = [...this.state.blogSectionsOnscreen];
         sectionsArrWithData[idx].blogData = newBlogData; 
-        this.setState({ blogSectionsOnscreen: sectionsArrWithData });
-
-        //hand combined state up to parent object
-        let blogtextdata = this.createBlogDataModel();
-        if(blogtextdata !== null){
-            this.props.getBlogTextData(blogtextdata);
-        }
+        this.setState({ blogSectionsOnscreen: sectionsArrWithData },
+            () => {
+                //hand combined state up to parent object
+                let blogtextdata = this.createBlogDataModel();
+                this.props.getBlogTextData(blogtextdata);
+            }
+        );
     }
 
     //returns a model with blog text data ready to be pushed to the server
     createBlogDataModel(){
         let blogTextData = [];
         this.state.blogSectionsOnscreen.forEach((nextBlogSection) => {
-            
-            if(Array.isArray(nextBlogSection.blogData)){
-                blogTextData = [...blogTextData, ...nextBlogSection.blogData];
-            }
-            else{
-                blogTextData = [...blogTextData, nextBlogSection.blogData];
+            if(nextBlogSection.blogData !== null){ //check here to see if blogData is null (could be empty data handed back)
+                if(Array.isArray(nextBlogSection.blogData)){
+                    blogTextData = [...blogTextData, ...nextBlogSection.blogData];
+                }
+                else{
+                    blogTextData = [...blogTextData, nextBlogSection.blogData];
+                }
             }
         });
 
@@ -105,7 +113,11 @@ class BlogEntryFormGenerator extends React.Component {
                 >
                 <SectionComponent
                     sectionOnScreen={index}
-                    formDataCallback={(data) => {this.storeSectionDataCallback(index, data)}}
+                    formDataCallback={(data) => {
+                        //NOTE to implementing components: 
+                        //formDataCallback can/should be called with data parameter as null if form data is invalid
+                        this.storeSectionDataCallback(index, data)
+                    }}
                 />
             </BlogFormSections>
         );
