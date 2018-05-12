@@ -35,7 +35,7 @@ class BlogList extends React.Component {
                 <div>Title: {blogPostBody.title}</div>
                 <div>Location: {blogPostBody.location}</div>
                 <div>Date: {moment.unix(blogPostBody.date).format("MM/DD/YYYY")}</div>
-                {blogPostBody.blogtext.map(this.renderBlogtextItem)}
+                {blogPostBody.blogContent.map(this.renderBlogtextItem)}
             </div>
         );
     }

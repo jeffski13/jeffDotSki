@@ -1,0 +1,94 @@
+{
+    "trip": "Chile-2017",
+    "title": "Preparing For Success",
+    "location": "Dallas",
+    "date": 1507870800,
+    "blogContent": [
+        {
+            "text": "I planned this trip out with my friend from work that grew up in Chile. I planned out where I was going to go and what I was going to do. Being a technologist and going to Japan previously, I thought I had everything figured out, and I did as far as technology was concerned. "
+        },
+        {
+            "text": "Here are some things I had covered",
+            "list": {
+                "style": "bullet",
+                "textItems": [
+                    {
+                        "title": "Electronics",
+                        "text": "Voltage and Plugs for your trip.",
+                        "subtext": "Find out what the voltage is in the country to which you are traveling. Go ahead and get an adapter set for all the different power outlet types. And I bought an external power brick (at least 20,000 mA), Anker is a pretty good brand if you can afford it."
+                    },
+                    {
+                        "title": "Clothing",
+                        "text": "Pack layers.",
+                        "subtext": "You should bring at least one set of layers including a hat and gloves. It may not be winter where you are going, but airports and restaurants can be uncomfortably cold. And a winter hat can double as night cap on the plane."
+                    },
+                    {
+                        "title": "Internet",
+                        "text": "Unlimited, mobile hotspot.",
+                        "subtext": "Surprisingly these are pretty easy to come by. I’m using TEP wireless for Chile for unlimited internet. I’ll let you know about the speeds later."
+                    }
+                ]
+            }
+        },
+        {
+            "text": "I had a power brick, a universal power adapter, and wireless internet. I did not think about the day to day activities like eating and drinking water."
+        },
+        {
+            "text": "Here are a few things I didn’t think about:",
+            "list": {
+                "style": "bullet",
+                "textItems": [
+                    {
+                        "title": "Vaccines",
+                        "text": "check for needed vaccines about a month before going.",
+                        "subtext": "No matter what country you are going to you should check for needed vaccines about a month before going. I used a company called Passport Health."
+                    }
+                ]
+            }
+        },
+        {
+            "list": {
+                "style": "quote",
+                "textItems": [
+                    {
+                        "text": "If you are going to fight alone, wear a mask. The mask isn’t for you; its to protect the ones you love.",
+                        "subtext": "Batman"
+                    }
+                ]
+            }
+        },
+        {
+            "text": "",
+            "list": {
+                "style": "bullet",
+                "textItems": [
+                    {
+                        "title": "Daily Drugs and Vitamins",
+                        "text": "Pack daily drugs and vitamins in the original bottles.",
+                        "subtext": "Until recently this did not apply to me. Now that I am taking daily medicine and vitamins, its important to keep the original bottles. This can seem like a pain if you are used to your daily medicine case, but it’s a good idea to keep the original bottles just to calm the security people about what kinds of medicine/drugs you are traveling with."
+                    },
+                    {
+                        "title": "Medicine",
+                        "text": "Take medicine from your home country that you regularly use when you are sick.",
+                        "subtext": "Getting sick while traveling can be stressful, not having familiar remedies just makes it worse. If you travel regularly in the U.S.A. we regularly say “no worries! Walmart is everywhere!” Just remember that Walmart is not everywhere in other countries, and even if it is, they do not necessarily have the brands with which you are familiar."
+                    },
+                    {
+                        "title": "Familiar Food",
+                        "text": "Take some mobiles snacks",
+                        "subtext": "Take something that is familiar. When you go to a new place its nice to have something tahts familiar. You want to make sure these are small and easy to fit into a travel bag. I recommend nature value bars and Go-Go Apple Sauce Packs.  DO NOT TAKE CHOCOLATE! It’s a trap! Once it melts, you will be sad."
+                    }
+                ]
+            }
+        },
+        {
+            "text": "If you have these things your loved ones (particularly your wife/girlfriend) will be much happier with you and you will feel more prepared and confident for your trip."
+        },
+        {
+            "text": "Some other things I brought along:"
+        },
+        {
+            "text": "Tablet, cell phone, hand sanitizer, cell charger, power strip, headphones, house key only, exercise equipment, workout shoes, workout braces, workout stuff, workout, you gotta workout"
+        }
+    ],
+    "titleImage": "https://s3.us-east-2.amazonaws.com/jeff.ski/blog/Chile-2017/Santiago-Center.jpg"
+}

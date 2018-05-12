@@ -37,13 +37,8 @@ export function getBlogs(tripName, callback){
     .then((response) => {
         //parse the response
         let rawBlogResponseArr = response.data;
-        let finalBlogArr = [];
-        
-        rawBlogResponseArr.forEach(rawBlogItem => {
-            finalBlogArr.push(rawBlogItem.blogItem);
-        });
 
-        callback(null, finalBlogArr);
+        callback(null, rawBlogResponseArr);
     })
     .catch(function (error) {
         callback(error);

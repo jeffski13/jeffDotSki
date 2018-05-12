@@ -20,7 +20,7 @@ class ViewBlogs extends Component {
 		this.onGetBlogsButtonClicked = this.onGetBlogsButtonClicked.bind(this);
 
 		this.state = {
-			trip: 'Germany2020',
+			trip: 'Chile-2017',
 			blogData: [],
 			status: null
 		};
