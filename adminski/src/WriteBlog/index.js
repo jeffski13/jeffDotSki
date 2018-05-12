@@ -51,7 +51,7 @@ class WriteBlog extends Component {
 	}
 	
 	//form data binding
-	handleDateChange(date) {
+	handleDateChange = (date) => {
 		this.setState({ date: date });
 	}
 	
