@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, ButtonToolbar, Button } from 'react-bootstrap';
-import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 import moment from 'moment';
-import _ from 'lodash';
 
 import { validateFormString, validateDate, FORM_SUCCESS } from '../formvalidation';
 import BlogEntryFormGenerator from './BlogEntryFormGenerator';
 import AWS from 'aws-sdk';
-import { AWS_S3_BUCKET_NAME, AWS_S3_REGION, AWS_IDENTITY_POOL_ID, awsApiKey } from '../configski';
+import { AWS_S3_REGION, AWS_IDENTITY_POOL_ID } from '../configski';
 import { uploadPhoto } from '../aws/photo';
 import { uploadBlog } from '../aws/blog';
 import './styles.css';
@@ -54,7 +52,6 @@ class WriteBlog extends Component {
 			awsS3: s3
 		};
 	}
-
 	
 	//form data binding
 	handleDateChange(date) {
