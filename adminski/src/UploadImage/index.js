@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, FormControl, ButtonToolbar, Button } from 'react-bootstrap';
+import { FormGroup, FormControl, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 import AWS from 'aws-sdk';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 
@@ -147,8 +147,15 @@ class UploadImage extends React.Component {
                         bsSize="large"
                         disabled={this.state.status === STATUS_LOADING || this.state.imgFile === ''}
                         onClick={this.onSubmitPhotoClicked}
-                    >
+                        >
                         Send Image
+                    </Button>
+                    <Button 
+                        bsSize="large" 
+                        disabled={this.state.status === STATUS_LOADING}
+                        onClick={this.getBlogDirectories}
+                    >
+                        <Glyphicon glyph={"refresh"} />
                     </Button>
                     <div>
 						{(this.state.status === STATUS_LOADING)
