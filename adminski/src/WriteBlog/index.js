@@ -28,9 +28,6 @@ class WriteBlog extends Component {
 	constructor(props, context) {
 		super(props, context);
 
-		this.storeBlogTextFromChildForm = this.storeBlogTextFromChildForm.bind(this);
-		this.onSendClicked = this.onSendClicked.bind(this);
-
 		//initialize the AWS S3 SDK connection object
 		AWS.config.update({
 			region: AWS_S3_REGION,
@@ -79,7 +76,7 @@ class WriteBlog extends Component {
 	}
 
 	//upload photo/blog to server
-	onSendClicked() {
+	onSendClicked = () => {
 		//set state to loading so user cant submit blog twice
 		// and loading indicator appears
 		this.setState({
@@ -88,7 +85,7 @@ class WriteBlog extends Component {
 		});
 
 		//upload photo first, then include photo location when uploading blog 
-		uploadPhoto(this.state.titleImage, this.state.trip, this.state.awsS3, (err, data) => {
+		uploadPhoto(this.state.titleImage, this.state.trip, this.state.awsS3, (err, uploadedImageData) => {
 			////////////////////////////////
 			//upload photo call complete
 			////////////////////////////////
@@ -105,8 +102,8 @@ class WriteBlog extends Component {
 				title: this.state.title,
 				location: this.state.location,
 				date: moment(this.state.date.valueOf()).unix(),
-				blogtext: this.state.blogtext,
-				titleImage: data.Location
+				blogContent: this.state.blogtext,
+				titleImage: uploadedImageData.Location
 			}
 			
 			uploadBlog(blogdata, (err, data) => {
@@ -121,7 +118,7 @@ class WriteBlog extends Component {
 		});
 	}
 
-	storeBlogTextFromChildForm(blogTextData) {
+	storeBlogTextFromChildForm = (blogTextData) => {
 		this.setState({ blogtext: blogTextData });
 	}
 
