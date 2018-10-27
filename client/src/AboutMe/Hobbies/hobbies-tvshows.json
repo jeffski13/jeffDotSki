@@ -1,37 +1,22 @@
 [
   {
-    "title": "Dragonball Z",
-    "season": 8,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonballz.jpg"
-  },
-  {
-    "title": "Arrested Development",
-    "season": 1,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/arresteddevelopment.jpg"
-  },
-  {
-    "title": "The Bachelor",
-    "season": 22,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/thebachelor.jpg"
-  },
-  {
-    "title": "Daredevil",
-    "season": 1,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/daredevil.jpg"
-  },
-  {
     "title": "Naruto Shippuden",
     "season": 2,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/naruto.jpg"
   },
   {
-    "title": "Avatar",
+    "title": "Pokemon (en Espanol)",
     "season": 1,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/avatar.jpg"
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/pokemon_kanto.png"
   },
   {
-    "title": "Dr. Who",
+    "title": "My Hero Academia",
     "season": 2,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/doctorwho.jpg"
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/my_hero_academia.png"
+  },
+  {
+    "title": "Cowboy Bebop",
+    "season": 1,
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/cowboybebop.jpg"
   }
 ]

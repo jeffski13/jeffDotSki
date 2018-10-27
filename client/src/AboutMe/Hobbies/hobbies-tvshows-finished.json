@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Digimon",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/digimon.jpg"
+  },
+  {
+    "title": "Dragon Ball",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonball.jpg"
+  },
+  {
+    "title": "Dragon Ball Z",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonballz.jpg"
+  },
+  {
+    "title": "Yu Yu Hakusho",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/yuyuhakusho.jpg"
+  }
+]

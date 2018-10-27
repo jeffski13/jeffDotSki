@@ -4,9 +4,19 @@ import { Image, Grid, Row, Col } from 'react-bootstrap';
 import './styles.css';
 
 class TvShow extends React.Component {
-  render(){
-    return(
-      
+  render() {
+
+    let seasonRender = null;
+    if (this.props.season) {
+      seasonRender = (<div className="tvshowInfo" >
+        <div className="tvshowTitle" >Season:</div>
+        <div className="tvshowText" >{this.props.season}</div>
+      </div>
+      );
+    }
+
+    return (
+
       <div className="TvShow" >
         <Grid>
           <Row className="show-grid">
@@ -22,11 +32,8 @@ class TvShow extends React.Component {
                   <div className="tvshowTitle" >Show:</div>
                   <div className="tvshowText" >{this.props.title}</div>
                 </div>
-                <div className="tvshowInfo" >
-                  <div className="tvshowTitle" >Season:</div>
-                  <div className="tvshowText" >{this.props.season}</div>
-                </div>
-              </div>
+                {seasonRender}
+              </div >
             </Col>
             <Col xs={0} sm={4} />
             <Col xs={0} sm={2} />
@@ -38,7 +45,7 @@ class TvShow extends React.Component {
 }
 
 TvShow.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   season: PropTypes.number,
   thumb: PropTypes.string
 }
