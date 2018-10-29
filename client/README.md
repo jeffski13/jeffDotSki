@@ -10,4 +10,4 @@ Feel free to look through this as examples! I'm not going to say I know everythi
 
 I created a script that will run the build, copying into the local Firebase directory, and deploying to the firebase servers (which are hosting my site! #notasponsor)
 
-The goal is to get my deploys automated with every tag to my codebase. But for now this has been great! It has made me want to update my site more! Check it: [deployski.ps1]("/deployski.ps1")
+The goal is to get my deploys automated with every tag to my codebase. But for now this has been great! It has made me want to update my site more! Check it: [deployski.ps1](/deployski.ps1)
