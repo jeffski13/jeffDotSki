@@ -8,7 +8,8 @@
   "license": "ISC",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "deploy": "node copyToBuildFirebase.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -28,6 +29,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "webpack": "^3.0.0"
+    "webpack": "^3.0.0",
+    "ncp": "^2.0.0"
   }
 }
