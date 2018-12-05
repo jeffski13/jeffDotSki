@@ -104,7 +104,9 @@ export default class Blogs extends Component {
                                             this.sortBlogsByDate(true);
                                         }}
                                     >
-                                        Up
+                                        <i class="material-icons">
+                                            arrow_downward
+                                        </i>
                                     </Button>
                                     <Button
                                         disabled={!this.state.dateDescending}
@@ -112,7 +114,9 @@ export default class Blogs extends Component {
                                             this.sortBlogsByDate(false);
                                         }}
                                     >
-                                        Down
+                                        <i class="material-icons">
+                                            arrow_upward
+                                        </i>
                                     </Button>
                                 </ButtonGroup>
                             </div>
