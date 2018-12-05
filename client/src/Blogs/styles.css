@@ -9,11 +9,6 @@
 
 }
 
-.BlogSample{
-  padding-top: 6px;
-  padding-bottom: 60px;
-}
-
 .readMoreButton{
   margin-top: 6px;
 }
@@ -81,3 +76,15 @@
 }
 .btn-4 span:hover:before {height: 100%;}
 .btn-4 span:hover:after {width: 100%;}
+
+.BlogList-dateSortControls {
+    font-size: 20px;
+}
+
+.Blogs {
+    padding-top: 30px; 
+}
+
+.Blogs-controls {
+    text-align: end
+}

@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Grid, ButtonGroup, Button } from 'react-bootstrap';
+import { Grid, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 
-import BlogPage from './BlogPage';
+import BlogList from './BlogList';
+import BlogOneAtTime from './BlogOneAtTime';
 import { getBlogs } from './GetBlogs';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
 import Loadingski from '../Inf/Loadingski';
 import './styles.css';
 
+const VIEW_MODE_LIST = "VIEW_MODE_LIST";
+const VIEW_MODE_ONE = "VIEW_MODE_ONE";
 export default class Blogs extends Component {
 
     constructor(props) {
@@ -15,8 +18,8 @@ export default class Blogs extends Component {
             networkStatus: null,
             blogsArr: null,
             tripId: 'uuid1234',
-            dateDescending: true
-        }
+            viewMode: VIEW_MODE_LIST
+        };
     }
 
     componentDidMount() {
@@ -42,88 +45,63 @@ export default class Blogs extends Component {
                 this.setState({
                     blogsArr: data,
                     networkStatus: STATUS_SUCCESS
-                }, () => {
-                    //do initial date sort for blogs
-                    this.sortBlogsByDate(this.state.dateDescending);
                 });
             });
         });
     }
 
-    sortBlogsByDate = (shouldDescend) => {
-        let sortingHatSwitch = -1;
-        if (shouldDescend) {
-            sortingHatSwitch = 1;
+    changeViewStyle = (newViewMode) => {
+        if (newViewMode === VIEW_MODE_LIST || newViewMode === VIEW_MODE_ONE) {
+            this.setState({
+                viewMode: newViewMode
+            });
         }
-        let sortedBlogsArr = this.state.blogsArr;
-
-        sortedBlogsArr.sort((trip, nextTrip) => {
-            if (trip.date < nextTrip.date) {
-                return 1 * sortingHatSwitch;
-            }
-            if (trip.date > nextTrip.date) {
-                return -1 * sortingHatSwitch;
-            }
-            return 0;
-        });
-
-        this.setState({
-            blogsArr: sortedBlogsArr,
-            dateDescending: shouldDescend
-        });
-
     }
-
-    //renders all paragraphs except the first
-    renderSampleBlogItem = (nextBlog) => {
-        return (
-            <BlogPage key={nextBlog.createdAtDate}
-                blog={nextBlog}
-            />
-        );
-    }
-
 
     render() {
-        console.log('jeffski in the cage blog list', this.props.blogList);
         let failureMessageRender = (
             <div>Blast! Something went wrong while getting the blogs.</div>
         );
         let blogsArea = null;
+        let blogsViewComponentOptions = {
+            VIEW_MODE_LIST: BlogList,
+            VIEW_MODE_ONE: BlogOneAtTime
+        };
+        let BlogsViewComponent = blogsViewComponentOptions[this.state.viewMode];
         if (this.state.blogsArr) {
             blogsArea = (
                 <div className="Blogs">
                     <Grid>
-                        <div className="blogBrowserTitle">
-                            <div>Chile</div>
-                            <div>
-                                <ButtonGroup>
-                                    <Button
-                                        disabled={this.state.dateDescending}
-                                        onClick={() => {
-                                            this.sortBlogsByDate(true);
-                                        }}
-                                    >
-                                        <i class="material-icons">
-                                            arrow_downward
-                                        </i>
-                                    </Button>
-                                    <Button
-                                        disabled={!this.state.dateDescending}
-                                        onClick={() => {
-                                            this.sortBlogsByDate(false);
-                                        }}
-                                    >
-                                        <i class="material-icons">
-                                            arrow_upward
-                                        </i>
-                                    </Button>
-                                </ButtonGroup>
-                            </div>
-                        </div>
-                        {this.state.blogsArr.map(this.renderSampleBlogItem)}
+                        <Row className="show-grid">
+                            <Col xs={12} md={6}>
+                                <div className="blogBrowserTitle">Chile</div>
+                            </Col>
+                            <Col xs={6} md={6}>
+                                <div className="Blogs-controls">
+                                    <ButtonGroup>
+                                        <Button
+                                            disabled={this.state.viewMode === VIEW_MODE_LIST}
+                                            onClick={() => {
+                                                this.changeViewStyle(VIEW_MODE_LIST);
+                                            }}
+                                        >
+                                            <i class="material-icons">dehaze</i>
+                                        </Button>
+                                        <Button
+                                            disabled={this.state.viewMode === VIEW_MODE_ONE}
+                                            onClick={() => {
+                                                this.changeViewStyle(VIEW_MODE_ONE);
+                                            }}
+                                        >
+                                            <i class="material-icons">crop_square</i>
+                                        </Button>
+                                    </ButtonGroup>
+                                </div>
+                            </Col>
+                        </Row>
+                        <BlogsViewComponent blogs={this.state.blogsArr} />
                     </Grid>
-                </div>
+                </div >
             );
         }
         return (
