@@ -36,7 +36,7 @@ export default class BlogImagesCarousel extends React.Component {
             <div>
                 <div className="BlogImagesCarousel-text-wrapper" >
                     <div className="BlogImagesCarousel-text">
-                        <div className="BlogImagesCarousel-text-title" >{this.props.images[this.state.currentImageIndex].imageTitle}:</div>  
+                        <div className="BlogImagesCarousel-text-title" ><strong>{this.props.images[this.state.currentImageIndex].imageTitle}</strong></div>  
                         <div>{this.props.images[this.state.currentImageIndex].imageDescription}</div>
                     </div>
                 </div>
