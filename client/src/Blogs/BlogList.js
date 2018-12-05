@@ -58,10 +58,9 @@ export default class BlogList extends Component {
             return null;
         }
         return (
-            <div>
+            <div className="BlogList">
                 <Row className="show-grid">
-                    <Col xs={12} md={6} />
-                    <Col xs={6} md={6}>
+                    <Col xs={12} md={12}>
                         <div className="Blogs-controls">
                             <span className="BlogList-dateSortControls">Date Order: </span>
                             <ButtonGroup>

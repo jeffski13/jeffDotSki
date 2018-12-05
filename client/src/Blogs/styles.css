@@ -83,8 +83,21 @@
 
 .Blogs {
     padding-top: 30px; 
+    padding-bottom: 30px; 
 }
 
 .Blogs-controls {
     text-align: end
+}
+
+.BlogOneAtTime {   
+    padding-top: 20px; 
+}
+
+.BlogOneAtTime-blog {
+    padding-bottom: 30px; 
+}
+
+.BlogList {   
+    padding-top: 20px; 
 }

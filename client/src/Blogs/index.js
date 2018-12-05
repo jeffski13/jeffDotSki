@@ -18,8 +18,7 @@ export default class Blogs extends Component {
             networkStatus: null,
             blogsArr: null,
             tripId: 'uuid1234',
-            viewMode: VIEW_MODE_LIST
-        };
+            viewMode: VIEW_MODE_ONE        };
     }
 
     componentDidMount() {
@@ -76,7 +75,7 @@ export default class Blogs extends Component {
                             <Col xs={12} md={6}>
                                 <div className="blogBrowserTitle">Chile</div>
                             </Col>
-                            <Col xs={6} md={6}>
+                            <Col xs={12} md={6}>
                                 <div className="Blogs-controls">
                                     <ButtonGroup>
                                         <Button

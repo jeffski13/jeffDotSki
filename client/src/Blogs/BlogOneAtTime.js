@@ -10,87 +10,79 @@ export default class BlogOneAtTime extends Component {
         super(props);
         this.state = {
             blogs: [],
-            dateDescending: true
+            blogSelectedIndex: 0
         };
     }
 
     componentDidMount() {
         this.state.blogs = this.props.blogs;
+        this.sortBlogsByDate();
     }
 
-    sortBlogsByDate = (shouldDescend) => {
-        let sortingHatSwitch = -1;
-        if (shouldDescend) {
-            sortingHatSwitch = 1;
-        }
-        let sortedBlogsArr = this.state.blogsArr;
+    sortBlogsByDate = () => {
+        let sortedBlogsArr = this.state.blogs;
 
         sortedBlogsArr.sort((trip, nextTrip) => {
             if (trip.date < nextTrip.date) {
-                return 1 * sortingHatSwitch;
+                return -1;
             }
             if (trip.date > nextTrip.date) {
-                return -1 * sortingHatSwitch;
+                return 1;
             }
             return 0;
         });
 
         this.setState({
-            blogs: sortedBlogsArr,
-            dateDescending: shouldDescend
+            blogs: sortedBlogsArr
         });
 
     }
-    
-    //renders all paragraphs except the first
-    renderSampleBlogItem = (nextBlog) => {
-        return (
-            <BlogPage key={nextBlog.createdAtDate}
-                blog={nextBlog}
-            />
-        );
-    }
 
     render() {
-        if (!this.state.blogs) {
+        if (!this.state.blogs || this.state.blogs.length === 0) {
             return null;
         }
-        return (
-            <div>
-                <Row className="show-grid">
-                    <Col xs={12} md={6} />
-                    <Col xs={6} md={6}>
-                        <div className="Blogs-controls">
-                            <span className="BlogList-dateSortControls">Date Order: </span>
-                            <ButtonGroup>
-                                <Button
-                                    bsSize="xsmall"
-                                    disabled={this.state.dateDescending}
-                                    onClick={() => {
-                                        this.sortBlogsByDate(true);
-                                    }}
-                                >
-                                    <i class="material-icons">
-                                        arrow_downward
-                                    </i>
-                                </Button>
-                                <Button
-                                    bsSize="xsmall"
-                                    disabled={!this.state.dateDescending}
-                                    onClick={() => {
-                                        this.sortBlogsByDate(false);
-                                    }}
-                                >
-                                    <i class="material-icons">
-                                        arrow_upward
-                                    </i>
-                                </Button>
-                            </ButtonGroup>
-                        </div>
-                    </Col>
-                </Row>
 
-                {this.state.blogs.map(this.renderSampleBlogItem)}
+        let previousLink = null;
+        if (this.state.blogSelectedIndex > 0) {
+            previousLink = (
+                <button onClick={() => {
+                    this.setState({ blogSelectedIndex: this.state.blogSelectedIndex - 1 })
+                    window.scrollTo(0, 0);
+                }} >Previous: {this.state.blogs[this.state.blogSelectedIndex - 1].title}</button>
+            );
+        }
+        let nextLink = null;
+        if (this.state.blogSelectedIndex < this.state.blogs.length - 1) {
+            nextLink = (
+                <button onClick={() => {
+                    this.setState({ blogSelectedIndex: this.state.blogSelectedIndex + 1 })
+                    window.scrollTo(0, 0);
+                }} >Next: {this.state.blogs[this.state.blogSelectedIndex + 1].title}</button>
+            );
+        }
+
+        let blogNavigationControls = (
+            <Row className="show-grid">
+                <Col xs={6} md={3}>
+                    {previousLink}
+                </Col>
+                <Col xs={0} md={6}></Col>
+                <Col xs={6} md={3}>
+                    <div className="Blogs-controls">
+                        {nextLink}
+                    </div>
+                </Col>
+            </Row>
+        );
+
+        return (
+            <div className="BlogOneAtTime" >
+                {blogNavigationControls}
+                <div className="BlogOneAtTime-blog">
+                    <BlogPage blog={this.state.blogs[this.state.blogSelectedIndex]} />
+                </div>
+                {blogNavigationControls}
             </div>
         );
 
