@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import getBlogReducer from '../Blog/getBlogReducer';
-import getBlogListReducer from '../Blog/getBlogListReducer';
+import getBlogReducer from '../Blogs/getBlogReducer';
+import getBlogListReducer from '../Blogs/getBlogListReducer';
 import getShotGlassInfoReducer from '../AboutMe/Shotglass/redux/reducer';
 
 const rootReducer = combineReducers({

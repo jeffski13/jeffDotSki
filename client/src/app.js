@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import TitlePage from './TitlePage';
-import BlogBrowser from './Blog/BlogBrowser';
+import Blogs from './Blogs';
 import Shotglass from './AboutMe/Shotglass';
 import Bio from './AboutMe/Bio';
 import ErrorPage from './ErrorPage';
@@ -21,7 +21,7 @@ export default class App extends Component {
         <div className="webpagecontent">
           <Switch>
             <Route exact path="/" component={TitlePage}/>
-            <Route path="/blog/chile" component={BlogBrowser}/>
+            <Route path="/blog/chile" component={Blogs}/>
             <Route path="/aboutme/shotglass" component={Shotglass}/>
             <Route path="/aboutme/bio" component={Bio}/>
             <Route path="/careers" component={Careers}/>

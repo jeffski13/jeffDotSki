@@ -10,7 +10,6 @@ export function getBlogList(){
   }
 }
 
-
 export const GET_BLOG_ACTION='GET_BLOG_ACTION';
 
 export function getBlog(blogUrl) {

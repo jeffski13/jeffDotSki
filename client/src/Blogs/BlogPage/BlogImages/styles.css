@@ -1,0 +1,16 @@
+.BlogImagesCarousel-text-wrapper {
+    background-color: black;
+    min-height: 40px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.BlogImagesCarousel-text {
+    color: white;
+    font-size: 18px;
+}
+
+.BlogImagesCarousel-text-title {
+    font-size: 20px;
+}

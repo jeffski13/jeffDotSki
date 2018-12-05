@@ -14,9 +14,11 @@
   "dependencies": {
     "axios": "^0.17.1",
     "lodash": "^3.10.1",
+    "moment": "^2.22.2",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
+    "react-image-gallery": "^0.8.12",
     "react-loading": "^1.0.1",
     "react-redux": "^5.0.0",
     "react-router": "^4.2.0",
