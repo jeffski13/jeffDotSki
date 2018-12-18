@@ -17,6 +17,28 @@ export default class BlogPage extends Component {
         blog: PropTypes.object.isRequired
     }
 
+    constructor() {
+        super();
+        this.state = {
+            windowWidth: window.innerWidth
+        };
+    }
+
+    // add a listener for the screen size since we have a mobile view
+    componentWillMount() {
+        window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    // make sure to remove the listener for the screen size
+    // when the component is not mounted anymore
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    handleWindowSizeChange = () => {
+        this.setState({ windowWidth: window.innerWidth });
+    };
+
     //renders all paragraphs except the first
     renderRemainingParagraphs = (blogTextItem) => {
         return (
@@ -27,13 +49,19 @@ export default class BlogPage extends Component {
     }
 
     render() {
-
         let blog = this.props.blog;
 
         //get first paragraph data
         //then put the rest of the paragraphs into a separete array
         const firstParagraph = blog.blogContent[0];
         const remainingParagraphs = blog.blogContent.slice(1, blog.blogContent.length);
+
+
+        //is it time to go mobile? if so, get smaller image
+        let finalTitleImgUrl = blog.titleImageUrl //#YOLOSWAG - take out the check for blog.titleImage. Right now most dont have this, in the future they all should 
+        if (this.state.windowWidth <= 650 && blog.titleImage) { //for now check to see if titleImage exists
+            finalTitleImgUrl = blog.titleImage.midsize;
+        }
 
         return (
             <Grid>
@@ -49,7 +77,7 @@ export default class BlogPage extends Component {
                 <Row className="show-grid blogPargraph">
                     <Col sm={8} md={4} >{firstParagraph.text}</Col>
                     <Col sm={8} md={4} >
-                        <Image src={blog.titleImageUrl} responsive />
+                        <Image src={finalTitleImgUrl} responsive />
                     </Col>
                 </Row>
                 {remainingParagraphs.length > 0

@@ -5,6 +5,7 @@ import BlogImagesCarousel from './BlogImagesCarousel';
 import {Image} from 'react-bootstrap';
 
 import "./blog-image-styles.css";
+import { fileURLToPath } from 'url';
 
 class BlogImages extends React.Component {
     
@@ -16,7 +17,7 @@ class BlogImages extends React.Component {
     constructor() {
         super();
         this.state = {
-            width: window.innerWidth
+            windowWidth: window.innerWidth
         };
     }
 
@@ -32,15 +33,19 @@ class BlogImages extends React.Component {
     }
 
     handleWindowSizeChange = () => {
-        this.setState({ width: window.innerWidth });
+        this.setState({ windowWidth: window.innerWidth });
     };
 
     renderBlogImageItems = (blogImageItemData, index) => {
+        let finalImgUrl = blogImageItemData.midsize;
+        if(!finalImgUrl){
+            finalImgUrl = blogImageItemData.url;
+        }
         return (
             <div className="BlogImages-mobile-responsive-images" >
                 <Image
-                    key={blogImageItemData.url + index}
-                    src={blogImageItemData.url}
+                    key={finalImgUrl + index}
+                    src={finalImgUrl}
                     responsive 
                     />
                 <div className="BlogImages-mobile-text">
@@ -60,7 +65,7 @@ class BlogImages extends React.Component {
 
         //is it time to go mobile?
         let isMobile = false;
-        if (this.state.width <= 650) {
+        if (this.state.windowWidth <= 650) {
             isMobile = true;
         }
 
