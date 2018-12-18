@@ -7,3 +7,11 @@
 .brand {
 	cursor:pointer;
 }
+
+.Loadingski {
+    min-height: 86vh;
+}
+
+.Loadingski > div {
+    margin: 0 auto;
+}

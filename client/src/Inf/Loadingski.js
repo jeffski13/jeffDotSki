@@ -6,7 +6,7 @@ import './loading-styles.css';
 class Loadingski extends Component {
   render(){
     return(
-      <div className="loading" >
+      <div className="Loadingski" >
         <ReactLoading type="cylon" color="#333" height="100px" width="100px"/>
       </div>
     );
