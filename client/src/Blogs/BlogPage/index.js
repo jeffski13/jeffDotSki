@@ -56,7 +56,6 @@ export default class BlogPage extends Component {
         const firstParagraph = blog.blogContent[0];
         const remainingParagraphs = blog.blogContent.slice(1, blog.blogContent.length);
 
-
         //is it time to go mobile? if so, get smaller image
         let finalTitleImgUrl = blog.titleImageUrl //#YOLOSWAG - take out the check for blog.titleImage. Right now most dont have this, in the future they all should 
         if (this.state.windowWidth <= 650 && blog.titleImage) { //for now check to see if titleImage exists
@@ -75,7 +74,7 @@ export default class BlogPage extends Component {
                     <div>{moment.unix(blog.date).format("MM/DD/YYYY")}</div>
                 </Row>
                 <Row className="show-grid blogPargraph">
-                    <Col sm={8} md={4} >{firstParagraph.text}</Col>
+                    <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
                     <Col sm={8} md={4} >
                         <Image src={finalTitleImgUrl} responsive />
                     </Col>

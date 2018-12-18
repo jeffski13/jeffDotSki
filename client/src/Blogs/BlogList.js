@@ -10,7 +10,7 @@ export default class BlogList extends Component {
         super(props);
         this.state = {
             blogs: [],
-            dateDescending: true
+            dateDescending: false
         };
     }
 
@@ -65,24 +65,22 @@ export default class BlogList extends Component {
                             <span className="BlogList-dateSortControls">Date Order: </span>
                             <ButtonGroup>
                                 <Button
-                                    bsSize="xsmall"
-                                    disabled={this.state.dateDescending}
-                                    onClick={() => {
-                                        this.sortBlogsByDate(true);
-                                    }}
-                                >
-                                    <i class="material-icons">
-                                        arrow_downward
-                                    </i>
-                                </Button>
-                                <Button
-                                    bsSize="xsmall"
                                     disabled={!this.state.dateDescending}
                                     onClick={() => {
                                         this.sortBlogsByDate(false);
                                     }}
-                                >
-                                    <i class="material-icons">
+                                    >
+                                    <i className="material-icons navigation-icon-button">
+                                        arrow_downward
+                                    </i>
+                                </Button>
+                                <Button
+                                    disabled={this.state.dateDescending}
+                                    onClick={() => {
+                                        this.sortBlogsByDate(true);
+                                    }}
+                                    >
+                                    <i className="material-icons navigation-icon-button">
                                         arrow_upward
                                     </i>
                                 </Button>

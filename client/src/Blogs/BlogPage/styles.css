@@ -1,3 +1,7 @@
 .blogPargraph{
   margin-top: 10px;
 }
+
+.BlogPage__first-paragraph {
+    padding-bottom: 10px;
+}

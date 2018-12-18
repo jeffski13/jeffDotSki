@@ -79,20 +79,22 @@ export default class Blogs extends Component {
                                 <div className="Blogs-controls">
                                     <ButtonGroup>
                                         <Button
-                                            disabled={this.state.viewMode === VIEW_MODE_LIST}
-                                            onClick={() => {
-                                                this.changeViewStyle(VIEW_MODE_LIST);
-                                            }}
-                                        >
-                                            <i class="material-icons">dehaze</i>
-                                        </Button>
-                                        <Button
+                                            bsSize="large"
                                             disabled={this.state.viewMode === VIEW_MODE_ONE}
                                             onClick={() => {
                                                 this.changeViewStyle(VIEW_MODE_ONE);
                                             }}
                                         >
-                                            <i class="material-icons">crop_square</i>
+                                            <i className="material-icons navigation-icon-button">crop_square</i>
+                                        </Button>
+                                        <Button
+                                            bsSize="large"
+                                            disabled={this.state.viewMode === VIEW_MODE_LIST}
+                                            onClick={() => {
+                                                this.changeViewStyle(VIEW_MODE_LIST);
+                                            }}
+                                        >
+                                            <i className="material-icons navigation-icon-button">dehaze</i>
                                         </Button>
                                     </ButtonGroup>
                                 </div>

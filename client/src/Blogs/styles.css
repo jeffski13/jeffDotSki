@@ -101,3 +101,7 @@
 .BlogList {   
     padding-top: 20px; 
 }
+
+.navigation-icon-button {
+    vertical-align: middle;
+}
