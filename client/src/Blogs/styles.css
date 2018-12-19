@@ -84,6 +84,18 @@
 .Blogs {
     padding-top: 30px; 
     padding-bottom: 30px; 
+    min-height: 86vh;
+}
+
+.Blogs_error {
+    padding: 45px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Blogs_error-refresh{
+    padding-left: 60px;
 }
 
 .Blogs-controls {

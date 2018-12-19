@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import { Panel, Grid, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 
 import BlogList from './BlogList';
 import BlogOneAtTime from './BlogOneAtTime';
@@ -18,7 +18,8 @@ export default class Blogs extends Component {
             networkStatus: null,
             blogsArr: null,
             tripId: 'uuid1234',
-            viewMode: VIEW_MODE_ONE        };
+            viewMode: VIEW_MODE_ONE
+        };
     }
 
     componentDidMount() {
@@ -59,7 +60,28 @@ export default class Blogs extends Component {
 
     render() {
         let failureMessageRender = (
-            <div>Blast! Something went wrong while getting the blogs.</div>
+            <div className="Blogs">
+                <div className="Blogs_error" >
+                    <Panel bsStyle="danger">
+                        <Panel.Heading>
+                            <Panel.Title componentClass="h3">Houston, we have a problem.</Panel.Title>
+                        </Panel.Heading>
+                        <Panel.Body>
+                            <span>
+                                <span>Blast! Something went wrong while getting the blogs.</span>
+                                <span className="Blogs_error-refresh" >
+                                    <Button
+                                        onClick={()=>{window.location.reload()}} 
+                                        bsStyle="link"
+                                    >
+                                        Refresh?
+                                    </Button>
+                                </span>
+                            </span>
+                        </Panel.Body>
+                    </Panel>
+                </div>
+            </div>
         );
         let blogsArea = null;
         let blogsViewComponentOptions = {
