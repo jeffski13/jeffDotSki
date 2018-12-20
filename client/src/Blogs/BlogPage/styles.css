@@ -5,3 +5,8 @@
 .BlogPage__first-paragraph {
     padding-bottom: 10px;
 }
+
+.BlogPage_loadingImage {
+    visibility: hidden;
+    height: 0;
+}

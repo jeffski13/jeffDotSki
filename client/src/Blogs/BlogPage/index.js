@@ -11,6 +11,7 @@ import moment from 'moment';
 import BlogImages from './BlogImages'
 import BlogTextItem from './BlogTextItem';
 import './styles.css';
+import loadingImage from './loading_image.gif';
 
 export default class BlogPage extends Component {
     static propTypes = {
@@ -20,7 +21,8 @@ export default class BlogPage extends Component {
     constructor() {
         super();
         this.state = {
-            windowWidth: window.innerWidth
+            windowWidth: window.innerWidth,
+            hasTitleImageLoaded: false
         };
     }
 
@@ -62,6 +64,11 @@ export default class BlogPage extends Component {
             finalTitleImgUrl = blog.titleImage.midsize;
         }
 
+        //a little haxxy to make the image responsive and hidden when needed
+        let titleImageClass =  'img-responsive';
+        if(!this.state.hasTitleImageLoaded) {
+            titleImageClass = 'BlogPage_loadingImage img-responsive';
+        }
         return (
             <Grid>
                 <Row className="show-grid">
@@ -76,7 +83,17 @@ export default class BlogPage extends Component {
                 <Row className="show-grid blogPargraph">
                     <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
                     <Col sm={8} md={4} >
-                        <Image src={finalTitleImgUrl} responsive />
+                        <img 
+                            onLoad={() => {
+                                this.setState({
+                                    hasTitleImageLoaded: true
+                                })
+                            }} 
+                            id={blog.id + '-title-image'} 
+                            src={finalTitleImgUrl}
+                            className={titleImageClass}
+                        />
+                        {!this.state.hasTitleImageLoaded && <Image src={loadingImage} responsive />}
                     </Col>
                 </Row>
                 {remainingParagraphs.length > 0

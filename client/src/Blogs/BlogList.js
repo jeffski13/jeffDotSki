@@ -47,7 +47,7 @@ export default class BlogList extends Component {
     //renders all paragraphs except the first
     renderSampleBlogItem = (nextBlog) => {
         return (
-            <BlogPage key={nextBlog.createdAtDate}
+            <BlogPage key={nextBlog.id}
                 blog={nextBlog}
             />
         );
