@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -92,6 +91,7 @@ export default class BlogPage extends Component {
                             id={blog.id + '-title-image'} 
                             src={finalTitleImgUrl}
                             className={titleImageClass}
+                            alt={`${blog.title} Main`}
                         />
                         {!this.state.hasTitleImageLoaded && <Image src={loadingImage} responsive />}
                     </Col>

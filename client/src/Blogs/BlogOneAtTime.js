@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, ButtonGroup, Button } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 import BlogPage from './BlogPage';
 import './styles.css';
@@ -15,8 +15,12 @@ export default class BlogOneAtTime extends Component {
     }
 
     componentDidMount() {
-        this.state.blogs = this.props.blogs;
-        this.sortBlogsByDate();
+        //get blogs from props then sort them for rendering
+        this.setState({
+            blogs: this.props.blogs
+        }, () => {
+            this.sortBlogsByDate();
+        });
     }
 
     sortBlogsByDate = () => {
@@ -80,7 +84,7 @@ export default class BlogOneAtTime extends Component {
             <div className="BlogOneAtTime" >
                 {blogNavigationControls}
                 <div className="BlogOneAtTime-blog">
-                    <BlogPage blog={this.state.blogs[this.state.blogSelectedIndex]} />
+                    <BlogPage key={this.state.blogs[this.state.blogSelectedIndex].id} blog={this.state.blogs[this.state.blogSelectedIndex]} />
                 </div>
                 {blogNavigationControls}
             </div>

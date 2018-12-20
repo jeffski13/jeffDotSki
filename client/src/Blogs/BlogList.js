@@ -15,9 +15,11 @@ export default class BlogList extends Component {
     }
 
     componentDidMount() {
-        console.log('jeffski mounting component with ', this.props.blogs);
-        this.state.blogs = this.props.blogs;
-        this.sortBlogsByDate(this.state.dateDescending);
+        this.setState({
+            blogs: this.props.blogs
+        }, () => {
+            this.sortBlogsByDate(this.state.dateDescending);
+        });
     }
 
     sortBlogsByDate = (shouldDescend) => {

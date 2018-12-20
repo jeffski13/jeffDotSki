@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 import './styles.css';
 
 class TvShow extends React.Component {
@@ -23,7 +23,7 @@ class TvShow extends React.Component {
             <Col xs={0} sm={2} />
             <Col xs={8} sm={2} >
               <div className="tvshowImageContainer" >
-                <img className="tvshowImage" src={this.props.thumb} />
+                <img className="tvshowImage" src={this.props.thumb} alt={`${this.props.title} Show`} />
               </div>
             </Col>
             <Col xs={12} sm={4} >

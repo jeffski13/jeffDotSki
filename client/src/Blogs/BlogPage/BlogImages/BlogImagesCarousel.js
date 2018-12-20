@@ -31,6 +31,7 @@ export default class BlogImagesCarousel extends React.Component {
                 originalTitle: nextImageItem.imageTitle,
                 thumbnailTitle: nextImageItem.imageTitle
             });
+            return null; //lint wants to name sure if we error in here that we render something (in this case null)
         })
         return (
             <div>

@@ -53,7 +53,7 @@ class FooterBarski extends Component {
               </div>
               <LinkContainer to="/careers">
                 <a
-                  href= "#"
+                  href= "/careers"
                   className="footerBarskiLink"
                 >
                   Careers?

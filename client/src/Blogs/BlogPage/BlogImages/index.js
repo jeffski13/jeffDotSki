@@ -5,7 +5,6 @@ import BlogImagesCarousel from './BlogImagesCarousel';
 import {Image} from 'react-bootstrap';
 
 import "./blog-image-styles.css";
-import { fileURLToPath } from 'url';
 
 class BlogImages extends React.Component {
     
