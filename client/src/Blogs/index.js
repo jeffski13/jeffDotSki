@@ -18,7 +18,7 @@ export default class Blogs extends Component {
             networkStatus: null,
             blogsArr: null,
             tripId: 'uuid1234',
-            viewMode: VIEW_MODE_ONE
+            viewMode: VIEW_MODE_LIST
         };
     }
 
