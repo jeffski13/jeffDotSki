@@ -1,11 +1,26 @@
 import React from 'react';
-import ScrollableAnchor, {configureAnchors} from 'react-scrollable-anchor';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 
 import './styles.css';
 
 const linkPrefix = 'jumpToBlog-';
+
+function LinkWithTooltip({ id, children, href, tooltip }) {
+    return (
+        <OverlayTrigger
+            overlay={<Tooltip id={id}>{tooltip}</Tooltip>}
+            placement="left"
+            delayShow={100}
+            delayHide={200}
+        >
+            <a href={href}>{children}</a>
+        </OverlayTrigger>
+    );
+}
+
 export default class Timeline extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -40,7 +55,7 @@ export default class Timeline extends React.Component {
         // add a listener for the screen size since we have a mobile view
         window.addEventListener('resize', this.handleWindowSizeChange);
         //configure anchors with offset to account for ever-present header
-        configureAnchors({offset: -60});
+        configureAnchors({ offset: -60 });
     }
 
     componentWillUnmount() {
@@ -54,18 +69,18 @@ export default class Timeline extends React.Component {
     };
 
     renderDatePoints = (nextBlog, index) => {
-        let endLengths = 25;
+        let endLengths = 35;
         let totalHeight = this.state.windowHeight * 0.75;
 
         let svgCenterY = endLengths + index * ((totalHeight - (2 * endLengths)) / (this.state.blogs.length - 1));
 
         return (
-            <a href={'#' + linkPrefix + nextBlog.id} >
+            <LinkWithTooltip tooltip={nextBlog.date} href={'#' + linkPrefix + nextBlog.id}>
                 <circle
-                    cx={this.state.navWidth/2} cy={svgCenterY} r="7"
+                    cx={this.state.navWidth / 2} cy={svgCenterY} r="9"
                     stroke="grey" stroke-width="2" fill="grey"
                 />
-            </a>
+            </LinkWithTooltip>
         );
     }
 
