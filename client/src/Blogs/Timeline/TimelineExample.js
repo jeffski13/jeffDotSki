@@ -6,9 +6,8 @@ import Timeline from './index';
 class TimelineExampleElement extends React.Component {
 
     componentDidMount() {
-        //id for anchor
 
-        //magic from mdn to know when element is on screen
+        //magic from MDN to know when element is on screen
         let observerOptions = {
             root: null,
             rootMargin: "0px",
@@ -26,13 +25,13 @@ class TimelineExampleElement extends React.Component {
             thresholdSets[0].push(i);
         }
 
-        //for debugging only:
-        let title = this.props.blog.title;
+        let percentageInViewCallback = this.props.percentageInViewCallback;
+        let blogId = this.props.blog.id;
         observerOptions.threshold = thresholdSets[0];
         let nextBlogObserver = new IntersectionObserver((entries) => {
             entries.forEach(function (entry) {
-                let visiblePct = (Math.floor(entry.intersectionRatio * 100)) + "%";
-                console.log(title, ' entries are: ', visiblePct);
+                let visiblePct = Math.floor(entry.intersectionRatio * 100);
+                percentageInViewCallback(visiblePct, blogId);
             });
         }, observerOptions);
         nextBlogObserver.observe(document.querySelector("#" + this.props.nextBlogAnchorId));
@@ -60,6 +59,10 @@ export default class TimelineExample extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            sectionShowing: {
+                id: '',
+                percentage: -1
+            },
             blogs: [
                 {
                     date: 'Oct 14',
@@ -106,11 +109,35 @@ export default class TimelineExample extends React.Component {
     }
 
     renderContentSection = (nextBlog) => {
+        
         return (
             <TimelineExampleElement
                 key={nextBlog.id}
                 blog={nextBlog}
                 nextBlogAnchorId={nextBlog.id}
+                percentageInViewCallback={(percentageShowing, blogId)=> {
+                    console.log('we have a callback for id ', blogId, 'showing percentage ', percentageShowing);
+
+                    //determine which section is most visible and update state with findings
+                    if(this.state.sectionShowing.id === blogId){
+                        //if we get an id that is already deteremined to be "visible", just update percentage
+                        this.setState({ 
+                            sectionShowing: {
+                                id: blogId,
+                                percentage: percentageShowing
+                            }
+                        });
+                    }
+                    else if(percentageShowing > this.state.sectionShowing.percentage){ 
+                        //if we get a different id than what is "visible", see if the percentage showing is larger than the "visible", then update with new id and percentage
+                        this.setState({
+                            sectionShowing: {
+                                id: blogId,
+                                percentage: percentageShowing
+                            }
+                        });
+                    }
+                }}
             />
         );
     }
@@ -118,9 +145,14 @@ export default class TimelineExample extends React.Component {
     render() {
         let timelineLinksInfo = [];
         this.state.blogs.map((nextBlog) => {
+            let isNextBlogVisible = false;
+            if(this.state.sectionShowing.id === nextBlog.id){
+                isNextBlogVisible = true;
+            }
             timelineLinksInfo.push({
                 popoverText: nextBlog.date,
-                elementId: nextBlog.id
+                elementId: nextBlog.id,
+                isSectionVisible: isNextBlogVisible
             });
         });
 
@@ -132,7 +164,6 @@ export default class TimelineExample extends React.Component {
                 </div>
 
                 <Timeline linksInfo={timelineLinksInfo} />
-
             </div>
         );
     }

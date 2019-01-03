@@ -46,11 +46,16 @@ export default class Timeline extends React.Component {
 
         let svgCenterY = endLengths + index * ((totalHeight - (2 * endLengths)) / (this.props.linksInfo.length - 1));
 
+        let circleFillColor = 'grey';
+        if(nextLinkInfo.isSectionVisible){
+            circleFillColor = 'black';
+        }
+
         return (
             <LinkWithTooltip tooltip={nextLinkInfo.popoverText} href={'#' + nextLinkInfo.elementId}>
                 <circle
                     cx={this.state.navWidth / 2} cy={svgCenterY} r="9"
-                    stroke="grey" stroke-width="2" fill="grey"
+                    stroke="grey" stroke-width="2" fill={circleFillColor}
                 />
             </LinkWithTooltip>
         );
