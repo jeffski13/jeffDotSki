@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import moment from 'moment';
 
+import {MONTHS} from './blog-consts';
 import BlogPage from './BlogPage';
+import Timeline from './Timeline';
 import './styles.css';
 
 export default class BlogList extends Component {
@@ -46,19 +49,43 @@ export default class BlogList extends Component {
 
     }
 
+    getTimelineLinksInfo = () => {
+        let timelineLinkInfo = [];
+
+        //at this point we assume the blogs are sorted in order
+        this.state.blogs.map((nextBlog)=> {
+            let blogMoment = moment.unix(nextBlog.date);
+            let blogMonth = MONTHS[blogMoment.month()];
+            let blogDateOfMonth = blogMoment.date();
+
+            timelineLinkInfo.push({
+                popoverText: `${blogMonth.substring(0,3)} ${blogDateOfMonth}`,
+                elementId: nextBlog.id
+            })
+        });
+
+        return timelineLinkInfo;
+    } 
+
     //renders all paragraphs except the first
     renderSampleBlogItem = (nextBlog) => {
         return (
-            <BlogPage key={nextBlog.id}
+            <BlogPage 
+                key={nextBlog.id}
+                invisibleAnchorId={nextBlog.id}
                 blog={nextBlog}
             />
         );
     }
 
     render() {
+        //null if no data
         if (!this.state.blogs) {
             return null;
         }
+
+        let timelineLinksInfo = this.getTimelineLinksInfo();
+
         return (
             <div className="BlogList">
                 <Row className="show-grid">
@@ -92,6 +119,8 @@ export default class BlogList extends Component {
                 </Row>
 
                 {this.state.blogs.map(this.renderSampleBlogItem)}
+
+                <Timeline linksInfo={timelineLinksInfo} />
             </div>
         );
 

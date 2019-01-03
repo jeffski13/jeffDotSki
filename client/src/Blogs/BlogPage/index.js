@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/lib/Col';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 import Image from 'react-bootstrap/lib/Image';
 import moment from 'moment';
+import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 
 import BlogImages from './BlogImages'
 import BlogTextItem from './BlogTextItem';
@@ -25,9 +26,11 @@ export default class BlogPage extends Component {
         };
     }
 
-    // add a listener for the screen size since we have a mobile view
     componentWillMount() {
+        // add a listener for the screen size since we have a mobile view
         window.addEventListener('resize', this.handleWindowSizeChange);
+        //configure anchors with offset to account for ever-present header
+        configureAnchors({ offset: -60 });
     }
 
     // make sure to remove the listener for the screen size
@@ -71,7 +74,9 @@ export default class BlogPage extends Component {
         return (
             <Grid>
                 <Row className="show-grid">
+                <ScrollableAnchor id={this.props.invisibleAnchorId}>
                     <PageHeader>{blog.title}</PageHeader>
+                </ScrollableAnchor>
                 </Row>
                 <Row className="show-grid">
                     <div>{blog.location}</div>
