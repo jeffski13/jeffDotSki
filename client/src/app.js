@@ -10,7 +10,7 @@ import NavigationBar from './Inf/NavigationBar';
 import FooterBarski from './Inf/FooterBarski';
 import Careers from './Careers';
 import Hobbies from './AboutMe/Hobbies';
-import Timeline from './Blogs/Timeline';
+import TimelineExample from './Blogs/Timeline/TimelineExample';
 import './styles.css';
 
 //eventually this will do all the routing...later not now,  someday
@@ -23,7 +23,7 @@ export default class App extends Component {
           <Switch>
             <Route exact path="/" component={TitlePage}/>
             <Route path="/blog/chile" component={Blogs}/>
-            <Route path="/blog/timeline" component={Timeline}/>
+            <Route path="/blog/timeline" component={TimelineExample}/>
             <Route path="/aboutme/shotglass" component={Shotglass}/>
             <Route path="/aboutme/bio" component={Bio}/>
             <Route path="/careers" component={Careers}/>
