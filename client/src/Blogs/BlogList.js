@@ -13,7 +13,11 @@ export default class BlogList extends Component {
         super(props);
         this.state = {
             blogs: [],
-            dateDescending: false
+            dateDescending: false,
+            blogShowing: {
+                id: '',
+                percentage: -1
+            }
         };
     }
 
@@ -58,9 +62,15 @@ export default class BlogList extends Component {
             let blogMonth = MONTHS[blogMoment.month()];
             let blogDateOfMonth = blogMoment.date();
 
+            let isNextBlogVisible = false;
+            if(this.state.blogShowing.id === nextBlog.id){
+                isNextBlogVisible = true;
+            }
+            
             timelineLinkInfo.push({
                 popoverText: `${blogMonth.substring(0,3)} ${blogDateOfMonth}`,
-                elementId: nextBlog.id
+                elementId: nextBlog.id,
+                isSectionVisible: isNextBlogVisible
             })
         });
 
@@ -74,6 +84,30 @@ export default class BlogList extends Component {
                 key={nextBlog.id}
                 invisibleAnchorId={nextBlog.id}
                 blog={nextBlog}
+                blogAnchorId={`idForBlogPercentageView-${nextBlog.id}`}
+                percentageInViewCallback={(percentageShowing, blogId)=> {
+
+                    //determine which section is most visible and update state with findings
+                    if(this.state.blogShowing.id === blogId){
+                        //if we get an id that is already deteremined to be "visible", just update percentage
+                        this.setState({ 
+                            blogShowing: {
+                                id: blogId,
+                                percentage: percentageShowing
+                            }
+                        });
+                    }
+                    else if(percentageShowing > this.state.blogShowing.percentage){ 
+                        //if we get a different id than what is "visible", see if the percentage showing is larger than the "visible", then update with new id and percentage
+                        this.setState({
+                            blogShowing: {
+                                id: blogId,
+                                percentage: percentageShowing
+                            }
+                        });
+                    }
+
+                }}
             />
         );
     }

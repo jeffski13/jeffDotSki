@@ -28,13 +28,13 @@ class TimelineExampleElement extends React.Component {
         let percentageInViewCallback = this.props.percentageInViewCallback;
         let blogId = this.props.blog.id;
         observerOptions.threshold = thresholdSets[0];
-        let nextBlogObserver = new IntersectionObserver((entries) => {
+        let blogObserver = new IntersectionObserver((entries) => {
             entries.forEach(function (entry) {
                 let visiblePct = Math.floor(entry.intersectionRatio * 100);
                 percentageInViewCallback(visiblePct, blogId);
             });
         }, observerOptions);
-        nextBlogObserver.observe(document.querySelector("#" + this.props.nextBlogAnchorId));
+        blogObserver.observe(document.querySelector("#" + this.props.blogAnchorId));
     }
 
     render() {
@@ -42,7 +42,7 @@ class TimelineExampleElement extends React.Component {
 
         //id is the blog id
         return (
-            <div id={this.props.nextBlogAnchorId} className="timeline-page-content-section">
+            <div id={this.props.blogAnchorId} className="timeline-page-content-section">
                 <ScrollableAnchor id={this.props.blog.id}>
                     <div>
                         <h3>{this.props.blog.id}</h3>
@@ -114,8 +114,8 @@ export default class TimelineExample extends React.Component {
             <TimelineExampleElement
                 key={nextBlog.id}
                 blog={nextBlog}
-                nextBlogAnchorId={nextBlog.id}
-                percentageInViewCallback={(percentageShowing, blogId)=> {
+                blogAnchorId={nextBlog.id}
+                percentageInViewCallback={(percentageShowing, blogId) => {
                     console.log('we have a callback for id ', blogId, 'showing percentage ', percentageShowing);
 
                     //determine which section is most visible and update state with findings

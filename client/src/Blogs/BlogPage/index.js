@@ -39,6 +39,37 @@ export default class BlogPage extends Component {
         window.removeEventListener('resize', this.handleWindowSizeChange);
     }
 
+    componentDidMount(){
+        //magic from MDN to know when element is on screen
+        let observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: []
+        };
+
+        let thresholdSets = [
+            [],
+            [0.5],
+            [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+            [0, 0.25, 0.5, 0.75, 1.0]
+        ];
+
+        for (let i = 0; i <= 1.0; i += 0.01) {
+            thresholdSets[0].push(i);
+        }
+
+        let percentageInViewCallback = this.props.percentageInViewCallback;
+        let blogId = this.props.blog.id;
+        observerOptions.threshold = thresholdSets[0];
+        let blogObserver = new IntersectionObserver((entries) => {
+            entries.forEach(function (entry) {
+                let visiblePct = Math.floor(entry.intersectionRatio * 100);
+                percentageInViewCallback(visiblePct, blogId);
+            });
+        }, observerOptions);
+        blogObserver.observe(document.querySelector("#" + this.props.blogAnchorId));
+    }
+
     handleWindowSizeChange = () => {
         this.setState({ windowWidth: window.innerWidth });
     };
@@ -68,11 +99,11 @@ export default class BlogPage extends Component {
 
         //a little haxxy to make the image responsive and hidden when needed
         let titleImageClass =  'img-responsive';
-        if(!this.state.hasTitleImageLoaded) {
+        if (!this.state.hasTitleImageLoaded) {
             titleImageClass = 'BlogPage_loadingImage img-responsive';
         }
         return (
-            <Grid>
+            <Grid id={this.props.blogAnchorId} >
                 <Row className="show-grid">
                 <ScrollableAnchor id={this.props.invisibleAnchorId}>
                     <PageHeader>{blog.title}</PageHeader>

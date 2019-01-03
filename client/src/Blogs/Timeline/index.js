@@ -13,6 +13,8 @@ export default class Timeline extends React.Component {
         // {
         //   elementId: string - the header/title for the blog
         //   popoverText: string - the tooltip like text which will appear
+        //   isSectionVisible: string - true if the section corresponding to this linkinfo index is visible
+        //      NOTE: should only be true for one item at a time in the linksInfo array
         // }
         linksInfo: PropTypes.array.isRequired
     }
