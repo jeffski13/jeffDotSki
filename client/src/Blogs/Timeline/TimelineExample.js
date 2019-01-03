@@ -109,7 +109,7 @@ export default class TimelineExample extends React.Component {
     }
 
     renderContentSection = (nextBlog) => {
-        
+
         return (
             <TimelineExampleElement
                 key={nextBlog.id}
@@ -119,16 +119,16 @@ export default class TimelineExample extends React.Component {
                     console.log('we have a callback for id ', blogId, 'showing percentage ', percentageShowing);
 
                     //determine which section is most visible and update state with findings
-                    if(this.state.sectionShowing.id === blogId){
+                    if (this.state.sectionShowing.id === blogId) {
                         //if we get an id that is already deteremined to be "visible", just update percentage
-                        this.setState({ 
+                        this.setState({
                             sectionShowing: {
                                 id: blogId,
                                 percentage: percentageShowing
                             }
                         });
                     }
-                    else if(percentageShowing > this.state.sectionShowing.percentage){ 
+                    else if (percentageShowing > this.state.sectionShowing.percentage) {
                         //if we get a different id than what is "visible", see if the percentage showing is larger than the "visible", then update with new id and percentage
                         this.setState({
                             sectionShowing: {
@@ -146,7 +146,7 @@ export default class TimelineExample extends React.Component {
         let timelineLinksInfo = [];
         this.state.blogs.map((nextBlog) => {
             let isNextBlogVisible = false;
-            if(this.state.sectionShowing.id === nextBlog.id){
+            if (this.state.sectionShowing.id === nextBlog.id) {
                 isNextBlogVisible = true;
             }
             timelineLinksInfo.push({
@@ -163,7 +163,17 @@ export default class TimelineExample extends React.Component {
                     {this.state.blogs.map(this.renderContentSection)}
                 </div>
 
-                <Timeline linksInfo={timelineLinksInfo} />
+                <Timeline
+                    linksInfo={timelineLinksInfo}
+                    onTimelineClickedCallback={(indexOfClicked) => {
+                        this.setState({
+                            sectionShowing: {
+                                id: this.state.blogs[indexOfClicked].id,
+                                percentage: -1
+                            }
+                        })
+                    }}
+                />
             </div>
         );
     }

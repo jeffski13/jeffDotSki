@@ -16,8 +16,16 @@ export default class Timeline extends React.Component {
         //   isSectionVisible: string - true if the section corresponding to this linkinfo index is visible
         //      NOTE: should only be true for one item at a time in the linksInfo array
         // }
-        linksInfo: PropTypes.array.isRequired
+        linksInfo: PropTypes.array.isRequired,
+        // onTimelineClickedCallback(indexOfClickedTimelineItem)
+        // indexOfClickedTimelineItem: number - the index of the timeline item that was clicked
+        onTimelineClickedCallback: PropTypes.func
     }
+
+    //default onTimelineClickedCallback to empty function to avoid crash
+    static defaultProps = {
+        onTimelineClickedCallback: () => { }
+    };
 
     constructor(props) {
         super(props);
@@ -43,7 +51,7 @@ export default class Timeline extends React.Component {
     };
 
     renderDatePoints = (nextLinkInfo, index) => {
-        let endLengths = 35;
+        let endLengths = 30;
         let totalHeight = this.state.windowHeight * 0.75;
 
         let svgCenterY = endLengths + index * ((totalHeight - (2 * endLengths)) / (this.props.linksInfo.length - 1));
@@ -54,7 +62,13 @@ export default class Timeline extends React.Component {
         }
 
         return (
-            <LinkWithTooltip tooltip={nextLinkInfo.popoverText} href={'#' + nextLinkInfo.elementId}>
+            <LinkWithTooltip 
+                tooltip={nextLinkInfo.popoverText} 
+                href={'#' + nextLinkInfo.elementId}
+                onAnchorClickedCallback={() => {
+                    this.props.onTimelineClickedCallback(index);
+                }}
+            >
                 <circle
                     cx={this.state.navWidth / 2} cy={svgCenterY} r="9"
                     stroke="grey" stroke-width="2" fill={circleFillColor}
@@ -84,7 +98,7 @@ export default class Timeline extends React.Component {
  * href: string - the id of the element to which the link will go
  * tooltip: the text 
  */
-function LinkWithTooltip({ id, children, href, tooltip }) {
+function LinkWithTooltip({ id, children, href, tooltip, onAnchorClickedCallback }) {
     return (
         <OverlayTrigger
             overlay={<Tooltip id={id}>{tooltip}</Tooltip>}
@@ -92,7 +106,14 @@ function LinkWithTooltip({ id, children, href, tooltip }) {
             delayShow={100}
             delayHide={200}
         >
-            <a href={href}>{children}</a>
+            <a 
+                href={href} 
+                onClick={()=>{
+                    onAnchorClickedCallback();            
+                }}
+            >
+                {children}
+            </a>
         </OverlayTrigger>
     );
 }

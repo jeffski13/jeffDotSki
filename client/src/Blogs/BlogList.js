@@ -154,7 +154,20 @@ export default class BlogList extends Component {
 
                 {this.state.blogs.map(this.renderSampleBlogItem)}
 
-                <Timeline linksInfo={timelineLinksInfo} />
+                <Timeline 
+                    linksInfo={timelineLinksInfo}
+                    onTimelineClickedCallback={(indexOfClicked) => {
+                        //delay until transition of movement is over
+                        setTimeout(() => {
+                            this.setState({
+                                blogShowing: {
+                                    id: this.state.blogs[indexOfClicked].id,
+                                    percentage: -1
+                                }
+                            });
+                        }, 700);
+                    }}
+                 />
             </div>
         );
 
