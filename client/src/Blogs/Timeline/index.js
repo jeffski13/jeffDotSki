@@ -51,7 +51,7 @@ export default class Timeline extends React.Component {
     };
 
     renderDatePoints = (nextLinkInfo, index) => {
-        let endLengths = 30;
+        let endLengths = 10;
         let totalHeight = this.state.windowHeight * 0.75;
 
         let svgCenterY = endLengths + index * ((totalHeight - (2 * endLengths)) / (this.props.linksInfo.length - 1));
