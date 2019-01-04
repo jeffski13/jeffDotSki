@@ -41,9 +41,11 @@ class BlogImages extends React.Component {
             finalImgUrl = blogImageItemData.url;
         }
         return (
-            <div className="BlogImages-mobile-responsive-images" >
+            <div 
+                className="BlogImages-mobile-responsive-images"
+                key={finalImgUrl + index}
+            >
                 <Image
-                    key={finalImgUrl + index}
                     src={finalImgUrl}
                     responsive 
                     />

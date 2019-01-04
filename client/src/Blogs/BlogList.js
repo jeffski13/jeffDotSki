@@ -64,7 +64,7 @@ export default class BlogList extends Component {
         let timelineLinkInfo = [];
 
         //at this point we assume the blogs are sorted in order
-        this.state.blogs.map((nextBlog)=> {
+        this.state.blogs.forEach((nextBlog)=> {
             let blogMoment = moment.unix(nextBlog.date);
             let blogMonth = MONTHS[blogMoment.month()];
             let blogDateOfMonth = blogMoment.date();

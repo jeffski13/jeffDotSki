@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Overlay, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './styles.css';
 
 /**
@@ -63,6 +63,8 @@ export default class Timeline extends React.Component {
 
         return (
             <LinkWithTooltip 
+                key={'timelineLink-' + index + '-' + nextLinkInfo.elementId}
+                id={'timelineLink-' + index + '-' + nextLinkInfo.elementId}
                 tooltip={nextLinkInfo.popoverText} 
                 href={'#' + nextLinkInfo.elementId}
                 onAnchorClickedCallback={() => {
@@ -71,7 +73,7 @@ export default class Timeline extends React.Component {
             >
                 <circle
                     cx={this.state.navWidth / 2} cy={svgCenterY} r="9"
-                    stroke="grey" stroke-width="2" fill={circleFillColor}
+                    stroke="grey" strokeWidth="2" fill={circleFillColor}
                 />
             </LinkWithTooltip>
         );

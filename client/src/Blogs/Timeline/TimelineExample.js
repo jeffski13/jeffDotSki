@@ -144,7 +144,7 @@ export default class TimelineExample extends React.Component {
 
     render() {
         let timelineLinksInfo = [];
-        this.state.blogs.map((nextBlog) => {
+        this.state.blogs.forEach((nextBlog) => {
             let isNextBlogVisible = false;
             if (this.state.sectionShowing.id === nextBlog.id) {
                 isNextBlogVisible = true;
