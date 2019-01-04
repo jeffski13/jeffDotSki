@@ -12,7 +12,6 @@ import BlogImages from './BlogImages'
 import BlogTextItem from './BlogTextItem';
 import './styles.css';
 import loadingImage from './loading_image.gif';
-import {VIEW_MODE_LIST} from '../../Blogs';
 
 export default class BlogPage extends Component {
     static propTypes = {
@@ -33,43 +32,41 @@ export default class BlogPage extends Component {
         configureAnchors({ offset: -60 });
     }
 
-    componentDidMount(){
-        if(this.props.blogsViewMode === VIEW_MODE_LIST){
-            //magic from MDN to know when element is on screen
-            let observerOptions = {
-                root: null,
-                rootMargin: "0px",
-                threshold: []
-            };
-    
-            let thresholdSets = [
-                [],
-                [0.5],
-                [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-                [0, 0.25, 0.5, 0.75, 1.0]
-            ];
-    
-            for (let i = 0; i <= 1.0; i += 0.01) {
-                thresholdSets[0].push(i);
-            }
-    
-            let percentageInViewCallback = this.props.percentageInViewCallback;
-            let blogId = this.props.blog.id;
-            observerOptions.threshold = thresholdSets[0];
-            let blogObserver = new IntersectionObserver((entries) => {
-                entries.forEach(function (entry) {
-                    let visiblePct = Math.floor(entry.intersectionRatio * 100);
-                    percentageInViewCallback(visiblePct, blogId);
-                });
-            }, observerOptions);
-            blogObserver.observe(document.querySelector("#" + this.props.blogAnchorId));
+    componentDidMount() {
+        //magic from MDN to know when element is on screen
+        let observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: []
+        };
+
+        let thresholdSets = [
+            [],
+            [0.5],
+            [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+            [0, 0.25, 0.5, 0.75, 1.0]
+        ];
+
+        for (let i = 0; i <= 1.0; i += 0.01) {
+            thresholdSets[0].push(i);
         }
+
+        let percentageInViewCallback = this.props.percentageInViewCallback;
+        let blogId = this.props.blog.id;
+        observerOptions.threshold = thresholdSets[0];
+        let blogObserver = new IntersectionObserver((entries) => {
+            entries.forEach(function (entry) {
+                let visiblePct = Math.floor(entry.intersectionRatio * 100);
+                percentageInViewCallback(visiblePct, blogId);
+            });
+        }, observerOptions);
+        blogObserver.observe(document.querySelector("#" + this.props.blogAnchorId));
     }
 
     //renders all paragraphs except the first
     renderRemainingParagraphs = (blogTextItem, index) => {
         return (
-            <BlogTextItem 
+            <BlogTextItem
                 key={this.props.blog.id + '-textItem-' + index}
                 blogTextData={blogTextItem}
             />
@@ -91,16 +88,16 @@ export default class BlogPage extends Component {
         }
 
         //a little haxxy to make the image responsive and hidden when needed
-        let titleImageClass =  'img-responsive';
+        let titleImageClass = 'img-responsive';
         if (!this.state.hasTitleImageLoaded) {
             titleImageClass = 'BlogPage_loadingImage img-responsive';
         }
         return (
             <Grid id={this.props.blogAnchorId} >
                 <Row className="show-grid">
-                <ScrollableAnchor id={this.props.invisibleAnchorId}>
-                    <PageHeader>{blog.title}</PageHeader>
-                </ScrollableAnchor>
+                    <ScrollableAnchor id={this.props.invisibleAnchorId}>
+                        <PageHeader>{blog.title}</PageHeader>
+                    </ScrollableAnchor>
                 </Row>
                 <Row className="show-grid">
                     <div>{blog.location}</div>
@@ -111,13 +108,13 @@ export default class BlogPage extends Component {
                 <Row className="show-grid blogPargraph">
                     <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
                     <Col sm={8} md={4} >
-                        <img 
+                        <img
                             onLoad={() => {
                                 this.setState({
                                     hasTitleImageLoaded: true
                                 })
-                            }} 
-                            id={blog.id + '-title-image'} 
+                            }}
+                            id={blog.id + '-title-image'}
                             src={finalTitleImgUrl}
                             className={titleImageClass}
                             alt={`${blog.title} Main`}

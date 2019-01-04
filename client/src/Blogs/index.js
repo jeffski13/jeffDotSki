@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Panel, Grid, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 
-import BlogList from './BlogList';
-import BlogOneAtTime from './BlogOneAtTime';
 import { getBlogs } from './GetBlogs';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
 import Loadingski from '../Inf/Loadingski';
+import {MONTHS} from './blog-consts';
+import BlogPage from './BlogPage';
+import Timeline from './Timeline';
+import moment from 'moment';
 import './styles.css';
-
-export const VIEW_MODE_LIST = "VIEW_MODE_LIST";
-export const VIEW_MODE_ONE = "VIEW_MODE_ONE";
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
@@ -22,7 +21,11 @@ export default class Blogs extends Component {
             networkStatus: null,
             blogsArr: null,
             tripId: 'uuid1234',
-            viewMode: VIEW_MODE_LIST
+            sortBlogsDateDescending: false,
+            blogShowing: {
+                id: '',
+                percentage: -1
+            }
         };
     }
 
@@ -39,10 +42,10 @@ export default class Blogs extends Component {
 
     handleWindowSizeChange = () => {
         let isMobile = false;
-        if(window.innerWidth < MOBILE_WINDOW_WIDTH){
+        if (window.innerWidth < MOBILE_WINDOW_WIDTH) {
             isMobile = true;
         }
-        this.setState({ isViewMobile: isMobile});
+        this.setState({ isViewMobile: isMobile });
     };
 
     componentDidMount() {
@@ -70,17 +73,94 @@ export default class Blogs extends Component {
                 this.setState({
                     blogsArr: data,
                     networkStatus: STATUS_SUCCESS
+                }, () => {
+                    this.sortBlogsByDate(this.state.sortBlogsDateDescending);
                 });
             });
         });
     }
 
-    changeViewStyle = (newViewMode) => {
-        if (newViewMode === VIEW_MODE_LIST || newViewMode === VIEW_MODE_ONE) {
-            this.setState({
-                viewMode: newViewMode
-            });
+    sortBlogsByDate = (shouldDescend) => {
+        let sortingHatSwitch = -1;
+        if (shouldDescend) {
+            sortingHatSwitch = 1;
         }
+        let sortedBlogsArr = this.state.blogsArr;
+
+        sortedBlogsArr.sort((trip, nextTrip) => {
+            if (trip.date < nextTrip.date) {
+                return 1 * sortingHatSwitch;
+            }
+            if (trip.date > nextTrip.date) {
+                return -1 * sortingHatSwitch;
+            }
+            return 0;
+        });
+
+        this.setState({
+            blogsArr: sortedBlogsArr,
+            sortBlogsDateDescending: shouldDescend
+        });
+    }
+
+    getTimelineLinksInfo = () => {
+        let timelineLinkInfo = [];
+
+        //at this point we assume the blogs are sorted in order
+        this.state.blogsArr.forEach((nextBlog) => {
+            let blogMoment = moment.unix(nextBlog.date);
+            let blogMonth = MONTHS[blogMoment.month()];
+            let blogDateOfMonth = blogMoment.date();
+
+            let isNextBlogVisible = false;
+            if (this.state.blogShowing.id === nextBlog.id) {
+                isNextBlogVisible = true;
+            }
+
+            timelineLinkInfo.push({
+                popoverText: `${blogMonth.substring(0, 3)} ${blogDateOfMonth}`,
+                elementId: nextBlog.id,
+                isSectionVisible: isNextBlogVisible
+            })
+        });
+
+        return timelineLinkInfo;
+    }
+
+    //renders all paragraphs except the first
+    renderSampleBlogItem = (nextBlog) => {
+        return (
+            <BlogPage
+                key={nextBlog.id}
+                invisibleAnchorId={nextBlog.id}
+                isViewMobile={this.state.isViewMobile}
+                blog={nextBlog}
+                blogAnchorId={`idForBlogPercentageView-${nextBlog.id}`}
+                percentageInViewCallback={(percentageShowing, blogId) => {
+
+                    //determine which section is most visible and update state with findings
+                    if (this.state.blogShowing.id === blogId) {
+                        //if we get an id that is already deteremined to be "visible", just update percentage
+                        this.setState({
+                            blogShowing: {
+                                id: blogId,
+                                percentage: percentageShowing
+                            }
+                        });
+                    }
+                    else if (percentageShowing > this.state.blogShowing.percentage) {
+                        //if we get a different id than what is "visible", see if the percentage showing is larger than the "visible", then update with new id and percentage
+                        this.setState({
+                            blogShowing: {
+                                id: blogId,
+                                percentage: percentageShowing
+                            }
+                        });
+                    }
+
+                }}
+            />
+        );
     }
 
     render() {
@@ -96,7 +176,7 @@ export default class Blogs extends Component {
                                 <span>Blast! Something went wrong while getting the blogs.</span>
                                 <span className="Blogs_error-refresh" >
                                     <Button
-                                        onClick={()=>{window.location.reload()}} 
+                                        onClick={() => { window.location.reload() }}
                                         bsStyle="link"
                                     >
                                         Refresh?
@@ -108,19 +188,17 @@ export default class Blogs extends Component {
                 </div>
             </div>
         );
+
         let blogsArea = null;
-        let blogsViewComponentOptions = {
-            VIEW_MODE_LIST: BlogList,
-            VIEW_MODE_ONE: BlogOneAtTime
-        };
-        let BlogsViewComponent = blogsViewComponentOptions[this.state.viewMode];
-        
-        //adjust css classes for mobile
-        let blogHeaderClass = '';
-        if (this.state.isViewMobile) {
-            blogHeaderClass = 'Blogs_mobile';
-        }
+
         if (this.state.blogsArr) {
+            let timelineLinksInfo = this.getTimelineLinksInfo();
+    
+            //adjust css classes for mobile
+            let blogHeaderClass = '';
+            if (this.state.isViewMobile) {
+                blogHeaderClass = 'Blogs_mobile';
+            }
             blogsArea = (
                 <div className="Blogs">
                     <Grid>
@@ -132,20 +210,24 @@ export default class Blogs extends Component {
                                 <div className="Blogs_controls">
                                     <ButtonGroup>
                                         <Button
-                                            disabled={this.state.viewMode === VIEW_MODE_ONE}
+                                            disabled={!this.state.sortBlogsDateDescending}
                                             onClick={() => {
-                                                this.changeViewStyle(VIEW_MODE_ONE);
+                                                this.sortBlogsByDate(false);
                                             }}
                                         >
-                                            <i className="material-icons navigation-icon-button">crop_square</i>
+                                            <i className="material-icons navigation-icon-button">
+                                                arrow_downward
+                                            </i>
                                         </Button>
                                         <Button
-                                            disabled={this.state.viewMode === VIEW_MODE_LIST}
+                                            disabled={this.state.sortBlogsDateDescending}
                                             onClick={() => {
-                                                this.changeViewStyle(VIEW_MODE_LIST);
+                                                this.sortBlogsByDate(true);
                                             }}
                                         >
-                                            <i className="material-icons navigation-icon-button">dehaze</i>
+                                            <i className="material-icons navigation-icon-button">
+                                                arrow_upward
+                                            </i>
                                         </Button>
                                     </ButtonGroup>
                                 </div>
@@ -153,10 +235,24 @@ export default class Blogs extends Component {
                         </Row>
                         <Row className={blogHeaderClass}>
                             <Col xs={12}>
-                                <BlogsViewComponent 
-                                    isViewMobile={this.state.isViewMobile} 
-                                    blogs={this.state.blogsArr} 
-                                />
+                                <div className="BlogList">
+                                    {this.state.blogsArr.map(this.renderSampleBlogItem)}
+
+                                    <Timeline
+                                        linksInfo={timelineLinksInfo}
+                                        onTimelineClickedCallback={(indexOfClicked) => {
+                                            //delay until transition of movement is over
+                                            setTimeout(() => {
+                                                this.setState({
+                                                    blogShowing: {
+                                                        id: this.state.blogsArr[indexOfClicked].id,
+                                                        percentage: -1
+                                                    }
+                                                });
+                                            }, 700);
+                                        }}
+                                    />
+                                </div>
                             </Col>
                         </Row>
                     </Grid>
