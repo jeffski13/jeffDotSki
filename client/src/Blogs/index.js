@@ -19,9 +19,10 @@ export default class Blogs extends Component {
         this.state = {
             isViewMobile: false,
             networkStatus: null,
-            blogsArr: null,
             tripId: 'uuid1234',
+            blogsArr: null,
             sortBlogsDateDescending: false,
+            hasInitiallySorted: false,
             blogShowing: {
                 id: '',
                 percentage: -1
@@ -99,7 +100,8 @@ export default class Blogs extends Component {
 
         this.setState({
             blogsArr: sortedBlogsArr,
-            sortBlogsDateDescending: shouldDescend
+            sortBlogsDateDescending: shouldDescend,
+            hasInitiallySorted: true
         });
     }
 
@@ -137,7 +139,8 @@ export default class Blogs extends Component {
                 blog={nextBlog}
                 blogAnchorId={`idForBlogPercentageView-${nextBlog.id}`}
                 percentageInViewCallback={(percentageShowing, blogId) => {
-
+                    console.log('percentageInViewCallback for', blogId, ' with amount ', percentageShowing);
+                                                
                     //determine which section is most visible and update state with findings
                     if (this.state.blogShowing.id === blogId) {
                         //if we get an id that is already deteremined to be "visible", just update percentage
@@ -191,7 +194,7 @@ export default class Blogs extends Component {
 
         let blogsArea = null;
 
-        if (this.state.blogsArr) {
+        if (this.state.blogsArr && this.state.hasInitiallySorted) {
             let timelineLinksInfo = this.getTimelineLinksInfo();
     
             //adjust css classes for mobile
@@ -243,10 +246,12 @@ export default class Blogs extends Component {
                                         onTimelineClickedCallback={(indexOfClicked) => {
                                             //delay until transition of movement is over
                                             setTimeout(() => {
+                                                console.log('onTimelineClickedCallback for', indexOfClicked, ' with title ', this.state.blogsArr[indexOfClicked].title);
+                                                //we can assume this is showing 100%. This will fix itself in the callbacks, but will stop blogs offscreen from taking over with a 0%
                                                 this.setState({
                                                     blogShowing: {
                                                         id: this.state.blogsArr[indexOfClicked].id,
-                                                        percentage: -1
+                                                        percentage: 100
                                                     }
                                                 });
                                             }, 700);
