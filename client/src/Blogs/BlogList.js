@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {MONTHS} from './blog-consts';
 import BlogPage from './BlogPage';
 import Timeline from './Timeline';
+import {VIEW_MODE_LIST} from '../Blogs';
 import './styles.css';
 
 export default class BlogList extends Component {
@@ -90,6 +91,7 @@ export default class BlogList extends Component {
                 key={nextBlog.id}
                 invisibleAnchorId={nextBlog.id}
                 isViewMobile={this.state.isViewMobile}
+                blogsViewMode={VIEW_MODE_LIST}
                 blog={nextBlog}
                 blogAnchorId={`idForBlogPercentageView-${nextBlog.id}`}
                 percentageInViewCallback={(percentageShowing, blogId)=> {
@@ -160,7 +162,7 @@ export default class BlogList extends Component {
 
                 {this.state.blogs.map(this.renderSampleBlogItem)}
 
-                <Timeline 
+                <Timeline
                     linksInfo={timelineLinksInfo}
                     onTimelineClickedCallback={(indexOfClicked) => {
                         //delay until transition of movement is over

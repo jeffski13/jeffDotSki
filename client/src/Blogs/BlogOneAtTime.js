@@ -3,6 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import BlogPage from './BlogPage';
+import {VIEW_MODE_ONE} from '../Blogs';
 import './styles.css';
 
 export default class BlogOneAtTime extends Component {
@@ -94,6 +95,7 @@ export default class BlogOneAtTime extends Component {
                         key={this.state.blogs[this.state.blogSelectedIndex].id} 
                         blog={this.state.blogs[this.state.blogSelectedIndex]} 
                         isViewMobile={this.state.isViewMobile}
+                        blogsViewMode={VIEW_MODE_ONE}
                     />
                 </div>
                 {blogNavigationControls}

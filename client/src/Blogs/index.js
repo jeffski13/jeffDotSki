@@ -8,8 +8,8 @@ import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/const
 import Loadingski from '../Inf/Loadingski';
 import './styles.css';
 
-const VIEW_MODE_LIST = "VIEW_MODE_LIST";
-const VIEW_MODE_ONE = "VIEW_MODE_ONE";
+export const VIEW_MODE_LIST = "VIEW_MODE_LIST";
+export const VIEW_MODE_ONE = "VIEW_MODE_ONE";
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
@@ -153,7 +153,10 @@ export default class Blogs extends Component {
                         </Row>
                         <Row className={blogHeaderClass}>
                             <Col xs={12}>
-                                <BlogsViewComponent isViewMobile={this.state.isViewMobile} blogs={this.state.blogsArr} />
+                                <BlogsViewComponent 
+                                    isViewMobile={this.state.isViewMobile} 
+                                    blogs={this.state.blogsArr} 
+                                />
                             </Col>
                         </Row>
                     </Grid>
