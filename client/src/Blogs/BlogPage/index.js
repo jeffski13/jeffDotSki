@@ -83,7 +83,7 @@ export default class BlogPage extends Component {
 
         //is it time to go mobile? if so, get smaller image
         let finalTitleImgUrl = blog.titleImageUrl //#YOLOSWAG - take out the check for blog.titleImage. Right now most dont have this, in the future they all should 
-        if (this.state.isViewMobile && blog.titleImage) { //for now check to see if titleImage exists
+        if (this.props.isViewMobile && blog.titleImage) { //for now check to see if titleImage exists
             finalTitleImgUrl = blog.titleImage.midsize;
         }
 
@@ -127,7 +127,10 @@ export default class BlogPage extends Component {
                     : null}
 
                 <Row className="show-grid">
-                    <BlogImages blogImageData={blog.blogImages} />
+                    <BlogImages 
+                        blogImageData={blog.blogImages} 
+                        isViewMobile={this.props.isViewMobile}    
+                    />
                 </Row>
             </Grid>
         );

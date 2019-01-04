@@ -11,28 +11,7 @@ class BlogImages extends React.Component {
     static propTypes = {
         //all of the image data for the blog
         blogImageData: PropTypes.array.isRequired,
-    };
-
-    constructor() {
-        super();
-        this.state = {
-            windowWidth: window.innerWidth
-        };
-    }
-
-    // add a listener for the screen size since we have a mobile view
-    componentWillMount() {
-        window.addEventListener('resize', this.handleWindowSizeChange);
-    }
-
-    // make sure to remove the listener for the screen size
-    // when the component is not mounted anymore
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.handleWindowSizeChange);
-    }
-
-    handleWindowSizeChange = () => {
-        this.setState({ windowWidth: window.innerWidth });
+        isViewMobile: PropTypes.bool
     };
 
     renderBlogImageItems = (blogImageItemData, index) => {
@@ -64,13 +43,7 @@ class BlogImages extends React.Component {
             return null;
         }
 
-        //is it time to go mobile?
-        let isMobile = false;
-        if (this.state.windowWidth <= 650) {
-            isMobile = true;
-        }
-
-        if (isMobile) {
+        if (this.props.isViewMobile) {
             return (
                 <React.Fragment>
                     <div className="BlogImages-top-spacer" />
