@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 import BlogPage from './BlogPage';
 import './styles.css';
 
 export default class BlogOneAtTime extends Component {
+
+    static propTypes = {
+        isViewMobile: PropTypes.bool,
+        blogs: PropTypes.array.isRequired
+    }
 
     constructor(props) {
         super(props);
@@ -84,7 +90,11 @@ export default class BlogOneAtTime extends Component {
             <div className="BlogOneAtTime" >
                 {blogNavigationControls}
                 <div className="BlogOneAtTime-blog">
-                    <BlogPage key={this.state.blogs[this.state.blogSelectedIndex].id} blog={this.state.blogs[this.state.blogSelectedIndex]} />
+                    <BlogPage 
+                        key={this.state.blogs[this.state.blogSelectedIndex].id} 
+                        blog={this.state.blogs[this.state.blogSelectedIndex]} 
+                        isViewMobile={this.state.isViewMobile}
+                    />
                 </div>
                 {blogNavigationControls}
             </div>

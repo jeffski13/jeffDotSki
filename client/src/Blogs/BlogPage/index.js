@@ -12,31 +12,24 @@ import BlogImages from './BlogImages'
 import BlogTextItem from './BlogTextItem';
 import './styles.css';
 import loadingImage from './loading_image.gif';
+import {MOBILE_WINDOW_WIDTH} from '../../Blogs';
 
 export default class BlogPage extends Component {
     static propTypes = {
-        blog: PropTypes.object.isRequired
+        blog: PropTypes.object.isRequired,
+        isViewMobile: PropTypes.bool
     }
 
     constructor() {
         super();
         this.state = {
-            windowWidth: window.innerWidth,
             hasTitleImageLoaded: false
         };
     }
 
     componentWillMount() {
-        // add a listener for the screen size since we have a mobile view
-        window.addEventListener('resize', this.handleWindowSizeChange);
         //configure anchors with offset to account for ever-present header
         configureAnchors({ offset: -60 });
-    }
-
-    // make sure to remove the listener for the screen size
-    // when the component is not mounted anymore
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.handleWindowSizeChange);
     }
 
     componentDidMount(){
@@ -70,14 +63,11 @@ export default class BlogPage extends Component {
         blogObserver.observe(document.querySelector("#" + this.props.blogAnchorId));
     }
 
-    handleWindowSizeChange = () => {
-        this.setState({ windowWidth: window.innerWidth });
-    };
-
     //renders all paragraphs except the first
-    renderRemainingParagraphs = (blogTextItem) => {
+    renderRemainingParagraphs = (blogTextItem, index) => {
         return (
-            <BlogTextItem key={blogTextItem._id}
+            <BlogTextItem 
+                key={this.props.blog.id + '-textItem-' + index}
                 blogTextData={blogTextItem}
             />
         );
@@ -93,7 +83,7 @@ export default class BlogPage extends Component {
 
         //is it time to go mobile? if so, get smaller image
         let finalTitleImgUrl = blog.titleImageUrl //#YOLOSWAG - take out the check for blog.titleImage. Right now most dont have this, in the future they all should 
-        if (this.state.windowWidth <= 650 && blog.titleImage) { //for now check to see if titleImage exists
+        if (this.state.isViewMobile && blog.titleImage) { //for now check to see if titleImage exists
             finalTitleImgUrl = blog.titleImage.midsize;
         }
 

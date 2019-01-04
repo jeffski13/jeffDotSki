@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import {MONTHS} from './blog-consts';
 import BlogPage from './BlogPage';
@@ -8,6 +9,11 @@ import Timeline from './Timeline';
 import './styles.css';
 
 export default class BlogList extends Component {
+
+    static propTypes = {
+        isViewMobile: PropTypes.bool,
+        blogs: PropTypes.array.isRequired
+    }
 
     constructor(props) {
         super(props);
@@ -83,6 +89,7 @@ export default class BlogList extends Component {
             <BlogPage 
                 key={nextBlog.id}
                 invisibleAnchorId={nextBlog.id}
+                isViewMobile={this.state.isViewMobile}
                 blog={nextBlog}
                 blogAnchorId={`idForBlogPercentageView-${nextBlog.id}`}
                 percentageInViewCallback={(percentageShowing, blogId)=> {
@@ -124,8 +131,7 @@ export default class BlogList extends Component {
             <div className="BlogList">
                 <Row className="show-grid">
                     <Col xs={12} md={12}>
-                        <div className="Blogs-controls">
-                            <span className="BlogList-dateSortControls">Date Order: </span>
+                        <div className="Blogs_controls">
                             <ButtonGroup>
                                 <Button
                                     disabled={!this.state.dateDescending}

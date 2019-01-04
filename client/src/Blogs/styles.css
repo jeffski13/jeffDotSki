@@ -87,6 +87,10 @@
     min-height: 86vh;
 }
 
+.Blogs_mobile {
+    width: 95%;
+}
+
 .Blogs_error {
     padding: 45px;
     max-width: 600px;
@@ -98,8 +102,12 @@
     padding-left: 60px;
 }
 
-.Blogs-controls {
-    text-align: end
+.Blogs_controls {
+    text-align: end;
+}
+
+.Blogs_controls-wrapper {
+    padding-left: 0;
 }
 
 .BlogOneAtTime {   

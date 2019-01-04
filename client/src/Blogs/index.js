@@ -10,11 +10,15 @@ import './styles.css';
 
 const VIEW_MODE_LIST = "VIEW_MODE_LIST";
 const VIEW_MODE_ONE = "VIEW_MODE_ONE";
+
+export const MOBILE_WINDOW_WIDTH = 850;
+
 export default class Blogs extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            isViewMobile: false,
             networkStatus: null,
             blogsArr: null,
             tripId: 'uuid1234',
@@ -22,7 +26,28 @@ export default class Blogs extends Component {
         };
     }
 
+    componentWillMount() {
+        // add a listener for the screen size since we have a mobile view
+        window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    // make sure to remove the listener for the screen size
+    // when the component is not mounted anymore
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    handleWindowSizeChange = () => {
+        let isMobile = false;
+        if(window.innerWidth < MOBILE_WINDOW_WIDTH){
+            isMobile = true;
+        }
+        this.setState({ isViewMobile: isMobile});
+    };
+
     componentDidMount() {
+        this.handleWindowSizeChange();
+
         this.setState({
             networkStatus: STATUS_LOADING
         }, () => {
@@ -89,19 +114,24 @@ export default class Blogs extends Component {
             VIEW_MODE_ONE: BlogOneAtTime
         };
         let BlogsViewComponent = blogsViewComponentOptions[this.state.viewMode];
+        
+        //adjust css classes for mobile
+        let blogHeaderClass = '';
+        if (this.state.isViewMobile) {
+            blogHeaderClass = 'Blogs_mobile';
+        }
         if (this.state.blogsArr) {
             blogsArea = (
                 <div className="Blogs">
                     <Grid>
-                        <Row className="show-grid">
-                            <Col xs={12} md={6}>
+                        <Row className={`show-grid ${blogHeaderClass}`}>
+                            <Col xs={8} md={6}>
                                 <div className="blogBrowserTitle">Chile</div>
                             </Col>
-                            <Col xs={12} md={6}>
-                                <div className="Blogs-controls">
+                            <Col xs={4} md={6} className="Blogs_controls-wrapper">
+                                <div className="Blogs_controls">
                                     <ButtonGroup>
                                         <Button
-                                            bsSize="large"
                                             disabled={this.state.viewMode === VIEW_MODE_ONE}
                                             onClick={() => {
                                                 this.changeViewStyle(VIEW_MODE_ONE);
@@ -110,7 +140,6 @@ export default class Blogs extends Component {
                                             <i className="material-icons navigation-icon-button">crop_square</i>
                                         </Button>
                                         <Button
-                                            bsSize="large"
                                             disabled={this.state.viewMode === VIEW_MODE_LIST}
                                             onClick={() => {
                                                 this.changeViewStyle(VIEW_MODE_LIST);
@@ -122,7 +151,11 @@ export default class Blogs extends Component {
                                 </div>
                             </Col>
                         </Row>
-                        <BlogsViewComponent blogs={this.state.blogsArr} />
+                        <Row className={blogHeaderClass}>
+                            <Col xs={12}>
+                                <BlogsViewComponent isViewMobile={this.state.isViewMobile} blogs={this.state.blogsArr} />
+                            </Col>
+                        </Row>
                     </Grid>
                 </div >
             );
