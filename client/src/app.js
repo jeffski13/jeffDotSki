@@ -9,6 +9,7 @@ import ErrorPage from './ErrorPage';
 import NavigationBar from './Inf/NavigationBar';
 import FooterBarski from './Inf/FooterBarski';
 import Careers from './Careers';
+import User from './User';
 import Hobbies from './AboutMe/Hobbies';
 import TimelineExample from './Blogs/Timeline/TimelineExample';
 import './styles.css';
@@ -28,6 +29,7 @@ export default class App extends Component {
             <Route path="/aboutme/bio" component={Bio}/>
             <Route path="/careers" component={Careers}/>
             <Route path="/aboutme/hobbies" component={Hobbies}/>
+            <Route path="/user" component={User}/>
             <Route component={ ErrorPage } />
           </Switch>
           <FooterBarski />

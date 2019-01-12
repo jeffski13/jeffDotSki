@@ -1,0 +1,7 @@
+.User {
+    min-height: 86vh;
+}
+
+.User > div {
+    margin: 0 auto;
+}

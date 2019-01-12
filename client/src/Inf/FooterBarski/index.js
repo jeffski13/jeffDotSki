@@ -58,7 +58,18 @@ class FooterBarski extends Component {
                 >
                   Careers?
                 </a>
-  		    	  </LinkContainer>
+              </LinkContainer>
+              <div className="footLinkDivider" >
+                &nbsp;&bull;&nbsp;
+              </div>
+              <LinkContainer to="/user">
+                <a
+                  href= "/user"
+                  className="footerBarskiLink"
+                >
+                  Account
+                </a>
+              </LinkContainer>
             </div>
           </Col>
           <Col xs={3} sm={1} >
