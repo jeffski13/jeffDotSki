@@ -5,7 +5,7 @@ const path = require('path');
 var ncp = require('ncp').ncp;
 let srcDir = path.join(__dirname, "build");
 
-let destDir = "C:/\Users/\jeffskitab2/\Documents/\Firebase/\jeffdotski/\public";
+let destDir = path.join(__dirname, "firebaseski/public");
 
 console.log('source directory: ', srcDir);
 console.log('destination directory: ', destDir);

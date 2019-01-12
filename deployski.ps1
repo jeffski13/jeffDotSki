@@ -1,8 +1,8 @@
 Write-Host "howdy y'all, lets deploy this ish"
 
-npm run build; npm run deploy
+npm version patch; npm run build; npm run deploy
 
-cd $HOME/Documents/Firebase/jeffdotski
+cd ./firebaseski
 firebase deploy
 
 cd $PSScriptRoot

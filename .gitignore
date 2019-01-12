@@ -4,6 +4,8 @@ bundle.js
 npm-debug.log
 .DS_Store
 
+./firebaseski/public
+
 # IntelliJ
 *.iml
 /.idea
