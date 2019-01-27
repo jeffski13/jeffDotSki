@@ -62,9 +62,9 @@ class FooterBarski extends Component {
               <div className="footLinkDivider" >
                 &nbsp;&bull;&nbsp;
               </div>
-              <LinkContainer to="/user">
+              <LinkContainer to="/login">
                 <a
-                  href= "/user"
+                  href= "/login"
                   className="footerBarskiLink"
                 >
                   Account

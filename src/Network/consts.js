@@ -11,3 +11,11 @@ export const defaultErrorResponse = {
         code: 'Unknown'
     }
 };
+
+export const authErrorResponse = {
+    status: 'AccessDenied',
+    data: {
+        message: 'User not logged in',
+        code: 'ClientSideValidation'
+    }
+};

@@ -1,0 +1,15 @@
+.Signup {
+    min-height: 86vh;
+    background-color: #eee;
+}
+
+.BulletTextItem_formTextInput {
+    font-weight: normal;
+}
+
+.Signup-title {
+    padding: 25px;
+    font-weight: 600;
+    font-family: cursive;
+    text-align: center;
+}

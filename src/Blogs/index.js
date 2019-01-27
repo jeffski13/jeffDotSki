@@ -4,15 +4,17 @@ import { Panel, Grid, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import { getBlogs } from './GetBlogs';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
 import Loadingski from '../Inf/Loadingski';
-import {MONTHS} from './blog-consts';
+import { MONTHS } from './blog-consts';
 import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import moment from 'moment';
+import { getBlogsSecure } from '../User/GETblogs';
 import './styles.css';
+import withBlogAuth from '../User/Auth/withBlogAuth';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
-export default class Blogs extends Component {
+class Blogs extends Component {
 
     constructor(props) {
         super(props);
@@ -51,35 +53,61 @@ export default class Blogs extends Component {
 
     componentDidMount() {
         this.handleWindowSizeChange();
-
+        console.log('jeffski params', this.props.match.params);
         this.setState({
             networkStatus: STATUS_LOADING
         }, () => {
+            if (this.props.match.params.tripId) {
+                console.log('getting secure blogs');
+                getBlogsSecure(this.props.match.params.userId, this.props.match.params.tripId, (err, data) => {
+                    if (err) {
+                        console.log(err);
+                        this.setState({
+                            networkStatus: STATUS_FAILURE,
+                            getBlogsResults: {
+                                status: err.status,
+                                message: err.data.message,
+                                code: err.data.code
+                            }
+                        });
+                        return;
+                    }
 
-            //get list of blogs by trip name from server
-            getBlogs(this.state.tripId, (err, data) => {
-                if (err) {
-                    console.log(err);
                     this.setState({
-                        networkStatus: STATUS_FAILURE,
-                        getBlogsResults: {
-                            status: err.status,
-                            message: err.data.message,
-                            code: err.data.code
-                        }
+                        blogsArr: data,
+                        networkStatus: STATUS_SUCCESS
+                    }, () => {
+                        this.sortBlogsByDate(this.state.sortBlogsDateDescending);
                     });
-                    return;
-                }
-
-                this.setState({
-                    blogsArr: data,
-                    networkStatus: STATUS_SUCCESS
-                }, () => {
-                    this.sortBlogsByDate(this.state.sortBlogsDateDescending);
                 });
-            });
+            }
+            else {
+                //get list of blogs by trip name from server
+                getBlogs(this.state.tripId, (err, data) => {
+                    if (err) {
+                        console.log(err);
+                        this.setState({
+                            networkStatus: STATUS_FAILURE,
+                            getBlogsResults: {
+                                status: err.status,
+                                message: err.data.message,
+                                code: err.data.code
+                            }
+                        });
+                        return;
+                    }
+
+                    this.setState({
+                        blogsArr: data,
+                        networkStatus: STATUS_SUCCESS
+                    }, () => {
+                        this.sortBlogsByDate(this.state.sortBlogsDateDescending);
+                    });
+                });
+            }
         });
     }
+
 
     sortBlogsByDate = (shouldDescend) => {
         let sortingHatSwitch = -1;
@@ -139,8 +167,7 @@ export default class Blogs extends Component {
                 blog={nextBlog}
                 blogAnchorId={`idForBlogPercentageView-${nextBlog.id}`}
                 percentageInViewCallback={(percentageShowing, blogId) => {
-                    console.log('percentageInViewCallback for', blogId, ' with amount ', percentageShowing);
-                                                
+
                     //determine which section is most visible and update state with findings
                     if (this.state.blogShowing.id === blogId) {
                         //if we get an id that is already deteremined to be "visible", just update percentage
@@ -196,7 +223,7 @@ export default class Blogs extends Component {
 
         if (this.state.blogsArr && this.state.hasInitiallySorted) {
             let timelineLinksInfo = this.getTimelineLinksInfo();
-    
+
             //adjust css classes for mobile
             let blogHeaderClass = '';
             if (this.state.isViewMobile) {
@@ -275,3 +302,5 @@ export default class Blogs extends Component {
     }
 
 }
+
+export default withBlogAuth(Blogs);
