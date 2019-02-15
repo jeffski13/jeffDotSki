@@ -12,9 +12,7 @@ export function getBlogsSecure(userId, tripId, callback){
     Auth.currentAuthenticatedUser({
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {
-        console.log('jeffski Current authed user: ', user);
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
-        console.log('making axios call');
         
         axios({
             method: 'GET',

@@ -22,7 +22,6 @@ class Hobbies extends React.Component {
   }
 
   render() {
-    console.log(tvshows);
     return (
       <div className="aboutmeWrapper">
         <div className="shotGlassTextSection" >

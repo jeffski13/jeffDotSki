@@ -28,9 +28,7 @@ class Profile extends React.Component {
     }
 
     componentDidMount(){
-        console.log('jeffski: Profile component did mount');
         if(this.props.reduxBlogAuth.authState.isLoggedIn){
-            console.log('jeffski: Profile get blog info');
             return this.getBlogUserProfile();
         }
         
@@ -38,7 +36,6 @@ class Profile extends React.Component {
         // component did update check hang out since each page will require something different?
         //if we hit this page for the first time we might not know if we are logged in
         if(!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck){
-            console.log('jeffski: Profile initial not done');
             //perform initial auth check
             this.props.blogAuth.checkForAuth();
         }

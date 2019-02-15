@@ -20,7 +20,6 @@ class Login extends React.Component {
     }
 
     componentDidMount(){
-        console.log('jeffski: login component did mount ');
         //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
         // component did update check hang out since each page will require something different?
         //if we hit this page for the first time we might not know if we are logged in

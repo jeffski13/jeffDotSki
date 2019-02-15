@@ -7,9 +7,6 @@ let srcDir = path.join(__dirname, "build");
 
 let destDir = path.join(__dirname, "firebaseski/public");
 
-console.log('source directory: ', srcDir);
-console.log('destination directory: ', destDir);
-
 var ncpoptions = {
     "clobber": true
 }

@@ -6,7 +6,6 @@ import './styles.css';
 
 class NavigationBar extends Component {
   goToBio(){
-    console.log('jeffski in the bio');
   }
 
   render(){

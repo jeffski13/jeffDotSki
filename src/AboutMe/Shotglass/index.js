@@ -71,7 +71,6 @@ class Shotglass extends Component {
 
   render(){
     if(this.props.shotGlassInfo.title){
-      console.log(this.props.shotGlassInfo);
       return(
         <div className="aboutmeWrapper" >
           <div>

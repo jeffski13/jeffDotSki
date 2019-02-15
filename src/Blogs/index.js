@@ -53,15 +53,12 @@ class Blogs extends Component {
 
     componentDidMount() {
         this.handleWindowSizeChange();
-        console.log('jeffski params', this.props.match.params);
         this.setState({
             networkStatus: STATUS_LOADING
         }, () => {
             if (this.props.match.params.tripId) {
-                console.log('getting secure blogs');
                 getBlogsSecure(this.props.match.params.userId, this.props.match.params.tripId, (err, data) => {
                     if (err) {
-                        console.log(err);
                         this.setState({
                             networkStatus: STATUS_FAILURE,
                             getBlogsResults: {
@@ -85,7 +82,6 @@ class Blogs extends Component {
                 //get list of blogs by trip name from server
                 getBlogs(this.state.tripId, (err, data) => {
                     if (err) {
-                        console.log(err);
                         this.setState({
                             networkStatus: STATUS_FAILURE,
                             getBlogsResults: {
@@ -273,7 +269,6 @@ class Blogs extends Component {
                                         onTimelineClickedCallback={(indexOfClicked) => {
                                             //delay until transition of movement is over
                                             setTimeout(() => {
-                                                console.log('onTimelineClickedCallback for', indexOfClicked, ' with title ', this.state.blogsArr[indexOfClicked].title);
                                                 //we can assume this is showing 100%. This will fix itself in the callbacks, but will stop blogs offscreen from taking over with a 0%
                                                 this.setState({
                                                     blogShowing: {

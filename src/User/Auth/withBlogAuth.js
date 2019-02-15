@@ -125,7 +125,6 @@ let withBlogAuth = (OgComponent) => {
         }
 
         getAuthedUserInfo = () => {
-            console.log('wit blogauth getAuthedUserInfo ')
             this.props.storeAuthState({
                 isLoading: true,
                 currentState: AUTH_STATE_LOGIN_LOADING
@@ -133,7 +132,7 @@ let withBlogAuth = (OgComponent) => {
             Auth.currentAuthenticatedUser({
                 bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
             }).then((awsUser) => {
-                console.log('jeffski Current authed user: ', awsUser);
+                ('jeffski Current authed user: ', awsUser);
                 this.props.storeUserInfo({
                     username: awsUser.username,
                     email: awsUser.attributes.email,
@@ -185,7 +184,6 @@ let withBlogAuth = (OgComponent) => {
 
         verifyUserSignup = (verifyCode) => {
 
-            console.log('jeffski checking user name ', this.state.user.username);
             //we want user to go through login (verify username and password) before we try to confirm signup
             let userName = this.props.reduxBlogAuth.userInfo.username;
             if (!userName || userName === '') {
@@ -233,13 +231,11 @@ let withBlogAuth = (OgComponent) => {
             });
 
             Auth.resendSignUp(userName).then(() => {
-                console.log('code resent successfully');
             }).catch(e => {
                 this.props.storeAuthState({
                     isLoading: false,
                     currentState: AUTH_STATE_RESENDCODE_FAIL
                 });
-                console.log(e);
             });
         }
 
@@ -273,7 +269,6 @@ let withBlogAuth = (OgComponent) => {
         invokeApi = async call => {
             try {
                 const response = await call(Auth);
-                console.log('jeffski called api: ', response);
             } catch (err) {
                 console.log('jeffski error calling api: ', err.message, err)
             }

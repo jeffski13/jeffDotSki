@@ -38,8 +38,6 @@ class TimelineExampleElement extends React.Component {
     }
 
     render() {
-        console.log('rendering  timelineexampleelement');
-
         //id is the blog id
         return (
             <div id={this.props.blogAnchorId} className="timeline-page-content-section">
@@ -116,8 +114,6 @@ export default class TimelineExample extends React.Component {
                 blog={nextBlog}
                 blogAnchorId={nextBlog.id}
                 percentageInViewCallback={(percentageShowing, blogId) => {
-                    console.log('we have a callback for id ', blogId, 'showing percentage ', percentageShowing);
-
                     //determine which section is most visible and update state with findings
                     if (this.state.sectionShowing.id === blogId) {
                         //if we get an id that is already deteremined to be "visible", just update percentage

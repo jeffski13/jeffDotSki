@@ -45,7 +45,6 @@ export default class BlogImagesCarousel extends React.Component {
                     thumbnailPosition="bottom" 
                     items={imageUrls} 
                     onSlide={(index) => {
-                        console.log('jeffski on image gallery change: ', index);
                         this.setState({
                             currentImageIndex: index
                         });

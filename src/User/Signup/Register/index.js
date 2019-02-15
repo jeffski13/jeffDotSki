@@ -53,7 +53,6 @@ class Register extends React.Component {
                 this.setState({
                     registerNetwork: STATUS_SUCCESS
                 });
-                console.log('jeffski signup .then data: ', data);
 
                 //go to verification page
             })
@@ -66,7 +65,6 @@ class Register extends React.Component {
                     registerNetwork: STATUS_FAILURE,
                     registerNetworkMessage: userMessage
                 });
-                console.log('jeffski signup .catch err: ', err);
             });
             
 
@@ -78,7 +76,6 @@ class Register extends React.Component {
     }
 
     render() {
-        console.log('rendering register ', this.props.reduxBlogAuth.authState);
         //if we are not logged in go to login
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             this.props.history.push(jeffskiRoutes.profile);
