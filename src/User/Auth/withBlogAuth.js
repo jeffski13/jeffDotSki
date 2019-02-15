@@ -132,7 +132,6 @@ let withBlogAuth = (OgComponent) => {
             Auth.currentAuthenticatedUser({
                 bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
             }).then((awsUser) => {
-                ('jeffski Current authed user: ', awsUser);
                 this.props.storeUserInfo({
                     username: awsUser.username,
                     email: awsUser.attributes.email,
@@ -146,11 +145,12 @@ let withBlogAuth = (OgComponent) => {
                 });
             }).catch((err) => {
                 // uh oh! shouldnt be here if we are not logged in
+                // set state to current start because we were only checking if we were logged in, we dont want to show errors just for checking
                 if (err === 'not authenticated') {
                     this.props.storeAuthState({
                         isLoggedIn: false,
                         isLoading: false,
-                        currentState: AUTH_STATE_LOGIN_FAIL,
+                        currentState: null,
                         hasDoneInitialAuthCheck: true
                     });
                 }

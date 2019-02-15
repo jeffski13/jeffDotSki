@@ -25,7 +25,11 @@ class Login extends React.Component {
         //if we hit this page for the first time we might not know if we are logged in
         if(!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck){
             //perform initial auth check
-            this.props.blogAuth.checkForAuth();
+            return this.props.blogAuth.checkForAuth();
+        }
+        if(this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.isLoggedIn){
+            //redirect to profile
+            return this.props.history.push(jeffskiRoutes.profile);
         }
     }
 
@@ -61,27 +65,14 @@ class Login extends React.Component {
     }
 
     componentDidUpdate(previousProps) {
-        if(!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck 
-            && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck 
-            && this.props.reduxBlogAuth.authState.isLoggedIn){
-                this.props.history.push(jeffskiRoutes.profile);
+        if(this.props.reduxBlogAuth.authState.isLoggedIn){
+            return this.props.history.push(jeffskiRoutes.profile);
         }
 
          //if we are logged in go to profile
-         if (!this.props.reduxBlogAuth.authState.isLoading) {
-             if (this.props.reduxBlogAuth.authState.isLoggedIn) {
-                this.props.history.push(jeffskiRoutes.profile);
-            }
-            else {
-                //redirect to verification if needed
-                if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED){
-                    this.props.history.push(jeffskiRoutes.verify);
-                }
-                //show error message
-                if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL){
-                    this.setState({ showLoginErrorMesssage: true });
-                }
-            }
+         if (!this.props.reduxBlogAuth.authState.isLoading && this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED) {
+            //redirect to verification if needed
+            return this.props.history.push(jeffskiRoutes.verify);
         }
 
     }
@@ -89,11 +80,6 @@ class Login extends React.Component {
     //callback page for
     // https://jeffskiblog.auth.us-east-2.amazoncognito.com/login?response_type=token&client_id=ve30037id36g8m4q811kmnqfs&redirect_uri=https://jeff.ski/user
     render() {
-        //if we are not logged in go to login
-        if (this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
-            this.props.history.push('/profile');
-        }
-        
         return (
             <div className="Login">
                 <Grid>
@@ -177,7 +163,7 @@ class Login extends React.Component {
                             <Col xs={2} md={4} />
                         </Row>
 
-                        {this.state.showLoginErrorMesssage &&
+                        {(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL) &&
                             <Row className="show-grid User_login-message">
                                 <Col xs={2} md={4} />
                                 <Col xs={8} md={4}>
