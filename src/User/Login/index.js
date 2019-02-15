@@ -2,27 +2,46 @@ import React from 'react';
 import './styles.css';
 import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import withBlogAuth from '../Auth/withBlogAuth';
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
+import {AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED, AUTH_STATE_LOGIN_FAIL} from '../Auth/consts';
+import { jeffskiRoutes } from '../../app';
 
 class Login extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: 'jeffski13',
-            password: ''
+            username: 'userman1',
+            password: 'Password$420', //must have one uppercase, on special
+            showLoginErrorMesssage: false
         };
     }
 
+    componentDidMount(){
+        console.log('jeffski: login component did mount ');
+        //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
+        // component did update check hang out since each page will require something different?
+        //if we hit this page for the first time we might not know if we are logged in
+        if(!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck){
+            //perform initial auth check
+            this.props.blogAuth.checkForAuth();
+        }
+    }
+
     isFormDisabled = () => {
-        return this.props.blogAuth.authNetwork === STATUS_LOADING;
+        return this.props.reduxBlogAuth.authState.isLoading;
     }
     
     isLoginDisabled = () => {
-        return this.props.blogAuth.authNetwork === STATUS_LOADING 
-            || (!this.state.username || this.state.username.length < 8) 
-            || (!this.state.password || this.state.password.length < 8);
+        return this.isLoggingIn()
+        || (!this.state.username || this.state.username.length < 8) 
+        || (!this.state.password || this.state.password.length < 8);
+    }
+    
+    isLoggingIn = () => {
+        return this.props.reduxBlogAuth.authState.isLoading;
     }
     
     onLoginFormEnter = (event) => {
@@ -39,23 +58,43 @@ class Login extends React.Component {
     }
 
     onSignupClicked = () => {
-        this.props.history.push('/signup');
+        this.props.history.push(jeffskiRoutes.register);
+    }
+
+    componentDidUpdate(previousProps) {
+        if(!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck 
+            && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck 
+            && this.props.reduxBlogAuth.authState.isLoggedIn){
+                this.props.history.push(jeffskiRoutes.profile);
+        }
+
+         //if we are logged in go to profile
+         if (!this.props.reduxBlogAuth.authState.isLoading) {
+             if (this.props.reduxBlogAuth.authState.isLoggedIn) {
+                this.props.history.push(jeffskiRoutes.profile);
+            }
+            else {
+                //redirect to verification if needed
+                if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED){
+                    this.props.history.push(jeffskiRoutes.verify);
+                }
+                //show error message
+                if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL){
+                    this.setState({ showLoginErrorMesssage: true });
+                }
+            }
+        }
+
     }
 
     //callback page for
     // https://jeffskiblog.auth.us-east-2.amazoncognito.com/login?response_type=token&client_id=ve30037id36g8m4q811kmnqfs&redirect_uri=https://jeff.ski/user
     render() {
-        //if we are logged in go to profile
-        if (this.props.blogAuth.authNetwork !== STATUS_LOADING) {
-            if (this.props.blogAuth.isLoggedIn) {
-                console.log('jeffski login blogauth is in');
-                this.props.history.push('/profile');
-            }
-            else {
-                console.log('jeffski login blogauth is out');
-            }
+        //if we are not logged in go to login
+        if (this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
+            this.props.history.push('/profile');
         }
-
+        
         return (
             <div className="Login">
                 <Grid>
@@ -123,12 +162,13 @@ class Login extends React.Component {
                                         disabled={this.isLoginDisabled()}
                                         bsStyle="primary"
                                         onClick={this.onLoginClicked}
-                                    >
+                                        >
                                         Login
                                     </Button>
                                 </span>
                                 <span className="Login_action_button" >
                                     <Button
+                                        disabled={this.isLoggingIn()}
                                         onClick={this.onSignupClicked}
                                     >
                                         Sign Up
@@ -138,7 +178,7 @@ class Login extends React.Component {
                             <Col xs={2} md={4} />
                         </Row>
 
-                        {this.props.blogAuth.authNetwork === STATUS_FAILURE &&
+                        {this.state.showLoginErrorMesssage &&
                             <Row className="show-grid User_login-message">
                                 <Col xs={2} md={4} />
                                 <Col xs={8} md={4}>
@@ -157,4 +197,8 @@ class Login extends React.Component {
     }
 }
 
-export default withRouter(withBlogAuth(Login));
+function mapStateToProps({ reduxBlogAuth }) {
+    return { reduxBlogAuth };
+}
+
+export default connect(mapStateToProps)(withRouter(withBlogAuth(Login)));

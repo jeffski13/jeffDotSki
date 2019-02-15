@@ -4,6 +4,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 import githubLogo from './github-logo.png';
 import githubLogoShadow from './github-logo-shadow.png';
+import { jeffskiRoutes } from '../../app';
 import './styles.css';
 
 class FooterBarski extends Component {
@@ -62,9 +63,9 @@ class FooterBarski extends Component {
               <div className="footLinkDivider" >
                 &nbsp;&bull;&nbsp;
               </div>
-              <LinkContainer to="/login">
+              <LinkContainer to={jeffskiRoutes.login}>
                 <a
-                  href= "/login"
+                  href={jeffskiRoutes.login}
                   className="footerBarskiLink"
                 >
                   Account

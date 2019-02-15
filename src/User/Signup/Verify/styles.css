@@ -1,15 +1,22 @@
-.Signup {
+.Verify {
     min-height: 86vh;
     background-color: #eee;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
 .BulletTextItem_formTextInput {
     font-weight: normal;
 }
 
-.Signup-title {
-    padding: 25px;
+.Verify-title {
+    padding: 0px 20px 5px 20px;
     font-weight: 600;
     font-family: cursive;
+    text-align: center;
+}
+
+.Verify-message {
+    padding: 10px;
     text-align: center;
 }

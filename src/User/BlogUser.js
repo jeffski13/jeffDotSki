@@ -8,7 +8,7 @@ import { Auth } from 'aws-amplify';
  * @param {string} userId - the id of the user which we want
  * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
  */
-export function getUserSecure(userId, callback){
+export function getBlogUserSecure(userId, callback){
     Auth.currentAuthenticatedUser({
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {

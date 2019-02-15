@@ -3,12 +3,14 @@ import moment from 'moment';
 import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
 import './styles.css';
 import Amplify, { Auth } from 'aws-amplify';
-import { AUTH_CONFIG } from '../Auth/aws-auth-config';
+import { AUTH_CONFIG } from '../../Auth/aws-auth-config';
+import { jeffskiRoutes } from '../../../app';
+import { connect } from 'react-redux';
 
-export default class Signup extends React.Component {
+class Register extends React.Component {
     constructor(props) {
         super(props);
         //get start birthdate of 13 years ago
@@ -16,13 +18,14 @@ export default class Signup extends React.Component {
         startDate.year(startDate.year() - 13);
 
         this.state = {
+            registerNetwork: null,
+            registerNetworkMessage: null,
             username: 'userman1',
-            password: 'password2', //must have one uppercase
-            nameFirst: 'firstname1',
-            nameLast: 'lastname1',
+            password: 'Password$420', //must have one uppercase, on special
+            nameFirst: 'Yolo',
+            nameLast: 'Brolo',
             dateOfBirth: startDate,
             email: 'jeffskiosu@gmail.com'
-
         };
     }
 
@@ -31,46 +34,63 @@ export default class Signup extends React.Component {
     }
 
     isFormDisabled = () => {
-        return this.props.blogSignup && this.props.blogSignup.authNetwork === STATUS_LOADING;
+        return this.state.registerNetwork === STATUS_LOADING;
     }
 
     onSignupClicked = () => {
-        Auth.signUp({
-            username: this.state.username,
-            password: this.state.password,
-            attributes: {
-                email: this.state.email
-            }
-        })
-        .then(data => console.log('jeffski signup .then data: ', data))
-        .catch(err => console.log('jeffski signup .catch err: ', err));
+        this.setState({
+            registerNetwork: STATUS_LOADING
+        }, () => {
+            //call signup service
+            Auth.signUp({
+                username: this.state.username,
+                password: this.state.password,
+                attributes: {
+                    email: this.state.email
+                }
+            })
+            .then(data => {
+                this.setState({
+                    registerNetwork: STATUS_SUCCESS
+                });
+                console.log('jeffski signup .then data: ', data);
 
-        // After retrieveing the confirmation code from the user
-        // Auth.confirmSignUp(username, code, {
-        //     // Optional. Force user confirmation irrespective of existing alias. By default set to True.
-        //     forceAliasCreation: true    
-        // }).then(data => console.log('jeffski confirm .then data: ', data))
-        //   .catch(err => console.log('jeffski confirm .catch err: ', err));
+                //go to verification page
+            })
+            .catch(err => {
+                let userMessage = err.message;
+                if(err.code === 'UsernameExistsException'){
+                    userMessage = 'That username is not available. Please try another username.'
+                }
+                this.setState({
+                    registerNetwork: STATUS_FAILURE,
+                    registerNetworkMessage: userMessage
+                });
+                console.log('jeffski signup .catch err: ', err);
+            });
+            
 
-        // Auth.resendSignUp(username).then(() => {
-        //     console.log('code resent successfully');
-        // }).catch(e => {
-        //     console.log(e);
-        // });
+        });
     }
 
     onSignupCancelled = () => {
-        this.props.history.push('/login');
+        this.props.history.push(jeffskiRoutes.login);
     }
 
     render() {
+        console.log('rendering register ', this.props.reduxBlogAuth.authState);
+        //if we are not logged in go to login
+        if (this.props.reduxBlogAuth.authState.isLoggedIn) {
+            this.props.history.push(jeffskiRoutes.profile);
+        }
+
         return (
-            <div className="Signup">
+            <div className="Register">
                 <Grid>
                     <Row className="show-grid">
                         <Col xs={0} sm={2} md={4} />
                         <Col xs={12} sm={8} md={4}>
-                            <h2 className="Signup-title">Let's Get Started!</h2>
+                            <h2 className="Register-title">Let's Get Started!</h2>
                         </Col>
                         <Col xs={0} sm={2} md={4} />
                     </Row>
@@ -81,7 +101,7 @@ export default class Signup extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
                                 <FormGroup
-                                    controlId="signupNameFirstInput"
+                                    controlId="registerNameFirstInput"
                                 >
                                     <label className="has-float-label">
                                         <FormControl
@@ -107,7 +127,7 @@ export default class Signup extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
                                 <FormGroup
-                                    controlId="signupNameLastInput"
+                                    controlId="registerNameLastInput"
                                 >
                                     <label className="has-float-label">
                                         <FormControl
@@ -133,7 +153,7 @@ export default class Signup extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
                                 <FormGroup
-                                    controlId="signupUsernameInput"
+                                    controlId="registerUsernameInput"
                                 >
                                     <label className="has-float-label">
                                         <FormControl
@@ -159,7 +179,7 @@ export default class Signup extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
                                 <FormGroup
-                                    controlId="signupPasswordInput"
+                                    controlId="registerPasswordInput"
                                 >
                                     <label className="has-float-label">
                                         <FormControl
@@ -185,7 +205,7 @@ export default class Signup extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
                                 <FormGroup
-                                    controlId="signupEmailInput"
+                                    controlId="registerEmailInput"
                                 >
                                     <label className="has-float-label">
                                         <FormControl
@@ -247,12 +267,12 @@ export default class Signup extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                         </Row>
 
-                        {this.props.blogSignup && this.props.blogSignup.authNetwork === STATUS_FAILURE &&
+                        {this.state.registerNetwork === STATUS_FAILURE &&
                             <Row className="show-grid User_login-message">
                                 <Col xs={1} sm={2} md={4} />
                                 <Col xs={10} sm={8} md={4}>
                                     <Alert bsStyle="danger">
-                                        <strong>Oh No!</strong> Your user name or password was incorrect.
+                                        <strong>Oh No! </strong>{this.state.registerNetworkMessage} 
                                     </Alert>
                                 </Col>
                                 <Col xs={1} sm={2} md={4} />
@@ -264,3 +284,9 @@ export default class Signup extends React.Component {
         )
     }
 }
+
+function mapStateToProps({ reduxBlogAuth }) {
+    return { reduxBlogAuth };
+}
+
+export default connect(mapStateToProps)(Register);
