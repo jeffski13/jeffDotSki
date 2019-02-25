@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,28 +8,32 @@ import Amplify, { Auth } from 'aws-amplify';
 import { AUTH_CONFIG } from '../../Auth/aws-auth-config';
 import { jeffskiRoutes } from '../../../app';
 import { connect } from 'react-redux';
+import withBlogAuth from '../../Auth/withBlogAuth';
+import { storeUserInfo, storeAuthState } from '../../Auth/actions';
+import { bindActionCreators, compose } from 'redux';
 
-class Register extends React.Component {
+class Account extends React.Component {
     constructor(props) {
         super(props);
-        //get start birthdate of 13 years ago
-        let startDate = moment().startOf('day');
-        startDate.year(startDate.year() - 13);
-
         this.state = {
             registerNetwork: null,
             registerNetworkMessage: null,
             username: 'userman1',
             password: 'Password$420', //must have one uppercase, on special
-            nameFirst: 'Yolo',
-            nameLast: 'Brolo',
-            dateOfBirth: startDate,
             email: 'jeffskiosu@gmail.com'
         };
     }
 
     componentDidMount() {
         Amplify.configure(AUTH_CONFIG);
+
+        //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
+        // component did update check hang out since each page will require something different?
+        //if we hit this page for the first time we might not know if we are logged in
+        if (!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
+            //perform initial auth check
+            this.props.blogAuth.checkForAuth();
+        }
     }
 
     isFormDisabled = () => {
@@ -49,25 +52,33 @@ class Register extends React.Component {
                     email: this.state.email
                 }
             })
-            .then(data => {
-                this.setState({
-                    registerNetwork: STATUS_SUCCESS
+                .then(data => {
+                    console.log('signup for cognito success: ', data);
+                    //store everything in redux:
+                    this.props.storeUserInfo({
+                        email: this.state.email,
+                        username: this.state.username,
+                        isUserVerified: data.userConfirmed,
+                        password: this.state.password,
+                        id: data.userSub
+                    });
+                    
+                    this.setState({
+                        registerNetwork: STATUS_SUCCESS
+                    });
+                })
+                .catch(err => {
+                    console.log('error in cognito signup? ', err);
+                    let userMessage = err.message;
+                    // make some pretty messages for the common signup errors
+                    if (err.code === 'UsernameExistsException') {
+                        userMessage = 'That username is not available. Please try another username.'
+                    }
+                    this.setState({
+                        registerNetwork: STATUS_FAILURE,
+                        registerNetworkMessage: userMessage
+                    });
                 });
-
-                //go to verification page
-            })
-            .catch(err => {
-                let userMessage = err.message;
-                if(err.code === 'UsernameExistsException'){
-                    userMessage = 'That username is not available. Please try another username.'
-                }
-                this.setState({
-                    registerNetwork: STATUS_FAILURE,
-                    registerNetworkMessage: userMessage
-                });
-            });
-            
-
         });
     }
 
@@ -79,6 +90,9 @@ class Register extends React.Component {
         //if we are not logged in go to login
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             this.props.history.push(jeffskiRoutes.profile);
+        }
+        if (this.state.registerNetwork === STATUS_SUCCESS) {
+            this.props.history.push(jeffskiRoutes.verify);
         }
 
         return (
@@ -93,58 +107,6 @@ class Register extends React.Component {
                     </Row>
 
                     <form>
-
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerNameFirstInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="text"
-                                            value={this.state.nameFirst}
-                                            placeholder="Ex: Johnny"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    nameFirst: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>First Name</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
-
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerNameLastInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="text"
-                                            value={this.state.nameLast}
-                                            placeholder="Ex: Tsunami"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    nameLast: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>Last Name</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
 
                         <Row className="show-grid">
                             <Col xs={1} sm={2} md={4} />
@@ -226,23 +188,6 @@ class Register extends React.Component {
 
                         <Row className="show-grid">
                             <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <div className="form-group">
-                                    Date Of Birth: <DatePicker
-                                        selected={this.state.dateOfBirth}
-                                        onChange={(date) => {
-                                            this.setState({ dateOfBirth: date });
-                                        }}
-                                        className="form-control"
-                                        disabled={this.isFormDisabled()}
-                                    />
-                                </div>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
-
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4} className="Login_actions">
                                 <span className="Login_action_button" >
                                     <Button
@@ -257,7 +202,7 @@ class Register extends React.Component {
                                     <Button
                                         onClick={this.onSignupCancelled}
                                     >
-                                        Cancel
+                                        Go To Login
                                 </Button>
                                 </span>
                             </Col>
@@ -269,7 +214,7 @@ class Register extends React.Component {
                                 <Col xs={1} sm={2} md={4} />
                                 <Col xs={10} sm={8} md={4}>
                                     <Alert bsStyle="danger">
-                                        <strong>Oh No! </strong>{this.state.registerNetworkMessage} 
+                                        <strong>Oh No! </strong>{this.state.registerNetworkMessage}
                                     </Alert>
                                 </Col>
                                 <Col xs={1} sm={2} md={4} />
@@ -282,8 +227,12 @@ class Register extends React.Component {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ storeUserInfo }, dispatch);
+}
+
 function mapStateToProps({ reduxBlogAuth }) {
     return { reduxBlogAuth };
 }
 
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(withBlogAuth(Account));

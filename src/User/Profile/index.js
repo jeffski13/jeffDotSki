@@ -4,9 +4,10 @@ import withBlogAuth from '../Auth/withBlogAuth';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Loadingski from '../../Inf/Loadingski';
 import {STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING} from '../../Network/consts';
 import { getBlogUserSecure } from '../BlogUser';
-import { BLOG_USERINFO_CALL_FAIL} from '../Auth/consts'
+import {jeffskiRoutes} from '../../app';
 import './styles.css';
 
 class Profile extends React.Component {
@@ -55,7 +56,12 @@ class Profile extends React.Component {
         }, () => {
             getBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, (err, blogUserInfo) => {
                 if (err) {
-                    //PANIC! we have a verified aws user, we were not able to get their information back
+                    console.log('error on user info for profile: ', err);
+                    
+                    if(err.status === 404 && err.data.code === 'NotFound'){
+                        //user is not signed up with an account, but not blog information, send to register bloguser page
+                        this.props.history.push(jeffskiRoutes.registerBlogUser);
+                    }
                     return this.setState({
                         blogUserNetwork: STATUS_FAILURE
                     });
@@ -71,10 +77,17 @@ class Profile extends React.Component {
     }
 
     render(){
+        
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
-            this.props.history.push('/login');
+            this.props.history.push(jeffskiRoutes.login);
         }
+
+        //loading state
+        if(this.state.blogUserNetwork === STATUS_LOADING) {
+            return (<Loadingski />);
+        }
+
         let userState = {};
         if (this.state.blogUserNetwork === STATUS_LOADING) {
             userState = {

@@ -61,20 +61,19 @@ class Login extends React.Component {
     }
 
     onSignupClicked = () => {
-        this.props.history.push(jeffskiRoutes.register);
+        this.props.history.push(jeffskiRoutes.registerCognito);
     }
-
+    
     componentDidUpdate(previousProps) {
         if(this.props.reduxBlogAuth.authState.isLoggedIn){
+            //if we are logged in go to profile
             return this.props.history.push(jeffskiRoutes.profile);
         }
 
-         //if we are logged in go to profile
          if (!this.props.reduxBlogAuth.authState.isLoading && this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED) {
             //redirect to verification if needed
             return this.props.history.push(jeffskiRoutes.verify);
         }
-
     }
 
     //callback page for

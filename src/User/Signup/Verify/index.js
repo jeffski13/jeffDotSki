@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { jeffskiRoutes } from '../../../app';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
-import { AUTH_CODE_FAILURE_VERIFY_NOUSERNAMEPROVIDED } from '../../Auth/consts';
+import { AUTH_STATE_VERIFY_SUCCESS, AUTH_STATE_VERIFY_FAIL_INVALIDCODE, AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN } from '../../Auth/consts';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import './styles.css';
 
@@ -15,7 +15,8 @@ class Verify extends React.Component {
         super(props);
 
         this.state = {
-            code: ''
+            code: '',
+            verifyMessage: null
         }
     }
 
@@ -39,6 +40,30 @@ class Verify extends React.Component {
     }
 
     render() {
+        console.log('rendering in verify with :', this.props.reduxBlogAuth);
+        //if we login successfully go to profile
+        if(this.props.reduxBlogAuth.authState.isLoggedIn) {
+            this.props.history.push(jeffskiRoutes.profile);
+        }
+        
+        if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_SUCCESS) {
+            //if we have a user name and password in memory, use it to login
+            if(this.props.reduxBlogAuth.userInfo.username && this.props.reduxBlogAuth.userInfo.password){
+                this.props.blogAuth.login(this.props.reduxBlogAuth.userInfo.username, this.props.reduxBlogAuth.userInfo.password)
+            }
+            //if we dont have a user name and password, go back to the login page and let them do all that stuff again
+            else{
+                this.props.history.push(jeffskiRoutes.login);
+            }
+        }
+
+        let verifyMessage = null;
+        if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_INVALIDCODE){
+            verifyMessage = 'The code you entered was incorrect. Please check your email for a verification code.';
+        }
+        if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN){
+            verifyMessage = 'An error occurred during verification.';
+        }
 
         return (
             <div className="Verify">
@@ -110,12 +135,12 @@ class Verify extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                         </Row>
 
-                        {this.props.blogAuth.authNetwork === STATUS_FAILURE &&
+                        {verifyMessage && 
                             <Row className="show-grid User_login-message">
                                 <Col xs={1} sm={2} md={4} />
                                 <Col xs={10} sm={8} md={4}>
                                     <Alert bsStyle="danger">
-                                        <strong>Oh No! We got an error: </strong>{this.state.registerNetworkMessage} 
+                                        <strong>Oh No! We got an error: </strong>{verifyMessage} 
                                     </Alert>
                                 </Col>
                                 <Col xs={1} sm={2} md={4} />

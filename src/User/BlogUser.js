@@ -38,3 +38,31 @@ export function getBlogUserSecure(userId, callback){
     });
 
 }
+
+/**
+ * gets user info (name, email, trips owned, etc.)
+ * 
+ * @param {string} userId - the id of the user which we want
+ * @param {object} userSignupInfo - information such at first, last name, date of birth, etc. for signup
+ * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
+ */
+export function createBlogUserSecure(userId, userSignupInfo, callback){
+    console.log('body create blog user is ', userSignupInfo);
+    axios({
+        method: 'POST',
+        url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}`,
+        data: userSignupInfo
+    })
+    .then((response) => {
+        //parse the response
+        let rawUserResponseArr = response.data;
+
+        callback(null, rawUserResponseArr);
+    })
+    .catch(function (error) {
+        if(error.response){
+            return callback(error.response);
+        }
+        return callback(defaultErrorResponse);
+    });
+}

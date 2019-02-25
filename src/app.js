@@ -10,19 +10,20 @@ import NavigationBar from './Inf/NavigationBar';
 import FooterBarski from './Inf/FooterBarski';
 import Careers from './Careers';
 import Login from './User/Login';
-import Register from './User/Signup/Register';
+import RegisterBlogUser from './User/Signup/Register/BlogUser';
+import RegisterAccount from './User/Signup/Register/Account';
 import Verify from './User/Signup/Verify';
 import Profile from './User/Profile';
 import Hobbies from './AboutMe/Hobbies';
 import TimelineExample from './Blogs/Timeline/TimelineExample';
-import Trip from './User/Trips';
 
 import './styles.css';
 
 export const jeffskiRoutes = {
     login: '/login',
     profile: '/profile',
-    register: '/signup/register',
+    registerCognito: '/signup/register/account',
+    registerBlogUser: '/signup/register/bloguser',
     verify: '/signup/verify'
 };
 
@@ -42,7 +43,8 @@ export default class App extends Component {
             <Route path="/careers" component={Careers}/>
             <Route path="/aboutme/hobbies" component={Hobbies}/>
             <Route path={jeffskiRoutes.login} component={Login}/>
-            <Route path={jeffskiRoutes.register} component={Register}/>
+            <Route path={jeffskiRoutes.registerBlogUser} component={RegisterBlogUser}/>
+            <Route path={jeffskiRoutes.registerCognito} component={RegisterAccount}/>
             <Route path={jeffskiRoutes.verify} component={Verify}/>
             <Route path={jeffskiRoutes.profile} component={Profile}/>
             <Route path="/:userId/trips/:tripId" component={Blogs} />

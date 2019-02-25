@@ -7,6 +7,13 @@ const initialState = {
         isLoading: false,
         currentState: AUTH_STATE_LOGIN_LOADING,
         hasDoneInitialAuthCheck: false
+    },
+    userInfo: {
+        id: null,
+        isUserVerified: null,
+        email: null,
+        username: null,
+        password: null
     }
 };
 
