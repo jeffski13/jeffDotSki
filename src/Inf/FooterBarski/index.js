@@ -43,15 +43,6 @@ class FooterBarski extends Component {
           <Col xs={2} sm={1} />
           <Col xs={7} sm={10} className="footerBarskiLinkWrapper">
             <div className="footerLinksArea" >
-              <a
-                href= "mailto:techsupport@jeff.ski"
-                className="footerBarskiLink"
-              >
-                Website Support
-              </a>
-              <div className="footLinkDivider" >
-                &nbsp;&bull;&nbsp;
-              </div>
               <LinkContainer to="/careers">
                 <a
                   href= "/careers"
