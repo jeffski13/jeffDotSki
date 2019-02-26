@@ -1,17 +1,28 @@
 .navBarLink {
-    display:inline-block;
-    width:100%;
-    height:100%;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 
 .brand {
-	cursor:pointer;
+    cursor: pointer;
 }
 
 .Loadingski {
-    min-height: 86vh;
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 
-.Loadingski > div {
-    margin: 0 auto;
+.Loadingski_container {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.Loadingski_container>div {
+    margin-left: auto;
+    margin-right: auto;
 }

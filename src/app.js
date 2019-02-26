@@ -50,8 +50,8 @@ export default class App extends Component {
             <Route path="/:userId/trips/:tripId" component={Blogs} />
             <Route component={ ErrorPage } />
           </Switch>
-          <FooterBarski />
         </div>
+        <FooterBarski />
       </div>
     );
   }
