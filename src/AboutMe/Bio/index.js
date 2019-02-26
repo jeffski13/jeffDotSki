@@ -78,7 +78,7 @@ class Bio extends Component {
                   At the end of the day I am just a nerd. A threw a collage* together of things I spend too much time on. If you see anything we have in common, shoot me a message!
                 </p>
                 <p>
-                  Say hello at: <a href= "mailto:hello@jeff.ski" >hello@jeff.ski</a>
+                  Say hello at: <span className="Bio_emailAddress">coffee at jeff DOT ski</span>
                 </p>
               </Col>
             </Row>
