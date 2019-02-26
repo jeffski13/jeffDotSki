@@ -79,6 +79,7 @@ class Login extends React.Component {
     //callback page for
     // https://jeffskiblog.auth.us-east-2.amazoncognito.com/login?response_type=token&client_id=ve30037id36g8m4q811kmnqfs&redirect_uri=https://jeff.ski/user
     render() {
+
         return (
             <div className="Login">
                 <Grid>

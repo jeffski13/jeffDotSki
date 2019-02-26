@@ -115,8 +115,6 @@ class Profile extends React.Component {
             };
         }
         
-        
-
         return (
             <div className="User">
                 <Grid>

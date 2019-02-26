@@ -3,14 +3,14 @@ import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } f
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
-import './styles.css';
 import Amplify, { Auth } from 'aws-amplify';
+import { bindActionCreators, compose } from 'redux';
 import { AUTH_CONFIG } from '../../Auth/aws-auth-config';
 import { jeffskiRoutes } from '../../../app';
 import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { storeUserInfo, storeAuthState } from '../../Auth/actions';
-import { bindActionCreators, compose } from 'redux';
+import './styles.css';
 
 class Account extends React.Component {
     constructor(props) {
@@ -87,6 +87,7 @@ class Account extends React.Component {
     }
 
     render() {
+
         //if we are not logged in go to login
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             this.props.history.push(jeffskiRoutes.profile);
