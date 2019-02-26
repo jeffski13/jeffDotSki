@@ -1,0 +1,18 @@
+.User_header-title {
+    font-weight: 600;
+    font-family: cursive;
+    text-align: center;
+}
+
+/* button styling */
+.User_actions-section{
+    text-align: center;
+}
+
+.User_action-button {
+    padding: 15px;
+}
+
+.User_error-message {
+    padding: 10px;
+}

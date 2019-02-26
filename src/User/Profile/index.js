@@ -3,16 +3,20 @@ import { Button, Grid, Row, Col, Image } from 'react-bootstrap';
 import withBlogAuth from '../Auth/withBlogAuth';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import Loadingski from '../../Inf/Loadingski';
-import {STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING} from '../../Network/consts';
+import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import { getBlogUserSecure } from '../BlogUser';
-import {jeffskiRoutes} from '../../app';
+import { jeffskiRoutes } from '../../app';
 import './styles.css';
+import '../styles.css';
+
+const emptyProfileUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski/blog/alone-anime-art-262272.jpg';
 
 class Profile extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -28,28 +32,28 @@ class Profile extends React.Component {
         );
     }
 
-    componentDidMount(){
-        if(this.props.reduxBlogAuth.authState.isLoggedIn){
+    componentDidMount() {
+        if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             return this.getBlogUserProfile();
         }
-        
+
         //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
         // component did update check hang out since each page will require something different?
         //if we hit this page for the first time we might not know if we are logged in
-        if(!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck){
+        if (!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             //perform initial auth check
             this.props.blogAuth.checkForAuth();
         }
     }
 
     componentDidUpdate(previousProps) {
-        if(!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck 
-            && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck 
-            && this.props.reduxBlogAuth.authState.isLoggedIn){
-                this.getBlogUserProfile();
+        if (!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
+            && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck
+            && this.props.reduxBlogAuth.authState.isLoggedIn) {
+            this.getBlogUserProfile();
         }
     }
-    
+
     getBlogUserProfile = () => {
         this.setState({
             blogUserNetwork: STATUS_LOADING
@@ -57,8 +61,8 @@ class Profile extends React.Component {
             getBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, (err, blogUserInfo) => {
                 if (err) {
                     console.log('error on user info for profile: ', err);
-                    
-                    if(err.status === 404 && err.data.code === 'NotFound'){
+
+                    if (err.status === 404 && err.data.code === 'NotFound') {
                         //user is not signed up with an account, but not blog information, send to register bloguser page
                         this.props.history.push(jeffskiRoutes.registerBlogUser);
                     }
@@ -66,7 +70,7 @@ class Profile extends React.Component {
                         blogUserNetwork: STATUS_FAILURE
                     });
                 }
-        
+
                 this.setState({
                     ...blogUserInfo,
                     name: `${blogUserInfo.nameFirst} ${blogUserInfo.nameLast}`,
@@ -76,15 +80,19 @@ class Profile extends React.Component {
         });
     }
 
-    render(){
-        
+    goToEditProfile = () => {
+        this.props.history.push(jeffskiRoutes.profileEdit);
+    }
+
+    render() {
+
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.props.history.push(jeffskiRoutes.login);
         }
 
         //loading state
-        if(this.state.blogUserNetwork === STATUS_LOADING) {
+        if (this.state.blogUserNetwork === STATUS_LOADING) {
             return (<Loadingski />);
         }
 
@@ -108,27 +116,32 @@ class Profile extends React.Component {
             }
         }
         else {
+            let profilePicUrl = emptyProfileUrl;
+            if (this.state.profilePicUrl) {
+                profilePicUrl = this.state.profilePicUrl;
+            }
             userState = {
                 ...this.state,
                 username: this.props.reduxBlogAuth.userInfo.username,
-                email: this.props.reduxBlogAuth.userInfo.email
+                email: this.props.reduxBlogAuth.userInfo.email,
+                profilePic: profilePicUrl
             };
         }
-        
+
         return (
             <div className="User">
                 <Grid>
                     <Row className="show-grid">
                         <Col xs={12}>
-                            <h2 className="Profile_header">{userState.name}</h2>
+                            <h2 className="Profile_header">{userState.username}</h2>
                         </Col>
                     </Row>
 
                     <Row className="show-grid">
                         <Col xs={8}>
                             <Col xs={12} >
-                                <div className="Profile_title">Username</div>
-                                <div>{userState.username}</div>
+                                <div className="Profile_title">Name</div>
+                                <div>{userState.name}</div>
                             </Col>
                             <Col xs={12} >
                                 <div className="Profile_title">Email</div>
@@ -136,11 +149,13 @@ class Profile extends React.Component {
                             </Col>
                             <Col xs={12} >
                                 <div className="Profile_title">Birth Date</div>
-                                <div>{userState.dateOfBirth}</div>
+                                <div>{moment.unix(userState.dateOfBirth).format("MM/DD/YYYY")}</div>
                             </Col>
                         </Col>
                         <Col xs={4}>
-                            <Image responsive src={userState.profilePicUrl} />
+                            <div className="Profile_profilepic" onClick={this.goToEditProfile}>
+                                <Image responsive src={userState.profilePic} />
+                            </div>
                         </Col>
                     </Row>
 
@@ -161,12 +176,21 @@ class Profile extends React.Component {
 
                     <Row className="show-grid Profile_actions">
                         <Col xs={8} md={8}>
-                            <Button
-                                bsStyle="danger"
-                                onClick={this.props.blogAuth.logout}
-                            >
-                                Logout
-                            </Button>
+                            <span className="User_action-button" >
+                                <Button
+                                    onClick={this.goToEditProfile}
+                                >
+                                    Edit Profile
+                                </Button>
+                            </span>
+                            <span className="User_action-button" >
+                                <Button
+                                    bsStyle="danger"
+                                    onClick={this.props.blogAuth.logout}
+                                >
+                                    Logout
+                                </Button>
+                            </span>
                         </Col>
                     </Row>
 

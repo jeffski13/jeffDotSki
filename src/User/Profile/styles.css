@@ -14,3 +14,7 @@
 .Profile_actions {
     padding: 25px;
 }
+
+.Profile_profilepic {
+    cursor: pointer;
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles.css';
 import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,6 +6,8 @@ import { connect } from 'react-redux';
 import withBlogAuth from '../Auth/withBlogAuth';
 import {AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED, AUTH_STATE_LOGIN_FAIL} from '../Auth/consts';
 import { jeffskiRoutes } from '../../app';
+import './styles.css';
+import '../styles.css';
 
 class Login extends React.Component {
 
@@ -86,7 +87,7 @@ class Login extends React.Component {
                     <Row className="show-grid">
                         <Col xs={2} md={4} />
                         <Col xs={8} md={4}>
-                            <h2 className="Login_login-title">Welcome!</h2>
+                            <h2 className="User_header-title">Welcome!</h2>
                         </Col>
                         <Col xs={2} md={4} />
                     </Row>

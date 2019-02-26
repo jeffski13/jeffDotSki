@@ -8,7 +8,7 @@ class Loadingski extends Component {
     return(
       <div className="Loadingski" >
         <div className="Loadingski_container">
-            <ReactLoading type="cylon" color="#333" height="100px" width="100px"/>
+            <ReactLoading type="cylon" color="#333" height={100} width={100}/>
         </div>
       </div>
     );
