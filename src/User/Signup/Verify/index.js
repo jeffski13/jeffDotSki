@@ -40,7 +40,6 @@ class Verify extends React.Component {
     }
 
     render() {
-        console.log('rendering in verify with :', this.props.reduxBlogAuth);
         //if we login successfully go to profile
         if(this.props.reduxBlogAuth.authState.isLoggedIn) {
             this.props.history.push(jeffskiRoutes.profile);

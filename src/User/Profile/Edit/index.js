@@ -66,13 +66,11 @@ class ProfileEdit extends React.Component {
         }, () => {
             getBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, (err, blogUserInfo) => {
                 if (err) {
-                    console.log('error on getting user info to edit: ', err);
                     return this.setState({
                         profileFetchNetwork: STATUS_FAILURE,
                         profileFetchNetworkMessage: profileGetFailMessage
                     });
                 }
-                console.log('got user info to edit: ', blogUserInfo);
 
                 this.setState({
                     ...blogUserInfo,
@@ -110,13 +108,11 @@ class ProfileEdit extends React.Component {
 
             updateBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, updatedUserInfo, (err, data) => {
                 if (err) {
-                    console.log('blog user callback error: ', err);
 
                     return this.setState({
                         profileEditNetwork: STATUS_FAILURE
                     });
                 }
-                console.log('blog user callback success? ', data);
 
                 //WE DID IT! let state decide where we go from here
                 this.setState({
@@ -182,9 +178,6 @@ class ProfileEdit extends React.Component {
                 </div>
             );
         }
-
-        console.log('rendering edit user with props: ', this.props.reduxBlogAuth);
-        console.log('rendering edit user with local state: ', this.state);
 
         return (
             <div className="ProfileEdit">

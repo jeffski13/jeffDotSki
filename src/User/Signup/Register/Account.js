@@ -18,9 +18,9 @@ class Account extends React.Component {
         this.state = {
             registerNetwork: null,
             registerNetworkMessage: null,
-            username: 'userman1',
-            password: 'Password$420', //must have one uppercase, on special
-            email: 'jeffskiosu@gmail.com'
+            username: '',
+            password: '', //must have one uppercase, on special
+            email: ''
         };
     }
 
@@ -53,7 +53,6 @@ class Account extends React.Component {
                 }
             })
                 .then(data => {
-                    console.log('signup for cognito success: ', data);
                     //store everything in redux:
                     this.props.storeUserInfo({
                         email: this.state.email,
@@ -68,7 +67,6 @@ class Account extends React.Component {
                     });
                 })
                 .catch(err => {
-                    console.log('error in cognito signup? ', err);
                     let userMessage = err.message;
                     // make some pretty messages for the common signup errors
                     if (err.code === 'UsernameExistsException') {

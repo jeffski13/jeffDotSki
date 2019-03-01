@@ -25,8 +25,8 @@ class BlogUser extends React.Component {
             registerNetwork: STATUS_LOADING,
             registerNetworkMessage: null,
             initialBlogUserInfoCheck: false,
-            nameFirst: 'Yolo',
-            nameLast: 'Brolo',
+            nameFirst: '',
+            nameLast: '',
             dateOfBirth: startDate,
             minDateNumber: minDate.unix()
         };
@@ -59,7 +59,6 @@ class BlogUser extends React.Component {
             // make sure blog user doesnt already exist
             getBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, (err, blogUserInfo) => {
                 if (err) {
-                    console.log('error on user info for profile: ', err);
                     if (err.status === 404 && err.data.code === 'NotFound') {
                         // if user info does not come back we are in the right: we are logged in but need to create blog user info
                         return this.setState({
@@ -82,7 +81,6 @@ class BlogUser extends React.Component {
     }
 
     componentDidUpdate(previousProps) {
-        console.log('component did update with props: ', this.props.reduxBlogAuth);
         if(!this.state.initialBlogUserInfoCheck && this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.userInfo.isUserVerified){
             this.checkForUserBlogInfo();
         }
@@ -111,27 +109,12 @@ class BlogUser extends React.Component {
                 username: this.props.reduxBlogAuth.userInfo.username
             };
 
-            //need to sign this bloke in first
-            // this.props.blogAuth.login(this.state.username, this.state.password, (err, user, message) => {
-            //     console.log('login callback triggerred!!!!');
-            //     if(err){
-            //         console.log('we got an error:', err);
-            //     }
-            //     if(user){
-            //         console.log('we got a user:', user);
-            //     }
-            //     console.log('and we got a message:', message);
-            // });
-
             createBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, userSignupInfo, (err, data) => {
                 if (err) {
-                    console.log('blog user callback error: ', err);
-
                     return this.setState({
                         registerNetwork: STATUS_FAILURE
                     });
                 }
-                console.log('blog user callback success? ', data);
 
                 //WE DID IT! let state decide where we go from here
                 this.setState({
@@ -151,9 +134,6 @@ class BlogUser extends React.Component {
             //if we are logged in and blog user info already exists go to login
             this.props.history.push(jeffskiRoutes.profile);
         }
-
-        console.log('rendering blog user signup with props: ', this.props.reduxBlogAuth);
-
 
         return (
             <div className="Register">

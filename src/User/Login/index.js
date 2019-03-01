@@ -14,8 +14,8 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'userman1',
-            password: 'Password$420', //must have one uppercase, on special
+            username: '',
+            password: '', //must have one uppercase, on special
             showLoginErrorMesssage: false
         };
     }

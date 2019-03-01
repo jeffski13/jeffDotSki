@@ -92,7 +92,6 @@ let withBlogAuth = (OgComponent) => {
                     // More info please check the Enabling MFA part
                     Auth.setupTOTP(user);
                 } else {
-                    console.log('withblogauth logged in: ', user);
                     //SUCCESSSSSSS!!!! we are logged into AWS
                     //at this point we should be able to get the users AWS and blog info
                     loginCallback(null, user, 'success');
@@ -103,7 +102,6 @@ let withBlogAuth = (OgComponent) => {
                     // The error happens if the user didn't finish the confirmation step when signing up
                     // In this case you need to resend the code and confirm the user
                     // About how to resend the code and confirm the user, please check the signUp part
-                    console.log('withblogauth calling login callback with user not verified');
                     loginCallback(err, null, 'not verified');
                     this.props.storeAuthState({
                         isLoggedIn: false,
@@ -140,7 +138,6 @@ let withBlogAuth = (OgComponent) => {
             Auth.currentAuthenticatedUser({
                 bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
             }).then((awsUser) => {
-                console.log('withblogauth got autheduser info: ', awsUser);
                 this.props.storeUserInfo({
                     username: awsUser.username,
                     email: awsUser.attributes.email,
@@ -197,7 +194,6 @@ let withBlogAuth = (OgComponent) => {
             //we want user to go through login (verify username and password) before we try to confirm signup
             let userName = this.props.reduxBlogAuth.userInfo.username;
             if (!userName || userName === '') {
-                console.log('verification called with no username in state.');
                 this.props.storeAuthState({
                     isLoading: false,
                     currentState: AUTH_STATE_VERIFY_FAIL_NOUSERNAME
@@ -208,13 +204,11 @@ let withBlogAuth = (OgComponent) => {
                 isLoading: true,
                 currentState: AUTH_STATE_VERIFYING
             });
-            console.log('calling AWS auth confirmSignUp with ', userName);
             //start call for verifying user
             Auth.confirmSignUp(userName, verifyCode, {
                 // Optional. Force user confirmation irrespective of existing alias. By default set to True.
                 forceAliasCreation: true
             }).then((data) => {
-                console.log('verifies signup dude!: ', data);
                 //DO THIS NEXT!
                 //make call out to our user service with put to say that we are verified                
                 this.props.storeAuthState({
@@ -222,9 +216,7 @@ let withBlogAuth = (OgComponent) => {
                     currentState: AUTH_STATE_VERIFY_SUCCESS,
                     isUserVerified: true
                 });
-                console.log('now logging in with ', userName);
             }).catch((err) => {
-                console.log('error of sadness during verification: ', err);
                 let currentVerifyState = AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN;
                 if(err.code === 'CodeMismatchException'){
                     currentVerifyState = AUTH_STATE_VERIFY_FAIL_INVALIDCODE;
@@ -291,7 +283,6 @@ let withBlogAuth = (OgComponent) => {
             try {
                 const response = await call(Auth);
             } catch (err) {
-                console.log('jeffski error calling api: ', err.message, err)
             }
         };
 

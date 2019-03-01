@@ -30,7 +30,6 @@ export function validateFormPositiveNumber(inputNum) {
 }
 
 export function validateFormPositiveAndLessThanMaximum(inputNum, maxNum) {
-    console.log('editting num: ', inputNum);
 	if (validateFormPositiveNumber(inputNum) === FORM_SUCCESS) {
         let num = parseInt(inputNum);
         if(num < maxNum){

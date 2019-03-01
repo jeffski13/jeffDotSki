@@ -47,7 +47,6 @@ export function getBlogUserSecure(userId, callback) {
  * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
  */
 export function createBlogUserSecure(userId, userSignupInfo, callback) {
-    console.log('body create blog user is ', userSignupInfo);
     axios({
         method: 'POST',
         url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}`,
@@ -79,7 +78,6 @@ export function updateBlogUserSecure(userId, userUpdateInfo, callback) {
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
-        console.log('body create blog user is ', userUpdateInfo);
         axios({
             method: 'PUT',
             url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}`,
