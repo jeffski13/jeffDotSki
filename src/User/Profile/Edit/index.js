@@ -24,7 +24,9 @@ class ProfileEdit extends React.Component {
         minDate.year(minDate.year() - 13);
 
         this.state = {
-            profileEditNetwork: STATUS_LOADING,
+            profileFetchNetwork: STATUS_LOADING,
+            profileFetchNetworkMessage: null,
+            profileEditNetwork: null,
             profileEditNetworkMessage: null,
             nameFirst: null,
             nameLast: null,
@@ -60,14 +62,14 @@ class ProfileEdit extends React.Component {
 
     getBlogUserProfile = () => {
         this.setState({
-            profileEditNetwork: STATUS_LOADING
+            profileFetchNetwork: STATUS_LOADING
         }, () => {
             getBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, (err, blogUserInfo) => {
                 if (err) {
                     console.log('error on getting user info to edit: ', err);
                     return this.setState({
-                        profileEditNetwork: STATUS_FAILURE,
-                        profileEditNetworkMessage: profileGetFailMessage
+                        profileFetchNetwork: STATUS_FAILURE,
+                        profileFetchNetworkMessage: profileGetFailMessage
                     });
                 }
                 console.log('got user info to edit: ', blogUserInfo);
@@ -75,7 +77,7 @@ class ProfileEdit extends React.Component {
                 this.setState({
                     ...blogUserInfo,
                     name: `${blogUserInfo.nameFirst} ${blogUserInfo.nameLast}`,
-                    profileEditNetwork: STATUS_SUCCESS,
+                    profileFetchNetwork: STATUS_SUCCESS,
                     dateOfBirth: moment.unix(blogUserInfo.dateOfBirth)
                 });
             });
@@ -101,7 +103,6 @@ class ProfileEdit extends React.Component {
             dateOfBirth: moment(this.state.dateOfBirth.valueOf()).unix(),
             bio: this.state.bio
         };
-        return console.log('Edit profile Save clicked: ', updatedUserInfo);
 
         this.setState({
             profileEditNetwork: STATUS_LOADING
@@ -119,7 +120,8 @@ class ProfileEdit extends React.Component {
 
                 //WE DID IT! let state decide where we go from here
                 this.setState({
-                    profileEditNetwork: STATUS_SUCCESS
+                    profileEditNetwork: STATUS_SUCCESS,
+                    profileEditNetworkMessage: 'Profile updated successfully'
                 });
             });
 
@@ -153,10 +155,10 @@ class ProfileEdit extends React.Component {
         }
 
         //loading state
-        if (this.state.profileEditNetwork === STATUS_LOADING) {
+        if (this.state.profileFetchNetwork === STATUS_LOADING) {
             return (<Loadingski />);
         }
-        if (this.state.profileEditNetworkMessage === profileGetFailMessage) {
+        if (this.state.profileFetchNetworkMessage === profileGetFailMessage) {
             return (
                 <div className="ProfileEdit">
                     <Grid>
@@ -171,7 +173,7 @@ class ProfileEdit extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
                                 <Alert bsStyle="danger">
-                                    <strong>Oh No! </strong>{this.state.profileEditNetworkMessage}
+                                    <strong>Oh No! </strong>{this.state.profileFetchNetworkMessage}
                                 </Alert>
                             </Col>
                             <Col xs={1} sm={2} md={4} />
@@ -352,7 +354,7 @@ class ProfileEdit extends React.Component {
                                         disabled={this.isFormDisabled()}
                                         onClick={this.onCancelProfileChanges}
                                     >
-                                        Cancel
+                                        Back To Profile
                                     </Button>
                                 </span>
                             </Col>
@@ -365,6 +367,18 @@ class ProfileEdit extends React.Component {
                                 <Col xs={10} sm={8} md={4}>
                                     <Alert bsStyle="danger">
                                         <strong>Oh No! </strong>{this.state.profileEditNetworkMessage}
+                                    </Alert>
+                                </Col>
+                                <Col xs={1} sm={2} md={4} />
+                            </Row>
+                        }
+
+                        {this.state.profileEditNetwork === STATUS_SUCCESS &&
+                            <Row className="show-grid User_error-message">
+                                <Col xs={1} sm={2} md={4} />
+                                <Col xs={10} sm={8} md={4}>
+                                    <Alert bsStyle="success">
+                                        <strong>YAY! </strong>{this.state.profileEditNetworkMessage}
                                     </Alert>
                                 </Col>
                                 <Col xs={1} sm={2} md={4} />
