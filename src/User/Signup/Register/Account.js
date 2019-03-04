@@ -12,15 +12,45 @@ import withBlogAuth from '../../Auth/withBlogAuth';
 import { storeUserInfo, storeAuthState } from '../../Auth/actions';
 import './styles.css';
 
+const passwordRules = [
+    {
+        text: 'At Least 8 Characters',
+        code: 'length',
+        regex: null
+    },
+    {
+        text: 'One Uppercase Letter',
+        code: 'upperalpha',
+        regex: new RegExp('[A-Z]')
+    },
+    {
+        text: 'One Lowercase Letter',
+        code: 'loweralpha',
+        regex: new RegExp('[a-z]')
+    },
+    {
+        text: 'One Number',
+        code: 'numeric',
+        regex: new RegExp('[0-9]')
+    },
+    {
+        text: 'One Special Character',
+        code: 'special',
+        regex: null
+    }
+];
+
 class Account extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             registerNetwork: null,
             registerNetworkMessage: null,
             username: '',
             password: '', //must have one uppercase, on special
-            email: ''
+            email: '',
+            passwordAnalyzerResults: null
         };
     }
 
@@ -61,7 +91,7 @@ class Account extends React.Component {
                         password: this.state.password,
                         id: data.userSub
                     });
-                    
+
                     this.setState({
                         registerNetwork: STATUS_SUCCESS
                     });
@@ -82,6 +112,33 @@ class Account extends React.Component {
 
     onSignupCancelled = () => {
         this.props.history.push(jeffskiRoutes.login);
+    }
+
+    renderPasswordAnalysisList = (nextPasswordRule) => {
+        //we have typed at least one character
+        let hintClassName = 'Account_password-invalid';
+        if (nextPasswordRule.code === 'length') {
+            if (this.state.password.length >= 8) {
+                hintClassName = 'Account_password-valid';
+            }
+        }
+        else if (nextPasswordRule.code === 'special') {
+            const specialChars = ['^', '$', '*', '.', '[', ']', '{', '}', '(', ')', '?', '-', '"', '!', '@', '#','%', '&', '/', '\\', ',', '>', '<', "'", ':', ';', '|', '_', '~', '`'];
+            specialChars.forEach((nextChar)=>{
+                if (this.state.password.includes(nextChar)) {
+                    hintClassName = 'Account_password-valid';
+                }
+            });
+        }
+        else {
+            let regex = nextPasswordRule.regex;
+            if (regex.exec(this.state.password)) {
+                hintClassName = 'Account_password-valid';
+            }
+        }
+
+
+        return (<li className={hintClassName}>{nextPasswordRule.text}</li>);
     }
 
     render() {
@@ -106,6 +163,32 @@ class Account extends React.Component {
                     </Row>
 
                     <form>
+
+                        <Row className="show-grid">
+                            <Col xs={1} sm={2} md={4} />
+                            <Col xs={10} sm={8} md={4}>
+                                <FormGroup
+                                    controlId="registerEmailInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            type="email"
+                                            value={this.state.email}
+                                            placeholder="Ex: yolo@swag.net"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    email: e.target.value
+                                                });
+                                            }}
+                                            name="text"
+                                            className="form-label-group ability-input BulletTextItem_formTextInput"
+                                        />
+                                        <span>E-Mail</span>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={1} sm={2} md={4} />
+                        </Row>
 
                         <Row className="show-grid">
                             <Col xs={1} sm={2} md={4} />
@@ -145,6 +228,9 @@ class Account extends React.Component {
                                             value={this.state.password}
                                             placeholder="Ex: s0m3Th1ngC0mpl1cAt3D"
                                             onChange={(e) => {
+
+
+                                                console.log('jeffski looking at passowrd: ', e.target.value);
                                                 this.setState({
                                                     password: e.target.value
                                                 });
@@ -159,28 +245,12 @@ class Account extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                         </Row>
 
-                        <Row className="show-grid">
+                        <Row>
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerEmailInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="email"
-                                            value={this.state.email}
-                                            placeholder="Ex: yolo@swag.net"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    email: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>E-Mail</span>
-                                    </label>
-                                </FormGroup>
+                                <ul>
+                                    {passwordRules.map(this.renderPasswordAnalysisList)}
+                                </ul>
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>
