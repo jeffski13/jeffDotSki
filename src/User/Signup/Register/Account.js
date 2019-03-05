@@ -248,7 +248,7 @@ class Account extends React.Component {
                         <Row>
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
-                                <ul>
+                                <ul className="Register_validation-list">
                                     {passwordRules.map(this.renderPasswordAnalysisList)}
                                 </ul>
                             </Col>
