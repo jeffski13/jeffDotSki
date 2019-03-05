@@ -2,6 +2,8 @@ import axios from 'axios';
 import { defaultErrorResponse } from '../Network/consts';
 import { Auth } from 'aws-amplify';
 
+export const emptyProfileUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski/blog/alone-anime-art-262272.jpg';
+
 /**
  * gets user info (name, email, trips owned, etc.)
  * 

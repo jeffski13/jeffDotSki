@@ -8,12 +8,10 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 import Loadingski from '../../Inf/Loadingski';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
-import { getBlogUserSecure } from '../BlogUser';
+import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
 import { jeffskiRoutes } from '../../app';
 import './styles.css';
 import '../styles.css';
-
-const emptyProfileUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski/blog/alone-anime-art-262272.jpg';
 
 class Profile extends React.Component {
 
@@ -80,8 +78,12 @@ class Profile extends React.Component {
         });
     }
 
-    goToEditProfile = () => {
-        this.props.history.push(jeffskiRoutes.profileEdit);
+    goToEditProfileInfo = () => {
+        this.props.history.push(jeffskiRoutes.profileEditInfo);
+    }
+
+    goToEditProfilePic = () => {
+        this.props.history.push(jeffskiRoutes.profileEditPic);
     }
 
     render() {
@@ -128,7 +130,7 @@ class Profile extends React.Component {
             };
         }
 
-        const editLink = (<LinkContainer to={jeffskiRoutes.profileEdit}><a href={jeffskiRoutes.profileEdit}>Edit</a></LinkContainer>);
+        const editLink = (<LinkContainer to={jeffskiRoutes.profileEditInfo}><a href={jeffskiRoutes.profileEdit}>Edit</a></LinkContainer>);
 
         return (
             <div className="User">
@@ -155,7 +157,7 @@ class Profile extends React.Component {
                             </Col>
                         </Col>
                         <Col xs={4}>
-                            <div className="Profile_profilepic" onClick={this.goToEditProfile}>
+                            <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
                                 <Image responsive src={userState.profilePic} />
                             </div>
                         </Col>
@@ -185,7 +187,7 @@ class Profile extends React.Component {
                         <Col xs={10} sm={8} md={4} className="User_actions-section">
                             <span className="User_action-button" >
                                 <Button
-                                    onClick={this.goToEditProfile}
+                                    onClick={this.goToEditProfileInfo}
                                 >
                                     Edit Profile
                                 </Button>

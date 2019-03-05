@@ -1,17 +1,19 @@
 import React from 'react';
 import moment from 'moment';
-import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert, Image } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { withRouter, Link } from 'react-router-dom';
 
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
 import { jeffskiRoutes } from '../../../app';
 import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
-import { updateBlogUserSecure, getBlogUserSecure } from '../../BlogUser';
+import { updateBlogUserSecure, getBlogUserSecure, emptyProfileUrl } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
 import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from './formvalidation';
 import '../../styles.css';
+import './styles.css';
 import { isNullOrUndefined } from 'util';
 
 const BIO_TEXT_ROWS_DEFAULT = 4;
@@ -35,6 +37,7 @@ class ProfileEdit extends React.Component {
             dateOfBirth: null,
             minDateNumber: minDate.unix(),
             bio: '',
+            profilePic: emptyProfileUrl,
             bioCharacterLimit: 2000,
             bioTextRows: BIO_TEXT_ROWS_DEFAULT
         };
@@ -119,11 +122,11 @@ class ProfileEdit extends React.Component {
                 this.setState({
                     profileEditNetwork: STATUS_SUCCESS,
                     profileEditNetworkMessage: 'Profile updated successfully',
-                    profileNetworkThrottle: true 
+                    profileNetworkThrottle: true
                 });
-                
+
                 setTimeout(() => {
-                    this.setState({ 
+                    this.setState({
                         profileEditNetwork: null,
                         profileEditNetworkMessage: null,
                         profileNetworkThrottle: false
@@ -162,6 +165,10 @@ class ProfileEdit extends React.Component {
         }
 
         return (<li className={hintClassName}>Must be at least 13 years old</li>);
+    }
+
+    goToEditProfilePic = () => {
+        this.props.history.push(jeffskiRoutes.profileEditPic);
     }
 
     render() {
@@ -210,6 +217,16 @@ class ProfileEdit extends React.Component {
                             <h2 className="User_header-title">Edit Profile</h2>
                         </Col>
                         <Col xs={0} sm={2} md={4} />
+                    </Row>
+
+                    <Row className="show-grid">
+                        <Col xs={0} sm={2} md={5} />
+                        <Col xs={12} sm={8} md={2}>
+                            <div className="Profile_profilepic ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
+                                <Image responsive src={this.state.profilePic} />
+                            </div>
+                        </Col>
+                        <Col xs={0} sm={2} md={5} />
                     </Row>
 
                     <form>
@@ -343,7 +360,7 @@ class ProfileEdit extends React.Component {
                                     <strong>Date Of Birth: </strong><DatePicker
                                         selected={this.state.dateOfBirth}
                                         onChange={(date) => {
-                                            if(date){
+                                            if (date) {
                                                 this.setState({ dateOfBirth: date });
                                             }
                                         }}
@@ -422,4 +439,4 @@ function mapStateToProps({ reduxBlogAuth }) {
     return { reduxBlogAuth };
 }
 
-export default connect(mapStateToProps)(withBlogAuth(ProfileEdit));
+export default connect(mapStateToProps)(withRouter(withBlogAuth(ProfileEdit)));

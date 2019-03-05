@@ -16,13 +16,15 @@ import Verify from './User/Signup/Verify';
 import Profile from './User/Profile';
 import Hobbies from './AboutMe/Hobbies';
 import TimelineExample from './Blogs/Timeline/TimelineExample';
-import ProfileEdit from './User/Profile/Edit';
+import ProfileEditInfo from './User/Profile/EditInfo';
+import ProfileEditPic from './User/Profile/EditPic';
 import './styles.css';
 
 export const jeffskiRoutes = {
     login: '/login',
     profile: '/profile',
-    profileEdit: '/profile/edit',
+    profileEditInfo: '/profile/edit',
+    profileEditPic: '/profile/edit/pic',
     registerCognito: '/signup/register/account',
     registerBlogUser: '/signup/register/bloguser',
     verify: '/signup/verify'
@@ -48,7 +50,8 @@ export default class App extends Component {
             <Route path={jeffskiRoutes.registerCognito} component={RegisterAccount}/>
             <Route exact path={jeffskiRoutes.verify} component={Verify}/>
             <Route exact path={jeffskiRoutes.profile} component={Profile}/>
-            <Route exact path={jeffskiRoutes.profileEdit} component={ProfileEdit}/>
+            <Route exact path={jeffskiRoutes.profileEditInfo} component={ProfileEditInfo}/>
+            <Route exact path={jeffskiRoutes.profileEditPic} component={ProfileEditPic}/>
             <Route path="/:userId/trips/:tripId" component={Blogs} />
             <Route component={ ErrorPage } />
           </Switch>
