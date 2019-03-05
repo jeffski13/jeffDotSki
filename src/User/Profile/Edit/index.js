@@ -154,6 +154,16 @@ class ProfileEdit extends React.Component {
         });
     }
 
+    renderBirthDateValidation = () => {
+        //we have typed at least one character
+        let hintClassName = 'Register_password-invalid';
+        if (this.state.dateOfBirth && this.state.dateOfBirth.unix() <= this.state.minDateNumber) {
+            hintClassName = 'Register_password-valid';
+        }
+
+        return (<li className={hintClassName}>Must be at least 13 years old</li>);
+    }
+
     render() {
 
 
@@ -333,11 +343,23 @@ class ProfileEdit extends React.Component {
                                     <strong>Date Of Birth: </strong><DatePicker
                                         selected={this.state.dateOfBirth}
                                         onChange={(date) => {
-                                            this.setState({ dateOfBirth: date });
+                                            if(date){
+                                                this.setState({ dateOfBirth: date });
+                                            }
                                         }}
                                         className="form-control"
                                     />
                                 </FormGroup>
+                            </Col>
+                            <Col xs={1} sm={2} md={4} />
+                        </Row>
+
+                        <Row>
+                            <Col xs={1} sm={2} md={4} />
+                            <Col xs={10} sm={8} md={4}>
+                                <ul className="Register_validation-list">
+                                    {this.renderBirthDateValidation()}
+                                </ul>
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>

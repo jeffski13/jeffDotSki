@@ -116,24 +116,24 @@ class Account extends React.Component {
 
     renderPasswordAnalysisList = (nextPasswordRule) => {
         //we have typed at least one character
-        let hintClassName = 'Account_password-invalid';
+        let hintClassName = 'Register_password-invalid';
         if (nextPasswordRule.code === 'length') {
             if (this.state.password.length >= 8) {
-                hintClassName = 'Account_password-valid';
+                hintClassName = 'Register_password-valid';
             }
         }
         else if (nextPasswordRule.code === 'special') {
             const specialChars = ['^', '$', '*', '.', '[', ']', '{', '}', '(', ')', '?', '-', '"', '!', '@', '#','%', '&', '/', '\\', ',', '>', '<', "'", ':', ';', '|', '_', '~', '`'];
             specialChars.forEach((nextChar)=>{
                 if (this.state.password.includes(nextChar)) {
-                    hintClassName = 'Account_password-valid';
+                    hintClassName = 'Register_password-valid';
                 }
             });
         }
         else {
             let regex = nextPasswordRule.regex;
             if (regex.exec(this.state.password)) {
-                hintClassName = 'Account_password-valid';
+                hintClassName = 'Register_password-valid';
             }
         }
 

@@ -91,7 +91,8 @@ class BlogUser extends React.Component {
     }
 
     isFormDisabled = () => {
-        return (this.state.registerNetwork === STATUS_LOADING) ||
+        return (this.state.registerNetwork === STATUS_LOADING) || 
+            !this.state.dateOfBirth ||
             (this.state.dateOfBirth.unix() > this.state.minDateNumber) ||
             !this.state.nameFirst || !this.state.nameLast;
     }
@@ -123,6 +124,16 @@ class BlogUser extends React.Component {
             });
 
         });
+    }
+
+    renderBirthDateValidation = () => {
+        //we have typed at least one character
+        let hintClassName = 'Register_password-invalid';
+        if (this.state.dateOfBirth && this.state.dateOfBirth.unix() <= this.state.minDateNumber) {
+            hintClassName = 'Register_password-valid';
+        }
+
+        return (<li className={hintClassName}>Must be at least 13 years old</li>);
     }
 
     render() {
@@ -230,11 +241,23 @@ class BlogUser extends React.Component {
                                     Date Of Birth: <DatePicker
                                         selected={this.state.dateOfBirth}
                                         onChange={(date) => {
-                                            this.setState({ dateOfBirth: date });
+                                            if(date) {
+                                                this.setState({ dateOfBirth: date });
+                                            }
                                         }}
                                         className="form-control"
                                     />
                                 </div>
+                            </Col>
+                            <Col xs={1} sm={2} md={4} />
+                        </Row>
+
+                        <Row>
+                            <Col xs={1} sm={2} md={4} />
+                            <Col xs={10} sm={8} md={4}>
+                                <ul className="Register_validation-list">
+                                    {this.renderBirthDateValidation()}
+                                </ul>
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>

@@ -16,11 +16,28 @@
     text-align: center;
 }
 
-.Account_password-valid {
+.Register_validation-list {
+    list-style: none;
+}
+
+.Register_password-valid {
     color: green;
     font-weight: bold;
 }
 
-.Account_password-invalid {
-    color: black;
+.Register_password-valid:before {
+    content: '✓ ';
 }
+
+.Register_password-invalid {
+    color: rgb(44, 44, 44);
+}
+
+.Register_password-invalid:before {
+    content: '✗ ';
+}
+
+.react-datepicker-popper {
+    z-index: 10;
+}
+
