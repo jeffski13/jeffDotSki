@@ -12,6 +12,7 @@ import { updateBlogUserSecure, getBlogUserSecure } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
 import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from './formvalidation';
 import '../../styles.css';
+import { isNullOrUndefined } from 'util';
 
 const BIO_TEXT_ROWS_DEFAULT = 4;
 const profileGetFailMessage = 'We were not able to get your profile information at this time.';
@@ -28,6 +29,7 @@ class ProfileEdit extends React.Component {
             profileFetchNetworkMessage: null,
             profileEditNetwork: null,
             profileEditNetworkMessage: null,
+            profileNetworkThrottle: false,
             nameFirst: null,
             nameLast: null,
             dateOfBirth: null,
@@ -108,7 +110,6 @@ class ProfileEdit extends React.Component {
 
             updateBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, updatedUserInfo, (err, data) => {
                 if (err) {
-
                     return this.setState({
                         profileEditNetwork: STATUS_FAILURE
                     });
@@ -117,8 +118,17 @@ class ProfileEdit extends React.Component {
                 //WE DID IT! let state decide where we go from here
                 this.setState({
                     profileEditNetwork: STATUS_SUCCESS,
-                    profileEditNetworkMessage: 'Profile updated successfully'
+                    profileEditNetworkMessage: 'Profile updated successfully',
+                    profileNetworkThrottle: true 
                 });
+                
+                setTimeout(() => {
+                    this.setState({ 
+                        profileEditNetwork: null,
+                        profileEditNetworkMessage: null,
+                        profileNetworkThrottle: false
+                    });
+                }, 3000);
             });
 
         });
@@ -146,12 +156,12 @@ class ProfileEdit extends React.Component {
 
     render() {
 
-        
+
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.props.history.push(jeffskiRoutes.login);
         }
-        
+
         //loading state
         if (this.state.profileFetchNetwork === STATUS_LOADING) {
             return (<Loadingski />);
@@ -180,7 +190,7 @@ class ProfileEdit extends React.Component {
                 </div>
             );
         }
-        
+
         return (
             <div className="ProfileEdit">
                 <Grid>
@@ -319,7 +329,7 @@ class ProfileEdit extends React.Component {
                                 <FormGroup
                                     controlId="profileEditDateOfBirthInput"
                                     validationState={validateFormPositiveAndLessThanOrEqualToMaximum(this.state.dateOfBirth.unix(), this.state.minDateNumber)}
-                                    >
+                                >
                                     <strong>Date Of Birth: </strong><DatePicker
                                         selected={this.state.dateOfBirth}
                                         onChange={(date) => {
@@ -337,10 +347,10 @@ class ProfileEdit extends React.Component {
                             <Col xs={10} sm={8} md={4} className="User_actions-section">
                                 <span className="User_action-button" >
                                     <Button
-                                        disabled={this.isFormDisabled() || this.isFormInvalid()}
+                                        disabled={this.isFormDisabled() || this.isFormInvalid() || this.state.profileNetworkThrottle}
                                         bsStyle="primary"
                                         onClick={this.onSaveProfile}
-                                        >
+                                    >
                                         Save
                                     </Button>
                                 </span>
