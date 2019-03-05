@@ -1,0 +1,32 @@
+.ImageForm__preview-image {
+    padding: 10px 5px 10px 5px;
+}
+
+.ImageForm__preview-image-individual {
+    height: 300px;
+}
+
+.ImageForm__preview-image-details {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.ImageForm__preview-image-file-name {
+    padding-bottom: 5px;
+}
+
+.ImageForm__file_size {
+    padding-left: 15px;
+}
+
+.ImageForm__file_size_valid {
+    color: green;
+}
+
+.ImageForm__file_size_invalid {
+    color: red;
+}
+
+.ImageForm__file_details {
+    display: flex;
+}

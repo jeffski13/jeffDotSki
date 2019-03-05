@@ -9,17 +9,15 @@ import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network
 import { jeffskiRoutes } from '../../../app';
 import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
-import { updateBlogUserSecure, getBlogUserSecure, emptyProfileUrl } from '../../BlogUser';
+import { updateBlogUserSecure, getBlogUserSecure, emptyProfileUrl, profileGetFailMessage } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
-import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from './formvalidation';
+import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from '../formvalidation';
 import '../../styles.css';
 import './styles.css';
-import { isNullOrUndefined } from 'util';
 
 const BIO_TEXT_ROWS_DEFAULT = 4;
-const profileGetFailMessage = 'We were not able to get your profile information at this time.';
 
-class ProfileEdit extends React.Component {
+class ProfileEditInfo extends React.Component {
     constructor(props) {
         super(props);
         //get start birthdate of 13 years ago
@@ -173,7 +171,6 @@ class ProfileEdit extends React.Component {
 
     render() {
 
-
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.props.history.push(jeffskiRoutes.login);
@@ -185,7 +182,7 @@ class ProfileEdit extends React.Component {
         }
         if (this.state.profileFetchNetworkMessage === profileGetFailMessage) {
             return (
-                <div className="ProfileEdit">
+                <div className="ProfileEditInfo">
                     <Grid>
                         <Row className="show-grid">
                             <Col xs={0} sm={2} md={4} />
@@ -209,7 +206,7 @@ class ProfileEdit extends React.Component {
         }
 
         return (
-            <div className="ProfileEdit">
+            <div className="ProfileEditInfo">
                 <Grid>
                     <Row className="show-grid">
                         <Col xs={0} sm={2} md={4} />
@@ -431,7 +428,7 @@ class ProfileEdit extends React.Component {
                     </form>
                 </Grid>
             </div>
-        )
+        );
     }
 }
 
@@ -439,4 +436,4 @@ function mapStateToProps({ reduxBlogAuth }) {
     return { reduxBlogAuth };
 }
 
-export default connect(mapStateToProps)(withRouter(withBlogAuth(ProfileEdit)));
+export default connect(mapStateToProps)(withRouter(withBlogAuth(ProfileEditInfo)));

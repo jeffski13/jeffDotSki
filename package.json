@@ -12,7 +12,9 @@
     "deploy": "node copyToBuildFirebase.js"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "aws-amplify": "^1.1.19",
+    "aws-sdk": "^2.229.1",
     "aws4": "^1.8.0",
     "axios": "^0.17.1",
     "lodash": "^4.17.11",

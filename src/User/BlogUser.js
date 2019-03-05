@@ -1,8 +1,13 @@
 import axios from 'axios';
 import { defaultErrorResponse } from '../Network/consts';
 import { Auth } from 'aws-amplify';
+import AWS from 'aws-sdk';
+import uuidv1 from 'uuid/v1';
+
+import { AWS_S3_BUCKET_NAME, AWS_S3_REGION, AWS_IDENTITY_POOL_ID_AWS_ACCESS } from './AWS_CONSTS';
 
 export const emptyProfileUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski/blog/alone-anime-art-262272.jpg';
+export const profileGetFailMessage = 'We were not able to get your profile information at this time.';
 
 /**
  * gets user info (name, email, trips owned, etc.)
@@ -103,5 +108,47 @@ export function updateBlogUserSecure(userId, userUpdateInfo, callback) {
         
     }).catch((err) => {
         console.log('ERROR getting current auth user: ', err)
+    });
+}
+
+/**
+ * upload image to AWS S3 blogs "directory"
+ *
+ * @param {object} profilePicFile - photo file
+ * @param {string} userId - name of the trip for this photo
+ * @param {function} callback - (error, data) - function with error/data information from s3
+ */
+export function uploadProfilePic(profilePicFile, userId, callback) {
+    if(!profilePicFile || !userId || userId === ''){
+        callback({ message: "No file or userId while trying to upload photo!"});
+        return;
+    }
+
+    let fileName = uuidv1();
+    if(profilePicFile.name){
+        fileName += profilePicFile.name;
+    }
+    let blogImageUploadKey = `${userId}/profile/${fileName}`;
+
+    AWS.config.update({
+        region: AWS_S3_REGION,
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: AWS_IDENTITY_POOL_ID_AWS_ACCESS
+        })
+    });
+    let awsS3client = new AWS.S3({ apiVersion: '2006-03-01' });
+
+    //upload photo
+    let s3Params = {
+        Key: blogImageUploadKey,
+        Body: profilePicFile,
+        Bucket: AWS_S3_BUCKET_NAME,
+        ACL: 'public-read'
+    };
+
+    console.log('aws upload');
+    awsS3client.upload(s3Params, (err, data) => {
+        console.log('aws upload done');
+        callback(err, data);
     });
 }
