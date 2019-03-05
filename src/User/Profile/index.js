@@ -4,6 +4,7 @@ import withBlogAuth from '../Auth/withBlogAuth';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import {LinkContainer} from 'react-router-bootstrap';
 
 import Loadingski from '../../Inf/Loadingski';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
@@ -127,6 +128,8 @@ class Profile extends React.Component {
             };
         }
 
+        const editLink = (<LinkContainer to={jeffskiRoutes.profileEdit}><a href={jeffskiRoutes.profileEdit}>Edit</a></LinkContainer>);
+
         return (
             <div className="User">
                 <Grid>
@@ -162,13 +165,17 @@ class Profile extends React.Component {
                         <Col xs={8}>
                             <Col xs={12} >
                                 <div className="Profile_title">Bio</div>
-                                <div>{userState.bio}</div>
+                                {userState.bio
+                                    ? <div>{userState.bio}</div>
+                                    : <div className="Profile_empty-info">Your bio is empty. {editLink}</div>}
                             </Col>
                         </Col>
                         <Col xs={4}>
                             <Col xs={12} >
                                 <div className="Profile_title">Trips</div>
                                 {userState.trips && userState.trips.map(this.renderTripLinks)}
+                                {(!userState.trips || userState.trips.length === 0) && 
+                                    <div className="Profile_empty-info">You have no trips.</div>}
                             </Col>
                         </Col>
                     </Row>
