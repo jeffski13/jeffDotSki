@@ -29,10 +29,10 @@ export function validateFormPositiveNumber(inputNum) {
 	}
 }
 
-export function validateFormPositiveAndLessThanMaximum(inputNum, maxNum) {
+export function validateFormPositiveAndLessThanOrEqualToMaximum(inputNum, maxNum) {
 	if (validateFormPositiveNumber(inputNum) === FORM_SUCCESS) {
         let num = parseInt(inputNum);
-        if(num < maxNum){
+        if(num <= maxNum){
             return FORM_SUCCESS;
         }
 	}

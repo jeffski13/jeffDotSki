@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { updateBlogUserSecure, getBlogUserSecure } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
-import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanMaximum, FORM_ERROR } from './formvalidation';
+import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from './formvalidation';
 import '../../styles.css';
 
 const BIO_TEXT_ROWS_DEFAULT = 4;
@@ -90,7 +90,7 @@ class ProfileEdit extends React.Component {
         return this.state.profileEditNetwork === STATUS_LOADING ||
             validateFormString(this.state.nameFirst) === FORM_ERROR ||
             validateFormString(this.state.nameLast) === FORM_ERROR ||
-            validateFormPositiveAndLessThanMaximum(this.state.dateOfBirth.unix(), this.state.minDateNumber) === FORM_ERROR ||
+            validateFormPositiveAndLessThanOrEqualToMaximum(this.state.dateOfBirth.unix(), this.state.minDateNumber) === FORM_ERROR ||
             validateFormStringWithCharacterMax(this.state.bio, this.state.bioCharacterLimit, true) === FORM_ERROR;
     }
 
@@ -145,11 +145,13 @@ class ProfileEdit extends React.Component {
     }
 
     render() {
+
+        
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.props.history.push(jeffskiRoutes.login);
         }
-
+        
         //loading state
         if (this.state.profileFetchNetwork === STATUS_LOADING) {
             return (<Loadingski />);
@@ -178,7 +180,7 @@ class ProfileEdit extends React.Component {
                 </div>
             );
         }
-
+        
         return (
             <div className="ProfileEdit">
                 <Grid>
@@ -316,7 +318,7 @@ class ProfileEdit extends React.Component {
                             <Col xs={10} sm={8} md={4}>
                                 <FormGroup
                                     controlId="profileEditDateOfBirthInput"
-                                    validationState={validateFormPositiveAndLessThanMaximum(this.state.dateOfBirth.unix(), this.state.minDateNumber)}
+                                    validationState={validateFormPositiveAndLessThanOrEqualToMaximum(this.state.dateOfBirth.unix(), this.state.minDateNumber)}
                                     >
                                     <strong>Date Of Birth: </strong><DatePicker
                                         selected={this.state.dateOfBirth}
