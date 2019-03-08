@@ -35,7 +35,7 @@ class ProfileEditInfo extends React.Component {
             dateOfBirth: null,
             minDateNumber: minDate.unix(),
             bio: '',
-            profilePic: emptyProfileUrl,
+            profilePicUrl: emptyProfileUrl,
             bioCharacterLimit: 2000,
             bioTextRows: BIO_TEXT_ROWS_DEFAULT
         };
@@ -220,7 +220,7 @@ class ProfileEditInfo extends React.Component {
                         <Col xs={0} sm={2} md={5} />
                         <Col xs={12} sm={8} md={2}>
                             <div className="Profile_profilepic ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
-                                <Image responsive src={this.state.profilePic} />
+                                <Image responsive src={this.state.profilePicUrl} />
                             </div>
                         </Col>
                         <Col xs={0} sm={2} md={5} />

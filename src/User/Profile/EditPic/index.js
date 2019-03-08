@@ -12,6 +12,7 @@ import Loadingski from '../../../Inf/Loadingski';
 import '../../styles.css';
 import SingleImageUpload from './SingleImageUpload';
 import ImageForm from './ImageForm';
+import loadingImage from '../../../loading_image.gif';
 
 class ProfileEditPic extends React.Component {
     constructor(props) {
@@ -22,10 +23,11 @@ class ProfileEditPic extends React.Component {
             profileEditNetwork: null,
             profileEditNetworkMessage: null,
             profileNetworkThrottle: false,
-            profilePic: emptyProfileUrl,
+            profilePicUrl: emptyProfileUrl,
             newProfilePicUrl: null,
             newProfilePic: null,
             uploadedProfilePicUrl: null,
+            imagePreviewLoading: false,
             formRefreshProp: false //needed?
         };
     }
@@ -96,8 +98,8 @@ class ProfileEditPic extends React.Component {
         if (errData) {
             console.log("error uploading title image ", errData.filename, " with error ", errData.error);
             this.setState({
-                titleImgNetworkStatus: STATUS_FAILURE,
-                networkStatusErrorMesage: errData.error.message
+                profileEditNetwork: STATUS_FAILURE,
+                profileEditNetworkMessage: errData.error.message
             });
             return;
         }
@@ -107,7 +109,7 @@ class ProfileEditPic extends React.Component {
             uploadedProfilePicUrl: uploadedProfilePicData.url
         }, () => {
             const updatedUserInfo = {
-                profilePic: this.state.uploadedProfilePicUrl
+                profilePicUrl: this.state.uploadedProfilePicUrl
             }
             updateBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, updatedUserInfo, (err, data) => {
                 if (err) {
@@ -140,6 +142,7 @@ class ProfileEditPic extends React.Component {
 
     render() {
 
+        console.log('reduxblog auth is', this.props.reduxBlogAuth.userInfo.id);
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.props.history.push(jeffskiRoutes.login);
@@ -174,7 +177,10 @@ class ProfileEditPic extends React.Component {
             );
         }
 
-        let picSrc = this.state.profilePic;
+        let picSrc = this.state.profilePicUrl;
+        if(this.state.imagePreviewLoading) {
+            picSrc = loadingImage;
+        }
         if(this.state.newProfilePicUrl) {
             picSrc = this.state.newProfilePicUrl;
         }
@@ -213,13 +219,18 @@ class ProfileEditPic extends React.Component {
                                         }
                                         else {
                                             //NOTE to implementing components: 
-                                            this.setState({newProfilePicUrl: imgUrl, newProfilePic: imgData})
+                                            this.setState({
+                                                newProfilePicUrl: imgUrl, 
+                                                newProfilePic: imgData,
+                                                imagePreviewLoading: false
+                                            });
                                         }
                                         
                                     }}
-                                    onPhotoPreviewUrl={(imgUrl) => {
-                                        //NOTE to implementing components: 
-                                        //formDataCallback can/should be called with data parameter as null if form data is invalid
+                                    onImageLoading={() => {
+                                        this.setState({
+                                            imagePreviewLoading: true
+                                        });
                                     }}
                                     showPreview={false}
                                 />
@@ -275,9 +286,9 @@ class ProfileEditPic extends React.Component {
                             </Row>
                         }
 
-                        {this.state.titleImage && this.state.profileEditNetwork === STATUS_LOADING &&
-                            <SingleImageUpload imageFileToUpload={this.state.titleImage}
-                                tripId={this.props.reduxBlogAuth.userInfo.id}
+                        {this.state.newProfilePic && this.state.profileEditNetwork === STATUS_LOADING &&
+                            <SingleImageUpload imageFileToUpload={this.state.newProfilePic}
+                                userId={this.props.reduxBlogAuth.userInfo.id}
                                 onPhotoFinished={this.onTitleImageUploadComplete}
                                 disabled={this.isFormDisabled()}
                             />

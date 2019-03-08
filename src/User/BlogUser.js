@@ -119,6 +119,8 @@ export function updateBlogUserSecure(userId, userUpdateInfo, callback) {
  * @param {function} callback - (error, data) - function with error/data information from s3
  */
 export function uploadProfilePic(profilePicFile, userId, callback) {
+    console.log('propfilepic is', profilePicFile);
+    console.log('userId is', userId);
     if(!profilePicFile || !userId || userId === ''){
         callback({ message: "No file or userId while trying to upload photo!"});
         return;

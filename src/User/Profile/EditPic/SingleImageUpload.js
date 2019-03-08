@@ -10,7 +10,7 @@ export default class SingleImageUpload extends React.Component {
 
     static propTypes = {
         imageFileToUpload: PropTypes.object.isRequired,
-        tripId: PropTypes.string.isRequired,
+        userId: PropTypes.string.isRequired,
         onPhotoFinished: PropTypes.func
     };
 

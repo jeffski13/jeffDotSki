@@ -11,7 +11,7 @@ import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import BlogImages from './BlogImages'
 import BlogTextItem from './BlogTextItem';
 import './styles.css';
-import loadingImage from './loading_image.gif';
+import loadingImage from '../../loading_image.gif';
 
 export default class BlogPage extends Component {
     static propTypes = {

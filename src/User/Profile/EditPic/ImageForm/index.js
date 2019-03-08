@@ -2,8 +2,10 @@ import React from 'react';
 import { Panel, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../../Network/consts';
 import { validateFormString, FORM_SUCCESS, FORM_ERROR } from '../../formvalidation';
 import './styles.css';
+
 
 const MAX_IMAGE_FILE_SIZE = 5000000;
 
@@ -19,12 +21,14 @@ export default class ImageForm extends React.Component {
         refreshProp: PropTypes.any,
         // can we select a photo?
         formDisabled: PropTypes.bool,
-        showPreview: PropTypes.bool
+        showPreview: PropTypes.bool,
+        onImageLoading: PropTypes.func
     };
-
+    
     static defaultProps = {
         refreshProp: null,
-        formDisabled: false
+        formDisabled: false,
+        onImageLoading: () => {}
     };
 
     constructor(props, context) {
@@ -48,12 +52,15 @@ export default class ImageForm extends React.Component {
     handleImgFileChange = (e) => {
         if (e.target.files.length < 1) {
             //fail fast, no file was clicked
+            this.props.imageSelectedCallback(null);
             this.setState(this.defaultState);
             return;
         }
         if (e.target.files.length > 0) {
+            this.props.onImageLoading();
             this.setState({
-                image: e.target.files[0]
+                image: e.target.files[0],
+                imgLoading: STATUS_LOADING
             }, () => {
                 if (this.validateImage() === FORM_SUCCESS) {
                     //once preview url array with length is stored we can start storing preview urls as they come in
@@ -64,20 +71,26 @@ export default class ImageForm extends React.Component {
                     reader.onloadend = () => {
                         //store the url in the matching state index
                         this.setState({
-                            imgPreviewUrl: reader.result
+                            imgPreviewUrl: reader.result,
+                            imgLoading: STATUS_SUCCESS
                         }, () => {
                             //if image is good give it to parent
                             this.props.imageSelectedCallback(this.state.image, this.state.imgPreviewUrl);
                         });
                     }
-    
+                    
                     reader.readAsDataURL(file)
                 }
                 else {
                     //if image is too large or whatnot, send parent an empty object (so they know something invlaid was selected)
-                    this.props.imageSelectedCallback(null);
+                    this.setState({
+                        imgPreviewUrl: null,
+                        imgLoading: null
+                    }, () => {
+                        this.props.imageSelectedCallback(null);
+                    });
                 }
-
+                
             });
         }
     }
@@ -134,7 +147,7 @@ export default class ImageForm extends React.Component {
 
     render() {
         return (
-            <form>
+            <React.Fragment>
                 <FormGroup
                     controlId="imageSelectForm"
                 >
@@ -150,7 +163,7 @@ export default class ImageForm extends React.Component {
                 </FormGroup>
                 {this.renderImageSize()}
                 {this.props.showPreview && this.renderPreviewArea()}
-            </form>
+            </React.Fragment>
         );
     }
 }
