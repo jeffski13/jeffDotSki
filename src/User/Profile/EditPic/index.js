@@ -23,6 +23,8 @@ class ProfileEditPic extends React.Component {
             profileEditNetworkMessage: null,
             profileNetworkThrottle: false,
             profilePic: emptyProfileUrl,
+            newProfilePicUrl: null,
+            newProfilePic: null,
             uploadedProfilePicUrl: null,
             formRefreshProp: false //needed?
         };
@@ -71,11 +73,11 @@ class ProfileEditPic extends React.Component {
     }
 
     isFormDisabled = () => {
-        return this.state.profileEditNetwork === STATUS_LOADING;
+        return this.state.profileEditNetwork === STATUS_LOADING || this.state.profileFetchNetwork === STATUS_LOADING;
     }
 
     isFormInvalid = () => {
-        return this.state.profileEditNetwork === STATUS_LOADING;
+        return this.isFormDisabled() || !this.state.newProfilePicUrl || !this.state.newProfilePic;
     }
 
     onSaveProfilePic = () => {
@@ -136,11 +138,6 @@ class ProfileEditPic extends React.Component {
         this.props.history.push(jeffskiRoutes.profileEditPic);
     }
 
-    storeProfilePic = (imgData) => {
-        console.log('edit profile pic image selected');
-        this.setState({ titleImage: imgData });
-    }
-
     render() {
 
         //if we are not logged in go to login
@@ -177,6 +174,11 @@ class ProfileEditPic extends React.Component {
             );
         }
 
+        let picSrc = this.state.profilePic;
+        if(this.state.newProfilePicUrl) {
+            picSrc = this.state.newProfilePicUrl;
+        }
+
         return (
             <div className="ProfileEditInfo">
                 <Grid>
@@ -190,13 +192,13 @@ class ProfileEditPic extends React.Component {
 
                     <form>
                         <Row className="show-grid">
-                            <Col xs={0} sm={2} md={5} />
-                            <Col xs={12} sm={8} md={2}>
+                            <Col xs={0} sm={2} md={4} />
+                            <Col xs={12} sm={8} md={4}>
                                 <div className="Profile_profilepic ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
-                                    <Image responsive src={this.state.profilePic} />
+                                    <Image responsive src={picSrc} />
                                 </div>
                             </Col>
-                            <Col xs={0} sm={2} md={5} />
+                            <Col xs={0} sm={2} md={4} />
                         </Row>
 
                         <Row className="show-grid">
@@ -204,11 +206,22 @@ class ProfileEditPic extends React.Component {
                             <Col xs={12} sm={8} md={2}>
                                 <ImageForm
                                     refreshProp={this.state.formRefreshProp}
-                                    imageSelectedCallback={(imgData) => {
+                                    imageSelectedCallback={(imgData, imgUrl) => {
+                                        
+                                        if(!imgData) {
+                                            this.setState({newProfilePicUrl: null, newProfilePic: null})
+                                        }
+                                        else {
+                                            //NOTE to implementing components: 
+                                            this.setState({newProfilePicUrl: imgUrl, newProfilePic: imgData})
+                                        }
+                                        
+                                    }}
+                                    onPhotoPreviewUrl={(imgUrl) => {
                                         //NOTE to implementing components: 
                                         //formDataCallback can/should be called with data parameter as null if form data is invalid
-                                        this.storeProfilePic(imgData)
                                     }}
+                                    showPreview={false}
                                 />
                             </Col>
                             <Col xs={0} sm={2} md={5} />
@@ -266,6 +279,7 @@ class ProfileEditPic extends React.Component {
                             <SingleImageUpload imageFileToUpload={this.state.titleImage}
                                 tripId={this.props.reduxBlogAuth.userInfo.id}
                                 onPhotoFinished={this.onTitleImageUploadComplete}
+                                disabled={this.isFormDisabled()}
                             />
                         }
                     </form>

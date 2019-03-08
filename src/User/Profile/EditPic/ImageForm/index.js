@@ -18,7 +18,8 @@ export default class ImageForm extends React.Component {
         //refresh counter: could be anything just needs to change to refresh
         refreshProp: PropTypes.any,
         // can we select a photo?
-        formDisabled: PropTypes.bool
+        formDisabled: PropTypes.bool,
+        showPreview: PropTypes.bool
     };
 
     static defaultProps = {
@@ -55,36 +56,35 @@ export default class ImageForm extends React.Component {
                 image: e.target.files[0]
             }, () => {
                 if (this.validateImage() === FORM_SUCCESS) {
-                    //if image is good give it to parent
-                    console.log('image title success')
-                    this.props.imageSelectedCallback(this.state.image);
+                    //once preview url array with length is stored we can start storing preview urls as they come in
+                    let reader = new FileReader();
+                    let file = this.state.image;
+                    
+                    //give the reader a callback so it stores the images to state when its done reading them in
+                    reader.onloadend = () => {
+                        //store the url in the matching state index
+                        this.setState({
+                            imgPreviewUrl: reader.result
+                        }, () => {
+                            //if image is good give it to parent
+                            this.props.imageSelectedCallback(this.state.image, this.state.imgPreviewUrl);
+                        });
+                    }
+    
+                    reader.readAsDataURL(file)
                 }
                 else {
                     //if image is too large or whatnot, send parent an empty object (so they know something invlaid was selected)
-                    console.log('image title fail')
                     this.props.imageSelectedCallback(null);
                 }
 
-                //once preview url array with length is stored we can start storing preview urls as they come in
-                let reader = new FileReader();
-                let file = this.state.image;
-
-                //give the reader a callback so it stores the images to state when its done reading them in
-                reader.onloadend = () => {
-                    //store the url in the matching state index
-                    this.setState({
-                        imgPreviewUrl: reader.result
-                    });
-                }
-
-                reader.readAsDataURL(file)
             });
         }
     }
 
     renderImageSize = () => {
         if (this.state.image && this.state.image.size) {
-            let imgSize = this.state.image.size / 1000;
+            let imgSize = this.state.image.size / 1000 / 1000;
             let fileTooLargeMessage = '';
             let fileSizeClassName = "ImageForm__file_size_valid";
             if (this.state.image.size > MAX_IMAGE_FILE_SIZE) {
@@ -93,7 +93,7 @@ export default class ImageForm extends React.Component {
             }
             return (
                 <strong className={`ImageForm__file_size ${fileSizeClassName}`} >
-                    {`${imgSize} KB ${fileTooLargeMessage}`}
+                    {`${Math.round(imgSize * 100) / 100} MB ${fileTooLargeMessage}`}
                 </strong>
             );
         }
@@ -137,9 +137,8 @@ export default class ImageForm extends React.Component {
             <form>
                 <FormGroup
                     controlId="imageSelectForm"
-                    validationState={this.validateImage()}
                 >
-                    <ControlLabel>Title Image</ControlLabel>
+                    <ControlLabel>Upload New Profile Pic:</ControlLabel>
                     <div className="ImageForm__file_details" >
                         <FormControl
                             disabled={this.props.formDisabled}
@@ -147,10 +146,10 @@ export default class ImageForm extends React.Component {
                             placeholder="Choose Image File"
                             onChange={this.handleImgFileChange}
                         />
-                        {this.renderImageSize()}
                     </div>
                 </FormGroup>
-                {this.renderPreviewArea()}
+                {this.renderImageSize()}
+                {this.props.showPreview && this.renderPreviewArea()}
             </form>
         );
     }
