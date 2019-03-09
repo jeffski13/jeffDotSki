@@ -11,3 +11,13 @@ Feel free to look through this as examples! I'm not going to say I know everythi
 I created a script that will run the build, copying into the local Firebase directory, and deploying to the firebase servers (which are hosting my site! #notasponsor)
 
 The goal is to get my deploys automated with every tag to my codebase. But for now this has been great! It has made me want to update my site more! Check it: [deployski.ps1](./deployski.ps1)
+
+## Auth
+
+there are two important parts to auth
+
+- the higher order component withBlogAuth
+- the redux auth state
+
+We use the withBlogAuth to access methods through props to auth the user. State is not kept here as the components and their wrapping HOCs reset after page refreshes, redirects with react-router, etc.
+We use redux state to look into the current auth state (which every component can access)

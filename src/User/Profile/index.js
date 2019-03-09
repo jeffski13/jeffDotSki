@@ -59,7 +59,7 @@ class Profile extends React.Component {
         }, () => {
             getBlogUserSecure(this.props.reduxBlogAuth.userInfo.id, (err, blogUserInfo) => {
                 if (err) {
-
+                    console.log('error getting blog user:', err);
                     if (err.status === 404 && err.data.code === 'NotFound') {
                         //user is not signed up with an account, but not blog information, send to register bloguser page
                         this.props.history.push(jeffskiRoutes.registerBlogUser);

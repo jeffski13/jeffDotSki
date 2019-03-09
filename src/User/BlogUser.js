@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { defaultErrorResponse } from '../Network/consts';
-import { Auth } from 'aws-amplify';
-import AWS from 'aws-sdk';
-import uuidv1 from 'uuid/v1';
+import { Auth, Storage } from 'aws-amplify';
 
-import { AWS_S3_BUCKET_NAME, AWS_S3_REGION, AWS_IDENTITY_POOL_ID_AWS_ACCESS } from './AWS_CONSTS';
+import uuidv1 from 'uuid/v1';
 
 export const emptyProfileUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski/blog/alone-anime-art-262272.jpg';
 export const profileGetFailMessage = 'We were not able to get your profile information at this time.';
@@ -20,7 +18,6 @@ export function getBlogUserSecure(userId, callback) {
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
-
         axios({
             method: 'GET',
             url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}`,
@@ -34,7 +31,7 @@ export function getBlogUserSecure(userId, callback) {
 
                 callback(null, rawUserResponseArr);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 if (error.response) {
                     return callback(error.response);
                 }
@@ -105,7 +102,7 @@ export function updateBlogUserSecure(userId, userUpdateInfo, callback) {
                 }
                 return callback(defaultErrorResponse);
             });
-        
+
     }).catch((err) => {
         console.log('ERROR getting current auth user: ', err)
     });
@@ -119,38 +116,41 @@ export function updateBlogUserSecure(userId, userUpdateInfo, callback) {
  * @param {function} callback - (error, data) - function with error/data information from s3
  */
 export function uploadProfilePic(profilePicFile, userId, callback) {
-    console.log('propfilepic is', profilePicFile);
-    console.log('userId is', userId);
-    if(!profilePicFile || !userId || userId === ''){
-        callback({ message: "No file or userId while trying to upload photo!"});
-        return;
-    }
+    Auth.currentAuthenticatedUser({
+        bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    }).then((user) => {
+        let idTokenJwt = user.signInUserSession.idToken.jwtToken
 
-    let fileName = uuidv1();
-    if(profilePicFile.name){
-        fileName += profilePicFile.name;
-    }
-    let blogImageUploadKey = `${userId}/profile/${fileName}`;
+        console.log('propfilepic is', profilePicFile);
+        if (!profilePicFile || !userId || userId === '') {
+            callback({ message: "No file or userId while trying to upload photo!" });
+            return;
+        }
 
-    AWS.config.update({
-        region: AWS_S3_REGION,
-        credentials: new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: AWS_IDENTITY_POOL_ID_AWS_ACCESS
+        let fileName = uuidv1();
+        if (profilePicFile.name) {
+            fileName += profilePicFile.name;
+        }
+        let blogImageUploadKey = `${userId}/profile/${fileName}`;
+        let blogImageFileType = profilePicFile.type;
+
+        //public automatically
+        Storage.put(blogImageUploadKey, profilePicFile, {
+            level: 'public',
+            contentType: blogImageFileType
         })
+        .then((result) => {
+                const uploadFileUrlPrefix = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
+                callback(null, `${uploadFileUrlPrefix}${result.key}`)
+            })
+            .catch((err) => {
+                callback({
+                    message: "An error occured while trying to upload the profile pic!",
+                    error: err
+                });
+            });
+    }).catch((err) => {
+        console.log('ERROR getting current auth user: ', err)
     });
-    let awsS3client = new AWS.S3({ apiVersion: '2006-03-01' });
 
-    //upload photo
-    let s3Params = {
-        Key: blogImageUploadKey,
-        Body: profilePicFile,
-        Bucket: AWS_S3_BUCKET_NAME,
-        ACL: 'public-read'
-    };
-
-    console.log('aws upload');
-    awsS3client.upload(s3Params, (err, data) => {
-        console.log('aws upload done');
-        callback(err, data);
-    });
 }

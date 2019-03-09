@@ -37,7 +37,7 @@ class ProfileEditPic extends React.Component {
             return this.getBlogUserProfile();
         }
 
-        //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
+        //REFACTOR? should we move this call into the withBlogAuth itself and just let the. We might be able to do the authcheck as an action and use redux exclusively.
         // component did update check hang out since each page will require something different?
         //if we hit this page for the first time we might not know if we are logged in
         if (!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
@@ -94,7 +94,7 @@ class ProfileEditPic extends React.Component {
         this.props.history.push(jeffskiRoutes.profile);
     }
 
-    onTitleImageUploadComplete = (errData, uploadedProfilePicData) => {
+    onProfilePicUploadComplete = (errData, uploadedProfilePicData) => {
         if (errData) {
             console.log("error uploading title image ", errData.filename, " with error ", errData.error);
             this.setState({
@@ -142,7 +142,6 @@ class ProfileEditPic extends React.Component {
 
     render() {
 
-        console.log('reduxblog auth is', this.props.reduxBlogAuth.userInfo.id);
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.props.history.push(jeffskiRoutes.login);
@@ -289,7 +288,7 @@ class ProfileEditPic extends React.Component {
                         {this.state.newProfilePic && this.state.profileEditNetwork === STATUS_LOADING &&
                             <SingleImageUpload imageFileToUpload={this.state.newProfilePic}
                                 userId={this.props.reduxBlogAuth.userInfo.id}
-                                onPhotoFinished={this.onTitleImageUploadComplete}
+                                onPhotoFinished={this.onProfilePicUploadComplete}
                                 disabled={this.isFormDisabled()}
                             />
                         }

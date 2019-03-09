@@ -22,5 +22,11 @@ export const AUTH_CONFIG = {
 
         // OPTIONAL - Manually set the authentication flow type. Default is 'USER_SRP_AUTH'
         authenticationFlowType: 'USER_PASSWORD_AUTH'
+    },
+    Storage: {
+        AWSS3: {
+            bucket: 'jeff.ski.blogski', //REQUIRED -  Amazon S3 bucket
+            region: 'us-east-2' //OPTIONAL -  Amazon service region
+        }
     }
 };  

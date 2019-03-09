@@ -51,7 +51,7 @@ export default class SingleImageUpload extends React.Component {
         
         console.log('SingleImageUoload calling uploadphoto for aws with ');
         //upload photo first, then include photo location when uploading blog 
-        uploadProfilePic(this.props.imageFileToUpload, this.props.userId, (err, uploadedImageData) => {
+        uploadProfilePic(this.props.imageFileToUpload, this.props.userId, (err, uploadedImageUrl) => {
             console.log('aws returned info');
             if (err) {
                 console.log('aws returned info: err');
@@ -71,7 +71,7 @@ export default class SingleImageUpload extends React.Component {
             // WE DID IT! uploaded title photo (:
             this.props.onPhotoFinished(null, {
                 filename: file.name,
-                url: uploadedImageData.Location
+                url: uploadedImageUrl
             });
 
         });
