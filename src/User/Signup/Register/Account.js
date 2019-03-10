@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
@@ -153,7 +153,7 @@ class Account extends React.Component {
 
         return (
             <div className="Register">
-                <Grid>
+                <Container>
                     <Row className="show-grid">
                         <Col xs={0} sm={2} md={4} />
                         <Col xs={12} sm={8} md={4}>
@@ -290,7 +290,7 @@ class Account extends React.Component {
                             </Row>
                         }
                     </form>
-                </Grid>
+                </Container>
             </div>
         )
     }

@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import PageHeader from 'react-bootstrap/lib/PageHeader';
-import Image from 'react-bootstrap/lib/Image';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import moment from 'moment';
 import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 
@@ -93,10 +89,10 @@ export default class BlogPage extends Component {
             titleImageClass = 'BlogPage_loadingImage img-responsive';
         }
         return (
-            <Grid id={this.props.blogAnchorId} >
+            <Container id={this.props.blogAnchorId} >
                 <Row className="show-grid">
                     <ScrollableAnchor id={this.props.invisibleAnchorId}>
-                        <PageHeader>{blog.title}</PageHeader>
+                        <h3>{blog.title}</h3>
                     </ScrollableAnchor>
                 </Row>
                 <Row className="show-grid">
@@ -119,7 +115,7 @@ export default class BlogPage extends Component {
                             className={titleImageClass}
                             alt={`${blog.title} Main`}
                         />
-                        {!this.state.hasTitleImageLoaded && <Image src={loadingImage} responsive />}
+                        {!this.state.hasTitleImageLoaded && <Image src={loadingImage} fluid />}
                     </Col>
                 </Row>
                 {remainingParagraphs.length > 0
@@ -132,7 +128,7 @@ export default class BlogPage extends Component {
                         isViewMobile={this.props.isViewMobile}    
                     />
                 </Row>
-            </Grid>
+            </Container>
         );
     }
 

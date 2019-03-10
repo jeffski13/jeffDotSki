@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert, Image } from 'react-bootstrap';
+import { Button, Container, Row, Col, FormGroup, ControlLabel, FormControl, Alert, Image } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { withRouter, Link } from 'react-router-dom';
 
@@ -154,7 +154,7 @@ class ProfileEditPic extends React.Component {
         if (this.state.profileFetchNetworkMessage === profileGetFailMessage) {
             return (
                 <div className="ProfileEditInfo">
-                    <Grid>
+                    <Container>
                         <Row className="show-grid">
                             <Col xs={0} sm={2} md={4} />
                             <Col xs={12} sm={8} md={4}>
@@ -171,7 +171,7 @@ class ProfileEditPic extends React.Component {
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>
-                    </Grid>
+                    </Container>
                 </div>
             );
         }
@@ -186,7 +186,7 @@ class ProfileEditPic extends React.Component {
 
         return (
             <div className="ProfileEditInfo">
-                <Grid>
+                <Container>
                     <Row className="show-grid">
                         <Col xs={0} sm={2} md={4} />
                         <Col xs={12} sm={8} md={4}>
@@ -200,7 +200,7 @@ class ProfileEditPic extends React.Component {
                             <Col xs={0} sm={2} md={4} />
                             <Col xs={12} sm={8} md={4}>
                                 <div className="Profile_profilepic ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
-                                    <Image responsive src={picSrc} />
+                                    <Image fluid src={picSrc} />
                                 </div>
                             </Col>
                             <Col xs={0} sm={2} md={4} />
@@ -293,7 +293,7 @@ class ProfileEditPic extends React.Component {
                             />
                         }
                     </form>
-                </Grid>
+                </Container>
             </div>
         );
     }

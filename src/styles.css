@@ -1,6 +1,5 @@
-.webpagecontent{
-  padding-top: 50px;
-  padding-bottom: 50px;
-  min-height: 92vh;
-  background-color: #eee;
+.webpagecontent {
+    padding-top: 55px;
+    min-height: 92vh;
+    background-color: #eee;
 }

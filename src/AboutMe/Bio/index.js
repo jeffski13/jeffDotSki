@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Col, Row, Image} from 'react-bootstrap';
+import {Container, Col, Row, Image} from 'react-bootstrap';
 
 import '../styles.css';
 import './styles.css';
@@ -9,7 +9,7 @@ class Bio extends Component {
     return(
       <div className="aboutmeWrapper">
         <div className="shotGlassTextSection" >
-          <Grid>
+          <Container>
             <Row className="show-grid">
               <Col sm={2} md={4}>
               </Col>
@@ -19,8 +19,8 @@ class Bio extends Component {
               <Col sm={2} md={4}>
               </Col>
             </Row>
-          </Grid>
-          <Grid>
+          </Container>
+          <Container>
             <Row className="show-grid aboutMePargraph">
               <Col sm={10} >
                 <h2 className="aboutMeSectionTitle" >How Did I Get Here?</h2>
@@ -39,7 +39,7 @@ class Bio extends Component {
                 </p>
               </Col>
               <Col sm={10} md={5} >
-                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/aboutme-myjourneymap.png' responsive />
+                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/aboutme-myjourneymap.png' fluid />
               </Col>
             </Row>
             <Row className="show-grid aboutMePargraph">
@@ -55,7 +55,7 @@ class Bio extends Component {
                 In the summer 2012 I moved to Bartlesville, Oklahoma. There I snagged my first "professional" job as a computer programmer. I put professional in quotes because I had absolutely no idea what I was doing. However, my dad had always said I needed to find something that I enjoyed, I was good at, and I could get paid for. I could get payed for it, and I definitely enjoyed it. And I was good...enough at it. It was the beginning of what I knew would be an exciting career!
               </Col>
               <Col sm={10} md={5} >
-                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/a-professional-what.jpg' responsive />
+                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/a-professional-what.jpg' fluid />
               </Col>
             </Row>
             <Row className="show-grid aboutMePargraph">
@@ -84,7 +84,7 @@ class Bio extends Component {
             </Row>
             <Row className="show-grid BioHobbiesImg">
               <Col sm={10}  >
-                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/myhobbies.png' responsive />
+                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/myhobbies.png' fluid />
               </Col>
               <Col sm={6} smOffset={1} className="bioHobbieDisclaimer" >
                 <p>
@@ -92,7 +92,7 @@ class Bio extends Component {
                 </p>
               </Col>
             </Row>
-          </Grid>
+          </Container>
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Panel, FormGroup, FormControl, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../../Network/consts';
@@ -151,7 +151,7 @@ export default class ImageForm extends React.Component {
                 <FormGroup
                     controlId="imageSelectForm"
                 >
-                    <ControlLabel>Upload New Profile Pic:</ControlLabel>
+                    <Form.Label>Upload New Profile Pic:</Form.Label>
                     <div className="ImageForm__file_details" >
                         <FormControl
                             disabled={this.props.formDisabled}

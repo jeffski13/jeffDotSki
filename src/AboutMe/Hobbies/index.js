@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import TvShow from './TvShow';
 import tvshows from './hobbies-tvshows.json';
@@ -25,7 +25,7 @@ class Hobbies extends React.Component {
     return (
       <div className="aboutmeWrapper">
         <div className="shotGlassTextSection" >
-          <Grid>
+          <Container>
             <Row className="show-grid">
               <Col sm={1}>
               </Col>
@@ -33,8 +33,8 @@ class Hobbies extends React.Component {
                 <div className="aboutMeTitle" >Hobbies & Interests</div>
               </Col>
             </Row>
-          </Grid>
-          <Grid className="hobbiesSectionText">
+          </Container>
+          <Container className="hobbiesSectionText">
             <Row className="show-grid hobbiesSection">
               <Col sm={1}>
               </Col>
@@ -58,12 +58,12 @@ class Hobbies extends React.Component {
               <Col sm={10}>
               </Col>
             </Row>
-          </Grid>
+          </Container>
           <ul className="tvshowList" >
             {tvshows.map(this.renderTvShows)}
           </ul>
 
-          <Grid className="hobbiesSectionText">
+          <Container className="hobbiesSectionText">
             <Row className="show-grid hobbiesSection">
               <Col sm={1}>
               </Col>
@@ -78,7 +78,7 @@ class Hobbies extends React.Component {
                 <div>And here are the shows I have finished (Possibly more than once!). I enojoyed the heck out of every one of these.</div>
               </Col>
             </Row>
-          </Grid>
+          </Container>
           <ul className="tvshowList" >
             {tvshowsFinished.map(this.renderTvShows)}
           </ul>

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {Grid, Col, Row} from 'react-bootstrap';
+import {Container, Col, Row} from 'react-bootstrap';
 import './styles.css';
 
 class Careers extends Component {
   render() {
     return (
       <div className="Careers">
-        <Grid>
+        <Container>
           <Row className="show-grid">
             <Col xs={1} >
             </Col>
@@ -28,7 +28,7 @@ class Careers extends Component {
               <div className="careersText" >But who knows!? Maybe we could set up some sort of unpaid internship if you want to shadow a developer!</div>
             </Col>
           </Row>
-        </Grid>
+        </Container>
       </div>
     );
   }

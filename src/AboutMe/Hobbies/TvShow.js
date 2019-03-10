@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import './styles.css';
 
 class TvShow extends React.Component {
@@ -18,7 +18,7 @@ class TvShow extends React.Component {
     return (
 
       <div className="TvShow" >
-        <Grid>
+        <Container>
           <Row className="show-grid">
             <Col xs={0} sm={2} />
             <Col xs={8} sm={2} >
@@ -38,7 +38,7 @@ class TvShow extends React.Component {
             <Col xs={0} sm={4} />
             <Col xs={0} sm={2} />
           </Row>
-        </Grid>
+        </Container>
       </div>
     );
   }

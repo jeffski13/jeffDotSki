@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Image from 'react-bootstrap/lib/Image';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
-import Grid from 'react-bootstrap/lib/Grid';
+import { Container, Image, Col, Row } from 'react-bootstrap';
 
 import { getShotGlassInfo } from './redux/actions';
 import Loadingski from '../../Inf/Loadingski';
@@ -74,17 +71,17 @@ class Shotglass extends Component {
       return(
         <div className="aboutmeWrapper" >
           <div>
-            <Image src={this.props.shotGlassInfo.images.main} responsive />
+            <Image src={this.props.shotGlassInfo.images.main} fluid />
           </div>
           <div className="aboutMeTextSection" >
-            <Grid>
+            <Container>
               <Col>
                 <div className="aboutMeTitle" >{this.props.shotGlassInfo.title}</div>
               </Col>
-            </Grid>
-            <Grid>
+            </Container>
+            <Container>
               {this.props.shotGlassInfo.textItems.map(this.renderShotGlassInfoText)}
-            </Grid>
+            </Container>
           </div>
         </div>
       );

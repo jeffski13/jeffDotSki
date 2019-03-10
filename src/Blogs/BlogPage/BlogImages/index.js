@@ -26,7 +26,7 @@ class BlogImages extends React.Component {
             >
                 <Image
                     src={finalImgUrl}
-                    responsive 
+                    fluid 
                     />
                 <div className="BlogImages-mobile-text">
                     <h4>{blogImageItemData.imageTitle}</h4>

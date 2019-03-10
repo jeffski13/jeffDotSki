@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, FormGroup, Form, FormControl, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -83,7 +83,7 @@ class Login extends React.Component {
 
         return (
             <div className="Login">
-                <Grid>
+                <Container>
                     <Row className="show-grid">
                         <Col xs={2} md={4} />
                         <Col xs={8} md={4}>
@@ -100,7 +100,7 @@ class Login extends React.Component {
                                 <FormGroup
                                     controlId="usernameFormInput"
                                 >
-                                    <ControlLabel className="User_login-form-label">User Name</ControlLabel>
+                                    <Form.Control className="User_login-form-label">User Name</Form.Control>
                                     <FormControl
                                         type="text"
                                         value={this.state.username || ''}
@@ -124,7 +124,7 @@ class Login extends React.Component {
                                 <FormGroup
                                     controlId="passwordFormInput"
                                 >
-                                    <ControlLabel className="User_login-form-label">Password</ControlLabel>
+                                    <Form.Control className="User_login-form-label">Password</Form.Control>
                                     <FormControl
                                         type="password"
                                         value={this.state.password || ''}
@@ -176,7 +176,7 @@ class Login extends React.Component {
                             </Row>
                         }
                     </form>
-                </Grid>
+                </Container>
 
             </div >
         )

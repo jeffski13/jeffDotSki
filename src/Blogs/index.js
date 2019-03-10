@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Panel, Grid, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import { Card, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 
 import { getBlogs } from './GetBlogs';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
@@ -196,27 +196,27 @@ class Blogs extends Component {
                 failureMessageRender = (
                     <div className="Blogs">
                         <div className="Blogs_error" >
-                            <Panel bsStyle="info">
-                                <Panel.Heading>
-                                    <Panel.Title componentClass="h3">Hmm...</Panel.Title>
-                                </Panel.Heading>
-                                <Panel.Body>
-                                    <span>
-                                        <span>It looks like this trip is empty.</span>
-                                        <span className="Blogs_error-refresh" >
-                                            <Button
-                                                onClick={() => {
-                                                    //go back to profile
-                                                    this.props.history.push(jeffskiRoutes.profile);
-                                                }}
-                                                bsStyle="link"
-                                            >
-                                                Go To Profile
+                            <Card bg="info" text="white" style={{ width: '18rem' }}>
+                                <Card.Header>Hmm...</Card.Header>
+                                <Card.Body>
+                                    <Card.Text>
+                                        <span>
+                                            <span>It looks like this trip is empty.</span>
+                                            <span className="Blogs_error-refresh" >
+                                                <Button
+                                                    onClick={() => {
+                                                        //go back to profile
+                                                        this.props.history.push(jeffskiRoutes.profile);
+                                                    }}
+                                                    bsStyle="link"
+                                                >
+                                                    Go To Profile
                                             </Button>
+                                            </span>
                                         </span>
-                                    </span>
-                                </Panel.Body>
-                            </Panel>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
                         </div>
                     </div>
                 );
@@ -225,27 +225,27 @@ class Blogs extends Component {
                 failureMessageRender = (
                     <div className="Blogs">
                         <div className="Blogs_error" >
-                            <Panel bsStyle="warning">
-                                <Panel.Heading>
-                                    <Panel.Title componentClass="h3">Sorry!</Panel.Title>
-                                </Panel.Heading>
-                                <Panel.Body>
-                                    <span>
-                                        <span>This blog is private.</span>
-                                        <span className="Blogs_error-refresh" >
-                                            <Button
-                                                onClick={() => {
-                                                    //go back to profile
-                                                    this.props.history.push(jeffskiRoutes.profile);
-                                                }}
-                                                bsStyle="link"
-                                            >
-                                                Go To Profile
+                            <Card bg="warning" text="white" style={{ width: '18rem' }}>
+                                <Card.Header>Sorry!</Card.Header>
+                                <Card.Body>
+                                    <Card.Text>
+                                        <span>
+                                            <span>This blog is private.</span>
+                                            <span className="Blogs_error-refresh" >
+                                                <Button
+                                                    onClick={() => {
+                                                        //go back to profile
+                                                        this.props.history.push(jeffskiRoutes.profile);
+                                                    }}
+                                                    bsStyle="link"
+                                                >
+                                                    Go To Profile
                                             </Button>
+                                            </span>
                                         </span>
-                                    </span>
-                                </Panel.Body>
-                            </Panel>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
                         </div>
                     </div>
                 );
@@ -254,24 +254,24 @@ class Blogs extends Component {
                 failureMessageRender = (
                     <div className="Blogs">
                         <div className="Blogs_error" >
-                            <Panel bsStyle="danger">
-                                <Panel.Heading>
-                                    <Panel.Title componentClass="h3">Houston, we have a problem.</Panel.Title>
-                                </Panel.Heading>
-                                <Panel.Body>
-                                    <span>
-                                        <span>Blast! Something went wrong while getting the blogs.</span>
-                                        <span className="Blogs_error-refresh" >
-                                            <Button
-                                                onClick={() => { window.location.reload() }}
-                                                bsStyle="link"
-                                            >
-                                                Refresh?
+                            <Card bg="danger" text="white" style={{ width: '18rem' }}>
+                                <Card.Header>Houston, we have a problem.</Card.Header>
+                                <Card.Body>
+                                    <Card.Text>
+                                        <span>
+                                            <span>Something went wrong while getting the blogs.</span>
+                                            <span className="Blogs_error-refresh" >
+                                                <Button
+                                                    onClick={() => { window.location.reload() }}
+                                                    bsStyle="link"
+                                                >
+                                                    Refresh?
                                             </Button>
+                                            </span>
                                         </span>
-                                    </span>
-                                </Panel.Body>
-                            </Panel>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
                         </div>
                     </div>
                 );
@@ -290,7 +290,7 @@ class Blogs extends Component {
             }
             blogsArea = (
                 <div className="Blogs">
-                    <Grid>
+                    <Container>
                         <Row className={`show-grid ${blogHeaderClass}`}>
                             <Col xs={8} md={6}>
                                 <div className="blogBrowserTitle">Chile</div>
@@ -345,7 +345,7 @@ class Blogs extends Component {
                                 </div>
                             </Col>
                         </Row>
-                    </Grid>
+                    </Container>
                 </div >
             );
         }

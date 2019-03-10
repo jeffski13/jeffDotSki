@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert, Image } from 'react-bootstrap';
+import { Button, Container, Row, Col, FormGroup, FormControl, Alert, Image, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { withRouter, Link } from 'react-router-dom';
@@ -183,7 +183,7 @@ class ProfileEditInfo extends React.Component {
         if (this.state.profileFetchNetworkMessage === profileGetFailMessage) {
             return (
                 <div className="ProfileEditInfo">
-                    <Grid>
+                    <Container>
                         <Row className="show-grid">
                             <Col xs={0} sm={2} md={4} />
                             <Col xs={12} sm={8} md={4}>
@@ -200,14 +200,14 @@ class ProfileEditInfo extends React.Component {
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>
-                    </Grid>
+                    </Container>
                 </div>
             );
         }
 
         return (
             <div className="ProfileEditInfo">
-                <Grid>
+                <Container>
                     <Row className="show-grid">
                         <Col xs={0} sm={2} md={4} />
                         <Col xs={12} sm={8} md={4}>
@@ -220,7 +220,7 @@ class ProfileEditInfo extends React.Component {
                         <Col xs={0} sm={2} md={5} />
                         <Col xs={12} sm={8} md={2}>
                             <div className="Profile_profilepic ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
-                                <Image responsive src={this.state.profilePicUrl} />
+                                <Image fluid src={this.state.profilePicUrl} />
                             </div>
                         </Col>
                         <Col xs={0} sm={2} md={5} />
@@ -333,7 +333,7 @@ class ProfileEditInfo extends React.Component {
                                     controlId="profileEditBioInput"
                                     validationState={validateFormStringWithCharacterMax(this.state.bio, this.state.bioCharacterLimit, true)}
                                 >
-                                    <ControlLabel>Bio ({this.state.bioCharacterLimit} character limit):</ControlLabel>
+                                    <Form.Control>Bio ({this.state.bioCharacterLimit} character limit):</Form.Control>
                                     <FormControl
                                         componentClass="textarea"
                                         value={this.state.bio}
@@ -426,7 +426,7 @@ class ProfileEditInfo extends React.Component {
                             </Row>
                         }
                     </form>
-                </Grid>
+                </Container>
             </div>
         );
     }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, Image} from 'react-bootstrap';
+import {Container, Row, Col, Image} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 import githubLogo from './github-logo.png';
@@ -38,7 +38,7 @@ class FooterBarski extends Component {
     let githubLogoImage = this.state.isGithubMouseOver ? githubLogoShadow : githubLogo;
 
     return(
-      <Grid className="FooterBarski">
+      <Container className="FooterBarski" fluid>
         <Row className="show-grid">
           <Col xs={2} sm={1} />
           <Col xs={7} sm={10} className="footerBarskiLinkWrapper">
@@ -76,7 +76,7 @@ class FooterBarski extends Component {
             </a>
           </Col>
         </Row>
-      </Grid>
+      </Container>
     );
   }
 }

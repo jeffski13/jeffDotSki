@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, FormGroup, FormControl, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -148,7 +148,7 @@ class BlogUser extends React.Component {
 
         return (
             <div className="Register">
-                <Grid>
+                <Container>
                     <Row className="show-grid">
                         <Col xs={0} sm={2} md={4} />
                         <Col xs={12} sm={8} md={4}>
@@ -288,7 +288,7 @@ class BlogUser extends React.Component {
                             </Row>
                         }
                     </form>
-                </Grid>
+                </Container>
             </div>
         )
     }

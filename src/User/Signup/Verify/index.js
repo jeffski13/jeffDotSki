@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -66,7 +66,7 @@ class Verify extends React.Component {
 
         return (
             <div className="Verify">
-                <Grid>
+                <Container>
                     <Row className="show-grid">
                         <Col xs={0} sm={2} md={4} />
                         <Col xs={12} sm={8} md={4}>
@@ -146,7 +146,7 @@ class Verify extends React.Component {
                             </Row>
                         }
                     </form>
-                </Grid>
+                </Container>
             </div>
         );
     }

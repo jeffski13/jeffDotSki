@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Row, Col, Image } from 'react-bootstrap';
+import { Button, Container, Row, Col, Image } from 'react-bootstrap';
 import withBlogAuth from '../Auth/withBlogAuth';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -134,7 +134,7 @@ class Profile extends React.Component {
 
         return (
             <div className="User">
-                <Grid>
+                <Container>
                     <Row className="show-grid">
                         <Col xs={12}>
                             <h2 className="Profile_header">{userState.username}</h2>
@@ -158,7 +158,7 @@ class Profile extends React.Component {
                         </Col>
                         <Col xs={4}>
                             <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
-                                <Image responsive src={userState.profilePic} />
+                                <Image fluid src={userState.profilePic} />
                             </div>
                         </Col>
                     </Row>
@@ -204,7 +204,7 @@ class Profile extends React.Component {
                         <Col xs={1} sm={2} md={4} />
                     </Row>
 
-                </Grid>
+                </Container>
 
             </div >
         )
