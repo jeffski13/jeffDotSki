@@ -40,7 +40,7 @@ class Login extends React.Component {
     
     isLoginDisabled = () => {
         return this.isLoggingIn()
-        || (!this.state.username || this.state.username.length < 8) 
+        || !this.state.username 
         || (!this.state.password || this.state.password.length < 8);
     }
     
