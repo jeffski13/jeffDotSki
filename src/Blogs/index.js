@@ -9,6 +9,7 @@ import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import moment from 'moment';
 import { getBlogsSecure } from '../User/GETblogs';
+import { jeffskiRoutes } from '../app';
 import './styles.css';
 import withBlogAuth from '../User/Auth/withBlogAuth';
 
@@ -59,7 +60,7 @@ class Blogs extends Component {
             if (this.props.match.params.tripId) {
                 getBlogsSecure(this.props.match.params.userId, this.props.match.params.tripId, (err, data) => {
                     if (err) {
-                        this.setState({
+                        return this.setState({
                             networkStatus: STATUS_FAILURE,
                             getBlogsResults: {
                                 status: err.status,
@@ -67,7 +68,6 @@ class Blogs extends Component {
                                 code: err.data.code
                             }
                         });
-                        return;
                     }
 
                     this.setState({
@@ -190,30 +190,93 @@ class Blogs extends Component {
     }
 
     render() {
-        let failureMessageRender = (
-            <div className="Blogs">
-                <div className="Blogs_error" >
-                    <Panel bsStyle="danger">
-                        <Panel.Heading>
-                            <Panel.Title componentClass="h3">Houston, we have a problem.</Panel.Title>
-                        </Panel.Heading>
-                        <Panel.Body>
-                            <span>
-                                <span>Blast! Something went wrong while getting the blogs.</span>
-                                <span className="Blogs_error-refresh" >
-                                    <Button
-                                        onClick={() => { window.location.reload() }}
-                                        bsStyle="link"
-                                    >
-                                        Refresh?
-                                    </Button>
-                                </span>
-                            </span>
-                        </Panel.Body>
-                    </Panel>
-                </div>
-            </div>
-        );
+        let failureMessageRender = null;
+        if (this.state.networkStatus === STATUS_FAILURE) {
+            if (this.state.getBlogsResults.status === 404) {
+                failureMessageRender = (
+                    <div className="Blogs">
+                        <div className="Blogs_error" >
+                            <Panel bsStyle="info">
+                                <Panel.Heading>
+                                    <Panel.Title componentClass="h3">Hmm...</Panel.Title>
+                                </Panel.Heading>
+                                <Panel.Body>
+                                    <span>
+                                        <span>It looks like this trip is empty.</span>
+                                        <span className="Blogs_error-refresh" >
+                                            <Button
+                                                onClick={() => {
+                                                    //go back to profile
+                                                    this.props.history.push(jeffskiRoutes.profile);
+                                                }}
+                                                bsStyle="link"
+                                            >
+                                                Go To Profile
+                                            </Button>
+                                        </span>
+                                    </span>
+                                </Panel.Body>
+                            </Panel>
+                        </div>
+                    </div>
+                );
+            }
+            else if (this.state.getBlogsResults.status === 403) {
+                failureMessageRender = (
+                    <div className="Blogs">
+                        <div className="Blogs_error" >
+                            <Panel bsStyle="warning">
+                                <Panel.Heading>
+                                    <Panel.Title componentClass="h3">Sorry!</Panel.Title>
+                                </Panel.Heading>
+                                <Panel.Body>
+                                    <span>
+                                        <span>This blog is private.</span>
+                                        <span className="Blogs_error-refresh" >
+                                            <Button
+                                                onClick={() => {
+                                                    //go back to profile
+                                                    this.props.history.push(jeffskiRoutes.profile);
+                                                }}
+                                                bsStyle="link"
+                                            >
+                                                Go To Profile
+                                            </Button>
+                                        </span>
+                                    </span>
+                                </Panel.Body>
+                            </Panel>
+                        </div>
+                    </div>
+                );
+            }
+            else {
+                failureMessageRender = (
+                    <div className="Blogs">
+                        <div className="Blogs_error" >
+                            <Panel bsStyle="danger">
+                                <Panel.Heading>
+                                    <Panel.Title componentClass="h3">Houston, we have a problem.</Panel.Title>
+                                </Panel.Heading>
+                                <Panel.Body>
+                                    <span>
+                                        <span>Blast! Something went wrong while getting the blogs.</span>
+                                        <span className="Blogs_error-refresh" >
+                                            <Button
+                                                onClick={() => { window.location.reload() }}
+                                                bsStyle="link"
+                                            >
+                                                Refresh?
+                                            </Button>
+                                        </span>
+                                    </span>
+                                </Panel.Body>
+                            </Panel>
+                        </div>
+                    </div>
+                );
+            }
+        }
 
         let blogsArea = null;
 

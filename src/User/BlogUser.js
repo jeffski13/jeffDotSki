@@ -133,13 +133,12 @@ export function uploadProfilePic(profilePicFile, userId, callback) {
         }
         let blogImageUploadKey = `${userId}/profile/${fileName}`;
         let blogImageFileType = profilePicFile.type;
-
-        //public automatically
+        
         Storage.put(blogImageUploadKey, profilePicFile, {
             level: 'public',
             contentType: blogImageFileType
         })
-        .then((result) => {
+            .then((result) => {
                 const uploadFileUrlPrefix = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
                 callback(null, `${uploadFileUrlPrefix}${result.key}`)
             })
