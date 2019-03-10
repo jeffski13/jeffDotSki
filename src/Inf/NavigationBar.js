@@ -11,22 +11,32 @@ class NavigationBar extends Component {
     render() {
         return (
             <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
-                <Navbar.Brand href="/" className="brand">jeff.ski</Navbar.Brand>
+                <LinkContainer to="/">
+                    <Navbar.Brand className="brand">jeff.ski</Navbar.Brand>
+                </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
                         <NavDropdown title="Travel" id="navigationbar-travel">
-                            <NavDropdown.Item href="/blog/chile">Chile</NavDropdown.Item>
+                            <LinkContainer to="/blog/chile">
+                                <NavDropdown.Item>Chile</NavDropdown.Item>
+                            </LinkContainer>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/aboutme/shotglass">Shotglass Collection</NavDropdown.Item>
+                            <LinkContainer to="/aboutme/shotglass">
+                                <NavDropdown.Item>Shotglass Collection</NavDropdown.Item>
+                            </LinkContainer>
                         </NavDropdown>
                         <NavDropdown title="Software Engineering" id="navigationbar-softwareengineering">
                             <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume2018_3_9_SoftwareEng.pdf">Resume</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Nav pullRight >
-                        <Nav.Link href="/aboutme/bio">Bio</Nav.Link>
-                        <Nav.Link href="/aboutme/hobbies">Hobbies</Nav.Link>
+                        <LinkContainer to="/aboutme/bio">
+                            <Nav.Link>Bio</Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to="/aboutme/hobbies">
+                            <Nav.Link>Hobbies</Nav.Link>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

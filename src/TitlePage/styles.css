@@ -8,4 +8,19 @@
 }
 
 .TitlePage_aboutJeff {
+    background: #EFEFEF;
+    height: 400px;
+}
+
+.TitlePage_aboutJeff-image {
+    padding: 20px;
+}
+
+.TitlePage_aboutJeff-image > img {
+    height: 400px;
+    padding: 45px;
+}
+
+.TitlePage_aboutJeff-text {
+    
 }

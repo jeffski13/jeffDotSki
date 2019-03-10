@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import TitleImg from './TitleImg';
-import { Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import './styles.css';
 
 class TitlePage extends Component {
@@ -9,12 +9,12 @@ class TitlePage extends Component {
         return (
             <div className="TitlePage" >
                 <TitleImg />
-                <div>
+                <Container fluid>
                     <Row className="TitlePage_aboutJeff">
-                        <Col sm={4}>
-                            <Image src="https://s3.us-east-2.amazonaws.com/jeff.ski/title/titlePage-info1-md.jpg" roundedCircle />
+                        <Col sm={5} className="TitlePage_aboutJeff-image">
+                            <Image src="https://s3.us-east-2.amazonaws.com/jeff.ski/title/titlePage-info1-md.jpg" roundedCircle  fluid/>
                         </Col>
-                        <Col sm={8}>
+                        <Col sm={7} className="TitlePage_aboutJeff-text">
                             <h3>About Jeff</h3>
                             <ul>
                                 <li><strong>Software Engineer:</strong> Web Developer and Android Native Applications</li>
@@ -26,7 +26,7 @@ class TitlePage extends Component {
                             {/* <li><strong>AWS Serverless Officionado: </strong> Goodbye server management, hello microservices!</li> */}
                         </Col>
                     </Row>
-                </div>
+                </Container>
             </div>
         );
     }
