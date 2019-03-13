@@ -3,3 +3,8 @@
     min-height: 92vh;
     background-color: #eee;
 }
+
+.webpagecontent > div {
+    padding-top: 25px; 
+    padding-bottom: 25px; 
+}
