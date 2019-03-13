@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputGroup, Button, Container, Row, Col, FormGroup, Form, FormControl, Alert } from 'react-bootstrap';
+import { InputGroup, Button, Container, Row, Col, Form, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -70,15 +70,13 @@ class Login extends React.Component {
     }
 
     onLoginClicked = (event) => {
-
         // if we have valid usernames and passwords and we are not loading right now, try to login
-        if (!this.isLoginDisabled() && !this.isLoginDisabled()) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.isLoginDisabled()) {
             this.props.blogAuth.login(this.state.username, this.state.password);
         }
         else {
-            event.preventDefault();
-            event.stopPropagation();
-            console.log('running vlaidation')
             //run validation
             this.setState({
                 isValidated: true
@@ -105,7 +103,6 @@ class Login extends React.Component {
     //callback page for
     // https://jeffskiblog.auth.us-east-2.amazoncognito.com/login?response_type=token&client_id=ve30037id36g8m4q811kmnqfs&redirect_uri=https://jeff.ski/user
     render() {
-        console.log('render ', this.state.passwordValid)
 
         return (
             <Container className="Login">
@@ -211,9 +208,12 @@ class Login extends React.Component {
                     <Row className="show-grid User_login-message">
                         <Col xs={2} md={4} />
                         <Col xs={8} md={4}>
-                            <Alert bsStyle="danger">
-                                <strong>Oh No!</strong> Your user name or password was incorrect.
-                                    </Alert>
+                            <Alert dismissible variant="danger">
+                                <Alert.Heading>Oh No!</Alert.Heading>
+                                <p>
+                                    Your user name or password was incorrect.
+                                </p>
+                            </Alert>
                         </Col>
                         <Col xs={2} md={4} />
                     </Row>
