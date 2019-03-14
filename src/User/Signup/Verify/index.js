@@ -1,11 +1,12 @@
 import React from 'react';
-import { Button, Container, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, InputGroup, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { jeffskiRoutes } from '../../../app';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
-import { AUTH_STATE_VERIFY_SUCCESS, AUTH_STATE_VERIFY_FAIL_INVALIDCODE, AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN } from '../../Auth/consts';
+import { AUTH_STATE_VERIFY_SUCCESS, AUTH_STATE_VERIFY_FAIL_INVALIDCODE, AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN, 
+    AUTH_STATE_RESENDCODE_SUCCESS, AUTH_STATE_RESENDCODE_FAIL_CAUSEUNKNOWN, AUTH_STATE_RESENDCODE_FAIL_MAX_TRIES } from '../../Auth/consts';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import './styles.css';
 
@@ -16,7 +17,10 @@ class Verify extends React.Component {
 
         this.state = {
             code: '',
-            verifyMessage: null
+            verifyMessage: null,
+            resendEmailNetworkThrottle: false,
+            verifyNetworkThrottle: false,
+            isValidated: false
         }
     }
 
@@ -27,16 +31,69 @@ class Verify extends React.Component {
         }
     }
 
-    isFormDisabled = () => {
-        return this.props.blogAuth.authNetwork === STATUS_LOADING;
+    isCodeValid = () => {
+        return (typeof this.state.code === 'string' && this.state.code.length >= 6);
     }
 
-    onVerifyClicked = () => {
-        this.props.blogAuth.verifyUserSignup(this.state.code)
+    isVerifyDisabled = () => {
+        return !this.isCodeValid() || this.state.verifyNetworkThrottle;
+    }
+
+    onFormEnterKey = (event) => {
+        if (event.key === 'Enter') {
+            this.onVerifyClicked(event);
+        }
+    }
+
+    onVerifyClicked = (event) => {
+        // if we have valid code, try to verify
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.isVerifyDisabled()) {
+            
+            this.setState({
+                verifyNetworkThrottle: true
+            }, () => {
+                this.props.blogAuth.verifyUserSignup(this.state.code)
+    
+                setTimeout(() => {
+                    this.setState({
+                        verifyNetworkThrottle: false
+                    });
+                }, 1000);
+            });
+        }
+        else {
+            //show form feedback
+            this.setState({
+                isValidated: true
+            });
+        }
     }
 
     onResendCodeClicked = () => {
-        this.props.blogAuth.resendUserSignupEmail()
+        //WE DID IT! let state decide where we go from here
+        this.setState({
+            resendEmailNetworkThrottle: true
+        }, () => {
+            this.props.blogAuth.resendUserSignupEmail()
+
+            setTimeout(() => {
+                this.setState({
+                    resendEmailNetworkThrottle: false
+                });
+            }, 3000);
+        });
+    }
+
+    onVerifyChanged = (e) => {
+        //only allow numerics
+        let regex = new RegExp(/^\d+$/);
+        if (regex.exec(e.target.value) || e.target.value === '') {
+            this.setState({
+                code: e.target.value
+            });
+        }
     }
 
     render() {
@@ -60,98 +117,130 @@ class Verify extends React.Component {
         if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_INVALIDCODE) {
             verifyMessage = 'The code you entered was incorrect. Please check your email for a verification code.';
         }
-        if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN) {
+        let resendAlert = null;
+        if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_RESENDCODE_SUCCESS) {
+            resendAlert = (
+                <Alert dismissible variant="success">
+                    <Alert.Heading>Success!</Alert.Heading>
+                    <p>
+                        You should see a new verification email in your inbox soon.
+                    </p>
+                </Alert>);
+        }
+        else if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_RESENDCODE_FAIL_MAX_TRIES) {
+            resendAlert = (
+                <Alert dismissible variant="danger">
+                    <Alert.Heading>Oh no!</Alert.Heading>
+                    <p>
+                        You have exceeded the maximum number of resends. Please try again later.
+                    </p>
+                </Alert>);
+        }
+        else if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_RESENDCODE_FAIL_CAUSEUNKNOWN) {
+            resendAlert = (
+                <Alert dismissible variant="danger">
+                    <Alert.Heading>Error!</Alert.Heading>
+                    <p>
+                        There was a problem emailing your code.
+                    </p>
+                </Alert>);
+        }
+        else if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN) {
             verifyMessage = 'An error occurred during verification.';
         }
 
         return (
-            <div className="Verify">
-                <Container>
+            <Container className="Verify">
+                <Row className="show-grid">
+                    <Col xs={0} sm={2} md={4} />
+                    <Col xs={12} sm={8} md={4}>
+                        <h2 className="Verify-title">Let's Get Started!</h2>
+                    </Col>
+                    <Col xs={0} sm={2} md={4} />
+                </Row>
+                <Row className="show-grid Verify-message">
+                    <Col xs={0} sm={2} md={4} />
+                    <Col xs={12} sm={8} md={4}>
+                        <div>You should receive an email shortly with a verification code.</div>
+                    </Col>
+                    <Col xs={0} sm={2} md={4} />
+                </Row>
+
+                <Form
+                    onSubmit={e => this.onVerifyClicked(e)}
+                >
                     <Row className="show-grid">
-                        <Col xs={0} sm={2} md={4} />
-                        <Col xs={12} sm={8} md={4}>
-                            <h2 className="Verify-title">Let's Get Started!</h2>
-                        </Col>
-                        <Col xs={0} sm={2} md={4} />
-                    </Row>
-                    <Row className="show-grid Verify-message">
-                        <Col xs={0} sm={2} md={4} />
-                        <Col xs={12} sm={8} md={4}>
-                            <div>You should receive an email shortly with a verification code.</div>
-                        </Col>
-                        <Col xs={0} sm={2} md={4} />
+                        <Col xs={1} sm={2} md={4} />
+                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="verifyCodeInput">
+                            <InputGroup>
+                                <Form.Control
+                                    aria-describedby="inputGroupPrepend"
+                                    isInvalid={this.state.isValidated && !this.isCodeValid()}
+                                    type="text"
+                                    value={this.state.code}
+                                    placeholder="Ex: 123456"
+                                    onChange={this.onVerifyChanged}
+                                    onKeyDown={this.onFormEnterKey}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Code must be at least 6 digits.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        <Col xs={1} sm={2} md={4} />
                     </Row>
 
-                    <form>
+                    <Row className="show-grid">
+                        <Col xs={1} sm={2} md={4} />
+                        <Col xs={10} sm={8} md={4} className="Login_actions">
+                            <span className="Verify_action_button" >
+                                <Button
+                                    disabled={this.state.verifyNetworkThrottle || this.props.blogAuth.authNetwork === STATUS_LOADING}
+                                    variant="primary"
+                                    onClick={this.onVerifyClicked}
+                                >
+                                    Verify
+                                    </Button>
+                            </span>
+                            <span className="Verify_action_button" >
+                                <Button
+                                    variant="secondary"
+                                    disabled={this.state.resendEmailNetworkThrottle || this.props.blogAuth.authNetwork === STATUS_LOADING}
+                                    onClick={this.onResendCodeClicked}
+                                >
+                                    Resend Code
+                                </Button>
+                            </span>
+                        </Col>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
 
-                        <Row className="show-grid">
+                    {verifyMessage &&
+                        <Row className="show-grid User_login-message">
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="verifyCodeInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="number"
-                                            value={this.state.code}
-                                            placeholder="Ex: 123456"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    code: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>Verification Code</span>
-                                    </label>
-                                </FormGroup>
+                                <Alert dismissible variant="danger">
+                                    <Alert.Heading>Oh No!</Alert.Heading>
+                                    <p>
+                                        We got an error: {verifyMessage}
+                                    </p>
+                                </Alert>
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>
+                    }
 
-                        <Row className="show-grid">
+                    {this.state.resendEmailNetworkThrottle &&
+                        <Row className="show-grid User_error-message">
                             <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4} className="Login_actions">
-                                <span className="Verify_action_button" >
-                                    <Button
-                                        disabled={this.isFormDisabled() || this.state.code.toString().length < 6}
-                                        variant="primary"
-                                        onClick={this.onVerifyClicked}
-                                        >
-                                        Verify
-                                    </Button>
-                                </span>
-                                <span className="Verify_action_button" >
-                                    <Button
-                                        variant="secondary"
-                                        disabled={this.isFormDisabled()}
-                                        onClick={this.onResendCodeClicked}
-                                    >
-                                        Resend Code
-                                </Button>
-                                </span>
+                            <Col xs={10} sm={8} md={4}>
+                                {resendAlert}
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>
-
-                        {verifyMessage &&
-                            <Row className="show-grid User_login-message">
-                                <Col xs={1} sm={2} md={4} />
-                                <Col xs={10} sm={8} md={4}>
-                                    <Alert dismissible variant="danger">
-                                        <Alert.Heading>Oh No!</Alert.Heading>
-                                        <p>
-                                            We got an error: {verifyMessage}
-                                        </p>
-                                    </Alert>
-                                </Col>
-                                <Col xs={1} sm={2} md={4} />
-                            </Row>
-                        }
-                    </form>
-                </Container>
-            </div>
+                    }
+                </Form>
+            </Container>
         );
     }
 }

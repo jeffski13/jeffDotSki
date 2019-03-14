@@ -9,7 +9,7 @@ import {
     AUTH_STATE_LOGIN_FAIL_PASSWORD_RESET, AUTH_STATE_LOGIN_LOADING, AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED, AUTH_STATE_LOGIN_FAIL, AUTH_STATE_LOGGOUT_FAIL,
     AUTH_STATE_LOGGOUT_LOADING,
     AUTH_STATE_VERIFY_FAIL_NOUSERNAME, AUTH_STATE_VERIFYING, AUTH_STATE_VERIFY_FAIL_INVALIDCODE, AUTH_STATE_VERIFY_SUCCESS, AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN,
-    AUTH_STATE_RESENDINGCODE, AUTH_STATE_RESENDCODE_FAIL,
+    AUTH_STATE_RESENDINGCODE, AUTH_STATE_RESENDCODE_FAIL_CAUSEUNKNOWN, AUTH_STATE_RESENDCODE_SUCCESS, AUTH_STATE_RESENDCODE_FAIL_MAX_TRIES,
     AWS_CODE_FAILURE_USERNOTVERIFIED, AWS_CODE_FAILURE_PASSWORDRESETREQUIRED
 } from './consts';
 import { connect } from 'react-redux';
@@ -244,11 +244,23 @@ let withBlogAuth = (OgComponent) => {
             });
 
             Auth.resendSignUp(userName).then(() => {
-            }).catch(e => {
                 this.props.storeAuthState({
                     isLoading: false,
-                    currentState: AUTH_STATE_RESENDCODE_FAIL
+                    currentState: AUTH_STATE_RESENDCODE_SUCCESS
                 });
+            }).catch(e => {
+                if(e.code === 'LimitExceededException'){
+                    this.props.storeAuthState({
+                        isLoading: false,
+                        currentState: AUTH_STATE_RESENDCODE_FAIL_MAX_TRIES
+                    });
+                }
+                else {
+                    this.props.storeAuthState({
+                        isLoading: false,
+                        currentState: AUTH_STATE_RESENDCODE_FAIL_CAUSEUNKNOWN
+                    });
+                }
             });
         }
 
