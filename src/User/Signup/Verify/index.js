@@ -11,7 +11,7 @@ import './styles.css';
 
 class Verify extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -20,47 +20,47 @@ class Verify extends React.Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //if we dont have a username we cant verify anything
-        if(!this.props.reduxBlogAuth.userInfo || !this.props.reduxBlogAuth.userInfo.username) {
+        if (!this.props.reduxBlogAuth.userInfo || !this.props.reduxBlogAuth.userInfo.username) {
             this.props.history.push(jeffskiRoutes.login);
         }
     }
 
     isFormDisabled = () => {
-        return this.props.blogAuth.authNetwork === STATUS_LOADING
+        return this.props.blogAuth.authNetwork === STATUS_LOADING;
     }
 
     onVerifyClicked = () => {
         this.props.blogAuth.verifyUserSignup(this.state.code)
     }
-    
+
     onResendCodeClicked = () => {
         this.props.blogAuth.resendUserSignupEmail()
     }
 
     render() {
         //if we login successfully go to profile
-        if(this.props.reduxBlogAuth.authState.isLoggedIn) {
+        if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             this.props.history.push(jeffskiRoutes.profile);
         }
-        
-        if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_SUCCESS) {
+
+        if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_SUCCESS) {
             //if we have a user name and password in memory, use it to login
-            if(this.props.reduxBlogAuth.userInfo.username && this.props.reduxBlogAuth.userInfo.password){
+            if (this.props.reduxBlogAuth.userInfo.username && this.props.reduxBlogAuth.userInfo.password) {
                 this.props.blogAuth.login(this.props.reduxBlogAuth.userInfo.username, this.props.reduxBlogAuth.userInfo.password)
             }
             //if we dont have a user name and password, go back to the login page and let them do all that stuff again
-            else{
+            else {
                 this.props.history.push(jeffskiRoutes.login);
             }
         }
 
         let verifyMessage = null;
-        if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_INVALIDCODE){
+        if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_INVALIDCODE) {
             verifyMessage = 'The code you entered was incorrect. Please check your email for a verification code.';
         }
-        if(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN){
+        if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN) {
             verifyMessage = 'An error occurred during verification.';
         }
 
@@ -113,10 +113,10 @@ class Verify extends React.Component {
                         <Row className="show-grid">
                             <Col xs={1} sm={2} md={4} />
                             <Col xs={10} sm={8} md={4} className="Login_actions">
-                            <span className="Verify_action_button" >
+                                <span className="Verify_action_button" >
                                     <Button
                                         disabled={this.isFormDisabled() || this.state.code.toString().length < 6}
-                                        bsStyle="primary"
+                                        variant="primary"
                                         onClick={this.onVerifyClicked}
                                         >
                                         Verify
@@ -124,9 +124,10 @@ class Verify extends React.Component {
                                 </span>
                                 <span className="Verify_action_button" >
                                     <Button
+                                        variant="secondary"
                                         disabled={this.isFormDisabled()}
                                         onClick={this.onResendCodeClicked}
-                                        >
+                                    >
                                         Resend Code
                                 </Button>
                                 </span>
@@ -134,12 +135,15 @@ class Verify extends React.Component {
                             <Col xs={1} sm={2} md={4} />
                         </Row>
 
-                        {verifyMessage && 
+                        {verifyMessage &&
                             <Row className="show-grid User_login-message">
                                 <Col xs={1} sm={2} md={4} />
                                 <Col xs={10} sm={8} md={4}>
-                                    <Alert bsStyle="danger">
-                                        <strong>Oh No! We got an error: </strong>{verifyMessage} 
+                                    <Alert dismissible variant="danger">
+                                        <Alert.Heading>Oh No!</Alert.Heading>
+                                        <p>
+                                            We got an error: {verifyMessage}
+                                        </p>
                                     </Alert>
                                 </Col>
                                 <Col xs={1} sm={2} md={4} />

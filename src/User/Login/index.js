@@ -122,7 +122,6 @@ class Login extends React.Component {
                     onSubmit={e => this.onLoginClicked(e)}
                 >
                     <Row className="show-grid">
-
                         <Col xs={2} md={4} />
                         <Form.Group as={Col} xs="8" md="4" controlId="usernameFormInput">
                             <InputGroup>
