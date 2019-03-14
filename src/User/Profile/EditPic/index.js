@@ -177,10 +177,10 @@ class ProfileEditPic extends React.Component {
         }
 
         let picSrc = this.state.profilePicUrl;
-        if(this.state.imagePreviewLoading) {
+        if (this.state.imagePreviewLoading) {
             picSrc = loadingImage;
         }
-        if(this.state.newProfilePicUrl) {
+        if (this.state.newProfilePicUrl) {
             picSrc = this.state.newProfilePicUrl;
         }
 
@@ -212,19 +212,19 @@ class ProfileEditPic extends React.Component {
                                 <ImageForm
                                     refreshProp={this.state.formRefreshProp}
                                     imageSelectedCallback={(imgData, imgUrl) => {
-                                        
-                                        if(!imgData) {
-                                            this.setState({newProfilePicUrl: null, newProfilePic: null})
+
+                                        if (!imgData) {
+                                            this.setState({ newProfilePicUrl: null, newProfilePic: null })
                                         }
                                         else {
                                             //NOTE to implementing components: 
                                             this.setState({
-                                                newProfilePicUrl: imgUrl, 
+                                                newProfilePicUrl: imgUrl,
                                                 newProfilePic: imgData,
                                                 imagePreviewLoading: false
                                             });
                                         }
-                                        
+
                                     }}
                                     onImageLoading={() => {
                                         this.setState({
@@ -243,14 +243,15 @@ class ProfileEditPic extends React.Component {
                                 <span className="User_action-button" >
                                     <Button
                                         disabled={this.isFormDisabled() || this.isFormInvalid() || this.state.profileNetworkThrottle}
-                                        bsStyle="primary"
+                                        variant="primary"
                                         onClick={this.onSaveProfilePic}
-                                    >
+                                        >
                                         Save
                                     </Button>
                                 </span>
                                 <span className="User_action-button" >
                                     <Button
+                                        variant="secondary"
                                         disabled={this.isFormDisabled()}
                                         onClick={this.onCancelProfileChanges}
                                     >
@@ -265,8 +266,11 @@ class ProfileEditPic extends React.Component {
                             <Row className="show-grid User_error-message">
                                 <Col xs={1} sm={2} md={4} />
                                 <Col xs={10} sm={8} md={4}>
-                                    <Alert bsStyle="danger">
-                                        <strong>Oh No! </strong>{this.state.profileEditNetworkMessage}
+                                    <Alert variant="danger">
+                                        <Alert.Heading>Oh No!</Alert.Heading>
+                                        <p>
+                                            {this.state.profileEditNetworkMessage}
+                                        </p>
                                     </Alert>
                                 </Col>
                                 <Col xs={1} sm={2} md={4} />
@@ -277,8 +281,11 @@ class ProfileEditPic extends React.Component {
                             <Row className="show-grid User_error-message">
                                 <Col xs={1} sm={2} md={4} />
                                 <Col xs={10} sm={8} md={4}>
-                                    <Alert bsStyle="success">
-                                        <strong>YAY! </strong>{this.state.profileEditNetworkMessage}
+                                    <Alert variant="success">
+                                        <Alert.Heading>YAY!</Alert.Heading>
+                                        <p>
+                                            {this.state.profileEditNetworkMessage}
+                                        </p>
                                     </Alert>
                                 </Col>
                                 <Col xs={1} sm={2} md={4} />

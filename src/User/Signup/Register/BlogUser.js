@@ -232,7 +232,7 @@ class BlogUser extends React.Component {
 
                     <Row className="show-grid">
                         <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerNameFirstInput">
+                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerNameLastInput">
                             <InputGroup>
                                 <Form.Control className="User_login-form-label"
                                     placeholder="Username"
