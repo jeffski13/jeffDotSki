@@ -9,6 +9,10 @@ import { jeffskiRoutes } from '../../app';
 import './styles.css';
 import '../styles.css';
 
+/**
+ * login page will validate a username and password entered. 
+ * After the first attempt, we will give feedback on the form.
+ */
 class Login extends React.Component {
 
     constructor(props) {
@@ -184,7 +188,7 @@ class Login extends React.Component {
                                 <Button
                                     variant="primary"
                                     type="submit"
-                                    disabled={this.isLoggingIn() || this.isLoginDisabled()}
+                                    disabled={this.isLoggingIn()}
                                 >
                                     Login
                                 </Button>

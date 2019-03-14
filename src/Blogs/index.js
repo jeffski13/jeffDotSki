@@ -263,7 +263,7 @@ class Blogs extends Component {
                                             <span className="Blogs_error-refresh" >
                                                 <Button
                                                     onClick={() => { window.location.reload() }}
-                                                    bsStyle="link"
+                                                    variant="link"
                                                 >
                                                     Refresh?
                                             </Button>

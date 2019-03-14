@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Container, Row, Col, Image } from 'react-bootstrap';
+import { Button, Container, Row, Col, Image, Alert } from 'react-bootstrap';
 import withBlogAuth from '../Auth/withBlogAuth';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import Loadingski from '../../Inf/Loadingski';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
@@ -109,13 +109,28 @@ class Profile extends React.Component {
             };
         }
         else if (this.state.blogUserNetwork === STATUS_FAILURE) {
-            userState = {
-                name: 'Fail',
-                username: 'Fail',
-                email: 'Fail',
-                dateOfBirth: 'Fail',
-                bio: 'Fail'
-            }
+            return (
+                <Row className="show-grid User_login-message">
+                    <Col xs={2} md={4} />
+                    <Col xs={8} md={4}>
+                        <Alert variant="danger">
+                            <Alert.Heading>Oh No!</Alert.Heading>
+                            <span>
+                                <span>Something went wrong while getting the blogs.</span>
+                                <span className="Blogs_error-refresh" >
+                                    <Button
+                                        onClick={() => { window.location.reload() }}
+                                        variant="link"
+                                    >
+                                        Refresh?
+                                        </Button>
+                                </span>
+                            </span>
+                        </Alert>
+                    </Col>
+                    <Col xs={2} md={4} />
+                </Row>
+            );
         }
         else {
             let profilePicUrl = emptyProfileUrl;
@@ -133,80 +148,79 @@ class Profile extends React.Component {
         const editLink = (<LinkContainer to={jeffskiRoutes.profileEditInfo}><a href={jeffskiRoutes.profileEdit}>Edit</a></LinkContainer>);
 
         return (
-            <div className="User">
-                <Container>
-                    <Row className="show-grid">
-                        <Col xs={12}>
-                            <h2 className="Profile_header">{userState.username}</h2>
-                        </Col>
-                    </Row>
+            <Container className="User">
+                <Row className="show-grid">
+                    <Col xs={12}>
+                        <h2 className="Profile_header">{userState.username}</h2>
+                    </Col>
+                </Row>
 
-                    <Row className="show-grid">
-                        <Col xs={8}>
-                            <Col xs={12} >
-                                <div className="Profile_title">Name</div>
-                                <div>{userState.name}</div>
-                            </Col>
-                            <Col xs={12} >
-                                <div className="Profile_title">Email</div>
-                                <div>{userState.email}</div>
-                            </Col>
-                            <Col xs={12} >
-                                <div className="Profile_title">Birth Date</div>
-                                <div>{moment.unix(userState.dateOfBirth).format("MM/DD/YYYY")}</div>
-                            </Col>
+                <Row className="show-grid">
+                    <Col xs={8}>
+                        <Col xs={12} >
+                            <div className="Profile_title">Name</div>
+                            <div>{userState.name}</div>
                         </Col>
-                        <Col xs={4}>
-                            <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
-                                <Image fluid src={userState.profilePic} />
-                            </div>
+                        <Col xs={12} >
+                            <div className="Profile_title">Email</div>
+                            <div>{userState.email}</div>
                         </Col>
-                    </Row>
+                        <Col xs={12} >
+                            <div className="Profile_title">Birth Date</div>
+                            <div>{moment.unix(userState.dateOfBirth).format("MM/DD/YYYY")}</div>
+                        </Col>
+                    </Col>
+                    <Col xs={4}>
+                        <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
+                            <Image fluid src={userState.profilePic} />
+                        </div>
+                    </Col>
+                </Row>
 
-                    <Row className="show-grid Profile_bio">
-                        <Col xs={8}>
-                            <Col xs={12} >
-                                <div className="Profile_title">Bio</div>
-                                {userState.bio
-                                    ? <div>{userState.bio}</div>
-                                    : <div className="Profile_empty-info">Your bio is empty. {editLink}</div>}
-                            </Col>
+                <Row className="show-grid Profile_bio">
+                    <Col xs={8}>
+                        <Col xs={12} >
+                            <div className="Profile_title">Bio</div>
+                            {userState.bio
+                                ? <div>{userState.bio}</div>
+                                : <div className="Profile_empty-info">Your bio is empty. {editLink}</div>}
                         </Col>
-                        <Col xs={4}>
-                            <Col xs={12} >
-                                <div className="Profile_title">Trips</div>
-                                {userState.trips && userState.trips.map(this.renderTripLinks)}
-                                {(!userState.trips || userState.trips.length === 0) && 
-                                    <div className="Profile_empty-info">You have no trips.</div>}
-                            </Col>
+                    </Col>
+                    <Col xs={4}>
+                        <Col xs={12} >
+                            <div className="Profile_title">Trips</div>
+                            {userState.trips && userState.trips.map(this.renderTripLinks)}
+                            {(!userState.trips || userState.trips.length === 0) &&
+                                <div className="Profile_empty-info">You have no trips.</div>}
                         </Col>
-                    </Row>
+                    </Col>
+                </Row>
 
-                    <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4} className="User_actions-section">
-                            <span className="User_action-button" >
-                                <Button
-                                    onClick={this.goToEditProfileInfo}
-                                >
-                                    Edit Profile
-                                </Button>
-                            </span>
-                            <span className="User_action-button" >
-                                <Button
-                                    bsStyle="danger"
-                                    onClick={this.props.blogAuth.logout}
-                                >
-                                    Logout
-                                </Button>
-                            </span>
-                        </Col>
-                        <Col xs={1} sm={2} md={4} />
-                    </Row>
+                <Row className="show-grid">
+                    <Col xs={1} sm={2} md={4} />
+                    <Col xs={10} sm={8} md={4} className="User_actions-section">
+                        <span className="User_action-button" >
+                            <Button
+                                onClick={this.goToEditProfileInfo}
+                                variant="secondary"
+                            >
+                                Edit Profile
+                            </Button>
+                        </span>
+                        <span className="User_action-button" >
+                            <Button
+                                variant="danger"
+                                onClick={this.props.blogAuth.logout}
+                            >
+                                Logout
+                            </Button>
+                        </span>
+                    </Col>
+                    <Col xs={1} sm={2} md={4} />
+                </Row>
 
-                </Container>
+            </Container>
 
-            </div >
         )
     }
 }
