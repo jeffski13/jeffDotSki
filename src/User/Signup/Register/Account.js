@@ -314,7 +314,7 @@ class Account extends React.Component {
                         <Col xs={10} sm={8} md={4} className="Login_actions">
                             <span className="Login_action_button" >
                                 <Button
-                                    disabled={this.isFormDisabled()}
+                                    disabled={this.state.registerNetwork === STATUS_LOADING}
                                     variant="primary"
                                     onClick={this.onSignupClicked}
                                 >
