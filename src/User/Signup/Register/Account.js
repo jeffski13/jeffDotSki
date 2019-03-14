@@ -71,7 +71,7 @@ class Account extends React.Component {
         }
         return false;
     }
-    
+
     isEmailValid = () => {
         if (this.state.email && typeof this.state.email === 'string' && this.state.email.length >= 3 && this.state.email.includes('@')) {
             return true;
@@ -81,8 +81,8 @@ class Account extends React.Component {
 
     isPasswordValid = () => {
         if (this.state.password && typeof this.state.password === 'string') {
-            for(let i = 0; i < passwordRules.length; i++){
-                if(!this.isPasswordValidForRule(passwordRules[i])){
+            for (let i = 0; i < passwordRules.length; i++) {
+                if (!this.isPasswordValidForRule(passwordRules[i])) {
                     console.log('jeffski password invalid')
                     return false;
                 }
@@ -172,7 +172,7 @@ class Account extends React.Component {
         }
         else if (rule.code === 'special') {
             const specialChars = ['^', '$', '*', '.', '[', ']', '{', '}', '(', ')', '?', '-', '"', '!', '@', '#', '%', '&', '/', '\\', ',', '>', '<', "'", ':', ';', '|', '_', '~', '`'];
-            for(let i = 0; i < specialChars.length; i++){
+            for (let i = 0; i < specialChars.length; i++) {
                 if (this.state.password.includes(specialChars[i])) {
                     return true;
                 }
@@ -190,7 +190,7 @@ class Account extends React.Component {
     renderPasswordAnalysisList = (nextPasswordRule) => {
         //we have typed at least one character
         let hintClassName = 'Register_password-invalid';
-        if(this.isPasswordValidForRule(nextPasswordRule)){
+        if (this.isPasswordValidForRule(nextPasswordRule)) {
             hintClassName = 'Register_password-valid';
         }
 
@@ -224,22 +224,22 @@ class Account extends React.Component {
                         <Col xs={1} sm={2} md={4} />
                         <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerEmailInput">
                             <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.isEmailValid()}
-                                    type="email"
-                                    value={this.state.email}
-                                    placeholder="Ex: yolo@swag.net"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            email: e.target.value
-                                        });
-                                    }}
-                                    name="text"
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Email must not be blank.
+                                    <Form.Control className="User_login-form-label"
+                                        aria-describedby="inputGroupPrepend"
+                                        isInvalid={this.state.isValidated && !this.isEmailValid()}
+                                        type="email"
+                                        value={this.state.email}
+                                        placeholder="Ex: yolo@swag.net"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                email: e.target.value
+                                            });
+                                        }}
+                                        name="text"
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Email must not be blank.
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
@@ -317,12 +317,13 @@ class Account extends React.Component {
                                     disabled={this.isFormDisabled()}
                                     variant="primary"
                                     onClick={this.onSignupClicked}
-                                    >
+                                >
                                     Sign Up
                                     </Button>
                             </span>
                             <span className="Login_action_button" >
                                 <Button
+                                    disabled={this.state.registerNetwork === STATUS_LOADING}
                                     onClick={this.onSignupCancelled}
                                     variant="secondary"
                                 >
@@ -340,7 +341,7 @@ class Account extends React.Component {
                                 <Alert dismissible variant="danger">
                                     <Alert.Heading>Oh No!</Alert.Heading>
                                     <p>
-                                    {this.state.registerNetworkMessage}
+                                        {this.state.registerNetworkMessage}
                                     </p>
                                 </Alert>
                             </Col>
