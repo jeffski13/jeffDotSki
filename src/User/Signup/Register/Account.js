@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Container, Row, Col, FormGroup, ControlLabel, FormControl, Alert } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
+import { Button, Container, Row, Col, Form, InputGroup, Alert } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
 import Amplify, { Auth } from 'aws-amplify';
@@ -50,7 +49,7 @@ class Account extends React.Component {
             username: '',
             password: '', //must have one uppercase, on special
             email: '',
-            passwordAnalyzerResults: null
+            isValidated: false
         };
     }
 
@@ -66,11 +65,62 @@ class Account extends React.Component {
         }
     }
 
-    isFormDisabled = () => {
-        return this.state.registerNetwork === STATUS_LOADING;
+    isUsernameValid = () => {
+        if (this.state.username && typeof this.state.username === 'string' && this.state.username.length >= 1) {
+            return true;
+        }
+        return false;
+    }
+    
+    isEmailValid = () => {
+        if (this.state.email && typeof this.state.email === 'string' && this.state.email.length >= 3 && this.state.email.includes('@')) {
+            return true;
+        }
+        return false;
     }
 
-    onSignupClicked = () => {
+    isPasswordValid = () => {
+        if (this.state.password && typeof this.state.password === 'string') {
+            for(let i = 0; i < passwordRules.length; i++){
+                if(!this.isPasswordValidForRule(passwordRules[i])){
+                    console.log('jeffski password invalid')
+                    return false;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+        console.log('jeffski password valid')
+        return true;
+    }
+
+    isFormDisabled = () => {
+        return this.state.registerNetwork === STATUS_LOADING || !this.isUsernameValid() || !this.isPasswordValid() || !this.isEmailValid();
+    }
+
+    onFormEnterKey = (event) => {
+        if (event.key === 'Enter') {
+            this.onSignupClicked(event);
+        }
+    }
+
+    onSignupClicked = (event) => {
+        // if we have valid usernames and passwords and we are not loading right now, try to login
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.isFormDisabled()) {
+            this.signupUser();
+        }
+        else {
+            //run validation
+            this.setState({
+                isValidated: true
+            });
+        }
+    }
+
+    signupUser = () => {
         this.setState({
             registerNetwork: STATUS_LOADING
         }, () => {
@@ -114,29 +164,35 @@ class Account extends React.Component {
         this.props.history.push(jeffskiRoutes.login);
     }
 
+    isPasswordValidForRule(rule) {
+        if (rule.code === 'length') {
+            if (this.state.password.length >= 8) {
+                return true;
+            }
+        }
+        else if (rule.code === 'special') {
+            const specialChars = ['^', '$', '*', '.', '[', ']', '{', '}', '(', ')', '?', '-', '"', '!', '@', '#', '%', '&', '/', '\\', ',', '>', '<', "'", ':', ';', '|', '_', '~', '`'];
+            for(let i = 0; i < specialChars.length; i++){
+                if (this.state.password.includes(specialChars[i])) {
+                    return true;
+                }
+            }
+        }
+        else {
+            let regex = rule.regex;
+            if (regex.exec(this.state.password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     renderPasswordAnalysisList = (nextPasswordRule) => {
         //we have typed at least one character
         let hintClassName = 'Register_password-invalid';
-        if (nextPasswordRule.code === 'length') {
-            if (this.state.password.length >= 8) {
-                hintClassName = 'Register_password-valid';
-            }
+        if(this.isPasswordValidForRule(nextPasswordRule)){
+            hintClassName = 'Register_password-valid';
         }
-        else if (nextPasswordRule.code === 'special') {
-            const specialChars = ['^', '$', '*', '.', '[', ']', '{', '}', '(', ')', '?', '-', '"', '!', '@', '#','%', '&', '/', '\\', ',', '>', '<', "'", ':', ';', '|', '_', '~', '`'];
-            specialChars.forEach((nextChar)=>{
-                if (this.state.password.includes(nextChar)) {
-                    hintClassName = 'Register_password-valid';
-                }
-            });
-        }
-        else {
-            let regex = nextPasswordRule.regex;
-            if (regex.exec(this.state.password)) {
-                hintClassName = 'Register_password-valid';
-            }
-        }
-
 
         return (<li className={hintClassName}>{nextPasswordRule.text}</li>);
     }
@@ -152,146 +208,147 @@ class Account extends React.Component {
         }
 
         return (
-            <div className="Register">
-                <Container>
+            <Container className="Register">
+                <Row className="show-grid">
+                    <Col xs={0} sm={2} md={4} />
+                    <Col xs={12} sm={8} md={4}>
+                        <h2 className="Register-title">Let's Get Started!</h2>
+                    </Col>
+                    <Col xs={0} sm={2} md={4} />
+                </Row>
+
+                <Form
+                    onSubmit={e => this.onSignupClicked(e)}
+                >
                     <Row className="show-grid">
-                        <Col xs={0} sm={2} md={4} />
-                        <Col xs={12} sm={8} md={4}>
-                            <h2 className="Register-title">Let's Get Started!</h2>
-                        </Col>
-                        <Col xs={0} sm={2} md={4} />
+                        <Col xs={1} sm={2} md={4} />
+                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerEmailInput">
+                            <InputGroup>
+                                <Form.Control className="User_login-form-label"
+                                    aria-describedby="inputGroupPrepend"
+                                    isInvalid={this.state.isValidated && !this.isEmailValid()}
+                                    type="email"
+                                    value={this.state.email}
+                                    placeholder="Ex: yolo@swag.net"
+                                    onChange={(e) => {
+                                        this.setState({
+                                            email: e.target.value
+                                        });
+                                    }}
+                                    name="text"
+                                    onKeyDown={this.onFormEnterKey}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Email must not be blank.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        <Col xs={1} sm={2} md={4} />
                     </Row>
 
-                    <form>
+                    <Row className="show-grid">
+                        <Col xs={1} sm={2} md={4} />
+                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerUsernameInput">
+                            <InputGroup>
+                                <Form.Control className="User_login-form-label"
+                                    aria-describedby="inputGroupPrepend"
+                                    isInvalid={this.state.isValidated && !this.isUsernameValid()}
+                                    type="text"
+                                    value={this.state.username}
+                                    placeholder="Ex: SumthingFun"
+                                    onChange={(e) => {
+                                        this.setState({
+                                            username: e.target.value
+                                        });
+                                    }}
+                                    onKeyDown={this.onFormEnterKey}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Username must not be blank.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
 
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerEmailInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="email"
-                                            value={this.state.email}
-                                            placeholder="Ex: yolo@swag.net"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    email: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>E-Mail</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
+                    <Row className="show-grid">
 
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerUsernameInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="text"
-                                            value={this.state.username}
-                                            placeholder="Ex: SumthingFun"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    username: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>Username</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
+                        <Col xs={2} md={4} />
+                        <Form.Group as={Col} xs="8" md="4" controlId="passwordFormInput">
+                            <InputGroup>
+                                <Form.Control
+                                    className="User_password-form-label"
+                                    isInvalid={this.state.isValidated && !this.isPasswordValid()}
+                                    aria-describedby="inputGroupPrepend"
+                                    type="password"
+                                    value={this.state.password || ''}
+                                    onChange={(e) => {
+                                        console.log('jeffski looking at passowrd: ', e.target.value);
+                                        this.setState({
+                                            password: e.target.value
+                                        });
+                                    }}
+                                    placeholder="Ex: s0m3Th1ngC0mpl!cAt3D"
+                                    onKeyDown={this.onFormEnterKey}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Incorrect password format
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        <Col xs={2} md={4} />
+                    </Row>
 
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerPasswordInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="password"
-                                            value={this.state.password}
-                                            placeholder="Ex: s0m3Th1ngC0mpl1cAt3D"
-                                            onChange={(e) => {
+                    <Row>
+                        <Col xs={1} sm={2} md={4} />
+                        <Col xs={10} sm={8} md={4}>
+                            <ul className="Register_validation-list">
+                                {passwordRules.map(this.renderPasswordAnalysisList)}
+                            </ul>
+                        </Col>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
 
-
-                                                console.log('jeffski looking at passowrd: ', e.target.value);
-                                                this.setState({
-                                                    password: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>Password</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
-
-                        <Row>
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <ul className="Register_validation-list">
-                                    {passwordRules.map(this.renderPasswordAnalysisList)}
-                                </ul>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
-
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4} className="Login_actions">
-                                <span className="Login_action_button" >
-                                    <Button
-                                        disabled={this.isFormDisabled()}
-                                        bsStyle="primary"
-                                        onClick={this.onSignupClicked}
+                    <Row className="show-grid">
+                        <Col xs={1} sm={2} md={4} />
+                        <Col xs={10} sm={8} md={4} className="Login_actions">
+                            <span className="Login_action_button" >
+                                <Button
+                                    disabled={this.isFormDisabled()}
+                                    variant="primary"
+                                    onClick={this.onSignupClicked}
                                     >
-                                        Sign Up
+                                    Sign Up
                                     </Button>
-                                </span>
-                                <span className="Login_action_button" >
-                                    <Button
-                                        onClick={this.onSignupCancelled}
-                                    >
-                                        Go To Login
+                            </span>
+                            <span className="Login_action_button" >
+                                <Button
+                                    onClick={this.onSignupCancelled}
+                                    variant="secondary"
+                                >
+                                    Go To Login
                                 </Button>
-                                </span>
+                            </span>
+                        </Col>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
+
+                    {this.state.registerNetwork === STATUS_FAILURE &&
+                        <Row className="show-grid User_login-message">
+                            <Col xs={1} sm={2} md={4} />
+                            <Col xs={10} sm={8} md={4}>
+                                <Alert dismissible variant="danger">
+                                    <Alert.Heading>Oh No!</Alert.Heading>
+                                    <p>
+                                    {this.state.registerNetworkMessage}
+                                    </p>
+                                </Alert>
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>
-
-                        {this.state.registerNetwork === STATUS_FAILURE &&
-                            <Row className="show-grid User_login-message">
-                                <Col xs={1} sm={2} md={4} />
-                                <Col xs={10} sm={8} md={4}>
-                                    <Alert bsStyle="danger">
-                                        <strong>Oh No! </strong>{this.state.registerNetworkMessage}
-                                    </Alert>
-                                </Col>
-                                <Col xs={1} sm={2} md={4} />
-                            </Row>
-                        }
-                    </form>
-                </Container>
-            </div>
+                    }
+                </Form>
+            </Container>
         )
     }
 }
