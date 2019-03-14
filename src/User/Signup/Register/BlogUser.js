@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Button, Container, Row, Col, FormGroup, FormControl, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, FormGroup, FormControl, Alert, Form, InputGroup } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -28,7 +28,8 @@ class BlogUser extends React.Component {
             nameFirst: '',
             nameLast: '',
             dateOfBirth: startDate,
-            minDateNumber: minDate.unix()
+            minDateNumber: minDate.unix(),
+            isValidated: false
         };
     }
 
@@ -47,7 +48,7 @@ class BlogUser extends React.Component {
 
     checkForUserBlogInfo = () => {
         //if we have already done the initial check dont call this twice
-        if(this.state.initialBlogUserInfoCheck){
+        if (this.state.initialBlogUserInfoCheck) {
             return;
         }
 
@@ -81,23 +82,38 @@ class BlogUser extends React.Component {
     }
 
     componentDidUpdate(previousProps) {
-        if(!this.state.initialBlogUserInfoCheck && this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.userInfo.isUserVerified){
+        if (!this.state.initialBlogUserInfoCheck && this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.userInfo.isUserVerified) {
             this.checkForUserBlogInfo();
         }
 
-        if(this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck && !this.props.reduxBlogAuth.authState.isLoggedIn){
+        if (this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck && !this.props.reduxBlogAuth.authState.isLoggedIn) {
             this.props.history.push(jeffskiRoutes.login);
         }
     }
 
     isFormDisabled = () => {
-        return (this.state.registerNetwork === STATUS_LOADING) || 
+        return (this.state.registerNetwork === STATUS_LOADING) ||
             !this.state.dateOfBirth ||
             (this.state.dateOfBirth.unix() > this.state.minDateNumber) ||
             !this.state.nameFirst || !this.state.nameLast;
     }
 
-    onSignupClicked = () => {
+    onSignupClicked = (event) => {
+        // if we have valid inputs and we are not loading right now, try to login
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.isFormDisabled()) {
+            this.signupUser();
+        }
+        else {
+            //run validation
+            this.setState({
+                isValidated: true
+            });
+        }
+    }
+
+    signupUser = () => {
         this.setState({
             registerNetwork: STATUS_LOADING
         }, () => {
@@ -126,6 +142,12 @@ class BlogUser extends React.Component {
         });
     }
 
+    onFormEnterKey = (event) => {
+        if (event.key === 'Enter') {
+            this.onSignupClicked(event);
+        }
+    }
+
     renderBirthDateValidation = () => {
         //we have typed at least one character
         let hintClassName = 'Register_password-invalid';
@@ -147,149 +169,151 @@ class BlogUser extends React.Component {
         }
 
         return (
-            <div className="Register">
-                <Container>
+            <Container className="Register">
+                <Row className="show-grid">
+                    <Col xs={0} sm={2} md={4} />
+                    <Col xs={12} sm={8} md={4}>
+                        <h2 className="Register-title">Hello {this.props.reduxBlogAuth.userInfo.username}!</h2>
+                        <h4 className="Register-title">Just a couple more things:</h4>
+                    </Col>
+                    <Col xs={0} sm={2} md={4} />
+                </Row>
+
+                <Form
+                    onSubmit={e => this.onSignupClicked(e)}
+                >
                     <Row className="show-grid">
-                        <Col xs={0} sm={2} md={4} />
-                        <Col xs={12} sm={8} md={4}>
-                            <h2 className="Register-title">Hello {this.props.reduxBlogAuth.userInfo.username}!</h2>
-                            <h4 className="Register-title">Just a couple more things:</h4>
+                        <Col xs={1} sm={2} md={4} />
+                        <Col xs={10} sm={8} md={4}>
+                            <FormGroup
+                                controlId="registerEmailInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        type="email"
+                                        value={this.props.reduxBlogAuth.userInfo.email}
+                                        placeholder="Ex: yolo@swag.net"
+                                        disabled={true}
+                                        name="text"
+                                        className="form-label-group ability-input BulletTextItem_formTextInput"
+                                    />
+                                    <span>E-Mail</span>
+                                </label>
+                            </FormGroup>
                         </Col>
-                        <Col xs={0} sm={2} md={4} />
+                        <Col xs={1} sm={2} md={4} />
                     </Row>
 
-                    <form>
+                    <Row className="show-grid">
+                        <Col xs={1} sm={2} md={4} />
+                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerNameFirstInput">
+                            <InputGroup>
+                                <Form.Control className="User_login-form-label"
+                                    placeholder="Username"
+                                    aria-describedby="inputGroupPrepend"
+                                    isInvalid={this.state.isValidated && !this.state.nameFirst}
+                                    type="text"
+                                    value={this.state.nameFirst}
+                                    placeholder="Ex: Johnny"
+                                    onChange={(e) => {
+                                        this.setState({
+                                            nameFirst: e.target.value
+                                        });
+                                    }}
+                                    onKeyDown={this.onFormEnterKey}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    First name must not be blank.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
 
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerEmailInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="email"
-                                            value={this.props.reduxBlogAuth.userInfo.email}
-                                            placeholder="Ex: yolo@swag.net"
-                                            disabled={true}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>E-Mail</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
+                    <Row className="show-grid">
+                        <Col xs={1} sm={2} md={4} />
+                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerNameFirstInput">
+                            <InputGroup>
+                                <Form.Control className="User_login-form-label"
+                                    placeholder="Username"
+                                    aria-describedby="inputGroupPrepend"
+                                    isInvalid={this.state.isValidated && !this.state.nameLast}
+                                    value={this.state.nameLast}
+                                    placeholder="Ex: Tsunami"
+                                    type="text"
+                                    onChange={(e) => {
+                                        this.setState({
+                                            nameLast: e.target.value
+                                        });
+                                    }}
+                                    onKeyDown={this.onFormEnterKey}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Last name must not be blank.
+                                </Form.Control.Feedback>
+                            </InputGroup>
+                        </Form.Group>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
 
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerNameFirstInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="text"
-                                            value={this.state.nameFirst}
-                                            placeholder="Ex: Johnny"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    nameFirst: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>First Name</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
+                    <Row className="show-grid">
+                        <Col xs={1} sm={2} md={4} />
+                        <Col xs={10} sm={8} md={4}>
+                            <div className="form-group">
+                                Date Of Birth: <DatePicker
+                                    selected={this.state.dateOfBirth}
+                                    onChange={(date) => {
+                                        if (date) {
+                                            this.setState({ dateOfBirth: date });
+                                        }
+                                    }}
+                                    className="form-control"
+                                />
+                            </div>
+                        </Col>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
 
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <FormGroup
-                                    controlId="registerNameLastInput"
-                                >
-                                    <label className="has-float-label">
-                                        <FormControl
-                                            type="text"
-                                            value={this.state.nameLast}
-                                            placeholder="Ex: Tsunami"
-                                            onChange={(e) => {
-                                                this.setState({
-                                                    nameLast: e.target.value
-                                                });
-                                            }}
-                                            name="text"
-                                            className="form-label-group ability-input BulletTextItem_formTextInput"
-                                        />
-                                        <span>Last Name</span>
-                                    </label>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
+                    <Row>
+                        <Col xs={1} sm={2} md={4} />
+                        <Col xs={10} sm={8} md={4}>
+                            <ul className="Register_validation-list">
+                                {this.renderBirthDateValidation()}
+                            </ul>
+                        </Col>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
 
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <div className="form-group">
-                                    Date Of Birth: <DatePicker
-                                        selected={this.state.dateOfBirth}
-                                        onChange={(date) => {
-                                            if(date) {
-                                                this.setState({ dateOfBirth: date });
-                                            }
-                                        }}
-                                        className="form-control"
-                                    />
-                                </div>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
-
-                        <Row>
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
-                                <ul className="Register_validation-list">
-                                    {this.renderBirthDateValidation()}
-                                </ul>
-                            </Col>
-                            <Col xs={1} sm={2} md={4} />
-                        </Row>
-
-                        <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4} className="Login_actions">
-                                <Button
-                                    disabled={this.isFormDisabled()}
-                                    bsStyle="primary"
-                                    onClick={this.onSignupClicked}
-                                >
-                                    Finish Signup
+                    <Row className="show-grid">
+                        <Col xs={1} sm={2} md={4} />
+                        <Col xs={10} sm={8} md={4} className="Login_actions">
+                            <Button
+                                disabled={this.isFormDisabled()}
+                                variant="primary"
+                                onClick={this.onSignupClicked}
+                            >
+                                Finish Signup
                                 </Button>
+                        </Col>
+                        <Col xs={1} sm={2} md={4} />
+                    </Row>
+
+                    {this.state.registerNetwork === STATUS_FAILURE &&
+                        <Row className="show-grid User_login-message">
+                            <Col xs={1} sm={2} md={4} />
+                            <Col xs={10} sm={8} md={4}>
+                                <Alert dismissible variant="danger">
+                                    <Alert.Heading>Oh No!</Alert.Heading>
+                                    <p>
+                                        {this.state.registerNetworkMessage}
+                                    </p>
+                                </Alert>
                             </Col>
                             <Col xs={1} sm={2} md={4} />
                         </Row>
-
-                        {this.state.registerNetwork === STATUS_FAILURE &&
-                            <Row className="show-grid User_login-message">
-                                <Col xs={1} sm={2} md={4} />
-                                <Col xs={10} sm={8} md={4}>
-                                    <Alert bsStyle="danger">
-                                        <strong>Oh No! </strong>{this.state.registerNetworkMessage}
-                                    </Alert>
-                                </Col>
-                                <Col xs={1} sm={2} md={4} />
-                            </Row>
-                        }
-                    </form>
-                </Container>
-            </div>
+                    }
+                </Form>
+            </Container>
         )
     }
 }
