@@ -86,16 +86,17 @@ class ProfileEditInfo extends React.Component {
         });
     }
 
-    isFormDisabled = () => {
-        return this.state.profileEditNetwork === STATUS_LOADING || !this.state.nameFirst || !this.state.nameLast;
-    }
-
     isFormInvalid = () => {
         return this.state.profileEditNetwork === STATUS_LOADING ||
+            !this.state.nameFirst || !this.state.nameLast ||
             validateFormString(this.state.nameFirst) === FORM_ERROR ||
             validateFormString(this.state.nameLast) === FORM_ERROR ||
             validateFormPositiveAndLessThanOrEqualToMaximum(this.state.dateOfBirth.unix(), this.state.minDateNumber) === FORM_ERROR ||
             validateFormStringWithCharacterMax(this.state.bio, this.state.bioCharacterLimit, true) === FORM_ERROR;
+    }
+
+    isSaveProfileDisabled = () => {
+        return this.state.profileEditNetwork === STATUS_LOADING;
     }
 
     onFormEnterKey = (event) => {
@@ -108,7 +109,7 @@ class ProfileEditInfo extends React.Component {
         // if we have valid inputs and we are not loading right now, try to login
         event.preventDefault();
         event.stopPropagation();
-        if (!this.isFormDisabled()) {
+        if (!this.isFormInvalid() && !this.isSaveProfileDisabled()) {
             this.onSaveProfile();
         }
         else {
@@ -400,9 +401,9 @@ class ProfileEditInfo extends React.Component {
                         <Col xs={10} sm={8} md={4} className="User_actions-section">
                             <span className="User_action-button" >
                                 <Button
-                                    disabled={this.isFormDisabled() || this.isFormInvalid() || this.state.profileNetworkThrottle}
+                                    disabled={this.isSaveProfileDisabled() || this.state.profileNetworkThrottle}
                                     variant="primary"
-                                    onClick={this.onSaveProfile}
+                                    onClick={this.onSaveClicked}
                                 >
                                     Save
                                     </Button>
@@ -410,7 +411,7 @@ class ProfileEditInfo extends React.Component {
                             <span className="User_action-button" >
                                 <Button
                                     variant="secondary"
-                                    disabled={this.isFormDisabled()}
+                                    disabled={this.isSaveProfileDisabled()}
                                     onClick={this.onCancelProfileChanges}
                                 >
                                     Back To Profile
