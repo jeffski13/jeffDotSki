@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Indicator from '../../../Network/Indicator';
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
-import { uploadProfilePic } from '../../BlogUser';
+import Indicator from '../../../../Network/Indicator';
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../../Network/consts';
+import { uploadProfilePic } from '../../../BlogUser';
+import './styles.css';
 
 export default class SingleImageUpload extends React.Component {
 
@@ -78,16 +79,8 @@ export default class SingleImageUpload extends React.Component {
     }
 
     render() {
-        let uploadProgress = null;
-        if (this.state.imageNetworkStatus === STATUS_LOADING) {
-            uploadProgress = (
-                <span>
-                    Working On It: ({this.props.imageFileToUpload.name})
-                </span>
-            );
-        }
         return (
-            <div>
+            <div className="SingleImageUpload_progressIndicator">
                 <span>
                     {(this.state.imageNetworkStatus === STATUS_LOADING)
                         && <CircularProgress />}
@@ -95,7 +88,6 @@ export default class SingleImageUpload extends React.Component {
                         && <Indicator success={true} />}
                     {(this.state.imageNetworkStatus === STATUS_FAILURE)
                         && <Indicator success={false} />}
-                    {uploadProgress}
                 </span>
             </div>
         );

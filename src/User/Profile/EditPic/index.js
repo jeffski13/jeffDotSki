@@ -136,10 +136,6 @@ class ProfileEditPic extends React.Component {
         });
     };
 
-    goToEditProfilePic = () => {
-        this.props.history.push(jeffskiRoutes.profileEditPic);
-    }
-
     render() {
 
         //if we are not logged in go to login
@@ -199,7 +195,7 @@ class ProfileEditPic extends React.Component {
                         <Row className="show-grid">
                             <Col xs={0} sm={2} md={4} />
                             <Col xs={12} sm={8} md={4}>
-                                <div className="Profile_profilepic ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
+                                <div className="ProfileEditInfo_profilepic">
                                     <Image fluid src={picSrc} />
                                 </div>
                             </Col>
@@ -208,7 +204,7 @@ class ProfileEditPic extends React.Component {
 
                         <Row className="show-grid">
                             <Col xs={0} sm={2} md={5} />
-                            <Col xs={12} sm={8} md={2}>
+                            <Col xs={12} sm={8} md={4}>
                                 <ImageForm
                                     refreshProp={this.state.formRefreshProp}
                                     imageSelectedCallback={(imgData, imgUrl) => {

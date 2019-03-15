@@ -241,7 +241,7 @@ class ProfileEditInfo extends React.Component {
                 <Row className="show-grid">
                     <Col xs={0} sm={2} md={5} />
                     <Col xs={12} sm={8} md={2}>
-                        <div className="Profile_profilepic ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
+                        <div className="Profile_profilepic-link ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
                             <Image fluid src={this.state.profilePicUrl} />
                         </div>
                     </Col>

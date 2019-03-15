@@ -171,7 +171,7 @@ class Profile extends React.Component {
                         </Col>
                     </Col>
                     <Col xs={4}>
-                        <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
+                        <div className="Profile_profilepic-link" onClick={this.goToEditProfilePic}>
                             <Image fluid src={userState.profilePic} />
                         </div>
                     </Col>
