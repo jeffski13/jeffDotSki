@@ -10,9 +10,9 @@ import withBlogAuth from '../../Auth/withBlogAuth';
 import { getBlogUserSecure, updateBlogUserSecure, emptyProfileUrl, profileGetFailMessage } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
 import '../../styles.css';
-import SingleImageUpload from './SingleImageUpload';
 import ImageForm from './ImageForm';
 import loadingImage from '../../../loading_image.gif';
+import ResizeProfileImg from './ResizeProfileImg';
 
 class ProfileEditPic extends React.Component {
     constructor(props) {
@@ -127,11 +127,9 @@ class ProfileEditPic extends React.Component {
 
                 setTimeout(() => {
                     this.setState({
-                        profileEditNetwork: null,
-                        profileEditNetworkMessage: null,
                         profileNetworkThrottle: false
                     });
-                }, 3000);
+                }, 1000);
             });
         });
     };
@@ -209,12 +207,20 @@ class ProfileEditPic extends React.Component {
                                     refreshProp={this.state.formRefreshProp}
                                     imageSelectedCallback={(imgData, imgUrl) => {
 
+                                        //prep state for uploading an image (network messages, status, etc.)
                                         if (!imgData) {
-                                            this.setState({ newProfilePicUrl: null, newProfilePic: null })
+                                            this.setState({ 
+                                                newProfilePicUrl: null, 
+                                                newProfilePic: null,
+                                                profileEditNetwork: null,
+                                                profileEditNetworkMessage: null
+                                            });
                                         }
                                         else {
                                             //NOTE to implementing components: 
                                             this.setState({
+                                                profileEditNetwork: null,
+                                                profileEditNetworkMessage: null,
                                                 newProfilePicUrl: imgUrl,
                                                 newProfilePic: imgData,
                                                 imagePreviewLoading: false
@@ -228,6 +234,7 @@ class ProfileEditPic extends React.Component {
                                         });
                                     }}
                                     showPreview={false}
+                                    formDisabled={this.isFormDisabled()}
                                 />
                             </Col>
                             <Col xs={0} sm={2} md={5} />
@@ -241,7 +248,7 @@ class ProfileEditPic extends React.Component {
                                         disabled={this.isFormDisabled() || this.isFormInvalid() || this.state.profileNetworkThrottle}
                                         variant="primary"
                                         onClick={this.onSaveProfilePic}
-                                        >
+                                    >
                                         Save
                                     </Button>
                                 </span>
@@ -277,7 +284,7 @@ class ProfileEditPic extends React.Component {
                             <Row className="show-grid User_error-message">
                                 <Col xs={1} sm={2} md={4} />
                                 <Col xs={10} sm={8} md={4}>
-                                    <Alert variant="success">
+                                    <Alert dismissible variant="success">
                                         <Alert.Heading>YAY!</Alert.Heading>
                                         <p>
                                             {this.state.profileEditNetworkMessage}
@@ -289,10 +296,10 @@ class ProfileEditPic extends React.Component {
                         }
 
                         {this.state.newProfilePic && this.state.profileEditNetwork === STATUS_LOADING &&
-                            <SingleImageUpload imageFileToUpload={this.state.newProfilePic}
+                            <ResizeProfileImg fileToResizeAndUpload={this.state.newProfilePic}
                                 userId={this.props.reduxBlogAuth.userInfo.id}
                                 onPhotoFinished={this.onProfilePicUploadComplete}
-                                disabled={this.isFormDisabled()}
+                                resizeMaxHeight={600}
                             />
                         }
                     </form>

@@ -126,11 +126,9 @@ export function uploadProfilePic(profilePicFile, userId, callback) {
             callback({ message: "No file or userId while trying to upload photo!" });
             return;
         }
-
-        let fileName = uuidv1();
-        if (profilePicFile.name) {
-            fileName += profilePicFile.name;
-        }
+        
+        //hardcoded profile pic name so they dont take up a bunch of storage with multiple profile pics that arent used
+        let fileName = 'profilepic';
         let blogImageUploadKey = `${userId}/profile/${fileName}`;
         let blogImageFileType = profilePicFile.type;
         
