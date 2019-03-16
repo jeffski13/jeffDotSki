@@ -171,8 +171,14 @@ class Profile extends React.Component {
                         </Col>
                     </Col>
                     <Col xs={4}>
-                        <div className="Profile_profilepic-link" onClick={this.goToEditProfilePic}>
+                        <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
                             <Image fluid src={userState.profilePic} />
+                            <Button
+                                onClick={this.goToEditProfilePic}
+                                variant="link"
+                            >
+                                Edit Image
+                            </Button>
                         </div>
                     </Col>
                 </Row>
@@ -204,7 +210,7 @@ class Profile extends React.Component {
                                 onClick={this.goToEditProfileInfo}
                                 variant="secondary"
                             >
-                                Edit Profile
+                                Edit Info
                             </Button>
                         </span>
                         <span className="User_action-button" >

@@ -251,7 +251,7 @@ class ProfileEditPic extends React.Component {
                                         disabled={this.isFormDisabled()}
                                         onClick={this.onCancelProfileChanges}
                                     >
-                                        Back To Profile
+                                        Go To Profile
                                     </Button>
                                 </span>
                             </Col>

@@ -243,6 +243,12 @@ class ProfileEditInfo extends React.Component {
                     <Col xs={12} sm={8} md={2}>
                         <div className="Profile_profilepic-link ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
                             <Image fluid src={this.state.profilePicUrl} />
+                            <Button
+                                onClick={this.goToEditProfilePic}
+                                variant="link"
+                            >
+                                Edit Image
+                            </Button>
                         </div>
                     </Col>
                     <Col xs={0} sm={2} md={5} />
@@ -414,8 +420,8 @@ class ProfileEditInfo extends React.Component {
                                     disabled={this.isSaveProfileDisabled()}
                                     onClick={this.onCancelProfileChanges}
                                 >
-                                    Back To Profile
-                                    </Button>
+                                    Go To Profile
+                                </Button>
                             </span>
                         </Col>
                         <Col xs={1} sm={2} md={4} />
