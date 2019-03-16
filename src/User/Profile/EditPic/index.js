@@ -205,19 +205,20 @@ class ProfileEditPic extends React.Component {
                             <Col xs={12} sm={8} md={4}>
                                 <ImageForm
                                     refreshProp={this.state.formRefreshProp}
-                                    imageSelectedCallback={(imgData, imgUrl) => {
-
+                                    imageSelectedCallback={(err, imgData, imgUrl) => {
                                         //prep state for uploading an image (network messages, status, etc.)
-                                        if (!imgData) {
+                                        if (err) {
+                                            // image upload failure
                                             this.setState({ 
                                                 newProfilePicUrl: null, 
                                                 newProfilePic: null,
-                                                profileEditNetwork: null,
-                                                profileEditNetworkMessage: null
+                                                profileEditNetwork: STATUS_FAILURE,
+                                                profileEditNetworkMessage: err.message,
+                                                imagePreviewLoading: false
                                             });
                                         }
                                         else {
-                                            //NOTE to implementing components: 
+                                            // image load success!
                                             this.setState({
                                                 profileEditNetwork: null,
                                                 profileEditNetworkMessage: null,
@@ -229,12 +230,14 @@ class ProfileEditPic extends React.Component {
 
                                     }}
                                     onImageLoading={() => {
+                                        console.log('image preview loading')
                                         this.setState({
                                             imagePreviewLoading: true
                                         });
                                     }}
                                     showPreview={false}
                                     formDisabled={this.isFormDisabled()}
+                                    shouldShowImageSize={false}
                                 />
                             </Col>
                             <Col xs={0} sm={2} md={5} />

@@ -116,7 +116,7 @@ class Profile extends React.Component {
                         <Alert variant="danger">
                             <Alert.Heading>Oh No!</Alert.Heading>
                             <span>
-                                <span>Something went wrong while getting the blogs.</span>
+                                <span>Something went wrong while getting your profile info.</span>
                                 <span className="Blogs_error-refresh" >
                                     <Button
                                         onClick={() => { window.location.reload() }}

@@ -6,9 +6,10 @@ import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../../Netw
 import { validateFormString, FORM_SUCCESS, FORM_ERROR } from '../../formvalidation';
 import './styles.css';
 
-
-const MAX_IMAGE_FILE_SIZE = 5000000;
-
+// keep the rif raf out (25MB image...seems a bit excessive), even a panoramic is 12.5MB
+const MAX_IMAGE_FILE_SIZE = 25000000;
+export const FILE_LOADING_ERROR_IMAGE_EXCESSIVELY_LARGE = 'FILE_LOADING_ERROR_IMAGE_EXCESSIVELY_LARGE';
+export const FILE_LOADING_ERROR_UNKNOWN_CAUSE = 'FILE_LOADING_ERROR_UNKNOWN_CAUSE';
 /**
  * handles the image selection process (not the upload, just interacting with the OS to choose the image)
  */
@@ -28,6 +29,7 @@ export default class ImageForm extends React.Component {
     static defaultProps = {
         refreshProp: null,
         formDisabled: false,
+        shouldShowImageSize: true,
         onImageLoading: () => {}
     };
 
@@ -62,7 +64,23 @@ export default class ImageForm extends React.Component {
                 image: e.target.files[0],
                 imgLoading: STATUS_LOADING
             }, () => {
-                if (this.validateImage() === FORM_SUCCESS) {
+                let error = null;
+                //check to see if file is corrupt
+                if(!this.state.image || validateFormString(this.state.image.name) === FORM_ERROR){
+                    error = {
+                        code: FILE_LOADING_ERROR_UNKNOWN_CAUSE,
+                        message: 'Something went wrong while trying to load your file. Please choose another.'
+                    };
+                }
+                //check to see if file is too large
+                else if(this.state.image.size > MAX_IMAGE_FILE_SIZE){
+                    error = {
+                        code: FILE_LOADING_ERROR_IMAGE_EXCESSIVELY_LARGE,
+                        message: 'The file is too large. Please submit a file less than 25 MB'
+                    };
+                }
+
+                if(!error){
                     //once preview url array with length is stored we can start storing preview urls as they come in
                     let reader = new FileReader();
                     let file = this.state.image;
@@ -75,7 +93,7 @@ export default class ImageForm extends React.Component {
                             imgLoading: STATUS_SUCCESS
                         }, () => {
                             //if image is good give it to parent
-                            this.props.imageSelectedCallback(this.state.image, this.state.imgPreviewUrl);
+                            this.props.imageSelectedCallback(null, this.state.image, this.state.imgPreviewUrl);
                         });
                     }
                     
@@ -87,7 +105,7 @@ export default class ImageForm extends React.Component {
                         imgPreviewUrl: null,
                         imgLoading: null
                     }, () => {
-                        this.props.imageSelectedCallback(null);
+                        this.props.imageSelectedCallback(error);
                     });
                 }
                 
@@ -136,15 +154,6 @@ export default class ImageForm extends React.Component {
         }
     }
 
-    validateImage = () => {
-        if(this.state.image && validateFormString(this.state.image.name) && this.state.image.size < MAX_IMAGE_FILE_SIZE){
-            return FORM_SUCCESS;
-        }
-        else {
-            return FORM_ERROR;
-        }
-    }
-
     render() {
         return (
             <React.Fragment>
@@ -161,7 +170,7 @@ export default class ImageForm extends React.Component {
                         />
                     </div>
                 </FormGroup>
-                {this.renderImageSize()}
+                {this.props.shouldShowImageSize && this.renderImageSize()}
                 {this.props.showPreview && this.renderPreviewArea()}
             </React.Fragment>
         );
