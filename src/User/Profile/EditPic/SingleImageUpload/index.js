@@ -32,7 +32,6 @@ export default class SingleImageUpload extends React.Component {
     }
 
     componentDidMount() {
-        console.log('SingleImageUoload calling uploadimage');
         this.uploadImage();
     }
     
@@ -50,14 +49,10 @@ export default class SingleImageUpload extends React.Component {
             imageNetworkStatus: STATUS_LOADING
         });
         
-        console.log('SingleImageUoload calling uploadphoto for aws with ');
         //upload photo first, then include photo location when uploading blog 
         uploadProfilePic(this.props.imageFileToUpload, this.props.userId, (err, uploadedImageUrl) => {
-            console.log('aws returned info');
             if (err) {
-                console.log('aws returned info: err');
                 // Failure (in the original super smash narrator voice)
-                console.log("Error in title image upload: ", err);
                 this.props.onPhotoFinished({
                     error: err,
                     filename: file.name
@@ -67,7 +62,6 @@ export default class SingleImageUpload extends React.Component {
                 });
                 return;
             }
-            console.log('aws returned info: success');
 
             // WE DID IT! uploaded title photo (:
             this.props.onPhotoFinished(null, {

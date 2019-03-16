@@ -10,6 +10,8 @@ import './styles.css';
 const MAX_IMAGE_FILE_SIZE = 25000000;
 export const FILE_LOADING_ERROR_IMAGE_EXCESSIVELY_LARGE = 'FILE_LOADING_ERROR_IMAGE_EXCESSIVELY_LARGE';
 export const FILE_LOADING_ERROR_UNKNOWN_CAUSE = 'FILE_LOADING_ERROR_UNKNOWN_CAUSE';
+export const FILE_LOADING_ERROR_NO_FILE_FOUND = 'FILE_LOADING_ERROR_NO_FILE_FOUND';
+export const FILE_LOADING_ERROR_INVALID_FORMAT = 'FILE_LOADING_ERROR_INVALID_FORMAT';
 /**
  * handles the image selection process (not the upload, just interacting with the OS to choose the image)
  */
@@ -25,12 +27,12 @@ export default class ImageForm extends React.Component {
         showPreview: PropTypes.bool,
         onImageLoading: PropTypes.func
     };
-    
+
     static defaultProps = {
         refreshProp: null,
         formDisabled: false,
         shouldShowImageSize: true,
-        onImageLoading: () => {}
+        onImageLoading: () => { }
     };
 
     constructor(props, context) {
@@ -52,8 +54,13 @@ export default class ImageForm extends React.Component {
     }
 
     handleImgFileChange = (e) => {
+        let error = null;
         if (e.target.files.length < 1) {
             //fail fast, no file was clicked
+            error = {
+                code: FILE_LOADING_ERROR_NO_FILE_FOUND,
+                message: 'no file was given'
+            };
             this.props.imageSelectedCallback(null);
             this.setState(this.defaultState);
             return;
@@ -64,27 +71,35 @@ export default class ImageForm extends React.Component {
                 image: e.target.files[0],
                 imgLoading: STATUS_LOADING
             }, () => {
-                let error = null;
                 //check to see if file is corrupt
-                if(!this.state.image || validateFormString(this.state.image.name) === FORM_ERROR){
+                let imageType = /image.*/;
+                if (!this.state.image || validateFormString(this.state.image.name) === FORM_ERROR) {
                     error = {
                         code: FILE_LOADING_ERROR_UNKNOWN_CAUSE,
                         message: 'Something went wrong while trying to load your file. Please choose another.'
                     };
                 }
+                //check if file is an image
+                else if (!this.state.image.type.match(imageType)) {
+                    //ERROR! file given is not an image type
+                    error = {
+                        code: FILE_LOADING_ERROR_INVALID_FORMAT,
+                        message: 'The file provided must be in a supported image format'
+                    };
+                }
                 //check to see if file is too large
-                else if(this.state.image.size > MAX_IMAGE_FILE_SIZE){
+                else if (this.state.image.size > MAX_IMAGE_FILE_SIZE) {
                     error = {
                         code: FILE_LOADING_ERROR_IMAGE_EXCESSIVELY_LARGE,
                         message: 'The file is too large. Please submit a file less than 25 MB'
                     };
                 }
 
-                if(!error){
+                if (!error) {
                     //once preview url array with length is stored we can start storing preview urls as they come in
                     let reader = new FileReader();
                     let file = this.state.image;
-                    
+
                     //give the reader a callback so it stores the images to state when its done reading them in
                     reader.onloadend = () => {
                         //store the url in the matching state index
@@ -96,7 +111,7 @@ export default class ImageForm extends React.Component {
                             this.props.imageSelectedCallback(null, this.state.image, this.state.imgPreviewUrl);
                         });
                     }
-                    
+
                     reader.readAsDataURL(file)
                 }
                 else {
@@ -108,7 +123,7 @@ export default class ImageForm extends React.Component {
                         this.props.imageSelectedCallback(error);
                     });
                 }
-                
+
             });
         }
     }

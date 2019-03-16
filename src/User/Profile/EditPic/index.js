@@ -96,7 +96,6 @@ class ProfileEditPic extends React.Component {
 
     onProfilePicUploadComplete = (errData, uploadedProfilePicData) => {
         if (errData) {
-            console.log("error uploading title image ", errData.filename, " with error ", errData.error);
             this.setState({
                 profileEditNetwork: STATUS_FAILURE,
                 profileEditNetworkMessage: errData.error.message
@@ -230,7 +229,6 @@ class ProfileEditPic extends React.Component {
 
                                     }}
                                     onImageLoading={() => {
-                                        console.log('image preview loading')
                                         this.setState({
                                             imagePreviewLoading: true
                                         });
