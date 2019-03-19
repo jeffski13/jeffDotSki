@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { storeUserInfo, storeAuthState } from '../../Auth/actions';
 import './styles.css';
+import '../../styles.css';
 
 const passwordRules = [
     {
@@ -208,7 +209,7 @@ class Account extends React.Component {
         }
 
         return (
-            <Container className="Register">
+            <Container className="Register User">
                 <Row className="show-grid">
                     <Col />
                     <Col xs={12} sm={8} md={4}>

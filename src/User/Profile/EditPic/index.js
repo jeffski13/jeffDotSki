@@ -178,134 +178,132 @@ class ProfileEditPic extends React.Component {
         }
 
         return (
-            <div className="ProfileEditInfo">
-                <Container>
+            <Container className="User ProfileEditInfo">
+                <Row className="show-grid">
+                    <Col />
+                    <Col xs={12} sm={8} md={4} >
+                        <h2 className="User_header-title">Edit Profile Pic</h2>
+                    </Col>
+                    <Col />
+                </Row>
+
+                <form>
                     <Row className="show-grid">
                         <Col />
                         <Col xs={12} sm={8} md={4} >
-                            <h2 className="User_header-title">Edit Profile Pic</h2>
+                            <div className="ProfileEditInfo_profilepic">
+                                <Image fluid src={picSrc} />
+                            </div>
                         </Col>
                         <Col />
                     </Row>
 
-                    <form>
-                        <Row className="show-grid">
-                            <Col />
-                            <Col xs={12} sm={8} md={4} >
-                                <div className="ProfileEditInfo_profilepic">
-                                    <Image fluid src={picSrc} />
-                                </div>
-                            </Col>
-                            <Col />
-                        </Row>
-
-                        <Row className="show-grid">
-                            <Col />
-                            <Col xs="auto" >
-                                <ImageForm
-                                    refreshProp={this.state.formRefreshProp}
-                                    imageSelectedCallback={(err, imgData, imgUrl) => {
-                                        //prep state for uploading an image (network messages, status, etc.)
-                                        if (err) {
-                                            // image upload failure
-                                            this.setState({ 
-                                                newProfilePicUrl: null, 
-                                                newProfilePic: null,
-                                                profileEditNetwork: STATUS_FAILURE,
-                                                profileEditNetworkMessage: err.message,
-                                                imagePreviewLoading: false
-                                            });
-                                        }
-                                        else {
-                                            // image load success!
-                                            this.setState({
-                                                profileEditNetwork: null,
-                                                profileEditNetworkMessage: null,
-                                                newProfilePicUrl: imgUrl,
-                                                newProfilePic: imgData,
-                                                imagePreviewLoading: false
-                                            });
-                                        }
-
-                                    }}
-                                    onImageLoading={() => {
+                    <Row className="show-grid">
+                        <Col />
+                        <Col xs="auto" >
+                            <ImageForm
+                                refreshProp={this.state.formRefreshProp}
+                                imageSelectedCallback={(err, imgData, imgUrl) => {
+                                    //prep state for uploading an image (network messages, status, etc.)
+                                    if (err) {
+                                        // image upload failure
                                         this.setState({
-                                            imagePreviewLoading: true
+                                            newProfilePicUrl: null,
+                                            newProfilePic: null,
+                                            profileEditNetwork: STATUS_FAILURE,
+                                            profileEditNetworkMessage: err.message,
+                                            imagePreviewLoading: false
                                         });
-                                    }}
-                                    showPreview={false}
-                                    formDisabled={this.isFormDisabled()}
-                                    shouldShowImageSize={false}
-                                />
-                            </Col>
-                            <Col />
-                        </Row>
+                                    }
+                                    else {
+                                        // image load success!
+                                        this.setState({
+                                            profileEditNetwork: null,
+                                            profileEditNetworkMessage: null,
+                                            newProfilePicUrl: imgUrl,
+                                            newProfilePic: imgData,
+                                            imagePreviewLoading: false
+                                        });
+                                    }
 
-                        <Row className="show-grid">
-                            <Col />
-                            <Col sm={10} md={8} className="User_actions-section">
-                                <span className="User_action-button" >
-                                    <Button
-                                        disabled={this.isFormDisabled() || this.isFormInvalid() || this.state.profileNetworkThrottle}
-                                        variant="primary"
-                                        onClick={this.onSaveProfilePic}
-                                    >
-                                        Save
-                                    </Button>
-                                </span>
-                                <span className="User_action-button" >
-                                    <Button
-                                        variant="secondary"
-                                        disabled={this.isFormDisabled()}
-                                        onClick={this.onCancelProfileChanges}
-                                    >
-                                        Go To Profile
-                                    </Button>
-                                </span>
-                            </Col>
-                            <Col />
-                        </Row>
-
-                        {this.state.profileEditNetwork === STATUS_FAILURE &&
-                            <Row className="show-grid User_error-message">
-                                <Col />
-                                <Col xs={10} sm={8} md={4} >
-                                    <Alert variant="danger">
-                                        <Alert.Heading>Oh No!</Alert.Heading>
-                                        <p>
-                                            {this.state.profileEditNetworkMessage}
-                                        </p>
-                                    </Alert>
-                                </Col>
-                                <Col />
-                            </Row>
-                        }
-
-                        {this.state.profileEditNetwork === STATUS_SUCCESS &&
-                            <Row className="show-grid User_error-message">
-                                <Col />
-                                <Col xs={10} sm={8} md={4} >
-                                    <Alert dismissible variant="success">
-                                        <Alert.Heading>YAY!</Alert.Heading>
-                                        <p>
-                                            {this.state.profileEditNetworkMessage}
-                                        </p>
-                                    </Alert>
-                                </Col>
-                                <Col />
-                            </Row>
-                        }
-
-                        {this.state.newProfilePic && this.state.profileEditNetwork === STATUS_LOADING &&
-                            <ResizeProfileImg fileToResizeAndUpload={this.state.newProfilePic}
-                                userId={this.props.reduxBlogAuth.userInfo.id}
-                                onPhotoFinished={this.onProfilePicUploadComplete}
-                                resizeMaxHeight={600}
+                                }}
+                                onImageLoading={() => {
+                                    this.setState({
+                                        imagePreviewLoading: true
+                                    });
+                                }}
+                                showPreview={false}
+                                formDisabled={this.isFormDisabled()}
+                                shouldShowImageSize={false}
                             />
-                        }
-                    </form>
-                </Container>
-            </div>
+                        </Col>
+                        <Col />
+                    </Row>
+
+                    <Row className="show-grid">
+                        <Col />
+                        <Col sm={10} md={8} className="User_actions-section">
+                            <span className="User_action-button" >
+                                <Button
+                                    disabled={this.isFormDisabled() || this.isFormInvalid() || this.state.profileNetworkThrottle}
+                                    variant="primary"
+                                    onClick={this.onSaveProfilePic}
+                                >
+                                    Save
+                                    </Button>
+                            </span>
+                            <span className="User_action-button" >
+                                <Button
+                                    variant="secondary"
+                                    disabled={this.isFormDisabled()}
+                                    onClick={this.onCancelProfileChanges}
+                                >
+                                    Go To Profile
+                                    </Button>
+                            </span>
+                        </Col>
+                        <Col />
+                    </Row>
+
+                    {this.state.profileEditNetwork === STATUS_FAILURE &&
+                        <Row className="show-grid User_error-message">
+                            <Col />
+                            <Col xs={10} sm={8} md={4} >
+                                <Alert variant="danger">
+                                    <Alert.Heading>Oh No!</Alert.Heading>
+                                    <p>
+                                        {this.state.profileEditNetworkMessage}
+                                    </p>
+                                </Alert>
+                            </Col>
+                            <Col />
+                        </Row>
+                    }
+
+                    {this.state.profileEditNetwork === STATUS_SUCCESS &&
+                        <Row className="show-grid User_error-message">
+                            <Col />
+                            <Col xs={10} sm={8} md={4} >
+                                <Alert dismissible variant="success">
+                                    <Alert.Heading>YAY!</Alert.Heading>
+                                    <p>
+                                        {this.state.profileEditNetworkMessage}
+                                    </p>
+                                </Alert>
+                            </Col>
+                            <Col />
+                        </Row>
+                    }
+
+                    {this.state.newProfilePic && this.state.profileEditNetwork === STATUS_LOADING &&
+                        <ResizeProfileImg fileToResizeAndUpload={this.state.newProfilePic}
+                            userId={this.props.reduxBlogAuth.userInfo.id}
+                            onPhotoFinished={this.onProfilePicUploadComplete}
+                            resizeMaxHeight={600}
+                        />
+                    }
+                </form>
+            </Container>
         );
     }
 }

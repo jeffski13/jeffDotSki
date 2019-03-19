@@ -185,7 +185,7 @@ class Profile extends React.Component {
         }
 
         return (
-            <Container className="User">
+            <Container className="User Profile">
                 <Row className="show-grid">
                     <Col xs={12}>
                         <h2 className="Profile_header">{userState.username}</h2>

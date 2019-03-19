@@ -229,7 +229,7 @@ class ProfileEditInfo extends React.Component {
         }
 
         return (
-            <Container className="ProfileEditInfo">
+            <Container className="User ProfileEditInfo">
                 <Row className="show-grid">
                     <Col />
                     <Col xs={12} sm={8} md={4}>

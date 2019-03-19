@@ -11,6 +11,7 @@ import withBlogAuth from '../../Auth/withBlogAuth';
 import { createBlogUserSecure, getBlogUserSecure } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
 import './styles.css';
+import '../../styles.css';
 
 class BlogUser extends React.Component {
     constructor(props) {
@@ -169,7 +170,7 @@ class BlogUser extends React.Component {
         }
 
         return (
-            <Container className="Register">
+            <Container className="Register User">
                 <Row className="show-grid">
                     <Col xs={0} sm={2} md={4} />
                     <Col xs={12} sm={8} md={4}>

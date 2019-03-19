@@ -9,6 +9,7 @@ import { AUTH_STATE_VERIFY_SUCCESS, AUTH_STATE_VERIFY_FAIL_INVALIDCODE, AUTH_STA
     AUTH_STATE_RESENDCODE_SUCCESS, AUTH_STATE_RESENDCODE_FAIL_CAUSEUNKNOWN, AUTH_STATE_RESENDCODE_FAIL_MAX_TRIES } from '../../Auth/consts';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import './styles.css';
+import '../../styles.css';
 
 class Verify extends React.Component {
 
@@ -150,7 +151,7 @@ class Verify extends React.Component {
         }
 
         return (
-            <Container className="Verify">
+            <Container className="Verify User">
                 <Row className="show-grid">
                     <Col />
                     <Col xs={12} sm={8} md={4}>
