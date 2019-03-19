@@ -159,7 +159,7 @@ class Profile extends React.Component {
                     showMoreText = 'Show Less';
                 }
                 bioShowMoreUi = (
-                    <span className="Profile-bio-show-more-less" >
+                    <span className="Profile_bio-show-more-less" >
                         <Button
                             onClick={() => { 
                                 this.setState({showMoreBio: !this.state.showMoreBio}); 
@@ -174,7 +174,7 @@ class Profile extends React.Component {
             bioArea = (
                 <React.Fragment>
                     <div className="Profile_title">Bio</div>
-                    <div>{userState.bio.substring(0, 300)}{!this.state.showMoreBio && isBioLongWinded && <span>...</span>}{this.state.showMoreBio && userState.bio.substring(300)}{bioShowMoreUi}</div>
+                    <div className="Profile_bio">{userState.bio.substring(0, 300)}{!this.state.showMoreBio && isBioLongWinded && <span>...</span>}{this.state.showMoreBio && userState.bio.substring(300)}{bioShowMoreUi}</div>
                 </React.Fragment>
             );
         }
