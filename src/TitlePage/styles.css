@@ -1,26 +1,41 @@
-.TitlePage{
-  background-color: #bbb;
+.TitlePage {
+    background-color: #bbb;
 }
 
-.TitleImage > img {
+.TitleImage>img {
     max-width: 100%;
     max-height: none;
 }
 
 .TitlePage_aboutJeff {
     background: #EFEFEF;
-    height: 400px;
 }
 
 .TitlePage_aboutJeff-image {
     padding: 20px;
 }
 
-.TitlePage_aboutJeff-image > img {
+.TitlePage_aboutJeff-text {
+    display: table;
+    height: 400px;
+    overflow: hidden;
+}
+
+.TitlePage_aboutJeff-text-container {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.TitlePage_aboutJeff-image>img {
     height: 400px;
     padding: 45px;
 }
 
-.TitlePage_aboutJeff-text {
-    
+.TitlePage_aboutJeff-name {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.TitlePage_aboutJeff-name-websiteName {
+    color: #777777;
 }

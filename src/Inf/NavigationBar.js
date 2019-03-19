@@ -30,7 +30,7 @@ class NavigationBar extends Component {
                             <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume2018_3_9_SoftwareEng.pdf">Resume</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Nav pullRight >
+                    <Nav >
                         <LinkContainer to="/aboutme/bio">
                             <Nav.Link>Bio</Nav.Link>
                         </LinkContainer>
