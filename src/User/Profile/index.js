@@ -19,7 +19,8 @@ class Profile extends React.Component {
         super(props);
 
         this.state = {
-            blogUserNetwork: STATUS_LOADING
+            blogUserNetwork: STATUS_LOADING,
+            showMoreBio: false
         };
     }
 
@@ -146,6 +147,43 @@ class Profile extends React.Component {
 
         const editLink = (<LinkContainer to={jeffskiRoutes.profileEditInfo}><a href={jeffskiRoutes.profileEdit}>Edit</a></LinkContainer>);
 
+        // ui for bio: show more/show less for bio if really long
+        let bioArea = null;
+        if (userState.bio) {
+            let bioShowMoreUi = null;
+            let isBioLongWinded = false;
+            if (userState.bio.length > 300) {
+                isBioLongWinded = true;
+                let showMoreText = 'Show More';
+                if(this.state.showMoreBio){
+                    showMoreText = 'Show Less';
+                }
+                bioShowMoreUi = (
+                    <span className="Profile-bio-show-more-less" >
+                        <Button
+                            onClick={() => { 
+                                this.setState({showMoreBio: !this.state.showMoreBio}); 
+                            }} 
+                            variant="link"
+                        >
+                            {showMoreText}
+                        </Button>
+                    </span>
+                );
+            }
+            bioArea = (
+                <React.Fragment>
+                    <div className="Profile_title">Bio</div>
+                    <div>{userState.bio.substring(0, 300)}{!this.state.showMoreBio && isBioLongWinded && <span>...</span>}{this.state.showMoreBio && userState.bio.substring(300)}{bioShowMoreUi}</div>
+                </React.Fragment>
+            );
+        }
+        else {
+            bioArea = (
+                <div className="Profile_empty-info">Your bio is empty. {editLink}</div>
+            );
+        }
+
         return (
             <Container className="User">
                 <Row className="show-grid">
@@ -155,7 +193,8 @@ class Profile extends React.Component {
                 </Row>
 
                 <Row className="show-grid">
-                    <Col xs={8}>
+                    <Col xs={0} />
+                    <Col xs={6}>
                         <Col xs={12} >
                             <div className="Profile_title">Name</div>
                             <div>{userState.name}</div>
@@ -169,7 +208,7 @@ class Profile extends React.Component {
                             <div>{moment.unix(userState.dateOfBirth).format("MM/DD/YYYY")}</div>
                         </Col>
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6}>
                         <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
                             <Image fluid src={userState.profilePic} />
                             <Button
@@ -180,19 +219,17 @@ class Profile extends React.Component {
                             </Button>
                         </div>
                     </Col>
+                    <Col xs={0} />
                 </Row>
 
-                <Row className="show-grid Profile_bio">
-                    <Col xs={8}>
-                        <Col xs={12} >
-                            <div className="Profile_title">Bio</div>
-                            {userState.bio
-                                ? <div>{userState.bio}</div>
-                                : <div className="Profile_empty-info">Your bio is empty. {editLink}</div>}
+                <Row className="show-grid">
+                    <Col xs={12} md={8} className="Profile_bio-trip-row">
+                        <Col xs={12}>
+                            {bioArea}
                         </Col>
                     </Col>
-                    <Col xs={4}>
-                        <Col xs={12} >
+                    <Col xs={12} md={4} className="Profile_bio-trip-row">
+                        <Col xs={12}>
                             <div className="Profile_title">Trips</div>
                             {userState.trips && userState.trips.map(this.renderTripLinks)}
                             {(!userState.trips || userState.trips.length === 0) &&
