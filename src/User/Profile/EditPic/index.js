@@ -149,20 +149,20 @@ class ProfileEditPic extends React.Component {
                 <div className="ProfileEditInfo">
                     <Container>
                         <Row className="show-grid">
-                            <Col xs={0} sm={2} md={4} />
-                            <Col xs={12} sm={8} md={4}>
+                            <Col />
+                            <Col xs={12} sm={8} md={4} >
                                 <h2 className="User_header-title">Edit Profile</h2>
                             </Col>
-                            <Col xs={0} sm={2} md={4} />
+                            <Col />
                         </Row>
                         <Row className="show-grid User_error-message">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
+                            <Col />
+                            <Col xs={10} sm={8} md={4} >
                                 <Alert bsStyle="danger">
                                     <strong>Oh No! </strong>{this.state.profileFetchNetworkMessage}
                                 </Alert>
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
                     </Container>
                 </div>
@@ -181,27 +181,27 @@ class ProfileEditPic extends React.Component {
             <div className="ProfileEditInfo">
                 <Container>
                     <Row className="show-grid">
-                        <Col xs={0} sm={2} md={4} />
-                        <Col xs={12} sm={8} md={4}>
+                        <Col />
+                        <Col xs={12} sm={8} md={4} >
                             <h2 className="User_header-title">Edit Profile Pic</h2>
                         </Col>
-                        <Col xs={0} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <form>
                         <Row className="show-grid">
-                            <Col xs={0} sm={2} md={4} />
-                            <Col xs={12} sm={8} md={4}>
+                            <Col />
+                            <Col xs={12} sm={8} md={4} >
                                 <div className="ProfileEditInfo_profilepic">
                                     <Image fluid src={picSrc} />
                                 </div>
                             </Col>
-                            <Col xs={0} sm={2} md={4} />
+                            <Col />
                         </Row>
 
                         <Row className="show-grid">
-                            <Col xs={0} sm={2} md={5} />
-                            <Col xs={12} sm={8} md={4}>
+                            <Col />
+                            <Col xs="auto" >
                                 <ImageForm
                                     refreshProp={this.state.formRefreshProp}
                                     imageSelectedCallback={(err, imgData, imgUrl) => {
@@ -238,12 +238,12 @@ class ProfileEditPic extends React.Component {
                                     shouldShowImageSize={false}
                                 />
                             </Col>
-                            <Col xs={0} sm={2} md={5} />
+                            <Col />
                         </Row>
 
                         <Row className="show-grid">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4} className="User_actions-section">
+                            <Col />
+                            <Col sm={10} md={8} className="User_actions-section">
                                 <span className="User_action-button" >
                                     <Button
                                         disabled={this.isFormDisabled() || this.isFormInvalid() || this.state.profileNetworkThrottle}
@@ -263,13 +263,13 @@ class ProfileEditPic extends React.Component {
                                     </Button>
                                 </span>
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
 
                         {this.state.profileEditNetwork === STATUS_FAILURE &&
                             <Row className="show-grid User_error-message">
-                                <Col xs={1} sm={2} md={4} />
-                                <Col xs={10} sm={8} md={4}>
+                                <Col />
+                                <Col xs={10} sm={8} md={4} >
                                     <Alert variant="danger">
                                         <Alert.Heading>Oh No!</Alert.Heading>
                                         <p>
@@ -277,14 +277,14 @@ class ProfileEditPic extends React.Component {
                                         </p>
                                     </Alert>
                                 </Col>
-                                <Col xs={1} sm={2} md={4} />
+                                <Col />
                             </Row>
                         }
 
                         {this.state.profileEditNetwork === STATUS_SUCCESS &&
                             <Row className="show-grid User_error-message">
-                                <Col xs={1} sm={2} md={4} />
-                                <Col xs={10} sm={8} md={4}>
+                                <Col />
+                                <Col xs={10} sm={8} md={4} >
                                     <Alert dismissible variant="success">
                                         <Alert.Heading>YAY!</Alert.Heading>
                                         <p>
@@ -292,7 +292,7 @@ class ProfileEditPic extends React.Component {
                                         </p>
                                     </Alert>
                                 </Col>
-                                <Col xs={1} sm={2} md={4} />
+                                <Col />
                             </Row>
                         }
 

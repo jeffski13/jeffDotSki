@@ -111,19 +111,19 @@ class Login extends React.Component {
         return (
             <Container className="Login">
                 <Row className="show-grid">
-                    <Col xs={2} md={4} />
+                    <Col />
                     <Col xs={8} md={4}>
                         <h2 className="User_header-title">Welcome!</h2>
                     </Col>
-                    <Col xs={2} md={4} />
+                    <Col />
                 </Row>
 
                 <Form
                     onSubmit={e => this.onLoginClicked(e)}
                 >
                     <Row className="show-grid">
-                        <Col xs={2} md={4} />
-                        <Form.Group as={Col} xs="8" md="4" controlId="usernameFormInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="usernameFormInput">
                             <InputGroup>
                                 <Form.Control className="User_login-form-label"
                                     placeholder="Username"
@@ -147,12 +147,12 @@ class Login extends React.Component {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={2} md={4} />
+                        <Col />
                     </Row>
                     <Row className="show-grid">
 
-                        <Col xs={2} md={4} />
-                        <Form.Group as={Col} xs="8" md="4" controlId="passwordFormInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="passwordFormInput">
                             <InputGroup>
                                 <Form.Control
                                     className="User_password-form-label"
@@ -177,12 +177,12 @@ class Login extends React.Component {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={2} md={4} />
-                        <Col xs={8} md={4} className="Login_actions">
+                        <Col />
+                        <Col sm={10} md={8} className="Login_actions">
                             <span className="Login_action_button" >
                                 <Button
                                     variant="primary"
@@ -202,14 +202,14 @@ class Login extends React.Component {
                                 </Button>
                             </span>
                         </Col>
-                        <Col xs={2} md={4} />
+                        <Col />
                     </Row>
                 </Form>
 
 
                 {(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL) &&
                     <Row className="show-grid User_login-message">
-                        <Col xs={2} md={4} />
+                        <Col />
                         <Col xs={8} md={4}>
                             <Alert dismissible variant="danger">
                                 <Alert.Heading>Oh No!</Alert.Heading>
@@ -218,7 +218,7 @@ class Login extends React.Component {
                                 </p>
                             </Alert>
                         </Col>
-                        <Col xs={2} md={4} />
+                        <Col />
                     </Row>
                 }
             </Container>

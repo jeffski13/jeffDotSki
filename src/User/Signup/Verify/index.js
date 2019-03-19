@@ -152,26 +152,26 @@ class Verify extends React.Component {
         return (
             <Container className="Verify">
                 <Row className="show-grid">
-                    <Col xs={0} sm={2} md={4} />
+                    <Col />
                     <Col xs={12} sm={8} md={4}>
                         <h2 className="Verify-title">Let's Get Started!</h2>
                     </Col>
-                    <Col xs={0} sm={2} md={4} />
+                    <Col />
                 </Row>
                 <Row className="show-grid Verify-message">
-                    <Col xs={0} sm={2} md={4} />
-                    <Col xs={12} sm={8} md={4}>
+                    <Col />
+                    <Col xs={10} sm={8} lg={6} xl={4} >
                         <div>You should receive an email shortly with a verification code.</div>
                     </Col>
-                    <Col xs={0} sm={2} md={4} />
+                    <Col />
                 </Row>
 
                 <Form
                     onSubmit={e => this.onVerifyClicked(e)}
                 >
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="verifyCodeInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="verifyCodeInput">
                             <InputGroup>
                                 <Form.Control
                                     aria-describedby="inputGroupPrepend"
@@ -187,12 +187,12 @@ class Verify extends React.Component {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4} className="Login_actions">
+                        <Col />
+                        <Col xs={10} sm={8} md={6} lg={4} className="Login_actions">
                             <span className="Verify_action_button" >
                                 <Button
                                     disabled={this.state.verifyNetworkThrottle || this.props.blogAuth.authNetwork === STATUS_LOADING}
@@ -212,12 +212,12 @@ class Verify extends React.Component {
                                 </Button>
                             </span>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     {verifyMessage &&
                         <Row className="show-grid User_login-message">
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                             <Col xs={10} sm={8} md={4}>
                                 <Alert dismissible variant="danger">
                                     <Alert.Heading>Oh No!</Alert.Heading>
@@ -226,17 +226,17 @@ class Verify extends React.Component {
                                     </p>
                                 </Alert>
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
                     }
 
                     {this.state.resendEmailNetworkThrottle &&
                         <Row className="show-grid User_error-message">
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                             <Col xs={10} sm={8} md={4}>
                                 {resendAlert}
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
                     }
                 </Form>

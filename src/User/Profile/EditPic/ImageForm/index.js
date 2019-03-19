@@ -175,7 +175,6 @@ export default class ImageForm extends React.Component {
                 <FormGroup
                     controlId="imageSelectForm"
                 >
-                    <Form.Label>Upload New Profile Pic:</Form.Label>
                     <div className="ImageForm__file_details" >
                         <FormControl
                             disabled={this.props.formDisabled}

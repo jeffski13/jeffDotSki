@@ -208,20 +208,20 @@ class ProfileEditInfo extends React.Component {
                 <div className="ProfileEditInfo">
                     <Container>
                         <Row className="show-grid">
-                            <Col xs={0} sm={2} md={4} />
+                            <Col />
                             <Col xs={12} sm={8} md={4}>
                                 <h2 className="User_header-title">Edit Profile</h2>
                             </Col>
-                            <Col xs={0} sm={2} md={4} />
+                            <Col />
                         </Row>
                         <Row className="show-grid User_error-message">
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                             <Col xs={10} sm={8} md={4}>
                                 <Alert bsStyle="danger">
                                     <strong>Oh No! </strong>{this.state.profileFetchNetworkMessage}
                                 </Alert>
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
                     </Container>
                 </div>
@@ -231,16 +231,16 @@ class ProfileEditInfo extends React.Component {
         return (
             <Container className="ProfileEditInfo">
                 <Row className="show-grid">
-                    <Col xs={0} sm={2} md={4} />
+                    <Col />
                     <Col xs={12} sm={8} md={4}>
                         <h2 className="User_header-title">Edit Profile</h2>
                     </Col>
-                    <Col xs={0} sm={2} md={4} />
+                    <Col />
                 </Row>
 
                 <Row className="show-grid">
-                    <Col xs={0} sm={2} md={5} />
-                    <Col xs={12} sm={8} md={2}>
+                    <Col />
+                    <Col xs={10} sm={8} lg={6} xl={4} >
                         <div className="Profile_profilepic-link ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
                             <Image fluid src={this.state.profilePicUrl} />
                             <Button
@@ -251,15 +251,15 @@ class ProfileEditInfo extends React.Component {
                             </Button>
                         </div>
                     </Col>
-                    <Col xs={0} sm={2} md={5} />
+                    <Col />
                 </Row>
 
                 <Form
                     onSubmit={e => this.onSaveClicked(e)}
                 >
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4}>
+                        <Col />
+                        <Col xs={10} sm={8} lg={6} xl={4}>
                             <FormGroup
                                 controlId="profileEditUsernameInput"
                             >
@@ -276,12 +276,12 @@ class ProfileEditInfo extends React.Component {
                                 </label>
                             </FormGroup>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4}>
+                        <Col />
+                        <Col xs={10} sm={8} lg={6} xl={4}>
                             <FormGroup
                                 controlId="profileEditEmailInput"
                             >
@@ -298,12 +298,12 @@ class ProfileEditInfo extends React.Component {
                                 </label>
                             </FormGroup>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="profileNameFirstInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="profileNameFirstInput">
                             <InputGroup>
                                 <Form.Control className="User_login-form-label"
                                     placeholder="Username"
@@ -324,12 +324,12 @@ class ProfileEditInfo extends React.Component {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="profileNameLastInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="profileNameLastInput">
                             <InputGroup>
                                 <Form.Control className="User_login-form-label"
                                     placeholder="Username"
@@ -350,12 +350,12 @@ class ProfileEditInfo extends React.Component {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="profileBioInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="profileBioInput">
                             <InputGroup>
                                 <Form.Control className="User_login-form-label"
                                     aria-describedby="inputGroupPrepend"
@@ -369,12 +369,12 @@ class ProfileEditInfo extends React.Component {
                                 />
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4}>
+                        <Col />
+                        <Col xs={10} sm={8} lg={6} xl={4} >
                             <FormGroup
                                 controlId="profileEditDateOfBirthInput"
                             >
@@ -389,22 +389,22 @@ class ProfileEditInfo extends React.Component {
                                 />
                             </FormGroup>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row>
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4}>
+                        <Col />
+                        <Col xs={10} sm={8} lg={6} xl={4} >
                             <ul className="Register_validation-list">
                                 {this.renderBirthDateValidation()}
                             </ul>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4} className="User_actions-section">
+                        <Col />
+                        <Col sm={10} md={8} className="User_actions-section">
                             <span className="User_action-button" >
                                 <Button
                                     disabled={this.isSaveProfileDisabled() || this.state.profileNetworkThrottle}
@@ -412,7 +412,7 @@ class ProfileEditInfo extends React.Component {
                                     onClick={this.onSaveClicked}
                                 >
                                     Save
-                                    </Button>
+                                </Button>
                             </span>
                             <span className="User_action-button" >
                                 <Button
@@ -424,13 +424,13 @@ class ProfileEditInfo extends React.Component {
                                 </Button>
                             </span>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     {this.state.profileEditNetwork === STATUS_FAILURE &&
                         <Row className="show-grid User_error-message">
-                            <Col xs={1} sm={2} md={4} />
-                            <Col xs={10} sm={8} md={4}>
+                            <Col />
+                            <Col xs={10} sm={8} md={4} >
                                 <Alert dismissible variant="danger">
                                     <Alert.Heading>Oh No!</Alert.Heading>
                                     <p>
@@ -438,13 +438,13 @@ class ProfileEditInfo extends React.Component {
                                     </p>
                                 </Alert>
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
                     }
 
                     {this.state.profileEditNetwork === STATUS_SUCCESS &&
                         <Row className="show-grid User_error-message">
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                             <Col xs={10} sm={8} md={4}>
                                 <Alert dismissible variant="success">
                                     <Alert.Heading>YAY!</Alert.Heading>
@@ -453,7 +453,7 @@ class ProfileEditInfo extends React.Component {
                                     </p>
                                 </Alert>
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
                     }
                 </Form>

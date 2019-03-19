@@ -203,7 +203,7 @@ class Profile extends React.Component {
 
                 <Row className="show-grid">
                     <Col xs={1} sm={2} md={4} />
-                    <Col xs={10} sm={8} md={4} className="User_actions-section">
+                    <Col xs={10} sm={8} md={6} lg={4} className="User_actions-section">
                         <span className="User_action-button" >
                             <Button
                                 onClick={this.goToEditProfileInfo}

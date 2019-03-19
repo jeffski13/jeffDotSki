@@ -210,45 +210,45 @@ class Account extends React.Component {
         return (
             <Container className="Register">
                 <Row className="show-grid">
-                    <Col xs={0} sm={2} md={4} />
+                    <Col />
                     <Col xs={12} sm={8} md={4}>
                         <h2 className="Register-title">Let's Get Started!</h2>
                     </Col>
-                    <Col xs={0} sm={2} md={4} />
+                    <Col />
                 </Row>
 
                 <Form
                     onSubmit={e => this.onSignupClicked(e)}
                 >
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerEmailInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} md={6} lg={4} controlId="registerEmailInput">
                             <InputGroup>
-                                    <Form.Control className="User_login-form-label"
-                                        aria-describedby="inputGroupPrepend"
-                                        isInvalid={this.state.isValidated && !this.isEmailValid()}
-                                        type="email"
-                                        value={this.state.email}
-                                        placeholder="Ex: yolo@swag.net"
-                                        onChange={(e) => {
-                                            this.setState({
-                                                email: e.target.value
-                                            });
-                                        }}
-                                        name="text"
-                                        onKeyDown={this.onFormEnterKey}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        Email must not be blank.
+                                <Form.Control className="User_login-form-label"
+                                    aria-describedby="inputGroupPrepend"
+                                    isInvalid={this.state.isValidated && !this.isEmailValid()}
+                                    type="email"
+                                    value={this.state.email}
+                                    placeholder="Ex: yolo@swag.net"
+                                    onChange={(e) => {
+                                        this.setState({
+                                            email: e.target.value
+                                        });
+                                    }}
+                                    name="text"
+                                    onKeyDown={this.onFormEnterKey}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Email must not be blank.
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerUsernameInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} md={6} lg={4} controlId="registerUsernameInput">
                             <InputGroup>
                                 <Form.Control className="User_login-form-label"
                                     aria-describedby="inputGroupPrepend"
@@ -268,13 +268,13 @@ class Account extends React.Component {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
 
-                        <Col xs={2} md={4} />
-                        <Form.Group as={Col} xs="8" md="4" controlId="passwordFormInput">
+                        <Col />
+                        <Form.Group as={Col} xs={10} sm={8} md={6} lg={4} controlId="passwordFormInput">
                             <InputGroup>
                                 <Form.Control
                                     className="User_password-form-label"
@@ -296,22 +296,22 @@ class Account extends React.Component {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Col xs={2} md={4} />
+                        <Col />
                     </Row>
 
-                    <Row>
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4}>
+                    <Row className="show-grid">
+                        <Col />
+                        <Col xs="auto" >
                             <ul className="Register_validation-list">
                                 {passwordRules.map(this.renderPasswordAnalysisList)}
                             </ul>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={4} className="Login_actions">
+                        <Col />
+                        <Col sm={10} md={8} className="Login_actions">
                             <span className="Login_action_button" >
                                 <Button
                                     disabled={this.state.registerNetwork === STATUS_LOADING}
@@ -331,12 +331,12 @@ class Account extends React.Component {
                                 </Button>
                             </span>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     {this.state.registerNetwork === STATUS_FAILURE &&
                         <Row className="show-grid User_login-message">
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                             <Col xs={10} sm={8} md={4}>
                                 <Alert dismissible variant="danger">
                                     <Alert.Heading>Oh No!</Alert.Heading>
@@ -345,7 +345,7 @@ class Account extends React.Component {
                                     </p>
                                 </Alert>
                             </Col>
-                            <Col xs={1} sm={2} md={4} />
+                            <Col />
                         </Row>
                     }
                 </Form>
