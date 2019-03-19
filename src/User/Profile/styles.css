@@ -19,6 +19,9 @@
 .Profile_profilepic {
     cursor: pointer;
 }
+.Profile_profilepic > img {
+    margin-left: 0;
+}
 
 .Profile_empty-info {
     color: rgb(70, 70, 70);

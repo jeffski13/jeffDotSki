@@ -194,7 +194,7 @@ class Profile extends React.Component {
 
                 <Row className="show-grid">
                     <Col xs={0} />
-                    <Col xs={6}>
+                    <Col xs={6} md={8}>
                         <Col xs={12} >
                             <div className="Profile_title">Name</div>
                             <div>{userState.name}</div>
@@ -208,7 +208,7 @@ class Profile extends React.Component {
                             <div>{moment.unix(userState.dateOfBirth).format("MM/DD/YYYY")}</div>
                         </Col>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={6} md={4}>
                         <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
                             <Image fluid src={userState.profilePic} />
                             <Button
