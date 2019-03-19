@@ -12,6 +12,10 @@
     padding-bottom: 25px;
 }
 
+.Profile_bio {
+    font-family: 'Bitter', serif;
+}
+
 .Profile_actions {
     padding: 25px;
 }
@@ -25,4 +29,8 @@
 
 .Profile_empty-info {
     color: rgb(70, 70, 70);
+}
+
+.Profile_bio-show-more-less > button {
+    padding: 0 0 0 10px;
 }
