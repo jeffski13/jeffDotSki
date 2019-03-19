@@ -12,7 +12,7 @@ class TitlePage extends Component {
                 <Container fluid>
                     <Row className="TitlePage_aboutJeff">
                         <Col xs={12} sm={0} className="TitlePage_aboutJeff-name">
-                            <h2><span className="TitlePage_aboutJeff-name-websiteName">Jeff</span> Szcin<span className="TitlePage_websiteName">ski</span></h2>
+                            <h2><span className="TitlePage_aboutJeff-name-websiteName">Jeff</span> Szcin<span className="TitlePage_aboutJeff-name-websiteName">ski</span></h2>
                         </Col>
                         <Col xs={12} sm={12} md={5} className="TitlePage_aboutJeff-image">
                             <Image src="https://s3.us-east-2.amazonaws.com/jeff.ski/title/titlePage-info1-md.jpg" roundedCircle fluid />
