@@ -37,5 +37,9 @@
 }
 
 .TitlePage_aboutJeff-name-websiteName {
-    color: #777777;
+    color: #000000;
+    font-weight: bold;
+}
+.TitlePage_aboutJeff-name-nonwebsitename {
+    color: #504747;
 }
