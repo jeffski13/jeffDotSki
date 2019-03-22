@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Navbar, NavItem, NavDropdown, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
-
+import {jeffskiRoutes} from '../app';
 import './styles.css';
 
 class NavigationBar extends Component {
@@ -33,6 +33,9 @@ class NavigationBar extends Component {
                     <Nav >
                         <LinkContainer to="/aboutme/bio">
                             <Nav.Link>Bio</Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to={jeffskiRoutes.travelTrailsHome}>
+                            <Nav.Link>Travel Trails</Nav.Link>
                         </LinkContainer>
                         <LinkContainer to="/aboutme/hobbies">
                             <Nav.Link>Hobbies</Nav.Link>

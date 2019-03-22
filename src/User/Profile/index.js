@@ -87,7 +87,6 @@ class Profile extends React.Component {
     }
 
     render() {
-
         //if we are not logged in go to login
         if (!this.props.reduxBlogAuth.authState.isLoggedIn && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.props.history.push(jeffskiRoutes.login);

@@ -18,16 +18,18 @@ import Hobbies from './AboutMe/Hobbies';
 import TimelineExample from './Blogs/Timeline/TimelineExample';
 import ProfileEditInfo from './User/Profile/EditInfo';
 import ProfileEditPic from './User/Profile/EditPic';
+import TravelTrailsHome from './TravelTrails/Home';
 import './styles.css';
 
 export const jeffskiRoutes = {
-    login: '/login',
-    profile: '/profile',
-    profileEditInfo: '/profile/edit',
-    profileEditPic: '/profile/edit/pic',
-    registerCognito: '/signup/register/account',
-    registerBlogUser: '/signup/register/bloguser',
-    verify: '/signup/verify'
+    travelTrailsHome: '/traveltrails',
+    login: '/traveltrails/login',
+    profile: '/traveltrails/profile',
+    profileEditInfo: '/traveltrails/profile/edit',
+    profileEditPic: '/traveltrails/profile/edit/pic',
+    registerCognito: '/traveltrails/signup/register/account',
+    registerBlogUser: '/traveltrails/signup/register/bloguser',
+    verify: '/traveltrails/signup/verify'
 };
 
 //eventually this will do all the routing...later not now,  someday
@@ -37,26 +39,27 @@ export default class App extends Component {
       <div id="App" >
         <NavigationBar />
         <div className="webpagecontent">
-          <Switch>
-            <Route exact path="/" component={TitlePage}/>
-            <Route path="/blog/chile" component={Blogs}/>
-            <Route path="/blog/timeline" component={TimelineExample}/>
-            <Route path="/aboutme/shotglass" component={Shotglass}/>
-            <Route path="/aboutme/bio" component={Bio}/>
-            <Route path="/careers" component={Careers}/>
-            <Route path="/aboutme/hobbies" component={Hobbies}/>
-            <Route path={jeffskiRoutes.login} component={Login}/>
-            <Route path={jeffskiRoutes.registerBlogUser} component={RegisterBlogUser}/>
-            <Route path={jeffskiRoutes.registerCognito} component={RegisterAccount}/>
-            <Route exact path={jeffskiRoutes.verify} component={Verify}/>
-            <Route exact path={jeffskiRoutes.profile} component={Profile}/>
-            <Route exact path={jeffskiRoutes.profileEditInfo} component={ProfileEditInfo}/>
-            <Route exact path={jeffskiRoutes.profileEditPic} component={ProfileEditPic}/>
-            <Route path="/:userId/trips/:tripId" component={Blogs} />
-            <Route component={ ErrorPage } />
-          </Switch>
+            <Switch>
+                <Route exact path="/" component={TitlePage}/>
+                <Route path="/blog/chile" component={Blogs}/>
+                <Route path="/blog/timeline" component={TimelineExample}/>
+                <Route path="/aboutme/shotglass" component={Shotglass}/>
+                <Route path="/aboutme/bio" component={Bio}/>
+                <Route path="/careers" component={Careers}/>
+                <Route path="/aboutme/hobbies" component={Hobbies}/>
+                <Route path={jeffskiRoutes.login} component={Login}/>
+                <Route path={jeffskiRoutes.registerBlogUser} component={RegisterBlogUser}/>
+                <Route path={jeffskiRoutes.registerCognito} component={RegisterAccount}/>
+                <Route exact path={jeffskiRoutes.verify} component={Verify}/>
+                <Route exact path={jeffskiRoutes.profile} component={Profile}/>
+                <Route exact path={jeffskiRoutes.profileEditInfo} component={ProfileEditInfo}/>
+                <Route exact path={jeffskiRoutes.profileEditPic} component={ProfileEditPic}/>
+                <Route exact path={jeffskiRoutes.travelTrailsHome} component={TravelTrailsHome} />
+                <Route path="/:userId/trips/:tripId" component={Blogs} />
+                <Route component={ ErrorPage } />
+            </Switch>
+            <FooterBarski />
         </div>
-        <FooterBarski />
       </div>
     );
   }

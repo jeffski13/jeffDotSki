@@ -1,9 +1,11 @@
 .FooterBarski {
-    background-color: grey;
-    width:100%;
-    height:60px;
-    padding: 0px;
-}
+    position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: grey;
+  text-align: center;
+  }
 
 .footerBarskiLinkWrapper{
   color: white;

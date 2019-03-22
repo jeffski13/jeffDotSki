@@ -1,7 +1,6 @@
 .navBarLink {
     display: inline-block;
     width: 100%;
-    height: 100%;
 }
 
 .brand {
@@ -13,13 +12,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
     width: 100%;
 }
 
 .Loadingski_container {
     display: table-cell;
     vertical-align: middle;
+    height: 100vh;
 }
 
 .Loadingski_container>div {
