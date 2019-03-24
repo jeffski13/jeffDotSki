@@ -25,12 +25,12 @@ class BlogImages extends React.Component {
                 key={finalImgUrl + index}
             >
                 <Image
-                    src={finalImgUrl}
                     fluid 
+                    src={finalImgUrl}
                     />
-                <div className="BlogImages-mobile-text">
+                <div className="BlogImages-mobile-text-container">
                     <h4>{blogImageItemData.imageTitle}</h4>
-                    <p>{blogImageItemData.imageDescription}</p>
+                    <p className="BlogImages-mobile-text" >{blogImageItemData.imageDescription}</p>
                 </div>
             </div>
         );
