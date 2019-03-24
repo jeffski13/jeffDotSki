@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 
-import { getBlogs } from './GetBlogs';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
 import Loadingski from '../Inf/Loadingski';
 import { MONTHS } from './blog-consts';
@@ -9,6 +8,7 @@ import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import moment from 'moment';
 import { getBlogsSecure } from '../User/GETblogs';
+import { getTripSecure } from '../User/GETtrip';
 import { jeffskiRoutes } from '../app';
 import './styles.css';
 import withBlogAuth from '../User/Auth/withBlogAuth';
@@ -21,8 +21,8 @@ class Blogs extends Component {
         super(props);
         this.state = {
             isViewMobile: false,
-            networkStatus: null,
-            tripId: 'uuid1234',
+            networkStatus: null, //refactor, need to make this and object with trip and blogs properties, then key off those
+            tripName: '',
             blogsArr: null,
             sortBlogsDateDescending: false,
             hasInitiallySorted: false,
@@ -57,50 +57,49 @@ class Blogs extends Component {
         this.setState({
             networkStatus: STATUS_LOADING
         }, () => {
+            //default to chile for now
+            let tripId = 'uuid1234';
+            //if user provides trip id in the the path use it to look up blogs
             if (this.props.match.params.tripId) {
-                getBlogsSecure(this.props.match.params.userId, this.props.match.params.tripId, (err, data) => {
-                    if (err) {
-                        return this.setState({
-                            networkStatus: STATUS_FAILURE,
-                            getBlogsResults: {
-                                status: err.status,
-                                message: err.data.message,
-                                code: err.data.code
-                            }
-                        });
-                    }
-
-                    this.setState({
-                        blogsArr: data,
-                        networkStatus: STATUS_SUCCESS
-                    }, () => {
-                        this.sortBlogsByDate(this.state.sortBlogsDateDescending);
-                    });
-                });
+                tripId = this.props.match.params.tripId;
             }
-            else {
-                //get list of blogs by trip name from server
-                getBlogs(this.state.tripId, (err, data) => {
-                    if (err) {
-                        this.setState({
-                            networkStatus: STATUS_FAILURE,
-                            getBlogsResults: {
-                                status: err.status,
-                                message: err.data.message,
-                                code: err.data.code
-                            }
-                        });
-                        return;
-                    }
-
-                    this.setState({
-                        blogsArr: data,
-                        networkStatus: STATUS_SUCCESS
-                    }, () => {
-                        this.sortBlogsByDate(this.state.sortBlogsDateDescending);
+            getBlogsSecure(this.props.match.params.userId, tripId, (err, data) => {
+                if (err) {
+                    return this.setState({
+                        networkStatus: STATUS_FAILURE,
+                        getBlogsResults: {
+                            status: err.status,
+                            message: err.data.message,
+                            code: err.data.code
+                        }
                     });
+                }
+                this.setState({
+                    blogsArr: data,
+                    networkStatus: STATUS_SUCCESS
+                }, () => {
+                    this.sortBlogsByDate(this.state.sortBlogsDateDescending);
                 });
-            }
+            });
+            getTripSecure(this.props.match.params.userId, tripId, (err, data) => {
+                if (err) {
+                    console.log('trip error returned', err);
+                    return this.setState({
+                        networkStatus: STATUS_FAILURE,
+                        getTripResults: {
+                            status: err.status,
+                            message: err.data.message,
+                            code: err.data.code
+                        }
+                    });
+                }
+                console.log('trip data returned', data);
+                this.setState({
+                    tripName: data.name,
+                    networkStatus: STATUS_SUCCESS
+                });
+            });
+            
         });
     }
 
@@ -293,7 +292,7 @@ class Blogs extends Component {
                     <Container>
                         <Row className={`show-grid ${blogHeaderClass}`}>
                             <Col xs={8} md={6}>
-                                <div className="blogBrowserTitle">Chile</div>
+                                <div className="blogBrowserTitle">{this.state.tripName}</div>
                             </Col>
                             <Col xs={4} md={6} className="Blogs_controls-wrapper">
                                 <div className="Blogs_controls">

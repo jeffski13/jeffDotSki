@@ -8,7 +8,7 @@ import { Auth } from 'aws-amplify';
  * @param {string} tripName - the name of the trip for which you want the blogs
  * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
  */
-export function getBlogsSecure(userId, tripId, callback){
+export function getTripSecure(userId, tripId, callback){
     Auth.currentAuthenticatedUser({
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {
@@ -16,7 +16,7 @@ export function getBlogsSecure(userId, tripId, callback){
         
         axios({
             method: 'GET',
-            url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/${tripId}/blogs`,
+            url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/${tripId}`,
             headers: {
                 'Authorization': idTokenJwt
             }
@@ -37,7 +37,7 @@ export function getBlogsSecure(userId, tripId, callback){
         //not logged in
         axios({
             method: 'GET',
-            url: `https://864wf8s3oi.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/${tripId}/blogs`
+            url: `https://864wf8s3oi.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/${tripId}`
         })
         .then((response) => {
             //parse the response
