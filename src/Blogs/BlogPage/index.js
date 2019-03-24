@@ -104,7 +104,8 @@ export default class BlogPage extends Component {
                 <Row className="show-grid blogPargraph">
                     <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
                     <Col sm={8} md={4} >
-                        <img
+                        <Image
+                            fluid
                             onLoad={() => {
                                 this.setState({
                                     hasTitleImageLoaded: true
