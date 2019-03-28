@@ -63,3 +63,16 @@
 #travelTrailHome-buttonLeft {
     margin-right: 20px;
 }
+
+.TravelTrailers_mobile-text > h1 {
+    font-size: 300%;
+    color: white;
+}
+
+.TravelTrailers_mobile > img {
+    filter: grayscale(100%) contrast(60%) brightness(40%);
+}
+
+.TravelTrailsHome_container {
+    padding: 0;
+}
