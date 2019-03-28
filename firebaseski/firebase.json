@@ -13,11 +13,14 @@
         {"source":"/aboutme/bio","destination":"/index.html"},
         {"source":"/careers","destination":"/index.html"},
         {"source":"/aboutme/hobbies","destination":"/index.html"},
-        {"source":"/login","destination":"/index.html"},
-        {"source":"/signup/register/account","destination":"/index.html"},
-        {"source":"/signup/register/bloguser","destination":"/index.html"},
-        {"source":"/profile","destination":"/index.html"},
-        {"source":"/profile/edit","destination":"/index.html"},
+        {"source":"/traveltrails/login","destination":"/index.html"},
+        {"source":"/traveltrails/signup/register/account","destination":"/index.html"},
+        {"source":"/traveltrails/signup/register/bloguser","destination":"/index.html"},
+        {"source":"/traveltrails/signup/verify","destination":"/index.html"},
+        {"source":"/traveltrails/profile","destination":"/index.html"},
+        {"source":"/traveltrails/profile/edit","destination":"/index.html"},
+        {"source":"/traveltrails/profile/edit/pic","destination":"/index.html"},
+        {"source":"/traveltrails","destination":"/index.html"},
         {"source":"/user","destination":"/index.html"}
     ]
   }
