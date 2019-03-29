@@ -19,6 +19,7 @@ import TimelineExample from './Blogs/Timeline/TimelineExample';
 import ProfileEditInfo from './User/Profile/EditInfo';
 import ProfileEditPic from './User/Profile/EditPic';
 import TravelTrailsHome from './TravelTrails/Home';
+import PublicProfile from './User/Profile/Public';
 import './styles.css';
 
 export const jeffskiRoutes = {
@@ -41,21 +42,22 @@ export default class App extends Component {
         <div className="webpagecontent">
             <Switch>
                 <Route exact path="/" component={TitlePage}/>
-                <Route path="/blog/chile" component={Blogs}/>
-                <Route path="/blog/timeline" component={TimelineExample}/>
-                <Route path="/aboutme/shotglass" component={Shotglass}/>
-                <Route path="/aboutme/bio" component={Bio}/>
-                <Route path="/careers" component={Careers}/>
-                <Route path="/aboutme/hobbies" component={Hobbies}/>
-                <Route path={jeffskiRoutes.login} component={Login}/>
-                <Route path={jeffskiRoutes.registerBlogUser} component={RegisterBlogUser}/>
-                <Route path={jeffskiRoutes.registerCognito} component={RegisterAccount}/>
+                <Route exact path="/blog/chile" component={Blogs}/>
+                <Route exact path="/blog/timeline" component={TimelineExample}/>
+                <Route exact path="/aboutme/shotglass" component={Shotglass}/>
+                <Route exact path="/aboutme/bio" component={Bio}/>
+                <Route exact path="/careers" component={Careers}/>
+                <Route exact path="/aboutme/hobbies" component={Hobbies}/>
+                <Route exact path={jeffskiRoutes.login} component={Login}/>
+                <Route exact path={jeffskiRoutes.registerBlogUser} component={RegisterBlogUser}/>
+                <Route exact path={jeffskiRoutes.registerCognito} component={RegisterAccount}/>
                 <Route exact path={jeffskiRoutes.verify} component={Verify}/>
                 <Route exact path={jeffskiRoutes.profile} component={Profile}/>
                 <Route exact path={jeffskiRoutes.profileEditInfo} component={ProfileEditInfo}/>
                 <Route exact path={jeffskiRoutes.profileEditPic} component={ProfileEditPic}/>
                 <Route exact path={jeffskiRoutes.travelTrailsHome} component={TravelTrailsHome} />
                 <Route path="/:userId/trips/:tripId" component={Blogs} />
+                <Route exact path="/traveltrails/:userId" component={PublicProfile} />
                 <Route component={ ErrorPage } />
             </Switch>
             <FooterBarski />
