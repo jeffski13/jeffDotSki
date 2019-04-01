@@ -205,7 +205,7 @@ class Blogs extends Component {
                                                 <Button
                                                     onClick={() => {
                                                         //go back to profile
-                                                        this.props.history.push(jeffskiRoutes.profile);
+                                                        this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
                                                     }}
                                                     bsStyle="link"
                                                 >
@@ -234,7 +234,7 @@ class Blogs extends Component {
                                                 <Button
                                                     onClick={() => {
                                                         //go back to profile
-                                                        this.props.history.push(jeffskiRoutes.profile);
+                                                        this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
                                                     }}
                                                     bsStyle="link"
                                                 >

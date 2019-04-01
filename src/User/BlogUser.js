@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { defaultErrorResponse } from '../Network/consts';
 import { Auth, Storage } from 'aws-amplify';
-
+import AWS from 'aws-sdk';
+import { AUTH_CONFIG } from './Auth/aws-auth-config';
 import uuidv1 from 'uuid/v1';
+var apigClientFactory = require('aws-api-gateway-client').default;
 
 export const emptyProfileUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski/blog/alone-anime-art-262272.jpg';
 export const profileGetFailMessage = 'We were not able to get your profile information at this time.';
@@ -37,8 +39,23 @@ export function getBlogUserSecure(userId, callback) {
                 }
                 return callback(defaultErrorResponse);
             });
-    }).catch((err) => {
-        console.log('ERROR getting current auth user: ', err)
+        }).catch((err) => {
+            axios({
+                method: 'GET',
+                url: `https://864wf8s3oi.execute-api.us-east-2.amazonaws.com/Prod/${userId}`,
+            })
+                .then((response) => {
+                    //parse the response
+                    let rawUserResponseArr = response.data;
+    
+                    callback(null, rawUserResponseArr);
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        return callback(error.response);
+                    }
+                    return callback(defaultErrorResponse);
+                });
     });
 
 }
@@ -126,12 +143,12 @@ export function uploadProfilePic(profilePicFile, userId, callback) {
             callback({ message: "No file or userId while trying to upload photo!" });
             return;
         }
-        
+
         //hardcoded profile pic name so they dont take up a bunch of storage with multiple profile pics that arent used
         let fileName = 'profilepic';
         let blogImageUploadKey = `${userId}/profile/${fileName}`;
         let blogImageFileType = profilePicFile.type;
-        
+
         Storage.put(blogImageUploadKey, profilePicFile, {
             level: 'public',
             contentType: blogImageFileType

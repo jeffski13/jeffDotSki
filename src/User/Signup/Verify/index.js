@@ -100,7 +100,7 @@ class Verify extends React.Component {
     render() {
         //if we login successfully go to profile
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
-            this.props.history.push(jeffskiRoutes.profile);
+            this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
         }
 
         if (this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_VERIFY_SUCCESS) {

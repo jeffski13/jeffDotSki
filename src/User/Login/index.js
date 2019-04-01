@@ -37,7 +37,7 @@ class Login extends React.Component {
         }
         if (this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.isLoggedIn) {
             //redirect to profile
-            return this.props.history.push(jeffskiRoutes.profile);
+            return this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
         }
     }
 
@@ -95,7 +95,7 @@ class Login extends React.Component {
     componentDidUpdate(previousProps) {
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             //if we are logged in go to profile
-            return this.props.history.push(jeffskiRoutes.profile);
+            return this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
         }
 
         if (!this.props.reduxBlogAuth.authState.isLoading && this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED) {

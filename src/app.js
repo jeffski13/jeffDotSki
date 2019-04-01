@@ -19,7 +19,6 @@ import TimelineExample from './Blogs/Timeline/TimelineExample';
 import ProfileEditInfo from './User/Profile/EditInfo';
 import ProfileEditPic from './User/Profile/EditPic';
 import TravelTrailsHome from './TravelTrails/Home';
-import PublicProfile from './User/Profile/Public';
 import './styles.css';
 
 export const jeffskiRoutes = {
@@ -57,7 +56,7 @@ export default class App extends Component {
                 <Route exact path={jeffskiRoutes.profileEditPic} component={ProfileEditPic}/>
                 <Route exact path={jeffskiRoutes.travelTrailsHome} component={TravelTrailsHome} />
                 <Route path="/:userId/trips/:tripId" component={Blogs} />
-                <Route exact path="/traveltrails/:userId" component={PublicProfile} />
+                <Route exact path="/traveltrails/:userId" component={Profile} />
                 <Route component={ ErrorPage } />
             </Switch>
             <FooterBarski />

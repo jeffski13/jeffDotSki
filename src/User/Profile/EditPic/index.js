@@ -91,7 +91,7 @@ class ProfileEditPic extends React.Component {
 
     onCancelProfileChanges = () => {
         //go back to profile
-        this.props.history.push(jeffskiRoutes.profile);
+        this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
     }
 
     onProfilePicUploadComplete = (errData, uploadedProfilePicData) => {

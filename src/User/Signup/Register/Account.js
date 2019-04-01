@@ -202,7 +202,7 @@ class Account extends React.Component {
 
         //if we are not logged in go to login
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
-            this.props.history.push(jeffskiRoutes.profile);
+            this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
         }
         if (this.state.registerNetwork === STATUS_SUCCESS) {
             this.props.history.push(jeffskiRoutes.verify);

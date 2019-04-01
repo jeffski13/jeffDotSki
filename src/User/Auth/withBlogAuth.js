@@ -1,11 +1,8 @@
 import React from 'react';
 import { AUTH_CONFIG } from './aws-auth-config';
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import Amplify, { Auth } from 'aws-amplify';
 import aws4 from "aws4";
-import { getBlogUserSecure } from '../BlogUser';
 import {
-    BLOG_USERINFO_CALL_FAIL,
     AUTH_STATE_LOGIN_FAIL_PASSWORD_RESET, AUTH_STATE_LOGIN_LOADING, AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED, AUTH_STATE_LOGIN_FAIL, AUTH_STATE_LOGGOUT_FAIL,
     AUTH_STATE_LOGGOUT_LOADING,
     AUTH_STATE_VERIFY_FAIL_NOUSERNAME, AUTH_STATE_VERIFYING, AUTH_STATE_VERIFY_FAIL_INVALIDCODE, AUTH_STATE_VERIFY_SUCCESS, AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN,
@@ -15,8 +12,6 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { storeUserInfo, storeAuthState } from './actions';
-
-
 
 /**
  * Gives user access to a prop called "blogAuth" which contains information about the current user and methods for:
@@ -36,7 +31,13 @@ let withBlogAuth = (OgComponent) => {
             Amplify.configure(AUTH_CONFIG);
         }
 
-        login = async (username, password, loginCallback = () => {}) => {
+        loginUnauthenticatedUser = () => {
+            
+
+
+        }
+
+        login = async (username, password, loginCallback = () => { }) => {
             this.props.storeAuthState({
                 isLoggedIn: false,
                 isLoading: true,
@@ -108,7 +109,7 @@ let withBlogAuth = (OgComponent) => {
                         isLoading: false,
                         currentState: AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED
                     });
-                    
+
                 } else if (err.code === AWS_CODE_FAILURE_PASSWORDRESETREQUIRED) {
                     // The error happens when the password is reset in the Cognito console
                     // In this case you need to call forgotPassword to reset the password
@@ -135,6 +136,7 @@ let withBlogAuth = (OgComponent) => {
                 isLoading: true,
                 currentState: AUTH_STATE_LOGIN_LOADING
             });
+
             Auth.currentAuthenticatedUser({
                 bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
             }).then((awsUser) => {
@@ -160,7 +162,14 @@ let withBlogAuth = (OgComponent) => {
                         currentState: null,
                         hasDoneInitialAuthCheck: true
                     });
+                    return this.loginUnauthenticatedUser();
                 }
+
+                this.props.storeAuthState({
+                    isLoggedIn: false,
+                    isLoading: false,
+                    currentState: AUTH_STATE_LOGIN_FAIL
+                });
             });
         }
 
@@ -199,7 +208,7 @@ let withBlogAuth = (OgComponent) => {
                     currentState: AUTH_STATE_VERIFY_FAIL_NOUSERNAME
                 });
             }
-            
+
             this.props.storeAuthState({
                 isLoading: true,
                 currentState: AUTH_STATE_VERIFYING
@@ -218,7 +227,7 @@ let withBlogAuth = (OgComponent) => {
                 });
             }).catch((err) => {
                 let currentVerifyState = AUTH_STATE_VERIFY_FAIL_CAUSEUNKNOWN;
-                if(err.code === 'CodeMismatchException'){
+                if (err.code === 'CodeMismatchException') {
                     currentVerifyState = AUTH_STATE_VERIFY_FAIL_INVALIDCODE;
                 }
                 this.props.storeAuthState({
@@ -249,7 +258,7 @@ let withBlogAuth = (OgComponent) => {
                     currentState: AUTH_STATE_RESENDCODE_SUCCESS
                 });
             }).catch(e => {
-                if(e.code === 'LimitExceededException'){
+                if (e.code === 'LimitExceededException') {
                     this.props.storeAuthState({
                         isLoading: false,
                         currentState: AUTH_STATE_RESENDCODE_FAIL_MAX_TRIES

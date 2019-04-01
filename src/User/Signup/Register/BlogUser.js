@@ -166,7 +166,7 @@ class BlogUser extends React.Component {
         }
         else if (this.state.registerNetwork === STATUS_SUCCESS) {
             //if we are logged in and blog user info already exists go to login
-            this.props.history.push(jeffskiRoutes.profile);
+            this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
         }
 
         return (
