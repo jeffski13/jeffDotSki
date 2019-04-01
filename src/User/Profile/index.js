@@ -21,18 +21,11 @@ class Profile extends React.Component {
         this.state = {
             blogUserNetwork: STATUS_LOADING,
             showMoreBio: false,
-            isEditEnabled: false
+            isEditEnabled: false,
+            blogUserInfo: null
         };
     }
-
-    renderTripLinks = (nextTripInfo) => {
-        return (
-            <div key={nextTripInfo.id} >
-                <Link to={`/${this.props.reduxBlogAuth.userInfo.id}/trips/${nextTripInfo.id}`} >{nextTripInfo.name}</Link>
-            </div>
-        );
-    }
-
+    
     componentDidMount() {
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             return this.getBlogUserProfile();
@@ -127,6 +120,14 @@ class Profile extends React.Component {
 
     goToLoggedInProfile = () => {
         this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
+    }
+
+    renderTripLinks = (nextTripInfo) => {
+        return (
+            <div key={nextTripInfo.id} >
+                <Link to={`/${this.state.blogUserInfo.id}/trips/${nextTripInfo.id}`} >{nextTripInfo.name}</Link>
+            </div>
+        );
     }
 
     render() {
