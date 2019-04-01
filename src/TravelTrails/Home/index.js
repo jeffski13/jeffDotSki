@@ -15,7 +15,7 @@ export default class Home extends React.Component {
                             <div className="TravelTrailsHome_titleContainer">
                                 <h1 className="TravelTrailsHome_title">Welcome To<br />Traveler's Trails</h1>
                                 <Link to={jeffskiRoutes.login} id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-full">LOGIN</Link>
-                                <Link to={jeffskiRoutes.profile} id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-ghost">PROFILE</Link>
+                                <Link to={jeffskiRoutes.registerCognito} id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-ghost">SIGN UP</Link>
                             </div>
                         </div>
                     </Col>
@@ -24,7 +24,7 @@ export default class Home extends React.Component {
                         <div className="TravelTrailsHome_titleContainer TravelTrailers_mobile-text">
                             <h1 className="TravelTrailsHome_title">Welcome To<br />Traveler's Trails</h1>
                             <Link to={jeffskiRoutes.login} id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-full">LOGIN</Link>
-                            <Link to={jeffskiRoutes.profile} id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-ghost">PROFILE</Link>
+                            <Link to={jeffskiRoutes.registerCognito} id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-ghost">SIGN UP</Link>
                         </div>
                     </Col>
                 </Row>
