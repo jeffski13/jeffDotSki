@@ -21,7 +21,9 @@
         {"source":"/traveltrails/profile/edit","destination":"/index.html"},
         {"source":"/traveltrails/profile/edit/pic","destination":"/index.html"},
         {"source":"/traveltrails","destination":"/index.html"},
-        {"source":"/user","destination":"/index.html"}
+        {"source":"/user","destination":"/index.html"},
+        {"source": "/traveltrails/**","dynamicLinks": true, "destination":"/index.html"},
+        {"source": "/traveltrails/**/trips/**","dynamicLinks": true, "destination":"/index.html"}
     ]
   }
 }
