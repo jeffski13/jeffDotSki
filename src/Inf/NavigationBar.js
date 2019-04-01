@@ -18,7 +18,7 @@ class NavigationBar extends Component {
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
                         <NavDropdown title="Travel" id="navigationbar-travel">
-                            <LinkContainer to="/blog/chile">
+                            <LinkContainer to="/traveltrails/1e06a9e0-f132-43d1-a79c-5846563abc1a/trips/uuid1234">
                                 <NavDropdown.Item>Chile</NavDropdown.Item>
                             </LinkContainer>
                             <NavDropdown.Divider />

@@ -8,7 +8,6 @@
     ],
     "rewrites":[
         {"source":"/home","destination":"/index.html"},
-        {"source":"/blog/chile","destination":"/index.html"},
         {"source":"/aboutme/shotglass","destination":"/index.html"},
         {"source":"/aboutme/bio","destination":"/index.html"},
         {"source":"/careers","destination":"/index.html"},
@@ -21,7 +20,7 @@
         {"source":"/traveltrails/profile/edit","destination":"/index.html"},
         {"source":"/traveltrails/profile/edit/pic","destination":"/index.html"},
         {"source":"/traveltrails","destination":"/index.html"},
-        {"source":"/traveltrails/:userid*","dynamicLinks": true, "destination":"/index.html"}
+        {"source":"/traveltrails/**","dynamicLinks": true, "destination":"/index.html"}
     ]
   }
 }

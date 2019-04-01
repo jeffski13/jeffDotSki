@@ -55,7 +55,7 @@ export default class App extends Component {
                 <Route exact path={jeffskiRoutes.profileEditInfo} component={ProfileEditInfo}/>
                 <Route exact path={jeffskiRoutes.profileEditPic} component={ProfileEditPic}/>
                 <Route exact path={jeffskiRoutes.travelTrailsHome} component={TravelTrailsHome} />
-                <Route path="/:userId/trips/:tripId" component={Blogs} />
+                <Route path="/traveltrails/:userId/trips/:tripId" component={Blogs} />
                 <Route exact path="/traveltrails/:userId" component={Profile} />
                 <Route component={ ErrorPage } />
             </Switch>

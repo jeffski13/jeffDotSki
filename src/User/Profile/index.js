@@ -125,7 +125,7 @@ class Profile extends React.Component {
     renderTripLinks = (nextTripInfo) => {
         return (
             <div key={nextTripInfo.id} >
-                <Link to={`/${this.state.blogUserInfo.id}/trips/${nextTripInfo.id}`} >{nextTripInfo.name}</Link>
+                <Link to={`${jeffskiRoutes.travelTrailsHome}/${this.state.blogUserInfo.id}/trips/${nextTripInfo.id}`} >{nextTripInfo.name}</Link>
             </div>
         );
     }
