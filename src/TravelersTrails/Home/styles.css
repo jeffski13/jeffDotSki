@@ -64,7 +64,7 @@
     margin-right: 20px;
 }
 
-.TravelTrailers_mobile-text > h1 {
+.TravelTrailers_mobile-text h1 {
     font-size: 300%;
     color: white;
 }
@@ -75,4 +75,37 @@
 
 .TravelTrailsHome_container {
     padding: 0;
+}
+
+.TravelTrailsHome_aboutTitle {
+    text-align: center;
+    font-family: 'Bitter', serif;
+    color: rgb(15, 15, 15);
+    font-weight: bold;
+    padding: 50px;
+}
+
+.TravelTrailsHome_about-imagetext{
+    text-align: center;
+    font-size: 50%;
+}
+
+.TravelTrailsHome_about-text-container {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.TravelTrailsHome_about-text {
+    padding: 50px;
+    display: table;
+    overflow: hidden;
+    height: 600px;
+}
+
+.TravelTrailsHome_about-image {
+    padding: 50px;
+}
+
+.TravelTrailsHome_about-image > img {
+    filter: grayscale(32%) contrast(100%) brightness(45%)
 }

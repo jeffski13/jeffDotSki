@@ -344,4 +344,4 @@ function mapStateToProps({ reduxBlogAuth }) {
     return { reduxBlogAuth };
 }
 
-export default connect(mapStateToProps)(withRouter(withBlogAuth(Profile))); 
+export default connect(mapStateToProps)(withRouter(withBlogAuth(Profile)));
