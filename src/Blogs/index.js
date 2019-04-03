@@ -7,11 +7,11 @@ import { MONTHS } from './blog-consts';
 import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import moment from 'moment';
-import { getBlogsSecure } from '../User/GETblogs';
-import { getTripSecure } from '../User/GETtrip';
+import { getBlogsSecure } from '../TravelersTrails/GETblogs';
+import { getTripSecure } from '../TravelersTrails/GETtrip';
 import { jeffskiRoutes } from '../app';
 import './styles.css';
-import withBlogAuth from '../User/Auth/withBlogAuth';
+import withBlogAuth from '../TravelersTrails/Auth/withBlogAuth';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 

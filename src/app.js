@@ -9,16 +9,16 @@ import ErrorPage from './ErrorPage';
 import NavigationBar from './Inf/NavigationBar';
 import FooterBarski from './Inf/FooterBarski';
 import Careers from './Careers';
-import Login from './User/Login';
-import RegisterBlogUser from './User/Signup/Register/BlogUser';
-import RegisterAccount from './User/Signup/Register/Account';
-import Verify from './User/Signup/Verify';
-import Profile from './User/Profile';
+import Login from './TravelersTrails/Login';
+import RegisterBlogUser from './TravelersTrails/Signup/Register/BlogUser';
+import RegisterAccount from './TravelersTrails/Signup/Register/Account';
+import Verify from './TravelersTrails/Signup/Verify';
+import Profile from './TravelersTrails/Profile';
 import Hobbies from './AboutMe/Hobbies';
 import TimelineExample from './Blogs/Timeline/TimelineExample';
-import ProfileEditInfo from './User/Profile/EditInfo';
-import ProfileEditPic from './User/Profile/EditPic';
-import TravelTrailsHome from './TravelTrails/Home';
+import ProfileEditInfo from './TravelersTrails/Profile/EditInfo';
+import ProfileEditPic from './TravelersTrails/Profile/EditPic';
+import TravelTrailsHome from './TravelersTrails/Home';
 import './styles.css';
 
 export const jeffskiRoutes = {
