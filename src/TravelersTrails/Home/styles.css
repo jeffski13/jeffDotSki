@@ -1,5 +1,5 @@
 #travelTrailsHome {
-    background-image: linear-gradient(#000c, #000c),url(https://s3.us-east-2.amazonaws.com/jeff.ski/traveltrail/home/traveltrail_home_md.jpg);
+    background-image: linear-gradient(#000000b3, #000000b3),url(https://s3.us-east-2.amazonaws.com/jeff.ski/traveltrail/home/traveltrail_home_md.jpg);
     background-size: cover;
     background-position: center;
     height: -webkit-fill-available;
@@ -70,7 +70,7 @@
 }
 
 .TravelTrailers_mobile > img {
-    filter: grayscale(100%) contrast(60%) brightness(40%);
+    filter: grayscale(0%) contrast(88%) brightness(28%);
 }
 
 .TravelTrailsHome_container {
