@@ -29,6 +29,11 @@ class Blogs extends Component {
             blogShowing: {
                 id: '',
                 percentage: -1
+            },
+            getBlogsResults: {
+                status: null,
+                message: null,
+                code: null
             }
         };
     }
