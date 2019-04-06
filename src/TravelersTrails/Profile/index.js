@@ -53,6 +53,7 @@ class Profile extends React.Component {
             this.setState({
                 isEditEnabled: false
             });
+            this.goToLogin();        
         }
     }
 
