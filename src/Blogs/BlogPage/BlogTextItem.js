@@ -48,7 +48,7 @@ class BlogTextItem extends Component {
               {this.props.blogTextData.list.textItems[0].text}
             </Col>
             <Col sm={8} smOffset={2} >
-              {this.props.blogTextData.list.textItems[0].subText}
+              {this.props.blogTextData.list.textItems[0].subtext}
             </Col>
           </div>
         );
@@ -64,20 +64,20 @@ class BlogTextItem extends Component {
     if(textListItem.title){
       let titleText = textListItem.title.trim();
       title = (
-        <strong>{titleText}: </strong>
+        <strong>{titleText} </strong>
       )
     }
 
-    let subText = null;
-    if(textListItem.subText){
-      subText = (
-        <div>{textListItem.subText}</div>
+    let subtext = null;
+    if(textListItem.subtext){
+      subtext = (
+        <div>{textListItem.subtext}</div>
       );
     }
 
     //add in subtext. bold title, add in text
      return(
-         <li key={index}> {title}{textListItem.text}{subText}</li>
+         <li key={index}> {title}{textListItem.text}{subtext}</li>
      );
   }
 
