@@ -23,17 +23,19 @@ class Blogs extends Component {
             isViewMobile: false,
             networkStatus: null, //refactor, need to make this and object with trip and blogs properties, then key off those
             tripName: '',
-            blogsArr: null,
             sortBlogsDateDescending: false,
             hasInitiallySorted: false,
             blogShowing: {
                 id: '',
                 percentage: -1
             },
-            getBlogsResults: {
-                status: null,
-                message: null,
-                code: null
+            blogsResults: {
+                error: {
+                    status: null,
+                    message: null,
+                    code: null
+                },
+                blogsArr: null,
             }
         };
     }
@@ -72,15 +74,19 @@ class Blogs extends Component {
                 if (err) {
                     return this.setState({
                         networkStatus: STATUS_FAILURE,
-                        getBlogsResults: {
-                            status: err.status,
-                            message: err.data.message,
-                            code: err.data.code
+                        blogsResults: {
+                            error: {
+                                status: err.status,
+                                message: err.data.message,
+                                code: err.data.code
+                            }
                         }
                     });
                 }
                 this.setState({
-                    blogsArr: data,
+                    blogsResults: {
+                        blogsArr: data,
+                    },
                     networkStatus: STATUS_SUCCESS
                 }, () => {
                     this.sortBlogsByDate(this.state.sortBlogsDateDescending);
@@ -91,10 +97,12 @@ class Blogs extends Component {
                     console.log('trip error returned', err);
                     return this.setState({
                         networkStatus: STATUS_FAILURE,
-                        getTripResults: {
-                            status: err.status,
-                            message: err.data.message,
-                            code: err.data.code
+                        blogsResults: {
+                            error: {
+                                status: err.status,
+                                message: err.data.message,
+                                code: err.data.code
+                            }
                         }
                     });
                 }
@@ -114,7 +122,7 @@ class Blogs extends Component {
         if (shouldDescend) {
             sortingHatSwitch = 1;
         }
-        let sortedBlogsArr = this.state.blogsArr;
+        let sortedBlogsArr = this.state.blogsResults.blogsArr;
 
         sortedBlogsArr.sort((trip, nextTrip) => {
             if (trip.date < nextTrip.date) {
@@ -137,7 +145,7 @@ class Blogs extends Component {
         let timelineLinkInfo = [];
 
         //at this point we assume the blogs are sorted in order
-        this.state.blogsArr.forEach((nextBlog) => {
+        this.state.blogsResults.blogsArr.forEach((nextBlog) => {
             let blogMoment = moment.unix(nextBlog.date);
             let blogMonth = MONTHS[blogMoment.month()];
             let blogDateOfMonth = blogMoment.date();
@@ -196,7 +204,7 @@ class Blogs extends Component {
     render() {
         let failureMessageRender = null;
         if (this.state.networkStatus === STATUS_FAILURE) {
-            if (this.state.getBlogsResults.status === 404) {
+            if (this.state.blogsResults.error.status === 404) {
                 failureMessageRender = (
                     <div className="Blogs">
                         <div className="Blogs_error" >
@@ -225,7 +233,7 @@ class Blogs extends Component {
                     </div>
                 );
             }
-            else if (this.state.getBlogsResults.status === 403) {
+            else if (this.state.blogsResults.error.status === 403) {
                 failureMessageRender = (
                     <div className="Blogs">
                         <div className="Blogs_error" >
@@ -284,7 +292,7 @@ class Blogs extends Component {
 
         let blogsArea = null;
 
-        if (this.state.blogsArr && this.state.hasInitiallySorted) {
+        if (this.state.blogsResults.blogsArr && this.state.hasInitiallySorted) {
             let timelineLinksInfo = this.getTimelineLinksInfo();
 
             //adjust css classes for mobile
@@ -329,7 +337,7 @@ class Blogs extends Component {
                         <Row className={blogHeaderClass}>
                             <Col xs={12}>
                                 <div className="BlogList">
-                                    {this.state.blogsArr.map(this.renderSampleBlogItem)}
+                                    {this.state.blogsResults.blogsArr.map(this.renderSampleBlogItem)}
 
                                     <Timeline
                                         linksInfo={timelineLinksInfo}
@@ -339,7 +347,7 @@ class Blogs extends Component {
                                                 //we can assume this is showing 100%. This will fix itself in the callbacks, but will stop blogs offscreen from taking over with a 0%
                                                 this.setState({
                                                     blogShowing: {
-                                                        id: this.state.blogsArr[indexOfClicked].id,
+                                                        id: this.state.blogsResults.blogsArr[indexOfClicked].id,
                                                         percentage: 100
                                                     }
                                                 });
