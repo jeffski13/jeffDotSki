@@ -77,7 +77,10 @@ class BlogTextItem extends Component {
 
     //add in subtext. bold title, add in text
      return(
-         <li key={index}> {title}{textListItem.text}{subtext}</li>
+         <li key={index}> 
+            {title}{textListItem.text}
+            {subtext}
+        </li>
      );
   }
 
