@@ -110,6 +110,11 @@
     padding-left: 0;
 }
 
+.Blogs_controls-date {
+    padding: 5px;
+    font-weight: 500;
+}
+
 .BlogOneAtTime {   
     padding-top: 20px; 
 }

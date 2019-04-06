@@ -112,14 +112,22 @@ class Blogs extends Component {
                     networkStatus: STATUS_SUCCESS
                 });
             });
-            
+
         });
     }
 
+    reverseBlogOrder = () => {
+        this.setState({
+            sortBlogsDateDescending: !this.state.sortBlogsDateDescending
+        }, () => {
+            this.sortBlogsByDate();
+        });
+    }
 
-    sortBlogsByDate = (shouldDescend) => {
+    sortBlogsByDate = () => {
+
         let sortingHatSwitch = -1;
-        if (shouldDescend) {
+        if (this.state.sortBlogsDateDescending) {
             sortingHatSwitch = 1;
         }
         let sortedBlogsArr = this.state.blogsResults.blogsArr;
@@ -136,7 +144,6 @@ class Blogs extends Component {
 
         this.setState({
             blogsArr: sortedBlogsArr,
-            sortBlogsDateDescending: shouldDescend,
             hasInitiallySorted: true
         });
     }
@@ -300,6 +307,7 @@ class Blogs extends Component {
             if (this.state.isViewMobile) {
                 blogHeaderClass = 'Blogs_mobile';
             }
+
             blogsArea = (
                 <div className="Blogs">
                     <Container>
@@ -309,28 +317,20 @@ class Blogs extends Component {
                             </Col>
                             <Col xs={4} md={6} className="Blogs_controls-wrapper">
                                 <div className="Blogs_controls">
+                                <div className="Blogs_controls-date">{timelineLinksInfo[0].popoverText}</div>
                                     <ButtonGroup>
                                         <Button
-                                            disabled={!this.state.sortBlogsDateDescending}
+                                            variant="secondary"
                                             onClick={() => {
-                                                this.sortBlogsByDate(false);
+                                                this.reverseBlogOrder();
                                             }}
                                         >
                                             <i className="material-icons navigation-icon-button">
-                                                arrow_downward
-                                            </i>
-                                        </Button>
-                                        <Button
-                                            disabled={this.state.sortBlogsDateDescending}
-                                            onClick={() => {
-                                                this.sortBlogsByDate(true);
-                                            }}
-                                        >
-                                            <i className="material-icons navigation-icon-button">
-                                                arrow_upward
+                                                swap_vert
                                             </i>
                                         </Button>
                                     </ButtonGroup>
+                                <div className="Blogs_controls-date">{timelineLinksInfo[timelineLinksInfo.length - 1].popoverText}</div>
                                 </div>
                             </Col>
                         </Row>
