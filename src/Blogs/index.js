@@ -316,30 +316,16 @@ class Blogs extends Component {
                                 <div className="blogBrowserTitle">{this.state.tripName}</div>
                             </Col>
                             <Col xs={4} md={6} className="Blogs_controls-wrapper">
-                                <div className="Blogs_controls">
-                                <div className="Blogs_controls-date">{timelineLinksInfo[0].popoverText}</div>
-                                    <ButtonGroup>
-                                        <Button
-                                            variant="secondary"
-                                            onClick={() => {
-                                                this.reverseBlogOrder();
-                                            }}
-                                        >
-                                            <i className="material-icons navigation-icon-button">
-                                                swap_vert
-                                            </i>
-                                        </Button>
-                                    </ButtonGroup>
-                                <div className="Blogs_controls-date">{timelineLinksInfo[timelineLinksInfo.length - 1].popoverText}</div>
-                                </div>
+                                
                             </Col>
                         </Row>
                         <Row className={blogHeaderClass}>
                             <Col xs={12}>
                                 <div className="BlogList">
                                     {this.state.blogsResults.blogsArr.map(this.renderSampleBlogItem)}
-
+                                    
                                     <Timeline
+                                        onReverseOrderClickedCallback={this.reverseBlogOrder}
                                         linksInfo={timelineLinksInfo}
                                         onTimelineClickedCallback={(indexOfClicked) => {
                                             //delay until transition of movement is over

@@ -3,16 +3,13 @@
 }
 
 .Timeline_sidenav {
+    padding-top: 55px;
     position: fixed;
-    bottom: 13vh;
-    right: 1vw;
+    top: 0vh;
+    right: 0px;
+    text-align: center;
 }
 
 #timeline-canvas {
     border:1px solid #d3d3d3;
-}
-
-.timeline-page-content-section {
-    height: 1000px;
-     background-color: lightgray;
 }

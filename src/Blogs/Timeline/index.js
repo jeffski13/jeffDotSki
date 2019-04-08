@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip, ButtonGroup, Button } from 'react-bootstrap';
 import './styles.css';
 
 /**
@@ -31,7 +31,8 @@ export default class Timeline extends React.Component {
         super(props);
         this.state = {
             windowHeight: window.innerHeight,
-            navWidth: 50
+            navWidth: 30,
+            totalHeightFraction: 0.75
         }
     }
 
@@ -52,20 +53,22 @@ export default class Timeline extends React.Component {
 
     renderDatePoints = (nextLinkInfo, index) => {
         let endLengths = 10;
-        let totalHeight = this.state.windowHeight * 0.75;
+        let totalHeight = this.state.windowHeight * this.state.totalHeightFraction;
 
         let svgCenterY = endLengths + index * ((totalHeight - (2 * endLengths)) / (this.props.linksInfo.length - 1));
 
         let circleFillColor = 'grey';
-        if(nextLinkInfo.isSectionVisible){
+        if (nextLinkInfo.isSectionVisible) {
             circleFillColor = 'black';
         }
 
+        console.log('rendering timeline ', index, 'max height:', totalHeight);
+
         return (
-            <LinkWithTooltip 
+            <LinkWithTooltip
                 key={'timelineLink-' + index + '-' + nextLinkInfo.elementId}
                 id={'timelineLink-' + index + '-' + nextLinkInfo.elementId}
-                tooltip={nextLinkInfo.popoverText} 
+                tooltip={nextLinkInfo.popoverText}
                 href={'#' + nextLinkInfo.elementId}
                 onAnchorClickedCallback={() => {
                     this.props.onTimelineClickedCallback(index);
@@ -80,10 +83,27 @@ export default class Timeline extends React.Component {
     }
 
     render() {
-        let totalHeight = this.state.windowHeight * 0.75;
+        let totalHeight = this.state.windowHeight * this.state.totalHeightFraction;
 
         return (
             <div className="Timeline_sidenav" >
+                <div>
+                    <div className="Blogs_controls-date">{this.props.linksInfo[0].popoverText}</div>
+                    <ButtonGroup>
+                        <Button
+                            variant="secondary"
+                            onClick={() => {
+                                this.props.onReverseOrderClickedCallback();
+                            }}
+                        >
+                            <i className="material-icons navigation-icon-button">
+                                swap_vert
+                            </i>
+                        </Button>
+                    </ButtonGroup>
+
+                    <div className="Blogs_controls-date">{this.props.linksInfo[this.props.linksInfo.length - 1].popoverText}</div>
+                </div>
                 <div>
                     <svg height={totalHeight} width={this.state.navWidth}>
                         {this.props.linksInfo.map(this.renderDatePoints)}
@@ -108,10 +128,10 @@ function LinkWithTooltip({ id, children, href, tooltip, onAnchorClickedCallback 
             delayShow={100}
             delayHide={200}
         >
-            <a 
-                href={href} 
-                onClick={()=>{
-                    onAnchorClickedCallback();            
+            <a
+                href={href}
+                onClick={() => {
+                    onAnchorClickedCallback();
                 }}
             >
                 {children}
