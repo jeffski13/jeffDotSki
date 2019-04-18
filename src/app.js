@@ -19,16 +19,18 @@ import TimelineExample from './Blogs/Timeline/TimelineExample';
 import ProfileEditInfo from './TravelersTrails/Profile/EditInfo';
 import ProfileEditPic from './TravelersTrails/Profile/EditPic';
 import TravelTrailsHome from './TravelersTrails/Home';
+import ManageTrips from './TravelersTrails/Trips';
 import './styles.css';
 
 export const jeffskiRoutes = {
-    travelTrailsHome: '/traveltrails',
     login: '/traveltrails/login',
+    manageTrips: '/traveltrails/manageTrips',
     profile: '/traveltrails/profile',
     profileEditInfo: '/traveltrails/profile/edit',
     profileEditPic: '/traveltrails/profile/edit/pic',
     registerCognito: '/traveltrails/signup/register/account',
     registerBlogUser: '/traveltrails/signup/register/bloguser',
+    travelTrailsHome: '/traveltrails',
     verify: '/traveltrails/signup/verify'
 };
 
@@ -55,6 +57,7 @@ export default class App extends Component {
                 <Route exact path={jeffskiRoutes.profileEditInfo} component={ProfileEditInfo}/>
                 <Route exact path={jeffskiRoutes.profileEditPic} component={ProfileEditPic}/>
                 <Route exact path={jeffskiRoutes.travelTrailsHome} component={TravelTrailsHome} />
+                <Route exact path={jeffskiRoutes.manageTrips} component={ManageTrips} />
                 <Route path="/traveltrails/:userId/trips/:tripId" component={Blogs} />
                 <Route exact path="/traveltrails/:userId" component={Profile} />
                 <Route component={ ErrorPage } />

@@ -25,12 +25,12 @@ class Profile extends React.Component {
             blogUserInfo: null
         };
     }
-    
+
     componentDidMount() {
         if (this.props.reduxBlogAuth.authState.isLoggedIn) {
             return this.getBlogUserProfile();
         }
-        
+
         //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
         // component did update check hang out since each page will require something different?
         //if we hit this page for the first time we might not know if we are logged in
@@ -49,11 +49,11 @@ class Profile extends React.Component {
             this.getBlogUserProfile();
         }
         //if user logs out they cannot possibly edit the profile
-        if(previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
+        if (previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
             this.setState({
                 isEditEnabled: false
             });
-            this.goToLogin();        
+            this.goToLogin();
         }
     }
 
@@ -76,7 +76,7 @@ class Profile extends React.Component {
         }, () => {
             let userId = this.props.match.params.userId;
             //if we are logged in and on our profile use our id
-            if(!userId && this.props.reduxBlogAuth.authState.isLoggedIn) {
+            if (!userId && this.props.reduxBlogAuth.authState.isLoggedIn) {
                 userId = this.props.reduxBlogAuth.userInfo.id;
             }
             getBlogUserSecure(userId, (err, blogUserInfo) => {
@@ -106,7 +106,7 @@ class Profile extends React.Component {
     goToLogin = () => {
         this.props.history.push(jeffskiRoutes.login);
     }
-    
+
     logout = () => {
         this.props.blogAuth.logout();
     }
@@ -208,7 +208,7 @@ class Profile extends React.Component {
             );
         }
         else {
-            if(this.state.isEditEnabled){
+            if (this.state.isEditEnabled) {
                 bioArea = (
                     <div className="Profile_empty-info">Your bio is empty. {editLink}</div>
                 );
@@ -299,7 +299,16 @@ class Profile extends React.Component {
                     </Col>
                     <Col xs={12} md={4} className="Profile_bio-trip-row">
                         <Col xs={12}>
-                            <div className="Profile_title">Trips</div>
+                            <div className="Profile_title">Trips {this.state.isEditEnabled &&
+                                    <span>
+                                        <Button
+                                            onClick={() => { this.props.history.push(jeffskiRoutes.manageTrips); }}
+                                            variant="link"
+                                        >
+                                            Manage Trips
+                                        </Button>
+                                    </span>}
+                                </div>
                             {userState.trips && userState.trips.map(this.renderTripLinks)}
                             {(!userState.trips || userState.trips.length === 0) && this.state.isEditEnabled &&
                                 <div className="Profile_empty-info">You have no trips.</div>}
