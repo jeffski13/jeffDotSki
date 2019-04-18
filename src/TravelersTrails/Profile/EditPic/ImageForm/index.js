@@ -3,7 +3,7 @@ import { Panel, FormGroup, FormControl, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../../Network/consts';
-import { validateFormString, FORM_SUCCESS, FORM_ERROR } from '../../formvalidation';
+import { validateFormString, FORM_SUCCESS, FORM_ERROR } from '../../../formvalidation';
 import './styles.css';
 
 // keep the rif raf out (25MB image...seems a bit excessive), even a panoramic is 12.5MB

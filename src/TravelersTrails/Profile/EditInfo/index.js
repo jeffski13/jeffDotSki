@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { updateBlogUserSecure, getBlogUserSecure, emptyProfileUrl, profileGetFailMessage } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
-import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from '../formvalidation';
+import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from '../../formvalidation';
 import '../../styles.css';
 import './styles.css';
 
