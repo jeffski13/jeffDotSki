@@ -152,7 +152,6 @@ export default class TripForm extends React.Component {
                             <Form.Group controlId="TripForm_monthFormGroup"
                                     validationState={validateFormPositiveNumber(this.props.month)}
                             >
-                                <Form.Label>Example select</Form.Label>
                                 <Form.Control as="select">
                                     {MONTHS.map(this.renderMonthsOptions)}
                                 </Form.Control>

@@ -1,9 +1,13 @@
 import React from 'react';
-import { ButtonToolbar, Button } from 'react-bootstrap';
+import { ButtonToolbar, Button, Container } from 'react-bootstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import withBlogAuth from '../Auth/withBlogAuth';
 import Indicator from '../../Network/Indicator';
+import Loadingski from '../../Inf/Loadingski';
 import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../formvalidation';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import { createTripSecure, updateTripSecure } from '../TripsForUser';
@@ -13,7 +17,7 @@ import './styles.css';
 
 const TRIP_MODE_CREATE_NEW = 'TRIP_MODE_CREATE_NEW';
 const TRIP_MODE_EDIT_EXISTING = 'TRIP_MODE_EDIT_EXISTING';
-export default class Trips extends React.Component {
+class Trips extends React.Component {
 
     constructor(props) {
         super(props);
@@ -36,6 +40,20 @@ export default class Trips extends React.Component {
             },
             refreshTrips: false //toggled whenever we want to refresh trips
         };
+    }
+
+    componentDidMount() {
+        if (this.props.reduxBlogAuth.authState.isLoggedIn) {
+            return this.getBlogUserProfile();
+        }
+
+        //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
+        // component did update check hang out since each page will require something different?
+        //if we hit this page for the first time we might not know if we are logged in
+        if (!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
+            //perform initial auth check
+            this.props.blogAuth.checkForAuth();
+        }
     }
 
     //returns true if the blog is ready to be submitted to the server
@@ -113,6 +131,10 @@ export default class Trips extends React.Component {
 
     render() {
 
+        if(!this.props.reduxBlogAuth.authState.isLoggedIn){
+            return <Loadingski />
+        }
+
         let getTripDetailsContent = null;
         if (this.state.tripInfo) {
             getTripDetailsContent = (
@@ -146,7 +168,7 @@ export default class Trips extends React.Component {
         }
         return (
             
-            <div className="Trips">
+            <Container className="Trips">
                 <Button
                     disabled={this.state.tripMode === TRIP_MODE_CREATE_NEW}
                     className="Trips_tripButton"
@@ -201,7 +223,13 @@ export default class Trips extends React.Component {
                     </ButtonToolbar>
                     {tripCreationServerMessage}
                 </div>
-            </div>
+            </Container>
         );
     }
 }
+
+function mapStateToProps({ reduxBlogAuth }) {
+    return { reduxBlogAuth };
+}
+
+export default connect(mapStateToProps)(withRouter(withBlogAuth(Trips)));

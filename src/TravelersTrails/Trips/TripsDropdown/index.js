@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import withBlogAuth from '../../Auth/withBlogAuth';
 import Indicator from '../../../Network/Indicator';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
 import { getTripsSecure } from '../../TripsForUser';
-import {  getTripSecure } from '../../GETtrip';
+import { getTripSecure } from '../../GETtrip';
 import './styles.css';
 
-export default class TripsDropdown extends React.Component {
+class TripsDropdown extends React.Component {
 
     static propTypes = {
         onTripReturned: PropTypes.func.isRequired,
@@ -69,7 +72,7 @@ export default class TripsDropdown extends React.Component {
     getTrips = () => {
         //get a list of all the trips when app starts
         this.setState({ getTripsStatus: STATUS_LOADING });
-        getTripsSecure((err, tripData) => {
+        getTripsSecure(this.props.reduxBlogAuth.userInfo.id, (err, tripData) => {
             if (err) {
                 return this.setState({
                     getTripsStatus: STATUS_FAILURE,
@@ -136,7 +139,7 @@ export default class TripsDropdown extends React.Component {
             //callback to parent, they will appreciate it
             this.props.onTripSelected();
             //get list of blogs by trip name from server
-            getTripSecure(this.state.availableTrips[this.state.tripIndexSelected].id, (err, data) => {
+            getTripSecure(this.props.reduxBlogAuth.userInfo.id, this.state.availableTrips[this.state.tripIndexSelected].id, (err, data) => {
                 if (err) {
                     return this.setState({
                         getTripsStatus: STATUS_FAILURE,
@@ -182,7 +185,6 @@ export default class TripsDropdown extends React.Component {
                 <div>
                     <Form.Group controlId="tripSelectDropdown"
                     >
-                        <Form.Label>Example select</Form.Label>
                         <Form.Control as="select"
                             disabled={this.state.getTripsStatus === STATUS_LOADING}
                         >
@@ -203,3 +205,9 @@ export default class TripsDropdown extends React.Component {
         );
     }
 }
+
+function mapStateToProps({ reduxBlogAuth }) {
+    return { reduxBlogAuth };
+}
+
+export default connect(mapStateToProps)(withRouter(withBlogAuth(TripsDropdown)));
