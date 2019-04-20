@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Row, Col, Form, InputGroup, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, FormGroup, FormControl, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -172,22 +172,27 @@ class Verify extends React.Component {
                 >
                     <Row className="show-grid">
                         <Col />
-                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="verifyCodeInput">
-                            <InputGroup>
-                                <Form.Control
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.isCodeValid()}
-                                    type="text"
-                                    value={this.state.code}
-                                    placeholder="Ex: 123456"
-                                    onChange={this.onVerifyChanged}
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Code must be at least 6 digits.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
+                        <Col xs={10} sm={8} lg={6} xl={4}>
+                            <FormGroup
+                                controlId="verifyCodeInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        aria-describedby="inputGroupPrepend"
+                                        isInvalid={this.state.isValidated && !this.isCodeValid()}
+                                        type="text"
+                                        value={this.state.code}
+                                        placeholder="Ex: 123456"
+                                        onChange={this.onVerifyChanged}
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>Verification Code</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        Code must be at least 6 digits.
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
                         <Col />
                     </Row>
 

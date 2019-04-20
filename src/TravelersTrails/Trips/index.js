@@ -281,7 +281,6 @@ class Trips extends React.Component {
                             <Col xs={12} md={8}>
                                 <FormGroup
                                     controlId="locationFormInput"
-                                    validationState={validateFormString(this.state.tripInfo.location)}
                                 >
                                     <label className="has-float-label">
                                         <FormControl

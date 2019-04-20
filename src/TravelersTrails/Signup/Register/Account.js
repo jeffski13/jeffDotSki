@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Row, Col, Form, InputGroup, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form, InputGroup, Alert, FormGroup, FormControl } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
 import Amplify, { Auth } from 'aws-amplify';
@@ -223,80 +223,95 @@ class Account extends React.Component {
                 >
                     <Row className="show-grid">
                         <Col />
-                        <Form.Group as={Col} xs={10} sm={8} md={6} lg={4} controlId="registerEmailInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.isEmailValid()}
-                                    type="email"
-                                    value={this.state.email}
-                                    placeholder="Ex: yolo@swag.net"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            email: e.target.value
-                                        });
-                                    }}
-                                    name="text"
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Email must not be blank.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
+                        <Col xs={10} sm={8} md={6} lg={4}>
+                            <FormGroup
+                                controlId="registerEmailInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        className="User_login-form-label"
+                                        aria-describedby="inputGroupPrepend"
+                                        type="email"
+                                        value={this.state.email}
+                                        placeholder="Ex: yolo@swag.net"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                email: e.target.value
+                                            });
+                                        }}
+                                        isInvalid={this.state.isValidated && !this.isEmailValid()}
+                                        name="text"
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>Email</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please enter a valid email. Example: yolo@swag.net
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
                         <Col />
                     </Row>
 
                     <Row className="show-grid">
                         <Col />
-                        <Form.Group as={Col} xs={10} sm={8} md={6} lg={4} controlId="registerUsernameInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.isUsernameValid()}
-                                    type="text"
-                                    value={this.state.username}
-                                    placeholder="Ex: SumthingFun"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            username: e.target.value
-                                        });
-                                    }}
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Username must not be blank.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
+                        <Col xs={10} sm={8} md={6} lg={4}>
+                            <FormGroup
+                                controlId="registerUsernameInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        aria-describedby="inputGroupPrepend"
+                                        isInvalid={this.state.isValidated && !this.isUsernameValid()}
+                                        type="text"
+                                        value={this.state.username}
+                                        placeholder="Ex: SumthingFun"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                username: e.target.value
+                                            });
+                                        }}
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>Username</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        Username must not be blank.
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
                         <Col />
                     </Row>
 
                     <Row className="show-grid">
-
                         <Col />
-                        <Form.Group as={Col} xs={10} sm={8} md={6} lg={4} controlId="passwordFormInput">
-                            <InputGroup>
-                                <Form.Control
-                                    className="User_password-form-label"
-                                    isInvalid={this.state.isValidated && !this.isPasswordValid()}
-                                    aria-describedby="inputGroupPrepend"
-                                    type="password"
-                                    value={this.state.password || ''}
-                                    onChange={(e) => {
-                                        console.log('jeffski looking at passowrd: ', e.target.value);
-                                        this.setState({
-                                            password: e.target.value
-                                        });
-                                    }}
-                                    placeholder="Ex: s0m3Th1ngC0mpl!cAt3D"
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Incorrect password format
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
+                        <Col xs={10} sm={8} md={6} lg={4}>
+                            <FormGroup
+                                controlId="passwordFormInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        className="User_password-form-label"
+                                        isInvalid={this.state.isValidated && !this.isPasswordValid()}
+                                        aria-describedby="inputGroupPrepend"
+                                        type="password"
+                                        value={this.state.password || ''}
+                                        onChange={(e) => {
+                                            console.log('jeffski looking at passowrd: ', e.target.value);
+                                            this.setState({
+                                                password: e.target.value
+                                            });
+                                        }}
+                                        placeholder="Ex: s0m3Th1ngC0mpl!cAt3D"
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>Password</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please enter a valid password. Example: s0m3Th1ngC0mpl!cAt3D
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
                         <Col />
                     </Row>
 

@@ -303,53 +303,65 @@ class ProfileEditInfo extends React.Component {
 
                     <Row className="show-grid">
                         <Col />
-                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="profileNameFirstInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    placeholder="Username"
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.state.nameFirst}
-                                    type="text"
-                                    value={this.state.nameFirst}
-                                    placeholder="Ex: Johnny"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            nameFirst: e.target.value
-                                        });
-                                    }}
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    First name must not be blank.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
+                        <Col xs={10} sm={8} lg={6} xl={4} >
+                            <FormGroup
+                                controlId="profileNameFirstInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        className="User_login-form-label"
+                                        placeholder="Username"
+                                        aria-describedby="inputGroupPrepend"
+                                        isInvalid={this.state.isValidated && !this.state.nameFirst}
+                                        type="text"
+                                        value={this.state.nameFirst}
+                                        placeholder="Ex: Johnny"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                nameFirst: e.target.value
+                                            });
+                                        }}
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>First Name</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        First name must not be blank.
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
                         <Col />
                     </Row>
 
                     <Row className="show-grid">
                         <Col />
-                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="profileNameLastInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    placeholder="Username"
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.state.nameLast}
-                                    value={this.state.nameLast}
-                                    placeholder="Ex: Tsunami"
-                                    type="text"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            nameLast: e.target.value
-                                        });
-                                    }}
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Last name must not be blank.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
+                        <Col xs={10} sm={8} lg={6} xl={4} >
+                            <FormGroup
+                                controlId="profileNameLastInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        className="User_login-form-label"
+                                        placeholder="Username"
+                                        aria-describedby="inputGroupPrepend"
+                                        isInvalid={this.state.isValidated && !this.state.nameLast}
+                                        value={this.state.nameLast}
+                                        placeholder="Ex: Tsunami"
+                                        type="text"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                nameLast: e.target.value
+                                            });
+                                        }}
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>Last Name</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        Last name must not be blank.
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
                         <Col />
                     </Row>
 

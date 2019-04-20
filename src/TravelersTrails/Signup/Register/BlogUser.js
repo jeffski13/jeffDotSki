@@ -184,7 +184,7 @@ class BlogUser extends React.Component {
                     onSubmit={e => this.onSignupClicked(e)}
                 >
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                         <Col xs={10} sm={8} md={4}>
                             <FormGroup
                                 controlId="registerEmailInput"
@@ -202,59 +202,69 @@ class BlogUser extends React.Component {
                                 </label>
                             </FormGroup>
                         </Col>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerNameFirstInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    placeholder="Username"
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.state.nameFirst}
-                                    type="text"
-                                    value={this.state.nameFirst}
-                                    placeholder="Ex: Johnny"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            nameFirst: e.target.value
-                                        });
-                                    }}
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    First name must not be blank.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
+                        <Col xs={10} sm={8} md={4}>
+                            <FormGroup
+                                controlId="registerNameFirstInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        className="User_login-form-label"
+                                        aria-describedby="inputGroupPrepend"
+                                        isInvalid={this.state.isValidated && !this.state.nameFirst}
+                                        type="text"
+                                        value={this.state.nameFirst}
+                                        placeholder="Ex: Johnny"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                nameFirst: e.target.value
+                                            });
+                                        }}
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>First Name</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        First name must not be blank.
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Form.Group as={Col} xs={10} sm={8} md={4} controlId="registerNameLastInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    placeholder="Username"
-                                    aria-describedby="inputGroupPrepend"
-                                    isInvalid={this.state.isValidated && !this.state.nameLast}
-                                    value={this.state.nameLast}
-                                    placeholder="Ex: Tsunami"
-                                    type="text"
-                                    onChange={(e) => {
-                                        this.setState({
-                                            nameLast: e.target.value
-                                        });
-                                    }}
-                                    onKeyDown={this.onFormEnterKey}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Last name must not be blank.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
-                        <Col xs={1} sm={2} md={4} />
+                        <Col />
+                        <Col xs={10} sm={8} md={4}>
+                            <FormGroup
+                                controlId="registerNameLastInput"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        className="User_login-form-label"
+                                        aria-describedby="inputGroupPrepend"
+                                        isInvalid={this.state.isValidated && !this.state.nameLast}
+                                        value={this.state.nameLast}
+                                        placeholder="Ex: Tsunami"
+                                        type="text"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                nameLast: e.target.value
+                                            });
+                                        }}
+                                        onKeyDown={this.onFormEnterKey}
+                                    />
+                                    <span>Last Name</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        Last name must not be blank.
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                        </Col>
+                        <Col />
                     </Row>
 
                     <Row className="show-grid">
