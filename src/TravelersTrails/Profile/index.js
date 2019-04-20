@@ -299,16 +299,7 @@ class Profile extends React.Component {
                     </Col>
                     <Col xs={12} md={4} className="Profile_bio-trip-row">
                         <Col xs={12}>
-                            <div className="Profile_title">Trips {this.state.isEditEnabled &&
-                                    <span>
-                                        <Button
-                                            onClick={() => { this.props.history.push(jeffskiRoutes.manageTrips); }}
-                                            variant="link"
-                                        >
-                                            Manage Trips
-                                        </Button>
-                                    </span>}
-                                </div>
+                            <div className="Profile_title">Trips</div>
                             {userState.trips && userState.trips.map(this.renderTripLinks)}
                             {(!userState.trips || userState.trips.length === 0) && this.state.isEditEnabled &&
                                 <div className="Profile_empty-info">You have no trips.</div>}
