@@ -24,20 +24,6 @@ export default class TripForm extends React.Component {
         this.props.onTripFormUpdateCallback(updatedStuff);
     }
 
-    renderMonthsOptions = (nextMonthName, index) => {
-        return (
-            <option 
-                key={nextMonthName + index}
-                onSelect={() => {
-                    //tell parent we have a new month selected
-                    this.onTripFormUpdate({ month: index + 1 });
-                }}
-            >
-                {nextMonthName}
-            </option>
-        );
-    }
-
     render() {
         return (
             <form>

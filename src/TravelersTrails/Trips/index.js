@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonToolbar, Button, Container } from 'react-bootstrap';
+import { ButtonToolbar, Button, Container, Form, Row, Col, FormGroup, FormControl } from 'react-bootstrap';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
@@ -13,16 +13,20 @@ import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/co
 import { createTripSecure, updateTripSecure } from '../TripsForUser';
 import TripsDropdown from './TripsDropdown';
 import TripForm from './TripForm';
+import { jeffskiRoutes } from '../../app';
 import './styles.css';
 
 const TRIP_MODE_CREATE_NEW = 'TRIP_MODE_CREATE_NEW';
 const TRIP_MODE_EDIT_EXISTING = 'TRIP_MODE_EDIT_EXISTING';
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 class Trips extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            isValidated: false,
             submitTripStatus: null,
             tripMode: TRIP_MODE_CREATE_NEW,
             createTripResults: {
@@ -31,11 +35,24 @@ class Trips extends React.Component {
                 code: null
             },
             tripInfo: {
-                location: '',
-                name: '',
-                country: '',
-                state: '',
-                year: moment().year(),
+                location: {
+                    value: '',
+                    valid: false
+                },
+                name: {
+                    value: '',
+                    valid: false
+                },
+                country: {
+                    value: '',
+                },
+                state: {
+                    value: '',
+                },
+                year: {
+                    value: 0,
+                    isValid: false
+                },
                 month: moment().month() + 1
             },
             refreshTrips: false //toggled whenever we want to refresh trips
@@ -43,16 +60,18 @@ class Trips extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.reduxBlogAuth.authState.isLoggedIn) {
-            return this.getBlogUserProfile();
-        }
 
         //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
         // component did update check hang out since each page will require something different?
         //if we hit this page for the first time we might not know if we are logged in
         if (!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             //perform initial auth check
-            this.props.blogAuth.checkForAuth();
+            return this.props.blogAuth.checkForAuth();
+        }
+
+        //if we have done the initial check and we are not logged in go to login
+        if (!this.props.reduxBlogAuth.authState.isLoggedIn) {
+            this.props.history.push(jeffskiRoutes.login);
         }
     }
 
@@ -63,16 +82,33 @@ class Trips extends React.Component {
             return false;
         }
 
-        if (validateFormString(this.state.tripInfo.location) === FORM_SUCCESS &&
-            validateFormString(this.state.tripInfo.name) === FORM_SUCCESS &&
-            validateFormPositiveNumber(this.state.tripInfo.year) === FORM_SUCCESS &&
+        if (this.state.tripInfo.location.isValid &&
+            this.state.tripInfo.name.isValid &&
+            this.state.tripInfo.year.isValid &&
             validateFormPositiveNumber(this.state.tripInfo.month) === FORM_SUCCESS) {
             return true;
         }
         return false;
     }
 
-    onSubmitClicked = () => {
+    onSubmitClicked = (event) => {
+        console.log('trip submit');
+        // if we have valid usernames and passwords and we are not loading right now, try to login
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.isFormSubmitAllowed()) {
+            this.submitTrip();
+        }
+        else {
+            //run validation
+            this.setState({
+                isValidated: true
+            });
+        }
+
+    }
+
+    submitTrip = () => {
         //set state to loading so user cant submit blog twice
         // and loading indicator appears
         this.setState({
@@ -105,10 +141,10 @@ class Trips extends React.Component {
 
 
             //send request with new blog entry
-            if(this.state.tripMode === TRIP_MODE_CREATE_NEW){
-                createTripSecure(this.props.reduxBlogAuth.userInfo.id, this.state.tripInfo,  tripFunctionCallback);
+            if (this.state.tripMode === TRIP_MODE_CREATE_NEW) {
+                createTripSecure(this.props.reduxBlogAuth.userInfo.id, this.state.tripInfo, tripFunctionCallback);
             }
-            else if(this.state.tripMode === TRIP_MODE_EDIT_EXISTING){
+            else if (this.state.tripMode === TRIP_MODE_EDIT_EXISTING) {
                 updateTripSecure(this.props.reduxBlogAuth.userInfo.id, this.state.tripId, this.state.tripInfo, tripFunctionCallback);
             }
         });
@@ -129,9 +165,23 @@ class Trips extends React.Component {
         });
     }
 
+    renderMonthsOptions = (nextMonthName, index) => {
+        return (
+            <option
+                key={nextMonthName + index}
+                onSelect={() => {
+                    //tell parent we have a new month selected
+                    this.tripFormUpdate({ month: index + 1 });
+                }}
+            >
+                {nextMonthName}
+            </option>
+        );
+    }
+
     render() {
 
-        if(!this.props.reduxBlogAuth.authState.isLoggedIn){
+        if (!this.props.reduxBlogAuth.authState.isLoggedIn) {
             return <Loadingski />
         }
 
@@ -140,9 +190,9 @@ class Trips extends React.Component {
             getTripDetailsContent = (
                 <div className="tripInformation" >
                     <h3>Trip Information</h3>
-                    <div><strong>Name: </strong>{this.state.tripInfo.name}</div>
-                    <div><strong>Location: </strong>{this.state.tripInfo.location}</div>
-                    <div><strong>Year: </strong>{this.state.tripInfo.year}</div>
+                    <div><strong>Name: </strong>{this.state.tripInfo.name.value}</div>
+                    <div><strong>Location: </strong>{this.state.tripInfo.location.value}</div>
+                    <div><strong>Year: </strong>{this.state.tripInfo.year.value}</div>
                     <div><strong>Month: </strong>{this.state.tripInfo.month}</div>
                 </div>
             );
@@ -167,63 +217,213 @@ class Trips extends React.Component {
             currentActionMessage = `Editing Trip "${this.state.tripInfo.name}"`;
         }
         return (
-            
+
             <Container className="Trips">
-                <Button
-                    disabled={this.state.tripMode === TRIP_MODE_CREATE_NEW}
-                    className="Trips_tripButton"
-                    bsStyle="success"
-                    onClick={this.resetTripForm}
-                >New Trip</Button>
-                <TripsDropdown
-                    className="Trips_tripButton"
-                    refreshProp={this.state.refreshTrips}
-                    onTripReturned={(tripInfoReturned) => {
-                        this.setState({
-                            tripMode: TRIP_MODE_EDIT_EXISTING,
-                            tripInfo: tripInfoReturned
-                        });
-                    }}
-                    ref={instance => { this.childTripsDropdown = instance; }}
-                />
-
-                <div className="Trips_tripForm">
-                    <h3>{currentActionMessage}</h3>
-
-                    <TripForm
-                        name={this.state.tripInfo.name}
-                        location={this.state.tripInfo.location}
-                        country={this.state.tripInfo.country}
-                        state={this.state.tripInfo.state}
-                        year={this.state.tripInfo.year}
-                        month={this.state.tripInfo.month}
-                        onTripFormUpdateCallback={(updateTripInfo) => {
+                <Form
+                    onSubmit={e => this.onSubmitClicked(e)}
+                >
+                    <Button
+                        disabled={this.state.tripMode === TRIP_MODE_CREATE_NEW}
+                        className="Trips_tripButton"
+                        variant="success"
+                        onClick={this.resetTripForm}
+                    >
+                        New Trip
+                    </Button>
+                    <TripsDropdown
+                        className="Trips_tripButton"
+                        refreshProp={this.state.refreshTrips}
+                        onTripReturned={(tripInfoReturned) => {
                             this.setState({
-                                tripInfo: { ...this.state.tripInfo, ...updateTripInfo }
+                                tripMode: TRIP_MODE_EDIT_EXISTING,
+                                tripInfo: tripInfoReturned
                             });
                         }}
-
+                        ref={instance => { this.childTripsDropdown = instance; }}
                     />
 
-                    <ButtonToolbar>
-                        <Button
-                            bsStyle="primary"
-                            bsSize="large"
-                            onClick={this.onSubmitClicked}
-                            disabled={!this.isFormSubmitAllowed()}
-                        >Submit</Button>
-                        <div>
-                            {(this.state.submitTripStatus === STATUS_LOADING)
-                                && <CircularProgress />}
-                            {(this.state.submitTripStatus === STATUS_SUCCESS)
-                                && <Indicator success={true} />}
-                            {(this.state.submitTripStatus === STATUS_FAILURE)
-                                && <Indicator success={false} />}
-                        </div>
-                    </ButtonToolbar>
-                    {tripCreationServerMessage}
-                </div>
-            </Container>
+                    <div className="Trips_tripForm">
+                        <h3>{currentActionMessage}</h3>
+
+                        <Row className="show-grid">
+                            <Col xs={12} md={8}>
+                                <FormGroup
+                                    controlId="nameFormInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            type="text"
+                                            value={this.state.tripInfo.name.value || ''}
+                                            placeholder="Enter text"
+                                            onChange={(e) => {
+                                                let tripUpdateInfo = {
+                                                    name: {
+                                                        value: e.target.value,
+                                                        isValid: validateFormString(e.target.value) === FORM_SUCCESS
+                                                    }
+                                                };
+                                                this.setState({
+                                                    tripInfo: { ...this.state.tripInfo, ...tripUpdateInfo }
+                                                });
+                                            }}
+                                            isInvalid={this.state.isValidated && !this.state.tripInfo.name.isValid}
+                                        />
+                                        <span>Name</span>
+                                        <Form.Control.Feedback type="invalid">
+                                            Name must have a value.
+                                        </Form.Control.Feedback>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col xs={12} md={8}>
+                                <FormGroup
+                                    controlId="locationFormInput"
+                                    validationState={validateFormString(this.state.tripInfo.location)}
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            type="text"
+                                            value={this.state.tripInfo.location.value || ''}
+                                            placeholder="Enter text"
+                                            onChange={(e) => {
+                                                let tripUpdateInfo = {
+                                                    location: {
+                                                        value: e.target.value,
+                                                        isValid: validateFormString(e.target.value) === FORM_SUCCESS
+                                                    }
+                                                };
+                                                this.setState({
+                                                    tripInfo: { ...this.state.tripInfo, ...tripUpdateInfo }
+                                                });
+                                            }}
+                                            isInvalid={this.state.isValidated && !this.state.tripInfo.name.isValid}
+                                        />
+                                        <span>Location</span>
+                                        <Form.Control.Feedback type="invalid">
+                                            Location must have a value.
+                                        </Form.Control.Feedback>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col xs={12} md={4}>
+                                <FormGroup
+                                    controlId="yearFormInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            placeholder="Enter text"
+                                            type="text"
+                                            value={this.state.tripInfo.year.value || ''}
+                                            onChange={(e) => {
+                                                let tripUpdateInfo = {
+                                                    year: {
+                                                        value: e.target.value,
+                                                        isValid: validateFormPositiveNumber(e.target.value) === FORM_SUCCESS
+                                                    }
+                                                };
+                                                this.setState({
+                                                    tripInfo: { ...this.state.tripInfo, ...tripUpdateInfo }
+                                                });
+                                            }}
+                                            isInvalid={this.state.isValidated && !this.state.tripInfo.year.isValid}
+                                        />
+                                        <span>Year</span>
+                                        <Form.Control.Feedback type="invalid">
+                                            Year must be a valid number.
+                                        </Form.Control.Feedback>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={12} md={4}>
+                                <Form.Group controlId="TripForm_monthFormGroup"
+                                    validationState={validateFormPositiveNumber(this.props.month)}
+                                >
+                                    <Form.Control as="select">
+                                        {MONTHS.map(this.renderMonthsOptions)}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col xs={12} md={4}>
+                                <FormGroup
+                                    controlId="countryFormInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            type="text"
+                                            value={this.state.tripInfo.country.value || ''}
+                                            placeholder="Country"
+                                            onChange={(e) => {
+                                                let tripUpdateInfo = {
+                                                    country: {
+                                                        value: e.target.value,
+                                                    }
+                                                };
+                                                this.setState({
+                                                    tripInfo: { ...this.state.tripInfo, ...tripUpdateInfo }
+                                                });
+                                            }}
+                                        />
+                                        <span>Country</span>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                            <Col xs={12} md={4}>
+                                <FormGroup
+                                    controlId="stateFormInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            type="text"
+                                            value={this.state.tripInfo.state.value || ''}
+                                            placeholder="Enter text"
+                                            onChange={(e) => {
+                                                let tripUpdateInfo = {
+                                                    state: {
+                                                        value: e.target.value,
+                                                    }
+                                                };
+                                                this.setState({
+                                                    tripInfo: { ...this.state.tripInfo, ...tripUpdateInfo }
+                                                });
+                                            }}
+                                        />
+                                        <span>State/Province</span>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                        </Row>
+
+                        <ButtonToolbar>
+                            <Button
+                                variant="primary"
+                                size="large"
+                                type="submit"
+                                disabled={this.state.submitTripStatus === STATUS_LOADING}
+                            >
+                                Submit
+                            </Button>
+                            <div>
+                                {(this.state.submitTripStatus === STATUS_LOADING)
+                                    && <CircularProgress />}
+                                {(this.state.submitTripStatus === STATUS_SUCCESS)
+                                    && <Indicator success={true} />}
+                                {(this.state.submitTripStatus === STATUS_FAILURE)
+                                    && <Indicator success={false} />}
+                            </div>
+                        </ButtonToolbar>
+                        {tripCreationServerMessage}
+                    </div>
+                </Form>
+            </Container >
         );
     }
 }
