@@ -39,3 +39,18 @@
 .User_action-button-login-area {
     text-align: right;
 }
+
+.Profile_trip-section-addTripButton {
+    padding-left: 10px;
+}
+
+.Profile_trip-section-addTripForm {
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+
+.Profile_trip-section-addTripErrorMesssage {
+    padding-top: 0px;
+    font-size: 14px;
+    color: red;
+}

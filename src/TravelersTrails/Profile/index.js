@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Row, Col, Image, Alert } from 'react-bootstrap';
+import { Button, Container, Row, Col, Image, Alert, FormGroup, FormControl, Form } from 'react-bootstrap';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -8,10 +8,21 @@ import { LinkContainer } from 'react-router-bootstrap';
 import withBlogAuth from '../Auth/withBlogAuth';
 import Loadingski from '../../Inf/Loadingski';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
+import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../formvalidation';
 import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
+import { createTripSecure, updateTripSecure } from '../TripsForUser';
 import { jeffskiRoutes } from '../../app';
 import './styles.css';
 import '../styles.css';
+import { LOADIPHLPAPI } from 'dns';
+
+const initialTripFormState = {
+    name: {
+        value: '',
+        isValid: false
+    },
+    isValidated: false
+};
 
 class Profile extends React.Component {
 
@@ -22,7 +33,10 @@ class Profile extends React.Component {
             blogUserNetwork: STATUS_LOADING,
             showMoreBio: false,
             isEditEnabled: false,
-            blogUserInfo: null
+            blogUserInfo: null,
+            isAddingTrip: false,
+            addTripNetwork: null,
+            addTripForm: initialTripFormState,
         };
     }
 
@@ -123,12 +137,180 @@ class Profile extends React.Component {
         this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
     }
 
+    isValidTripName = (tripNameInQuestion) => {
+        // check for duplicate trip names
+        if (this.state.blogUserInfo.trips) {
+            for (let i = 0; i < this.state.blogUserInfo.trips.length; i++) {
+                if (tripNameInQuestion === this.state.blogUserInfo.trips[i].name) {
+                    return false;
+                }
+            }
+        }
+        return validateFormString(tripNameInQuestion) === FORM_SUCCESS;
+    }
+
+    //returns true if the blog is ready to be submitted to the server
+    isAddTripFormSubmitAllowed = () => {
+        //form should not submit if we are currently uploading anything
+        if (this.state.addTripNetwork === STATUS_LOADING) {
+            return false;
+        }
+
+        if (this.state.addTripForm.name.isValid) {
+            return true;
+        }
+
+        return false;
+    }
+
+    submitAddNewTripForm = (event) => {
+        // if we have valid trip name and we are not loading right now, try to create a new trip
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.isAddTripFormSubmitAllowed()) {
+            this.addNewTrip();
+        }
+        else {
+            //run validation
+            this.setState({
+                addTripForm: { ...this.state.addTripForm, isValidated: true }
+            });
+        }
+    }
+
+    addNewTrip = () => {
+        this.setState({
+            addTripNetwork: STATUS_LOADING
+        }, () => {
+            let tripInfo = {
+                name: this.state.addTripForm.name.value
+            }
+            createTripSecure(this.props.reduxBlogAuth.userInfo.id, tripInfo, (err, data) => {
+                if (err) {
+                    this.setState({
+                        addTripNetwork: STATUS_FAILURE,
+                        createTripResults: {
+                            status: err.status,
+                            message: err.data.message,
+                            code: err.data.code
+                        },
+                        addTripForm: { ...this.state.addTripForm, isValidated: true }
+                    });
+                    return;
+                }
+                //declare victory! and clear out trip creation stuff
+                //refresh trips
+                this.resetTripForm();
+                this.setState({
+                    addTripNetwork: STATUS_SUCCESS,
+                    createTripResults: {
+                        message: 'Trip Created!'
+                    },
+                    addTripForm: initialTripFormState,
+                    isAddingTrip: false
+                });
+            });
+        })
+    }
+
     renderTripLinks = (nextTripInfo) => {
         return (
             <div key={nextTripInfo.id} >
                 <Link to={`${jeffskiRoutes.travelTrailsHome}/${this.state.blogUserInfo.id}/trips/${nextTripInfo.id}`} >{nextTripInfo.name}</Link>
             </div>
         );
+    }
+
+    renderTripArea = () => {
+        //special cases in which we have no trips
+        let tripsList = null;
+        if ((!this.state.blogUserInfo.trips || this.state.blogUserInfo.trips.length === 0)) {
+            if (this.state.isEditEnabled) {
+                tripsList = (
+                    <div className="Profile_empty-info">You have no trips.</div>
+                );
+            }
+            else {
+                tripsList = (
+                    <div className="Profile_empty-info">This user has no trips.</div>
+                );
+            }
+        }
+        else {
+            tripsList = this.state.blogUserInfo.trips.map(this.renderTripLinks)
+        }
+
+        let tripAddButton = null;
+        let addTripForm = null;
+        if (this.state.isEditEnabled) {
+            if (this.state.isAddingTrip) {
+                let addTripMessage = null;
+                if (this.state.addTripNetwork === STATUS_FAILURE) {
+                    addTripMessage = (
+                        <div className="Profile_trip-section-addTripErrorMesssage">An error occured. Please try again later.</div>
+                    )
+                }
+
+                addTripForm = (
+                    <Form
+                        className="Profile_trip-section-addTripForm"
+                        onSubmit={e => this.submitAddNewTripForm(e)}
+                    >
+                        <FormGroup
+                            controlId="nameFormInput"
+                        >
+                            <label className="has-float-label">
+                                <FormControl
+                                    type="text"
+                                    value={this.state.addTripForm.name.value || ''}
+                                    placeholder="Name Your Adventure"
+                                    onChange={(e) => {
+                                        let tripUpdateInfo = {
+                                            name: {
+                                                value: e.target.value,
+                                                isValid: this.isValidTripName(e.target.value)
+                                            }
+                                        };
+                                        this.setState({
+                                            addTripForm: { ...this.state.addTripForm, ...tripUpdateInfo }
+                                        });
+                                    }}
+                                    isInvalid={this.state.addTripForm.isValidated && !this.state.addTripForm.name.isValid}
+                                    onBlur={this.submitAddNewTripForm}
+                                    disabled={this.state.addTripNetwork === STATUS_LOADING}
+                                />
+                                <span>New Trip Name</span>
+                                <Form.Control.Feedback type="invalid">
+                                    Your trip name must be unique.
+                                </Form.Control.Feedback>
+                            </label>
+                        </FormGroup>
+                        {addTripMessage}
+                    </Form>
+                );
+            }
+            else {
+                tripAddButton = (
+                    <span className="Profile_trip-section-addTripButton">
+                        <Button
+                            onClick={() => this.setState({ isAddingTrip: true })}
+                            variant="success"
+                            size="small"
+                        >
+                            New Trip
+                    </Button>
+                    </span>
+                );
+            }
+        }
+
+        return (
+            <Col xs={12}>
+                <div className="Profile_title">Trips{tripAddButton}</div>
+                {addTripForm}
+                {tripsList}
+            </Col>
+        )
     }
 
     render() {
@@ -154,7 +336,7 @@ class Profile extends React.Component {
                                         variant="link"
                                     >
                                         Refresh?
-                                        </Button>
+                                    </Button>
                                 </span>
                             </span>
                         </Alert>
@@ -298,14 +480,7 @@ class Profile extends React.Component {
                         </Col>
                     </Col>
                     <Col xs={12} md={4} className="Profile_bio-trip-row">
-                        <Col xs={12}>
-                            <div className="Profile_title">Trips</div>
-                            {userState.trips && userState.trips.map(this.renderTripLinks)}
-                            {(!userState.trips || userState.trips.length === 0) && this.state.isEditEnabled &&
-                                <div className="Profile_empty-info">You have no trips.</div>}
-                            {(!userState.trips || userState.trips.length === 0) && !this.state.isEditEnabled &&
-                                <div className="Profile_empty-info">This user has no trips.</div>}
-                        </Col>
+                        {this.renderTripArea()}
                     </Col>
                 </Row>
                 {

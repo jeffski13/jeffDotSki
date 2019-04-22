@@ -105,7 +105,6 @@ class Trips extends React.Component {
                 isValidated: true
             });
         }
-
     }
 
     submitTrip = () => {
