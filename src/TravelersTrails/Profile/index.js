@@ -14,7 +14,6 @@ import { createTripSecure, updateTripSecure } from '../TripsForUser';
 import { jeffskiRoutes } from '../../app';
 import './styles.css';
 import '../styles.css';
-import { LOADIPHLPAPI } from 'dns';
 
 const initialTripFormState = {
     name: {
@@ -141,7 +140,7 @@ class Profile extends React.Component {
         // check for duplicate trip names
         if (this.state.blogUserInfo.trips) {
             for (let i = 0; i < this.state.blogUserInfo.trips.length; i++) {
-                if (tripNameInQuestion === this.state.blogUserInfo.trips[i].name) {
+                if (tripNameInQuestion.trim() === this.state.blogUserInfo.trips[i].name.trim()) {
                     return false;
                 }
             }
@@ -199,15 +198,19 @@ class Profile extends React.Component {
                     return;
                 }
                 //declare victory! and clear out trip creation stuff
-                //refresh trips
-                this.resetTripForm();
+                //add the trip to the trips array
+                let updatedTrips = this.state.blogUserInfo.trips;
+                updatedTrips.push(data.trip);
+                const updatedBlogUserInfo =  {trips: updatedTrips};
+                
                 this.setState({
                     addTripNetwork: STATUS_SUCCESS,
                     createTripResults: {
                         message: 'Trip Created!'
                     },
                     addTripForm: initialTripFormState,
-                    isAddingTrip: false
+                    isAddingTrip: false,
+                    blogUserInfo: {...this.state.blogUserInfo, updatedBlogUserInfo}
                 });
             });
         })
@@ -279,7 +282,7 @@ class Profile extends React.Component {
                                     onBlur={this.submitAddNewTripForm}
                                     disabled={this.state.addTripNetwork === STATUS_LOADING}
                                 />
-                                <span>New Trip Name</span>
+                                <span>New Trip</span>
                                 <Form.Control.Feedback type="invalid">
                                     Your trip name must be unique.
                                 </Form.Control.Feedback>
