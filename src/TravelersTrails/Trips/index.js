@@ -19,7 +19,10 @@ import './styles.css';
 const TRIP_MODE_CREATE_NEW = 'TRIP_MODE_CREATE_NEW';
 const TRIP_MODE_EDIT_EXISTING = 'TRIP_MODE_EDIT_EXISTING';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+//////////////////////
+// DEPRECATED
+//////////////////////
+// we are creating trips with name only from profile and editing on blog page
 class Trips extends React.Component {
 
     constructor(props) {

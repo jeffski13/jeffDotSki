@@ -283,7 +283,15 @@ class Blogs extends Component {
             let blogTitleRow = (
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={8} md={6}>
-                        <div className="blogBrowserTitle">{this.state.tripName}</div>
+                        <div className="blogBrowserTitle">{this.state.tripName}
+                            <span><Button
+                                onClick={() => {
+                                    this.props.onReverseOrderClickedCallback();
+                                }}
+                            >
+                                <i className="material-icons">edit</i>
+                            </Button></span>
+                        </div>
                     </Col>
                     <Col xs={4} md={6} className="Blogs_controls-wrapper">
 

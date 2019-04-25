@@ -3,6 +3,14 @@ import { defaultErrorResponse } from '../Network/consts';
 import { Auth, Storage } from 'aws-amplify';
 
 export const tripsGetFailMessage = 'We were not able to get your trip information at this time.';
+const mockErrorResponse = {
+    "status": 409,
+    "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+    },
+    "data": { "code": "BadRequest", "message": "Uh oh! We already have a trip with that name of Its Trippay2!. Please send a trip with a unique name." }
+};
 
 /**
  * gets user info (name, email, trips owned, etc.)
@@ -34,23 +42,23 @@ export function getTripsSecure(userId, callback) {
                 }
                 return callback(defaultErrorResponse);
             });
-        }).catch((err) => {
-            axios({
-                method: 'GET',
-                url: `https://864wf8s3oi.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips`,
+    }).catch((err) => {
+        axios({
+            method: 'GET',
+            url: `https://864wf8s3oi.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips`,
+        })
+            .then((response) => {
+                //parse the response
+                let rawUserResponseArr = response.data;
+
+                callback(null, rawUserResponseArr);
             })
-                .then((response) => {
-                    //parse the response
-                    let rawUserResponseArr = response.data;
-    
-                    callback(null, rawUserResponseArr);
-                })
-                .catch((error) => {
-                    if (error.response) {
-                        return callback(error.response);
-                    }
-                    return callback(defaultErrorResponse);
-                });
+            .catch((error) => {
+                if (error.response) {
+                    return callback(error.response);
+                }
+                return callback(defaultErrorResponse);
+            });
     });
 
 }
@@ -102,7 +110,6 @@ export function updateTripSecure(userId, tripId, tripUpdateInfo, callback) {
  * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
  */
 export function createTripSecure(userId, tripInfo, callback) {
-    
     Auth.currentAuthenticatedUser({
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {

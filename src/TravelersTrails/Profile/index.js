@@ -18,7 +18,8 @@ import '../styles.css';
 const initialTripFormState = {
     name: {
         value: '',
-        isValid: false
+        isValid: false,
+        validationMessage: ''
     },
     isValidated: false
 };
@@ -169,12 +170,9 @@ class Profile extends React.Component {
         if (this.isAddTripFormSubmitAllowed()) {
             this.addNewTrip();
         }
-        else {
-            //run validation
-            this.setState({
-                addTripForm: { ...this.state.addTripForm, isValidated: true }
-            });
-        }
+        this.setState({
+            addTripForm: { ...this.state.addTripForm, isValidated: true }
+        });
     }
 
     addNewTrip = () => {
@@ -186,23 +184,21 @@ class Profile extends React.Component {
             }
             createTripSecure(this.props.reduxBlogAuth.userInfo.id, tripInfo, (err, data) => {
                 if (err) {
-                    this.setState({
+                    return this.setState({
                         addTripNetwork: STATUS_FAILURE,
                         createTripResults: {
                             status: err.status,
                             message: err.data.message,
                             code: err.data.code
-                        },
-                        addTripForm: { ...this.state.addTripForm, isValidated: true }
+                        }
                     });
-                    return;
                 }
                 //declare victory! and clear out trip creation stuff
                 //add the trip to the trips array
                 let updatedTrips = this.state.blogUserInfo.trips;
-                updatedTrips.push(data.trip);
-                const updatedBlogUserInfo =  {trips: updatedTrips};
-                
+                updatedTrips.unshift(data.trip);
+                const updatedBlogUserInfo = { trips: updatedTrips };
+
                 this.setState({
                     addTripNetwork: STATUS_SUCCESS,
                     createTripResults: {
@@ -210,7 +206,7 @@ class Profile extends React.Component {
                     },
                     addTripForm: initialTripFormState,
                     isAddingTrip: false,
-                    blogUserInfo: {...this.state.blogUserInfo, updatedBlogUserInfo}
+                    blogUserInfo: { ...this.state.blogUserInfo, updatedBlogUserInfo }
                 });
             });
         })
@@ -284,7 +280,7 @@ class Profile extends React.Component {
                                 />
                                 <span>New Trip</span>
                                 <Form.Control.Feedback type="invalid">
-                                    Your trip name must be unique.
+                                    {this.state.addTripForm.name.validationMessage || 'Your trip name must be unique.'}
                                 </Form.Control.Feedback>
                             </label>
                         </FormGroup>
@@ -298,7 +294,7 @@ class Profile extends React.Component {
                         <Button
                             onClick={() => this.setState({ isAddingTrip: true })}
                             variant="success"
-                            size="small"
+                            size="sm"
                         >
                             New Trip
                     </Button>
