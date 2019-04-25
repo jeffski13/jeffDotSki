@@ -211,36 +211,7 @@ class Blogs extends Component {
     render() {
         let failureMessageRender = null;
         if (this.state.networkStatus === STATUS_FAILURE) {
-            if (this.state.blogsResults.error.status === 404) {
-                failureMessageRender = (
-                    <div className="Blogs">
-                        <div className="Blogs_error" >
-                            <Card bg="info" text="white" style={{ width: '18rem' }}>
-                                <Card.Header>Hmm...</Card.Header>
-                                <Card.Body>
-                                    <Card.Text>
-                                        <span>
-                                            <span>It looks like this trip is empty.</span>
-                                            <span className="Blogs_error-refresh" >
-                                                <Button
-                                                    onClick={() => {
-                                                        //go back to profile
-                                                        this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
-                                                    }}
-                                                    bsStyle="link"
-                                                >
-                                                    Go To Profile
-                                            </Button>
-                                            </span>
-                                        </span>
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    </div>
-                );
-            }
-            else if (this.state.blogsResults.error.status === 403) {
+            if (this.state.blogsResults.error.status === 403) {
                 failureMessageRender = (
                     <div className="Blogs">
                         <div className="Blogs_error" >
@@ -298,8 +269,10 @@ class Blogs extends Component {
         }
 
         let blogsArea = null;
+        let blogsContent = null;
 
         if (this.state.blogsResults.blogsArr && this.state.hasInitiallySorted) {
+
             let timelineLinksInfo = this.getTimelineLinksInfo();
 
             //adjust css classes for mobile
@@ -307,45 +280,80 @@ class Blogs extends Component {
             if (this.state.isViewMobile) {
                 blogHeaderClass = 'Blogs_mobile';
             }
+            let blogTitleRow = (
+                <Row className={`show-grid ${blogHeaderClass}`}>
+                    <Col xs={8} md={6}>
+                        <div className="blogBrowserTitle">{this.state.tripName}</div>
+                    </Col>
+                    <Col xs={4} md={6} className="Blogs_controls-wrapper">
 
+                    </Col>
+                </Row>
+            );
+            if (this.state.blogsResults.blogsArr.length === 0) {
+                blogsContent = (
+                    <div className="Blogs_error" >
+                        <Card bg="info" text="white" style={{ width: '18rem' }}>
+                            <Card.Header>Hmm...</Card.Header>
+                            <Card.Body>
+                                <Card.Text>
+                                    <span>
+                                        <span>It looks like this trip is empty.</span>
+                                        <span className="Blogs_error-refresh" >
+                                            <Button
+                                                onClick={() => {
+                                                    //go back to profile
+                                                    this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
+                                                }}
+                                                bsStyle="link"
+                                            >
+                                                Go To Profile
+                                            </Button>
+                                        </span>
+                                    </span>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </div>
+                );
+            }
+            else {
+                blogsContent = (
+                    <Row className={blogHeaderClass}>
+                        <Col xs={12}>
+                            <div className="BlogList">
+                                {this.state.blogsResults.blogsArr.map(this.renderSampleBlogItem)}
+
+                                <Timeline
+                                    onReverseOrderClickedCallback={this.reverseBlogOrder}
+                                    linksInfo={timelineLinksInfo}
+                                    onTimelineClickedCallback={(indexOfClicked) => {
+                                        //delay until transition of movement is over
+                                        setTimeout(() => {
+                                            //we can assume this is showing 100%. This will fix itself in the callbacks, but will stop blogs offscreen from taking over with a 0%
+                                            this.setState({
+                                                blogShowing: {
+                                                    id: this.state.blogsResults.blogsArr[indexOfClicked].id,
+                                                    percentage: 100
+                                                }
+                                            });
+                                        }, 700);
+                                    }}
+                                />
+                            </div>
+                        </Col>
+                    </Row>
+                );
+            }
             blogsArea = (
                 <div className="Blogs">
                     <Container>
-                        <Row className={`show-grid ${blogHeaderClass}`}>
-                            <Col xs={8} md={6}>
-                                <div className="blogBrowserTitle">{this.state.tripName}</div>
-                            </Col>
-                            <Col xs={4} md={6} className="Blogs_controls-wrapper">
-                                
-                            </Col>
-                        </Row>
-                        <Row className={blogHeaderClass}>
-                            <Col xs={12}>
-                                <div className="BlogList">
-                                    {this.state.blogsResults.blogsArr.map(this.renderSampleBlogItem)}
-                                    
-                                    <Timeline
-                                        onReverseOrderClickedCallback={this.reverseBlogOrder}
-                                        linksInfo={timelineLinksInfo}
-                                        onTimelineClickedCallback={(indexOfClicked) => {
-                                            //delay until transition of movement is over
-                                            setTimeout(() => {
-                                                //we can assume this is showing 100%. This will fix itself in the callbacks, but will stop blogs offscreen from taking over with a 0%
-                                                this.setState({
-                                                    blogShowing: {
-                                                        id: this.state.blogsResults.blogsArr[indexOfClicked].id,
-                                                        percentage: 100
-                                                    }
-                                                });
-                                            }, 700);
-                                        }}
-                                    />
-                                </div>
-                            </Col>
-                        </Row>
+                        {blogTitleRow}
+                        {blogsContent}
                     </Container>
                 </div >
             );
+
         }
         return (
             <div>
