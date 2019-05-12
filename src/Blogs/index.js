@@ -349,7 +349,7 @@ class Blogs extends Component {
             if (!this.state.isEditingTrip) {
                 blogRowContent = (
                     <div className="blogBrowserTitle">{this.state.tripName}
-                        <span>    
+                        <span className="Blogs_tripTitleEditButton">    
                             <Button
                                 onClick={() => this.setState({isEditingTrip: true}) }
                                 variant="secondary"
