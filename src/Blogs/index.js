@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Card, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import { Card, Container, Row, Col, ButtonGroup, Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 
+import withBlogAuth from '../TravelersTrails/Auth/withBlogAuth';
+import { updateTripSecure } from '../TravelersTrails/TripsForUser';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
+import { validateFormString, FORM_SUCCESS } from '../formvalidation';
 import Loadingski from '../Inf/Loadingski';
 import { MONTHS } from './blog-consts';
 import BlogPage from './BlogPage';
@@ -9,12 +12,20 @@ import Timeline from './Timeline';
 import moment from 'moment';
 import { getBlogsSecure } from '../TravelersTrails/GETblogs';
 import { getTripSecure } from '../TravelersTrails/GETtrip';
+import { getBlogUserSecure } from '../TravelersTrails/BlogUser';
 import { jeffskiRoutes } from '../app';
 import './styles.css';
-import withBlogAuth from '../TravelersTrails/Auth/withBlogAuth';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
+const initialTripFormState = {
+    name: {
+        value: '',
+        isValid: false,
+        validationMessage: ''
+    },
+    isValidated: false
+};
 class Blogs extends Component {
 
     constructor(props) {
@@ -36,7 +47,11 @@ class Blogs extends Component {
                     code: null
                 },
                 blogsArr: null,
-            }
+            },
+            isEditEnabled: false,
+            isEditingTrip: false,
+            editTripNetwork: null,
+            editTripForm: initialTripFormState,
         };
     }
 
@@ -59,10 +74,52 @@ class Blogs extends Component {
         this.setState({ isViewMobile: isMobile });
     };
 
+    componentDidUpdate(previousProps) {
+        if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
+            && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
+            this.getBlogData();
+        }
+        //if user logs out they cannot possibly edit the blog
+        if (previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
+            this.setState({
+                isEditEnabled: false
+            });
+        }
+    }
+
     componentDidMount() {
-        this.handleWindowSizeChange();
+        //loading blogs
         this.setState({
             networkStatus: STATUS_LOADING
+        });
+
+        //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
+        // component did update check hang out since each page will require something different?
+        //if we hit this page for the first time we might not know if we are logged in
+        if (!this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
+            //perform initial auth check
+            this.props.blogAuth.checkForAuth();
+        }
+        else {
+            this.getBlogData();
+        }
+    }
+
+    getBlogData = () => {
+        let isUserBlogOwner = false;
+        //if user is logged in and looking at his or her own blogs, show edit links
+        if (this.props.reduxBlogAuth.authState.isLoggedIn && (this.props.reduxBlogAuth.userInfo.id === this.props.match.params.userId || !this.props.match.params.userId)) {
+            isUserBlogOwner = true;
+        }
+        else {
+            isUserBlogOwner = false;
+        }
+
+        this.handleWindowSizeChange();
+        this.setState({
+            isEditEnabled: isUserBlogOwner,
+            networkStatus: STATUS_LOADING,
+            blogUserNetwork: STATUS_LOADING
         }, () => {
             //default to chile for now
             let tripId = 'uuid1234';
@@ -107,9 +164,12 @@ class Blogs extends Component {
                     });
                 }
                 console.log('trip data returned', data);
+                let tripFormNameState = initialTripFormState;
+                tripFormNameState.name.value = data.name;
                 this.setState({
                     tripName: data.name,
-                    networkStatus: STATUS_SUCCESS
+                    networkStatus: STATUS_SUCCESS,
+                    editTripForm: tripFormNameState
                 });
             });
 
@@ -172,6 +232,74 @@ class Blogs extends Component {
         return timelineLinkInfo;
     }
 
+    isValidTripName = (tripNameInQuestion) => {
+        return validateFormString(tripNameInQuestion) === FORM_SUCCESS;
+    }
+
+    //returns true if the blog is ready to be submitted to the server
+    isEditTripFormSubmitAllowed = () => {
+        //form should not submit if we are currently uploading anything
+        if (this.state.editTripNetwork === STATUS_LOADING) {
+            return false;
+        }
+
+        if (this.state.editTripForm.name.isValid) {
+            return true;
+        }
+
+        return false;
+    }
+
+    submitEditTripForm = (event) => {
+        // if we have valid trip name and we are not loading right now, try to create a new trip
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.isEditTripFormSubmitAllowed()) {
+            this.updateTripName();
+        }
+        this.setState({
+            editTripForm: { ...this.state.editTripForm, isValidated: true }
+        });
+    }
+
+    updateTripName = () => {
+        this.setState({
+            editTripNetwork: STATUS_LOADING
+        }, () => {
+            let tripInfo = {
+                name: this.state.editTripForm.name.value
+            }
+            //default to chile for now
+            let tripId = 'uuid1234';
+            //if user provides trip id in the the path use it to edit trip name
+            if (this.props.match.params.tripId) {
+                tripId = this.props.match.params.tripId;
+            }
+            updateTripSecure(this.props.reduxBlogAuth.userInfo.id, tripId, tripInfo, (err, data) => {
+                if (err) {
+                    return this.setState({
+                        editTripNetwork: STATUS_FAILURE,
+                        editTripResults: {
+                            status: err.status,
+                            message: err.data.message,
+                            code: err.data.code
+                        }
+                    });
+                }
+
+                let editTripFormState = this.state.editTripForm;
+                editTripFormState.name.value = data.name;
+
+                this.setState({
+                    editTripNetwork: STATUS_SUCCESS,
+                    editTripForm: editTripFormState,
+                    isEditingTrip: false,
+                    tripName: data.trip.name,
+                });
+            });
+        })
+    }
+
     //renders all paragraphs except the first
     renderSampleBlogItem = (nextBlog) => {
         return (
@@ -206,6 +334,93 @@ class Blogs extends Component {
                 }}
             />
         );
+    }
+
+    renderBlogTitleRow = (blogHeaderClass) => {
+        // display different UI depending on if we are editing trip name
+        
+        let blogRowContent;
+        if(!this.state.isEditEnabled){
+            blogRowContent = (
+                <div className="blogBrowserTitle">{this.state.tripName}</div>
+            );
+        }
+        else {
+            if (!this.state.isEditingTrip) {
+                blogRowContent = (
+                    <div className="blogBrowserTitle">{this.state.tripName}
+                        <span>    
+                            <Button
+                                onClick={() => this.setState({isEditingTrip: true}) }
+                                variant="secondary"
+                            >
+                                <i className="material-icons">edit</i>
+                            </Button>
+                        </span>
+                    </div>
+                );
+            }
+            else {
+                let editTripMessage = null;
+                if (this.state.editTripNetwork === STATUS_FAILURE) {
+                    editTripMessage = (
+                        <div className="Profile_trip-section-addTripErrorMesssage">An error occured. Please try again later.</div>
+                    )
+                }
+    
+                blogRowContent = (
+                    <Form
+                        className="Profile_trip-section-addTripForm"
+                        onSubmit={e => this.submitAddNewTripForm(e)}
+                    >
+                        <FormGroup
+                            controlId="nameFormInput"
+                        >
+                            <label className="has-float-label">
+                                <FormControl
+                                    type="text"
+                                    value={this.state.editTripForm.name.value || ''}
+                                    placeholder="Name Your Adventure"
+                                    onChange={(e) => {
+                                        let tripUpdateInfo = {
+                                            name: {
+                                                value: e.target.value,
+                                                isValid: this.isValidTripName(e.target.value)
+                                            }
+                                        };
+                                        this.setState({
+                                            editTripForm: { ...this.state.editTripForm, ...tripUpdateInfo }
+                                        });
+                                    }}
+                                    isInvalid={this.state.editTripForm.isValidated && !this.state.editTripForm.name.isValid}
+                                    onBlur={this.submitEditTripForm}
+                                    disabled={this.state.editTripNetwork === STATUS_LOADING}
+                                />
+                                <span>Edit Trip</span>
+                                <Form.Control.Feedback type="invalid">
+                                    {this.state.editTripForm.name.validationMessage || 'Your trip name must be unique.'}
+                                </Form.Control.Feedback>
+                            </label>
+                        </FormGroup>
+                        {editTripMessage}
+                    </Form>
+                );
+                
+            }
+        }
+
+        
+        let blogTitleRow = (
+            <Row className={`show-grid ${blogHeaderClass}`}>
+                <Col xs={8} md={6} lg={8}>
+                    {blogRowContent}
+                </Col>
+                <Col xs={4} md={6} className="Blogs_controls-wrapper">
+
+                </Col>
+            </Row>
+        );
+        return blogTitleRow;
     }
 
     render() {
@@ -280,24 +495,7 @@ class Blogs extends Component {
             if (this.state.isViewMobile) {
                 blogHeaderClass = 'Blogs_mobile';
             }
-            let blogTitleRow = (
-                <Row className={`show-grid ${blogHeaderClass}`}>
-                    <Col xs={8} md={6}>
-                        <div className="blogBrowserTitle">{this.state.tripName}
-                            <span><Button
-                                onClick={() => {
-                                    this.props.onReverseOrderClickedCallback();
-                                }}
-                            >
-                                <i className="material-icons">edit</i>
-                            </Button></span>
-                        </div>
-                    </Col>
-                    <Col xs={4} md={6} className="Blogs_controls-wrapper">
 
-                    </Col>
-                </Row>
-            );
             if (this.state.blogsResults.blogsArr.length === 0) {
                 blogsContent = (
                     <div className="Blogs_error" >
@@ -356,7 +554,7 @@ class Blogs extends Component {
             blogsArea = (
                 <div className="Blogs">
                     <Container>
-                        {blogTitleRow}
+                        {this.renderBlogTitleRow(blogHeaderClass)}
                         {blogsContent}
                     </Container>
                 </div >

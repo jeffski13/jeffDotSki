@@ -86,9 +86,9 @@ export function updateTripSecure(userId, tripId, tripUpdateInfo, callback) {
         })
             .then((response) => {
                 //parse the response
-                let rawUserResponseArr = response.data;
+                let rawUserResponse = response.data;
 
-                callback(null, rawUserResponseArr);
+                callback(null, rawUserResponse);
             })
             .catch(function (error) {
                 if (error.response) {

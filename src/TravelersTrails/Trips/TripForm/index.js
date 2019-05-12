@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, FormControl, FormGroup, Form } from 'react-bootstrap';
 
-import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../../formvalidation';
+import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../../../formvalidation';
 import './styles.css';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

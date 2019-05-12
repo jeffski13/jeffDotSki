@@ -8,9 +8,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 import withBlogAuth from '../Auth/withBlogAuth';
 import Loadingski from '../../Inf/Loadingski';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
-import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../formvalidation';
+import { validateFormString, FORM_SUCCESS } from '../../formvalidation';
 import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
-import { createTripSecure, updateTripSecure } from '../TripsForUser';
+import { createTripSecure } from '../TripsForUser';
 import { jeffskiRoutes } from '../../app';
 import './styles.css';
 import '../styles.css';
@@ -72,19 +72,17 @@ class Profile extends React.Component {
     }
 
     getBlogUserProfile = () => {
-        //if user is logged in and looking at his or her own profile, show edit links
+        let isUserBlogOwner = false;
+        //if user is logged in and looking at his or her own blogs, show edit links
         if (this.props.reduxBlogAuth.authState.isLoggedIn && (this.props.reduxBlogAuth.userInfo.id === this.props.match.params.userId || !this.props.match.params.userId)) {
-            this.setState({
-                isEditEnabled: true
-            });
+            isUserBlogOwner = true;
         }
         else {
-            this.setState({
-                isEditEnabled: false
-            });
+            isUserBlogOwner = false;
         }
 
         this.setState({
+            isEditEnabled: isUserBlogOwner,
             blogUserNetwork: STATUS_LOADING,
             blogUserInfo: null
         }, () => {

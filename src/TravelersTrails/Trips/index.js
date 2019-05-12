@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import withBlogAuth from '../Auth/withBlogAuth';
 import Indicator from '../../Network/Indicator';
 import Loadingski from '../../Inf/Loadingski';
-import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../formvalidation';
+import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../../formvalidation';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import { createTripSecure, updateTripSecure } from '../TripsForUser';
 import TripsDropdown from './TripsDropdown';
