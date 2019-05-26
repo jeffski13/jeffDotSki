@@ -110,6 +110,10 @@
     padding-left: 0;
 }
 
+.Blogs_controls-add-blog {
+    padding: 10px;
+}
+
 .Blogs_controls-date {
     padding: 5px;
     font-weight: 500;
@@ -133,4 +137,8 @@
 
 .Blogs_tripTitleEditButton {
     padding: 10px;
+}
+
+.Blogs_trip-title-edit {
+    font-size: larger;
 }

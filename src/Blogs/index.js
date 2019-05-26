@@ -18,11 +18,13 @@ import './styles.css';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
+const defaultErrorMessage = 'An error occured. Please try again later.';
 const initialTripFormState = {
     name: {
         value: '',
-        isValid: false,
-        validationMessage: ''
+        isValid: true,
+        validationMessage: '',
+        errorMessage: ''
     },
     isValidated: false
 };
@@ -30,6 +32,7 @@ class Blogs extends Component {
 
     constructor(props) {
         super(props);
+        this.editNameInputRef = React.createRef();
         this.state = {
             isViewMobile: false,
             networkStatus: null, //refactor, need to make this and object with trip and blogs properties, then key off those
@@ -74,18 +77,6 @@ class Blogs extends Component {
         this.setState({ isViewMobile: isMobile });
     };
 
-    componentDidUpdate(previousProps) {
-        if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
-            && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
-            this.getBlogData();
-        }
-        //if user logs out they cannot possibly edit the blog
-        if (previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
-            this.setState({
-                isEditEnabled: false
-            });
-        }
-    }
 
     componentDidMount() {
         //loading blogs
@@ -102,6 +93,23 @@ class Blogs extends Component {
         }
         else {
             this.getBlogData();
+        }
+    }
+
+    componentDidUpdate(previousProps, previousState) {
+        if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
+            && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
+            this.getBlogData();
+        }
+        //if user logs out they cannot possibly edit the blog
+        if (previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
+            this.setState({
+                isEditEnabled: false
+            });
+        }
+
+        if (!previousState.isEditingTrip && this.state.isEditingTrip) {
+            this.editNameInputRef.current.focus();
         }
     }
 
@@ -232,6 +240,15 @@ class Blogs extends Component {
         return timelineLinkInfo;
     }
 
+    editTripNameClicked = () => {
+        const editTripFormState = initialTripFormState;
+        editTripFormState.name.value = this.state.tripName;
+        this.setState({
+            isEditingTrip: true,
+            editTripForm: editTripFormState
+        });
+    }
+
     isValidTripName = (tripNameInQuestion) => {
         return validateFormString(tripNameInQuestion) === FORM_SUCCESS;
     }
@@ -277,13 +294,13 @@ class Blogs extends Component {
             }
             updateTripSecure(this.props.reduxBlogAuth.userInfo.id, tripId, tripInfo, (err, data) => {
                 if (err) {
+                    console.log('error is ', err);
+                    let editTripFormState = this.state.editTripForm;
+                    editTripFormState.name.errorMessage = err.data.message;
+
                     return this.setState({
                         editTripNetwork: STATUS_FAILURE,
-                        editTripResults: {
-                            status: err.status,
-                            message: err.data.message,
-                            code: err.data.code
-                        }
+                        editTripForm: editTripFormState,
                     });
                 }
 
@@ -337,21 +354,39 @@ class Blogs extends Component {
     }
 
     renderBlogTitleRow = (blogHeaderClass) => {
-        // display different UI depending on if we are editing trip name
-        
+        // display different UI depending on two things:
+        // 1) if we own the trip show editting and adding controls
+        // 2) if we are currently editing the trip, show different UI
+
         let blogRowContent;
-        if(!this.state.isEditEnabled){
+        let blogControls = null;
+        if (!this.state.isEditEnabled) {
             blogRowContent = (
                 <div className="blogBrowserTitle">{this.state.tripName}</div>
             );
         }
         else {
+            blogControls = (
+                <div className="Blogs_controls-add-blog">
+                    <Button
+                        onClick={() => {
+                            //go back to profile
+                            this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
+                        }}
+                        variant="success"
+                        size="lg"
+                        disabled={this.state.isEditingTrip}
+                    >
+                        <i className="material-icons">add</i>Add Blog
+                    </Button>
+                </div>
+            );
             if (!this.state.isEditingTrip) {
                 blogRowContent = (
                     <div className="blogBrowserTitle">{this.state.tripName}
-                        <span className="Blogs_tripTitleEditButton">    
+                        <span className="Blogs_tripTitleEditButton">
                             <Button
-                                onClick={() => this.setState({isEditingTrip: true}) }
+                                onClick={this.editTripNameClicked}
                                 variant="secondary"
                             >
                                 <i className="material-icons">edit</i>
@@ -364,17 +399,17 @@ class Blogs extends Component {
                 let editTripMessage = null;
                 if (this.state.editTripNetwork === STATUS_FAILURE) {
                     editTripMessage = (
-                        <div className="Profile_trip-section-addTripErrorMesssage">An error occured. Please try again later.</div>
+                        <div className="Profile_trip-section-addTripErrorMesssage">{this.state.editTripForm.name.errorMessage || defaultErrorMessage}</div>
                     )
                 }
-    
+
                 blogRowContent = (
                     <Form
-                        className="Profile_trip-section-addTripForm"
-                        onSubmit={e => this.submitAddNewTripForm(e)}
+                        className="Blogs_trip-title-edit"
+                        onSubmit={e => this.submitEditTripForm(e)}
                     >
                         <FormGroup
-                            controlId="nameFormInput"
+                            controlId="Blogs_trip-title-edit-input"
                         >
                             <label className="has-float-label">
                                 <FormControl
@@ -395,6 +430,7 @@ class Blogs extends Component {
                                     isInvalid={this.state.editTripForm.isValidated && !this.state.editTripForm.name.isValid}
                                     onBlur={this.submitEditTripForm}
                                     disabled={this.state.editTripNetwork === STATUS_LOADING}
+                                    ref={this.editNameInputRef}
                                 />
                                 <span>Edit Trip</span>
                                 <Form.Control.Feedback type="invalid">
@@ -405,18 +441,18 @@ class Blogs extends Component {
                         {editTripMessage}
                     </Form>
                 );
-                
+
             }
         }
 
-        
+
         let blogTitleRow = (
             <Row className={`show-grid ${blogHeaderClass}`}>
                 <Col xs={8} md={6} lg={8}>
                     {blogRowContent}
                 </Col>
                 <Col xs={4} md={6} className="Blogs_controls-wrapper">
-
+                    {blogControls}
                 </Col>
             </Row>
         );
@@ -442,7 +478,7 @@ class Blogs extends Component {
                                                         //go back to profile
                                                         this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
                                                     }}
-                                                    bsStyle="link"
+                                                    variant="link"
                                                 >
                                                     Go To Profile
                                             </Button>
@@ -505,17 +541,6 @@ class Blogs extends Component {
                                 <Card.Text>
                                     <span>
                                         <span>It looks like this trip is empty.</span>
-                                        <span className="Blogs_error-refresh" >
-                                            <Button
-                                                onClick={() => {
-                                                    //go back to profile
-                                                    this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
-                                                }}
-                                                bsStyle="link"
-                                            >
-                                                Go To Profile
-                                            </Button>
-                                        </span>
                                     </span>
                                 </Card.Text>
                             </Card.Body>
