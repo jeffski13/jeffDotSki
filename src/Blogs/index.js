@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Container, Row, Col, Button } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, Image } from 'react-bootstrap';
 
 import withBlogAuth from '../TravelersTrails/Auth/withBlogAuth';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
@@ -12,6 +12,7 @@ import { getBlogsSecure } from '../TravelersTrails/GETblogs';
 import { getBlogUserSecure } from '../TravelersTrails/BlogUser';
 import { jeffskiRoutes } from '../app';
 import './styles.css';
+import '../TravelersTrails/Profile/styles.css';
 import TripName from '../TravelersTrails/Trips/TripName';
 
 export const MOBILE_WINDOW_WIDTH = 850;
@@ -39,7 +40,9 @@ class Blogs extends Component {
                 blogsArr: null,
             },
             isEditEnabled: false,
-            isEditing: false
+            isEditing: false,
+            blogUserNetwork: STATUS_LOADING,
+            blogUserInfo: null
         };
     }
 
@@ -77,14 +80,14 @@ class Blogs extends Component {
             this.props.blogAuth.checkForAuth();
         }
         else {
-            this.getBlogData();
+            this.initializeBlogPageData();
         }
     }
 
     componentDidUpdate(previousProps, previousState) {
         if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
             && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
-            this.getBlogData();
+                this.initializeBlogPageData();
         }
         //if user logs out they cannot possibly edit the blog
         if (previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
@@ -94,7 +97,12 @@ class Blogs extends Component {
         }
     }
 
-    getBlogData = () => {
+    initializeBlogPageData = () => {
+        this.getBlogs();
+        this.getBlogUserProfile();
+    }
+
+    getBlogs = () => {
         let isUserBlogOwner = false;
         //if user is logged in and looking at his or her own blogs, show edit links
         console.log(`jeffski: ${this.props.match.params.userId}`);
@@ -138,6 +146,36 @@ class Blogs extends Component {
                     networkStatus: STATUS_SUCCESS
                 }, () => {
                     this.sortBlogsByDate(this.state.sortBlogsDateDescending);
+                });
+            });
+        });
+    }
+
+    getBlogUserProfile = () => {
+        this.setState({
+            blogUserNetwork: STATUS_LOADING,
+            blogUserInfo: null
+        }, () => {
+            let userId = this.props.match.params.userId;
+            getBlogUserSecure(userId, (err, blogUserInfo) => {
+                if (err) {
+                    if (err.status === 404 && err.data.code === 'NotFound') {
+                        //user is not signed up with an account, but not blog information, send to register bloguser page
+                        this.props.history.push(jeffskiRoutes.registerBlogUser);
+                    }
+                    return this.setState({
+                        blogUserNetwork: STATUS_FAILURE
+                    });
+                }
+
+                console.log('user info found ', blogUserInfo);
+
+                this.setState({
+                    blogUserInfo: {
+                        ...blogUserInfo,
+                        name: `${blogUserInfo.nameFirst} ${blogUserInfo.nameLast}`,
+                    },
+                    blogUserNetwork: STATUS_SUCCESS
                 });
             });
         });
@@ -235,10 +273,12 @@ class Blogs extends Component {
         );
     }
 
-    renderBlogHeaderRow = (blogHeaderClass) => {
+    renderBlogHeaderRow = blogHeaderClass => {
         // display different UI depending on two things:
         // 1) if user owns blog
         // 2) if user is in an edit mode
+
+        console.log('this.state.blogUserInfo:', this.state.blogUserInfo);
 
         let blogControls = null;
         if (this.state.isEditEnabled) {
@@ -261,23 +301,39 @@ class Blogs extends Component {
 
         //default trip is Chile for my personal website purposes
         let tripId = 'uuid1234';
-        if(this.props.match.params.tripId){
+        if (this.props.match.params.tripId) {
             tripId = this.props.match.params.tripId;
         }
 
         return (
-            <Row className={`show-grid ${blogHeaderClass}`}>
-                <Col xs={8} md={6} lg={8}>
-                    <TripName
-                        isEditingTripCallback={isEditingTrip => {this.setState({ isEditing: isEditingTrip})}}
-                        tripOwnerId={this.props.match.params.userId}
-                        tripId={tripId}
-                    />
-                </Col>
-                <Col xs={4} md={6} className="Blogs_controls-wrapper">
-                    {blogControls}
-                </Col>
-            </Row>
+            <React.Fragment>
+
+                <Row className={`show-grid ${blogHeaderClass}`}>
+                    <Col xs={8} lg={10}>
+                        <TripName
+                            isEditingTripCallback={isEditingTrip => { this.setState({ isEditing: isEditingTrip }) }}
+                            tripOwnerId={this.props.match.params.userId}
+                            tripId={tripId}
+                        />
+                    </Col>
+                    <Col xs={4} lg={2}>
+                        <div className="Profile_profilepic Blogs_user-profile-pic-container" onClick={this.goToEditProfilePic}>
+                            <Image roundedCircle
+                                fluid
+                                src={this.state.blogUserInfo.profilePicUrl}
+                                onClick={() => {
+                                    this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.match.params.userId}`);
+                                }}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+                <Row className={`show-grid ${blogHeaderClass}`}>
+                    <Col xs={12} md={12} className="Blogs_controls-wrapper">
+                        {blogControls}
+                    </Col>
+                </Row>
+            </React.Fragment>
         );
     }
 
@@ -398,20 +454,24 @@ class Blogs extends Component {
                     </Row>
                 );
             }
-            blogsArea = (
-                <div className="Blogs">
-                    <Container>
-                        {this.renderBlogHeaderRow(blogHeaderClass)}
-                        {blogsContent}
-                    </Container>
-                </div >
-            );
+
+            if (this.state.networkStatus === STATUS_SUCCESS && this.state.blogUserNetwork === STATUS_SUCCESS) {
+                blogsArea = (
+                    <div className="Blogs">
+                        <Container>
+                            {this.renderBlogHeaderRow(blogHeaderClass)}
+                            {blogsContent}
+                        </Container>
+                    </div >
+                );
+            }
 
         }
+        console.log('loaded? network status: ', this.state.networkStatus, ' and blogUserNetwork: ', this.state.blogUserNetwork);
         return (
             <div>
-                {this.state.networkStatus === STATUS_LOADING && <Loadingski />}
-                {this.state.networkStatus === STATUS_SUCCESS && blogsArea}
+                {(this.state.networkStatus === STATUS_LOADING || this.state.blogUserNetwork === STATUS_LOADING) && <Loadingski />}
+                {(this.state.networkStatus === STATUS_SUCCESS && this.state.blogUserNetwork === STATUS_SUCCESS) && blogsArea}
                 {this.state.networkStatus === STATUS_FAILURE && failureMessageRender}
             </div>
         );

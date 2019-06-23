@@ -134,3 +134,9 @@
 .navigation-icon-button {
     vertical-align: middle;
 }
+
+.Blogs_user-profile-pic-container > img {
+    object-fit: cover;
+    height: 100px;
+    width: 100px;
+}
