@@ -29,6 +29,8 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
 
+        this.newTripNameInputRef = React.createRef();
+        
         this.state = {
             blogUserNetwork: STATUS_LOADING,
             showMoreBio: false,
@@ -57,7 +59,7 @@ class Profile extends React.Component {
         }
     }
 
-    componentDidUpdate(previousProps) {
+    componentDidUpdate(previousProps, previousState) {
         if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
             && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
             this.getBlogUserProfile();
@@ -68,6 +70,11 @@ class Profile extends React.Component {
                 isEditEnabled: false
             });
             this.goToLogin();
+        }
+
+        //focuses on new trip name input 
+        if (!previousState.isAddingTrip && this.state.isAddingTrip) {
+            this.newTripNameInputRef.current.focus();
         }
     }
 
@@ -275,6 +282,7 @@ class Profile extends React.Component {
                                     isInvalid={this.state.addTripForm.isValidated && !this.state.addTripForm.name.isValid}
                                     onBlur={this.submitAddNewTripForm}
                                     disabled={this.state.addTripNetwork === STATUS_LOADING}
+                                    ref={this.newTripNameInputRef}
                                 />
                                 <span>New Trip</span>
                                 <Form.Control.Feedback type="invalid">
