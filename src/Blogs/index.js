@@ -1,33 +1,22 @@
 import React, { Component } from 'react';
-import { Card, Container, Row, Col, ButtonGroup, Button, Form, FormGroup, FormControl } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, Image } from 'react-bootstrap';
 
 import withBlogAuth from '../TravelersTrails/Auth/withBlogAuth';
-import { updateTripSecure } from '../TravelersTrails/TripsForUser';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
-import { validateFormString, FORM_SUCCESS } from '../formvalidation';
 import Loadingski from '../Inf/Loadingski';
 import { MONTHS } from './blog-consts';
 import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import moment from 'moment';
 import { getBlogsSecure } from '../TravelersTrails/GETblogs';
-import { getTripSecure } from '../TravelersTrails/GETtrip';
 import { getBlogUserSecure } from '../TravelersTrails/BlogUser';
 import { jeffskiRoutes } from '../app';
 import './styles.css';
+import '../TravelersTrails/Profile/styles.css';
+import TripName from '../TravelersTrails/Trips/TripName';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
-const defaultErrorMessage = 'An error occured. Please try again later.';
-const initialTripFormState = {
-    name: {
-        value: '',
-        isValid: true,
-        validationMessage: '',
-        errorMessage: ''
-    },
-    isValidated: false
-};
 class Blogs extends Component {
 
     constructor(props) {
@@ -35,8 +24,7 @@ class Blogs extends Component {
         this.editNameInputRef = React.createRef();
         this.state = {
             isViewMobile: false,
-            networkStatus: null, //refactor, need to make this and object with trip and blogs properties, then key off those
-            tripName: '',
+            networkStatus: null, //REFACTOR, need to make this and object with trip and blogs properties, then key off those
             sortBlogsDateDescending: false,
             hasInitiallySorted: false,
             blogShowing: {
@@ -52,9 +40,9 @@ class Blogs extends Component {
                 blogsArr: null,
             },
             isEditEnabled: false,
-            isEditingTrip: false,
-            editTripNetwork: null,
-            editTripForm: initialTripFormState,
+            isEditing: false,
+            blogUserNetwork: STATUS_LOADING,
+            blogUserInfo: null
         };
     }
 
@@ -92,14 +80,14 @@ class Blogs extends Component {
             this.props.blogAuth.checkForAuth();
         }
         else {
-            this.getBlogData();
+            this.initializeBlogPageData();
         }
     }
 
     componentDidUpdate(previousProps, previousState) {
         if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
             && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
-            this.getBlogData();
+                this.initializeBlogPageData();
         }
         //if user logs out they cannot possibly edit the blog
         if (previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
@@ -107,23 +95,26 @@ class Blogs extends Component {
                 isEditEnabled: false
             });
         }
-
-        if (!previousState.isEditingTrip && this.state.isEditingTrip) {
-            this.editNameInputRef.current.focus();
-        }
     }
 
-    getBlogData = () => {
+    initializeBlogPageData = () => {
+        this.getBlogs();
+        this.getBlogUserProfile();
+    }
+
+    getBlogs = () => {
         let isUserBlogOwner = false;
         //if user is logged in and looking at his or her own blogs, show edit links
+        console.log(`jeffski: ${this.props.match.params.userId}`);
         if (this.props.reduxBlogAuth.authState.isLoggedIn && (this.props.reduxBlogAuth.userInfo.id === this.props.match.params.userId || !this.props.match.params.userId)) {
             isUserBlogOwner = true;
         }
         else {
             isUserBlogOwner = false;
         }
-
+        //REFACTOR? move up to componentDidMount?
         this.handleWindowSizeChange();
+
         this.setState({
             isEditEnabled: isUserBlogOwner,
             networkStatus: STATUS_LOADING,
@@ -157,30 +148,36 @@ class Blogs extends Component {
                     this.sortBlogsByDate(this.state.sortBlogsDateDescending);
                 });
             });
-            getTripSecure(this.props.match.params.userId, tripId, (err, data) => {
+        });
+    }
+
+    getBlogUserProfile = () => {
+        this.setState({
+            blogUserNetwork: STATUS_LOADING,
+            blogUserInfo: null
+        }, () => {
+            let userId = this.props.match.params.userId;
+            getBlogUserSecure(userId, (err, blogUserInfo) => {
                 if (err) {
-                    console.log('trip error returned', err);
+                    if (err.status === 404 && err.data.code === 'NotFound') {
+                        //user is not signed up with an account, but not blog information, send to register bloguser page
+                        this.props.history.push(jeffskiRoutes.registerBlogUser);
+                    }
                     return this.setState({
-                        networkStatus: STATUS_FAILURE,
-                        blogsResults: {
-                            error: {
-                                status: err.status,
-                                message: err.data.message,
-                                code: err.data.code
-                            }
-                        }
+                        blogUserNetwork: STATUS_FAILURE
                     });
                 }
-                console.log('trip data returned', data);
-                let tripFormNameState = initialTripFormState;
-                tripFormNameState.name.value = data.name;
+
+                console.log('user info found ', blogUserInfo);
+
                 this.setState({
-                    tripName: data.name,
-                    networkStatus: STATUS_SUCCESS,
-                    editTripForm: tripFormNameState
+                    blogUserInfo: {
+                        ...blogUserInfo,
+                        name: `${blogUserInfo.nameFirst} ${blogUserInfo.nameLast}`,
+                    },
+                    blogUserNetwork: STATUS_SUCCESS
                 });
             });
-
         });
     }
 
@@ -240,83 +237,6 @@ class Blogs extends Component {
         return timelineLinkInfo;
     }
 
-    editTripNameClicked = () => {
-        const editTripFormState = initialTripFormState;
-        editTripFormState.name.value = this.state.tripName;
-        this.setState({
-            isEditingTrip: true,
-            editTripForm: editTripFormState
-        });
-    }
-
-    isValidTripName = (tripNameInQuestion) => {
-        return validateFormString(tripNameInQuestion) === FORM_SUCCESS;
-    }
-
-    //returns true if the blog is ready to be submitted to the server
-    isEditTripFormSubmitAllowed = () => {
-        //form should not submit if we are currently uploading anything
-        if (this.state.editTripNetwork === STATUS_LOADING) {
-            return false;
-        }
-
-        if (this.state.editTripForm.name.isValid) {
-            return true;
-        }
-
-        return false;
-    }
-
-    submitEditTripForm = (event) => {
-        // if we have valid trip name and we are not loading right now, try to create a new trip
-        event.preventDefault();
-        event.stopPropagation();
-        if (this.isEditTripFormSubmitAllowed()) {
-            this.updateTripName();
-        }
-        this.setState({
-            editTripForm: { ...this.state.editTripForm, isValidated: true }
-        });
-    }
-
-    updateTripName = () => {
-        this.setState({
-            editTripNetwork: STATUS_LOADING
-        }, () => {
-            let tripInfo = {
-                name: this.state.editTripForm.name.value
-            }
-            //default to chile for now
-            let tripId = 'uuid1234';
-            //if user provides trip id in the the path use it to edit trip name
-            if (this.props.match.params.tripId) {
-                tripId = this.props.match.params.tripId;
-            }
-            updateTripSecure(this.props.reduxBlogAuth.userInfo.id, tripId, tripInfo, (err, data) => {
-                if (err) {
-                    console.log('error is ', err);
-                    let editTripFormState = this.state.editTripForm;
-                    editTripFormState.name.errorMessage = err.data.message;
-
-                    return this.setState({
-                        editTripNetwork: STATUS_FAILURE,
-                        editTripForm: editTripFormState,
-                    });
-                }
-
-                let editTripFormState = this.state.editTripForm;
-                editTripFormState.name.value = data.name;
-
-                this.setState({
-                    editTripNetwork: STATUS_SUCCESS,
-                    editTripForm: editTripFormState,
-                    isEditingTrip: false,
-                    tripName: data.trip.name,
-                });
-            });
-        })
-    }
-
     //renders all paragraphs except the first
     renderSampleBlogItem = (nextBlog) => {
         return (
@@ -353,19 +273,15 @@ class Blogs extends Component {
         );
     }
 
-    renderBlogTitleRow = (blogHeaderClass) => {
+    renderBlogHeaderRow = blogHeaderClass => {
         // display different UI depending on two things:
-        // 1) if we own the trip show editting and adding controls
-        // 2) if we are currently editing the trip, show different UI
+        // 1) if user owns blog
+        // 2) if user is in an edit mode
 
-        let blogRowContent;
+        console.log('this.state.blogUserInfo:', this.state.blogUserInfo);
+
         let blogControls = null;
-        if (!this.state.isEditEnabled) {
-            blogRowContent = (
-                <div className="blogBrowserTitle">{this.state.tripName}</div>
-            );
-        }
-        else {
+        if (this.state.isEditEnabled) {
             blogControls = (
                 <div className="Blogs_controls-add-blog">
                     <Button
@@ -375,88 +291,50 @@ class Blogs extends Component {
                         }}
                         variant="success"
                         size="lg"
-                        disabled={this.state.isEditingTrip}
+                        disabled={this.state.isEditing}
                     >
                         <i className="material-icons">add</i>Add Blog
                     </Button>
                 </div>
             );
-            if (!this.state.isEditingTrip) {
-                blogRowContent = (
-                    <div className="blogBrowserTitle">{this.state.tripName}
-                        <span className="Blogs_tripTitleEditButton">
-                            <Button
-                                onClick={this.editTripNameClicked}
-                                variant="secondary"
-                            >
-                                <i className="material-icons">edit</i>
-                            </Button>
-                        </span>
-                    </div>
-                );
-            }
-            else {
-                let editTripMessage = null;
-                if (this.state.editTripNetwork === STATUS_FAILURE) {
-                    editTripMessage = (
-                        <div className="Profile_trip-section-addTripErrorMesssage">{this.state.editTripForm.name.errorMessage || defaultErrorMessage}</div>
-                    )
-                }
-
-                blogRowContent = (
-                    <Form
-                        className="Blogs_trip-title-edit"
-                        onSubmit={e => this.submitEditTripForm(e)}
-                    >
-                        <FormGroup
-                            controlId="Blogs_trip-title-edit-input"
-                        >
-                            <label className="has-float-label">
-                                <FormControl
-                                    type="text"
-                                    value={this.state.editTripForm.name.value || ''}
-                                    placeholder="Name Your Adventure"
-                                    onChange={(e) => {
-                                        let tripUpdateInfo = {
-                                            name: {
-                                                value: e.target.value,
-                                                isValid: this.isValidTripName(e.target.value)
-                                            }
-                                        };
-                                        this.setState({
-                                            editTripForm: { ...this.state.editTripForm, ...tripUpdateInfo }
-                                        });
-                                    }}
-                                    isInvalid={this.state.editTripForm.isValidated && !this.state.editTripForm.name.isValid}
-                                    onBlur={this.submitEditTripForm}
-                                    disabled={this.state.editTripNetwork === STATUS_LOADING}
-                                    ref={this.editNameInputRef}
-                                />
-                                <span>Edit Trip</span>
-                                <Form.Control.Feedback type="invalid">
-                                    {this.state.editTripForm.name.validationMessage || 'Your trip name must be unique.'}
-                                </Form.Control.Feedback>
-                            </label>
-                        </FormGroup>
-                        {editTripMessage}
-                    </Form>
-                );
-
-            }
         }
 
+        //default trip is Chile for my personal website purposes
+        let tripId = 'uuid1234';
+        if (this.props.match.params.tripId) {
+            tripId = this.props.match.params.tripId;
+        }
 
-        let blogTitleRow = (
-            <Row className={`show-grid ${blogHeaderClass}`}>
-                <Col xs={8} md={6} lg={8}>
-                    {blogRowContent}
-                </Col>
-                <Col xs={4} md={6} className="Blogs_controls-wrapper">
-                    {blogControls}
-                </Col>
-            </Row>
+        return (
+            <React.Fragment>
+
+                <Row className={`show-grid ${blogHeaderClass}`}>
+                    <Col xs={8} lg={10}>
+                        <TripName
+                            isEditingTripCallback={isEditingTrip => { this.setState({ isEditing: isEditingTrip }) }}
+                            tripOwnerId={this.props.match.params.userId}
+                            tripId={tripId}
+                        />
+                    </Col>
+                    <Col xs={4} lg={2}>
+                        <div className="Profile_profilepic Blogs_user-profile-pic-container" onClick={this.goToEditProfilePic}>
+                            <Image roundedCircle
+                                fluid
+                                src={this.state.blogUserInfo.profilePicUrl}
+                                onClick={() => {
+                                    this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.match.params.userId}`);
+                                }}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+                <Row className={`show-grid ${blogHeaderClass}`}>
+                    <Col xs={12} md={12} className="Blogs_controls-wrapper">
+                        {blogControls}
+                    </Col>
+                </Row>
+            </React.Fragment>
         );
-        return blogTitleRow;
     }
 
     render() {
@@ -576,20 +454,24 @@ class Blogs extends Component {
                     </Row>
                 );
             }
-            blogsArea = (
-                <div className="Blogs">
-                    <Container>
-                        {this.renderBlogTitleRow(blogHeaderClass)}
-                        {blogsContent}
-                    </Container>
-                </div >
-            );
+
+            if (this.state.networkStatus === STATUS_SUCCESS && this.state.blogUserNetwork === STATUS_SUCCESS) {
+                blogsArea = (
+                    <div className="Blogs">
+                        <Container>
+                            {this.renderBlogHeaderRow(blogHeaderClass)}
+                            {blogsContent}
+                        </Container>
+                    </div >
+                );
+            }
 
         }
+        console.log('loaded? network status: ', this.state.networkStatus, ' and blogUserNetwork: ', this.state.blogUserNetwork);
         return (
             <div>
-                {this.state.networkStatus === STATUS_LOADING && <Loadingski />}
-                {this.state.networkStatus === STATUS_SUCCESS && blogsArea}
+                {(this.state.networkStatus === STATUS_LOADING || this.state.blogUserNetwork === STATUS_LOADING) && <Loadingski />}
+                {(this.state.networkStatus === STATUS_SUCCESS && this.state.blogUserNetwork === STATUS_SUCCESS) && blogsArea}
                 {this.state.networkStatus === STATUS_FAILURE && failureMessageRender}
             </div>
         );

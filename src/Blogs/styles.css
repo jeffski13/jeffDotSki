@@ -135,10 +135,8 @@
     vertical-align: middle;
 }
 
-.Blogs_tripTitleEditButton {
-    padding: 10px;
-}
-
-.Blogs_trip-title-edit {
-    font-size: larger;
+.Blogs_user-profile-pic-container > img {
+    object-fit: cover;
+    height: 100px;
+    width: 100px;
 }
