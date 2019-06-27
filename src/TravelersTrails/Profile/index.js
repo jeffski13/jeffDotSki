@@ -29,6 +29,8 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
 
+        this.newTripNameInputRef = React.createRef();
+        
         this.state = {
             blogUserNetwork: STATUS_LOADING,
             showMoreBio: false,
@@ -57,7 +59,7 @@ class Profile extends React.Component {
         }
     }
 
-    componentDidUpdate(previousProps) {
+    componentDidUpdate(previousProps, previousState) {
         if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
             && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
             this.getBlogUserProfile();
@@ -68,6 +70,11 @@ class Profile extends React.Component {
                 isEditEnabled: false
             });
             this.goToLogin();
+        }
+
+        //focuses on new trip name input 
+        if (!previousState.isAddingTrip && this.state.isAddingTrip) {
+            this.newTripNameInputRef.current.focus();
         }
     }
 
@@ -182,6 +189,7 @@ class Profile extends React.Component {
             }
             createTripSecure(this.props.reduxBlogAuth.userInfo.id, tripInfo, (err, data) => {
                 if (err) {
+                    console.log('err: ', err);
                     return this.setState({
                         addTripNetwork: STATUS_FAILURE,
                         createTripResults: {
@@ -241,10 +249,14 @@ class Profile extends React.Component {
         let addTripForm = null;
         if (this.state.isEditEnabled) {
             if (this.state.isAddingTrip) {
-                let addTripMessage = null;
+                let addTripFeedbackArea = null;
                 if (this.state.addTripNetwork === STATUS_FAILURE) {
-                    addTripMessage = (
-                        <div className="Profile_trip-section-addTripErrorMesssage">An error occured. Please try again later.</div>
+                    let addTripFailMessage = 'An error occured. Please try again later.';
+                    if(this.state.createTripResults.message) {
+                        addTripFailMessage = this.state.createTripResults.message;
+                    }
+                    addTripFeedbackArea = (
+                        <div className="Profile_trip-section-addTripErrorMesssage">{addTripFailMessage}</div>
                     )
                 }
 
@@ -275,6 +287,7 @@ class Profile extends React.Component {
                                     isInvalid={this.state.addTripForm.isValidated && !this.state.addTripForm.name.isValid}
                                     onBlur={this.submitAddNewTripForm}
                                     disabled={this.state.addTripNetwork === STATUS_LOADING}
+                                    ref={this.newTripNameInputRef}
                                 />
                                 <span>New Trip</span>
                                 <Form.Control.Feedback type="invalid">
@@ -282,7 +295,7 @@ class Profile extends React.Component {
                                 </Form.Control.Feedback>
                             </label>
                         </FormGroup>
-                        {addTripMessage}
+                        {addTripFeedbackArea}
                     </Form>
                 );
             }
