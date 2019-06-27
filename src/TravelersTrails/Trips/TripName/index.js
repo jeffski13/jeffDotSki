@@ -141,6 +141,8 @@ class TripName extends React.Component {
             this.setState({
                 editTripForm: initialTripFormState,
                 isEditing: false
+            }, ()=> {
+                this.props.isEditingTripCallback(false);
             });
         }
 
@@ -265,11 +267,11 @@ class TripName extends React.Component {
 }
 
 TripName.defaultProps = {
-    isEditingTripCallback: () => { }
+    isEditingTripCallback: () => { return false; }
 };
 
 TripName.propTypes = {
-    //function called when trip edit is clicked
+    //function when trip is/isn't being edited
     isEditingTripCallback: PropTypes.func,
     tripOwnerId: PropTypes.string.isRequired,
     tripId: PropTypes.string.isRequired
