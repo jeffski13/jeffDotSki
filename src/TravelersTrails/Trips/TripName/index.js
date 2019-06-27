@@ -26,7 +26,7 @@ const defaultErrorMessage = 'An error occured. Please try again later.';
 class TripName extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.editNameInputRef = React.createRef();
         this.state = {
             isEditEnabled: false,
@@ -135,6 +135,15 @@ class TripName extends React.Component {
         // if we have valid trip name and we are not loading right now, try to create a new trip
         event.preventDefault();
         event.stopPropagation();
+
+        //if empty, just do nothing
+        if (this.state.editTripForm.name.value === '') {
+            this.setState({
+                editTripForm: initialTripFormState,
+                isEditing: false
+            });
+        }
+
         if (this.isEditTripFormSubmitAllowed()) {
             this.updateTripName();
         }
@@ -256,7 +265,7 @@ class TripName extends React.Component {
 }
 
 TripName.defaultProps = {
-    isEditingTripCallback: () => {}
+    isEditingTripCallback: () => { }
 };
 
 TripName.propTypes = {
