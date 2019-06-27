@@ -189,6 +189,7 @@ class Profile extends React.Component {
             }
             createTripSecure(this.props.reduxBlogAuth.userInfo.id, tripInfo, (err, data) => {
                 if (err) {
+                    console.log('err: ', err);
                     return this.setState({
                         addTripNetwork: STATUS_FAILURE,
                         createTripResults: {
@@ -248,10 +249,14 @@ class Profile extends React.Component {
         let addTripForm = null;
         if (this.state.isEditEnabled) {
             if (this.state.isAddingTrip) {
-                let addTripMessage = null;
+                let addTripFeedbackArea = null;
                 if (this.state.addTripNetwork === STATUS_FAILURE) {
-                    addTripMessage = (
-                        <div className="Profile_trip-section-addTripErrorMesssage">An error occured. Please try again later.</div>
+                    let addTripFailMessage = 'An error occured. Please try again later.';
+                    if(this.state.createTripResults.message) {
+                        addTripFailMessage = this.state.createTripResults.message;
+                    }
+                    addTripFeedbackArea = (
+                        <div className="Profile_trip-section-addTripErrorMesssage">{addTripFailMessage}</div>
                     )
                 }
 
@@ -290,7 +295,7 @@ class Profile extends React.Component {
                                 </Form.Control.Feedback>
                             </label>
                         </FormGroup>
-                        {addTripMessage}
+                        {addTripFeedbackArea}
                     </Form>
                 );
             }
