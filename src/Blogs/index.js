@@ -9,7 +9,7 @@ import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import moment from 'moment';
 import { getBlogsSecure } from '../TravelersTrails/GETblogs';
-import { getBlogUserSecure } from '../TravelersTrails/BlogUser';
+import { getBlogUserSecure, emptyProfileUrl } from '../TravelersTrails/BlogUser';
 import { jeffskiRoutes } from '../app';
 import './styles.css';
 import '../TravelersTrails/Profile/styles.css';
@@ -167,8 +167,10 @@ class Blogs extends Component {
                         blogUserNetwork: STATUS_FAILURE
                     });
                 }
-
-                console.log('user info found ', blogUserInfo);
+                
+                if(!blogUserInfo.profilePicUrl) {
+                    blogUserInfo.profilePicUrl = emptyProfileUrl;
+                }
 
                 this.setState({
                     blogUserInfo: {
