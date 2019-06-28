@@ -38,7 +38,8 @@ class Profile extends React.Component {
             blogUserInfo: null,
             isAddingTrip: false,
             addTripNetwork: null,
-            addTripForm: initialTripFormState,
+            addTripForm: {...initialTripFormState},
+            createTripResults: null
         };
     }
 
@@ -109,8 +110,6 @@ class Profile extends React.Component {
                     });
                 }
 
-                console.log('user info found ', blogUserInfo);
-
                 this.setState({
                     blogUserInfo: {
                         ...blogUserInfo,
@@ -172,6 +171,17 @@ class Profile extends React.Component {
         // if we have valid trip name and we are not loading right now, try to create a new trip
         event.preventDefault();
         event.stopPropagation();
+
+        //if empty, back out of editting mode
+        if (this.state.addTripForm.name.value === '') {
+            return this.setState({
+                addTripForm: {...initialTripFormState},
+                isAddingTrip: false,
+                createTripResults: null,
+                addTripNetwork: null
+            });
+        }
+
         if (this.isAddTripFormSubmitAllowed()) {
             this.addNewTrip();
         }
@@ -189,7 +199,6 @@ class Profile extends React.Component {
             }
             createTripSecure(this.props.reduxBlogAuth.userInfo.id, tripInfo, (err, data) => {
                 if (err) {
-                    console.log('err: ', err);
                     return this.setState({
                         addTripNetwork: STATUS_FAILURE,
                         createTripResults: {
@@ -210,7 +219,7 @@ class Profile extends React.Component {
                     createTripResults: {
                         message: 'Trip Created!'
                     },
-                    addTripForm: initialTripFormState,
+                    addTripForm: {...initialTripFormState},
                     isAddingTrip: false,
                     blogUserInfo: { ...this.state.blogUserInfo, updatedBlogUserInfo }
                 });

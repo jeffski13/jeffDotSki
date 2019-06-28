@@ -136,7 +136,7 @@ class TripName extends React.Component {
         event.preventDefault();
         event.stopPropagation();
 
-        //if empty, just do nothing
+        //if empty, back out of editting mode
         if (this.state.editTripForm.name.value === '') {
             this.setState({
                 editTripForm: initialTripFormState,
