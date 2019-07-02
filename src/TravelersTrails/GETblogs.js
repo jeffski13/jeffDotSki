@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {defaultErrorResponse, authErrorResponse} from '../Network/consts';
+import {defaultErrorResponse, authErrorResponse} from './Network/consts';
 import { Auth } from 'aws-amplify';
 
 /**

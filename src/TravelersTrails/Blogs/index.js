@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Card, Container, Row, Col, Button, Image } from 'react-bootstrap';
 
-import withBlogAuth from '../TravelersTrails/Auth/withBlogAuth';
-import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
-import Loadingski from '../Inf/Loadingski';
-import { MONTHS } from './blog-consts';
+import moment from 'moment';
+import withBlogAuth from '../Auth/withBlogAuth';
+import Loadingski from '../../Inf/Loadingski';
 import BlogPage from './BlogPage';
 import Timeline from './Timeline';
-import moment from 'moment';
-import { getBlogsSecure } from '../TravelersTrails/GETblogs';
-import { getBlogUserSecure, emptyProfileUrl } from '../TravelersTrails/BlogUser';
-import { jeffskiRoutes } from '../app';
+import TripName from '../Trips/TripName';
+import { MONTHS } from './blog-consts';
+import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
+import { getBlogsSecure } from '../GETblogs';
+import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
+import { jeffskiRoutes } from '../../app';
+import '../Profile/styles.css';
 import './styles.css';
-import '../TravelersTrails/Profile/styles.css';
-import TripName from '../TravelersTrails/Trips/TripName';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 

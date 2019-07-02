@@ -2,7 +2,7 @@ import React from 'react';
 import { Panel, FormGroup, FormControl, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../../Network/consts';
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
 import { validateFormString, FORM_SUCCESS, FORM_ERROR } from '../../../../formvalidation';
 import './styles.css';
 

@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { withRouter, Link } from 'react-router-dom';
 
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import { jeffskiRoutes } from '../../../app';
 import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';

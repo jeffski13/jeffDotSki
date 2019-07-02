@@ -6,8 +6,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import withBlogAuth from '../../Auth/withBlogAuth';
-import Indicator from '../../../Network/Indicator';
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
+import Indicator from '../../Network/Indicator';
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import { getTripsSecure } from '../../TripsForUser';
 import { getTripSecure } from '../../GETtrip';
 import './styles.css';

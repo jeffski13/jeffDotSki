@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { updateTripSecure } from '../../TripsForUser';
 import { getTripSecure } from '../../GETtrip';
-import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../../Network/consts';
+import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import { validateFormString, FORM_SUCCESS } from '../../../formvalidation';
 
 import './styles.css';

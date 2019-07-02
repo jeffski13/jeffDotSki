@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { defaultErrorResponse } from '../Network/consts';
+import { defaultErrorResponse } from './Network/consts';
 import { Auth, Storage } from 'aws-amplify';
 import AWS from 'aws-sdk';
 import { AUTH_CONFIG } from './Auth/aws-auth-config';

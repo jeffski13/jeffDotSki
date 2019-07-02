@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { defaultErrorResponse } from '../Network/consts';
+import { defaultErrorResponse } from './Network/consts';
 import { Auth, Storage } from 'aws-amplify';
 
 export const tripsGetFailMessage = 'We were not able to get your trip information at this time.';

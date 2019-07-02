@@ -7,7 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import withBlogAuth from '../Auth/withBlogAuth';
 import Loadingski from '../../Inf/Loadingski';
-import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
+import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
 import { validateFormString, FORM_SUCCESS } from '../../formvalidation';
 import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
 import { createTripSecure } from '../TripsForUser';

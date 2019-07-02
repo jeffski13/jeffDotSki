@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Container, Row, Col, Form, InputGroup, Alert, FormGroup, FormControl } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import Amplify, { Auth } from 'aws-amplify';
 import { bindActionCreators, compose } from 'redux';
 import { AUTH_CONFIG } from '../../Auth/aws-auth-config';
