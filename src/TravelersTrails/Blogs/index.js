@@ -14,6 +14,7 @@ import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
 import { jeffskiRoutes } from '../../app';
 import '../Profile/styles.css';
 import './styles.css';
+import AddBlog from './AddBlog';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
@@ -40,7 +41,8 @@ class Blogs extends Component {
                 blogsArr: null,
             },
             isEditEnabled: false,
-            isEditing: false,
+            isEditingTrip: false,
+            isAddingBlog: false,
             blogUserNetwork: STATUS_LOADING,
             blogUserInfo: null
         };
@@ -87,7 +89,7 @@ class Blogs extends Component {
     componentDidUpdate(previousProps, previousState) {
         if ((!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck
             && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) || (previousProps.match.params.userId !== this.props.match.params.userId)) {
-                this.initializeBlogPageData();
+            this.initializeBlogPageData();
         }
         //if user logs out they cannot possibly edit the blog
         if (previousProps.reduxBlogAuth.authState.isLoggedIn && !this.props.reduxBlogAuth.authState.isLoggedIn) {
@@ -167,8 +169,8 @@ class Blogs extends Component {
                         blogUserNetwork: STATUS_FAILURE
                     });
                 }
-                
-                if(!blogUserInfo.profilePicUrl) {
+
+                if (!blogUserInfo.profilePicUrl) {
                     blogUserInfo.profilePicUrl = emptyProfileUrl;
                 }
 
@@ -282,25 +284,6 @@ class Blogs extends Component {
 
         console.log('this.state.blogUserInfo:', this.state.blogUserInfo);
 
-        let blogControls = null;
-        if (this.state.isEditEnabled) {
-            blogControls = (
-                <div className="Blogs_controls-add-blog">
-                    <Button
-                        onClick={() => {
-                            //go back to profile
-                            this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.reduxBlogAuth.userInfo.id}`);
-                        }}
-                        variant="success"
-                        size="lg"
-                        disabled={this.state.isEditing}
-                    >
-                        <i className="material-icons">add</i>Add Blog
-                    </Button>
-                </div>
-            );
-        }
-
         //default trip is Chile for my personal website purposes
         let tripId = 'uuid1234';
         if (this.props.match.params.tripId) {
@@ -309,13 +292,13 @@ class Blogs extends Component {
 
         return (
             <React.Fragment>
-
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={8} lg={10}>
                         <TripName
-                            isEditingTripCallback={isEditingTrip => { this.setState({ isEditing: isEditingTrip }) }}
+                            isEditingTripCallback={isEditingTrip => { this.setState({ isEditingTrip }) }}
                             tripOwnerId={this.props.match.params.userId}
                             tripId={tripId}
+                            isDisabled={this.state.isAddingBlog}
                         />
                     </Col>
                     <Col xs={4} lg={2}>
@@ -332,7 +315,14 @@ class Blogs extends Component {
                 </Row>
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={12} md={12} className="Blogs_controls-wrapper">
-                        {blogControls}
+                        <AddBlog
+                            tripOwnerId={this.props.match.params.userId}
+                            tripId={tripId}
+                            isDisabled={this.state.isEditingTrip}
+                            isAddingBlogCallback={isAddingBlog => {
+                                this.setState({ isAddingBlog });
+                            }}
+                        />
                     </Col>
                 </Row>
             </React.Fragment>
@@ -413,20 +403,22 @@ class Blogs extends Component {
             }
 
             if (this.state.blogsResults.blogsArr.length === 0) {
-                blogsContent = (
-                    <div className="Blogs_error" >
-                        <Card bg="info" text="white" style={{ width: '18rem' }}>
-                            <Card.Header>Hmm...</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    <span>
-                                        <span>It looks like this trip is empty.</span>
-                                    </span>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </div>
-                );
+                if (!this.state.isAddingBlog) {
+                    blogsContent = (
+                        <div className="Blogs_error" >
+                            <Card bg="info" text="white" style={{ width: '18rem' }}>
+                                <Card.Header>Hmm...</Card.Header>
+                                <Card.Body>
+                                    <Card.Text>
+                                        <span>
+                                            <span>It looks like this trip is empty.</span>
+                                        </span>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    );
+                }
             }
             else {
                 blogsContent = (

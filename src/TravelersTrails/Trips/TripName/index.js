@@ -54,10 +54,15 @@ class TripName extends React.Component {
             this.getTripData();
         }
     }
-
+    
     componentDidUpdate(previousProps, previousState) {
         if (!previousState.isEditing && this.state.isEditing) {
             this.editNameInputRef.current.focus();
+        }
+        
+        //login check is complete
+        if(!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck ) {
+            this.getTripData();
         }
     }
 
@@ -206,6 +211,8 @@ class TripName extends React.Component {
                             <Button
                                 onClick={this.editTripNameClicked}
                                 variant="secondary"
+                                disabled={this.props.isDisabled}
+                                title="Please finish your blog."
                             >
                                 <i className="material-icons">edit</i>
                             </Button>
@@ -274,7 +281,8 @@ TripName.propTypes = {
     //function when trip is/isn't being edited
     isEditingTripCallback: PropTypes.func,
     tripOwnerId: PropTypes.string.isRequired,
-    tripId: PropTypes.string.isRequired
+    tripId: PropTypes.string.isRequired,
+    isDisabled: PropTypes.bool
 };
 
 export default withBlogAuth(TripName);
