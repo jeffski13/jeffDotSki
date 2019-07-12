@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import withBlogAuth from '../../Auth/withBlogAuth';
+import BlogDate from './BlogDate';
 
 const initialBlogFormState = {
     info: {
@@ -13,6 +14,7 @@ const initialBlogFormState = {
     },
     isValidated: false
 };
+
 class AddBlog extends React.Component {
     constructor(props) {
         super(props);
@@ -27,7 +29,7 @@ class AddBlog extends React.Component {
             addBlogForm: initialBlogFormState,
         }
     }
-    
+
     componentDidMount() {
         //REFACTOR? should we move this call into the withBlogAuth itself and just let the 
         // component did update check hang out since each page will require something different?
@@ -40,21 +42,21 @@ class AddBlog extends React.Component {
             this.completeInitialization();
         }
     }
-    
+
     componentDidUpdate(previousProps, previousState) {
         //switched to editing mode
         if (!previousState.isEditing && this.state.isEditing) {
             // this.blogTitleInputRef.current.focus();
         }
-        
+
         //props changed for blog owner
-        if(previousProps.tripOwnerId !== this.props.tripOwnerId 
-            || previousProps.tripId !== this.props.tripId ) {
+        if (previousProps.tripOwnerId !== this.props.tripOwnerId
+            || previousProps.tripId !== this.props.tripId) {
             this.completeInitialization();
         }
-        
+
         //login check is complete
-        if(!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck ) {
+        if (!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.completeInitialization();
         }
     }
@@ -72,7 +74,7 @@ class AddBlog extends React.Component {
             });
         }
     }
-    
+
     render() {
         if (this.state.isEditEnabled && !this.state.isAddingBlog) {
             return (
@@ -94,9 +96,12 @@ class AddBlog extends React.Component {
                 </div>
             );
         }
-        else { //?????
-            return null;
-        }
+
+        return (
+            <BlogDate 
+
+            />
+        );
     }
 }
 
