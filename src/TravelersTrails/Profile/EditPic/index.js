@@ -2,17 +2,17 @@ import React from 'react';
 import { Button, Container, Row, Col, FormGroup, ControlLabel, FormControl, Alert, Image } from 'react-bootstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import { jeffskiRoutes } from '../../../app';
-import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { getBlogUserSecure, updateBlogUserSecure, emptyProfileUrl, profileGetFailMessage } from '../../BlogUser';
 import Loadingski from '../../../Inf/Loadingski';
-import '../../styles.css';
-import ImageForm from './ImageForm';
+import ImageForm from '../../image-processing/ImageForm';
 import loadingImage from '../../../loading_image.gif';
-import ResizeProfileImg from './ResizeProfileImg';
+import ResizeProfileImg from '../../image-processing/ResizeProfileImg';
+import '../../styles.css';
 
 class ProfileEditPic extends React.Component {
     constructor(props) {

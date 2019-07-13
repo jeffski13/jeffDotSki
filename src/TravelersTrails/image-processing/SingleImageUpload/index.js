@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Indicator from '../../../../Network/Indicator';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../../Network/consts';
-import { uploadProfilePic } from '../../../BlogUser';
+import { uploadProfilePic } from '../../BlogUser';
 import './styles.css';
 
 export default class SingleImageUpload extends React.Component {

@@ -1,8 +1,48 @@
 export const STORE_BLOG_DATE = 'STORE_BLOG_DATE';
+export const STORE_BLOG_TEXT = 'STORE_BLOG_TEXT';
+export const BLOG_UPLOADING = 'BLOG_UPLOADING';
+export const BLOG_IMAGE_UPLOADING = 'BLOG_IMAGE_UPLOADING';
+export const BLOG_IMAGE_UPLOAD_SUCCESS = 'BLOG_IMAGE_UPLOAD_SUCCESS';
+export const BLOG_IMAGE_UPLOAD_FAILURE = 'BLOG_IMAGE_UPLOAD_FAILURE';
 
-export function storeBlogDate(blogDate){
-  return {
-    type: STORE_BLOG_DATE,
-    payload: blogDate
-  }
+export function storeBlogDate(blogDate) {
+    return {
+        type: STORE_BLOG_DATE,
+        payload: blogDate
+    }
+}
+
+export function storeBlogText(blogText) {
+    return {
+        type: STORE_BLOG_TEXT,
+        payload: blogText
+    }
+}
+
+export function uploadingBlog() {
+    return {
+        type: BLOG_UPLOADING,
+        payload: null
+    }
+}
+
+export function uploadingImage() {
+    return {
+        type: BLOG_IMAGE_UPLOADING,
+        payload: null
+    }
+}
+
+export function uploadImageSuccess(blogImageUrl) {
+    return {
+        type: BLOG_IMAGE_UPLOAD_SUCCESS,
+        payload: blogImageUrl
+    }
+}
+
+export function uploadImageFailure() {
+    return {
+        type: BLOG_IMAGE_UPLOAD_FAILURE,
+        payload: null
+    }
 }

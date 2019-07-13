@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import BlogDate from './BlogDate';
+import BlogEntryText from './BlogEntryText';
+import BlogImage from './BlogImage';
 
 const initialBlogFormState = {
     info: {
@@ -98,9 +102,23 @@ class AddBlog extends React.Component {
         }
 
         return (
-            <BlogDate 
-
-            />
+            <div>
+                <BlogDate />
+                <BlogEntryText />
+                <BlogImage />
+                <Button
+                    onClick={() => {
+                        console.log('this.props.blogCreation:', this.props.blogCreation );
+                        this.setState({
+                            addBlogNetwork: STATUS_LOADING
+                        });
+                    }}
+                    variant="primary"
+                    size="lg"
+                >
+                    Submit
+                </Button>
+            </div>
         );
     }
 }
@@ -113,4 +131,8 @@ AddBlog.propTypes = {
     isDisabled: PropTypes.bool
 };
 
-export default withBlogAuth(AddBlog);
+function mapStateToProps({ blogCreation }) {
+    return { blogCreation };
+}
+
+export default connect(mapStateToProps)(withBlogAuth(AddBlog));

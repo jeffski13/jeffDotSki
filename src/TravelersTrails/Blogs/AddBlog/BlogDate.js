@@ -17,20 +17,20 @@ class BlogDate extends React.Component {
     }
 
     render() {
-        let minuteString = this.props.blogCreation.date.minute().toString();
+        let minuteString = this.props.blogCreation.date.value.minute().toString();
         if(minuteString.length < 2){
             minuteString = `0${minuteString}`
         }
         let amOrPm = 'AM';
-        if(this.props.blogCreation.date.hour() > 12){
+        if(this.props.blogCreation.date.value.hour() > 12){
             amOrPm = 'PM';
         }
-        let timeOfDaySelected = ` ${this.props.blogCreation.date.hour() % 12}:${minuteString} ${amOrPm}`
-        console.log(`this.props.blogCreation.date: ${this.props.blogCreation.date}`);
+        let timeOfDaySelected = ` ${this.props.blogCreation.date.value.hour() % 12}:${minuteString} ${amOrPm}`
+        console.log(`this.props.blogCreation.date.value: ${this.props.blogCreation.date.value}`);
         return (
             <div className="form-group">
                 <DatePicker
-                    selected={this.props.blogCreation.date}
+                    selected={this.props.blogCreation.date.value}
                     onChange={ date => {
                         this.props.storeBlogDate(date);
                     }}

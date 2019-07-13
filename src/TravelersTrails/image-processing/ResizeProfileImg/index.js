@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { uploadProfilePic } from '../../../BlogUser';
-import Indicator from '../../../Network/Indicator';
-import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../../Network/consts';
+import { uploadProfilePic } from '../../BlogUser';
+import Indicator from '../../Network/Indicator';
+import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import './styles.css';
 
 export default class ResizeProfileImg extends React.Component {
