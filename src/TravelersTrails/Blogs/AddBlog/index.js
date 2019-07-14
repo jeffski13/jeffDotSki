@@ -113,6 +113,7 @@ class AddBlog extends React.Component {
                             addBlogNetwork: STATUS_LOADING
                         });
                     }}
+                    disabled={!this.props.blogCreation.isValid}
                     variant="primary"
                     size="lg"
                 >
