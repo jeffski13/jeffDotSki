@@ -101,9 +101,9 @@ class Blogs extends Component {
             });
         }
 
-        if(this.props.blogCreation.network === STATUS_SUCCESS){
+        if (this.props.blogCreation.network === STATUS_SUCCESS) {
             this.props.uploadingBlogFinished();
-            
+
             //reload the page
             window.location.reload();
         }
@@ -297,6 +297,24 @@ class Blogs extends Component {
             tripId = this.props.match.params.tripId;
         }
 
+        let addBlog;
+        if (this.state.isEditEnabled) {
+            addBlog = (
+                <Row className={`show-grid ${blogHeaderClass}`}>
+                    <Col xs={12} md={12} className="Blogs_controls-wrapper">
+                        <AddBlog
+                            tripOwnerId={this.props.match.params.userId}
+                            tripId={tripId}
+                            isDisabled={this.state.isEditingTrip}
+                            isAddingBlogCallback={isAddingBlog => {
+                                this.setState({ isAddingBlog });
+                            }}
+                        />
+                    </Col>
+                </Row>
+            );
+        }
+
         return (
             <React.Fragment>
                 <Row className={`show-grid ${blogHeaderClass}`}>
@@ -320,18 +338,7 @@ class Blogs extends Component {
                         </div>
                     </Col>
                 </Row>
-                <Row className={`show-grid ${blogHeaderClass}`}>
-                    <Col xs={12} md={12} className="Blogs_controls-wrapper">
-                        <AddBlog
-                            tripOwnerId={this.props.match.params.userId}
-                            tripId={tripId}
-                            isDisabled={this.state.isEditingTrip}
-                            isAddingBlogCallback={isAddingBlog => {
-                                this.setState({ isAddingBlog });
-                            }}
-                        />
-                    </Col>
-                </Row>
+                {addBlog}
             </React.Fragment>
         );
     }
