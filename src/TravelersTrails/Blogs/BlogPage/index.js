@@ -92,14 +92,14 @@ export default class BlogPage extends Component {
             <Container id={this.props.blogAnchorId} >
                 <Row className="show-grid">
                     <ScrollableAnchor id={this.props.invisibleAnchorId}>
-                        <h3>{blog.title}</h3>
+                    <h3>{moment.unix(blog.date).format("MM/DD/YYYY")}</h3>
                     </ScrollableAnchor>
                 </Row>
                 <Row className="show-grid">
-                    <div>{blog.location}</div>
+                    <h3>{blog.title}</h3>
                 </Row>
                 <Row className="show-grid">
-                    <div>{moment.unix(blog.date).format("MM/DD/YYYY")}</div>
+                    <div>{blog.location}</div>
                 </Row>
                 <Row className="show-grid blogPargraph">
                     <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>

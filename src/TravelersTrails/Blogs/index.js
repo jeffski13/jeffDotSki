@@ -29,7 +29,7 @@ class Blogs extends Component {
         this.state = {
             isViewMobile: false,
             networkStatus: null, //REFACTOR, need to make this and object with trip and blogs properties, then key off those
-            sortBlogsDateDescending: false,
+            sortBlogsDateDescending: true,
             hasInitiallySorted: false,
             blogShowing: {
                 id: '',
