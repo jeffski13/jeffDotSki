@@ -1,6 +1,5 @@
 import React from 'react';
 import Prototypes from 'prop-types';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { bindActionCreators } from 'redux';
@@ -10,11 +9,6 @@ import {storeBlogDate} from './actions';
 import './BlogDate-styles.css';
 
 class BlogDate extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         let minuteString = this.props.blogCreation.date.value.minute().toString();

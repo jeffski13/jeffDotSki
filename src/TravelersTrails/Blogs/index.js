@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Card, Container, Row, Col, Button, Image } from 'react-bootstrap';
-
 import moment from 'moment';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import withBlogAuth from '../Auth/withBlogAuth';
 import Loadingski from '../../Inf/Loadingski';
 import BlogPage from './BlogPage';
@@ -12,6 +14,7 @@ import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/const
 import { getBlogsSecure } from '../GETblogs';
 import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
 import { jeffskiRoutes } from '../../app';
+import { uploadingBlogFinished } from './AddBlog/actions';
 import '../Profile/styles.css';
 import './styles.css';
 import AddBlog from './AddBlog';
@@ -97,6 +100,13 @@ class Blogs extends Component {
                 isEditEnabled: false
             });
         }
+
+        if(this.props.blogCreation.network === STATUS_SUCCESS){
+            this.props.uploadingBlogFinished();
+            
+            //reload the page
+            window.location.reload();
+        }
     }
 
     initializeBlogPageData = () => {
@@ -107,7 +117,6 @@ class Blogs extends Component {
     getBlogs = () => {
         let isUserBlogOwner = false;
         //if user is logged in and looking at his or her own blogs, show edit links
-        console.log(`jeffski: ${this.props.match.params.userId}`);
         if (this.props.reduxBlogAuth.authState.isLoggedIn && (this.props.reduxBlogAuth.userInfo.id === this.props.match.params.userId || !this.props.match.params.userId)) {
             isUserBlogOwner = true;
         }
@@ -281,8 +290,6 @@ class Blogs extends Component {
         // display different UI depending on two things:
         // 1) if user owns blog
         // 2) if user is in an edit mode
-
-        console.log('this.state.blogUserInfo:', this.state.blogUserInfo);
 
         //default trip is Chile for my personal website purposes
         let tripId = 'uuid1234';
@@ -461,7 +468,6 @@ class Blogs extends Component {
             }
 
         }
-        console.log('loaded? network status: ', this.state.networkStatus, ' and blogUserNetwork: ', this.state.blogUserNetwork);
         return (
             <div>
                 {(this.state.networkStatus === STATUS_LOADING || this.state.blogUserNetwork === STATUS_LOADING) && <Loadingski />}
@@ -474,4 +480,12 @@ class Blogs extends Component {
 
 }
 
-export default withBlogAuth(Blogs);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ uploadingBlogFinished }, dispatch);
+}
+
+function mapStateToProps({ blogCreation }) {
+    return { blogCreation };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withBlogAuth(Blogs));

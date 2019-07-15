@@ -1,4 +1,5 @@
-import {STORE_BLOG_DATE, STORE_BLOG_TEXT, BLOG_UPLOADING, 
+import {STORE_BLOG_DATE, STORE_BLOG_TEXT, 
+    BLOG_UPLOADING, BLOG_UPLOADING_FAILURE, BLOG_UPLOADING_SUCCESS, BLOG_UPLOADING_FINISHED,
     BLOG_IMAGE_SELECTED, BLOG_IMAGE_UPLOADING, BLOG_IMAGE_UPLOAD_SUCCESS, BLOG_IMAGE_UPLOAD_FAILURE} from './actions';
 import moment from 'moment';
 import {STATUS_LOADING, STATUS_SUCCESS, STATUS_FAILURE} from '../../Network/consts';
@@ -7,7 +8,8 @@ import { LOADIPHLPAPI } from 'dns';
 const initialState = {
     text: {
         value: null,
-        isValid: false
+        rawValue: null,
+        isValid: true
     },
     date: {
         value: moment(),
@@ -25,6 +27,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+    console.log('REDUCER: action.type: ', action.type);
     if (action.type === STORE_BLOG_DATE) {
         //validation here
         let valid = false;
@@ -42,14 +45,23 @@ export default (state = initialState, action) => {
     else if (action.type === STORE_BLOG_TEXT) {
         //validation here
         let valid = false;
-        if(action.payload !== null && action.payload !== ''){
-            valid = true;
+        let sanitizedTextArray;
+        if(action.payload !== null){
+            //store the text user entered and 
+            sanitizedTextArray = action.payload.split('\n');
+            //filter out empty text (empty string will be present if user used multiple carriage returns)
+            sanitizedTextArray = sanitizedTextArray.filter(str => str !== '');
+
+            if(sanitizedTextArray !== ''){
+                valid = true;
+            }
         }
         state = {
             ...state,
             text: {
-                value: action.payload,
-                isValid: valid
+                value: sanitizedTextArray,
+                isValid: valid,
+                rawValue: action.payload,
             }
         };
     }
@@ -58,6 +70,21 @@ export default (state = initialState, action) => {
             ...state,
             network: STATUS_LOADING
         };
+    }
+    else if (action.type === BLOG_UPLOADING_SUCCESS) {
+        state = {
+            ...state,
+            network: STATUS_SUCCESS
+        };
+    }
+    else if (action.type === BLOG_UPLOADING_FAILURE) {
+        state = {
+            ...state,
+            network: STATUS_FAILURE
+        };
+    }
+    else if (action.type === BLOG_UPLOADING_FINISHED) {
+        state = initialState;
     }
     else if (action.type === BLOG_IMAGE_SELECTED) {
         let imageState = state.image;
@@ -78,6 +105,7 @@ export default (state = initialState, action) => {
         imageState.network = STATUS_LOADING;
         state = {
             ...state,
+            network: STATUS_LOADING,
             image: imageState
         };
     }
@@ -95,6 +123,7 @@ export default (state = initialState, action) => {
         imageState.network = STATUS_FAILURE;
         state = {
             ...state,
+            network: STATUS_FAILURE,
             image: imageState
         };
     }

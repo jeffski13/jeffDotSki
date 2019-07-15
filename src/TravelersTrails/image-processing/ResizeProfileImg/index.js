@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { uploadProfilePic } from '../../BlogUser';
+import { uploadBlogPic } from '../../BlogForUser';
 import Indicator from '../../Network/Indicator';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/consts';
 import './styles.css';
@@ -12,8 +13,10 @@ export default class ResizeProfileImg extends React.Component {
     static propTypes = {
         fileToResizeAndUpload: PropTypes.object.isRequired,
         userId: PropTypes.string.isRequired,
+        tripId: PropTypes.string,
         resizeMaxHeight: PropTypes.number, //the height
-        onPhotoFinished: PropTypes.func
+        onPhotoFinished: PropTypes.func,
+        isUserProfilePic: PropTypes.bool.isRequired // if true image is blog profile pic, if false image is blog image (note that a tripid is needed for blog images)
     };
 
     //default to empty functions to avoid crash
@@ -92,6 +95,8 @@ export default class ResizeProfileImg extends React.Component {
                 img.src = event.target.result;
                 // need reference to parentreactComponent because we cant bind this (need this of the img.onload to get height and width)
                 let userId = this.props.userId;
+                let tripId = this.props.tripId;
+                let isUserProfilePic = this.props.isUserProfilePic;
                 let parentReactComponent = this;
                 img.onload = function () {
 
@@ -118,32 +123,65 @@ export default class ResizeProfileImg extends React.Component {
                         cntxt.drawImage(img, 0, 0, resizedCanvas.width, resizedCanvas.height);
 
                         resizedCanvas.toBlob((createdBlobImage) => {
-                            //upload the file
-                            uploadProfilePic(createdBlobImage, userId, (err, uploadedImageUrl) => {
-                                //error handling
-                                if (err) {
-                                    parentReactComponent.props.onPhotoFinished({
-                                        error: err,
-                                        filename: file.name
-                                    });
-                                    parentReactComponent.setState({
-                                        thumbnailNetworkStatus: STATUS_FAILURE
-                                    });
-                                    return;
-                                }
 
-                                parentReactComponent.props.onPhotoFinished(null, {
-                                    filename: file.name,
-                                    url: uploadedImageUrl
-                                });
-                                parentReactComponent.setState({
-                                    thumbnailUrl: {
+                            if(isUserProfilePic){
+                                //upload the file
+                                uploadProfilePic(createdBlobImage, userId, (err, uploadedImageUrl) => {
+                                    //error handling
+                                    if (err) {
+                                        parentReactComponent.props.onPhotoFinished({
+                                            error: err,
+                                            filename: file.name
+                                        });
+                                        parentReactComponent.setState({
+                                            thumbnailNetworkStatus: STATUS_FAILURE
+                                        });
+                                        return;
+                                    }
+    
+                                    parentReactComponent.props.onPhotoFinished(null, {
                                         filename: file.name,
                                         url: uploadedImageUrl
-                                    },
-                                    thumbnailNetworkStatus: STATUS_SUCCESS
+                                    });
+                                    parentReactComponent.setState({
+                                        thumbnailUrl: {
+                                            filename: file.name,
+                                            url: uploadedImageUrl
+                                        },
+                                        thumbnailNetworkStatus: STATUS_SUCCESS
+                                    });
                                 });
-                            });
+                            }
+                            else {
+                                //upload the file
+                                uploadBlogPic(createdBlobImage, userId, tripId, (err, uploadedImageUrl) => {
+                                    //error handling
+                                    if (err) {
+                                        console.log('Uploading Blog pic in ResizeProfileImg failed with err: ', err);
+                                        parentReactComponent.props.onPhotoFinished({
+                                            error: err,
+                                            filename: file.name
+                                        });
+                                        parentReactComponent.setState({
+                                            thumbnailNetworkStatus: STATUS_FAILURE
+                                        });
+                                        return;
+                                    }
+                                    
+                                    console.log('ResizeProfileImg photo upload complete. Calling parentReact callback...')
+                                    parentReactComponent.props.onPhotoFinished(null, {
+                                        filename: file.name,
+                                        url: uploadedImageUrl
+                                    });
+                                    parentReactComponent.setState({
+                                        thumbnailUrl: {
+                                            filename: file.name,
+                                            url: uploadedImageUrl
+                                        },
+                                        thumbnailNetworkStatus: STATUS_SUCCESS
+                                    });
+                                });
+                            }
                         });
 
                     }

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import ImageForm from '../../image-processing/ImageForm';
 import ResizeProfileImg from '../../image-processing/ResizeProfileImg';
 import { STATUS_LOADING, STATUS_SUCCESS, STATUS_FAILURE } from '../../Network/consts';
-import { blogImageSelected, uploadingImage, uploadImageSuccess, uploadImageFailure } from './actions';
+import { blogImageSelected } from './actions';
 
 class BlogImage extends React.Component {
     constructor(props) {
@@ -25,16 +25,6 @@ class BlogImage extends React.Component {
     isFormInvalid = () => {
         return this.props.blogCreation.image.value !== null;
     }
-
-    onBlogImageUploadComplete = (errData, uploadedProfilePicData) => {
-        if (errData) {
-            this.props.uploadImageFailure();
-            return;
-        }
-
-        //success
-        this.props.uploadImageSuccess(uploadedProfilePicData.url);
-    };
 
     render() {
         let picSrc = null;
@@ -102,21 +92,13 @@ class BlogImage extends React.Component {
                         <Col />
                     </Row>
                 }
-
-                {this.props.blogCreation.image.value && this.props.blogCreation.image.network === STATUS_LOADING &&
-                    <ResizeProfileImg fileToResizeAndUpload={this.props.blogCreation.image.value}
-                        userId={this.props.reduxBlogAuth.userInfo.id}
-                        onPhotoFinished={this.onBlogImageUploadComplete}
-                        resizeMaxHeight={600}
-                    />
-                }
             </form>
         );
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ blogImageSelected, uploadingImage, uploadImageSuccess, uploadImageFailure }, dispatch);
+    return bindActionCreators({ blogImageSelected }, dispatch);
 }
 
 function mapStateToProps({ blogCreation }) {

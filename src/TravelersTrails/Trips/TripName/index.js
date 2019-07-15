@@ -94,7 +94,6 @@ class TripName extends React.Component {
                         }
                     });
                 }
-                console.log('trip data returned', data);
                 let tripFormNameState = initialTripFormState;
                 tripFormNameState.name.value = data.name;
                 this.setState({

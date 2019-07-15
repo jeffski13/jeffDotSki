@@ -19,7 +19,6 @@ class BlogEntryText extends React.Component {
     }
 
     handleBlogTextChange = (e) => {
-        //store the text user entered and 
         this.props.storeBlogText(e.target.value);
     }
 
@@ -33,7 +32,7 @@ class BlogEntryText extends React.Component {
                 <FormControl
                     type="text"
                     as="textarea"
-                    value={this.props.blogCreation.text.value}
+                    value={this.props.blogCreation.text.rawValue}
                     placeholder="<Your Adventure Here>"
                     onChange={this.handleBlogTextChange}
                     ref={this.blogTextInputRef}
