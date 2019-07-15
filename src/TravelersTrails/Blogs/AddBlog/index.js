@@ -14,6 +14,7 @@ import BlogEntryText from './BlogEntryText';
 import BlogImage from './BlogImage';
 import Loadingski from '../../../Inf/Loadingski';
 import {createBlogSecure} from '../../BlogForUser';
+import BlogTitle from './BlogTitle';
 
 const initialBlogFormState = {
     info: {
@@ -93,6 +94,7 @@ class AddBlog extends React.Component {
         //success
         //get bloginfotogether
         let blogInfo = {
+            title: this.props.blogCreation.title.value,
             blogContent: this.rawBlogToBlogTextModel(this.props.blogCreation.text.value),
             titleImageUrl: uploadedProfilePicData.url,
             date: moment(this.props.blogCreation.date.value.valueOf()).unix()
@@ -144,6 +146,7 @@ class AddBlog extends React.Component {
         let blogForm = (
             <React.Fragment>
                 <BlogDate />
+                <BlogTitle />
                 <BlogEntryText />
                 <BlogImage />
                 <Button

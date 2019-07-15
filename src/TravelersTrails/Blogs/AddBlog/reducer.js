@@ -1,4 +1,4 @@
-import {STORE_BLOG_DATE, STORE_BLOG_TEXT, 
+import {STORE_BLOG_DATE, STORE_BLOG_TEXT, STORE_BLOG_TITLE,
     BLOG_UPLOADING, BLOG_UPLOADING_FAILURE, BLOG_UPLOADING_SUCCESS, BLOG_UPLOADING_FINISHED,
     BLOG_IMAGE_SELECTED, BLOG_IMAGE_UPLOADING, BLOG_IMAGE_UPLOAD_SUCCESS, BLOG_IMAGE_UPLOAD_FAILURE} from './actions';
 import moment from 'moment';
@@ -6,6 +6,10 @@ import {STATUS_LOADING, STATUS_SUCCESS, STATUS_FAILURE} from '../../Network/cons
 import { LOADIPHLPAPI } from 'dns';
 //default blog
 const initialState = {
+    title: {
+        value: null,
+        isValid: true
+    },
     text: {
         value: null,
         rawValue: null,
@@ -36,6 +40,20 @@ export default (state = initialState, action) => {
         state = {
             ...state,
             date: {
+                value: action.payload,
+                isValid: valid
+            }
+        };
+    }
+    else if (action.type === STORE_BLOG_TITLE) {
+        //validation here
+        let valid = false;
+        if(action.payload !== null && action.payload !== ''){
+            valid = true;
+        }
+        state = {
+            ...state,
+            title: {
                 value: action.payload,
                 isValid: valid
             }
@@ -129,7 +147,7 @@ export default (state = initialState, action) => {
 
     //overall validation for blog
     state.isValid = false;
-    if(state.text.isValid && state.image.isValid && state.date.isValid){
+    if(state.text.isValid && state.title.isValid && state.image.isValid && state.date.isValid){
         state.isValid = true;
     }
     return state;

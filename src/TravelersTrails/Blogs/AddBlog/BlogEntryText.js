@@ -8,16 +8,6 @@ import { validateFormString, FORM_SUCCESS } from '../../../formvalidation';
 
 class BlogEntryText extends React.Component {
 
-    constructor(props, context) {
-        super(props, context);
-
-        this.blogTextInputRef = React.createRef();
-    }
-
-    componentDidMount() {
-        this.blogTextInputRef.current.focus();
-    }
-
     handleBlogTextChange = (e) => {
         this.props.storeBlogText(e.target.value);
     }
@@ -26,7 +16,7 @@ class BlogEntryText extends React.Component {
         return (
             <FormGroup
                 controlId="formControlsTextarea"
-                validationState={validateFormString(this.props.blogCreation.blogtext)}
+                validationState={validateFormString(this.props.blogCreation.text.rawValue)}
             >
                 <label>What Happened Today?</label>
                 <FormControl
@@ -35,7 +25,6 @@ class BlogEntryText extends React.Component {
                     value={this.props.blogCreation.text.rawValue}
                     placeholder="<Your Adventure Here>"
                     onChange={this.handleBlogTextChange}
-                    ref={this.blogTextInputRef}
                 />
             </FormGroup>
         );

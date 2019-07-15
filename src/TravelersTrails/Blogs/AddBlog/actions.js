@@ -1,4 +1,5 @@
 export const STORE_BLOG_DATE = 'STORE_BLOG_DATE';
+export const STORE_BLOG_TITLE = 'STORE_BLOG_TITLE';
 export const STORE_BLOG_TEXT = 'STORE_BLOG_TEXT';
 export const BLOG_UPLOADING = 'BLOG_UPLOADING';
 export const BLOG_UPLOADING_SUCCESS = 'BLOG_UPLOADING_SUCCESS';
@@ -13,6 +14,13 @@ export function storeBlogDate(blogDate) {
     return {
         type: STORE_BLOG_DATE,
         payload: blogDate
+    }
+}
+
+export function storeBlogTitle(title) {
+    return {
+        type: STORE_BLOG_TITLE,
+        payload: title
     }
 }
 
