@@ -20,7 +20,6 @@ class BlogDate extends React.Component {
             amOrPm = 'PM';
         }
         let timeOfDaySelected = ` ${this.props.blogCreation.date.value.hour() % 12}:${minuteString} ${amOrPm}`
-        console.log(`this.props.blogCreation.date.value: ${this.props.blogCreation.date.value}`);
         return (
             <div className="form-group">
                 <DatePicker

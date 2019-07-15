@@ -138,7 +138,6 @@ export function uploadProfilePic(profilePicFile, userId, callback) {
     }).then((user) => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
 
-        console.log('propfilepic is', profilePicFile);
         if (!profilePicFile || !userId || userId === '') {
             callback({ message: "No file or userId while trying to upload photo!" });
             return;

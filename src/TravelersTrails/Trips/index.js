@@ -95,7 +95,6 @@ class Trips extends React.Component {
     }
 
     onSubmitClicked = (event) => {
-        console.log('trip submit');
         // if we have valid usernames and passwords and we are not loading right now, try to login
         event.preventDefault();
         event.stopPropagation();

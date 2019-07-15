@@ -27,7 +27,6 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-    console.log('REDUCER: action.type: ', action.type);
     if (action.type === STORE_BLOG_DATE) {
         //validation here
         let valid = false;

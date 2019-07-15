@@ -84,7 +84,6 @@ class Account extends React.Component {
         if (this.state.password && typeof this.state.password === 'string') {
             for (let i = 0; i < passwordRules.length; i++) {
                 if (!this.isPasswordValidForRule(passwordRules[i])) {
-                    console.log('jeffski password invalid')
                     return false;
                 }
             }
@@ -92,7 +91,6 @@ class Account extends React.Component {
         else {
             return false;
         }
-        console.log('jeffski password valid')
         return true;
     }
 
@@ -297,7 +295,6 @@ class Account extends React.Component {
                                         type="password"
                                         value={this.state.password || ''}
                                         onChange={(e) => {
-                                            console.log('jeffski looking at passowrd: ', e.target.value);
                                             this.setState({
                                                 password: e.target.value
                                             });

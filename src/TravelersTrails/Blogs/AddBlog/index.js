@@ -86,14 +86,11 @@ class AddBlog extends React.Component {
 
     uploadBlogInfo = (errData, uploadedProfilePicData) => {
         if (errData) {
-            console.log('Blog image ERROR: ', errData);
             this.props.uploadImageFailure();
             return;
         }
 
         //success
-        console.log('AddBlog onBlogImageUploadComplete no errors!');
-        
         //get bloginfotogether
         let blogInfo = {
             blogContent: this.rawBlogToBlogTextModel(this.props.blogCreation.text.value),
@@ -123,7 +120,6 @@ class AddBlog extends React.Component {
     }
 
     render() {
-        console.log('render for AddBlog: network', this.props.blogCreation.network, ' imageNetwork: ', this.props.blogCreation.image.network, this.props.blogCreation);
         if (this.state.isEditEnabled && !this.state.isAddingBlog) {
             return (
                 <div className="Blogs_controls-add-blog">

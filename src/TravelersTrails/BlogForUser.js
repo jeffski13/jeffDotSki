@@ -27,18 +27,15 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
         let blogImageUploadKey = `${userId}/trips/${tripId}/${fileName}`;
         let blogImageFileType = blogPicFile.type;
 
-        console.log('uploading blog image to storage...');
         Storage.put(blogImageUploadKey, blogPicFile, {
             level: 'public',
             contentType: blogImageFileType
         })
         .then((result) => {
-                console.log('uploading blog image to storage complete!');
                 const uploadFileUrlPrefix = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
                 callback(null, `${uploadFileUrlPrefix}${result.key}`)
             })
             .catch((err) => {
-                console.log('uploading blog image to storage error occured');
                 callback({
                     message: "An error occured while trying to upload the profile pic!",
                     error: err

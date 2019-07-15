@@ -9,7 +9,6 @@ import {defaultErrorResponse} from '../Network/consts';
  * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
  */
 export function getBlogs(tripId, callback){
-    console.log('getting blogs without auth');
     axios({
         method: 'get',
         url: `https://864wf8s3oi.execute-api.us-east-2.amazonaws.com/Prod/alltripblogs?tripId=${tripId}`,
