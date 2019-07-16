@@ -56,13 +56,17 @@ export default class Timeline extends React.Component {
         let totalHeight = this.state.windowHeight * this.state.totalHeightFraction;
 
         let svgCenterY = endLengths + index * ((totalHeight - (2 * endLengths)) / (this.props.linksInfo.length - 1));
-
+        if(this.props.linksInfo.length === 1) {
+            svgCenterY = endLengths + index * ((totalHeight - (2 * endLengths)) / 2);
+        }
+        
         let circleFillColor = 'grey';
         if (nextLinkInfo.isSectionVisible) {
             circleFillColor = 'black';
         }
-
-        console.log('rendering timeline ', index, 'max height:', totalHeight);
+        
+        // console.log(`svgCenterY: ${svgCenterY}, endLengths: ${endLengths}, index: ${index}, : ${totalHeight}`);
+        // console.log('rendering timeline ', index, 'max height:', totalHeight);
 
         return (
             <LinkWithTooltip
