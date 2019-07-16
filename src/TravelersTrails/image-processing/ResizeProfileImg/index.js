@@ -157,7 +157,6 @@ export default class ResizeProfileImg extends React.Component {
                                 uploadBlogPic(createdBlobImage, userId, tripId, (err, uploadedImageUrl) => {
                                     //error handling
                                     if (err) {
-                                        console.log('Uploading Blog pic in ResizeProfileImg failed with err: ', err);
                                         parentReactComponent.props.onPhotoFinished({
                                             error: err,
                                             filename: file.name
@@ -168,7 +167,6 @@ export default class ResizeProfileImg extends React.Component {
                                         return;
                                     }
                                     
-                                    console.log('ResizeProfileImg photo upload complete. Calling parentReact callback...')
                                     parentReactComponent.props.onPhotoFinished(null, {
                                         filename: file.name,
                                         url: uploadedImageUrl
