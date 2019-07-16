@@ -6,15 +6,18 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import ResizeProfileImg from '../../image-processing/ResizeProfileImg';
-import { uploadingBlog, uploadingBlogSuccess, uploadingBlogFailure,
-    uploadingImage, uploadImageSuccess, uploadImageFailure } from './actions';
+import {
+    uploadingBlog, uploadingBlogSuccess, uploadingBlogFailure,
+    uploadingImage, uploadImageSuccess, uploadImageFailure
+} from './actions';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import BlogDate from './BlogDate';
 import BlogEntryText from './BlogEntryText';
 import BlogImage from './BlogImage';
-import Loadingski from '../../../Inf/Loadingski';
-import {createBlogSecure} from '../../BlogForUser';
+import ReactLoading from 'react-loading';
+import { createBlogSecure } from '../../BlogForUser';
 import BlogTitle from './BlogTitle';
+import './styles.css';
 
 const initialBlogFormState = {
     info: {
@@ -103,20 +106,20 @@ class AddBlog extends React.Component {
             if (err) {
                 return this.props.uploadingBlogFailure();
             }
-            
+
             //WE DID IT! let state decide where we go from here
             return this.props.uploadingBlogSuccess();
         });
     };
 
     //returns an array of objects with a "text" field. 
-    rawBlogToBlogTextModel(blogArr){
+    rawBlogToBlogTextModel(blogArr) {
         let finalArr = [];
-        blogArr.forEach(function(str) {
-          let nextEntry = {
-            text: str
-          };
-          finalArr.push(nextEntry);
+        blogArr.forEach(function (str) {
+            let nextEntry = {
+                text: str
+            };
+            finalArr.push(nextEntry);
         });
         return finalArr;
     }
@@ -143,34 +146,42 @@ class AddBlog extends React.Component {
             );
         };
 
-        let blogForm = (
-            <React.Fragment>
-                <BlogDate />
-                <BlogTitle />
-                <BlogEntryText />
-                <BlogImage />
-                <Button
-                    onClick={() => {
-                        this.props.uploadingImage();
-                    }}
-                    disabled={!this.props.blogCreation.isValid}
-                    variant="primary"
-                    size="lg"
-                >
-                    Submit
-                </Button>
-            </React.Fragment>
-        );
+        let blogForm = null;
 
-        if(this.props.blogCreation.network === STATUS_LOADING){
-            blogForm = (<Loadingski />);
+        if (this.props.blogCreation.network === null) {
+            blogForm = (
+                <React.Fragment>
+                    <BlogDate />
+                    <BlogTitle />
+                    <BlogEntryText />
+                    <BlogImage />
+                    <Button
+                        onClick={() => {
+                            this.props.uploadingImage();
+                        }}
+                        disabled={!this.props.blogCreation.isValid}
+                        variant="primary"
+                        size="lg"
+                    >
+                        Submit
+                </Button>
+                </React.Fragment>
+            );
+        }
+
+        if (this.props.blogCreation.network === STATUS_LOADING || this.props.blogCreation.network === STATUS_SUCCESS) {
+            blogForm = (
+                <div className="AddBlog_loading" >
+                    <ReactLoading type="cylon" color="#333" height={100} width={100} />
+                </div>
+            );
         }
 
         return (
             <div>
                 {blogForm}
                 {this.props.blogCreation.image.network === STATUS_LOADING &&
-                    <ResizeProfileImg 
+                    <ResizeProfileImg
                         fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
                         userId={this.props.reduxBlogAuth.userInfo.id}
                         tripId={this.props.tripId}
@@ -193,8 +204,10 @@ AddBlog.propTypes = {
 };
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ uploadingBlog, uploadingBlogFailure, uploadingBlogSuccess,
-        uploadingImage, uploadImageSuccess, uploadImageFailure }, dispatch);
+    return bindActionCreators({
+        uploadingBlog, uploadingBlogFailure, uploadingBlogSuccess,
+        uploadingImage, uploadImageSuccess, uploadImageFailure
+    }, dispatch);
 }
 
 function mapStateToProps({ blogCreation }) {
