@@ -300,6 +300,7 @@ class ProfileEditPic extends React.Component {
                             userId={this.props.reduxBlogAuth.userInfo.id}
                             onPhotoFinished={this.onProfilePicUploadComplete}
                             resizeMaxHeight={600}
+                            isUserProfilePic={true}
                         />
                     }
                 </form>
