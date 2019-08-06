@@ -9,7 +9,7 @@ import { jeffskiRoutes } from '../../../app';
 import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { createBlogUserSecure, getBlogUserSecure } from '../../BlogUser';
-import Loadingski from '../../../Inf/Loadingski';
+import AirplaneLoader from '../../../Inf/AirplaneLoader';
 import './styles.css';
 import '../../styles.css';
 
@@ -162,7 +162,7 @@ class BlogUser extends React.Component {
     render() {
         //loading state
         if (this.state.registerNetwork === STATUS_LOADING) {
-            return (<Loadingski />);
+            return (<AirplaneLoader />);
         }
         else if (this.state.registerNetwork === STATUS_SUCCESS) {
             //if we are logged in and blog user info already exists go to login

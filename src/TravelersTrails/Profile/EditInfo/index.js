@@ -10,7 +10,7 @@ import { jeffskiRoutes } from '../../../app';
 import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { updateBlogUserSecure, getBlogUserSecure, emptyProfileUrl, profileGetFailMessage } from '../../BlogUser';
-import Loadingski from '../../../Inf/Loadingski';
+import AirplaneLoader from '../../../Inf/AirplaneLoader';
 import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from '../../../formvalidation';
 import '../../styles.css';
 import './styles.css';
@@ -201,7 +201,7 @@ class ProfileEditInfo extends React.Component {
 
         //loading state
         if (this.state.profileFetchNetwork === STATUS_LOADING) {
-            return (<Loadingski />);
+            return (<AirplaneLoader />);
         }
         if (this.state.profileFetchNetworkMessage === profileGetFailMessage) {
             return (
