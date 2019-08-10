@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { updateBlogUserSecure, getBlogUserSecure, emptyProfileUrl, profileGetFailMessage } from '../../BlogUser';
 import AirplaneLoader from '../../../Inf/AirplaneLoader';
+import AirplaneLoaderOverlay from '../../../Inf/AirplaneLoader/Overlay';
 import { validateFormString, validateFormStringWithCharacterMax, validateFormPositiveAndLessThanOrEqualToMaximum, FORM_ERROR } from '../../../formvalidation';
 import '../../styles.css';
 import './styles.css';
@@ -231,10 +232,7 @@ class ProfileEditInfo extends React.Component {
         return (
             <div>
                 {
-                    this.state.profileEditNetwork === STATUS_LOADING &&
-                    (<div id="loading-overlayski">
-                        <AirplaneLoader />
-                    </div>)
+                    this.state.profileEditNetwork === STATUS_LOADING && <AirplaneLoaderOverlay />
                 }
                 <Container className="User ProfileEditInfo">
                     <Row className="show-grid">
