@@ -8,7 +8,7 @@ import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../../Network/co
 import { jeffskiRoutes } from '../../../app';
 import withBlogAuth from '../../Auth/withBlogAuth';
 import { getBlogUserSecure, updateBlogUserSecure, emptyProfileUrl, profileGetFailMessage } from '../../BlogUser';
-import Loadingski from '../../../Inf/Loadingski';
+import AirplaneLoader from '../../../Inf/AirplaneLoader';
 import ImageForm from '../../image-processing/ImageForm';
 import loadingImage from '../../../loading_image.gif';
 import ResizeProfileImg from '../../image-processing/ResizeProfileImg';
@@ -142,7 +142,7 @@ class ProfileEditPic extends React.Component {
 
         //loading state
         if (this.state.profileFetchNetwork === STATUS_LOADING) {
-            return (<Loadingski />);
+            return (<AirplaneLoader />);
         }
         if (this.state.profileFetchNetworkMessage === profileGetFailMessage) {
             return (

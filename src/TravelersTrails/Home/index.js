@@ -7,7 +7,7 @@ import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 
 import { jeffskiRoutes } from '../../app';
 import withBlogAuth from '../Auth/withBlogAuth';
-import Loadingski from '../../Inf/Loadingski';
+import AirplaneLoader from '../../Inf/AirplaneLoader';
 
 import './styles.css';
 
@@ -30,7 +30,7 @@ class Home extends React.Component {
 
     render() {
         if (this.props.reduxBlogAuth.authState.isLoading) {
-            return (<Loadingski />);
+            return (<AirplaneLoader />);
         }
 
         //show different button options if user is logged in

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import withBlogAuth from '../Auth/withBlogAuth';
-import Loadingski from '../../Inf/Loadingski';
+import AirplaneLoader from '../../Inf/AirplaneLoader';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
 import { validateFormString, FORM_SUCCESS } from '../../formvalidation';
 import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
@@ -336,7 +336,7 @@ class Profile extends React.Component {
 
         //loading state
         if (this.state.blogUserNetwork === STATUS_LOADING) {
-            return (<Loadingski />);
+            return (<AirplaneLoader />);
         }
 
         let userState = {};

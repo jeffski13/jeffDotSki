@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import withBlogAuth from '../Auth/withBlogAuth';
 import Indicator from '../Network/Indicator';
-import Loadingski from '../../Inf/Loadingski';
+import AirplaneLoader from '../../Inf/AirplaneLoader';
 import { validateFormString, validateFormPositiveNumber, FORM_SUCCESS } from '../../formvalidation';
 import { STATUS_LOADING, STATUS_FAILURE, STATUS_SUCCESS } from '../Network/consts';
 import { createTripSecure, updateTripSecure } from '../TripsForUser';
@@ -183,7 +183,7 @@ class Trips extends React.Component {
     render() {
 
         if (!this.props.reduxBlogAuth.authState.isLoggedIn) {
-            return <Loadingski />
+            return <AirplaneLoader />
         }
 
         let getTripDetailsContent = null;

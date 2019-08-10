@@ -5,7 +5,7 @@ import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import withBlogAuth from '../Auth/withBlogAuth';
-import Loadingski from '../../Inf/Loadingski';
+import AirplaneLoader from '../../Inf/AirplaneLoader';
 import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import TripName from '../Trips/TripName';
@@ -477,7 +477,7 @@ class Blogs extends Component {
         }
         return (
             <div>
-                {(this.state.networkStatus === STATUS_LOADING || this.state.blogUserNetwork === STATUS_LOADING) && <Loadingski />}
+                {(this.state.networkStatus === STATUS_LOADING || this.state.blogUserNetwork === STATUS_LOADING) && <AirplaneLoader />}
                 {(this.state.networkStatus === STATUS_SUCCESS && this.state.blogUserNetwork === STATUS_SUCCESS) && blogsArea}
                 {this.state.networkStatus === STATUS_FAILURE && failureMessageRender}
             </div>
