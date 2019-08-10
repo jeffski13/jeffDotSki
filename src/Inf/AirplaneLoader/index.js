@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import plane from '../airplaneLoader.svg';
+import plane from './airplaneLoader.svg';
 
 import './loading-styles.css';
 
