@@ -229,247 +229,255 @@ class ProfileEditInfo extends React.Component {
         }
 
         return (
-            <Container className="User ProfileEditInfo">
-                <Row className="show-grid">
-                    <Col />
-                    <Col xs={12} sm={8} md={4}>
-                        <h2 className="User_header-title">Edit Profile</h2>
-                    </Col>
-                    <Col />
-                </Row>
+            <div>
+                {
+                    this.state.profileEditNetwork === STATUS_LOADING &&
+                    (<div id="loading-overlayski">
+                        <AirplaneLoader />
+                    </div>)
+                }
+                <Container className="User ProfileEditInfo">
+                    <Row className="show-grid">
+                        <Col />
+                        <Col xs={12} sm={8} md={4}>
+                            <h2 className="User_header-title">Edit Profile</h2>
+                        </Col>
+                        <Col />
+                    </Row>
 
-                <Row className="show-grid">
-                    <Col />
-                    <Col xs={10} sm={8} lg={6} xl={4} >
-                        <div className="Profile_profilepic-link ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
-                            <Image fluid src={this.state.profilePicUrl} />
-                            <Button
-                                onClick={this.goToEditProfilePic}
-                                variant="link"
-                            >
-                                Edit Image
+                    <Row className="show-grid">
+                        <Col />
+                        <Col xs={10} sm={8} lg={6} xl={4} >
+                            <div className="Profile_profilepic-link ProfileEditInfo_profilepic" onClick={this.goToEditProfilePic}>
+                                <Image fluid src={this.state.profilePicUrl} />
+                                <Button
+                                    onClick={this.goToEditProfilePic}
+                                    variant="link"
+                                >
+                                    Edit Image
                             </Button>
-                        </div>
-                    </Col>
-                    <Col />
-                </Row>
-
-                <Form
-                    onSubmit={e => this.onSaveClicked(e)}
-                >
-                    <Row className="show-grid">
-                        <Col />
-                        <Col xs={10} sm={8} lg={6} xl={4}>
-                            <FormGroup
-                                controlId="profileEditUsernameInput"
-                            >
-                                <label className="has-float-label">
-                                    <FormControl
-                                        type="text"
-                                        value={this.props.reduxBlogAuth.userInfo.username}
-                                        placeholder="Ex: sumThingFuN55"
-                                        disabled={true}
-                                        name="text"
-                                        className="form-label-group ability-input BulletTextItem_formTextInput"
-                                    />
-                                    <span>Username</span>
-                                </label>
-                            </FormGroup>
+                            </div>
                         </Col>
                         <Col />
                     </Row>
 
-                    <Row className="show-grid">
-                        <Col />
-                        <Col xs={10} sm={8} lg={6} xl={4}>
-                            <FormGroup
-                                controlId="profileEditEmailInput"
-                            >
-                                <label className="has-float-label">
-                                    <FormControl
-                                        type="email"
-                                        value={this.props.reduxBlogAuth.userInfo.email}
-                                        placeholder="Ex: yolo@swag.net"
-                                        disabled={true}
-                                        name="text"
-                                        className="form-label-group ability-input BulletTextItem_formTextInput"
-                                    />
-                                    <span>E-Mail</span>
-                                </label>
-                            </FormGroup>
-                        </Col>
-                        <Col />
-                    </Row>
-
-                    <Row className="show-grid">
-                        <Col />
-                        <Col xs={10} sm={8} lg={6} xl={4} >
-                            <FormGroup
-                                controlId="profileNameFirstInput"
-                            >
-                                <label className="has-float-label">
-                                    <FormControl
-                                        className="User_login-form-label"
-                                        placeholder="Username"
-                                        aria-describedby="inputGroupPrepend"
-                                        isInvalid={this.state.isValidated && !this.state.nameFirst}
-                                        type="text"
-                                        value={this.state.nameFirst}
-                                        placeholder="Ex: Johnny"
-                                        onChange={(e) => {
-                                            this.setState({
-                                                nameFirst: e.target.value
-                                            });
-                                        }}
-                                        onKeyDown={this.onFormEnterKey}
-                                    />
-                                    <span>First Name</span>
-                                    <Form.Control.Feedback type="invalid">
-                                        First name must not be blank.
-                                    </Form.Control.Feedback>
-                                </label>
-                            </FormGroup>
-                        </Col>
-                        <Col />
-                    </Row>
-
-                    <Row className="show-grid">
-                        <Col />
-                        <Col xs={10} sm={8} lg={6} xl={4} >
-                            <FormGroup
-                                controlId="profileNameLastInput"
-                            >
-                                <label className="has-float-label">
-                                    <FormControl
-                                        className="User_login-form-label"
-                                        placeholder="Username"
-                                        aria-describedby="inputGroupPrepend"
-                                        isInvalid={this.state.isValidated && !this.state.nameLast}
-                                        value={this.state.nameLast}
-                                        placeholder="Ex: Tsunami"
-                                        type="text"
-                                        onChange={(e) => {
-                                            this.setState({
-                                                nameLast: e.target.value
-                                            });
-                                        }}
-                                        onKeyDown={this.onFormEnterKey}
-                                    />
-                                    <span>Last Name</span>
-                                    <Form.Control.Feedback type="invalid">
-                                        Last name must not be blank.
-                                    </Form.Control.Feedback>
-                                </label>
-                            </FormGroup>
-                        </Col>
-                        <Col />
-                    </Row>
-
-                    <Row className="show-grid">
-                        <Col />
-                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="profileBioInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    aria-describedby="inputGroupPrepend"
-                                    type="text"
-                                    as="textarea"
-                                    value={this.state.bio}
-                                    placeholder="What is your favorite place you've visited? Where would you like to go next?"
-                                    onChange={this.handleBioTextChange}
-                                    ref={ref => { this.bioTextArea = ref; }}
-                                    rows={this.state.bioTextRows}
-                                />
-                            </InputGroup>
-                        </Form.Group>
-                        <Col />
-                    </Row>
-
-                    <Row className="show-grid">
-                        <Col />
-                        <Col xs={10} sm={8} lg={6} xl={4} >
-                            <FormGroup
-                                controlId="profileEditDateOfBirthInput"
-                            >
-                                <strong>Date Of Birth: </strong><DatePicker
-                                    selected={this.state.dateOfBirth}
-                                    onChange={(date) => {
-                                        if (date) {
-                                            this.setState({ dateOfBirth: date });
-                                        }
-                                    }}
-                                    className="form-control"
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col />
-                    </Row>
-
-                    <Row>
-                        <Col />
-                        <Col xs={10} sm={8} lg={6} xl={4} >
-                            <ul className="Register_validation-list">
-                                {this.renderBirthDateValidation()}
-                            </ul>
-                        </Col>
-                        <Col />
-                    </Row>
-
-                    <Row className="show-grid">
-                        <Col />
-                        <Col sm={10} md={8} className="User_actions-section">
-                            <span className="User_action-button" >
-                                <Button
-                                    disabled={this.isSaveProfileDisabled() || this.state.profileNetworkThrottle}
-                                    variant="primary"
-                                    onClick={this.onSaveClicked}
-                                >
-                                    Save
-                                </Button>
-                            </span>
-                            <span className="User_action-button" >
-                                <Button
-                                    variant="secondary"
-                                    disabled={this.isSaveProfileDisabled()}
-                                    onClick={this.onCancelProfileChanges}
-                                >
-                                    Go To Profile
-                                </Button>
-                            </span>
-                        </Col>
-                        <Col />
-                    </Row>
-
-                    {this.state.profileEditNetwork === STATUS_FAILURE &&
-                        <Row className="show-grid User_error-message">
+                    <Form
+                        onSubmit={e => this.onSaveClicked(e)}
+                    >
+                        <Row className="show-grid">
                             <Col />
-                            <Col xs={10} sm={8} md={4} >
-                                <Alert dismissible variant="danger">
-                                    <Alert.Heading>Oh No!</Alert.Heading>
-                                    <p>
-                                        {this.state.profileEditNetworkMessage}
-                                    </p>
-                                </Alert>
+                            <Col xs={10} sm={8} lg={6} xl={4}>
+                                <FormGroup
+                                    controlId="profileEditUsernameInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            type="text"
+                                            value={this.props.reduxBlogAuth.userInfo.username}
+                                            placeholder="Ex: sumThingFuN55"
+                                            disabled={true}
+                                            name="text"
+                                            className="form-label-group ability-input BulletTextItem_formTextInput"
+                                        />
+                                        <span>Username</span>
+                                    </label>
+                                </FormGroup>
                             </Col>
                             <Col />
                         </Row>
-                    }
 
-                    {this.state.profileEditNetwork === STATUS_SUCCESS &&
-                        <Row className="show-grid User_error-message">
+                        <Row className="show-grid">
                             <Col />
-                            <Col xs={10} sm={8} md={4}>
-                                <Alert dismissible variant="success">
-                                    <Alert.Heading>YAY!</Alert.Heading>
-                                    <p>
-                                        {this.state.profileEditNetworkMessage}
-                                    </p>
-                                </Alert>
+                            <Col xs={10} sm={8} lg={6} xl={4}>
+                                <FormGroup
+                                    controlId="profileEditEmailInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            type="email"
+                                            value={this.props.reduxBlogAuth.userInfo.email}
+                                            placeholder="Ex: yolo@swag.net"
+                                            disabled={true}
+                                            name="text"
+                                            className="form-label-group ability-input BulletTextItem_formTextInput"
+                                        />
+                                        <span>E-Mail</span>
+                                    </label>
+                                </FormGroup>
                             </Col>
                             <Col />
                         </Row>
-                    }
-                </Form>
-            </Container>
+
+                        <Row className="show-grid">
+                            <Col />
+                            <Col xs={10} sm={8} lg={6} xl={4} >
+                                <FormGroup
+                                    controlId="profileNameFirstInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            className="User_login-form-label"
+                                            placeholder="Username"
+                                            aria-describedby="inputGroupPrepend"
+                                            isInvalid={this.state.isValidated && !this.state.nameFirst}
+                                            type="text"
+                                            value={this.state.nameFirst}
+                                            placeholder="Ex: Johnny"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    nameFirst: e.target.value
+                                                });
+                                            }}
+                                            onKeyDown={this.onFormEnterKey}
+                                        />
+                                        <span>First Name</span>
+                                        <Form.Control.Feedback type="invalid">
+                                            First name must not be blank.
+                                    </Form.Control.Feedback>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                            <Col />
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col />
+                            <Col xs={10} sm={8} lg={6} xl={4} >
+                                <FormGroup
+                                    controlId="profileNameLastInput"
+                                >
+                                    <label className="has-float-label">
+                                        <FormControl
+                                            className="User_login-form-label"
+                                            placeholder="Username"
+                                            aria-describedby="inputGroupPrepend"
+                                            isInvalid={this.state.isValidated && !this.state.nameLast}
+                                            value={this.state.nameLast}
+                                            placeholder="Ex: Tsunami"
+                                            type="text"
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    nameLast: e.target.value
+                                                });
+                                            }}
+                                            onKeyDown={this.onFormEnterKey}
+                                        />
+                                        <span>Last Name</span>
+                                        <Form.Control.Feedback type="invalid">
+                                            Last name must not be blank.
+                                    </Form.Control.Feedback>
+                                    </label>
+                                </FormGroup>
+                            </Col>
+                            <Col />
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col />
+                            <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="profileBioInput">
+                                <InputGroup>
+                                    <Form.Control className="User_login-form-label"
+                                        aria-describedby="inputGroupPrepend"
+                                        type="text"
+                                        as="textarea"
+                                        value={this.state.bio}
+                                        placeholder="What is your favorite place you've visited? Where would you like to go next?"
+                                        onChange={this.handleBioTextChange}
+                                        ref={ref => { this.bioTextArea = ref; }}
+                                        rows={this.state.bioTextRows}
+                                    />
+                                </InputGroup>
+                            </Form.Group>
+                            <Col />
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col />
+                            <Col xs={10} sm={8} lg={6} xl={4} >
+                                <FormGroup
+                                    controlId="profileEditDateOfBirthInput"
+                                >
+                                    <strong>Date Of Birth: </strong><DatePicker
+                                        selected={this.state.dateOfBirth}
+                                        onChange={(date) => {
+                                            if (date) {
+                                                this.setState({ dateOfBirth: date });
+                                            }
+                                        }}
+                                        className="form-control"
+                                    />
+                                </FormGroup>
+                            </Col>
+                            <Col />
+                        </Row>
+
+                        <Row>
+                            <Col />
+                            <Col xs={10} sm={8} lg={6} xl={4} >
+                                <ul className="Register_validation-list">
+                                    {this.renderBirthDateValidation()}
+                                </ul>
+                            </Col>
+                            <Col />
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col />
+                            <Col sm={10} md={8} className="User_actions-section">
+                                <span className="User_action-button" >
+                                    <Button
+                                        disabled={this.isSaveProfileDisabled() || this.state.profileNetworkThrottle}
+                                        variant="primary"
+                                        onClick={this.onSaveClicked}
+                                    >
+                                        Save
+                                </Button>
+                                </span>
+                                <span className="User_action-button" >
+                                    <Button
+                                        variant="secondary"
+                                        disabled={this.isSaveProfileDisabled()}
+                                        onClick={this.onCancelProfileChanges}
+                                    >
+                                        Go To Profile
+                                </Button>
+                                </span>
+                            </Col>
+                            <Col />
+                        </Row>
+
+                        {this.state.profileEditNetwork === STATUS_FAILURE &&
+                            <Row className="show-grid User_error-message">
+                                <Col />
+                                <Col xs={10} sm={8} md={4} >
+                                    <Alert dismissible variant="danger">
+                                        <Alert.Heading>Oh No!</Alert.Heading>
+                                        <p>
+                                            {this.state.profileEditNetworkMessage}
+                                        </p>
+                                    </Alert>
+                                </Col>
+                                <Col />
+                            </Row>
+                        }
+
+                        {this.state.profileEditNetwork === STATUS_SUCCESS &&
+                            <Row className="show-grid User_error-message">
+                                <Col />
+                                <Col xs={10} sm={8} md={4}>
+                                    <Alert dismissible variant="success">
+                                        <Alert.Heading>YAY!</Alert.Heading>
+                                        <p>
+                                            {this.state.profileEditNetworkMessage}
+                                        </p>
+                                    </Alert>
+                                </Col>
+                                <Col />
+                            </Row>
+                        }
+                    </Form>
+                </Container>
+            </div>
         );
     }
 }
