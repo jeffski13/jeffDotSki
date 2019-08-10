@@ -11,6 +11,7 @@ import './styles.css';
 export default class ResizeProfileImg extends React.Component {
 
     static propTypes = {
+        showProgressIndicator: PropTypes.bool,
         fileToResizeAndUpload: PropTypes.object.isRequired,
         userId: PropTypes.string.isRequired,
         tripId: PropTypes.string,
@@ -21,6 +22,7 @@ export default class ResizeProfileImg extends React.Component {
 
     //default to empty functions to avoid crash
     static defaultProps = {
+        showProgressIndicator: true,
         // the onPhotoFinished() resizedImageData param will be an array with these objects:
         // {
         //   filename: string, 
@@ -192,6 +194,10 @@ export default class ResizeProfileImg extends React.Component {
 
     render() {
         if(this.state.unmounting){
+            return null;
+        }
+
+        if(!this.props.showProgressIndicator){
             return null;
         }
         

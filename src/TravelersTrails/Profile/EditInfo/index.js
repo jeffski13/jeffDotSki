@@ -230,11 +230,11 @@ class ProfileEditInfo extends React.Component {
         }
 
         return (
-            <div>
+            <div className="ProfileEditInfo">
                 {
                     this.state.profileEditNetwork === STATUS_LOADING && <AirplaneLoaderOverlay />
                 }
-                <Container className="User ProfileEditInfo">
+                <Container className="User">
                     <Row className="show-grid">
                         <Col />
                         <Col xs={12} sm={8} md={4}>
