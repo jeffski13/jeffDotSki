@@ -7,6 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import withBlogAuth from '../Auth/withBlogAuth';
 import AirplaneLoader from '../../Inf/AirplaneLoader';
+import AirplaneLoaderOverlay from '../../Inf/AirplaneLoader/Overlay';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/consts';
 import { validateFormString, FORM_SUCCESS } from '../../formvalidation';
 import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
@@ -30,15 +31,15 @@ class Profile extends React.Component {
         super(props);
 
         this.newTripNameInputRef = React.createRef();
-        
+
         this.state = {
             blogUserNetwork: STATUS_LOADING,
             showMoreBio: false,
             isEditEnabled: false,
             blogUserInfo: null,
-            isAddingTrip: false,
+            isAddTripUiShowing: false,
             addTripNetwork: null,
-            addTripForm: {...initialTripFormState},
+            addTripForm: { ...initialTripFormState },
             createTripResults: null
         };
     }
@@ -74,7 +75,7 @@ class Profile extends React.Component {
         }
 
         //focuses on new trip name input 
-        if (!previousState.isAddingTrip && this.state.isAddingTrip) {
+        if (!previousState.isAddTripUiShowing && this.state.isAddTripUiShowing) {
             this.newTripNameInputRef.current.focus();
         }
     }
@@ -175,8 +176,8 @@ class Profile extends React.Component {
         //if empty, back out of editting mode
         if (this.state.addTripForm.name.value === '') {
             return this.setState({
-                addTripForm: {...initialTripFormState},
-                isAddingTrip: false,
+                addTripForm: { ...initialTripFormState },
+                isAddTripUiShowing: false,
                 createTripResults: null,
                 addTripNetwork: null
             });
@@ -219,8 +220,8 @@ class Profile extends React.Component {
                     createTripResults: {
                         message: 'Trip Created!'
                     },
-                    addTripForm: {...initialTripFormState},
-                    isAddingTrip: false,
+                    addTripForm: { ...initialTripFormState },
+                    isAddTripUiShowing: false,
                     blogUserInfo: { ...this.state.blogUserInfo, updatedBlogUserInfo }
                 });
             });
@@ -257,11 +258,11 @@ class Profile extends React.Component {
         let tripAddButton = null;
         let addTripForm = null;
         if (this.state.isEditEnabled) {
-            if (this.state.isAddingTrip) {
+            if (this.state.isAddTripUiShowing) {
                 let addTripFeedbackArea = null;
                 if (this.state.addTripNetwork === STATUS_FAILURE) {
                     let addTripFailMessage = 'An error occured. Please try again later.';
-                    if(this.state.createTripResults.message) {
+                    if (this.state.createTripResults.message) {
                         addTripFailMessage = this.state.createTripResults.message;
                     }
                     addTripFeedbackArea = (
@@ -312,7 +313,7 @@ class Profile extends React.Component {
                 tripAddButton = (
                     <span className="Profile_trip-section-addTripButton">
                         <Button
-                            onClick={() => this.setState({ isAddingTrip: true })}
+                            onClick={() => this.setState({ isAddTripUiShowing: true })}
                             variant="success"
                             size="sm"
                         >
@@ -422,116 +423,119 @@ class Profile extends React.Component {
         }
 
         return (
-            <Container className="User Profile">
-                <Row className="show-grid">
-                    <Col xs={9}>
-                        <h2 className="Profile_header">{userState.username}</h2>
-                    </Col>
-                    {!this.state.isEditEnabled && !this.props.reduxBlogAuth.authState.isLoggedIn &&
-                        <Col xs={3} className="User_action-button-login-area">
-                            <span className="User_action-button" >
-                                <Button
-                                    onClick={this.goToLogin}
-                                >
-                                    Login
-                                </Button>
-                            </span>
-                        </Col>}
-                    {!this.state.isEditEnabled && this.props.reduxBlogAuth.authState.isLoggedIn &&
-                        <Col xs={3} className="User_action-button-login-area">
-                            <span className="User_action-button" >
-                                <Button
-                                    onClick={this.goToLoggedInProfile}
-                                >
-                                    Profile
-                                </Button>
-                            </span>
-                        </Col>}
-
-                </Row>
-
-                <Row className="show-grid">
-                    <Col xs={0} />
-                    {this.state.isEditEnabled
-                        ? <Col xs={6} md={8}>
-                            <Col xs={12} >
-                                <div className="Profile_title">Name</div>
-                                <div>{userState.name}</div>
-                            </Col>
-                            <Col xs={12} >
-                                <div className="Profile_title">Email</div>
-                                <div>{userState.email}</div>
-                            </Col>
-                            <Col xs={12} >
-                                <div className="Profile_title">Birth Date</div>
-                                <div>{moment.unix(userState.dateOfBirth).format("MM/DD/YYYY")}</div>
-                            </Col>
-                        </Col>
-                        : <Col xs={12} md={8}>
-                            {bioArea}
-                        </Col>
-                    }
-                    {this.state.isEditEnabled
-                        ? <Col xs={6} md={4}>
-                            <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
-                                <Image fluid src={userState.profilePic} />
-                                <Button
-                                    onClick={this.goToEditProfilePic}
-                                    variant="link"
-                                >
-                                    Edit Image
-                                </Button>
-                            </div>
-                        </Col>
-                        : <Col xs={12} md={4}>
-                            <Image fluid src={userState.profilePic} />
-                        </Col>
-                    }
-                    <Col xs={0} />
-                </Row>
-
-                <Row className="show-grid">
-                    <Col xs={12} md={8} className="Profile_bio-trip-row">
-                        <Col xs={12}>
-                            {this.state.isEditEnabled
-                                ? bioArea
-                                : null}
-                        </Col>
-                    </Col>
-                    <Col xs={12} md={4} className="Profile_bio-trip-row">
-                        {this.renderTripArea()}
-                    </Col>
-                </Row>
+            <div className="Profile">
                 {
-                    this.state.isEditEnabled &&
-                    <Row className="show-grid">
-                        <Col xs={1} sm={2} md={4} />
-                        <Col xs={10} sm={8} md={6} lg={4} className="User_actions-section">
-                            <span className="User_action-button" >
-                                <Button
-                                    onClick={this.goToEditProfileInfo}
-                                    variant="secondary"
-                                >
-                                    Edit Info
-                                </Button>
-                            </span>
-                            <span className="User_action-button" >
-                                <Button
-                                    variant="danger"
-                                    onClick={this.logout}
-                                >
-                                    Logout
-                                </Button>
-                            </span>
-
-                        </Col>
-                        <Col xs={1} sm={2} md={4} />
-                    </Row>
+                    this.state.addTripNetwork === STATUS_LOADING && <AirplaneLoaderOverlay />
                 }
+                <Container className="User" >
+                    <Row className="show-grid">
+                        <Col xs={9}>
+                            <h2 className="Profile_header">{userState.username}</h2>
+                        </Col>
+                        {!this.state.isEditEnabled && !this.props.reduxBlogAuth.authState.isLoggedIn &&
+                            <Col xs={3} className="User_action-button-login-area">
+                                <span className="User_action-button" >
+                                    <Button
+                                        onClick={this.goToLogin}
+                                    >
+                                        Login
+                                    </Button>
+                                </span>
+                            </Col>}
+                        {!this.state.isEditEnabled && this.props.reduxBlogAuth.authState.isLoggedIn &&
+                            <Col xs={3} className="User_action-button-login-area">
+                                <span className="User_action-button" >
+                                    <Button
+                                        onClick={this.goToLoggedInProfile}
+                                    >
+                                        Profile
+                                    </Button>
+                                </span>
+                            </Col>}
 
-            </Container>
+                    </Row>
 
-        )
+                    <Row className="show-grid">
+                        <Col xs={0} />
+                        {this.state.isEditEnabled
+                            ? <Col xs={6} md={8}>
+                                <Col xs={12} >
+                                    <div className="Profile_title">Name</div>
+                                    <div>{userState.name}</div>
+                                </Col>
+                                <Col xs={12} >
+                                    <div className="Profile_title">Email</div>
+                                    <div>{userState.email}</div>
+                                </Col>
+                                <Col xs={12} >
+                                    <div className="Profile_title">Birth Date</div>
+                                    <div>{moment.unix(userState.dateOfBirth).format("MM/DD/YYYY")}</div>
+                                </Col>
+                            </Col>
+                            : <Col xs={12} md={8}>
+                                {bioArea}
+                            </Col>
+                        }
+                        {this.state.isEditEnabled
+                            ? <Col xs={6} md={4}>
+                                <div className="Profile_profilepic" onClick={this.goToEditProfilePic}>
+                                    <Image fluid src={userState.profilePic} />
+                                    <Button
+                                        onClick={this.goToEditProfilePic}
+                                        variant="link"
+                                    >
+                                        Edit Image
+                                </Button>
+                                </div>
+                            </Col>
+                            : <Col xs={12} md={4}>
+                                <Image fluid src={userState.profilePic} />
+                            </Col>
+                        }
+                        <Col xs={0} />
+                    </Row>
+
+                    <Row className="show-grid">
+                        <Col xs={12} md={8} className="Profile_bio-trip-row">
+                            <Col xs={12}>
+                                {this.state.isEditEnabled
+                                    ? bioArea
+                                    : null}
+                            </Col>
+                        </Col>
+                        <Col xs={12} md={4} className="Profile_bio-trip-row">
+                            {this.renderTripArea()}
+                        </Col>
+                    </Row>
+                    {
+                        this.state.isEditEnabled &&
+                        <Row className="show-grid">
+                            <Col xs={1} sm={2} md={4} />
+                            <Col xs={10} sm={8} md={6} lg={4} className="User_actions-section">
+                                <span className="User_action-button" >
+                                    <Button
+                                        onClick={this.goToEditProfileInfo}
+                                        variant="secondary"
+                                    >
+                                        Edit Info
+                                </Button>
+                                </span>
+                                <span className="User_action-button" >
+                                    <Button
+                                        variant="danger"
+                                        onClick={this.logout}
+                                    >
+                                        Logout
+                                </Button>
+                                </span>
+
+                            </Col>
+                            <Col xs={1} sm={2} md={4} />
+                        </Row>
+                    }
+                </Container>
+            </div>
+        );
     }
 }
 
