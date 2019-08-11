@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import withBlogAuth from '../Auth/withBlogAuth';
 import AirplaneLoader from '../../Inf/AirplaneLoader';
+import AirplaneLoaderOverlay from '../../Inf/AirplaneLoader/Overlay';
 import BlogPage from './BlogPage';
 import Timeline from './Timeline';
 import TripName from '../Trips/TripName';
@@ -45,6 +46,7 @@ class Blogs extends Component {
             },
             isEditEnabled: false,
             isEditingTrip: false,
+            editTripNetwork: null,
             isAddingBlog: false,
             blogUserNetwork: STATUS_LOADING,
             blogUserInfo: null
@@ -320,6 +322,7 @@ class Blogs extends Component {
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={8} lg={10}>
                         <TripName
+                            tripNetworkChangeCallback={editTripNetwork => { this.setState({ editTripNetwork }) }}
                             isEditingTripCallback={isEditingTrip => { this.setState({ isEditingTrip }) }}
                             tripOwnerId={this.props.match.params.userId}
                             tripId={tripId}
@@ -440,7 +443,6 @@ class Blogs extends Component {
                         <Col xs={12}>
                             <div className="BlogList">
                                 {this.state.blogsResults.blogsArr.map(this.renderSampleBlogItem)}
-
                                 <Timeline
                                     onReverseOrderClickedCallback={this.reverseBlogOrder}
                                     linksInfo={timelineLinksInfo}
@@ -477,6 +479,9 @@ class Blogs extends Component {
         }
         return (
             <div>
+                {
+                    this.state.editTripNetwork === STATUS_LOADING && <AirplaneLoaderOverlay />
+                }
                 {(this.state.networkStatus === STATUS_LOADING || this.state.blogUserNetwork === STATUS_LOADING) && <AirplaneLoader />}
                 {(this.state.networkStatus === STATUS_SUCCESS && this.state.blogUserNetwork === STATUS_SUCCESS) && blogsArea}
                 {this.state.networkStatus === STATUS_FAILURE && failureMessageRender}
