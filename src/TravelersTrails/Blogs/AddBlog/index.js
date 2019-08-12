@@ -14,7 +14,6 @@ import withBlogAuth from '../../Auth/withBlogAuth';
 import BlogDate from './BlogDate';
 import BlogEntryText from './BlogEntryText';
 import BlogImage from './BlogImage';
-import ReactLoading from 'react-loading';
 import { createBlogSecure } from '../../BlogForUser';
 import BlogTitle from './BlogTitle';
 import './styles.css';
@@ -190,20 +189,13 @@ class AddBlog extends React.Component {
             );
         }
 
-        if (this.props.blogCreation.network === STATUS_LOADING || this.props.blogCreation.network === STATUS_SUCCESS) {
-            blogForm = (
-                <div className="AddBlog_loading" >
-                    <ReactLoading type="cylon" color="#333" height={100} width={100} />
-                </div>
-            );
-        }
-
         return (
             <div>
                 {blogForm}
                 {this.props.blogCreation.image.network === STATUS_LOADING &&
                     <ResizeProfileImg
                         key={this.props.blogCreation.uploadAttempt} //needed so that we can get a "new" instance of the upload component
+                        showProgressIndicator={false}
                         fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
                         userId={this.props.reduxBlogAuth.userInfo.id}
                         tripId={this.props.tripId}
