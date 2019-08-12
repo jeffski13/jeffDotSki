@@ -164,7 +164,7 @@ class TripName extends React.Component {
             editTripNetwork: STATUS_LOADING
         }, () => {
             //let parent component know we are loading
-            this.props.tripNetworkChangeCallback(STATUS_LOADING);
+            this.props.editTripNetworkChangeCallback(STATUS_LOADING);
             
             let tripInfo = {
                 name: this.state.editTripForm.name.value
@@ -180,7 +180,7 @@ class TripName extends React.Component {
                         editTripForm: editTripFormState,
                     }, () => {
                         //let parent component know we are a failure at life
-                        this.props.tripNetworkChangeCallback(STATUS_FAILURE);
+                        this.props.editTripNetworkChangeCallback(STATUS_FAILURE);
                     });
                 }
                 
@@ -194,7 +194,7 @@ class TripName extends React.Component {
                     tripName: data.trip.name,
                 }, () => {
                     //let parent component know we are straight up bosses
-                    this.props.tripNetworkChangeCallback(STATUS_SUCCESS);
+                    this.props.editTripNetworkChangeCallback(STATUS_SUCCESS);
                     this.props.isEditingTripCallback(false);
                 });
             });
@@ -285,11 +285,11 @@ class TripName extends React.Component {
 
 TripName.defaultProps = {
     isEditingTripCallback: () => { return false; },
-    tripNetworkChangeCallback: () => { return null; }
+    editTripNetworkChangeCallback: () => { return null; }
 };
 
 TripName.propTypes = {
-    tripNetworkChangeCallback: PropTypes.func,
+    editTripNetworkChangeCallback: PropTypes.func,
     //function called when trip is/isn't being edited
     isEditingTripCallback: PropTypes.func,
     tripOwnerId: PropTypes.string.isRequired,

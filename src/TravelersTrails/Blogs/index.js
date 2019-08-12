@@ -308,9 +308,7 @@ class Blogs extends Component {
                             tripOwnerId={this.props.match.params.userId}
                             tripId={tripId}
                             isDisabled={this.state.isEditingTrip}
-                            isAddingBlogCallback={isAddingBlog => {
-                                this.setState({ isAddingBlog });
-                            }}
+                            isAddingBlogCallback={isAddingBlog => { this.setState({ isAddingBlog }); }}
                         />
                     </Col>
                 </Row>
@@ -322,7 +320,7 @@ class Blogs extends Component {
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={8} lg={10}>
                         <TripName
-                            tripNetworkChangeCallback={editTripNetwork => { this.setState({ editTripNetwork }) }}
+                            editTripNetworkChangeCallback={editTripNetwork => { this.setState({ editTripNetwork }) }}
                             isEditingTripCallback={isEditingTrip => { this.setState({ isEditingTrip }) }}
                             tripOwnerId={this.props.match.params.userId}
                             tripId={tripId}
@@ -480,7 +478,8 @@ class Blogs extends Component {
         return (
             <div>
                 {
-                    this.state.editTripNetwork === STATUS_LOADING && <AirplaneLoaderOverlay />
+                    (this.state.editTripNetwork === STATUS_LOADING || this.props.blogCreation.network === STATUS_LOADING)
+                    && <AirplaneLoaderOverlay />
                 }
                 {(this.state.networkStatus === STATUS_LOADING || this.state.blogUserNetwork === STATUS_LOADING) && <AirplaneLoader />}
                 {(this.state.networkStatus === STATUS_SUCCESS && this.state.blogUserNetwork === STATUS_SUCCESS) && blogsArea}

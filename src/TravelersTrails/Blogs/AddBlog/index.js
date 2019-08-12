@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import ResizeProfileImg from '../../image-processing/ResizeProfileImg';
 import {
-    uploadingBlog, uploadingBlogSuccess, uploadingBlogFailure,
+    uploadingBlogSuccess, uploadingBlogFailure,
     uploadingImage, uploadImageSuccess, uploadImageFailure
 } from './actions';
 import withBlogAuth from '../../Auth/withBlogAuth';
@@ -38,7 +38,6 @@ class AddBlog extends React.Component {
         this.state = {
             isEditEnabled: false,
             isAddingBlog: false,
-            addBlogNetwork: null,
             addBlogForm: initialBlogFormState,
         }
     }
@@ -90,6 +89,7 @@ class AddBlog extends React.Component {
 
     uploadBlogInfo = (errData, uploadedProfilePicData) => {
         if (errData) {
+            console.log('errDate in AddBlog uploadBlogInfo: ', errData)
             this.props.uploadImageFailure();
             return;
         }
@@ -125,6 +125,7 @@ class AddBlog extends React.Component {
     }
 
     render() {
+        console.log('this.props.blogCreation: ', this.props.blogCreation);
         if (this.state.isEditEnabled && !this.state.isAddingBlog) {
             return (
                 <div className="Blogs_controls-add-blog">
@@ -148,9 +149,29 @@ class AddBlog extends React.Component {
 
         let blogForm = null;
 
-        if (this.props.blogCreation.network === null) {
+        if (this.props.blogCreation.network === null || this.props.blogCreation.network === STATUS_FAILURE) {
+            let failureMessageRender = null;
+            if(this.props.blogCreation.network === STATUS_FAILURE){
+                failureMessageRender = (
+                    <div>
+                        <div className="Blogs_error" >
+                            <Card bg="danger" text="white" style={{ width: '18rem' }}>
+                                <Card.Header>Houston, we have a problem.</Card.Header>
+                                <Card.Body>
+                                    <Card.Text>
+                                        <span>
+                                            <span>Something went wrong while uploading the blog.</span>
+                                        </span>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    </div>
+                );
+            }
             blogForm = (
                 <React.Fragment>
+                    {failureMessageRender}
                     <BlogDate />
                     <BlogTitle />
                     <BlogEntryText />
@@ -164,7 +185,7 @@ class AddBlog extends React.Component {
                         size="lg"
                     >
                         Submit
-                </Button>
+                    </Button>
                 </React.Fragment>
             );
         }
@@ -182,6 +203,7 @@ class AddBlog extends React.Component {
                 {blogForm}
                 {this.props.blogCreation.image.network === STATUS_LOADING &&
                     <ResizeProfileImg
+                        key={this.props.blogCreation.uploadAttempt} //needed so that we can get a "new" instance of the upload component
                         fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
                         userId={this.props.reduxBlogAuth.userInfo.id}
                         tripId={this.props.tripId}
@@ -195,6 +217,10 @@ class AddBlog extends React.Component {
     }
 }
 
+AddBlog.defaultProps = {
+    isAddingBlogCallback: () => { return false; }
+};
+
 AddBlog.propTypes = {
     //function when trip is/isn't being edited
     isAddingBlogCallback: PropTypes.func,
@@ -205,7 +231,7 @@ AddBlog.propTypes = {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        uploadingBlog, uploadingBlogFailure, uploadingBlogSuccess,
+        uploadingBlogFailure, uploadingBlogSuccess,
         uploadingImage, uploadImageSuccess, uploadImageFailure
     }, dispatch);
 }

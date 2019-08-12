@@ -1,9 +1,9 @@
 import {STORE_BLOG_DATE, STORE_BLOG_TEXT, STORE_BLOG_TITLE,
     BLOG_UPLOADING, BLOG_UPLOADING_FAILURE, BLOG_UPLOADING_SUCCESS, BLOG_UPLOADING_FINISHED,
-    BLOG_IMAGE_SELECTED, BLOG_IMAGE_UPLOADING, BLOG_IMAGE_UPLOAD_SUCCESS, BLOG_IMAGE_UPLOAD_FAILURE} from './actions';
+    BLOG_IMAGE_SELECTED, START_UPLOAD_AND_BLOG_IMAGE_UPLOADING, BLOG_IMAGE_UPLOAD_SUCCESS, BLOG_IMAGE_UPLOAD_FAILURE} from './actions';
 import moment from 'moment';
 import {STATUS_LOADING, STATUS_SUCCESS, STATUS_FAILURE} from '../../Network/consts';
-import { LOADIPHLPAPI } from 'dns';
+
 //default blog
 const initialState = {
     title: {
@@ -27,7 +27,8 @@ const initialState = {
         network: null
     },
     isValid: false,
-    network: null
+    network: null,
+    uploadAttempt: 0 //a little hack so we can get "new" versions of components
 };
 
 export default (state = initialState, action) => {
@@ -82,15 +83,9 @@ export default (state = initialState, action) => {
             }
         };
     }
-    else if (action.type === BLOG_UPLOADING) {
-        state = {
-            ...state,
-            network: STATUS_LOADING
-        };
-    }
     else if (action.type === BLOG_UPLOADING_SUCCESS) {
         state = {
-            ...state,
+            ...initialState, //if we completely succeed we want to reset this
             network: STATUS_SUCCESS
         };
     }
@@ -117,13 +112,14 @@ export default (state = initialState, action) => {
             image: imageState
         };
     }
-    else if (action.type === BLOG_IMAGE_UPLOADING) {
+    else if (action.type === START_UPLOAD_AND_BLOG_IMAGE_UPLOADING) {
         let imageState = state.image;
         imageState.network = STATUS_LOADING;
         state = {
             ...state,
             network: STATUS_LOADING,
-            image: imageState
+            image: imageState,
+            uploadAttempt: state.uploadAttempt + 1
         };
     }
     else if (action.type === BLOG_IMAGE_UPLOAD_SUCCESS) {
