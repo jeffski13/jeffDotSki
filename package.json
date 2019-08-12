@@ -25,7 +25,7 @@
     "react-bootstrap": "^1.0.0-beta.11",
     "react-datepicker": "^1.8.0",
     "react-dom": "^16.9.0",
-    "react-image-gallery": "^0.8.18",
+    "react-image-gallery": "0.8.16",
     "react-loading": "^1.0.1",
     "react-redux": "^5.0.0",
     "react-router": "^4.2.0",
