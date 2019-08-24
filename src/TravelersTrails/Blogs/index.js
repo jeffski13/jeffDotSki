@@ -14,10 +14,10 @@ import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../Network/const
 import { getBlogsSecure } from '../GETblogs';
 import { getBlogUserSecure, emptyProfileUrl } from '../BlogUser';
 import { jeffskiRoutes } from '../../app';
-import { uploadingBlogFinished } from './AddBlog/actions';
+import { uploadingBlogFinished } from './BlogPage/creation/actions';
 import '../Profile/styles.css';
 import './styles.css';
-import AddBlog from './AddBlog';
+import AddBlog from './BlogPage/creation/AddTheBlog';
 
 export const MOBILE_WINDOW_WIDTH = 850;
 
@@ -258,6 +258,7 @@ class Blogs extends Component {
                 invisibleAnchorId={nextBlog.id}
                 isViewMobile={this.state.isViewMobile}
                 blog={nextBlog}
+                isEditEnabled={this.state.isEditEnabled}
                 blogAnchorId={`idForBlogPercentageView-${nextBlog.id}`}
                 percentageInViewCallback={(percentageShowing, blogId) => {
 
@@ -298,17 +299,15 @@ class Blogs extends Component {
         }
 
         let addBlog;
-        if (this.state.isEditEnabled) {
+        if (this.state.isEditEnabled && !this.props.blogCreation.isEdittingBlog) {
             addBlog = (
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={12} md={12} className="Blogs_controls-wrapper">
                         <AddBlog
                             tripOwnerId={this.props.match.params.userId}
                             tripId={tripId}
-                            isDisabled={this.state.isEditingTrip}
-                            isAddingBlogCallback={isAddingBlog => {
-                                this.setState({ isAddingBlog });
-                            }}
+                            isDisabled={this.state.isEditingTrip} //do not allow user to edit trip and add blog at the same time
+                            isAddingBlogCallback={isAddingBlog => { this.setState({ isAddingBlog }); }}
                         />
                     </Col>
                 </Row>

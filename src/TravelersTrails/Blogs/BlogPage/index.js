@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Image } from 'react-bootstrap';
-import moment from 'moment';
+import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
+import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import BlogImages from './BlogImages'
+import BlogImages from './BlogImages';
+import EditBlog from './creation/EditBlog';
 import BlogTextItem from './BlogTextItem';
+import {startEditBlog} from './creation/actions';
 import './styles.css';
 import loadingImage from '../../../loading_image.gif';
 
-export default class BlogPage extends Component {
-    static propTypes = {
-        blog: PropTypes.object.isRequired,
-        isViewMobile: PropTypes.bool,
-        blogsViewMode: PropTypes.string
-    }
+class BlogPage extends Component {
 
     constructor() {
         super();
@@ -59,6 +58,10 @@ export default class BlogPage extends Component {
         blogObserver.observe(document.querySelector("#" + this.props.blogAnchorId));
     }
 
+    editBlogClicked = () => {
+        this.props.startEditBlog(this.props.blog);
+    }
+
     //renders all paragraphs except the first
     renderRemainingParagraphs = (blogTextItem, index) => {
         return (
@@ -88,11 +91,17 @@ export default class BlogPage extends Component {
         if (!this.state.hasTitleImageLoaded) {
             titleImageClass = 'BlogPage_loadingImage img-responsive';
         }
+        if(this.props.blogCreation.isEdittingBlog && this.props.blogCreation.id === this.props.blog.id){
+            return <EditBlog
+                OGBlogInfo={this.props.blog}
+            />
+        }
+
         return (
             <Container id={this.props.blogAnchorId} >
                 <Row className="show-grid">
                     <ScrollableAnchor id={this.props.invisibleAnchorId}>
-                    <h3>{moment.unix(blog.date).format("MM/DD/YYYY")}</h3>
+                        <h3>{moment.unix(blog.date).format("MM/DD/YYYY")}</h3>
                     </ScrollableAnchor>
                 </Row>
                 <Row className="show-grid">
@@ -101,7 +110,8 @@ export default class BlogPage extends Component {
                 <Row className="show-grid">
                     <div>{blog.location}</div>
                 </Row>
-                <Row className="show-grid blogPargraph">
+                {/* Title image and first paragraph side-by-side */}
+                <Row className="show-grid blogPargraph"> 
                     <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
                     <Col sm={8} md={4} >
                         <Image
@@ -118,19 +128,57 @@ export default class BlogPage extends Component {
                         />
                         {!this.state.hasTitleImageLoaded && <Image src={loadingImage} fluid />}
                     </Col>
+                    {/* edit blog controls */}
+                    {this.props.isEditEnabled &&
+                        !this.props.blogCreation.isEdittingBlog && 
+                        <Col sm={1}>
+                            <span className="Blogs_tripTitleEditButton">
+                                <Button
+                                    onClick={this.editBlogClicked}
+                                    variant="secondary"
+                                    disabled={this.props.isDisabled} //should hook into redux state for this
+                                    title="Please finish editting your blog."
+                                >
+                                    <i className="material-icons">edit</i>
+                                </Button>
+                            </span>
+                        </Col>
+                    }
                 </Row>
                 {remainingParagraphs.length > 0
                     ? remainingParagraphs.map(this.renderRemainingParagraphs)
                     : null}
 
                 <Row className="show-grid">
-                    <BlogImages 
-                        blogImageData={blog.blogImages} 
-                        isViewMobile={this.props.isViewMobile}    
+                    <BlogImages
+                        blogImageData={blog.blogImages}
+                        isViewMobile={this.props.isViewMobile}
                     />
                 </Row>
             </Container>
         );
     }
-
 }
+
+BlogPage.propTypes = {
+    blog: PropTypes.object.isRequired,
+    isViewMobile: PropTypes.bool,
+    blogsViewMode: PropTypes.string,
+    isEditEnabled: PropTypes.bool
+}
+
+BlogPage.defaultProps = {
+    isEditEnabled: false,
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        startEditBlog
+    }, dispatch);
+}
+
+function mapStateToProps({ blogCreation }) {
+    return { blogCreation };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPage);

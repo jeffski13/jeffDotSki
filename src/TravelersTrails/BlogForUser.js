@@ -84,3 +84,42 @@ export function createBlogSecure(userId, tripId, blogInfo, callback) {
         console.log('ERROR creating blog: ', err)
     });
 }
+
+/**
+ * updates a blog users info
+ * 
+ * @param {string} userId - the id of the blog user
+ * @param {string} tripId - the id of the trip
+ * @param {object} tripInfo - information abot the new blog
+ * @param {function} callback - (err, data) - function which will return the success or an error from aws
+ */
+export const updateBlogSecure = (userId, tripId, blogId, updateBlogInfo, callback) => {
+    Auth.currentAuthenticatedUser({
+        bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    }).then(user => {
+        let idTokenJwt = user.signInUserSession.idToken.jwtToken
+        axios({
+            method: 'PUT',
+            url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/${tripId}/blogs/${blogId}`,
+            data: updateBlogInfo,
+            headers: {
+                'Authorization': idTokenJwt
+            }
+        })
+        .then(response => {
+                //parse the response
+                let rawUserResponseArr = response.data;
+                
+                callback(null, rawUserResponseArr);
+            })
+            .catch(error => {
+                if (error.response) {
+                    return callback(error.response);
+                }
+                return callback(defaultErrorResponse);
+            });
+
+    }).catch(err => {
+        console.log('ERROR creating blog: ', err)
+    });
+}
