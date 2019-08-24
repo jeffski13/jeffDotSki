@@ -98,7 +98,7 @@ class EditBlog extends React.Component {
         if(this.props.blogCreation.title.value !== this.props.OGBlogInfo.title){
             updateBlogInfo.title = this.props.blogCreation.title.value;
         }
-        if(this.props.blogCreation.title.value !== this.props.OGBlogInfo.title){
+        if(this.props.blogCreation.text.wasUpdated){
             updateBlogInfo.blogContent = this.rawBlogToBlogTextModel(this.props.blogCreation.text.value);
         }
         if(uploadedProfilePicData && uploadedProfilePicData.url){

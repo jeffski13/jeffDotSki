@@ -18,7 +18,8 @@ const initialState = {
     text: {
         value: [],
         rawValue: null,
-        isValid: true
+        isValid: true,
+        wasUpdated: false
     },
     date: {
         value: moment(),
@@ -90,6 +91,7 @@ export default (state = initialState, action) => {
                 value: action.payload.blogContent,
                 isValid: isEditBlogTextValid,
                 rawValue: rawText,
+                wasUpdated: false
             },
             date: {
                 value: moment(action.payload.date * 1000),
@@ -144,6 +146,7 @@ export default (state = initialState, action) => {
                 value: sanitizedTextArray,
                 isValid: isTextForBlogValid(sanitizedTextArray),
                 rawValue: action.payload,
+                wasUpdated: true
             }
         };
     }
