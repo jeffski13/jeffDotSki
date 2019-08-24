@@ -308,11 +308,7 @@ class Blogs extends Component {
                         <AddBlog
                             tripOwnerId={this.props.match.params.userId}
                             tripId={tripId}
-<<<<<<< HEAD
                             isDisabled={this.state.isEditingTrip} //do not allow user to edit trip and add blog at the same time
-=======
-                            isDisabled={this.state.isEditingTrip}
->>>>>>> master
                             isAddingBlogCallback={isAddingBlog => { this.setState({ isAddingBlog }); }}
                         />
                     </Col>
