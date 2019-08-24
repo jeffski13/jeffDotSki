@@ -31,13 +31,13 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
             level: 'public',
             contentType: blogImageFileType
         })
-        .then((result) => {
+        .then(result => {
                 const uploadFileUrlPrefix = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
                 callback(null, `${uploadFileUrlPrefix}${result.key}`)
             })
-            .catch((err) => {
+            .catch(err => {
                 callback({
-                    message: "An error occured while trying to upload the profile pic!",
+                    message: "An error occured while trying to upload the blog pic!",
                     error: err
                 });
             });
@@ -54,10 +54,10 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
  * @param {object} tripInfo - information abot the new blog
  * @param {function} callback - (err, data) - function which will return the success or an error from aws
  */
-export function createBlogSecure(userId, tripId, blogInfo, callback) {
+export const createBlogSecure = (userId, tripId, blogInfo, callback) => {
     Auth.currentAuthenticatedUser({
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-    }).then((user) => {
+    }).then(user => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
         axios({
             method: 'POST',
@@ -67,20 +67,20 @@ export function createBlogSecure(userId, tripId, blogInfo, callback) {
                 'Authorization': idTokenJwt
             }
         })
-            .then((response) => {
+        .then(response => {
                 //parse the response
                 let rawUserResponseArr = response.data;
-
+                
                 callback(null, rawUserResponseArr);
             })
-            .catch(function (error) {
+            .catch(error => {
                 if (error.response) {
                     return callback(error.response);
                 }
                 return callback(defaultErrorResponse);
             });
 
-    }).catch((err) => {
+    }).catch(err => {
         console.log('ERROR creating blog: ', err)
     });
 }

@@ -8,6 +8,7 @@ import { getTripSecure } from '../../GETtrip';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import { validateFormString, FORM_SUCCESS } from '../../../formvalidation';
 
+
 import './styles.css';
 const initialTripFormState = {
     name: {
@@ -54,14 +55,14 @@ class TripName extends React.Component {
             this.getTripData();
         }
     }
-    
+
     componentDidUpdate(previousProps, previousState) {
         if (!previousState.isEditing && this.state.isEditing) {
             this.editNameInputRef.current.focus();
         }
-        
+
         //login check is complete
-        if(!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck ) {
+        if (!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.getTripData();
         }
     }
@@ -145,7 +146,7 @@ class TripName extends React.Component {
             this.setState({
                 editTripForm: initialTripFormState,
                 isEditing: false
-            }, ()=> {
+            }, () => {
                 this.props.isEditingTripCallback(false);
             });
         }
@@ -162,6 +163,9 @@ class TripName extends React.Component {
         this.setState({
             editTripNetwork: STATUS_LOADING
         }, () => {
+            //let parent component know we are loading
+            this.props.editTripNetworkChangeCallback(STATUS_LOADING);
+            
             let tripInfo = {
                 name: this.state.editTripForm.name.value
             }
@@ -174,18 +178,23 @@ class TripName extends React.Component {
                     return this.setState({
                         editTripNetwork: STATUS_FAILURE,
                         editTripForm: editTripFormState,
+                    }, () => {
+                        //let parent component know we are a failure at life
+                        this.props.editTripNetworkChangeCallback(STATUS_FAILURE);
                     });
                 }
-
+                
                 let editTripFormState = this.state.editTripForm;
                 editTripFormState.name.value = data.name;
-
+                
                 this.setState({
                     editTripNetwork: STATUS_SUCCESS,
                     editTripForm: editTripFormState,
                     isEditing: false,
                     tripName: data.trip.name,
                 }, () => {
+                    //let parent component know we are straight up bosses
+                    this.props.editTripNetworkChangeCallback(STATUS_SUCCESS);
                     this.props.isEditingTripCallback(false);
                 });
             });
@@ -228,42 +237,44 @@ class TripName extends React.Component {
                     );
                 }
                 return (
-                    <Form
-                        className="Blogs_trip-title-edit"
-                        onSubmit={e => this.submitEditTripForm(e)}
-                    >
-                        <FormGroup
-                            controlId="Blogs_trip-title-edit-input"
+                    <div>
+                        <Form
+                            className="Blogs_trip-title-edit"
+                            onSubmit={e => this.submitEditTripForm(e)}
                         >
-                            <label className="has-float-label">
-                                <FormControl
-                                    type="text"
-                                    value={this.state.editTripForm.name.value || ''}
-                                    placeholder="Name Your Adventure"
-                                    onChange={(e) => {
-                                        let tripUpdateInfo = {
-                                            name: {
-                                                value: e.target.value,
-                                                isValid: this.isValidTripName(e.target.value)
-                                            }
-                                        };
-                                        this.setState({
-                                            editTripForm: { ...this.state.editTripForm, ...tripUpdateInfo }
-                                        });
-                                    }}
-                                    isInvalid={this.state.editTripForm.isValidated && !this.state.editTripForm.name.isValid}
-                                    onBlur={this.submitEditTripForm}
-                                    disabled={this.state.editTripNetwork === STATUS_LOADING}
-                                    ref={this.editNameInputRef}
-                                />
-                                <span>Edit Trip</span>
-                                <Form.Control.Feedback type="invalid">
-                                    {this.state.editTripForm.name.validationMessage || 'Your trip name must be unique.'}
-                                </Form.Control.Feedback>
-                            </label>
-                        </FormGroup>
-                        {editTripMessage}
-                    </Form>
+                            <FormGroup
+                                controlId="Blogs_trip-title-edit-input"
+                            >
+                                <label className="has-float-label">
+                                    <FormControl
+                                        type="text"
+                                        value={this.state.editTripForm.name.value || ''}
+                                        placeholder="Name Your Adventure"
+                                        onChange={(e) => {
+                                            let tripUpdateInfo = {
+                                                name: {
+                                                    value: e.target.value,
+                                                    isValid: this.isValidTripName(e.target.value)
+                                                }
+                                            };
+                                            this.setState({
+                                                editTripForm: { ...this.state.editTripForm, ...tripUpdateInfo }
+                                            });
+                                        }}
+                                        isInvalid={this.state.editTripForm.isValidated && !this.state.editTripForm.name.isValid}
+                                        onBlur={this.submitEditTripForm}
+                                        disabled={this.state.editTripNetwork === STATUS_LOADING}
+                                        ref={this.editNameInputRef}
+                                    />
+                                    <span>Edit Trip</span>
+                                    <Form.Control.Feedback type="invalid">
+                                        {this.state.editTripForm.name.validationMessage || 'Your trip name must be unique.'}
+                                    </Form.Control.Feedback>
+                                </label>
+                            </FormGroup>
+                            {editTripMessage}
+                        </Form>
+                    </div>
                 );
             }
         }
@@ -273,11 +284,13 @@ class TripName extends React.Component {
 }
 
 TripName.defaultProps = {
-    isEditingTripCallback: () => { return false; }
+    isEditingTripCallback: () => { return false; },
+    editTripNetworkChangeCallback: () => { return null; }
 };
 
 TripName.propTypes = {
-    //function when trip is/isn't being edited
+    editTripNetworkChangeCallback: PropTypes.func,
+    //function called when trip is/isn't being edited
     isEditingTripCallback: PropTypes.func,
     tripOwnerId: PropTypes.string.isRequired,
     tripId: PropTypes.string.isRequired,

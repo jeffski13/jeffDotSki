@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import withBlogAuth from '../Auth/withBlogAuth';
 import { AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED, AUTH_STATE_LOGIN_FAIL } from '../Auth/consts';
+import AirplaneLoaderOverlay from '../../Inf/AirplaneLoader/Overlay';
 import { jeffskiRoutes } from '../../app';
 import './styles.css';
 import '../styles.css';
@@ -109,120 +110,125 @@ class Login extends React.Component {
     render() {
 
         return (
-            <Container className="Login">
-                <Row className="show-grid">
-                    <Col />
-                    <Col xs={8} md={4}>
-                        <h2 className="User_header-title">Welcome!</h2>
-                    </Col>
-                    <Col />
-                </Row>
-
-                <Form
-                    onSubmit={e => this.onLoginClicked(e)}
-                >
+            <div className="Login" >
+                {
+                    this.props.reduxBlogAuth.authState.isLoading && <AirplaneLoaderOverlay />
+                }
+                <Container>
                     <Row className="show-grid">
-                        <Col />
-                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="usernameFormInput">
-                            <InputGroup>
-                                <Form.Control className="User_login-form-label"
-                                    placeholder="Username"
-                                    aria-describedby="inputGroupPrepend"
-                                    type="text"
-                                    isInvalid={this.state.isValidated && !this.state.usernameValid}
-                                    value={this.state.username || ''}
-                                    onChange={(e) => {
-                                        this.setState({
-                                            username: e.target.value
-                                        }, () => {
-                                            this.setState({
-                                                usernameValid: this.isUsernameValid()
-                                            });
-                                        });
-                                    }}
-                                    onKeyDown={this.onLoginFormEnter}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Username must not be blank.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
-                        <Col />
-                    </Row>
-                    <Row className="show-grid">
-
-                        <Col />
-                        <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="passwordFormInput">
-                            <InputGroup>
-                                <Form.Control
-                                    className="User_password-form-label"
-                                    isInvalid={this.state.isValidated && !this.state.passwordValid}
-                                    placeholder="Password"
-                                    aria-describedby="inputGroupPrepend"
-                                    type="password"
-                                    value={this.state.password || ''}
-                                    onChange={(e) => {
-                                        this.setState({
-                                            password: e.target.value
-                                        }, () => {
-                                            this.setState({
-                                                passwordValid: this.isPasswordValid()
-                                            });
-                                        });
-                                    }}
-                                    onKeyDown={this.onLoginFormEnter}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Password must be 8 characters.
-                                </Form.Control.Feedback>
-                            </InputGroup>
-                        </Form.Group>
-                        <Col />
-                    </Row>
-
-                    <Row className="show-grid">
-                        <Col />
-                        <Col sm={10} md={8} className="Login_actions">
-                            <span className="Login_action_button" >
-                                <Button
-                                    variant="primary"
-                                    type="submit"
-                                    disabled={this.isLoggingIn()}
-                                >
-                                    Login
-                                </Button>
-                            </span>
-                            <span className="Login_action_button" >
-                                <Button
-                                    disabled={this.isLoggingIn()}
-                                    onClick={this.onSignupClicked}
-                                    variant="secondary"
-                                >
-                                    Sign Up
-                                </Button>
-                            </span>
-                        </Col>
-                        <Col />
-                    </Row>
-                </Form>
-
-
-                {(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL) &&
-                    <Row className="show-grid User_login-message">
                         <Col />
                         <Col xs={8} md={4}>
-                            <Alert dismissible variant="danger">
-                                <Alert.Heading>Oh No!</Alert.Heading>
-                                <p>
-                                    Your user name or password was incorrect.
-                                </p>
-                            </Alert>
+                            <h2 className="User_header-title">Welcome!</h2>
                         </Col>
                         <Col />
                     </Row>
-                }
-            </Container>
-        )
+
+                    <Form
+                        onSubmit={e => this.onLoginClicked(e)}
+                    >
+                        <Row className="show-grid">
+                            <Col />
+                            <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="usernameFormInput">
+                                <InputGroup>
+                                    <Form.Control className="User_login-form-label"
+                                        placeholder="Username"
+                                        aria-describedby="inputGroupPrepend"
+                                        type="text"
+                                        isInvalid={this.state.isValidated && !this.state.usernameValid}
+                                        value={this.state.username || ''}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                username: e.target.value
+                                            }, () => {
+                                                this.setState({
+                                                    usernameValid: this.isUsernameValid()
+                                                });
+                                            });
+                                        }}
+                                        onKeyDown={this.onLoginFormEnter}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Username must not be blank.
+                                </Form.Control.Feedback>
+                                </InputGroup>
+                            </Form.Group>
+                            <Col />
+                        </Row>
+                        <Row className="show-grid">
+
+                            <Col />
+                            <Form.Group as={Col} xs={10} sm={8} lg={6} xl={4} controlId="passwordFormInput">
+                                <InputGroup>
+                                    <Form.Control
+                                        className="User_password-form-label"
+                                        isInvalid={this.state.isValidated && !this.state.passwordValid}
+                                        placeholder="Password"
+                                        aria-describedby="inputGroupPrepend"
+                                        type="password"
+                                        value={this.state.password || ''}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                password: e.target.value
+                                            }, () => {
+                                                this.setState({
+                                                    passwordValid: this.isPasswordValid()
+                                                });
+                                            });
+                                        }}
+                                        onKeyDown={this.onLoginFormEnter}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Password must be 8 characters.
+                                </Form.Control.Feedback>
+                                </InputGroup>
+                            </Form.Group>
+                            <Col />
+                        </Row>
+
+                        <Row className="show-grid">
+                            <Col />
+                            <Col sm={10} md={8} className="Login_actions">
+                                <span className="Login_action_button" >
+                                    <Button
+                                        variant="primary"
+                                        type="submit"
+                                        disabled={this.isLoggingIn()}
+                                    >
+                                        Login
+                                    </Button>
+                                </span>
+                                <span className="Login_action_button" >
+                                    <Button
+                                        disabled={this.isLoggingIn()}
+                                        onClick={this.onSignupClicked}
+                                        variant="secondary"
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </span>
+                            </Col>
+                            <Col />
+                        </Row>
+                    </Form>
+
+
+                    {(this.props.reduxBlogAuth.authState.currentState === AUTH_STATE_LOGIN_FAIL) &&
+                        <Row className="show-grid User_login-message">
+                            <Col />
+                            <Col xs={8} md={4}>
+                                <Alert dismissible variant="danger">
+                                    <Alert.Heading>Oh No!</Alert.Heading>
+                                    <p>
+                                        Your user name or password was incorrect.
+                                </p>
+                                </Alert>
+                            </Col>
+                            <Col />
+                        </Row>
+                    }
+                </Container>
+            </div>
+        );
     }
 }
 
