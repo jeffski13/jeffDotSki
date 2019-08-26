@@ -47,7 +47,6 @@ class Blogs extends Component {
             isEditEnabled: false,
             isEditingTrip: false,
             editTripNetwork: null,
-            isAddingBlog: false,
             blogUserNetwork: STATUS_LOADING,
             blogUserInfo: null
         };
@@ -301,15 +300,12 @@ class Blogs extends Component {
         }
 
         let addBlog;
-        if (this.state.isEditEnabled && !this.props.blogCreation.isEdittingBlog) {
+        if (this.state.isEditEnabled){
             addBlog = (
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={12} md={12} className="Blogs_controls-wrapper">
                         <AddBlog
-                            tripOwnerId={this.props.match.params.userId}
-                            tripId={tripId}
-                            isDisabled={this.state.isEditingTrip} //do not allow user to edit trip and add blog at the same time
-                            isAddingBlogCallback={isAddingBlog => { this.setState({ isAddingBlog }); }}
+                            isDisabled={this.props.blogCreation.isEdittingBlog} //do not allow user to edit trip and add blog at the same time
                         />
                     </Col>
                 </Row>
@@ -419,7 +415,7 @@ class Blogs extends Component {
             }
 
             if (this.state.blogsResults.blogsArr.length === 0) {
-                if (!this.state.isAddingBlog) {
+                if (!this.props.blogCreation.isAddingBlog) {
                     blogsContent = (
                         <div className="Blogs_error" >
                             <Card bg="info" text="white" style={{ width: '18rem' }}>
@@ -474,7 +470,6 @@ class Blogs extends Component {
                     </div >
                 );
             }
-
         }
         return (
             <div>

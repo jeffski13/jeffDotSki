@@ -4,10 +4,12 @@ import { Button, Card } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {STATUS_FAILURE, STATUS_LOADING} from '../../../Network/consts';
+import { withRouter } from 'react-router-dom';
+
+import { STATUS_FAILURE, STATUS_LOADING } from '../../../Network/consts';
 import ResizeProfileImg from '../../../image-processing/ResizeProfileImg';
 import {
-    uploadingBlogSuccess, uploadingBlogFailure,
+    startAddingBlog, uploadingBlogSuccess, uploadingBlogFailure,
     uploadingImage, uploadImageSuccess, uploadImageFailure
 } from './actions';
 import withBlogAuth from '../../../Auth/withBlogAuth';
@@ -18,16 +20,6 @@ import { createBlogSecure } from '../../../BlogForUser';
 import BlogTitle from './Form/BlogTitle';
 import './styles.css';
 
-const initialBlogFormState = {
-    info: {
-        value: '',
-        isValid: true,
-        validationMessage: '',
-        errorMessage: ''
-    },
-    isValidated: false
-};
-
 class AddBlog extends React.Component {
     constructor(props) {
         super(props);
@@ -35,9 +27,7 @@ class AddBlog extends React.Component {
         // this.blogTitleInputRef = React.createRef();
 
         this.state = {
-            isEditEnabled: false,
-            isAddingBlog: false,
-            addBlogForm: initialBlogFormState,
+            isEditEnabled: false
         }
     }
 
@@ -74,7 +64,7 @@ class AddBlog extends React.Component {
 
     completeInitialization = () => {
         //we are the owner of the blog
-        if (this.props.reduxBlogAuth.authState.isLoggedIn && (this.props.reduxBlogAuth.userInfo.id === this.props.tripOwnerId || !this.props.tripOwnerId)) {
+        if (this.props.reduxBlogAuth.authState.isLoggedIn && (this.props.reduxBlogAuth.userInfo.id === this.props.match.params.userId || !this.props.match.params.userId)) {
             this.setState({
                 isEditEnabled: true
             });
@@ -100,8 +90,8 @@ class AddBlog extends React.Component {
             blogContent: this.rawBlogToBlogTextModel(this.props.blogCreation.text.value),
             titleImageUrl: uploadedProfilePicData.url,
             date: moment(this.props.blogCreation.date.value.valueOf()).unix()
-        }
-        createBlogSecure(this.props.tripOwnerId, this.props.tripId, blogInfo, (err, data) => {
+        };
+        createBlogSecure(this.props.match.params.userId, this.props.match.params.tripId, blogInfo, (err, data) => {
             if (err) {
                 return this.props.uploadingBlogFailure();
             }
@@ -124,16 +114,18 @@ class AddBlog extends React.Component {
     }
 
     render() {
-        if (this.state.isEditEnabled && !this.state.isAddingBlog) {
+        // if we are editting a blog, do not show this component
+        if (this.props.blogCreation.isEdittingBlog) {
+            return null;
+        }
+
+        // if we are not editting another blog and we are not current adding a blog (yet), show the add blog button
+        if (this.state.isEditEnabled && !this.props.blogCreation.isAddingBlog && !this.props.blogCreation.isEdittingBlog) {
             return (
                 <div className="Blogs_controls-add-blog">
                     <Button
                         onClick={() => {
-                            this.setState({
-                                isAddingBlog: true
-                            }, () => {
-                                this.props.isAddingBlogCallback(this.state.isAddingBlog)
-                            });
+                            this.props.startAddingBlog();
                         }}
                         variant="success"
                         size="lg"
@@ -147,64 +139,69 @@ class AddBlog extends React.Component {
 
         let blogForm = null;
 
-        if (this.props.blogCreation.network === null || this.props.blogCreation.network === STATUS_FAILURE) {
-            let failureMessageRender = null;
-            if(this.props.blogCreation.network === STATUS_FAILURE){
-                failureMessageRender = (
-                    <div>
-                        <div className="Blogs_error" >
-                            <Card bg="danger" text="white" style={{ width: '18rem' }}>
-                                <Card.Header>Houston, we have a problem.</Card.Header>
-                                <Card.Body>
-                                    <Card.Text>
-                                        <span>
-                                            <span>Something went wrong while uploading the blog.</span>
-                                        </span>
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
+        // We are in a state of adding the blog
+        if (this.props.blogCreation.isAddingBlog) {
+            if (this.props.blogCreation.network === null || this.props.blogCreation.network === STATUS_FAILURE) {
+                let failureMessageRender = null;
+                if (this.props.blogCreation.network === STATUS_FAILURE) {
+                    failureMessageRender = (
+                        <div>
+                            <div className="Blogs_error" >
+                                <Card bg="danger" text="white" style={{ width: '18rem' }}>
+                                    <Card.Header>Houston, we have a problem.</Card.Header>
+                                    <Card.Body>
+                                        <Card.Text>
+                                            <span>
+                                                <span>Something went wrong while uploading the blog.</span>
+                                            </span>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </div>
                         </div>
-                    </div>
+                    );
+                }
+                blogForm = (
+                    <React.Fragment>
+                        {failureMessageRender}
+                        <BlogDate />
+                        <BlogTitle />
+                        <BlogEntryText />
+                        <BlogImage />
+                        <Button
+                            onClick={() => {
+                                this.props.uploadingImage();
+                            }}
+                            disabled={!this.props.blogCreation.isValid}
+                            variant="primary"
+                            size="lg"
+                        >
+                            Submit
+                        </Button>
+                    </React.Fragment>
                 );
             }
-            blogForm = (
-                <React.Fragment>
-                    {failureMessageRender}
-                    <BlogDate />
-                    <BlogTitle />
-                    <BlogEntryText />
-                    <BlogImage />
-                    <Button
-                        onClick={() => {
-                            this.props.uploadingImage();
-                        }}
-                        disabled={!this.props.blogCreation.isValid}
-                        variant="primary"
-                        size="lg"
-                    >
-                        Submit
-                    </Button>
-                </React.Fragment>
+    
+            return (
+                <div>
+                    {blogForm}
+                    {this.props.blogCreation.image.network === STATUS_LOADING &&
+                        <ResizeProfileImg
+                            key={this.props.blogCreation.uploadAttempt} //needed so that we can get a "new" instance of the upload component
+                            showProgressIndicator={false}
+                            fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
+                            userId={this.props.match.params.userId}
+                            tripId={this.props.match.params.tripId}
+                            onPhotoFinished={this.uploadBlogInfo}
+                            resizeMaxHeight={2000}
+                            isUserProfilePic={false}
+                        />
+                    }
+                </div>
             );
         }
-
-        return (
-            <div>
-                {blogForm}
-                {this.props.blogCreation.image.network === STATUS_LOADING &&
-                    <ResizeProfileImg
-                        key={this.props.blogCreation.uploadAttempt} //needed so that we can get a "new" instance of the upload component
-                        showProgressIndicator={false}
-                        fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
-                        userId={this.props.reduxBlogAuth.userInfo.id}
-                        tripId={this.props.tripId}
-                        onPhotoFinished={this.uploadBlogInfo}
-                        resizeMaxHeight={2000}
-                        isUserProfilePic={false}
-                    />
-                }
-            </div>
-        );
+        
+        return null;
     }
 }
 
@@ -222,7 +219,7 @@ AddBlog.propTypes = {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        uploadingBlogFailure, uploadingBlogSuccess,
+        startAddingBlog, uploadingBlogFailure, uploadingBlogSuccess,
         uploadingImage, uploadImageSuccess, uploadImageFailure
     }, dispatch);
 }
@@ -231,4 +228,4 @@ function mapStateToProps({ blogCreation }) {
     return { blogCreation };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withBlogAuth(AddBlog));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withBlogAuth(AddBlog)));

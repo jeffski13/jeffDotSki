@@ -1,3 +1,4 @@
+export const START_ADD_BLOG = 'START_ADD_BLOG';
 export const START_EDIT_BLOG = 'START_EDIT_BLOG';
 export const STORE_BLOG_DATE = 'STORE_BLOG_DATE';
 export const STORE_BLOG_TITLE = 'STORE_BLOG_TITLE';
@@ -11,6 +12,12 @@ export const BLOG_IMAGE_UPLOAD_SUCCESS = 'BLOG_IMAGE_UPLOAD_SUCCESS';
 export const BLOG_IMAGE_UPLOAD_FAILURE = 'BLOG_IMAGE_UPLOAD_FAILURE';
 export const START_UPDATE_NO_IMAGE = 'START_UPDATE_NO_IMAGE';
 
+export function startAddingBlog() {
+    return {
+        type: START_ADD_BLOG,
+        payload: null
+    }
+}
 export function startEditBlog(blogData) {
     return {
         type: START_EDIT_BLOG,

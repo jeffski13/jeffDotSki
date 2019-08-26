@@ -195,14 +195,7 @@ class EditBlog extends React.Component {
     }
 }
 
-EditBlog.defaultProps = {
-    isAddingBlogCallback: () => { return false; }
-};
-
 EditBlog.propTypes = {
-    //function when trip is/isn't being edited
-    isAddingBlogCallback: PropTypes.func,
-    isDisabled: PropTypes.bool,
     OGBlogInfo: PropTypes.object.isRequired
 };
 

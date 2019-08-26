@@ -6,3 +6,5 @@ cd ./firebaseski
 firebase deploy
 
 cd $PSScriptRoot
+
+git push --tags

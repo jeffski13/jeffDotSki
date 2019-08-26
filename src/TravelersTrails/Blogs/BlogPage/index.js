@@ -130,9 +130,10 @@ class BlogPage extends Component {
                         />
                         {!this.state.hasTitleImageLoaded && <Image src={loadingImage} fluid />}
                     </Col>
-                    {/* edit blog controls */}
+                    {/* edit blog controls should only show when we are not adding/editing a blog */}
                     {this.props.isEditEnabled &&
                         !this.props.blogCreation.isEdittingBlog &&
+                        !this.props.blogCreation.isAddingBlog &&
                         <Col sm={1}>
                             <span className="Blogs_tripTitleEditButton">
                                 <Button
