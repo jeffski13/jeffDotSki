@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import BlogImages from './BlogImages';
 import EditBlog from './creation/EditBlog';
 import BlogTextItem from './BlogTextItem';
-import {startEditBlog} from './creation/actions';
+import { startEditBlog } from './creation/actions';
 import './styles.css';
 import loadingImage from '../../../loading_image.gif';
 
@@ -91,10 +91,12 @@ class BlogPage extends Component {
         if (!this.state.hasTitleImageLoaded) {
             titleImageClass = 'BlogPage_loadingImage img-responsive';
         }
-        if(this.props.blogCreation.isEdittingBlog && this.props.blogCreation.id === this.props.blog.id){
-            return <EditBlog
-                OGBlogInfo={this.props.blog}
-            />
+        if (this.props.blogCreation.isEdittingBlog && this.props.blogCreation.id === this.props.blog.id) {
+            return (
+                <EditBlog
+                    OGBlogInfo={this.props.blog}
+                />
+            );
         }
 
         return (
@@ -111,7 +113,7 @@ class BlogPage extends Component {
                     <div>{blog.location}</div>
                 </Row>
                 {/* Title image and first paragraph side-by-side */}
-                <Row className="show-grid blogPargraph"> 
+                <Row className="show-grid blogPargraph">
                     <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
                     <Col sm={8} md={4} >
                         <Image
@@ -130,7 +132,7 @@ class BlogPage extends Component {
                     </Col>
                     {/* edit blog controls */}
                     {this.props.isEditEnabled &&
-                        !this.props.blogCreation.isEdittingBlog && 
+                        !this.props.blogCreation.isEdittingBlog &&
                         <Col sm={1}>
                             <span className="Blogs_tripTitleEditButton">
                                 <Button

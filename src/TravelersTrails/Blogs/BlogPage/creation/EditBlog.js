@@ -4,6 +4,8 @@ import { Button, Card } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { withRouter } from 'react-router-dom';
+
 import {STATUS_FAILURE, STATUS_LOADING} from '../../../Network/consts';
 import ResizeProfileImg from '../../../image-processing/ResizeProfileImg';
 import {
@@ -108,7 +110,7 @@ class EditBlog extends React.Component {
             updateBlogInfo.date = moment(this.props.blogCreation.date.value.valueOf()).unix();
         }
         
-        updateBlogSecure(this.props.tripOwnerId, this.props.tripId, this.props.blogCreation.id, updateBlogInfo, (err, data) => {
+        updateBlogSecure(this.props.match.params.userId, this.props.match.params.tripId, this.props.blogCreation.id, updateBlogInfo, (err, data) => {
             if (err) {
                 return this.props.uploadingBlogFailure();
             }
@@ -181,8 +183,8 @@ class EditBlog extends React.Component {
                         key={this.props.blogCreation.uploadAttempt} //needed so that we can get a "new" instance of the upload component
                         showProgressIndicator={false}
                         fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
-                        userId={this.props.reduxBlogAuth.userInfo.id}
-                        tripId={this.props.tripId}
+                        userId={this.props.match.params.userId}
+                        tripId={this.props.match.params.tripId}
                         onPhotoFinished={this.uploadBlogInfo}
                         resizeMaxHeight={2000}
                         isUserProfilePic={false}
@@ -200,8 +202,6 @@ EditBlog.defaultProps = {
 EditBlog.propTypes = {
     //function when trip is/isn't being edited
     isAddingBlogCallback: PropTypes.func,
-    tripOwnerId: PropTypes.string.isRequired,
-    tripId: PropTypes.string.isRequired,
     isDisabled: PropTypes.bool,
     OGBlogInfo: PropTypes.object.isRequired
 };
@@ -218,4 +218,4 @@ function mapStateToProps({ blogCreation }) {
     return { blogCreation };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withBlogAuth(EditBlog));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withBlogAuth(EditBlog)));

@@ -38,11 +38,11 @@ const initialState = {
     uploadAttempt: 0 //a little hack so we can get "new" versions of components
 };
 
-const sanitizedTextForBlog = textArray => {
-    let sanitizedTextArray = textArray.split('\n');
+const sanitizedTextForBlog = rawText => {
+    let sanitizedTextArray = rawText.split('\n');
     //filter out empty text (empty string will be present if user used multiple carriage returns)
     sanitizedTextArray = sanitizedTextArray.filter(str => str !== '');
-    return textArray;
+    return sanitizedTextArray;
 };
 
 const isTextForBlogValid = sanitizedBlogText => {
@@ -69,8 +69,6 @@ const isUploadedImagUrlValid = imageUrl => {
 
 export default (state = initialState, action) => {
     if (action.type === START_EDIT_BLOG) {
-        console.log('editing action: ', action.payload);
-        console.log('title: ', action.payload.title);
         // recreate raw text for the text input form
         let rawText = '';
         action.payload.blogContent.forEach(nextContent => {
