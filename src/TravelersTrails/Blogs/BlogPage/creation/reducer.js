@@ -1,5 +1,5 @@
 import {
-    START_ADD_BLOG, START_EDIT_BLOG,
+    START_ADD_BLOG, START_EDIT_BLOG, CANCEL_BLOG_CREATION,
     STORE_BLOG_DATE, STORE_BLOG_TEXT, STORE_BLOG_TITLE,
     BLOG_UPLOADING_FAILURE, BLOG_UPLOADING_SUCCESS, BLOG_UPLOADING_FINISHED,
     BLOG_IMAGE_SELECTED, START_UPLOAD_AND_BLOG_IMAGE_UPLOADING, BLOG_IMAGE_UPLOAD_SUCCESS, BLOG_IMAGE_UPLOAD_FAILURE,
@@ -118,13 +118,17 @@ export default (state = initialState, action) => {
             isEdittingBlog: true,
         };
     }
-    if(action.type === START_ADD_BLOG){
+    else if(action.type === START_ADD_BLOG){
         //reinitialize state
         state = initialState;
         state = {
             ...state,
             isAddingBlog: true
         };
+    }
+    else if (action.type === CANCEL_BLOG_CREATION) {
+        //reset state for cancellation
+        state = initialState;
     }
     else if (action.type === STORE_BLOG_DATE) {
         console.log('STORE_BLOG_DATE');

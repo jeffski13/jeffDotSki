@@ -1,5 +1,6 @@
 export const START_ADD_BLOG = 'START_ADD_BLOG';
 export const START_EDIT_BLOG = 'START_EDIT_BLOG';
+export const CANCEL_BLOG_CREATION = 'CANCEL_BLOG_CREATION';
 export const STORE_BLOG_DATE = 'STORE_BLOG_DATE';
 export const STORE_BLOG_TITLE = 'STORE_BLOG_TITLE';
 export const STORE_BLOG_TEXT = 'STORE_BLOG_TEXT';
@@ -8,9 +9,9 @@ export const BLOG_UPLOADING_FAILURE = 'BLOG_UPLOADING_FAILURE';
 export const BLOG_UPLOADING_FINISHED = 'BLOG_UPLOADING_FINISHED';
 export const BLOG_IMAGE_SELECTED = 'BLOG_IMAGE_SELECTED';
 export const START_UPLOAD_AND_BLOG_IMAGE_UPLOADING = 'START_UPLOAD_AND_BLOG_IMAGE_UPLOADING';
+export const START_UPDATE_NO_IMAGE = 'START_UPDATE_NO_IMAGE';
 export const BLOG_IMAGE_UPLOAD_SUCCESS = 'BLOG_IMAGE_UPLOAD_SUCCESS';
 export const BLOG_IMAGE_UPLOAD_FAILURE = 'BLOG_IMAGE_UPLOAD_FAILURE';
-export const START_UPDATE_NO_IMAGE = 'START_UPDATE_NO_IMAGE';
 
 export function startAddingBlog() {
     return {
@@ -22,6 +23,11 @@ export function startEditBlog(blogData) {
     return {
         type: START_EDIT_BLOG,
         payload: blogData //hand in all the initial information for the edit blog form
+    }
+}
+export function cancelBlogCreation() {
+    return {
+        type: CANCEL_BLOG_CREATION
     }
 }
 export function storeBlogDate(blogDate) {

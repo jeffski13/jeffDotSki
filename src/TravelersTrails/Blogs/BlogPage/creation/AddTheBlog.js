@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -9,7 +9,8 @@ import { withRouter } from 'react-router-dom';
 import { STATUS_FAILURE, STATUS_LOADING } from '../../../Network/consts';
 import ResizeProfileImg from '../../../image-processing/ResizeProfileImg';
 import {
-    startAddingBlog, uploadingBlogSuccess, uploadingBlogFailure,
+    cancelBlogCreation, startAddingBlog,
+    uploadingBlogSuccess, uploadingBlogFailure,
     uploadingImage, uploadImageSuccess, uploadImageFailure
 } from './actions';
 import withBlogAuth from '../../../Auth/withBlogAuth';
@@ -19,6 +20,7 @@ import BlogImage from './Form/BlogImage';
 import { createBlogSecure } from '../../../BlogForUser';
 import BlogTitle from './Form/BlogTitle';
 import './styles.css';
+import './../../../styles.css'; //travelersTrails styles
 
 class AddBlog extends React.Component {
     constructor(props) {
@@ -168,20 +170,39 @@ class AddBlog extends React.Component {
                         <BlogTitle />
                         <BlogEntryText />
                         <BlogImage />
-                        <Button
-                            onClick={() => {
-                                this.props.uploadingImage();
-                            }}
-                            disabled={!this.props.blogCreation.isValid}
-                            variant="primary"
-                            size="lg"
-                        >
-                            Submit
-                        </Button>
+                        <Row className="show-grid">
+                            <Col />
+                            <Col sm={10} md={8} className="User_actions-section">
+                                <span className="User_action-button" >
+                                    <Button
+                                        onClick={() => {
+                                            this.props.uploadingImage();
+                                        }}
+                                        disabled={!this.props.blogCreation.isValid}
+                                        variant="primary"
+                                        size="lg"
+                                    >
+                                        Submit
+                                </Button>
+                                </span>
+                                <span className="User_action-button" >
+                                    <Button
+                                        onClick={() => {
+                                            this.props.cancelBlogCreation();
+                                        }}
+                                        variant="danger"
+                                        size="lg"
+                                    >
+                                        Cancel
+                                </Button>
+                                </span>
+                            </Col>
+                            <Col />
+                        </Row>
                     </React.Fragment>
                 );
             }
-    
+
             return (
                 <div>
                     {blogForm}
@@ -200,7 +221,7 @@ class AddBlog extends React.Component {
                 </div>
             );
         }
-        
+
         return null;
     }
 }
@@ -219,7 +240,8 @@ AddBlog.propTypes = {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        startAddingBlog, uploadingBlogFailure, uploadingBlogSuccess,
+        startAddingBlog, cancelBlogCreation,
+        uploadingBlogFailure, uploadingBlogSuccess,
         uploadingImage, uploadImageSuccess, uploadImageFailure
     }, dispatch);
 }

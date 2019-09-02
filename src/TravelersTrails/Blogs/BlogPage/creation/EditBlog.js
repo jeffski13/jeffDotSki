@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Row, Col } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
-import {STATUS_FAILURE, STATUS_LOADING} from '../../../Network/consts';
+import { STATUS_FAILURE, STATUS_LOADING } from '../../../Network/consts';
 import ResizeProfileImg from '../../../image-processing/ResizeProfileImg';
 import {
+    cancelBlogCreation,
     uploadingBlogSuccess, uploadingBlogFailure,
     uploadingImage, uploadImageSuccess, uploadImageFailure,
-    startBlogUpdatedNoImage
+    startBlogUpdatedNoImage,
 } from './actions';
 import withBlogAuth from '../../../Auth/withBlogAuth';
 import BlogDate from './Form/BlogDate';
@@ -20,7 +21,11 @@ import BlogImage from './Form/BlogImage';
 import { updateBlogSecure } from '../../../BlogForUser';
 import BlogTitle from './Form/BlogTitle';
 import './styles.css';
+import './../../../styles.css'; //travelersTrails styles
 
+/**
+ * editting blog starts from the blog page
+ */
 class EditBlog extends React.Component {
     constructor(props) {
         super(props);
@@ -79,9 +84,9 @@ class EditBlog extends React.Component {
 
     onUpdateClicked = () => {
         //see if user is updating the blog image (if not go straight to uploading blog info)
-        if(this.props.blogCreation.image.valueImageUrlLocal && this.props.blogCreation.image.valueImageData){
+        if (this.props.blogCreation.image.valueImageUrlLocal && this.props.blogCreation.image.valueImageData) {
             this.props.uploadingImage();
-        }else {
+        } else {
             this.props.startBlogUpdatedNoImage();
             this.uploadBlogInfo(null, null);
         }
@@ -97,19 +102,19 @@ class EditBlog extends React.Component {
         //success
         //get bloginfotogether
         const updateBlogInfo = {};
-        if(this.props.blogCreation.title.value !== this.props.OGBlogInfo.title){
+        if (this.props.blogCreation.title.value !== this.props.OGBlogInfo.title) {
             updateBlogInfo.title = this.props.blogCreation.title.value;
         }
-        if(this.props.blogCreation.text.wasUpdated){
+        if (this.props.blogCreation.text.wasUpdated) {
             updateBlogInfo.blogContent = this.rawBlogToBlogTextModel(this.props.blogCreation.text.value);
         }
-        if(uploadedProfilePicData && uploadedProfilePicData.url){
+        if (uploadedProfilePicData && uploadedProfilePicData.url) {
             updateBlogInfo.titleImageUrl = uploadedProfilePicData.url;
         }
-        if(moment(this.props.blogCreation.date.value.valueOf()).unix() !== this.props.OGBlogInfo.date){
+        if (moment(this.props.blogCreation.date.value.valueOf()).unix() !== this.props.OGBlogInfo.date) {
             updateBlogInfo.date = moment(this.props.blogCreation.date.value.valueOf()).unix();
         }
-        
+
         updateBlogSecure(this.props.match.params.userId, this.props.match.params.tripId, this.props.blogCreation.id, updateBlogInfo, (err, data) => {
             if (err) {
                 return this.props.uploadingBlogFailure();
@@ -138,7 +143,7 @@ class EditBlog extends React.Component {
 
         if (this.props.blogCreation.network === null || this.props.blogCreation.network === STATUS_FAILURE) {
             let failureMessageRender = null;
-            if(this.props.blogCreation.network === STATUS_FAILURE){
+            if (this.props.blogCreation.network === STATUS_FAILURE) {
                 failureMessageRender = (
                     <div>
                         <div className="Blogs_error" >
@@ -163,14 +168,35 @@ class EditBlog extends React.Component {
                     <BlogTitle />
                     <BlogEntryText />
                     <BlogImage />
-                    <Button
-                        onClick={this.onUpdateClicked}
-                        disabled={!this.props.blogCreation.isValid}
-                        variant="primary"
-                        size="lg"
-                    >
-                        Update
-                    </Button>
+                    <Row className="show-grid">
+                        <Col />
+                        <Col sm={10} md={8} className="User_actions-section">
+                            <span className="User_action-button" >
+                                <Button
+                                    onClick={() => {
+                                        this.props.uploadingImage();
+                                    }}
+                                    disabled={!this.props.blogCreation.isValid}
+                                    variant="primary"
+                                    size="lg"
+                                >
+                                    Save
+                                </Button>
+                            </span>
+                            <span className="User_action-button" >
+                                <Button
+                                    onClick={() => {
+                                        this.props.cancelBlogCreation();
+                                    }}
+                                    variant="danger"
+                                    size="lg"
+                                >
+                                    Cancel
+                                </Button>
+                            </span>
+                        </Col>
+                        <Col />
+                    </Row>
                 </React.Fragment>
             );
         }
@@ -201,6 +227,7 @@ EditBlog.propTypes = {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
+        cancelBlogCreation,
         uploadingBlogFailure, uploadingBlogSuccess,
         uploadingImage, uploadImageSuccess, uploadImageFailure,
         startBlogUpdatedNoImage
