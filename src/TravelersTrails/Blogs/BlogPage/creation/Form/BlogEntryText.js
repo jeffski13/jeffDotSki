@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { storeBlogText } from '../actions';
-import { FormGroup, FormControl } from 'react-bootstrap';
-import { validateFormString, FORM_SUCCESS } from '../../../../../formvalidation';
+import { FormGroup, FormControl, Form } from 'react-bootstrap';
 
 class BlogEntryText extends React.Component {
 
@@ -15,17 +14,20 @@ class BlogEntryText extends React.Component {
     render() {
         return (
             <FormGroup
-                controlId="formControlsTextarea"
-                validationState={validateFormString(this.props.blogCreation.text.rawValue)}
+                controlId="blog-form-text"
             >
                 <label>What Happened Today?</label>
                 <FormControl
+                    isInvalid={this.props.blogCreation.isValidated && !this.props.blogCreation.text.isValid}                        
                     type="text"
                     as="textarea"
                     value={this.props.blogCreation.text.rawValue}
                     placeholder="<Your Adventure Here>"
                     onChange={this.handleBlogTextChange}
                 />
+                <Form.Control.Feedback type="invalid">
+                    Your reader's would love to hear what you did today!
+                </Form.Control.Feedback>
             </FormGroup>
         );
     }

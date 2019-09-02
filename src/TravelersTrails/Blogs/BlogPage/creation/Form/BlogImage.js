@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Alert, Image } from 'react-bootstrap';
+import { Row, Col, Alert, Image, FormGroup, Form, FormControl } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -33,7 +33,7 @@ class BlogImage extends React.Component {
         }
 
         //for edit we can render the one form the server
-        if(this.props.blogCreation.isEdittingBlog && this.props.blogCreation.image.uploadedUrl) {
+        if (this.props.blogCreation.isEdittingBlog && this.props.blogCreation.image.uploadedUrl) {
             picSrc = this.props.blogCreation.image.uploadedUrl;
         }
 
@@ -80,6 +80,17 @@ class BlogImage extends React.Component {
                             formDisabled={this.isFormDisabled()}
                             shouldShowImageSize={false}
                         />
+                        <FormGroup
+                            controlId="blog-form-image"
+                        >
+                            <FormControl
+                                isInvalid={this.props.blogCreation.isValidated && !this.props.blogCreation.image.isValid}
+                                type="hidden"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                A picture is worth 1,000 words. Show people your favorite moment!
+                            </Form.Control.Feedback>
+                        </FormGroup>
                     </Col>
                     <Col />
                 </Row>

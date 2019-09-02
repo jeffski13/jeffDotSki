@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card, Row, Col } from 'react-bootstrap';
+import { Button, Card, Row, Col, Form } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -10,6 +10,7 @@ import { STATUS_FAILURE, STATUS_LOADING } from '../../../Network/consts';
 import ResizeProfileImg from '../../../image-processing/ResizeProfileImg';
 import {
     cancelBlogCreation,
+    validateBlog,
     uploadingBlogSuccess, uploadingBlogFailure,
     uploadingImage, uploadImageSuccess, uploadImageFailure,
     startBlogUpdatedNoImage,
@@ -82,14 +83,25 @@ class EditBlog extends React.Component {
         }
     }
 
-    onUpdateClicked = () => {
-        //see if user is updating the blog image (if not go straight to uploading blog info)
-        if (this.props.blogCreation.image.valueImageUrlLocal && this.props.blogCreation.image.valueImageData) {
-            this.props.uploadingImage();
-        } else {
-            this.props.startBlogUpdatedNoImage();
-            this.uploadBlogInfo(null, null);
+    onSaveClicked = event => {
+        // if we have valid inputs and we are not loading right now, try to login
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.props.blogCreation.isValid) {
+            //see if user is updating the blog image (if not go straight to uploading blog info)
+            if (this.props.blogCreation.image.valueImageUrlLocal && this.props.blogCreation.image.valueImageData) {
+                this.props.uploadingImage();
+            } else {
+                this.props.startBlogUpdatedNoImage();
+                this.uploadBlogInfo(null, null);
+            }
         }
+        else {
+            //run validation
+            this.props.validateBlog();
+        }
+
+
     }
 
     uploadBlogInfo = (errData, uploadedProfilePicData) => {
@@ -162,10 +174,14 @@ class EditBlog extends React.Component {
                 );
             }
             blogForm = (
-                <React.Fragment>
+                <Form
+                    onSubmit={e => this.onSaveClicked(e)}
+                >
                     {failureMessageRender}
                     <BlogDate />
-                    <BlogTitle />
+                    <BlogTitle
+                        onFormEnterKeyCallback={this.onSaveClicked}
+                    />
                     <BlogEntryText />
                     <BlogImage />
                     <Row className="show-grid">
@@ -173,10 +189,7 @@ class EditBlog extends React.Component {
                         <Col sm={10} md={8} className="User_actions-section">
                             <span className="User_action-button" >
                                 <Button
-                                    onClick={() => {
-                                        this.props.uploadingImage();
-                                    }}
-                                    disabled={!this.props.blogCreation.isValid}
+                                    onClick={this.onSaveClicked}
                                     variant="primary"
                                     size="lg"
                                 >
@@ -197,7 +210,7 @@ class EditBlog extends React.Component {
                         </Col>
                         <Col />
                     </Row>
-                </React.Fragment>
+                </Form>
             );
         }
 
@@ -228,6 +241,7 @@ EditBlog.propTypes = {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         cancelBlogCreation,
+        validateBlog,
         uploadingBlogFailure, uploadingBlogSuccess,
         uploadingImage, uploadImageSuccess, uploadImageFailure,
         startBlogUpdatedNoImage

@@ -1,6 +1,7 @@
 export const START_ADD_BLOG = 'START_ADD_BLOG';
 export const START_EDIT_BLOG = 'START_EDIT_BLOG';
 export const CANCEL_BLOG_CREATION = 'CANCEL_BLOG_CREATION';
+export const VALIDATE_BLOG = 'VALIDATE_BLOG';
 export const STORE_BLOG_DATE = 'STORE_BLOG_DATE';
 export const STORE_BLOG_TITLE = 'STORE_BLOG_TITLE';
 export const STORE_BLOG_TEXT = 'STORE_BLOG_TEXT';
@@ -28,6 +29,11 @@ export function startEditBlog(blogData) {
 export function cancelBlogCreation() {
     return {
         type: CANCEL_BLOG_CREATION
+    }
+}
+export function validateBlog() {
+    return {
+        type: VALIDATE_BLOG
     }
 }
 export function storeBlogDate(blogDate) {

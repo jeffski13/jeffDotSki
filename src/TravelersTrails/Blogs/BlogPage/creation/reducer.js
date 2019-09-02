@@ -1,5 +1,6 @@
 import {
     START_ADD_BLOG, START_EDIT_BLOG, CANCEL_BLOG_CREATION,
+    VALIDATE_BLOG,
     STORE_BLOG_DATE, STORE_BLOG_TEXT, STORE_BLOG_TITLE,
     BLOG_UPLOADING_FAILURE, BLOG_UPLOADING_SUCCESS, BLOG_UPLOADING_FINISHED,
     BLOG_IMAGE_SELECTED, START_UPLOAD_AND_BLOG_IMAGE_UPLOADING, BLOG_IMAGE_UPLOAD_SUCCESS, BLOG_IMAGE_UPLOAD_FAILURE,
@@ -15,12 +16,12 @@ const initialState = {
     isAddingBlog: false,
     title: {
         value: '',
-        isValid: true
+        isValid: false
     },
     text: {
         value: [],
         rawValue: null,
-        isValid: true,
+        isValid: false,
         wasUpdated: false
     },
     date: {
@@ -35,6 +36,7 @@ const initialState = {
         network: null
     },
     isValid: false,
+    isValidated: false,
     network: null,
     id: null,
     uploadAttempt: 0 //a little hack so we can get "new" versions of components
@@ -129,6 +131,14 @@ export default (state = initialState, action) => {
     else if (action.type === CANCEL_BLOG_CREATION) {
         //reset state for cancellation
         state = initialState;
+    }
+    else if (action.type === VALIDATE_BLOG) {
+        console.log('reducer is validated', action);
+        //reset state for cancellation
+        state = {
+            ...state,
+            isValidated: true
+        };
     }
     else if (action.type === STORE_BLOG_DATE) {
         console.log('STORE_BLOG_DATE');
