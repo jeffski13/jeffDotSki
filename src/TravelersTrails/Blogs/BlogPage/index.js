@@ -74,6 +74,7 @@ class BlogPage extends Component {
 
     render() {
         let blog = this.props.blog;
+        let blogPageContent = null;
 
         //get first paragraph data
         //then put the rest of the paragraphs into a separete array
@@ -92,74 +93,81 @@ class BlogPage extends Component {
             titleImageClass = 'BlogPage_loadingImage img-responsive';
         }
         if (this.props.blogCreation.isEdittingBlog && this.props.blogCreation.id === this.props.blog.id) {
-            return (
-                <EditBlog
-                    OGBlogInfo={this.props.blog}
-                />
+            blogPageContent = (<EditBlog
+                OGBlogInfo={this.props.blog}
+            />);
+        }
+        else {
+            blogPageContent = (
+                <React.Fragment>
+                    <Row className="show-grid">
+                        <ScrollableAnchor id={this.props.invisibleAnchorId}>
+                            <h3>{moment.unix(blog.date).format("MM/DD/YYYY")}</h3>
+                        </ScrollableAnchor>
+                    </Row>
+                    <Row className="show-grid">
+                        <h3>{blog.title}</h3>
+                    </Row>
+                    <Row className="show-grid">
+                        <div>{blog.location}</div>
+                    </Row>
+                    {/* Title image and first paragraph side-by-side */}
+                    <Row className="show-grid blogPargraph">
+                        <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
+                        <Col sm={8} md={4} >
+                            <Image
+                                fluid
+                                onLoad={() => {
+                                    this.setState({
+                                        hasTitleImageLoaded: true
+                                    })
+                                }}
+                                id={blog.id + '-title-image'}
+                                src={finalTitleImgUrl}
+                                className={titleImageClass}
+                                alt={`${blog.title} Main`}
+                            />
+                            {!this.state.hasTitleImageLoaded && <Image src={loadingImage} fluid />}
+                        </Col>
+                        {/* edit blog controls should only show when we are not adding/editing a blog */}
+                        {this.props.isEditEnabled &&
+                            !this.props.blogCreation.isEdittingBlog &&
+                            !this.props.blogCreation.isAddingBlog &&
+                            <Col sm={1}>
+                                <span className="Blogs_tripTitleEditButton">
+                                    <Button
+                                        onClick={this.editBlogClicked}
+                                        variant="secondary"
+                                        disabled={this.props.isDisabled} //should hook into redux state for this
+                                        title="Please finish editting your blog."
+                                    >
+                                        <i className="material-icons">edit</i>
+                                    </Button>
+                                </span>
+                            </Col>
+                        }
+                    </Row>
+                    {
+                        remainingParagraphs.length > 0
+                            ? remainingParagraphs.map(this.renderRemainingParagraphs)
+                            : null
+                    }
+
+                    <Row className="show-grid">
+                        <BlogImages
+                            blogImageData={blog.blogImages}
+                            isViewMobile={this.props.isViewMobile}
+                        />
+                    </Row>
+                </React.Fragment>
             );
         }
 
         return (
-            <Container id={this.props.blogAnchorId} >
-                <Row className="show-grid">
-                    <ScrollableAnchor id={this.props.invisibleAnchorId}>
-                        <h3>{moment.unix(blog.date).format("MM/DD/YYYY")}</h3>
-                    </ScrollableAnchor>
-                </Row>
-                <Row className="show-grid">
-                    <h3>{blog.title}</h3>
-                </Row>
-                <Row className="show-grid">
-                    <div>{blog.location}</div>
-                </Row>
-                {/* Title image and first paragraph side-by-side */}
-                <Row className="show-grid blogPargraph">
-                    <Col className="BlogPage__first-paragraph" sm={8} md={4} >{firstParagraph.text}</Col>
-                    <Col sm={8} md={4} >
-                        <Image
-                            fluid
-                            onLoad={() => {
-                                this.setState({
-                                    hasTitleImageLoaded: true
-                                })
-                            }}
-                            id={blog.id + '-title-image'}
-                            src={finalTitleImgUrl}
-                            className={titleImageClass}
-                            alt={`${blog.title} Main`}
-                        />
-                        {!this.state.hasTitleImageLoaded && <Image src={loadingImage} fluid />}
-                    </Col>
-                    {/* edit blog controls should only show when we are not adding/editing a blog */}
-                    {this.props.isEditEnabled &&
-                        !this.props.blogCreation.isEdittingBlog &&
-                        !this.props.blogCreation.isAddingBlog &&
-                        <Col sm={1}>
-                            <span className="Blogs_tripTitleEditButton">
-                                <Button
-                                    onClick={this.editBlogClicked}
-                                    variant="secondary"
-                                    disabled={this.props.isDisabled} //should hook into redux state for this
-                                    title="Please finish editting your blog."
-                                >
-                                    <i className="material-icons">edit</i>
-                                </Button>
-                            </span>
-                        </Col>
-                    }
-                </Row>
-                {remainingParagraphs.length > 0
-                    ? remainingParagraphs.map(this.renderRemainingParagraphs)
-                    : null}
-
-                <Row className="show-grid">
-                    <BlogImages
-                        blogImageData={blog.blogImages}
-                        isViewMobile={this.props.isViewMobile}
-                    />
-                </Row>
+            <Container id={this.props.blogAnchorId} className="BlogPage" >
+                {blogPageContent}
             </Container>
-        );
+        )
     }
 }
 
