@@ -4,7 +4,8 @@ import {
     STORE_BLOG_DATE, STORE_BLOG_TEXT, STORE_BLOG_TITLE,
     BLOG_UPLOADING_FAILURE, BLOG_UPLOADING_SUCCESS, BLOG_UPLOADING_FINISHED,
     BLOG_IMAGE_SELECTED, START_UPLOAD_AND_BLOG_IMAGE_UPLOADING, BLOG_IMAGE_UPLOAD_SUCCESS, BLOG_IMAGE_UPLOAD_FAILURE,
-    START_UPDATE_NO_IMAGE
+    START_UPDATE_NO_IMAGE,
+    DELETE_BLOG_IMAGE, DELETE_BLOG_IMAGE_SUCCESS, DELETE_BLOG_IMAGE_FAILURE, DELETE_BLOG_FAILURE, DELETE_BLOG_SUCCESS
 } from './actions';
 import moment from 'moment';
 import { STATUS_LOADING, STATUS_SUCCESS, STATUS_FAILURE } from '../../../Network/consts';
@@ -14,6 +15,7 @@ import { STATUS_LOADING, STATUS_SUCCESS, STATUS_FAILURE } from '../../../Network
 const initialState = {
     isEdittingBlog: false,
     isAddingBlog: false,
+    isDeleting: false,
     title: {
         value: '',
         isValid: false
@@ -39,7 +41,7 @@ const initialState = {
     isValidated: false,
     network: null,
     id: null,
-    uploadAttempt: 0 //a little hack so we can get "new" versions of components
+    attempt: 0 //a little hack so we can get "new" versions of components
 };
 
 const getValidationState = state => {
@@ -82,7 +84,7 @@ export default (state = initialState, action) => {
     if (action.type === START_EDIT_BLOG) {
         //reinitialize state
         state = initialState;
-        
+
         // recreate raw text for the text input form
         let rawText = '';
         action.payload.blogContent.forEach(nextContent => {
@@ -120,7 +122,7 @@ export default (state = initialState, action) => {
             isEdittingBlog: true,
         };
     }
-    else if(action.type === START_ADD_BLOG){
+    else if (action.type === START_ADD_BLOG) {
         //reinitialize state
         state = initialState;
         state = {
@@ -202,7 +204,7 @@ export default (state = initialState, action) => {
         imageState.valueImageData = action.payload.imageData;
         imageState.valueImageUrlLocal = action.payload.imageUrl;
         imageState.isValid = false;
-        
+
         //when editting we will start with an uploaded url. If we are changing the pic, we need to X that data in preparation for the new image
         imageState.uploadedUrl = null;
         if (action.payload.imageData && action.payload.imageUrl) {
@@ -248,9 +250,50 @@ export default (state = initialState, action) => {
             image: imageState
         };
     }
+    else if (action.type === DELETE_BLOG_IMAGE) {
+        let imageState = state.image;
+        imageState.network = STATUS_LOADING;
+        state = {
+            ...state,
+            isDeleting: true,
+            network: STATUS_LOADING,
+            image: imageState,
+            attempt: state.attempt + 1,
+        };
+    }
+    else if (action.type === DELETE_BLOG_IMAGE_SUCCESS) {
+        let imageState = state.image;
+        imageState.network = STATUS_SUCCESS;
+        imageState.uploadedUrl = action.payload;
+        state = {
+            ...state,
+            image: imageState
+        };
+    }
+    else if (action.type === DELETE_BLOG_IMAGE_FAILURE) {
+        let imageState = state.image;
+        imageState.network = STATUS_FAILURE;
+        state = {
+            ...state,
+            network: STATUS_FAILURE,
+            image: imageState
+        };
+    }
+    else if (action.type === DELETE_BLOG_SUCCESS) {
+        state = {
+            ...initialState, //if we completely succeed we want to reset this
+            network: STATUS_SUCCESS
+        };
+    }
+    else if (action.type === DELETE_BLOG_FAILURE) {
+        state = {
+            ...state,
+            network: STATUS_FAILURE
+        };
+    }
 
     //overall validation for blog
     state.isValid = getValidationState(state);
-    
+
     return state;
 }

@@ -3,6 +3,8 @@ import { Auth, Storage } from 'aws-amplify';
 import uuidv1 from 'uuid/v1';
 import { defaultErrorResponse } from './Network/consts';
 
+
+const S3_URL_PREFIX = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
 /**
  * upload image to AWS S3 blogs "directory"
  *
@@ -31,8 +33,8 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
             level: 'public',
             contentType: blogImageFileType
         })
-        .then(result => {
-                const uploadFileUrlPrefix = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
+            .then(result => {
+                const uploadFileUrlPrefix = S3_URL_PREFIX;
                 callback(null, `${uploadFileUrlPrefix}${result.key}`)
             })
             .catch(err => {
@@ -43,6 +45,45 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
             });
     }).catch((err) => {
         console.log('ERROR getting current auth user: ', err)
+    });
+}
+
+/**
+ * delete image in AWS S3 blogs "directory"
+ *
+ * @param {object} blogPicFile - photo file
+ * @param {string} userId - author user id for this photo
+ * @param {string} tripId - trip id for this photo
+ * @param {function} callback - (error, data) - function with error/data information from s3
+ */
+export function deleteBlogPic(photoUrlToDelete, callback) {
+    Auth.currentAuthenticatedUser({
+        bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    }).then(user => {
+        //do some sort of matching of URL here? need to test if I can delete someone elses ish
+        if (!photoUrlToDelete) {
+            callback({ message: "No photo url while trying to delete photo!" });
+            return;
+        }
+
+        //get last part of url for deletion
+        const photoDeleteKey = photoUrlToDelete.replace(S3_URL_PREFIX, '');
+
+        Storage.remove(photoDeleteKey, {
+            level: 'public'
+        })
+            .then(result => {
+                console.log('blog image deleted: ', result);
+                callback(null);
+            })
+            .catch(err => {
+                callback({
+                    message: "An error occured while trying to delete the blog pic!",
+                    error: err
+                });
+            });
+    }).catch((err) => {
+        console.log('ERROR getting current auth user during blog image delete: ', err)
     });
 }
 
@@ -67,10 +108,10 @@ export const createBlogSecure = (userId, tripId, blogInfo, callback) => {
                 'Authorization': idTokenJwt
             }
         })
-        .then(response => {
+            .then(response => {
                 //parse the response
                 let rawUserResponseArr = response.data;
-                
+
                 callback(null, rawUserResponseArr);
             })
             .catch(error => {
@@ -90,7 +131,8 @@ export const createBlogSecure = (userId, tripId, blogInfo, callback) => {
  * 
  * @param {string} userId - the id of the blog user
  * @param {string} tripId - the id of the trip
- * @param {object} tripInfo - information abot the new blog
+ * @param {string} blogId - the id of the blog
+ * @param {object} updateBlogInfo - information abot the new blog
  * @param {function} callback - (err, data) - function which will return the success or an error from aws
  */
 export const updateBlogSecure = (userId, tripId, blogId, updateBlogInfo, callback) => {
@@ -106,10 +148,10 @@ export const updateBlogSecure = (userId, tripId, blogId, updateBlogInfo, callbac
                 'Authorization': idTokenJwt
             }
         })
-        .then(response => {
+            .then(response => {
                 //parse the response
                 let rawUserResponseArr = response.data;
-                
+
                 callback(null, rawUserResponseArr);
             })
             .catch(error => {
@@ -120,6 +162,44 @@ export const updateBlogSecure = (userId, tripId, blogId, updateBlogInfo, callbac
             });
 
     }).catch(err => {
-        console.log('ERROR creating blog: ', err)
+        console.log('ERROR updating blog: ', err)
+    });
+}
+
+/**
+ * deletes a blog for a user
+ * 
+ * @param {string} userId - the id of the blog user
+ * @param {string} tripId - the id of the trip
+ * @param {string} blogId - the id of the blog
+ * @param {function} callback - (err, data) - function which will return the success or an error from aws
+ */
+export const deleteBlogSecure = (userId, tripId, blogId, callback) => {
+    Auth.currentAuthenticatedUser({
+        bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    }).then(user => {
+        let idTokenJwt = user.signInUserSession.idToken.jwtToken
+        axios({
+            method: 'DELETE',
+            url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/${tripId}/blogs/${blogId}`,
+            headers: {
+                'Authorization': idTokenJwt
+            }
+        })
+            .then(response => {
+                //parse the response
+                let rawUserResponseArr = response.data;
+
+                callback(null, rawUserResponseArr);
+            })
+            .catch(error => {
+                if (error.response) {
+                    return callback(error.response);
+                }
+                return callback(defaultErrorResponse);
+            });
+
+    }).catch(err => {
+        console.log('ERROR deleting blog: ', err)
     });
 }

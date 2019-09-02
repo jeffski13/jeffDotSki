@@ -13,6 +13,11 @@ export const START_UPLOAD_AND_BLOG_IMAGE_UPLOADING = 'START_UPLOAD_AND_BLOG_IMAG
 export const START_UPDATE_NO_IMAGE = 'START_UPDATE_NO_IMAGE';
 export const BLOG_IMAGE_UPLOAD_SUCCESS = 'BLOG_IMAGE_UPLOAD_SUCCESS';
 export const BLOG_IMAGE_UPLOAD_FAILURE = 'BLOG_IMAGE_UPLOAD_FAILURE';
+export const DELETE_BLOG_IMAGE = 'DELETE_BLOG_IMAGE';
+export const DELETE_BLOG_IMAGE_SUCCESS = 'DELETE_BLOG_IMAGE_SUCCESS';
+export const DELETE_BLOG_IMAGE_FAILURE = 'DELETE_BLOG_IMAGE_FAILURE';
+export const DELETE_BLOG_SUCCESS = 'DELETE_BLOG_SUCCESS';
+export const DELETE_BLOG_FAILURE = 'DELETE_BLOG_FAILURE';
 
 export function startAddingBlog() {
     return {
@@ -113,3 +118,33 @@ export function startBlogUpdatedNoImage() {
     }
 }
 
+export function deleteBlogImage() {
+    return {
+        type: DELETE_BLOG_IMAGE,
+        payload: null
+    }
+}
+export function deleteImageSuccess() {
+    return {
+        type: DELETE_BLOG_IMAGE_SUCCESS,
+        payload: null
+    }
+}
+export function deleteImageFailure() {
+    return {
+        type: DELETE_BLOG_IMAGE_FAILURE,
+        payload: null
+    }
+}
+export function deleteBlogSuccess() {
+    return {
+        type: DELETE_BLOG_SUCCESS,
+        payload: null
+    }
+}
+export function deleteBlogFailure() {
+    return {
+        type: DELETE_BLOG_FAILURE,
+        payload: null
+    }
+}

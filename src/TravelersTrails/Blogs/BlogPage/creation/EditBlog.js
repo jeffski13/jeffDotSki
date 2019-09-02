@@ -14,12 +14,14 @@ import {
     uploadingBlogSuccess, uploadingBlogFailure,
     uploadingImage, uploadImageSuccess, uploadImageFailure,
     startBlogUpdatedNoImage,
+    deleteBlogImage, deleteImageSuccess, deleteImageFailure,
+    deleteBlogSuccess, deleteBlogFailure
 } from './actions';
 import withBlogAuth from '../../../Auth/withBlogAuth';
 import BlogDate from './Form/BlogDate';
 import BlogEntryText from './Form/BlogEntryText';
 import BlogImage from './Form/BlogImage';
-import { updateBlogSecure } from '../../../BlogForUser';
+import { updateBlogSecure, deleteBlogPic, deleteBlogSecure } from '../../../BlogForUser';
 import BlogTitle from './Form/BlogTitle';
 import './styles.css';
 import './../../../styles.css'; //travelersTrails styles
@@ -67,6 +69,7 @@ class EditBlog extends React.Component {
         if (!previousProps.reduxBlogAuth.authState.hasDoneInitialAuthCheck && this.props.reduxBlogAuth.authState.hasDoneInitialAuthCheck) {
             this.completeInitialization();
         }
+
     }
 
     completeInitialization = () => {
@@ -149,6 +152,36 @@ class EditBlog extends React.Component {
         return finalArr;
     }
 
+    onDeleteClicked = () => {
+        //update app state
+        this.props.deleteBlogImage();
+
+        this.deleteBlogTitleImage();
+    };
+
+    deleteBlogTitleImage = () => {
+        deleteBlogPic(this.props.OGBlogInfo.titleImageUrl, (err) => {
+            if (err) {
+                this.props.deleteImageFailure();
+                return;
+            }
+
+            //update state with delete success
+            this.props.deleteImageSuccess();
+            
+            //we deleted it! now lets finish off the blog delete
+            deleteBlogSecure(this.props.match.params.userId, this.props.match.params.tripId, this.props.OGBlogInfo.id, (err, data) => {
+                if (err) {
+                    return this.props.deleteBlogFailure();
+                }
+    
+                //WE DID IT! let state decide where we go from here
+                return this.props.deleteBlogSuccess();
+            });
+
+        });
+    }
+
     render() {
 
         let blogForm = null;
@@ -207,6 +240,15 @@ class EditBlog extends React.Component {
                                     Cancel
                                 </Button>
                             </span>
+                            <span className="User_action-button" >
+                                <Button
+                                    onClick={this.onDeleteClicked}
+                                    variant="danger"
+                                    size="lg"
+                                >
+                                    Delete
+                                </Button>
+                            </span>
                         </Col>
                         <Col />
                     </Row>
@@ -217,9 +259,9 @@ class EditBlog extends React.Component {
         return (
             <div>
                 {blogForm}
-                {this.props.blogCreation.image.network === STATUS_LOADING &&
+                {this.props.blogCreation.isEditing && this.props.blogCreation.image.network === STATUS_LOADING &&
                     <ResizeProfileImg
-                        key={this.props.blogCreation.uploadAttempt} //needed so that we can get a "new" instance of the upload component
+                        key={this.props.blogCreation.attempt} //needed so that we can get a "new" instance of the upload component
                         showProgressIndicator={false}
                         fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
                         userId={this.props.match.params.userId}
@@ -244,7 +286,9 @@ function mapDispatchToProps(dispatch) {
         validateBlog,
         uploadingBlogFailure, uploadingBlogSuccess,
         uploadingImage, uploadImageSuccess, uploadImageFailure,
-        startBlogUpdatedNoImage
+        startBlogUpdatedNoImage,
+        deleteBlogImage, deleteImageSuccess, deleteImageFailure,
+        deleteBlogSuccess, deleteBlogFailure
     }, dispatch);
 }
 

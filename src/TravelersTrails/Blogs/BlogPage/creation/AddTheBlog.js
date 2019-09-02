@@ -78,6 +78,9 @@ class AddBlog extends React.Component {
         }
     }
 
+    /**
+     * called after the image has been uploaded (see ResizeProfileImg component in render)
+     */
     uploadBlogInfo = (errData, uploadedProfilePicData) => {
         if (errData) {
             console.log('errDate in AddBlog uploadBlogInfo: ', errData)
@@ -222,7 +225,7 @@ class AddBlog extends React.Component {
                     {blogForm}
                     {this.props.blogCreation.image.network === STATUS_LOADING &&
                         <ResizeProfileImg
-                            key={this.props.blogCreation.uploadAttempt} //needed so that we can get a "new" instance of the upload component
+                            key={this.props.blogCreation.attempt} //needed so that we can get a "new" instance of the upload component
                             showProgressIndicator={false}
                             fileToResizeAndUpload={this.props.blogCreation.image.valueImageData}
                             userId={this.props.match.params.userId}
