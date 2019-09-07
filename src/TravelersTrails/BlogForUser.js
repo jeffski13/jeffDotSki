@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { Auth, Storage } from 'aws-amplify';
 import uuidv1 from 'uuid/v1';
+import {getProtectedStorageUrlFromUser, STORAGE_PROTECTED_PREFIX} from './Auth/storageUrl';
 import { defaultErrorResponse } from './Network/consts';
-
-
-const S3_URL_PREFIX = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
+                
 /**
  * upload image to AWS S3 blogs "directory"
  *
@@ -18,7 +17,7 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
-
+        console.log('user for blueser: ', user.storage);
         if (!blogPicFile || !userId || userId === '' || !tripId || tripId === '') {
             callback({ message: "No file or userId or tripId while trying to upload photo!" });
             return;
@@ -29,13 +28,14 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
         let blogImageUploadKey = `${userId}/trips/${tripId}/${fileName}`;
         let blogImageFileType = blogPicFile.type;
 
+        const s3StorageProtectedUrlPrefix = getProtectedStorageUrlFromUser(user);
         Storage.put(blogImageUploadKey, blogPicFile, {
-            level: 'public',
+            level: 'protected',
             contentType: blogImageFileType
         })
             .then(result => {
-                const uploadFileUrlPrefix = S3_URL_PREFIX;
-                callback(null, `${uploadFileUrlPrefix}${result.key}`)
+                const uploadUrl = encodeURI(`${STORAGE_PROTECTED_PREFIX}/${s3StorageProtectedUrlPrefix}/${blogImageUploadKey}`);
+                callback(null, uploadUrl);
             })
             .catch(err => {
                 callback({
@@ -48,44 +48,6 @@ export function uploadBlogPic(blogPicFile, userId, tripId, callback) {
     });
 }
 
-/**
- * delete image in AWS S3 blogs "directory"
- *
- * @param {object} blogPicFile - photo file
- * @param {string} userId - author user id for this photo
- * @param {string} tripId - trip id for this photo
- * @param {function} callback - (error, data) - function with error/data information from s3
- */
-export function deleteBlogPic(photoUrlToDelete, callback) {
-    Auth.currentAuthenticatedUser({
-        bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-    }).then(user => {
-        //do some sort of matching of URL here? need to test if I can delete someone elses ish
-        if (!photoUrlToDelete) {
-            callback({ message: "No photo url while trying to delete photo!" });
-            return;
-        }
-
-        //get last part of url for deletion
-        const photoDeleteKey = photoUrlToDelete.replace(S3_URL_PREFIX, '');
-
-        Storage.remove(photoDeleteKey, {
-            level: 'public'
-        })
-            .then(result => {
-                console.log('blog image deleted: ', result);
-                callback(null);
-            })
-            .catch(err => {
-                callback({
-                    message: "An error occured while trying to delete the blog pic!",
-                    error: err
-                });
-            });
-    }).catch((err) => {
-        console.log('ERROR getting current auth user during blog image delete: ', err)
-    });
-}
 
 /**
  * updates a blog users info
@@ -108,7 +70,7 @@ export const createBlogSecure = (userId, tripId, blogInfo, callback) => {
                 'Authorization': idTokenJwt
             }
         })
-            .then(response => {
+        .then(response => {
                 //parse the response
                 let rawUserResponseArr = response.data;
 
@@ -120,7 +82,7 @@ export const createBlogSecure = (userId, tripId, blogInfo, callback) => {
                 }
                 return callback(defaultErrorResponse);
             });
-
+            
     }).catch(err => {
         console.log('ERROR creating blog: ', err)
     });
@@ -163,6 +125,48 @@ export const updateBlogSecure = (userId, tripId, blogId, updateBlogInfo, callbac
 
     }).catch(err => {
         console.log('ERROR updating blog: ', err)
+    });
+}
+
+/**
+ * delete image in AWS S3 blogs "directory"
+ *
+ * @param {object} blogPicFile - photo file
+ * @param {string} userId - author user id for this photo
+ * @param {string} tripId - trip id for this photo
+ * @param {function} callback - (error, data) - function with error/data information from s3
+ */
+export function deleteBlogPic(photoUrlToDelete, callback) {
+    Auth.currentAuthenticatedUser({
+        bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    }).then(user => {
+        
+        //do some sort of matching of URL here? need to test if I can delete someone elses ish
+        if (!photoUrlToDelete) {
+            callback({ message: "No photo url while trying to delete photo!" });
+            return;
+        }
+        //get last part of url for deletion
+        const s3StorageProtectedUrlPrefix = getProtectedStorageUrlFromUser(user);
+        const S3_URL_PREFIX = `${STORAGE_PROTECTED_PREFIX}${s3StorageProtectedUrlPrefix}`;
+        let photoDeleteKey = photoUrlToDelete.replace(S3_URL_PREFIX, '');
+        photoDeleteKey = 'a817475c-526b-4132-9449-522722c0a1fc/trips/624f9f40-66e5-11e9-991b-dd181cef9033/b96209f0-cf89-11e9-95fe-5d3bc8065942';
+        Storage.remove(photoDeleteKey, {
+            level: 'protected'
+        })
+            .then(result => {
+                console.log('result from blog upload: ', result);
+                console.log('blog image deleted: ', result);
+                callback(null);
+            })
+            .catch(err => {
+                callback({
+                    message: "An error occured while trying to delete the blog pic!",
+                    error: err
+                });
+            });
+    }).catch((err) => {
+        console.log('ERROR getting current auth user during blog image delete: ', err)
     });
 }
 

@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { defaultErrorResponse } from './Network/consts';
 import { Auth, Storage } from 'aws-amplify';
-import AWS from 'aws-sdk';
-import { AUTH_CONFIG } from './Auth/aws-auth-config';
-import uuidv1 from 'uuid/v1';
-var apigClientFactory = require('aws-api-gateway-client').default;
-
+import {getProtectedStorageUrlFromUser, STORAGE_PROTECTED_PREFIX} from './Auth/storageUrl';
 export const emptyProfileUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski/blog/alone-anime-art-262272.jpg';
 export const profileGetFailMessage = 'We were not able to get your profile information at this time.';
 
@@ -15,10 +11,10 @@ export const profileGetFailMessage = 'We were not able to get your profile infor
  * @param {string} userId - the id of the user which we want
  * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
  */
-export function getBlogUserSecure(userId, callback) {
+export const getBlogUserSecure = (userId, callback) => {
     Auth.currentAuthenticatedUser({
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
-    }).then((user) => {
+    }).then(async user => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
         axios({
             method: 'GET',
@@ -57,8 +53,7 @@ export function getBlogUserSecure(userId, callback) {
                     return callback(defaultErrorResponse);
                 });
     });
-
-}
+};
 
 /**
  * creates a new blog user
@@ -137,24 +132,24 @@ export function uploadProfilePic(profilePicFile, userId, callback) {
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
-
         if (!profilePicFile || !userId || userId === '') {
             callback({ message: "No file or userId while trying to upload photo!" });
             return;
         }
-
+        
         //hardcoded profile pic name so they dont take up a bunch of storage with multiple profile pics that arent used
-        let fileName = 'profilepic';
+        let fileName = 'profilepicski';
         let blogImageUploadKey = `${userId}/profile/${fileName}`;
         let blogImageFileType = profilePicFile.type;
-
+        
+        const s3StorageProtectedUrlPrefix = getProtectedStorageUrlFromUser(user);
         Storage.put(blogImageUploadKey, profilePicFile, {
-            level: 'public',
-            contentType: blogImageFileType
+            contentType: blogImageFileType,
+            level: 'protected'
         })
             .then((result) => {
-                const uploadFileUrlPrefix = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/';
-                callback(null, `${uploadFileUrlPrefix}${result.key}`)
+                const uploadUrl = `${STORAGE_PROTECTED_PREFIX}/${s3StorageProtectedUrlPrefix}/${blogImageUploadKey}`;
+                callback(null, uploadUrl);
             })
             .catch((err) => {
                 callback({

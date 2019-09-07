@@ -26,7 +26,7 @@ export const AUTH_CONFIG = {
     Storage: {
         AWSS3: {
             bucket: 'jeff.ski.blogski', //REQUIRED -  Amazon S3 bucket
-            region: 'us-east-2' //OPTIONAL -  Amazon service region
+            region: 'us-east-2', //OPTIONAL -  Amazon service region
         }
     }
 };  

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AUTH_CONFIG } from './aws-auth-config';
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth, Storage } from 'aws-amplify';
 import aws4 from "aws4";
 import {
     AUTH_STATE_LOGIN_FAIL_PASSWORD_RESET, AUTH_STATE_LOGIN_LOADING, AUTH_STATE_LOGIN_FAIL_USERNOTVERIFIED, AUTH_STATE_LOGIN_FAIL, AUTH_STATE_LOGGOUT_FAIL,
@@ -32,7 +32,7 @@ let withBlogAuth = (OgComponent) => {
         }
 
         loginUnauthenticatedUser = () => {
-            
+
 
 
         }
