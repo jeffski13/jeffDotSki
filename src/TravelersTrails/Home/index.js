@@ -51,16 +51,19 @@ class Home extends React.Component {
             </div>
         );
 
+        const homeImageUrl = 'https://s3.us-east-2.amazonaws.com/jeff.ski.blogski/public/traveltrail_home_sm.jpg';
+
         return (
             <Container fluid className="TravelTrailsHome_container">
                 <Row noGutters={true} >
-                    <Col className="d-none d-sm-block">
+                    <Col className="d-none d-sm-block TravelTrailers_desktop">
+                        <Image src={homeImageUrl} />
                         <div id="travelTrailsHome">
                             {titleAndLinks}
                         </div>
                     </Col>
                     <Col className="d-block d-sm-none TravelTrailers_mobile">
-                        <Image src="https://s3.us-east-2.amazonaws.com/jeff.ski/traveltrail/home/traveltrail_home_md.jpg" />
+                        <Image src={homeImageUrl} />
                         <div className="TravelTrailers_mobile-text">
                             {titleAndLinks}
                         </div>

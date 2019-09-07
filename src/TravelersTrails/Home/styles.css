@@ -73,6 +73,13 @@
     filter: grayscale(0%) contrast(88%) brightness(28%);
 }
 
+.TravelTrailers_desktop > img {
+    filter: grayscale(0%) contrast(88%) brightness(28%);
+    max-width: 2000px;
+    max-height: 1000px;
+    margin: 0px
+}
+
 .TravelTrailsHome_container {
     padding: 0;
 }
