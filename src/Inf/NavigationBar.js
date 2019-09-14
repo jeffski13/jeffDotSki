@@ -5,9 +5,6 @@ import {jeffskiRoutes} from '../app';
 import './styles.css';
 
 class NavigationBar extends Component {
-    goToBio() {
-    }
-
     render() {
         return (
             <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">

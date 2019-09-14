@@ -103,7 +103,7 @@ class Blogs extends Component {
         }
 
         if (this.props.blogCreation.network === STATUS_SUCCESS) {
-            this.props.uploadingBlogFinished();
+            this.props.uploadingBlogFinished(); // heh? this could be true on delete, edit, or create, soo....
 
             //reload the page
             window.location.reload();

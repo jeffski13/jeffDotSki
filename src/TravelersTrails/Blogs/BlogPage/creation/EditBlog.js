@@ -153,13 +153,12 @@ class EditBlog extends React.Component {
     }
 
     onDeleteClicked = () => {
-        //update app state
+        // delete the blog image and the blog itself at the same time. 
+        // Note here that the only thing we REALLY care about is the deleting of the blog
+        // we want to make sure that the blog doesnt appear in the users trip list, but if an image exists that doesnt 
+        // have a trip its not the end of the world. We do want to make a service later where we log all failed images.
+        // Its good to know and if a user deletes something there will be the expectation that its actually deleted.
         this.props.deleteBlogImage();
-
-        this.deleteBlogTitleImage();
-    };
-
-    deleteBlogTitleImage = () => {
         deleteBlogPic(this.props.OGBlogInfo.titleImageUrl, (err) => {
             if (err) {
                 this.props.deleteImageFailure();
@@ -168,19 +167,17 @@ class EditBlog extends React.Component {
 
             //update state with delete success
             this.props.deleteImageSuccess();
-            
-            //we deleted it! now lets finish off the blog delete
-            deleteBlogSecure(this.props.match.params.userId, this.props.match.params.tripId, this.props.OGBlogInfo.id, (err, data) => {
-                if (err) {
-                    return this.props.deleteBlogFailure();
-                }
-    
-                //WE DID IT! let state decide where we go from here
-                return this.props.deleteBlogSuccess();
-            });
-
         });
-    }
+
+        deleteBlogSecure(this.props.match.params.userId, this.props.match.params.tripId, this.props.OGBlogInfo.id, (err, data) => {
+            if (err) {
+                return this.props.deleteBlogFailure();
+            }
+
+            //WE DID IT! let state decide where we go from here
+            return this.props.deleteBlogSuccess();
+        });
+    };
 
     render() {
 

@@ -148,9 +148,8 @@ export function deleteBlogPic(photoUrlToDelete, callback) {
         }
         //get last part of url for deletion
         const s3StorageProtectedUrlPrefix = getProtectedStorageUrlFromUser(user);
-        const S3_URL_PREFIX = `${STORAGE_PROTECTED_PREFIX}${s3StorageProtectedUrlPrefix}`;
-        let photoDeleteKey = photoUrlToDelete.replace(S3_URL_PREFIX, '');
-        photoDeleteKey = 'a817475c-526b-4132-9449-522722c0a1fc/trips/624f9f40-66e5-11e9-991b-dd181cef9033/b96209f0-cf89-11e9-95fe-5d3bc8065942';
+        const S3_URL_PREFIX = `${STORAGE_PROTECTED_PREFIX}/${s3StorageProtectedUrlPrefix}`;
+        let photoDeleteKey = photoUrlToDelete.replace(`${S3_URL_PREFIX}/`, '');
         Storage.remove(photoDeleteKey, {
             level: 'protected'
         })

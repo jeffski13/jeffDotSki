@@ -271,11 +271,11 @@ export default (state = initialState, action) => {
         };
     }
     else if (action.type === DELETE_BLOG_IMAGE_FAILURE) {
+        //update image state only. We dont really care if we have images hanging out that dont have a trip. Isssss fine
         let imageState = state.image;
         imageState.network = STATUS_FAILURE;
         state = {
             ...state,
-            network: STATUS_FAILURE,
             image: imageState
         };
     }
