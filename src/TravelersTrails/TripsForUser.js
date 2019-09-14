@@ -67,6 +67,44 @@ export function getTripsSecure(userId, callback) {
  * updates a blog users info
  * 
  * @param {string} userId - the id of the blog user
+ * @param {object} tripInfo - information abot the new trip
+ * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
+ */
+export function createTripSecure(userId, tripInfo, callback) {
+    Auth.currentAuthenticatedUser({
+        bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    }).then((user) => {
+        let idTokenJwt = user.signInUserSession.idToken.jwtToken
+        axios({
+            method: 'POST',
+            url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/`,
+            data: tripInfo,
+            headers: {
+                'Authorization': idTokenJwt
+            }
+        })
+            .then((response) => {
+                //parse the response
+                let rawUserResponseArr = response.data;
+
+                callback(null, rawUserResponseArr);
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    return callback(error.response);
+                }
+                return callback(defaultErrorResponse);
+            });
+
+    }).catch((err) => {
+        console.log('ERROR creating trip: ', err)
+    });
+}
+
+/**
+ * updates a blog users trip
+ * 
+ * @param {string} userId - the id of the blog user
  * @param {string} tripId - the id of the trip user
  * @param {object} tripUpdateInfo - information for the updated trip
  * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
@@ -103,30 +141,29 @@ export function updateTripSecure(userId, tripId, tripUpdateInfo, callback) {
 }
 
 /**
- * updates a blog users info
+ * deletes a blog users trip
  * 
  * @param {string} userId - the id of the blog user
- * @param {object} tripInfo - information abot the new trip
- * @param {function} callback - (err, data) - function which will return the blogs or an error from aws
+ * @param {string} tripId - the id of the trip user
+ * @param {function} callback - (err, data) - function which will return success or an error from aws
  */
-export function createTripSecure(userId, tripInfo, callback) {
+export function deleteTripSecure(userId, tripId, callback) {
     Auth.currentAuthenticatedUser({
         bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     }).then((user) => {
         let idTokenJwt = user.signInUserSession.idToken.jwtToken
         axios({
-            method: 'POST',
-            url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/`,
-            data: tripInfo,
+            method: 'DELETE',
+            url: `https://me41kdv4y4.execute-api.us-east-2.amazonaws.com/Prod/${userId}/trips/${tripId}`,
             headers: {
                 'Authorization': idTokenJwt
             }
         })
             .then((response) => {
                 //parse the response
-                let rawUserResponseArr = response.data;
+                let rawUserResponse = response.data;
 
-                callback(null, rawUserResponseArr);
+                callback(null, rawUserResponse);
             })
             .catch(function (error) {
                 if (error.response) {
@@ -136,6 +173,6 @@ export function createTripSecure(userId, tripInfo, callback) {
             });
 
     }).catch((err) => {
-        console.log('ERROR creating trip: ', err)
+        console.log('ERROR deleting trip: ', err)
     });
 }

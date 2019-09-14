@@ -2,6 +2,7 @@ import axios from 'axios';
 import {defaultErrorResponse, authErrorResponse} from './Network/consts';
 import { Auth } from 'aws-amplify';
 
+//Delete this eventually? i think this is already in the TripsForUser file 
 /**
  * gets all blogs for a given trip
  * 

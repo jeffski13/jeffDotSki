@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form, FormGroup, FormControl } from 'react-bootstrap';
+import { Row, Col, Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 
 import withBlogAuth from '../../Auth/withBlogAuth';
-import { updateTripSecure } from '../../TripsForUser';
+import { updateTripSecure, deleteTripSecure } from '../../TripsForUser';
 import { getTripSecure } from '../../GETtrip';
 import { STATUS_FAILURE, STATUS_SUCCESS, STATUS_LOADING } from '../../Network/consts';
 import { validateFormString, FORM_SUCCESS } from '../../../formvalidation';
 
 
 import './styles.css';
+import { deleteBlogPic } from '../../BlogForUser';
 const initialTripFormState = {
     name: {
         value: '',
@@ -159,19 +160,66 @@ class TripName extends React.Component {
         });
     }
 
-    updateTripName = () => {
+    onDeleteClicked = async () => {
+        // fire and forget deletion of all blog images
+        await this.props.allBlogs.forEach(nextBlog => {
+            deleteBlogPic(nextBlog.titleImageUrl, (err) => {
+                if (err) {
+                    console.error(`Failed to delete image for blog ${nextBlog.id} with error: ${err}`);
+                    return;
+                }
+                
+                console.log(`Success deleteing image for blog ${nextBlog.id}`);
+            });
+        });
+
+        // make call to delete trip from user
         this.setState({
             editTripNetwork: STATUS_LOADING
         }, () => {
             //let parent component know we are loading
             this.props.editTripNetworkChangeCallback(STATUS_LOADING);
-            
+
+            deleteTripSecure(this.props.reduxBlogAuth.userInfo.id, this.props.tripId, (err, data) => {
+                if (err) {
+                    console.error('Error whilst deleting trip: ', err);
+                    let editTripFormState = this.state.editTripForm;
+                    editTripFormState.name.errorMessage = 'An error occured while deleting the trip. Some of your images may have successfully deleted. Please try again later.';
+
+                    return this.setState({
+                        editTripNetwork: STATUS_FAILURE,
+                        editTripForm: editTripFormState,
+                    }, () => {
+                        //let parent component know we are a failure at life
+                        this.props.editTripNetworkChangeCallback(STATUS_FAILURE, true);
+                    });
+                }
+
+                this.setState({
+                    editTripNetwork: STATUS_SUCCESS,
+                    isEditing: false,
+                }, () => {
+                    //let parent component know we have successfully deleted the trip
+                    this.props.editTripNetworkChangeCallback(STATUS_SUCCESS, true);
+                    this.props.isEditingTripCallback(false);
+                });
+            });
+        })
+    }
+
+    updateTripName = () => {
+        this.setState({
+            editTripNetwork: STATUS_LOADING
+        }, () => {
+            //let parent component know we are loading
+            this.props.editTripNetworkChangeCallback(STATUS_LOADING, false);
+
             let tripInfo = {
                 name: this.state.editTripForm.name.value
             }
             updateTripSecure(this.props.reduxBlogAuth.userInfo.id, this.props.tripId, tripInfo, (err, data) => {
                 if (err) {
-                    console.log('error is ', err);
+                    console.error('Error whilst updating trip: ', err);
                     let editTripFormState = this.state.editTripForm;
                     editTripFormState.name.errorMessage = err.data.message;
 
@@ -180,13 +228,13 @@ class TripName extends React.Component {
                         editTripForm: editTripFormState,
                     }, () => {
                         //let parent component know we are a failure at life
-                        this.props.editTripNetworkChangeCallback(STATUS_FAILURE);
+                        this.props.editTripNetworkChangeCallback(STATUS_FAILURE, false);
                     });
                 }
-                
+
                 let editTripFormState = this.state.editTripForm;
                 editTripFormState.name.value = data.name;
-                
+
                 this.setState({
                     editTripNetwork: STATUS_SUCCESS,
                     editTripForm: editTripFormState,
@@ -262,7 +310,6 @@ class TripName extends React.Component {
                                             });
                                         }}
                                         isInvalid={this.state.editTripForm.isValidated && !this.state.editTripForm.name.isValid}
-                                        onBlur={this.submitEditTripForm}
                                         disabled={this.state.editTripNetwork === STATUS_LOADING}
                                         ref={this.editNameInputRef}
                                     />
@@ -273,6 +320,49 @@ class TripName extends React.Component {
                                 </label>
                             </FormGroup>
                             {editTripMessage}
+
+                            <Row className="show-grid">
+                                <Col />
+                                <Col sm={10} md={8} className="User_actions-section">
+                                    <span className="User_action-button" >
+                                        <Button
+                                            onClick={this.submitEditTripForm}
+                                            variant="primary"
+                                            size="lg"
+                                            disabled={!this.isEditTripFormSubmitAllowed() || this.state.editTripNetwork === STATUS_LOADING}
+                                        >
+                                            Save
+                                        </Button>
+                                    </span>
+                                    <span className="User_action-button" >
+                                        <Button
+                                            onClick={() => {
+                                                //reset form
+                                                this.setState({                                                    
+                                                    isEditing: false,
+                                                    networkStatus: null,
+                                                    editTripNetwork: null,
+                                                    editTripForm: initialTripFormState,
+                                                })
+                                            }}
+                                            variant="secondary"
+                                            size="lg"
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </span>
+                                    <span className="User_action-button" >
+                                        <Button
+                                            onClick={this.onDeleteClicked}
+                                            variant="danger"
+                                            size="lg"
+                                        >
+                                            Delete Trip
+                                        </Button>
+                                    </span>
+                                </Col>
+                                <Col />
+                            </Row>
                         </Form>
                     </div>
                 );
@@ -285,7 +375,8 @@ class TripName extends React.Component {
 
 TripName.defaultProps = {
     isEditingTripCallback: () => { return false; },
-    editTripNetworkChangeCallback: () => { return null; }
+    //second param true if deleting trip
+    editTripNetworkChangeCallback: (editTripNetwork, wasDeleting) => { return null; }
 };
 
 TripName.propTypes = {
@@ -294,7 +385,8 @@ TripName.propTypes = {
     isEditingTripCallback: PropTypes.func,
     tripOwnerId: PropTypes.string.isRequired,
     tripId: PropTypes.string.isRequired,
-    isDisabled: PropTypes.bool
+    isDisabled: PropTypes.bool,
+    allBlogs: PropTypes.array.isRequired
 };
 
 export default withBlogAuth(TripName);

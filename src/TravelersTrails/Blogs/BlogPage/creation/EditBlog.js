@@ -231,7 +231,7 @@ class EditBlog extends React.Component {
                                     onClick={() => {
                                         this.props.cancelBlogCreation();
                                     }}
-                                    variant="danger"
+                                    variant="secondary"
                                     size="lg"
                                 >
                                     Cancel

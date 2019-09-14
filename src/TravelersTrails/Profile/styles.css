@@ -51,6 +51,7 @@
 
 .Profile_trip-section-addTripErrorMesssage {
     padding-top: 0px;
+    padding-bottom: 10px;
     font-size: 14px;
     color: red;
 }

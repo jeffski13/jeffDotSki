@@ -317,11 +317,20 @@ class Blogs extends Component {
                 <Row className={`show-grid ${blogHeaderClass}`}>
                     <Col xs={8} lg={10}>
                         <TripName
-                            editTripNetworkChangeCallback={editTripNetwork => { this.setState({ editTripNetwork }) }}
+                            editTripNetworkChangeCallback={(editTripNetwork, wasDeleting) => { 
+                                if(editTripNetwork === STATUS_SUCCESS && wasDeleting){
+                                    //redirect to profile page
+                                    return this.props.history.push(`${jeffskiRoutes.travelTrailsHome}/${this.props.match.params.userId}`);
+                                }
+
+                                //gross, state in multiple places. no thanks. Clean this up please.
+                                this.setState({ editTripNetwork });
+                            }}
                             isEditingTripCallback={isEditingTrip => { this.setState({ isEditingTrip }) }}
                             tripOwnerId={this.props.match.params.userId}
                             tripId={tripId}
                             isDisabled={this.state.isAddingBlog}
+                            allBlogs={this.state.blogsResults.blogsArr || []}
                         />
                     </Col>
                     <Col xs={4} lg={2}>
