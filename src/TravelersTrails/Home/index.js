@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Col, Row, Image } from 'react-bootstrap';
+import { Container, Col, Row, Image, InputGroup } from 'react-bootstrap';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { HashLink } from "react-router-hash-link";
@@ -9,9 +10,19 @@ import { jeffskiRoutes } from '../../app';
 import withBlogAuth from '../Auth/withBlogAuth';
 import AirplaneLoader from '../../Inf/AirplaneLoader';
 
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './styles.css';
 
 class Home extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchResults: ['1', 'two'],
+            isLoading: false,
+            selectedTraveler: null
+        };
+    }
 
     componentWillMount() {
         //configure anchors with offset to account for ever-present header
@@ -27,8 +38,23 @@ class Home extends React.Component {
             return this.props.blogAuth.checkForAuth();
         }
     }
+    
+    //https://ericgio.github.io/react-bootstrap-typeahead/#public-methods
+    _handleSearch = (query) => {
+        console.log('query: ', query);
+        this.setState({ isLoading: true }, () => {
+            setTimeout(() => {
+                this.setState({
+                    isLoading: false,
+                    searchResults: [...this.state.searchResults, 'tree']
+                });
+            }, 1000);
+        });
+    }
 
     render() {
+        console.log('selectedTravel is: ', this.state.selectedTraveler);
+
         if (this.props.reduxBlogAuth.authState.isLoading) {
             return (<AirplaneLoader />);
         }
@@ -43,11 +69,32 @@ class Home extends React.Component {
             secondLink = <a href="#TravelTrailsHome-about-section" id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-ghost">ABOUT</a>;
         }
 
+
         let titleAndLinks = (
             <div className="TravelTrailsHome_titleContainer">
                 <h1 className="TravelTrailsHome_title">{pageTitlePrefix}<br />Traveler's Trails</h1>
                 <Link to={jeffskiRoutes.login} id="travelTrailHome-buttonLeft" className="TravelTrail_button TravelTrail_button-full">{firstButtonText}</Link>
                 {secondLink}
+                <InputGroup className="mb-3 TravelTrailsHome_search">
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="basic-addon1">
+                            <i className="material-icons">search</i>
+                        </InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <AsyncTypeahead
+                        isLoading={this.state.isLoading}
+                        bsSize="large"
+                        labelKey="username"
+                        minLength={3}
+                        onSearch={this._handleSearch}
+                        placeholder="Search for a Traveler..."
+                        options={this.state.searchResults}
+                        onChange={selectedTraveler => {
+                            //here we need to jump to the users site
+                            this.setState({selectedTraveler});
+                        }}
+                    />
+                </InputGroup>
             </div>
         );
 
