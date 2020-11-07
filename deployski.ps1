@@ -9,7 +9,7 @@ Write-Host "howdy y'all, lets deploy this ish"
 npm version patch; npm run build; npm run deploy
 
 #deploy build files to prod
-#NOTE: must globally install firebase (npm install -g firebse)
+#NOTE: must globally install firebase (npm install -g firebase-tools)
 cd ./firebaseski
 firebase deploy
 
