@@ -24,7 +24,7 @@ class NavigationBar extends Component {
                             </LinkContainer>
                         </NavDropdown>
                         <NavDropdown title="Software Engineering" id="navigationbar-softwareengineering">
-                            <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume2019_09_10_SoftwareEng.pdf" >Resume</NavDropdown.Item>
+                            <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume2020_10_12_SoftwareEng.pdf" >Resume</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Nav >
