@@ -1,10 +1,13 @@
 /node_modules
 /build
 bundle.js
-npm-debug.log
 .DS_Store
-
 **/firebaseski/public
+
+#debug logs
+npm-debug.log
+debug.log
+firebaseski/firebase-debug.log
 
 # IntelliJ
 *.iml
