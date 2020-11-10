@@ -32,10 +32,16 @@ class Bio extends Component {
             <Row className="show-grid aboutMePargraph" >
               <Col sm={10} md={5} className="aboutMePargraphWithImage" >
                 <p>
-                  I graduated from Claremore High School in 2009 and went to Oklahoma State University (Stillwater, OK). While in college I was lucky enough to get a job in a different city every summer. In 2010 was "workin at the Ribcrib" (Stillwater), 2011 was in Las Vegas, 2012 Cessna (Wichita), 2013 was ABB Totalflow (Bartlesville, OK), and the summer of 2014 I interned at USAA in San Antonio, Texas.
+                  I graduated from Claremore High School in 2009 and went to Oklahoma State University (Stillwater, OK). While in college I was lucky enough to get a differnt job in a different city every summer. In 2010 was "workin at the Ribcrib" (Stillwater), 2011 was in Las Vegas, 2012 Cessna (Wichita), 2013 was ABB Totalflow (Bartlesville, OK), and the summer of 2014 I interned at USAA in San Antonio, Texas.
                 </p>
                 <p>
-                I enjoyed my summer internship, but being ten hours away from home was a bit too much at the time. Fortunately USAA was opening an office in Dallas, and that's how I eneded up here!
+                I enjoyed my summer internship, but being ten hours away from home was a bit too much at the time. Fortunately USAA was opening an office in Dallas.
+                </p>
+                <p>
+                After about five years of the "big city life" being four hours away from home was too much. So I moved to Oklahoma city. I miss my Dallas friends a ton but life in OKC is good.
+                </p>
+                <p>
+                And that's how I eneded up here!
                 </p>
               </Col>
               <Col sm={10} md={5} >
@@ -46,13 +52,13 @@ class Bio extends Component {
               <Col sm={10} >
                 <h2 className="aboutMeSectionTitle">A Professional What?</h2>
                 <p>
-                  During college I wrote my first line of code. As a mechanical engineer I took a course in VBA. I distincly remember the professor writing "x = x + 1" in front of the class. Everyone just stared in silence, wondering how this algebraic conundrum could be so casually written in an engineering class (needless to say I had alot to learn!). I enjoyed VBA and intro to electrical circuits so much I changed my major to electrical engineering.
+                  Back in colllege I remember the professor writing "x = x + 1", and being so confused (needless to say I had alot to learn!). Now here I am 6 years later. And I am a professional!
                 </p>
               </Col>
             </Row>
             <Row className="show-grid aboutMePargraph">
               <Col sm={10} md={5} className="aboutMePargraphWithImage" >
-                In the summer 2012 I moved to Bartlesville, Oklahoma. There I snagged my first "professional" job as a computer programmer. I put professional in quotes because I had absolutely no idea what I was doing. However, my dad had always said I needed to find something that I enjoyed, I was good at, and I could get paid for. I could get payed for it, and I definitely enjoyed it. And I was good...enough at it. It was the beginning of what I knew would be an exciting career!
+                I started my career as a web developer for Beardon Services. Then I start in Android Development for USAA. I then worked in R&D for USAA: Virtual Reality, Amazon Fire TV, Android Wear, tons of cool stuff! Things came full circle when I dove back into web development again in 2017 (this site is made in react!).
               </Col>
               <Col sm={10} md={5} >
                 <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/a-professional-what.jpg' fluid />
@@ -61,13 +67,10 @@ class Bio extends Component {
             <Row className="show-grid aboutMePargraph">
               <Col sm={10} >
                 <p>
-                  That summer I created a native android app, which is how I got my start in the mobile app space. During my internship in Stillwater I got a decent introduction to web development. In 2014 I traveled to San Antonio and continued android app development.
+                  Currently I am working at Boeing, enjoying life near family and old friends. And everyday I work hard to become the best version of myself!
                 </p>
                 <p>
-                  After graduating in December of 2014 I found myself moving to Dallas, far away from my familiar family and friends. But on an adventure. So many people had told me that while I was young and single, the thing I needed to do was go out and experience the world. And while I was definitely out of my comfort zone, I was as ready as ever for this. Las Vegas was my first time at a new company, and Wichita was my first time in a new city without friends. All of my prior experience had prepared me to succeed in this new city.
-                </p>
-                <p>
-                  That is not to say I haven't made a ton of mistakes! Every day I learn more about thriving in the professional world of IT. And everyday I work to better myself to become the best version of myself!
+                  Also if you have read this far...THANK YOU! Seriously I appreciate it. I will never know why you took this much interest in my life story, but thank you for listening!
                 </p>
               </Col>
             </Row>
