@@ -1,5 +1,9 @@
 [
   {
+    "title": "Cowboy Bebop",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/cowboybebop.jpg"
+  },
+  {
     "title": "Digimon",
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/digimon.jpg"
   },
@@ -10,6 +14,10 @@
   {
     "title": "Dragon Ball Z",
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonballz.jpg"
+  },
+  {
+    "title": "One Punch Man",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/one_punch_man.jpg"
   },
   {
     "title": "Yu Yu Hakusho",

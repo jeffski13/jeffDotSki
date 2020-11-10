@@ -41,11 +41,11 @@ class NavigationBar extends Component {
                         <LinkContainer to="/aboutme/bio">
                             <Nav.Link>Bio</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to={jeffskiRoutes.travelTrailsHome}>
-                            <Nav.Link>Travel Trails</Nav.Link>
-                        </LinkContainer>
                         <LinkContainer to="/aboutme/hobbies">
                             <Nav.Link>Hobbies</Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to={jeffskiRoutes.travelTrailsHome}>
+                            <Nav.Link>Traveler's Trails</Nav.Link>
                         </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>

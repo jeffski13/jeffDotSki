@@ -1,13 +1,13 @@
 [
   {
-    "title": "Naruto Shippuden",
-    "season": 2,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/naruto.jpg"
+    "title": "Hunter X Hunter",
+    "season": 5,
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/hunter_x_hunter.jpg"
   },
   {
-    "title": "Pokemon (en Espanol)",
-    "season": 1,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/pokemon_kanto.png"
+    "title": "Naruto Shippuden",
+    "season": 14,
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/naruto.jpg"
   },
   {
     "title": "My Hero Academia",
@@ -15,8 +15,8 @@
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/my_hero_academia.png"
   },
   {
-    "title": "Cowboy Bebop",
+    "title": "Pokemon (en Espanol)",
     "season": 1,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/cowboybebop.jpg"
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/pokemon_kanto.png"
   }
 ]
