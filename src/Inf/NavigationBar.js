@@ -4,13 +4,23 @@ import { LinkContainer } from 'react-router-bootstrap';
 import {jeffskiRoutes} from '../app';
 import './styles.css';
 
+function Brandski(props)  {
+    return  (
+        <LinkContainer to="/">
+            <strong><a className="brand">jeff.ski</a></strong>
+        </LinkContainer>
+    );
+}
+
 class NavigationBar extends Component {
+
     render() {
         return (
             <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
-                <LinkContainer to="/">
-                    <Navbar.Brand className="brand">jeff.ski</Navbar.Brand>
-                </LinkContainer>
+                
+                <Navbar.Brand 
+                    as={Brandski}
+                    />
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">

@@ -4,6 +4,7 @@ import TitleImg from './TitleImg';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import './styles.css';
 
+
 class TitlePage extends Component {
     render() {
         return (
@@ -19,7 +20,7 @@ class TitlePage extends Component {
                         </Col>
                         <Col xs={12} sm={12} md={7} className="TitlePage_aboutJeff-text">
                             <div className="TitlePage_aboutJeff-text-container">
-                                <h3>Who Is This Jeff Guy?</h3>
+                                <h3>Who Is This <span className="TitlePage_aboutJeff-name-websiteName">Jeff</span> Guy?</h3>
                                 <ul>
                                     <li><strong>Software Engineer:</strong> Web Developer and Android Native Applications</li>
                                     <li><strong>Traveler</strong> Tokyo, Japan <span>&nbsp;&bull;&nbsp;</span> Chile Coast <span>&nbsp;&bull;&nbsp;</span> Next Germany? </li>

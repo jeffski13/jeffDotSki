@@ -5,6 +5,13 @@
 
 .brand {
     cursor: pointer;
+    font-size: 25px;
+    padding: 0px 25px 0px 10px;
+    font-weight: bold;
+}
+
+#App > nav > strong > a {
+    color: #484cfa;
 }
 
 .Loadingski {
