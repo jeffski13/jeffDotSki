@@ -9,6 +9,7 @@
 
 .hobbiesSectionText {
   padding-bottom: 25px;
+  padding-top: 15px;
 }
 
 .tvshowList{
@@ -53,4 +54,8 @@
 
 .tvshowText{
   font-size: medium; 
+}
+
+.hobbies-motorcycle-image {
+  padding: 15px;
 }

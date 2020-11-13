@@ -16,6 +16,11 @@
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonballz.jpg"
   },
   {
+    "title": "My Hero Academia",
+    "season": 2,
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/my_hero_academia.png"
+  },
+  {
     "title": "One Punch Man",
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/one_punch_man.jpg"
   },

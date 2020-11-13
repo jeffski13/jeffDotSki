@@ -35,10 +35,10 @@ class Bio extends Component {
                   I graduated from Claremore High School in 2009 and went to Oklahoma State University (Stillwater, OK). While in college I was lucky enough to get a differnt job in a different city every summer. In 2010 was "workin at the Ribcrib" (Stillwater), 2011 was in Las Vegas, 2012 Cessna (Wichita), 2013 was ABB Totalflow (Bartlesville, OK), and the summer of 2014 I interned at USAA in San Antonio, Texas.
                 </p>
                 <p>
-                I enjoyed my summer internship, but being ten hours away from home was a bit too much at the time. Fortunately USAA was opening an office in Dallas.
+                I enjoyed my summer internship, but being TEN hours away from home was a bit too much at the time. Fortunately USAA was opening an office in Dallas.
                 </p>
                 <p>
-                After about five years of the "big city life" being four hours away from home was too much. So I moved to Oklahoma city. I miss my Dallas friends a ton but life in OKC is good.
+                After about five years of the "big city life", being FOUR hours away from home was too much. So I moved to Oklahoma city. I miss my Dallas friends a ton but life in OKC is good.
                 </p>
                 <p>
                 And that's how I eneded up here!
