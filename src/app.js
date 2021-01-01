@@ -5,6 +5,7 @@ import TitlePage from './TitlePage';
 import Shotglass from './AboutMe/Shotglass';
 import Bio from './AboutMe/Bio';
 import Hobbies from './AboutMe/Hobbies';
+import Ali from './Ali';
 import Careers from './Careers';
 import ErrorPage from './ErrorPage';
 import NavigationBar from './Inf/NavigationBar';
@@ -39,7 +40,6 @@ export default class App extends Component {
   render() {
     return (
       <div id="App" >
-        <NavigationBar />
         <div className="webpagecontent">
             <Switch>
                 <Route exact path="/" component={TitlePage}/>
@@ -49,6 +49,7 @@ export default class App extends Component {
                 <Route exact path="/aboutme/bio" component={Bio}/>
                 <Route exact path="/careers" component={Careers}/>
                 <Route exact path="/aboutme/hobbies" component={Hobbies}/>
+                <Route exact path="/ali" component={Ali}/>
                 <Route exact path={jeffskiRoutes.login} component={Login}/>
                 <Route exact path={jeffskiRoutes.registerBlogUser} component={RegisterBlogUser}/>
                 <Route exact path={jeffskiRoutes.registerCognito} component={RegisterAccount}/>
@@ -62,7 +63,6 @@ export default class App extends Component {
                 <Route exact path="/traveltrails/:userId" component={Profile} />
                 <Route component={ ErrorPage } />
             </Switch>
-            <FooterBarski />
         </div>
       </div>
     );

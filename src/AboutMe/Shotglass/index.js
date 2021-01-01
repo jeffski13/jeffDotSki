@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Container, Image, Col, Row } from 'react-bootstrap';
 
 import { getShotGlassInfo } from './redux/actions';
@@ -8,19 +8,19 @@ import Loadingski from '../../Inf/Loadingski';
 import '../styles.css';
 
 class Shotglass extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.renderShotGlassInfoText = this.renderShotGlassInfoText.bind(this);
     this.renderList = this.renderList.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getShotGlassInfo();
   }
 
-  renderShotGlassInfoText(textItem, index){
-    return(
+  renderShotGlassInfoText(textItem, index) {
+    return (
       <Row key={index} className="show-grid aboutMePargraph">
         <Col sm={10} >{textItem.text}</Col>
         {this.renderList(textItem.list)}
@@ -28,47 +28,47 @@ class Shotglass extends Component {
     );
   }
 
-  renderList(list){
+  renderList(list) {
 
-    if(list){
+    if (list) {
 
-      if(list.style === "bullet"){
-        return(
+      if (list.style === "bullet") {
+        return (
           <Col sm={8} >
             <ul>{list.textItems.map(this.renderTextListItem)}</ul>
           </Col>
         );
       }
     }
-    else{
+    else {
       return null;
     }
   }
 
-  renderTextListItem(textListItem, index){
+  renderTextListItem(textListItem, index) {
     let location = null;
-    if(textListItem.location){
+    if (textListItem.location) {
       location = (
         <strong>{textListItem.location}: </strong>
       );
     }
 
     let city = null;
-    if(textListItem.city){
+    if (textListItem.city) {
       city = (
         <div>{textListItem.city}</div>
       );
     }
 
     //add in subtext. bold title, add in text
-     return(
-         <li key={index}>{location}{textListItem.date}{city}</li>
-     );
+    return (
+      <li key={index}>{location}{textListItem.date}{city}</li>
+    );
   }
 
-  render(){
-    if(this.props.shotGlassInfo.title){
-      return(
+  render() {
+    if (this.props.shotGlassInfo.title) {
+      return (
         <div className="aboutmeWrapper" >
           <div>
             <Image src={this.props.shotGlassInfo.images.main} fluid />
@@ -86,18 +86,18 @@ class Shotglass extends Component {
         </div>
       );
     }
-    return(
+    return (
       <Loadingski />
     );
   }
 }
 
-function mapStateToProps({ shotGlassInfo }){
+function mapStateToProps({ shotGlassInfo }) {
   return { shotGlassInfo };
 }
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators({getShotGlassInfo}, dispatch);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ getShotGlassInfo }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Shotglass);
