@@ -1,11 +1,17 @@
 {
-  "name": "my-react-router-app",
+  "name": "jeff.ski",
+  "version": "2.0.0",
+  "description": "jeff.ski website source code",
+  "author": "Jeff Szcinski",
+  "repository": "git@github.com:jeffski13",
+  "license": "ISC",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router dev",
+    "deploy": "node copyToBuildFirebase.js",
     "startofficial": "react-router-serve ./build/server/index.js",
     "test": "vitest",
     "typecheck": "react-router typegen && tsc"
@@ -16,6 +22,8 @@
     "@vitejs/plugin-react": "^4.4.1",
     "bootstrap": "^5.3.5",
     "isbot": "^5.1.17",
+    "ncp": "^2.0.0",
+    "path": "^0.12.7",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",

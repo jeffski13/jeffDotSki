@@ -1,0 +1,24 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites":[
+        {"source":"/home","destination":"/index.html"},
+        {"source":"/blog/chile","destination":"/index.html"},
+        {"source":"/aboutme/shotglass","destination":"/index.html"},
+        {"source":"/aboutme/bio","destination":"/index.html"},
+        {"source":"/careers","destination":"/index.html"},
+        {"source":"/aboutme/hobbies","destination":"/index.html"},
+        {"source":"/login","destination":"/index.html"},
+        {"source":"/signup/register/account","destination":"/index.html"},
+        {"source":"/signup/register/bloguser","destination":"/index.html"},
+        {"source":"/profile","destination":"/index.html"},
+        {"source":"/profile/edit","destination":"/index.html"},
+        {"source":"/user","destination":"/index.html"}
+    ]
+  }
+}
