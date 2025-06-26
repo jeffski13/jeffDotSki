@@ -1,13 +1,6 @@
-/node_modules
-/build
-bundle.js
-npm-debug.log
 .DS_Store
+/node_modules/
 
-**/firebaseski/public
-
-# IntelliJ
-*.iml
-/.idea
-/firebaseski/.firebase
-*.cache
+# React Router
+/.react-router/
+/build/

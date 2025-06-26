@@ -1,0 +1,20 @@
+.back-button {
+  position: fixed; /* Position the back button on the left */
+  left: 10px;
+  z-index: 10;
+}
+
+.back-arrow {
+  width: 30px;
+  height: 30px;
+}
+
+.clickable-link-icon {
+  transition: transform 0.15s;
+}
+
+.clickable-link-icon:hover,
+.clickable-link-icon:focus {
+  transform: scale(1.2);
+  outline: none;
+}

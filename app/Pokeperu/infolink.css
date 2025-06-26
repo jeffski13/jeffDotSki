@@ -1,0 +1,11 @@
+.info-link {
+  position: fixed;
+  bottom: 70px;
+  left: 18px;
+  z-index: 2;
+}
+
+.info-link-icon {
+  width: 40px;
+  height: 40px;
+}
