@@ -1,0 +1,32 @@
+.PokePeruSecondaryPage {
+  text-align: center;
+}
+
+.secondary-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the content horizontally */
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.secondary-page-title-container {
+  display: flex;
+  align-items: center;      /* Vertically center the text and icon */
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  gap: 10px;
+  height: 100%;             /* Ensure container takes full height if needed */
+}
+
+.secondary-page-title {
+  margin: 0;
+}
+
+.secondary-page-icon {
+  width: 75px;
+  height: 75px;
+}

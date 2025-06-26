@@ -1,4 +1,0 @@
-/* make month dropdown take up more space */
-#TripForm_monthFormGroup > div {
-    display: grid;   
-}

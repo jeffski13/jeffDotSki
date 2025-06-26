@@ -1,0 +1,152 @@
+
+
+.blinking {
+  animation: blink 0.2s ease-in-out 2; /* Loop the animation 3 times */
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.monster .attack-animation {
+  opacity: 1;
+  top: 40%; /* Center vertically relative to the monster */
+  left: 50%; /* Center horizontally relative to the monster */
+  transform: translate(-50%, -50%); /* Adjust for exact centering */
+}
+
+.attack-animation {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  width: 100px; /* Reduced size */
+  height: 100px; /* Reduced size */
+  opacity: 0;
+  animation: fade-out 0.5s ease-in-out;
+}
+
+.attack-animation.Fire {
+  background: radial-gradient(circle, rgba(255,69,0,1) 0%, rgba(255,140,0,1) 50%, rgba(255,0,0,0) 100%);
+}
+
+.attack-animation.Water {
+  background: radial-gradient(circle, rgba(0,191,255,1) 0%, rgba(135,206,250,1) 50%, rgba(0,0,255,0) 100%);
+}
+
+.attack-animation.Electric {
+  background: radial-gradient(circle, rgba(255,255,0,1) 0%, rgba(255,215,0,1) 50%, rgba(255,255,0,0) 100%);
+}
+
+.attack-animation.Grass {
+  background: radial-gradient(circle, rgba(34,139,34,1) 0%, rgba(50,205,50,1) 50%, rgba(0,255,0,0) 100%);
+}
+
+.attack-animation.Normal {
+  background: radial-gradient(circle, rgba(169,169,169,1) 0%, rgba(211,211,211,1) 50%, rgba(169,169,169,0) 100%);
+}
+
+.attack-animation.Ice {
+  background: radial-gradient(circle, rgba(173,216,230,1) 0%, rgba(135,206,250,1) 50%, rgba(0,191,255,0) 100%);
+}
+
+.attack-animation.Fighting {
+  background: radial-gradient(circle, rgba(178,34,34,1) 0%, rgba(220,20,60,1) 50%, rgba(178,34,34,0) 100%);
+}
+
+.attack-animation.Poison {
+  background: radial-gradient(circle, rgba(138,43,226,1) 0%, rgba(186,85,211,1) 50%, rgba(138,43,226,0) 100%);
+}
+
+.attack-animation.Ground {
+  background: radial-gradient(circle, rgba(210,180,140,1) 0%, rgba(244,164,96,1) 50%, rgba(210,180,140,0) 100%);
+}
+
+.attack-animation.Flying {
+  background: radial-gradient(circle, rgba(135,206,235,1) 0%, rgba(176,224,230,1) 50%, rgba(135,206,235,0) 100%);
+}
+
+.attack-animation.Psychic {
+  background: radial-gradient(circle, rgba(255,20,147,1) 0%, rgba(255,105,180,1) 50%, rgba(255,20,147,0) 100%);
+}
+
+.attack-animation.Bug {
+  background: radial-gradient(circle, rgba(124,252,0,1) 0%, rgba(50,205,50,1) 50%, rgba(124,252,0,0) 100%);
+}
+
+.attack-animation.Rock {
+  background: radial-gradient(circle, rgba(139,69,19,1) 0%, rgba(160,82,45,1) 50%, rgba(139,69,19,0) 100%);
+}
+
+.attack-animation.Ghost {
+  background: radial-gradient(circle, rgba(75,0,130,1) 0%, rgba(123,104,238,1) 50%, rgba(75,0,130,0) 100%);
+}
+
+.attack-animation.Dragon {
+  background: radial-gradient(circle, rgba(72,61,139,1) 0%, rgba(106,90,205,1) 50%, rgba(72,61,139,0) 100%);
+}
+
+.attack-animation.Dark {
+  background: radial-gradient(circle, rgba(47,79,79,1) 0%, rgba(105,105,105,1) 50%, rgba(47,79,79,0) 100%);
+}
+
+.attack-animation.Steel {
+  background: radial-gradient(circle, rgba(192,192,192,1) 0%, rgba(169,169,169,1) 50%, rgba(192,192,192,0) 100%);
+}
+
+.attack-animation.Fairy {
+  background: radial-gradient(circle, rgba(255,182,193,1) 0%, rgba(255,105,180,1) 50%, rgba(255,182,193,0) 100%);
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
+@keyframes monster1-attack-move {
+  0% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(30px);
+  }
+  60% {
+    transform: translateX(30px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.monster-battle-image.monster1-attack-anim {
+  animation: monster1-attack-move 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes monster2-attack-move {
+  0% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-30px);
+  }
+  60% {
+    transform: translateX(-63px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.monster-battle-image.monster2-attack-anim {
+  animation: monster2-attack-move 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
