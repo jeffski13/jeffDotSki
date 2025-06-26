@@ -11,7 +11,7 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router dev",
-    "deploy": "node copyToBuildFirebase.js",
+    "deploy": "node copyToBuildFirebase.cjs",
     "startofficial": "react-router-serve ./build/server/index.js",
     "test": "vitest",
     "typecheck": "react-router typegen && tsc"
