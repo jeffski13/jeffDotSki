@@ -1,7 +1,7 @@
 const path = require('path');
 const ncp = require('ncp').ncp;
 
-let srcDir = path.join(__dirname, "build/client");
+let srcDir = path.join(__dirname, "build");
 
 let destDir = path.join(__dirname, "firebaseski/public");
 
