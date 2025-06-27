@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import ROUTES from '../../consts/ROUTES';
 import type { Monster } from '../monsters';
 import './monsterselection.css';
+import '../secondaryPage.css';
 import '../infolink.css';
+import { Col, Container, Row } from 'react-bootstrap';
 
 interface MonsterSelectionProps {
   monsters: Monster[];
@@ -45,7 +47,15 @@ export default function MonsterSelection({
             className="gym-link-icon clickable-link-icon"
           />
         </a>
-        <h1 className="title">Monster Selection</h1>
+        <Container>
+          <Row>
+            <Col xs={2} />
+            <Col xs={8} >
+              <h1 className="title">Monster Selection</h1>
+            </Col>
+            <Col xs={2} />
+          </Row>
+        </Container>
         <a href={ROUTES.pokePeru.pokedex} className="pokedex-link">
           <img
             src="/images/pokedex-icon.png"
