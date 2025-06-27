@@ -2,7 +2,10 @@ const path = require('path');
 const ncp = require('ncp').ncp;
 const fs = require('fs');
 
-// delete everything inside of the destination directory
+/**
+ * orchestrates the deletion of old files in the Firebase public directory
+ * and the copying of new files from the build directory.
+ */
 const deleteOldFilesAndcopyNewFiles = async () => {
     try {
         const srcDir = path.join(__dirname, "build/client");

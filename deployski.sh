@@ -4,7 +4,7 @@ echo "howdy y'all, lets deploy this ish"
 
 npm version patch
 npm run build
-npm run deploy
+npm run copyBuildToFirebase
 
 cd ./firebaseski
 firebase deploy
