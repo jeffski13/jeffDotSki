@@ -5,7 +5,8 @@
 .secondary-page-header {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the content horizontally */
+  justify-content: center;
+  /* Center the content horizontally */
   overflow: hidden;
   white-space: nowrap;
   margin-bottom: 20px;
@@ -14,12 +15,21 @@
 
 .secondary-page-title-container {
   display: flex;
-  align-items: center;      /* Vertically center the text and icon */
+  align-items: center;
+  /* Vertically center the text and icon */
   justify-content: center;
   overflow: hidden;
   white-space: nowrap;
   gap: 10px;
-  height: 100%;             /* Ensure container takes full height if needed */
+  height: 100%;
+}
+
+ 
+/* On small screens, display attack buttons side by side */
+@media (max-width: 600px) {
+  .secondary-page-title-container {
+    width: 70%;
+  }
 }
 
 .secondary-page-title {
