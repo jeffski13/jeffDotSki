@@ -17,7 +17,7 @@
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed; 
+  background-attachment: fixed;
   background-size: cover;
 }
 
@@ -31,11 +31,16 @@
 
 .battle-text-with-backdrop {
   opacity: 1;
-  background-color: rgba(255, 255, 255, 0.8); /* Light background with some transparency */
-  border-radius: 15px; /* Rounded corners */
-  padding: 5px; /* Add some padding inside the container */
-  margin: 5px; /* Add some padding inside the container */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Light background with some transparency */
+  border-radius: 15px;
+  /* Rounded corners */
+  padding: 5px;
+  /* Add some padding inside the container */
+  margin: 5px;
+  /* Add some padding inside the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Add a subtle shadow for depth */
 }
 
 .battle-results {
@@ -45,18 +50,24 @@
 .monster {
   opacity: 1;
   text-align: center;
-  position: relative; /* Make the monster container a positioning context */
-  margin: 5px; /* Add spacing between monsters */
+  position: relative;
+  /* Make the monster container a positioning context */
+  margin: 5px;
+  /* Add spacing between monsters */
 }
 
 .monster-winner {
-  box-shadow: 0 4px 8px rgba(31, 218, 84, 0.8); /* Add a subtle shadow for depth */
-  background-color: rgba(15, 163, 12, 0.8); /* Light background with some transparency */
+  box-shadow: 0 4px 8px rgba(31, 218, 84, 0.8);
+  /* Add a subtle shadow for depth */
+  background-color: rgba(15, 163, 12, 0.8);
+  /* Light background with some transparency */
 }
 
 .monster-loser {
-  box-shadow: 0 4px 8px rgba(199, 199, 199, 0.8); /* Add a subtle shadow for depth */
-  background-color: rgba(111, 111, 111, 0.8); /* Light background with some transparency */
+  box-shadow: 0 4px 8px rgba(199, 199, 199, 0.8);
+  /* Add a subtle shadow for depth */
+  background-color: rgba(111, 111, 111, 0.8);
+  /* Light background with some transparency */
 }
 
 .monster-battle-image {
@@ -79,12 +90,14 @@
 
 .hp-bar-fill {
   height: 100%;
-  background-color: #4caf50; /* Default green */
+  background-color: #4caf50;
+  /* Default green */
   transition: width 0.3s ease-in-out, background-color 0.3s;
 }
 
 .hp-bar-fill.low {
-  background-color: #ffd600; /* Yellow for <50% */
+  background-color: #ffd600;
+  /* Yellow for <50% */
 }
 
 button {
@@ -106,12 +119,14 @@ button {
 }
 
 .attack-button.enabled {
-  background-color: #2242b6; /* Green for enabled buttons */
+  background-color: #2242b6;
+  /* Green for enabled buttons */
   color: white;
 }
 
 .attack-button.disabled {
-  background-color: #ccc; /* Gray for disabled buttons */
+  background-color: #ccc;
+  /* Gray for disabled buttons */
   color: #666;
   cursor: not-allowed;
   opacity: 0.6;
@@ -120,6 +135,11 @@ button {
 
 /* On small screens, display attack buttons side by side */
 @media (max-width: 600px) {
+  .battle-title {
+    font-size: medium;
+    padding: 5px;
+  }
+
   .monster .attack-button {
     display: inline-block;
     width: 48%;
@@ -130,8 +150,14 @@ button {
     overflow: hidden;
     white-space: nowrap;
   }
+
   .monster .attack-button:last-child {
     margin-right: 0;
-  width: 50%;
+    width: 50%;
+  }
+
+  .monster-battle-image {
+    width: 120px;
+    height: 120px;
   }
 }
