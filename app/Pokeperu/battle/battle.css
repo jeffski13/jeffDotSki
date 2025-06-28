@@ -1,3 +1,13 @@
+.Battle {
+  min-height: 475px;
+}
+
+@media (min-width: 600px) {
+  .Battle {
+    min-height: 625px;
+  }
+}
+
 .BattleUI {
   text-align: center;
 }
@@ -132,9 +142,8 @@ button {
   opacity: 0.6;
 }
 
-
-/* On small screens, display attack buttons side by side */
 @media (max-width: 600px) {
+
   .battle-title {
     font-size: medium;
     padding: 5px;
