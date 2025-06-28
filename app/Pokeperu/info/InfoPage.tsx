@@ -3,6 +3,7 @@ import ROUTES from '../../consts/ROUTES';
 import './infopage.css';
 import '../navigation.css';
 import '../secondaryPage.css';
+import '../mobile-support.css';
 
 interface InfoPageProps {}
 
@@ -19,10 +20,16 @@ function InfoPage({ }: InfoPageProps) {
         <a href={ROUTES.pokePeru.battle} className="back-button">
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
         </a>
-        <div className="secondary-page-title-container">
-          <h1 className="secondary-page-title">About Pokemon in Peru</h1>
-          <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon" />
-        </div>
+        <Container>
+          <Row>
+            <Col xs={2} />
+            <Col xs={8} >
+              <h1 className="title">About Pokemon in Peru</h1>
+            </Col>
+            <Col xs={2} />
+          </Row>
+        </Container>
+        <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon desktop-view" />
       </div>
       <div className="project-info">
         <h2>About the Project</h2>
