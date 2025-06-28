@@ -32,7 +32,7 @@ export default function BattleContainer({ selectedMonsters }: BattleProps) {
         <Battle selectedMonsters={selectedMonsters} />
       )}
 
-      <a className="info-link" onClick={() => setInfoNavigationConfirm(true)}
+      <a className="info-link-fixed-location" onClick={() => setInfoNavigationConfirm(true)}
         >
         <img
           src="/images/info-icon.png"
