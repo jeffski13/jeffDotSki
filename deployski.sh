@@ -10,3 +10,6 @@ cd ./firebaseski
 firebase deploy
 
 cd $executionScriptDir
+
+git add ./firebaseski/.firebase/hosting.cHVibGlj.cache
+git commit -m "firebase cache for release."
