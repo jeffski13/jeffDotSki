@@ -11,5 +11,7 @@ firebase deploy
 
 cd $executionScriptDir
 
+sleep 0.1
+
 git add ./firebaseski/.firebase/hosting.cHVibGlj.cache
 git commit -m "firebase cache for release."
