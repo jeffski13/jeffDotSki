@@ -54,6 +54,7 @@
   /* Make the monster container a positioning context */
   margin: 5px;
   /* Add spacing between monsters */
+  max-width: 50%;
 }
 
 .monster-winner {
