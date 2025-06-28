@@ -23,10 +23,16 @@ export function Pokedex({
         <a href={ROUTES.pokePeru.battle} className="back-button">
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
         </a>
-        <div className="secondary-page-title-container">
-          <h1 className="secondary-page-title">Pokedex</h1>
-          <img src="/images/pokedex-icon.png" alt="Pokedex" className="secondary-page-icon" />
-        </div>
+        <Container>
+          <Row>
+            <Col xs={2} />
+            <Col xs={8} >
+              <h1 className="title">Pokedex</h1>
+            </Col>
+            <Col xs={2} />
+          </Row>
+        </Container>
+        <img src="/images/pokedex-icon.png" alt="Pokedex" className="secondary-page-icon" />
       </div>
       <ul className="monster-list">
         {selectedMonsters.map((monster: Monster) => {
@@ -75,13 +81,51 @@ export function Pokedex({
             monster.attack2,
           ];
 
+          const description = `The ${monster.inspiration} Pokemon: ${monster.description}`
           return (
             <li key={monster.name} className="monster-item">
               <div className="monster-details">
-                <div className='monster-details-top '>
+                <div className='monster-details-top'>
                   <img src={monster.image} alt={monster.name} className="monster-image-dex" />
                   <div>
-                    <h2 className="monster-name">
+                    {/* mobile only header */}
+                    <Container className="monster-name-types mobile-view">
+                      <Row>
+                        <Col xs={12}>
+                          <h2 className="monster-name-types">
+                            {monster.name}
+                          </h2>
+                        </Col>
+                        <Col xs={12}>
+                          <h2 className="monster-name-types">
+                            <span className="monster-types">
+                              <span
+                                className="type-badge"
+                                style={{ backgroundColor: getTypeColor(monster.type) }}
+                              >
+                                {monster.type}
+                              </span>
+                            </span>
+                          </h2>
+                        </Col>
+                        <Col xs={12}>
+                          <h2 className="monster-name-types">
+                            <span className="monster-types">
+                              {monster.secondType && (
+                                  <span
+                                    className="type-badge"
+                                    style={{ backgroundColor: getTypeColor(monster.secondType) }}
+                                  >
+                                    {monster.secondType}
+                                  </span>
+                                )}
+                            </span>
+                          </h2>
+                        </Col>
+                      </Row>
+                    </Container>
+                    {/* desktop header */}
+                    <h2 className="monster-name-types desktop-view">
                       {monster.name}
                       <span className="monster-types">
                         <span
@@ -100,22 +144,24 @@ export function Pokedex({
                         )}
                       </span>
                     </h2>
-                    <p className="monster-description">
-                      <span className="monster-inspiration">The {monster.inspiration} Pokemon: </span>{monster.description}
-                    </p>
+                    <p className="monster-description desktop-view">{description}</p>
                   </div>
+                </div>
+                {/* mobile description */}
+                <div className='monster-details-top mobile-view'>
+                  <p className="monster-description">{description}</p>
                 </div>
               </div>
               <div className="monster-stats-section monster-details">
                 <Container>
                   {statsList.map((stat) => (
                     <Row key={stat.name}>
-                      <Col xs={4} md={3} className="stats-container">
+                      <Col xs={12} sm={4} md={3} className="stats-container">
                         <div className="stats-label-container">
                           <span className="stats-label">{stat.name}:</span>
                         </div>
                       </Col>
-                      <Col xs={8} md={9}>
+                      <Col xs={12} sm={8} md={9}>
                         <div className="stat-bar">
                           <div
                             className="bar"
@@ -138,7 +184,7 @@ export function Pokedex({
                 <Container className="attacks-list">
                   {attackList.map((attack, index) => (
                     <Row key={index} className="attack-item">
-                      <Col xs={4} md={4} className="attack-name-container">
+                      <Col xs={12} sm={4} md={4} className="attack-name-container">
                         <span>
                           {attack.isPhysical ?
                             <img className="attack-type-physical" src="/images/pokedex/attack_physical.png" /> :
@@ -146,10 +192,10 @@ export function Pokedex({
                         </span>
                         <span className="attack-name">{attack.name}</span>
                       </Col>
-                      <Col xs={5} md={4} className="attack-name-container attack-stats">
+                      <Col xs={8} sm={5} md={4} className="attack-name-container attack-stats">
                         <span className="attack-name"><strong>Pow:</strong> {attack.damage} <strong>PP:</strong> {attack.powerPoints} <strong>Acc:</strong> {(attack.accuracy * 100)}%</span>
                       </Col>
-                      <Col xs={3} md={4}>
+                      <Col xs={4} sm={3} md={4}>
                         <div
                           className="type-badge type-badge-attack"
                           style={{ backgroundColor: getTypeColor(attack.type) }}
@@ -165,7 +211,7 @@ export function Pokedex({
           );
         })}
       </ul>
-      <a href={ROUTES.pokePeru.info} className="info-link">
+      <a href={ROUTES.pokePeru.info}>
         <img
           src="/images/info-icon.png"
           alt="Information Link"
