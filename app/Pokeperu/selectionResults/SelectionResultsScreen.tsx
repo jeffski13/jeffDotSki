@@ -4,6 +4,7 @@ import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 import './selectionResults.css';
 import '../navigationOverride.css';
 import '../navigation.css';
+import '../mobile-support.css';
 import type { Monster } from '../monsters';
 import { getTypeColor } from '../typeColors';
 
@@ -42,9 +43,15 @@ export default function SelectionResultsScreen({
     };
   }, [setBattleClicked]);
 
+  const StartButtonColumn = (
+    <Col className="startButtonContainer selection-results-ui-element" xs={12}>
+      <Button onClick={setBattleClicked}>Start Battle</Button>
+    </Col>
+  );
+
   return (
     <div
-    className='selection-results-screen'
+      className='selection-results-screen'
       style={{
         position: 'relative',
         minHeight: '75vh',
@@ -68,8 +75,11 @@ export default function SelectionResultsScreen({
         <Row>
           <h1 className='selection-results-ui-element'>Selection Results</h1>
         </Row>
+        <Row className="mobile-view">
+          {StartButtonColumn}
+        </Row>
         <Row>
-          <Col sm={5}>
+          <Col xs={12} sm={5}>
             {/* User 1 */}
             <div className="monster-trainer-container" style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -91,12 +101,12 @@ export default function SelectionResultsScreen({
               </div>
             </div>
           </Col>
-          <Col sm={2}>
+          <Col xs={0} sm={2} className="desktop-view">
             <div className='results-vs' style={{ marginLeft: 'auto', alignSelf: 'flex-start' }}>
               <h2 className='selection-results-ui-element' >VS</h2>
             </div>
           </Col>
-          <Col sm={5}>
+          <Col xs={12} sm={5}>
             {/* User 2 */}
             <div className="monster-trainer-container" style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -119,10 +129,8 @@ export default function SelectionResultsScreen({
             </div>
           </Col>
         </Row>
-        <Row>
-          <Col className="startButtonContainer selection-results-ui-element" xs={12}>
-            <Button onClick={setBattleClicked}>Start Battle</Button>
-          </Col>
+        <Row className="desktop-view">
+          {StartButtonColumn}
         </Row>
       </Container>
       {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)}></BackNavigationConfirmModal>)}
