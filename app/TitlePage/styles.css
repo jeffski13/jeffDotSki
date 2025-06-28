@@ -27,8 +27,17 @@
 }
 
 .TitlePage_aboutJeff-image>img {
-    height: 400px;
+    min-height: 300px;
+    min-width: 300px;
+    max-height: 350px;
+    max-width: 350px;
     padding: 45px;
+}
+
+@media (max-width: 601px) {
+    .TitlePage_aboutJeff-image>img {
+        padding: 10px;
+    }
 }
 
 .TitlePage_aboutJeff-name {
@@ -40,6 +49,7 @@
     color: #000000;
     font-weight: bold;
 }
+
 .TitlePage_aboutJeff-name-nonwebsitename {
     color: #504747;
 }
