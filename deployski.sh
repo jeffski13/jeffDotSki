@@ -1,4 +1,4 @@
-executionScriptDir=$(dirname "$0")
+executionScriptDir=$(pwd)
 
 echo "howdy y'all, lets deploy this ish"
 
