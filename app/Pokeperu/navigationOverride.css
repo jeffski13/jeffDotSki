@@ -1,5 +1,5 @@
 .battle-back-button {
-  top: 120px
+  top: 100px
 }
 
 .back-confirm-modal {
@@ -23,3 +23,8 @@
   padding: 0.5em 1.5em;
 }
 
+@media (min-width: 600px) {
+    .battle-back-button {
+        top: 120px;
+    }
+}

@@ -1,9 +1,17 @@
 .pokeperu-img-container {
     width: 100%;
-    height: 66px;
+    max-height: 66px;
 }
 
 .pokeperu-logo {
     width: 100%;
-    height: 66px;
+    max-height: 66px;
+}
+
+
+/* On small screens, display attack buttons side by side */
+@media (max-width: 600px) {
+    .pokeperu-logo {
+        padding-top: 10px;
+    }
 }
