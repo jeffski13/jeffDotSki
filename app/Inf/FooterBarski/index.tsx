@@ -3,7 +3,7 @@ import {Container, Row, Col, Image} from 'react-bootstrap';
 
 import githubLogo from './github-logo.png';
 import githubLogoShadow from './github-logo-shadow.png';
-import ROUTES from '../../consts/ROUTES';
+import packageJson from "package.json";
 import './styles.css';
 
 class FooterBarski extends Component {
@@ -42,21 +42,7 @@ class FooterBarski extends Component {
           <Col xs={2} sm={1} />
           <Col xs={7} sm={10} className="footerBarskiLinkWrapper">
             <div className="footerLinksArea" >
-                <a
-                  href= "/careers"
-                  className="footerBarskiLink"
-                >
-                  Careers?
-                </a>
-              <div className="footLinkDivider" >
-                &nbsp;&bull;&nbsp;
-              </div>
-                <a
-                  href={ROUTES.login}
-                  className="footerBarskiLink"
-                >
-                  Account
-                </a>
+                Version: {packageJson.version}
             </div>
           </Col>
           <Col xs={3} sm={1} >

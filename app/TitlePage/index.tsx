@@ -1,7 +1,6 @@
 import TitleImg from "./TitleImg";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
-import packageJson from "../../package.json";
 
 export default function TitlePage() {
   return (
@@ -19,17 +18,12 @@ export default function TitlePage() {
                       <div className="TitlePage_aboutJeff-text-container">
                           <h3>Who Is This Jeff Guy?</h3>
                           <ul>
-                              <li><strong>Software Engineer:</strong> Web Developer and Android Native Applications</li>
                               <li><strong>English Teacher:</strong> Elementry school and private classes to spanish speakers</li>
-                              <li><strong>Traveler:</strong> Tokyo, Japan <span>&nbsp;&bull;&nbsp;</span> Santiago, Chile <span>&nbsp;&bull;&nbsp;</span> Medellín, Colombia <span>&nbsp;&bull;&nbsp;</span> Lima, Perú </li>
+                              <li><strong>Software Engineer:</strong> Web Developer and Android Native Applications</li>
+                              <li><strong>World Traveler:</strong> Tokyo, Japan <span>&nbsp;&bull;&nbsp;</span> Santiago, Chile <span>&nbsp;&bull;&nbsp;</span> Medellín, Colombia <span>&nbsp;&bull;&nbsp;</span> Lima, Perú <span>&nbsp;&bull;&nbsp;</span> Buenos Aires, Argentina </li>
                               <li><strong>A Believer of the Arts:</strong> I am a leader of the Señora Fátima Choir in Lima</li>
                           </ul>
                       </div>
-                  </Col>
-              </Row>
-              <Row>
-                  <Col xs={12} className="text-center">
-                      <p>Version {packageJson.version}</p>
                   </Col>
               </Row>
           </Container>
