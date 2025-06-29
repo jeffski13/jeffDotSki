@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Container, Col, Row, Image} from 'react-bootstrap';
-
+import ROUTES from '../../consts/ROUTES';
 import '../styles.css';
 import './styles.css';
 
@@ -32,7 +32,7 @@ class Bio extends Component {
             <Row className="show-grid aboutMePargraph" >
               <Col sm={10} md={5} className="aboutMePargraphWithImage" >
                 <p>
-                  I graduated from Claremore High School in 2009 and went to Oklahoma State University (Stillwater, OK). While in college I was lucky enough to get a job in a different city every summer, including Las Vegas (2011), and Cessna in Wichita (2012). In the summer of 2014 I interned at USAA in San Antonio, Texas.
+                  I graduated from Claremore High School (Oklahoma) in 2009 and went to Oklahoma State University (Stillwater, OK). While in college I was lucky enough to get a job in a different city every summer, including Las Vegas (2011), and Cessna in Wichita (2012). In the summer of 2014 I interned at USAA in San Antonio, Texas.
                 </p>
                 <p>
                 I enjoyed my summer internship, and decided I wanted to try programming as a profession.
@@ -64,8 +64,18 @@ class Bio extends Component {
                   After graduating in December of 2014 I moved Dallas, far away from my familiar family and friends. So many people had told me that while I was young and single, the thing I needed to do was go out and experience the world. And while I was definitely out of my comfort zone, I was as ready as ever for this.
                 </p>
                 <p>
-                  I started traveling the world in 2023 (Colombia, Peru, Argentina, and Chile). I work everyday to know more and improve my spanish and myself.
+                  After 10 years of software experience, I moved to El Paso to improve my spanish. My desire for fluency led me to move to Medellin, Colombia (2023). From there I lived in Santiago, Chile (2024) and then Lima, Perú (2025). In Lima I studied spanish communications and took the B2 DELE certification exam.
                 </p>
+                <p>
+                  While in Perú I got my first teaching job with 5th and 6th graders. And I loved it. I have decided that teaching English as a Foreign Language is what I want to do with my life.
+                </p>
+                <p>
+                  In Peru, as part of my English Workshop, I made the "Pokemon in Peru" educational program, which can be accessed within this site. <a href={ROUTES.pokePeru.battle}>Pokemon In Peru Project</a>
+                </p>
+              </Col>
+            </Row>
+            <Row className="show-grid aboutMePargraph" >
+              <Col sm={10} className="aboutMePargraphWithImage" >
               </Col>
             </Row>
             <Row className="show-grid aboutMePargraph">
