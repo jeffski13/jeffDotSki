@@ -20,7 +20,6 @@ const jeffDotSkiPage = <P extends object>(PageContent: React.ComponentType<P>) =
               <div className="webpagecontent">
                 <PageContent {...props} />
               </div>
-              <FooterBarski />
           </div>
         );
     }

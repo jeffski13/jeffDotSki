@@ -1,6 +1,7 @@
 import TitleImg from "./TitleImg";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
+import FooterBarski from "~/Inf/FooterBarski";
 
 export default function TitlePage() {
   return (
@@ -27,6 +28,7 @@ export default function TitlePage() {
                   </Col>
               </Row>
           </Container>
+          <FooterBarski />
       </div>
   );
 }
