@@ -64,7 +64,7 @@ describe('BattleStartScreen Component', () => {
     expect(screen.getByText(/User 2 chose: Charmander/i)).toBeInTheDocument();
 
     // Find and click the "Start Battle" button
-    const startBattleButton = screen.getByText(/Start Battle/i);
+    const startBattleButton = screen.getAllByText(/Start Battle/i)[0];
     fireEvent.click(startBattleButton);
 
     // Verify the UI transitions to the battle phase

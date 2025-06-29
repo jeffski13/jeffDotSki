@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Pokedex } from './Pokedex';
+import {PokePeruContent} from '../index';
 import { ElementType } from '../ElementType';
 import type { Monster } from '../monsters';
 
@@ -42,14 +42,24 @@ const mockSelectedMonsters: Monster[] = [
   },
 ];
 
-describe('Pokedex Component', () => {
-  it('displays the monster name when rendered', () => {
-    // Render the Pokedex component
-    render(<Pokedex selectedMonsters={mockSelectedMonsters} />);
+describe('PokePeruStart Component', () => {
+  test('handleMonsterSelect modifies the selected monsters', () => {
+    render(<PokePeruContent monsters={mockSelectedMonsters} />);
 
-    // Assert that each monster's name is displayed
-    mockSelectedMonsters.forEach((monster) => {
-      expect(screen.getAllByText(monster.name).length).toBe(2);
-    });
+    // Find the buttons for the monsters
+    const pikachuButton = screen.getByText(/Pikachu/i);
+    const charmanderButton = screen.getByText(/Charmander/i);
+
+    // Simulate selecting Pikachu
+    fireEvent.click(pikachuButton);
+    expect(screen.getByText(/User 2, choose your monster:/i)).toBeInTheDocument();
+
+    // Simulate selecting Charmander
+    fireEvent.click(charmanderButton);
+    expect(screen.getByText(/Selection Results/i)).toBeInTheDocument();
+
+    // Verify that the selected monsters are displayed in the results
+    expect(screen.getByText(/User 1 chose: Pikachu/i)).toBeInTheDocument();
+    expect(screen.getByText(/User 2 chose: Charmander/i)).toBeInTheDocument();
   });
 });
