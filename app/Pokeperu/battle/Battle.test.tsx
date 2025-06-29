@@ -3,45 +3,7 @@ import Battle from './Battle';
 import { ElementType } from '../ElementType';
 import type { Monster } from '../monsters';
 import { calculateAdjustedDamage } from './battleAttack';
-
-const mockSelectedMonsters: Monster[] = [
-  {
-    name: 'Pikachu',
-    trainer: 'Ash',
-    trainerImage: '', // Added trainerImage as empty string for test data
-    description: '',
-    inspiration: '',
-    hp: 35,
-    attack: 55,
-    defense: 40,
-    specialAttack: 50,
-    specialDefense: 50,
-    speed: 90,
-    type: ElementType.Electric,
-    secondType: null,
-    image: '/images/monsters/pikachu.jpg',
-    attack1: { name: 'Quick Attack', damage: 10, type: ElementType.Normal, isPhysical: true, powerPoints: 20, accuracy: 1 },
-    attack2: { name: 'Thunderbolt', damage: 20, type: ElementType.Electric, isPhysical: false, powerPoints: 20, accuracy: 1 },
-  },
-  {
-    name: 'Charmander',
-    trainer: 'Brock',
-    trainerImage: '', // Added trainerImage as empty string for test data
-    description: '',
-    inspiration: '',
-    hp: 47,
-    attack: 52,
-    defense: 43,
-    specialAttack: 60,
-    specialDefense: 50,
-    speed: 65,
-    type: ElementType.Fire,
-    secondType: null,
-    image: '/images/monsters/charmander.jpg',
-    attack1: { name: 'Scratch', damage: 10, type: ElementType.Normal, isPhysical: true, powerPoints: 20, accuracy: 1 },
-    attack2: { name: 'Flamethrower', damage: 20, type: ElementType.Fire, isPhysical: false, powerPoints: 20, accuracy: 1 },
-  },
-];
+import mockSelectedMonsters from '../mockMonsters';
 
 const mocksWithMonster1VeryWeak = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
 mocksWithMonster1VeryWeak[0].hp = 60;

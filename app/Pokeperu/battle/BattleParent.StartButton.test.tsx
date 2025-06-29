@@ -1,58 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import BattleContainer from './BattleParent';
-import type { Monster } from '../monsters';
-import { ElementType } from '../ElementType';
-
-const mockSelectedMonsters: Monster[] = [
-  {
-    name: 'Pikachu',
-    trainer: 'Ash',
-    hp: 35,
-    attack: 55,
-    defense: 40,
-    specialAttack: 50,
-    specialDefense: 50,
-    speed: 90,
-    type: ElementType.Electric,
-    image: '/images/pikachu.jpg',
-    attack1: {
-      name: 'Quick Attack', damage: 10, type: ElementType.Normal,
-      isPhysical: false, powerPoints: 0, accuracy: 1
-    },
-    attack2: {
-      name: 'Thunderbolt', damage: 20, type: ElementType.Electric,
-      isPhysical: false, powerPoints: 0, accuracy: 1
-    },
-    secondType: null,
-    description: null,
-    inspiration: '',
-    trainerImage: ''
-  },
-  {
-    name: 'Charmander',
-    trainer: 'Brock',
-    hp: 39,
-    attack: 52,
-    defense: 43,
-    specialAttack: 60,
-    specialDefense: 50,
-    speed: 65,
-    type: ElementType.Fire,
-    image: '/images/charmander.jpg',
-    attack1: {
-      name: 'Scratch', damage: 10, type: ElementType.Normal,
-      isPhysical: false, powerPoints: 0, accuracy: 1
-    },
-    attack2: {
-      name: 'Flamethrower', damage: 20, type: ElementType.Fire,
-      isPhysical: false, powerPoints: 0, accuracy: 1
-    },
-    secondType: null,
-    description: null,
-    inspiration: '',
-    trainerImage: ''
-  },
-];
+import mockSelectedMonsters from '../mockMonsters';
 
 describe('BattleStartScreen Component', () => {
   test('clicking "Start Battle" transitions to the battle phase', () => {
@@ -64,7 +12,7 @@ describe('BattleStartScreen Component', () => {
     expect(screen.getByText(/User 2 chose: Charmander/i)).toBeInTheDocument();
 
     // Find and click the "Start Battle" button
-    const startBattleButton = screen.getByText(/Start Battle/i);
+    const startBattleButton = screen.getAllByText(/Start Battle/i)[0];
     fireEvent.click(startBattleButton);
 
     // Verify the UI transitions to the battle phase
@@ -73,7 +21,7 @@ describe('BattleStartScreen Component', () => {
     expect(monster1Hp).toBe(35);
     const hpValueMonster2 = document.querySelector('.hp-value-monster2');
     const monster2Hp = parseInt(hpValueMonster2?.innerHTML);
-    expect(monster2Hp).toBe(39);
+    expect(monster2Hp).toBe(47);
   });
 
   test('shows "Are you sure?" popup with Yes and No buttons when back button is clicked', () => {
