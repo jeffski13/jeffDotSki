@@ -1,13 +1,14 @@
 import TitleImg from "./TitleImg";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
+import packageJson from "../../package.json";
 
 export default function TitlePage() {
   return (
       <div className="TitlePage" >
           <TitleImg />
-          <Container fluid>
-              <Row className="TitlePage_aboutJeff">
+          <Container fluid className="TitlePage_aboutJeff">
+              <Row>
                   <Col xs={12} sm={12} className="TitlePage_aboutJeff-name">
                       <h2><span className="TitlePage_aboutJeff-name-websiteName">JEFF</span> <span className="TitlePage_aboutJeff-name-nonwebsitename">SZCIN</span><span className="TitlePage_aboutJeff-name-websiteName">SKI</span></h2>
                   </Col>
@@ -24,6 +25,11 @@ export default function TitlePage() {
                               <li><strong>A Believer of the Arts:</strong> I am a leader of the Señora Fátima Choir in Lima</li>
                           </ul>
                       </div>
+                  </Col>
+              </Row>
+              <Row>
+                  <Col xs={12} className="text-center">
+                      <p>Version {packageJson.version}</p>
                   </Col>
               </Row>
           </Container>
