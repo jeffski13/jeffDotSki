@@ -20,13 +20,13 @@ export function FooterBarski() {
     <Container className="FooterBarski" fluid>
       <Row className="show-grid">
         <Col xs={1} />
-        <Col xs={3} className="footerBarskiLinkWrapper">
+        <Col xs={4} sm={3} className="footerBarskiLinkWrapper">
           <div className="footerLinksArea" >
               Version: {packageJson.version}
           </div>
         </Col>
-        <Col xs={4} />
-        <Col xs={2} >
+        <Col xs={3} sm={6} />
+        <Col xs={2} sm={1} >
           <a title="Instagram"
             href="https://www.instagram.com/jeffski13/"
           >
@@ -41,7 +41,7 @@ export function FooterBarski() {
             />
           </a>
         </Col>
-        <Col xs={2} >
+        <Col xs={2} sm={1} >
           <a title="My Open Source Website!"
             href="https://github.com/jeffski13"
           >
