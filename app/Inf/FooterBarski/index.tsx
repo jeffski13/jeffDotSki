@@ -1,65 +1,64 @@
-import React, {Component} from 'react';
+import { useState } from 'react';
 import {Container, Row, Col, Image} from 'react-bootstrap';
 
 import githubLogo from './github-logo.png';
 import githubLogoShadow from './github-logo-shadow.png';
+import instaLogo from './instagram-logo.png';
+import instaLogoShadow from './instagram-logo-shadow.png';
 import packageJson from "package.json";
 import './styles.css';
 
-class FooterBarski extends Component {
+export function FooterBarski() {
 
-  constructor(props){
-    super(props);
+  const [isGithubImgMouseOver, setIsGithubImgMouseOver] = useState(false);
+  const [isInstaMouseOver, setIsInstaMouseOver] = useState(false);
+  
+  let githubLogoImage = isGithubImgMouseOver ? githubLogoShadow : githubLogo;
+  let instaLogoImage = isInstaMouseOver ? instaLogoShadow : instaLogo;
 
-    this.githubImgMouseOver = this.githubImgMouseOver.bind(this);
-    this.gitihubImgMouseOut = this.gitihubImgMouseOut.bind(this);
-
-    this.state = {
-      isGithubMouseOver : false
-    }
-  }
-
-  //on hover effect for the github logo link
-  githubImgMouseOver(){
-    this.setState({
-      isGithubMouseOver: true
-    });
-  }
-
-  //on hover effect for the github logo link
-  gitihubImgMouseOut(){
-    this.setState({
-      isGithubMouseOver: false
-    });
-  }
-
-  render(){
-    let githubLogoImage = this.state.isGithubMouseOver ? githubLogoShadow : githubLogo;
-
-    return(
-      <Container className="FooterBarski" fluid>
-        <Row className="show-grid">
-          <Col xs={2} sm={1} />
-          <Col xs={7} sm={10} className="footerBarskiLinkWrapper">
-            <div className="footerLinksArea" >
-                Version: {packageJson.version}
-            </div>
-          </Col>
-          <Col xs={3} sm={1} >
-            <a title="My Open Source Website!"
-              href="https://github.com/jeffski13"
-            >
-              <Image src={githubLogoImage}
-                className="githubLogo"
-                onMouseOver={this.githubImgMouseOver}
-                onMouseOut={this.gitihubImgMouseOut}
-              />
-            </a>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+  return(
+    <Container className="FooterBarski" fluid>
+      <Row className="show-grid">
+        <Col xs={1} />
+        <Col xs={4} sm={3} className="footerBarskiLinkWrapper">
+          <div className="footerLinksArea" >
+              Version: {packageJson.version}
+          </div>
+        </Col>
+        <Col xs={3} sm={6} />
+        <Col xs={2} sm={1} >
+          <a title="Instagram"
+            href="https://www.instagram.com/jeffski13/"
+          >
+            <Image src={instaLogoImage}
+              className="githubLogo"
+              onMouseOver={() => {
+                setIsInstaMouseOver(true)
+              }}
+              onMouseOut={() => {
+                setIsInstaMouseOver(false)
+              }}
+            />
+          </a>
+        </Col>
+        <Col xs={2} sm={1} >
+          <a title="My Open Source Website!"
+            href="https://github.com/jeffski13"
+          >
+            <Image src={githubLogoImage}
+              className="githubLogo"
+              onMouseOver={() => {
+                setIsGithubImgMouseOver(true)
+              }}
+              onMouseOut={() => {
+                setIsGithubImgMouseOver(false)
+              }}
+            />
+          </a>
+        </Col>
+      </Row>
+    </Container>
+  );
 }
 
 export default FooterBarski;
