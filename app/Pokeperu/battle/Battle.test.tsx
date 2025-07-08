@@ -29,12 +29,12 @@ mocksWithMonster1VeryWeak[1].attack1 = {
   accuracy: 1,
 }
 
-const testMonster1Hp = (hpExpected) => {
+const testMonster1Hp = (hpExpected: Number) => {
   const hpValueMonster1 = document.querySelector('.hp-value-monster1');
   const monster1Hp = parseInt(hpValueMonster1?.innerHTML);
   expect(monster1Hp).toBe(hpExpected);
 }
-const testMonster2Hp = (hpExpected) => {
+const testMonster2Hp = (hpExpected: Number) => {
   const hpValueMonster2 = document.querySelector('.hp-value-monster2');
   const monster2Hp = parseInt(hpValueMonster2?.innerHTML);
   expect(monster2Hp).toBe(hpExpected);
@@ -75,7 +75,7 @@ describe('Battle Component', () => {
     fireEvent.click(attackButton);
 
     // Verify that monster2's HP is reduced
-    expect(screen.getByText(/Pikachu did /i)).toBeInTheDocument(); // 
+    expect(screen.getByText(/Pikachu done messed up /i)).toBeInTheDocument(); // 
     expect(screen.getByText(/damage to Charmander./i)).toBeInTheDocument(); // 
   });
 
