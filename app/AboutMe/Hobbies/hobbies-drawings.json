@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Ivysaur 002",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_2ivysaur.PNG"
+  },
+  {
+    "name": "Venasaur 003",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_3venasaur.PNG"
+  },
+  {
+    "name": "Charmander 004",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_4charmander.PNG"
+  },
+  {
+    "name": "Charmeleon 005",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_5charmeleon.PNG"
+  },
+  {
+    "name": "Charizard 006",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_6charizard.PNG"
+  },
+  {
+    "name": "Squirtle 007",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_7squirtle.jpeg"
+  },
+  {
+    "name": "Wartortle 008",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_8wortortle.jpg"
+  },
+  {
+    "name": "Blastoise 009",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_9blastoise.PNG"
+  }
+]

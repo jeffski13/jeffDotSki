@@ -1,17 +1,12 @@
 [
   {
-    "title": "Naruto Shippuden",
-    "season": 15,
+    "title": "Naruto (en Español)",
+    "season": 5,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/naruto.jpg"
   },
   {
-    "title": "Pokemon (en Espanol)",
+    "title": "Pokemon (en Español)",
     "season": 1,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/pokemon_kanto.png"
-  },
-  {
-    "title": "Seven Deadly Sins",
-    "season": 3,
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/seven_deadly_sins.jpg"
   }
 ]

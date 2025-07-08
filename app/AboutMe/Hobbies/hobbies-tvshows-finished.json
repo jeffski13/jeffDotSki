@@ -19,10 +19,12 @@
   },
   {
     "title": "Dragon Ball",
+    "season": 4,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonball.jpg"
   },
   {
     "title": "Dragon Ball Z",
+    "season": 5,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonballz.jpg"
   },
   {
@@ -32,13 +34,18 @@
   },
   {
     "title": "FLCL",
-    "season": 5,
+    "season": 1,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/flcl.jpg"
   },
   {
     "title": "Inuyasha",
     "season": 1,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/inuyasha.jpg"
+  },
+  {
+    "title": "Hunter X Hunter",
+    "season": 5,
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/hunterxhunter.jpg"
   },
   {
     "title": "My Hero Academia",
@@ -51,11 +58,18 @@
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/promised_neverland.jpg"
   },
   {
+    "title": "Seven Deadly Sins",
+    "season": 3,
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/seven_deadly_sins.jpg"
+  },
+  {
     "title": "Sword Art Online",
+    "season": 2,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/sword_art_online.jpg"
   },
   {
     "title": "Yu Yu Hakusho",
+    "season": 4,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/yuyuhakusho.jpg"
   }
 ]
