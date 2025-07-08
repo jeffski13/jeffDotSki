@@ -24,7 +24,7 @@ const renderTvShows = (tvshowItem, index) => {
 
 const renderDrawings = (drawingItem, index) => {
   return (
-    <Col xs={12} md={6}>
+    <Col xs={12} md={6} lg={4}>
       <li key={index} >
         <div className="hobbieItemInfoContainer">
           <div className="hobbieItemInfo" >
