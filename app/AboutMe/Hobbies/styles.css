@@ -11,11 +11,11 @@
   padding-bottom: 25px;
 }
 
-.tvshowList{
+.hobbiesContentList{
   list-style-type: none;
 }
 
-.TvShow{
+.HobbieContentItem{
   padding-bottom: 10px; 
   overflow: hidden;  
 }
@@ -35,7 +35,7 @@
   height: 300px;
 }
 
-.tvshowImageContainer{
+.hobbieImageContainer{
   float: left;
   border: 1px solid gray;
   border-radius: 5px;
@@ -43,20 +43,20 @@
   margin-right: 15px;
 }
 
-.tvshowInfo{
+.hobbieItemInfo{
   display: inline-flex;
 }
 
-.tvshowInfoContainer{
+.hobbieItemInfoContainer{
   display: inline-grid;
 }
 
-.tvshowTitle{
+.hobbieItemTitle{
   font-size: medium;
   font-weight: bold;
   padding-right: 5px;
 }
 
-.tvshowText{
+.hobbieItemText{
   font-size: medium; 
 }
