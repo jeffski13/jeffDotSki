@@ -2,7 +2,7 @@ name: unit-test-action
 run-name: ${{ github.actor }} triggered automated unit test run
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
     branches:
       - 'master'
 jobs:
