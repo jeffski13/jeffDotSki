@@ -19,10 +19,10 @@ export default function TitlePage() {
                       <div className="TitlePage_aboutJeff-text-container">
                           <h3>Who Is This Jeff Guy?</h3>
                           <ul>
-                              <li><strong>English Teacher:</strong> Elementry school and private classes to spanish speakers</li>
+                              <li><strong>English Teacher:</strong> Elementry School and Private Lessons for Spanish Speakers</li>
                               <li><strong>Software Engineer:</strong> Web Developer and Android Native Applications</li>
-                              <li><strong>World Traveler:</strong> Tokyo, Japan <span>&nbsp;&bull;&nbsp;</span> Santiago, Chile <span>&nbsp;&bull;&nbsp;</span> Medellín, Colombia <span>&nbsp;&bull;&nbsp;</span> Lima, Perú <span>&nbsp;&bull;&nbsp;</span> Buenos Aires, Argentina </li>
-                              <li><strong>A Believer of the Arts:</strong> I am a leader of the Señora Fátima Choir in Lima</li>
+                              <li><strong>World Traveler:</strong> Tokyo, Japan <span>&nbsp;&bull;&nbsp;</span> Santiago, Chile <span>&nbsp;&bull;&nbsp;</span> Medellín, Colombia <span>&nbsp;&bull;&nbsp;</span> Lima, Perú </li>
+                              <li><strong>A Believer of the Arts:</strong> Leader of the Señora Fátima Choir in Miraflores, Lima, Perú</li>
                           </ul>
                       </div>
                   </Col>
