@@ -31,7 +31,7 @@ export function FooterBarski() {
             href="https://www.instagram.com/jeffski13/"
           >
             <Image src={instaLogoImage}
-              className="githubLogo"
+              className="logo instagramLogo"
               onMouseOver={() => {
                 setIsInstaMouseOver(true)
               }}
@@ -46,7 +46,7 @@ export function FooterBarski() {
             href="https://github.com/jeffski13"
           >
             <Image src={githubLogoImage}
-              className="githubLogo"
+              className="logo githubLogo"
               onMouseOver={() => {
                 setIsGithubImgMouseOver(true)
               }}
