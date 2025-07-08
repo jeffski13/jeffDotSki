@@ -40,6 +40,7 @@ function InfoPage({ }: InfoPageProps) {
           <li>Personality Types</li>
         </ul>
         <p>The students were required to create pokemon (inspired by animals) and a gym leader (with personality traits). The project had an optional battle component with prizes to keep the students invested in the project.</p>
+        <p>Each group was assigned a region of Peru (desert, moutains, coast, etc). This gave students an inspirational starting point for what types of monsters and gym leaders could be created. They were also tested on the english names of the regions/biomes.</p>
         <div className="infoSection" id="sectionPokemonCreation">
           <h3>Pokemon Creation</h3>
           <p>The students were required to create the following for each monster:</p>
