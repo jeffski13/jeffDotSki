@@ -75,7 +75,7 @@ describe('Battle Component', () => {
     fireEvent.click(attackButton);
 
     // Verify that monster2's HP is reduced
-    expect(screen.getByText(/Pikachu done messed up /i)).toBeInTheDocument(); // 
+    expect(screen.getByText(/Pikachu did /i)).toBeInTheDocument(); // 
     expect(screen.getByText(/damage to Charmander./i)).toBeInTheDocument(); // 
   });
 
