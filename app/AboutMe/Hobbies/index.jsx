@@ -1,6 +1,7 @@
 import { Container, Row, Col } from 'react-bootstrap';
 
 import TvShow from './TvShow';
+import drawings from './hobbies-drawings.json';
 import tvshows from './hobbies-tvshows.json';
 import tvshowsFinished from './hobbies-tvshows-finished.json';
 import '../styles.css';
@@ -20,6 +21,26 @@ const renderTvShows = (tvshowItem, index) => {
   );
 }
 
+const renderDrawings = (tvshowItem, index) => {
+  return (
+    <Col xs={12} md={6}>
+      <li key={index} >
+        <div className="TvShow" >
+          <div className="tvshowImageContainer" >
+            <img className="hobbieImage drawingImage" src={tvshowItem.thumb} alt={`${tvshowItem.name} Drawing`} />
+          </div>
+          <div className="tvshowInfoContainer">
+            <div className="tvshowInfo" >
+              <div className="tvshowTitle" >Title:</div>
+              <div className="tvshowText" >{tvshowItem.name}</div>
+            </div>
+          </div >
+        </div>
+      </li>
+    </Col>
+  );
+}
+
 export default function Hobbies() {
   return (
     <div className="aboutmeWrapper">
@@ -30,6 +51,24 @@ export default function Hobbies() {
               <div className="aboutMeTitle" >Hobbies & Interests</div>
             </Col>
           </Row>
+        </Container>
+
+        <Container className="hobbiesSection">
+          <Row>
+            <Col sm={12}>
+              <div className="hobbiesSectionTitle">Drawings:</div>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={12} className="hobbiesSectionText">
+              <div>I started drawing as a hobby during the pandemic. Over the years I feel I have found my style. Enjoy!</div>
+            </Col>
+          </Row>
+          <ul className="tvshowList" >
+            <Row>
+              {drawings.map(renderDrawings)}
+            </Row>
+          </ul>
         </Container>
 
         <Container className="hobbiesSection">

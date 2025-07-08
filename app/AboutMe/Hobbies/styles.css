@@ -20,12 +20,19 @@
   overflow: hidden;  
 }
 
-.tvshowImage{
-  height: 100px;
+.hobbieImage {
   padding: 5px;
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.tvshowImage{
+  height: 100px;
+}
+
+.drawingImage{
+  height: 300px;
 }
 
 .tvshowImageContainer{

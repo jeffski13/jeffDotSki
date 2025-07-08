@@ -15,10 +15,9 @@ class TvShow extends React.Component {
     }
 
     return (
-
       <div className="TvShow" >
         <div className="tvshowImageContainer" >
-          <img className="tvshowImage" src={this.props.thumb} alt={`${this.props.title} Show`} />
+          <img className="hobbieImage tvshowImage" src={this.props.thumb} alt={`${this.props.title} Show`} />
         </div>
         <div className="tvshowInfoContainer">
           <div className="tvshowInfo" >
