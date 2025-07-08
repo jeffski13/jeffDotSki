@@ -44,8 +44,15 @@
   text-align: center;
 }
 
-.githubLogo{
+.logo{
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.githubLogo{
+  height: 35px;
+}
+
+.instagramLogo{
   height: 40px;
 }
