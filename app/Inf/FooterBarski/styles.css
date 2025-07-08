@@ -8,51 +8,51 @@
   z-index: 10;
 }
 
-.footerBarskiLinkWrapper{
+.footerBarskiLinkWrapper {
   color: white;
   line-height: 60px;
 }
 
-.footerLinksArea{
+.footerLinksArea {
   display: flex;
 }
 
-.footerBarskiLink{
+.footerBarskiLink {
   color: white;
   text-decoration: none;
   font-weight: 700;
 }
 
-.footerBarskiLink:hover{
+.footerBarskiLink:hover {
   color: white;
   text-decoration: none;
   text-shadow: 2px 1px #444;
 }
 
-.footerBarskiLink:visited{
+.footerBarskiLink:visited {
   text-decoration: none;
   color: white;
 }
 
-.footerBarskiLink:focus{
+.footerBarskiLink:focus {
   text-decoration: none;
   color: white;
 }
 
-.footLinkDivider{
+.footLinkDivider {
   width: 20px;
   text-align: center;
 }
 
-.logo{
+.footerLogo {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.githubLogo{
+.githubLogo {
   height: 35px;
 }
 
-.instagramLogo{
+.instagramLogo {
   height: 40px;
 }
