@@ -11,9 +11,6 @@
     background: #EFEFEF;
 }
 
-.TitlePage_aboutJeff-image {
-    padding: 20px;
-}
 
 .TitlePage_aboutJeff-text {
     display: table;
@@ -26,7 +23,13 @@
     vertical-align: middle;
 }
 
+.TitlePage_aboutJeff-image {
+    padding: 20px;
+}
+
 .TitlePage_aboutJeff-image>img {
+    margin-left: auto;
+    margin-right: auto;
     min-height: 300px;
     min-width: 300px;
     max-height: 350px;
