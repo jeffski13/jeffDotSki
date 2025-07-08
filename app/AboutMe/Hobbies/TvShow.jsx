@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'react-bootstrap';
 import './styles.css';
 
 class TvShow extends React.Component {
@@ -18,27 +17,16 @@ class TvShow extends React.Component {
     return (
 
       <div className="TvShow" >
-        <Container>
-          <Row className="show-grid">
-            <Col xs={0} sm={2} />
-            <Col xs={8} sm={2} >
-              <div className="tvshowImageContainer" >
-                <img className="tvshowImage" src={this.props.thumb} alt={`${this.props.title} Show`} />
-              </div>
-            </Col>
-            <Col xs={12} sm={4} >
-              <div className="tvshowInfoContainer">
-                <div className="tvshowInfo" >
-                  <div className="tvshowTitle" >Show:</div>
-                  <div className="tvshowText" >{this.props.title}</div>
-                </div>
-                {seasonRender}
-              </div >
-            </Col>
-            <Col xs={0} sm={4} />
-            <Col xs={0} sm={2} />
-          </Row>
-        </Container>
+        <div className="tvshowImageContainer" >
+          <img className="tvshowImage" src={this.props.thumb} alt={`${this.props.title} Show`} />
+        </div>
+        <div className="tvshowInfoContainer">
+          <div className="tvshowInfo" >
+            <div className="tvshowTitle" >Show:</div>
+            <div className="tvshowText" >{this.props.title}</div>
+          </div>
+          {seasonRender}
+        </div >
       </div>
     );
   }
