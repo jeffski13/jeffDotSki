@@ -29,9 +29,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <Helmet>
-          <title>Jeff Szcinski</title>
           <meta name="description" content="Jeff Szcinski - Software Engineer, English Education Innovator, World Traveler, Artist and Performer. Learn more about Jeff's work, travels, and projects." />
-          <meta name="keywords" content="Jeff Szcinski, English Teacher, Software Engineer, World Traveler, Artist, Web Developer, Android Developer, Choir Leader, Jeff Ski" />
+          <meta name="keywords" content="Jeff Szcinski, Jeffski, English Teacher, Software Engineer, World Traveler, Artist, Web Developer, Android Developer, Choir Leader, Jeff Ski" />
           <meta property="og:title" content="Jeff Szcinski | English Teacher, Software Engineer, World Traveler" />
           <meta property="og:description" content="Jeff Szcinski - Software Engineer, English Education Innovator, World Traveler, Artist and Performer." />
           <meta property="og:type" content="website" />
