@@ -4,21 +4,10 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
 import FooterBarski from "~/Inf/FooterBarski";
 import ROUTES from "~/consts/ROUTES";
-import { Helmet } from "react-helmet";
 
 export default function TitlePage() {
   return (
     <div className="TitlePage" >
-      <Helmet>
-        <title>Jeff Szcinski | Software Engineer, Educator, World Traveler</title>
-        <meta name="description" content="Jeff Szcinski - Software Engineer, English Education Innovator, World Traveler, Artist and Performer. Learn more about Jeff's work, travels, and projects." />
-        <meta name="keywords" content="Jeff Szcinski, Software Engineer, English Teacher, World Traveler, Artist, Peru, Web Developer, Android Developer, Choir Leader, Jeff Ski" />
-        <meta property="og:title" content="Jeff Szcinski | Software Engineer, Educator, World Traveler" />
-        <meta property="og:description" content="Jeff Szcinski - Software Engineer, English Education Innovator, World Traveler, Artist and Performer." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://jeff.ski/" />
-        <meta property="og:image" content="https://s3.us-east-2.amazonaws.com/jeff.ski/title/titlePage-info1-md.jpg" />
-      </Helmet>
       <TitleImg />
       <Container fluid className="TitlePage_aboutJeff">
         <Row>
