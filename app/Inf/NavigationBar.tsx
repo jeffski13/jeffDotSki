@@ -15,10 +15,10 @@ class NavigationBar extends Component {
                     <Navbar.Collapse>
                         <Nav className="mr-auto">
                             <NavDropdown title="Resume" id="navigationbar-resume">
-                                <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume_2025_01_26_TeacherEnglish.pdf" >English Teacher</NavDropdown.Item>
-                                <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_CV_2025_01_26_ProfeIngles.pdf" >Profesor de Inglés (Español)</NavDropdown.Item>
-                                <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume_2025_01_07_software.pdf" >Software Engineering</NavDropdown.Item>
-                                <NavDropdown.Item href="https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_CV_2025_01_07_Software.pdf" >Ingeníero Informático (Español)</NavDropdown.Item>
+                                <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} >English Teacher</NavDropdown.Item>
+                                <NavDropdown.Item href={ROUTES.external.resume.profeIngles} >Profesor de Inglés (Español)</NavDropdown.Item>
+                                <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} >Software Engineering</NavDropdown.Item>
+                                <NavDropdown.Item href={ROUTES.external.resume.ingenieroDeSoftware} >Ingeníero Informático (Español)</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         <Nav >
