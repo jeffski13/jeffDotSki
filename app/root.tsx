@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
+import { Helmet } from "react-helmet";
 import type { Route } from "./+types/root";
 import "./app.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,11 +28,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <Helmet>
+          <title>Jeff Szcinski | Software Engineer, Educator, World Traveler</title>
+          <meta name="description" content="Jeff Szcinski - Software Engineer, English Education Innovator, World Traveler, Artist and Performer. Learn more about Jeff's work, travels, and projects." />
+          <meta name="keywords" content="Jeff Szcinski, English Teacher, Software Engineer, World Traveler, Artist, Web Developer, Android Developer, Choir Leader, Jeff Ski" />
+          <meta property="og:title" content="Jeff Szcinski | English Teacher, Software Engineer, World Traveler" />
+          <meta property="og:description" content="Jeff Szcinski - Software Engineer, English Education Innovator, World Traveler, Artist and Performer." />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://jeff.ski/" />
+          <meta property="og:image" content="https://s3.us-east-2.amazonaws.com/jeff.ski/title/titlePage-info1-md.jpg" />
+        </Helmet>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js" 
+        <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
           crossOrigin="true"></script>
 
         <script
