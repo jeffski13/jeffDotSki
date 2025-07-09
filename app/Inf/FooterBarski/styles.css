@@ -10,7 +10,7 @@
 
 .footerBarskiLinkWrapper {
   color: white;
-  line-height: 60px;
+  line-height: 50px;
 }
 
 .footerLinksArea {
@@ -50,9 +50,9 @@
 }
 
 .githubLogo {
-  height: 35px;
+  height: 30px;
 }
 
 .instagramLogo {
-  height: 40px;
+  height: 35px;
 }
