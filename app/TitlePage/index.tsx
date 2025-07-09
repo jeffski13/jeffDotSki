@@ -19,7 +19,7 @@ export default function TitlePage() {
           </Col>
           <Col xs={12} sm={12} md={7} className="TitlePage_aboutJeff-text">
             <div className="TitlePage_aboutJeff-text-container">
-              <h3>Who Is Jeff Szcinski (Jeffski)?</h3>
+              <h3>Who Is Jeff (Jeffski) Szcinski?</h3>
               <ul>
                 <li><strong><a className="titlePageLink" href={ROUTES.pokePeru.info}>English Education Innovator</a>:</strong> Elementry School and Private Lessons for Spanish Speakers</li>
                 <li><strong><a className="titlePageLink" href={ROUTES.external.resume.softwareEngineer}>Software Engineer</a>:</strong> Web Developer and Android Native Applications</li>
