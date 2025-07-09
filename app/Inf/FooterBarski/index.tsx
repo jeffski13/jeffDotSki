@@ -7,6 +7,7 @@ import instaLogo from './instagram-logo.png';
 import instaLogoShadow from './instagram-logo-shadow.png';
 import packageJson from "package.json";
 import './styles.css';
+import ROUTES from '~/consts/ROUTES';
 
 export function FooterBarski() {
 
@@ -28,7 +29,7 @@ export function FooterBarski() {
         <Col xs={2} sm={6} />
         <Col xs={2} sm={1} >
           <a title="Instagram"
-            href="https://www.instagram.com/jeffski13/"
+            href={ROUTES.external.instagram}
           >
             <Image src={instaLogoImage}
               className="footerLogo instagramLogo"
