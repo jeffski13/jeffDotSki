@@ -27,6 +27,7 @@
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
+    "react-helmet": "^6.1.0",
     "react-loading": "^2.0.3",
     "react-router": "^7.5.2"
   },
