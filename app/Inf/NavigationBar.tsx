@@ -15,6 +15,8 @@ export default function NavigationBar() {
             pokePeru: 'Poke Perú',
             bio: 'Biografía',
             hobbies: 'Pasatiempos',
+            drawing: 'Dibujos',
+            tvShows: 'Series',
         },
         default: {
             resume: 'Resume',
@@ -25,6 +27,8 @@ export default function NavigationBar() {
             pokePeru: 'Poke Peru',
             bio: 'Bio',
             hobbies: 'Hobbies',
+            drawing: 'Drawing',
+            tvShows: 'TV Shows',
         }
     };
     const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
@@ -46,8 +50,11 @@ export default function NavigationBar() {
                     </Nav>
                     <Nav >
                         <Nav.Link href={ROUTES.pokePeru.battle}>{content.pokePeru}</Nav.Link>
+                        <NavDropdown title={content.hobbies} id="navigationbar-resume">
+                            <NavDropdown.Item href={ROUTES.aboutMe.drawing} >{content.drawing}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.tvShows} >{content.tvShows}</NavDropdown.Item>
+                        </NavDropdown>
                         <Nav.Link href={ROUTES.aboutMe.bio}>{content.bio}</Nav.Link>
-                        <Nav.Link href={ROUTES.aboutMe.hobbies}>{content.hobbies}</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
