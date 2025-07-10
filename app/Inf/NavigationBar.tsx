@@ -1,37 +1,56 @@
-import React, { Component } from 'react';
-import { Navbar, NavItem, NavDropdown, Nav } from 'react-bootstrap'
+
+import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
 import ROUTES from '../consts/ROUTES';
 import './styles.css';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../langSupport';
 
-class NavigationBar extends Component {
-    render() {
-        return (
-            <>
-                <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
-                    <Nav.Link href="/">
-                        <Navbar.Brand className="brand">jeff.ski</Navbar.Brand>
-                    </Nav.Link>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse>
-                        <Nav className="mr-auto">
-                            <NavDropdown title="Resume" id="navigationbar-resume">
-                                <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} >English Teacher</NavDropdown.Item>
-                                <NavDropdown.Item href={ROUTES.external.resume.profeIngles} >Profesor de Inglés (Español)</NavDropdown.Item>
-                                <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} >Software Engineering</NavDropdown.Item>
-                                <NavDropdown.Item href={ROUTES.external.resume.ingenieroDeSoftware} >Ingeníero Informático (Español)</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                        <Nav >
-                            <Nav.Link href={ROUTES.pokePeru.battle}>Poke Peru</Nav.Link>
-                            <Nav.Link href={ROUTES.aboutMe.bio}>Bio</Nav.Link>
-                            <Nav.Link href={ROUTES.aboutMe.hobbies}>Hobbies</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            </>
-        );
-    }
-
+export default function NavigationBar() {
+    const multiLangContent: MultiLangContent = {
+        es: {
+            resume: 'Currículum',
+            englishTeacher: 'Profesor de Inglés',
+            englishTeacherResume: 'Profesor de Inglés (Español)',
+            softwareEngineer: 'Ingeniero Informático',
+            softwareEngineerResume: 'Ingeniero Informático (Español)',
+            pokePeru: 'Poke Perú',
+            bio: 'Biografía',
+            hobbies: 'Pasatiempos',
+        },
+        default: {
+            resume: 'Resume',
+            englishTeacher: 'English Teacher',
+            englishTeacherResume: 'English Teacher (Spanish)',
+            softwareEngineer: 'Software Engineering',
+            softwareEngineerResume: 'Software Engineering (Spanish)',
+            pokePeru: 'Poke Peru',
+            bio: 'Bio',
+            hobbies: 'Hobbies',
+        }
+    };
+    const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+    return (
+        <>
+            <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
+                <Nav.Link href="/">
+                    <Navbar.Brand className="brand">jeff.ski</Navbar.Brand>
+                </Nav.Link>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse>
+                    <Nav className="mr-auto">
+                        <NavDropdown title={content.resume} id="navigationbar-resume">
+                            <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} >{content.englishTeacher}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.resume.profeIngles} >{content.englishTeacherResume}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} >{content.softwareEngineer}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.resume.ingenieroDeSoftware} >{content.softwareEngineerResume}</NavDropdown.Item>
+                        </NavDropdown>
+                    </Nav>
+                    <Nav >
+                        <Nav.Link href={ROUTES.pokePeru.battle}>{content.pokePeru}</Nav.Link>
+                        <Nav.Link href={ROUTES.aboutMe.bio}>{content.bio}</Nav.Link>
+                        <Nav.Link href={ROUTES.aboutMe.hobbies}>{content.hobbies}</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+        </>
+    );
 }
-
-export default NavigationBar;
