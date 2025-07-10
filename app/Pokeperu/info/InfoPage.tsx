@@ -36,14 +36,17 @@ function InfoPage({ }: InfoPageProps) {
       attack2: 'Ataque 2 (Nombre, Poder, Puntos de Poder, Precisión)',
       art: 'Arte Original',
       descNote: 'La "descripción" era una oportunidad para que los estudiantes usaran inglés más formal y científico.',
-      monsterDataInstructions: 'This data can be found and modified inside of the file: ',
-      artDataInstructions: 'The art from the students can be placed inside of the folder: ',
+      monsterDataInstructions: 'Esta información se puede encontrar y estar modificada en este archivo: ',
+      artDataInstructions: 'El arte de los estudiantes se puede poner en la carpeta: ',
       gymLeaderCreation: 'Creación de Líder de Gimnasio',
       gymLeaderDesc: 'Los estudiantes debían crear lo siguiente:',
       gymLeaderName: 'Nombre',
       gymLeaderPersonality: 'Carácter/personalidad',
       gymLeaderArt: 'Arte Original',
       gymLeaderNote: 'La "personalidad" era una oportunidad para usar vocabulario sobre comportamiento y modales.',
+      gymLeaderDataModInstructions: 'Los datos de los líderes de gymnasio se pueden encontrar y modificar en el siguiente archivo: ',
+      gymLeaderImagesModInstructions: 'El art de los estudiantes se pueden estar puestas en la siguiente carpeta: ',
+      gymLeaderEnvironmentsModInstructions: 'Los ambientes se pueden estar puestos en la siguiente carpeta: ',
       battle: 'Batalla de Monstruos',
       battleDesc: 'Como celebración del final del proyecto, los estudiantes pudieron batallar entre sí. También pudieron experimentar y simular batallas para ver si su monstruo funcionaba bien.',
       attacks: 'Los estudiantes podían elegir entre los siguientes 3 tipos de ataques:',
@@ -80,14 +83,17 @@ function InfoPage({ }: InfoPageProps) {
       attack2: 'Attack 2 (Name, Power, Power Points, Accuracy)',
       art: 'Original Artwork',
       descNote: 'The "description" was an opportunity for the students to utilize more scientific, formal english.',
-      monsterDataInstructions: 'Esta información se puede encontrar y estar modificada en este archivo: ',
-      artDataInstructions: 'El arte de los estudiantes se puede poner en la carpeta: ',
+      monsterDataInstructions: 'This data can be found and modified inside of the file: ',
+      artDataInstructions: 'The art from the students can be placed inside of the folder: ',
       gymLeaderCreation: 'Gym Leader Creation',
       gymLeaderDesc: 'The students were required to create the following:',
       gymLeaderName: 'Name',
       gymLeaderPersonality: 'Character/personality',
       gymLeaderArt: 'Original Artwork',
       gymLeaderNote: 'The "personality" was an opportunity for the students to utilize vocabulary related to mannerisms and behavior.',
+      gymLeaderDataModInstructions: 'This data can be found and modified inside of the following file: ',
+      gymLeaderImagesModInstructions: 'The art from the students can be placed inside of the following folder: ',
+      gymLeaderEnvironmentsModInstructions: 'The environments can be placed inside of the following folder: ',
       battle: 'Monster Battle',
       battleDesc: 'As a celebration of the end of the project, the students were able to battle one another. Students were also given an opportunity to experiment beforehand and run battle simulations to see if their monster would perform well in the heat of battle.',
       attacks: 'The students could choose from the following 3 types of attacks:',
@@ -185,14 +191,11 @@ function InfoPage({ }: InfoPageProps) {
               </Col>
             </Row>
           </Container>
-          <p>This data can be found and modified inside of the <strong>gymleaders.tsx</strong> file.</p>
-          <p>The art from the students can be placed inside of the <strong>/public/images/gymleaders</strong> folder.</p>
-          <p>The environments can be placed inside of the <strong>/public/images/perulandscape</strong> folder.</p>
+          <p>{content.gymLeaderDataModInstructions}<strong>gymleaders.tsx</strong></p>
+          <p>{content.gymLeaderImagesModInstructions}<strong>/public/images/gymleaders</strong></p>
+          <p>{content.gymLeaderEnvironmentsModInstructions}<strong>/public/images/perulandscape</strong></p>
         </div>
         <div className="infoSection" id="sectionBattle">
-          
-          
-          
           <h3>{content.battle}</h3>
           <p>{content.battleDesc}</p>
           <Container>
@@ -217,14 +220,10 @@ function InfoPage({ }: InfoPageProps) {
           <p>{content.statsNote}</p>
         </div>
         <div className="infoSection" id="sectionDIY">
-          
-          
-          
-          
           <h3>{content.diy}</h3>
           <p>{content.diyDesc}</p>
-          <p>npm install</p>
-          <p>npm start</p>
+          <p><strong>npm install</strong></p>
+          <p><strong>npm start</strong></p>
           <p>{content.browser} <a href={pokePeruLink}>{pokePeruLink}</a></p>
           <p>{content.modify}</p>
           <p><strong>monsters.tsx</strong> and <strong>gymleaders.tsx</strong></p>
