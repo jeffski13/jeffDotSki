@@ -13,7 +13,7 @@ export default function TitlePage() {
          { label: 'Innovador en Educación de Inglés', desc: 'Escuela primaria y clases particulares para hispanohablantes', link: ROUTES.pokePeru.info },
          { label: 'Ingeniero de Software', desc: 'Desarrollador web y aplicaciones nativas de Android', link: ROUTES.external.resume.softwareEngineer },
          { label: 'Viajero del Mundo', desc: 'Tokio, Japón • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
-         { label: 'Artista y Músico', desc: 'Líder del coro Señora Fátima en Miraflores, Lima, Perú', link: ROUTES.aboutMe.hobbies },
+         { label: 'Artista y Músico', desc: 'Arte y Líder del coro Señora Fátima en Miraflores, Lima, Perú', link: ROUTES.aboutMe.drawing },
        ]
      },
      default: {
@@ -22,7 +22,7 @@ export default function TitlePage() {
          { label: 'English Education Innovator', desc: 'Elementry School and Private Lessons for Spanish Speakers', link: ROUTES.pokePeru.info },
          { label: 'Software Engineer', desc: 'Web Developer and Android Native Applications', link: ROUTES.external.resume.softwareEngineer },
          { label: 'World Traveler', desc: 'Tokyo, Japan • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
-         { label: 'Artist and Performer', desc: 'Leader of the Señora Fátima Choir in Miraflores, Lima, Perú', link: ROUTES.aboutMe.hobbies },
+         { label: 'Artist and Performer', desc: 'Fan Art Leader of the Señora Fátima Choir in Miraflores, Lima, Perú', link: ROUTES.aboutMe.drawing },
        ]
      }
   }
