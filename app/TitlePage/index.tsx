@@ -3,7 +3,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
 import FooterBarski from "~/Inf/FooterBarski";
 import ROUTES from "~/consts/ROUTES";
-import { getContentByLanguage, type MultiLangContent } from "~/langSupport";
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 
 export default function TitlePage() {
   const multiLangContent: MultiLangContent = {
@@ -27,7 +27,7 @@ export default function TitlePage() {
      }
   }
 
-  const content = getContentByLanguage(multiLangContent)
+  const content = getContentByLanguage(multiLangContent, getBrowserLanguage())
 
   return (
     <div className="TitlePage" >

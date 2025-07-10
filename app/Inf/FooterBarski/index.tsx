@@ -8,7 +8,7 @@ import instaLogoShadow from './instagram-logo-shadow.png';
 import packageJson from "package.json";
 import './styles.css';
 import ROUTES from '~/consts/ROUTES';
-import { getContentByLanguage, type MultiLangContent } from '~/langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/langSupport';
 
 export function FooterBarski() {
   const [isGithubImgMouseOver, setIsGithubImgMouseOver] = useState(false);
@@ -30,7 +30,7 @@ export function FooterBarski() {
     }
   };
 
-  const content = getContentByLanguage(multiLangContent);
+  const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   return(
     <Container className="FooterBarski" fluid>
