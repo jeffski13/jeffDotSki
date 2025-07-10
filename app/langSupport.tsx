@@ -5,7 +5,6 @@ export interface MultiLangContent {
     default: any
 }
 
-
 const getBrowserLanguage = () => {
     return useMemo(() => {
         if (typeof window !== 'undefined') {
