@@ -13,10 +13,10 @@ export default function NavigationBar() {
             softwareEngineer: 'Ingeniero Informático',
             softwareEngineerResume: 'Ingeniero Informático (Español)',
             pokePeru: 'Poke Perú',
-            bio: 'Biografía',
-            hobbies: 'Pasatiempos',
+            hobbies: 'Bio y Pasatiempos',
             drawing: 'Dibujos',
             tvShows: 'Series',
+            bio: 'Biografía',
         },
         default: {
             resume: 'Resume',
@@ -25,10 +25,10 @@ export default function NavigationBar() {
             softwareEngineer: 'Software Engineering',
             softwareEngineerResume: 'Software Engineering (Spanish)',
             pokePeru: 'Poke Peru',
-            bio: 'Bio',
-            hobbies: 'Hobbies',
+            hobbies: 'Hobbies and Bio',
             drawing: 'Drawing',
             tvShows: 'TV Shows',
+            bio: 'Bio',
         }
     };
     const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
@@ -53,8 +53,8 @@ export default function NavigationBar() {
                         <NavDropdown title={content.hobbies} id="navigationbar-resume">
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing} >{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows} >{content.tvShows}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href={ROUTES.aboutMe.bio}>{content.bio}</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
