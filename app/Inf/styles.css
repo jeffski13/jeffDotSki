@@ -26,3 +26,11 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.navbar-nav > a {
+    padding-left: 10px;
+}
+
+.dropdown {
+    padding-left: 10px;
+}
