@@ -86,6 +86,7 @@
   width: 50%;
   width: 180px;
   height: 180px;
+  object-fit: contain;
 }
 
 .hp-bar {
