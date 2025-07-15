@@ -6,6 +6,21 @@ export interface GymLeader {
 
 export const gymLeaders: GymLeader[] = [
   {
+    name: "???",
+    image: "/images/gymleaders/trainersquad01.png",
+    environmentImage: "/images/perulandscape/peru-9.jpg",
+  },
+  {
+    name: "Jim",
+    image: "/images/gymleaders/trainersquad02.png",
+    environmentImage: "/images/perulandscape/peru-10.png",
+  },
+  {
+    name: "Tom",
+    image: "/images/gymleaders/trainersquad03.png",
+    environmentImage: "/images/perulandscape/peru-11.jpg",
+  },
+  {
     name: "Lily",
     image: "/images/gymleaders/trainersquad1.png",
     environmentImage: "/images/perulandscape/peru-1.jpg",
