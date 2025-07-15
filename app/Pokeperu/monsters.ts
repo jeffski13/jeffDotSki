@@ -141,7 +141,7 @@ export const monsters: Monster[] = [
     type: ElementType.Grass,
     secondType: ElementType.Ground,
     image: '/images/monsters/pkmnsquad03a.png',
-    description: 'He is always. He is calm but when something attacks him, he literally goes into rage mode.',
+    description: 'He is calm but when something attacks him, he literally goes into rage mode.',
     inspiration: 'Bat', // Added inspiration
     attack1: {
       name: 'Vine Whip',
