@@ -35,13 +35,13 @@ export const monsters: Monster[] = [
   {
     name: 'Moradder',
     trainer: '???',
-    trainerImage: '/images/gymleaders/trainersquad0.png', // Added trainer image
+    trainerImage: '/images/gymleaders/trainersquad01.png', // Added trainer image
     hp: 100,
     attack: 0,
     defense: 40,
-    specialAttack: 50,
+    specialAttack: 110,
     specialDefense: 50,
-    speed: 60,
+    speed: 0,
     type: ElementType.Dark,
     secondType: ElementType.Fire,
     image: '/images/monsters/pkmnsquad01a.png',
