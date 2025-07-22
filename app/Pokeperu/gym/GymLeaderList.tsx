@@ -53,6 +53,13 @@ function GymLeaderList({ gymLeaders }: GymLeaderListProps) {
                   </h2>
                 </div>
               </div>
+              <div className='gymleader-details-bottom'>
+                <div>
+                  <h2 className="gymleader-biome">
+                    {leader.biome}
+                  </h2>
+                </div>
+              </div>
             </div>
           </li>
         ))}
