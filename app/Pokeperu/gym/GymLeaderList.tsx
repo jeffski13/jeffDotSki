@@ -43,22 +43,19 @@ function GymLeaderList({ gymLeaders }: GymLeaderListProps) {
                 backgroundPosition: 'center',
                 borderRadius: '16px',
                 minHeight: '180px',
+                position: 'relative',
               }}
             >
-              <div className='gymleader-details-top'>
-                <img src={leader.image} alt={leader.name} className="gymleader-image" />
-                <div>
-                  <h2 className="gymleader-name">
-                    {leader.name}
-                  </h2>
-                </div>
+              <img src={leader.image} alt={leader.name} className="gymleader-image" />
+              <div>
+                <h2 className="gymleader-name">
+                  {leader.name}
+                </h2>
               </div>
-              <div className='gymleader-details-bottom'>
-                <div>
-                  <h2 className="gymleader-biome">
-                    {leader.biome}
-                  </h2>
-                </div>
+              <div
+                className="gymleader-biome"
+              >
+                {leader.biome}
               </div>
             </div>
           </li>
