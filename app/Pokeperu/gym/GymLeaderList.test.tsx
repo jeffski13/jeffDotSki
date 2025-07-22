@@ -8,5 +8,8 @@ describe('GymLeaderList', () => {
     gymLeaders.forEach((leader) => {
       expect(screen.getByText(leader.name)).toBeInTheDocument();
     });
+    gymLeaders.forEach((leader) => {
+      expect(screen.getByText(leader.biome)).toBeInTheDocument();
+    });
   });
 });
