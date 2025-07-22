@@ -59,7 +59,7 @@ export function FooterBarski() {
         </Col>
         <Col xs={2} sm={1} >
           <a title={content.githubTitle}
-            href="https://github.com/jeffski13"
+            href="https://github.com/jeffski13/jeffDotSki"
           >
             <Image src={githubLogoImage}
               className="footerLogo githubLogo"
