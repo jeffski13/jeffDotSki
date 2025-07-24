@@ -8,7 +8,6 @@
     ],
     "rewrites":[
         {"source":"/aboutme/bio","destination":"/index.html"},
-        {"source":"/careers","destination":"/index.html"},
         {"source":"/aboutme/hobbies/drawing","destination":"/index.html"},
         {"source":"/aboutme/hobbies/tvShows","destination":"/index.html"},
         {"source":"/pokePeru/battle","destination":"/index.html"},

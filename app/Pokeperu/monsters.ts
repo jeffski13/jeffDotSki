@@ -197,7 +197,7 @@ export const monsters: Monster[] = [
     image: '/images/monsters/pkmnsquad1b.png',
     trainer: 'Lily',
     trainerImage: '/images/gymleaders/trainersquad1.png', // Added trainer image
-    description: 'He tricks you. He might seem like a very sweet pokemon but hew can kill you in a second. He leaves a very sweet scent that smells like cotton candy. Some people say that he eats too much sugar and now he is crazy.',
+    description: 'He tricks you. He might seem like a very sweet pokemon but he can kill you in a second. He leaves a very sweet scent that smells like cotton candy. Some people say that he eats too much sugar and now he is crazy.',
     inspiration: 'Duck', // Added inspiration
     hp: 90,
     attack: 50,
@@ -324,7 +324,7 @@ export const monsters: Monster[] = [
     name: 'Raymi',
     trainer: 'Inty',
     trainerImage: '/images/gymleaders/trainersquad3.png', // Added trainer image
-    description: 'It is friendly but usually is scares people.',
+    description: 'It is friendly but usually it scares people.',
     inspiration: 'Legend Sun God', // Added inspiration
     hp: 50,
     attack: 50,
