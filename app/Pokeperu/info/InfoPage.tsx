@@ -15,10 +15,10 @@ export default function InfoPageContainer() {
 }
 
 function InfoPage({ }: InfoPageProps) {
-  const blankData = `{
+  const blankDataPokemon = `{
  name: '',
- trainer: '',
- trainerImage: '',
+ trainer: '/images/monsters/',
+ trainerImage: '/images/gymleaders/',
  hp: 0,
  attack: 0,
  defense: 0,
@@ -46,6 +46,12 @@ function InfoPage({ }: InfoPageProps) {
   accuracy: 1,
   isPhysical: false
  }
+}`;
+  const blankDataGymLeader = `{
+  name: "",
+  image: "/images/gymleaders/",
+  environmentImage: "/images/perulandscape/",
+  biome: "",
 }`;
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const multiLangContent = {
@@ -277,7 +283,7 @@ function InfoPage({ }: InfoPageProps) {
             </Row>
             <Row className="info-blank-pokemon-data">
               <Col sm={12}>
-                <CopyableField blankData={blankData} />
+                <CopyableField blankData={blankDataPokemon} />
               </Col>
             </Row>
           </Container>
@@ -292,6 +298,11 @@ function InfoPage({ }: InfoPageProps) {
               </Col>
               <Col sm={11} md={5}>
                 <img src="/images/info/info_gymleader_creation_dataentry_b.png" alt="Back" className="info-image" />
+              </Col>
+            </Row>
+            <Row className="info-blank-pokemon-data">
+              <Col sm={12}>
+                <CopyableField blankData={blankDataGymLeader} />
               </Col>
             </Row>
           </Container>
