@@ -1,4 +1,5 @@
 
+import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ROUTES from '../../consts/ROUTES';
 import './infopage.css';
@@ -7,13 +8,51 @@ import '../secondaryPage.css';
 import '../mobile-support.css';
 import { getContentByLanguage, getBrowserLanguage } from '../../langSupport';
 
-interface InfoPageProps {}
+interface InfoPageProps { }
 
 export default function InfoPageContainer() {
   return (<InfoPage />);
 }
 
 function InfoPage({ }: InfoPageProps) {
+  const blankDataPokemon = `{
+ name: '',
+ trainer: '/images/monsters/',
+ trainerImage: '/images/gymleaders/',
+ hp: 0,
+ attack: 0,
+ defense: 0,
+ specialAttack: 0,
+ specialDefense: 0,
+ speed: 0,
+ image: '', 
+ description: '',
+ inspiration: '',
+ type: ElementType.Normal,
+ secondType: ElementType.Normal,
+ attack1: {
+  name: '',
+  type: ElementType.Normal,
+  damage: 0,
+  powerPoints: 0,
+  accuracy: 1,
+  isPhysical: true
+ },
+ attack2: {
+  name: '',
+  type: ElementType.Normal,
+  damage: 0,
+  powerPoints: 0,
+  accuracy: 1,
+  isPhysical: false
+ }
+}`;
+  const blankDataGymLeader = `{
+  name: "",
+  image: "/images/gymleaders/",
+  environmentImage: "/images/perulandscape/",
+  biome: "",
+}`;
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const multiLangContent = {
     es: {
@@ -28,7 +67,6 @@ function InfoPage({ }: InfoPageProps) {
       pokemonCreation: 'Creación de Pokémon',
       pokemonDesc: 'Los estudiantes debían crear lo siguiente para cada monstruo:',
       name: 'Nombre',
-      desc: 'Dos oraciones formales describiendo el carácter/personalidad del pokémon.',
       type1: 'Tipo de Elemento 1',
       type2: 'Tipo de Elemento 2 (Opcional)',
       stats: 'Estadísticas: Puntos de Salud, Ataque, Defensa, Ataque Especial, Defensa Especial, Velocidad',
@@ -60,6 +98,7 @@ function InfoPage({ }: InfoPageProps) {
       npmStart: 'npm start',
       browser: 'En el navegador, ve a',
       modify: 'Los archivos siguientes pueden modificarse con los datos respectivos.',
+      conjunction: 'y',
       images: 'Las imágenes de monstruos y líderes pueden agregarse en ',
       environments: 'Nuevos entornos pueden agregarse en: ',
     },
@@ -107,6 +146,7 @@ function InfoPage({ }: InfoPageProps) {
       npmStart: 'npm start',
       browser: 'In the browser, go to',
       modify: 'The following files can be modified with the respective monster and gym leader data:',
+      conjunction: 'and',
       images: 'Images with the monsters and gym leader data can be placed here: ',
       environments: 'New environments can be added inside of /public/images/perulandscape',
     }
@@ -158,7 +198,7 @@ function InfoPage({ }: InfoPageProps) {
               <Col sm={11} md={5}>
                 <img src="/images/info/info_pokemon_creation_a.png" alt="Back" className="info-image" />
               </Col>
-              <Col sm={1}  className="info-arrow-separator" >
+              <Col sm={1} className="info-arrow-separator" >
                 <span>➡️</span>
               </Col>
               <Col sm={11} md={5}>
@@ -183,7 +223,7 @@ function InfoPage({ }: InfoPageProps) {
               <Col sm={11} md={5}>
                 <img src="/images/info/info_gymleader_creation_a.png" alt="Back" className="info-image" />
               </Col>
-              <Col sm={1}  className="info-arrow-separator" >
+              <Col sm={1} className="info-arrow-separator" >
                 <span>➡️</span>
               </Col>
               <Col sm={11} md={5}>
@@ -203,7 +243,7 @@ function InfoPage({ }: InfoPageProps) {
               <Col sm={11} md={5}>
                 <img src="/images/info/info_battle_a.png" alt="Back" className="info-image" />
               </Col>
-              <Col sm={1}  className="info-arrow-separator" >
+              <Col sm={1} className="info-arrow-separator" >
                 <span>💥</span>
               </Col>
               <Col sm={11} md={5}>
@@ -226,19 +266,24 @@ function InfoPage({ }: InfoPageProps) {
           <p><strong>npm start</strong></p>
           <p>{content.browser} <a href={pokePeruLink}>{pokePeruLink}</a></p>
           <p>{content.modify}</p>
-          <p><strong>monsters.tsx</strong> and <strong>gymleaders.tsx</strong></p>
-          <p>{content.images}: <strong>/public/images/monsters</strong> and <strong>/public/images/gymleaders</strong></p>
+          <p><strong>monsters.tsx</strong> {content.conjunction} <strong>gymleaders.tsx</strong></p>
+          <p>{content.images}: <strong>/public/images/monsters</strong> {content.conjunction} <strong>/public/images/gymleaders</strong></p>
           <p>{content.environments} <strong>/public/images/perulandscape</strong></p>
           <Container>
             <Row className="info-images-container">
               <Col sm={11} md={5}>
                 <img src="/images/info/info_pokemon_creation_dataentry_a.png" alt="Back" className="info-image" />
               </Col>
-              <Col sm={1}  className="info-arrow-separator" >
+              <Col sm={1} className="info-arrow-separator" >
                 <span>➡️</span>
               </Col>
               <Col sm={11} md={5}>
                 <img src="/images/info/info_pokemon_creation_dataentry_b.png" alt="Back" className="info-image" />
+              </Col>
+            </Row>
+            <Row className="info-blank-pokemon-data">
+              <Col sm={12}>
+                <CopyableField blankData={blankDataPokemon} />
               </Col>
             </Row>
           </Container>
@@ -248,15 +293,56 @@ function InfoPage({ }: InfoPageProps) {
               <Col sm={11} md={5}>
                 <img src="/images/info/info_gymleader_creation_dataentry_a.png" alt="Back" className="info-image" />
               </Col>
-              <Col sm={1}  className="info-arrow-separator" >
+              <Col sm={1} className="info-arrow-separator" >
                 <span>➡️</span>
               </Col>
               <Col sm={11} md={5}>
                 <img src="/images/info/info_gymleader_creation_dataentry_b.png" alt="Back" className="info-image" />
               </Col>
             </Row>
+            <Row className="info-blank-pokemon-data">
+              <Col sm={12}>
+                <CopyableField blankData={blankDataGymLeader} />
+              </Col>
+            </Row>
           </Container>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// Expandable/copyable blank Pokémon data field
+interface CopyableFieldProps {
+  blankData: string;
+}
+
+function CopyableField({ blankData }: CopyableFieldProps) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(blankData);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (e) {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <div style={{ margin: '1.5em 0', textAlign: 'center' }}>
+      <div style={{ position: 'relative', maxWidth: 600, margin: '0 auto' }}>
+        <textarea
+          readOnly
+          value={blankData}
+          style={{ width: '100%', minHeight: 220, fontFamily: 'monospace', fontSize: 14, borderRadius: 8, border: '1px solid #bbb', padding: 12, resize: 'vertical', background: '#f9f9f9' }}
+        />
+        <button
+          onClick={handleCopy}
+          style={{ position: 'absolute', top: 10, right: 10, padding: '0.3em 1em', borderRadius: 6, border: '1px solid #888', background: '#e0e0e0', cursor: 'pointer', fontWeight: 600 }}
+        >
+          {copied ? 'Copied!' : 'Copy'}
+        </button>
       </div>
     </div>
   );
