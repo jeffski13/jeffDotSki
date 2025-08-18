@@ -28,11 +28,11 @@ function InfoPage({ }: InfoPageProps) {
  image: '', 
  description: '',
  inspiration: '',
- type: '',
- secondType: '',
+ type: ElementType.Normal,
+ secondType: ElementType.Normal,
  attack1: {
   name: '',
-  type: '',
+  type: ElementType.Normal,
   damage: 0,
   powerPoints: 0,
   accuracy: 1,
@@ -40,7 +40,7 @@ function InfoPage({ }: InfoPageProps) {
  },
  attack2: {
   name: '',
-  type: '',
+  type: ElementType.Normal,
   damage: 0,
   powerPoints: 0,
   accuracy: 1,
