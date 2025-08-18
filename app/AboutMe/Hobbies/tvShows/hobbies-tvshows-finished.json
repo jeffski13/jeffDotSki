@@ -28,6 +28,11 @@
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/dragonballz.jpg"
   },
   {
+    "title": "Evangelion",
+    "season": 1,
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/evangelion.jpg"
+  },
+  {
     "title": "Fairy Tail",
     "season": 5,
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/fairy_tail.jpg"
