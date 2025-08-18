@@ -163,7 +163,7 @@ export function Pokedex({
                         </div>
                       </Col>
                       <Col xs={12} sm={8} md={9}>
-                        <div className="stat-bar">
+                        <div className="stat-bar" title={`${stat.name}: ${stat.value}`}>
                           <div
                             className="bar"
                             style={{
