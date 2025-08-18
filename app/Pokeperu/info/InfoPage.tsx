@@ -15,6 +15,38 @@ export default function InfoPageContainer() {
 }
 
 function InfoPage({ }: InfoPageProps) {
+  const blankData = `{
+ name: '',
+ trainer: '',
+ trainerImage: '',
+ hp: 0,
+ attack: 0,
+ defense: 0,
+ specialAttack: 0,
+ specialDefense: 0,
+ speed: 0,
+ image: '', 
+ description: '',
+ inspiration: '',
+ type: '',
+ secondType: '',
+ attack1: {
+  name: '',
+  type: '',
+  damage: 0,
+  powerPoints: 0,
+  accuracy: 1,
+  isPhysical: true
+ },
+ attack2: {
+  name: '',
+  type: '',
+  damage: 0,
+  powerPoints: 0,
+  accuracy: 1,
+  isPhysical: false
+ }
+}`;
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const multiLangContent = {
     es: {
@@ -29,7 +61,6 @@ function InfoPage({ }: InfoPageProps) {
       pokemonCreation: 'Creación de Pokémon',
       pokemonDesc: 'Los estudiantes debían crear lo siguiente para cada monstruo:',
       name: 'Nombre',
-      desc: 'Dos oraciones formales describiendo el carácter/personalidad del pokémon.',
       type1: 'Tipo de Elemento 1',
       type2: 'Tipo de Elemento 2 (Opcional)',
       stats: 'Estadísticas: Puntos de Salud, Ataque, Defensa, Ataque Especial, Defensa Especial, Velocidad',
@@ -246,7 +277,7 @@ function InfoPage({ }: InfoPageProps) {
             </Row>
             <Row className="info-blank-pokemon-data">
               <Col sm={12}>
-                <CopyableField />
+                <CopyableField blankData={blankData} />
               </Col>
             </Row>
           </Container>
@@ -271,9 +302,12 @@ function InfoPage({ }: InfoPageProps) {
 }
 
 // Expandable/copyable blank Pokémon data field
-function CopyableField() {
+interface CopyableFieldProps {
+  blankData: string;
+}
+
+function CopyableField({ blankData }: CopyableFieldProps) {
   const [copied, setCopied] = useState(false);
-  const blankData = "{\n name: '',\n trainer: '',\n trainerImage: '',\n hp: 0,\n attack: 0,\n defense: 0,\n specialAttack: 0,\n specialDefense: 0,\n speed: 0,\n image: '', \n description: '',\n inspiration: '',\n type: '',\n secondType: '',\n attack1: {\n  name: '',\n  type: '',\n  damage: 0,\n  powerPoints: 0,\n  accuracy: 1,\n  isPhysical: true\n },\n attack2: {\n  name: '',\n  type: '',\n  damage: 0,\n  powerPoints: 0,\n  accuracy: 1,\n  isPhysical: false\n }\n}";
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(blankData);
