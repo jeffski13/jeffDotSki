@@ -152,12 +152,19 @@ function InfoPage({ }: InfoPageProps) {
     }
   };
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
-        <a href={ROUTES.pokePeru.battle} className="back-button">
+        <button
+          type="button"
+          className="back-button"
+          onClick={() => window.history.back()}
+          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+          aria-label="Go back"
+        >
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
-        </a>
+        </button>
         <Container>
           <Row>
             <Col xs={2} />
