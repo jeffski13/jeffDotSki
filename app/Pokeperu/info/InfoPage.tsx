@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import ROUTES from '../../consts/ROUTES';
 import './infopage.css';
 import '../navigation.css';
@@ -312,7 +312,7 @@ function InfoPage({ }: InfoPageProps) {
   );
 }
 
-// Expandable/copyable blank Pokémon data field
+// copyable data field
 interface CopyableFieldProps {
   blankData: string;
 }
@@ -337,12 +337,12 @@ function CopyableField({ blankData }: CopyableFieldProps) {
           value={blankData}
           style={{ width: '100%', minHeight: 220, fontFamily: 'monospace', fontSize: 14, borderRadius: 8, border: '1px solid #bbb', padding: 12, resize: 'vertical', background: '#f9f9f9' }}
         />
-        <button
+        <Button
           onClick={handleCopy}
-          style={{ position: 'absolute', top: 10, right: 10, padding: '0.3em 1em', borderRadius: 6, border: '1px solid #888', background: '#e0e0e0', cursor: 'pointer', fontWeight: 600 }}
+          style={{ position: 'absolute', top: 10, right: 10, padding: '0.3em 1em', borderRadius: 6}}
         >
           {copied ? 'Copied!' : 'Copy'}
-        </button>
+        </Button>
       </div>
     </div>
   );
