@@ -184,8 +184,22 @@ function InfoPage({ }: InfoPageProps) {
           <li>{content.animals}</li>
           <li>{content.personalities}</li>
         </ul>
+        <p>
+        <div style={{ textAlign: 'center' }}>
+          <video
+            width="100%"
+            style={{ maxWidth: 600, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.12)' }}
+            controls
+            poster="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruPromoPoster.png"
+          >
+            <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokemonInPeruPromoShortLQ.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        </p>
         <p>{content.required}</p>
         <p>{content.region}</p>
+        {/* Video demonstration at the bottom of project-info */}
         <div className="infoSection" id="sectionPokemonCreation">
           <h3>{content.pokemonCreation}</h3>
           <p>{content.pokemonDesc}</p>
