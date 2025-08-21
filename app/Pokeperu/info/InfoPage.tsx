@@ -62,6 +62,7 @@ function InfoPage({ }: InfoPageProps) {
       elements: 'Elementos',
       animals: 'Nombres de Animales',
       personalities: 'Tipos de Personalidad',
+      videoNotCompatable: 'Su buscador no funciona con este video.',
       required: 'Los estudiantes debían crear pokémon (inspirados en animales) y un líder de gimnasio (con rasgos de personalidad). El proyecto tenía un componente de batalla opcional con premios para mantener el interés.',
       region: 'A cada grupo se le asignó una región de Perú (desierto, montañas, costa, etc). Esto les dio inspiración para los tipos de monstruos y líderes de gimnasio que podían crear. También se les evaluó en los nombres en inglés de las regiones/biomas.',
       pokemonCreation: 'Creación de Pokémon',
@@ -109,6 +110,7 @@ function InfoPage({ }: InfoPageProps) {
       elements: 'Elements',
       animals: 'Names of Animals',
       personalities: 'Personality Types',
+      videoNotCompatable: 'Your browser does not support the video tag.',
       required: 'The students were required to create pokemon (inspired by animals) and a gym leader (with personality traits). The project had an optional battle component with prizes to keep the students invested in the project.',
       region: 'Each group was assigned a region of Peru (desert, moutains, coast, etc). This gave students an inspirational starting point for what types of monsters and gym leaders could be created. They were also tested on the english names of the regions/biomes.',
       pokemonCreation: 'Pokemon Creation',
@@ -152,6 +154,7 @@ function InfoPage({ }: InfoPageProps) {
     }
   };
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+  const posterUrl="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruPromoPoster.png";
 
   return (
     <div className="PokePeruSecondaryPage">
@@ -187,13 +190,22 @@ function InfoPage({ }: InfoPageProps) {
         <p>
         <div style={{ textAlign: 'center' }}>
           <video
+            className="promo-video desktop-view"
             width="100%"
-            style={{ maxWidth: 600, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.12)' }}
             controls
-            poster="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruPromoPoster.png"
-          >
+            poster={posterUrl}
+            >
             <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokemonInPeruPromoShortLQ.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
+            {content.videoNotCompatable}
+          </video>
+          <video
+            className="promo-video mobile-view"
+            width="100%"
+            controls
+            poster={posterUrl}
+            >
+            <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokemonInPeruPromoMobileShortLQ.mp4" type="video/mp4" />
+            {content.videoNotCompatable}
           </video>
         </div>
         </p>

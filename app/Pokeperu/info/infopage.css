@@ -34,3 +34,9 @@
 ul {
     list-style-type: circle;
 }
+
+.promo-video { 
+    max-width: 600;
+    border-radius: 12;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
