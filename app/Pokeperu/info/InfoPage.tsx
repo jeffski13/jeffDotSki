@@ -204,7 +204,7 @@ function InfoPage({ }: InfoPageProps) {
             controls
             poster={posterUrl}
             >
-            <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokemonInPeruPromoMobileShortLQ.mp4" type="video/mp4" />
+            <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruMobileShortLQ.mp4" type="video/mp4" />
             {content.videoNotCompatable}
           </video>
         </div>
