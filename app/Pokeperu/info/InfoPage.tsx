@@ -63,6 +63,7 @@ function InfoPage({ }: InfoPageProps) {
       animals: 'Nombres de Animales',
       personalities: 'Tipos de Personalidad',
       videoNotCompatable: 'Su buscador no funciona con este video.',
+      videoMobile: 'https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruMobileShortLQ_es.mp4',
       required: 'Los estudiantes debían crear pokémon (inspirados en animales) y un líder de gimnasio (con rasgos de personalidad). El proyecto tenía un componente de batalla opcional con premios para mantener el interés.',
       region: 'A cada grupo se le asignó una región de Perú (desierto, montañas, costa, etc). Esto les dio inspiración para los tipos de monstruos y líderes de gimnasio que podían crear. También se les evaluó en los nombres en inglés de las regiones/biomas.',
       pokemonCreation: 'Creación de Pokémon',
@@ -111,6 +112,7 @@ function InfoPage({ }: InfoPageProps) {
       animals: 'Names of Animals',
       personalities: 'Personality Types',
       videoNotCompatable: 'Your browser does not support the video tag.',
+      videoMobile: 'https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruMobileShortLQ.mp4',
       required: 'The students were required to create pokemon (inspired by animals) and a gym leader (with personality traits). The project had an optional battle component with prizes to keep the students invested in the project.',
       region: 'Each group was assigned a region of Peru (desert, moutains, coast, etc). This gave students an inspirational starting point for what types of monsters and gym leaders could be created. They were also tested on the english names of the regions/biomes.',
       pokemonCreation: 'Pokemon Creation',
@@ -191,8 +193,9 @@ function InfoPage({ }: InfoPageProps) {
         <div style={{ textAlign: 'center' }}>
           <video
             className="promo-video desktop-view"
-            width="100%"
+            width="50%"
             controls
+            muted={true}
             poster={posterUrl}
             >
             <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokemonInPeruPromoShortLQ.mp4" type="video/mp4" />
@@ -202,9 +205,10 @@ function InfoPage({ }: InfoPageProps) {
             className="promo-video mobile-view"
             width="100%"
             controls
+            muted={true}
             poster={posterUrl}
             >
-            <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruMobileShortLQ.mp4" type="video/mp4" />
+            <source src={content.videoMobile} type="video/mp4" />
             {content.videoNotCompatable}
           </video>
         </div>
