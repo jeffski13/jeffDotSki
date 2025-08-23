@@ -1,6 +1,6 @@
 executionScriptDir=$(pwd)
 
-echo "howdy y'all, lets deploy this ish"
+echo "howdy y'all, lets deploy this thang"
 
 npm version patch
 npm run build

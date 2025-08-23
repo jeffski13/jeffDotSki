@@ -2,10 +2,9 @@ import { useState } from 'react';
 import SelectionResultsScreen from '../selectionResults/SelectionResultsScreen';
 import Battle from './Battle';
 import type { Monster } from '../monsters';
-import ROUTES from '~/consts/ROUTES';
 import './battle.css';
 import '../infolink.css';
-import InfoNavigationConfirmModal from '../InfoNavigationConfirmModal';
+import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 
 interface BattleProps {
   selectedMonsters: Monster[]
@@ -40,7 +39,7 @@ export default function BattleContainer({ selectedMonsters }: BattleProps) {
           className="info-link-icon clickable-link-icon"
         />
       </a>
-      {showInfoNavigationConfirm && (<InfoNavigationConfirmModal onCancelNavigation={() => setInfoNavigationConfirm(false)}></InfoNavigationConfirmModal>)}
+      {showInfoNavigationConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setInfoNavigationConfirm(false)}></BackNavigationConfirmModal>)}
     </div>
   );
 }
