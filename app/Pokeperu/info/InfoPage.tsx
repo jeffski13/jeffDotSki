@@ -56,7 +56,7 @@ function InfoPage({ }: InfoPageProps) {
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const multiLangContent = {
     es: {
-      about: 'Sobre Pokémon en Perú',
+      about: 'Pokémon en Perú',
       aboutProject: 'Sobre el Proyecto',
       projectDesc: 'Pokémon en Perú fue un proyecto educativo diseñado para expandir el vocabulario descriptivo de los estudiantes en las siguientes categorías:',
       elements: 'Elementos',
@@ -64,6 +64,7 @@ function InfoPage({ }: InfoPageProps) {
       personalities: 'Tipos de Personalidad',
       videoNotCompatable: 'Su buscador no funciona con este video.',
       videoMobile: 'https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruMobileShortLQ_es.mp4',
+      videoDesktop: 'https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruShortLQ_es.mp4',
       required: 'Los estudiantes debían crear pokémon (inspirados en animales) y un líder de gimnasio (con rasgos de personalidad). El proyecto tenía un componente de batalla opcional con premios para mantener el interés.',
       region: 'A cada grupo se le asignó una región de Perú (desierto, montañas, costa, etc). Esto les dio inspiración para los tipos de monstruos y líderes de gimnasio que podían crear. También se les evaluó en los nombres en inglés de las regiones/biomas.',
       pokemonCreation: 'Creación de Pokémon',
@@ -105,7 +106,7 @@ function InfoPage({ }: InfoPageProps) {
       environments: 'Nuevos entornos pueden agregarse en: ',
     },
     default: {
-      about: 'About Pokemon in Peru',
+      about: 'Pokemon in Peru',
       aboutProject: 'About the Project',
       projectDesc: 'Pokemon in Peru was an educational project designed to expand students descriptive vocabulary in the following categories:',
       elements: 'Elements',
@@ -113,6 +114,7 @@ function InfoPage({ }: InfoPageProps) {
       personalities: 'Personality Types',
       videoNotCompatable: 'Your browser does not support the video tag.',
       videoMobile: 'https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruMobileShortLQ.mp4',
+      videoDesktop: 'https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruShortLQ.mp4',
       required: 'The students were required to create pokemon (inspired by animals) and a gym leader (with personality traits). The project had an optional battle component with prizes to keep the students invested in the project.',
       region: 'Each group was assigned a region of Peru (desert, moutains, coast, etc). This gave students an inspirational starting point for what types of monsters and gym leaders could be created. They were also tested on the english names of the regions/biomes.',
       pokemonCreation: 'Pokemon Creation',
@@ -198,7 +200,7 @@ function InfoPage({ }: InfoPageProps) {
             muted={true}
             poster={posterUrl}
             >
-            <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokemonInPeruPromoShortLQ.mp4" type="video/mp4" />
+            <source src={content.videoDesktop} type="video/mp4" />
             {content.videoNotCompatable}
           </video>
           <video
