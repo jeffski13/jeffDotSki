@@ -191,8 +191,9 @@ function InfoPage({ }: InfoPageProps) {
         <div style={{ textAlign: 'center' }}>
           <video
             className="promo-video desktop-view"
-            width="100%"
+            width="50%"
             controls
+            muted={true}
             poster={posterUrl}
             >
             <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokemonInPeruPromoShortLQ.mp4" type="video/mp4" />
@@ -202,6 +203,7 @@ function InfoPage({ }: InfoPageProps) {
             className="promo-video mobile-view"
             width="100%"
             controls
+            muted={true}
             poster={posterUrl}
             >
             <source src="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruMobileShortLQ.mp4" type="video/mp4" />
