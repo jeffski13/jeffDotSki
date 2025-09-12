@@ -1,5 +1,5 @@
 import { ElementType } from "../ElementType";
-import type { Monster } from "../monsters";
+import { monsters, type Monster } from "../monsters";
 
 export const monstersClaremore: Monster[] = [
   {
@@ -130,4 +130,8 @@ export const monstersClaremore: Monster[] = [
       accuracy: 1,
     },
   },
-]
+];
+
+export const getClaremoreMonsters = () => {
+  return [...monstersClaremore, ...monsters];
+}

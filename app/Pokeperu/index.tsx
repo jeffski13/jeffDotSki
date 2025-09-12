@@ -2,6 +2,7 @@ import { useState } from 'react';
 import BattleContainer from './battle/BattleParent';
 import MonsterSelection from './selection/MonsterSelection';
 import { monsters, type Monster } from './monsters';
+import ROUTES from '~/consts/ROUTES';
 import './pokeperu.css';
 
 export default function PokePeru() {
@@ -10,17 +11,19 @@ export default function PokePeru() {
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
-      <PokePeruContent monsters={monsters} />
+      <PokePeruContent monsters={monsters} dexRoute={ROUTES.pokePeru.pokedex} />
     </div>
   );
 }
 
 interface PokePeruContentProps {
   monsters: Monster[];
+  dexRoute: string;
 }
 
 export function PokePeruContent({
   monsters,
+  dexRoute
 }: PokePeruContentProps) {
   const [selectedMonstersNames, setSelectedMonstersNames] = useState<string[]>([]);
   const [selectedMonsters, setSelectedMonsters] = useState<Monster[]>([]);
@@ -42,6 +45,7 @@ export function PokePeruContent({
           selectedMonstersNames={selectedMonstersNames}
           currentUser={currentUser}
           handleMonsterSelect={handleMonsterSelect}
+          dexRoute={dexRoute}
         />
       ) : (
         <BattleContainer selectedMonsters={selectedMonsters} />

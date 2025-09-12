@@ -8,6 +8,7 @@ export default [
     route(ROUTES.aboutMe.tvShows, "routes/aboutMeTvShows.tsx"),
     route(ROUTES.pokePeru.battle, "routes/pokeperubattle.tsx"),
     route(ROUTES.pokePeru.pokeClaremore, "routes/pokeperuClaremore.tsx"),
+    route(ROUTES.pokePeru.pokeClaremoreDex, "routes/pokeperuClaremoreDex.tsx"),
     route(ROUTES.pokePeru.pokedex, "routes/pokeperupokedex.tsx"),
     route(ROUTES.pokePeru.gymleaders, "routes/pokeperugymleaders.tsx"),
     route(ROUTES.pokePeru.info, "routes/pokeperuinfo.tsx"),

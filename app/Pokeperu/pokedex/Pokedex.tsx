@@ -10,19 +10,21 @@ import '../mobile-support.css';
 
 interface BattleProps {
   selectedMonsters: Monster[];
+  battleRoute: string;
 }
 
 export default function PokedexContainer() {
-  return (<Pokedex selectedMonsters={monsters} />);
+  return (<Pokedex selectedMonsters={monsters} battleRoute={ROUTES.pokePeru.battle} />);
 }
 
 export function Pokedex({
   selectedMonsters,
+  battleRoute
 }: BattleProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
-        <a href={ROUTES.pokePeru.battle} className="back-button">
+        <a href={battleRoute} className="back-button">
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
         </a>
         <Container>

@@ -1,11 +1,7 @@
 import { PokePeruContent } from "..";
-import { monsters } from "../monsters"
-import { monstersClaremore } from "./monstersClaremore"
+import { getClaremoreMonsters } from "./monstersClaremore"
 import { Pokedex } from "../pokedex/Pokedex"
-
-const getMonsters = () => {
-  return [...monstersClaremore, ...monsters];
-}
+import ROUTES from "~/consts/ROUTES";
 
 export default function PokePeruClaremore() {
   return (
@@ -13,12 +9,11 @@ export default function PokePeruClaremore() {
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
-      <PokePeruContent monsters={getMonsters()} />
+      <PokePeruContent monsters={getClaremoreMonsters()} dexRoute={ROUTES.pokePeru.pokeClaremoreDex} />
     </div>
   );
 }
 
 export function PokedexClaremoreContainer() {
-  const allMonstersClaremore = [...monstersClaremore, ...monsters];
-  return (<Pokedex selectedMonsters={getMonsters()} />);
+  return (<Pokedex selectedMonsters={getClaremoreMonsters()} battleRoute={ROUTES.pokePeru.pokeClaremore} />);
 }
