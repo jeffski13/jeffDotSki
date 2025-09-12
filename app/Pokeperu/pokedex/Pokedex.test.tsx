@@ -5,7 +5,7 @@ import mockSelectedMonsters from '../mockMonsters';
 describe('Pokedex Component', () => {
   it('displays the monster name when rendered', () => {
     // Render the Pokedex component
-    render(<Pokedex selectedMonsters={mockSelectedMonsters} />);
+    render(<Pokedex selectedMonsters={mockSelectedMonsters} battleRoute='' />);
 
     // Assert that each monster's name is displayed
     mockSelectedMonsters.forEach((monster) => {
