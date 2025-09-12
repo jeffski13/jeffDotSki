@@ -8,13 +8,14 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 interface GymLeaderListProps {
   gymLeaders: GymLeader[];
+  battleRoute: string;
 }
 
 export default function GymLeaderListContainer() {
-  return (<GymLeaderList gymLeaders={gymLeaders} />);
+  return (<GymLeaderList gymLeaders={gymLeaders} battleRoute={ROUTES.pokePeru.battle} />);
 }
 
-function GymLeaderList({ gymLeaders }: GymLeaderListProps) {
+export function GymLeaderList({ gymLeaders }: GymLeaderListProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
