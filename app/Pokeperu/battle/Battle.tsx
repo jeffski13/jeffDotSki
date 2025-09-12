@@ -57,7 +57,7 @@ export default function Battle({
 
   useEffect(() => {
     // Randomly select an image from the /perulandscape folder on mount
-    const randomImageIndex = Math.floor(Math.random() * 11) + 1; // Random number between 1 and 8
+    const randomImageIndex = Math.floor(Math.random() * 11) + 1; // Random number for background
     setBackgroundImage(`/images/perulandscape/peru-${randomImageIndex}.jpg`);
   }, []);
 
