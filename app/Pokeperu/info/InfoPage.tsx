@@ -320,11 +320,11 @@ function InfoPage({ }: InfoPageProps) {
           <Container>
             <Row className="info-images-container">
               <Col sm={11} md={5}>
-                <h4>{content.diyNontechnicalMonsterCreationWorksheetTitle}Monster Creation Worksheet</h4>
+                <h4>{content.diyNontechnicalMonsterCreationWorksheetTitle}</h4>
                 <img src="/images/info/info_monster_creation_printable.png" alt="Back" className="info-image" />
               </Col>
               <Col sm={11} md={5}>
-                <h4>{content.diyNontechnicalGymleaderCreationWorksheetTitle}Gym Leader Creation Worksheet</h4>
+                <h4>{content.diyNontechnicalGymleaderCreationWorksheetTitle}</h4>
                 <img src="/images/info/info_gymleader_creation_printable.png" alt="Back" className="info-image" />
               </Col>
             </Row>
