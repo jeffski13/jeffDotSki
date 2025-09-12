@@ -5,7 +5,7 @@ import GymLeaderListContainer from "../Pokeperu/gym/GymLeaderList";
 export function meta({ }: Route.MetaArgs) {
   return [
     { title: "PokePeru Gym Leaders" },
-    { name: "Pokemon Gym Leaders in Peru", content: "Pokemon Gym Leaders in Peru" },
+    { name: "Gym Leaders in Peru", content: "Gym Leaders in Peru" },
   ];
 }
 

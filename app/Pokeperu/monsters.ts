@@ -132,7 +132,7 @@ export const monsters: Monster[] = [
     name: 'Conty',
     trainer: 'Monty',
     trainerImage: '/images/gymleaders/trainersquad2.png', // Added trainer image
-    description: 'This Pokemon is cute and friendly. He stays with the people all the time. His special attack is Ice Eggs',
+    description: 'This monster is cute and friendly. He stays with the people all the time. His special attack is Ice Eggs',
     inspiration: '', // Added inspiration
     hp: 80,
     attack: 0,

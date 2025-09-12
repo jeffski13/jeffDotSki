@@ -5,7 +5,7 @@ import PokePeru from "../Pokeperu";
 export function meta({ }: Route.MetaArgs) {
   return [
     { title: "PokePeru Battle" },
-    { name: "Pokemon in Peru Battle", content: "Pokebattle in Peru" },
+    { name: "Pocket Monsters in Peru Battle", content: "Pokebattle in Peru" },
   ];
 }
 

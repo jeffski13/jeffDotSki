@@ -14,7 +14,7 @@ export default function Bio() {
       professionalWhat: '¿Una profesiónal de verdad?',
       afterGrad: 'Después de graduarme en diciembre de 2014 me mudé a Dallas, lejos de mi familia y amigos. Muchos me dijeron que mientras fuera joven y soltero debía salir y conocer el mundo. Así que dejé Oklahoma y empecé a viajar.',
       becomingTeacher: 'En Perú conseguí mi primer puesto como profe con 5o y 6o grado. Y a mi me encantó. He decidido que voy a dedicarme a enseñar inglés como lenguaje extranjera.',
-      teacherPokePeru: 'Al enseñar mi taller de inglés, hice el plataforma "Pokemon en Peru", lo cual se puede acceder aquí en esta pagina web.',
+      teacherPokePeru: 'Al enseñar mi taller de inglés, hice el plataforma "Pocket Monsters en Peru", lo cual se puede acceder aquí en esta pagina web.',
       sayHello: '¡Salúdame!',
       interests: 'Al final soy un nerdo nomás. Hice un muro de mis intereses.',
       commonInterests: '¡Si veas algo que tenemos en comun, avisame!',
@@ -29,7 +29,7 @@ export default function Bio() {
       professionalWhat: 'A Professional What?',
       afterGrad: 'After graduating in December of 2014 I moved Dallas, far away from my familiar family and friends. So many people had told me that while I was young and single I needed go out and experience the world. So I left Oklahoma and started traveling.',
       becomingTeacher: 'While in Perú I got my first teaching job with 5th and 6th graders. And I loved it. I have decided that teaching English as a Foreign Language is what I want to do with my life.',
-      teacherPokePeru: 'While teaching my English Workshop, I made the "Pokemon in Peru" educational program, which can be accessed within this site.',
+      teacherPokePeru: 'While teaching my English Workshop, I made the "Pocket Monsters in Peru" educational program, which can be accessed within this site.',
       sayHello: 'Say Hello!',
       interests: 'At the end of the day I am just a nerd. A threw a collage* together of things I have enjoyed.',
       commonInterests: 'If you see anything we have in common, shoot me a message!',
@@ -91,7 +91,7 @@ export default function Bio() {
           <Row className="show-grid aboutMePargraph">
             <Col sm={10} >
               <p>
-                {content.teacherPokePeru}<a href={ROUTES.pokePeru.battle}>Pokemon In Peru Project</a>
+                {content.teacherPokePeru}<a href={ROUTES.pokePeru.battle}>Pocket Monsters In Peru Project</a>
               </p>
             </Col>
           </Row>
