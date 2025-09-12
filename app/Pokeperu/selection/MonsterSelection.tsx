@@ -11,6 +11,7 @@ interface MonsterSelectionProps {
   selectedMonstersNames: string[];
   currentUser: number;
   handleMonsterSelect: (monster: Monster) => void;
+  dexRoute: string;
 }
 
 export default function MonsterSelection({
@@ -18,6 +19,7 @@ export default function MonsterSelection({
   selectedMonstersNames,
   currentUser,
   handleMonsterSelect,
+  dexRoute
 }: MonsterSelectionProps) {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -56,7 +58,7 @@ export default function MonsterSelection({
             <Col xs={2} />
           </Row>
         </Container>
-        <a href={ROUTES.pokePeru.pokedex} className="pokedex-link">
+        <a href={dexRoute} className="pokedex-link">
           <img
             src="/images/pokedex-icon.png"
             alt="Pokedex"

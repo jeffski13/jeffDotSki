@@ -1,0 +1,137 @@
+import { ElementType } from "../ElementType";
+import { monsters, type Monster } from "../monsters";
+
+export const monstersClaremore: Monster[] = [
+  {
+    name: 'Moradder',
+    trainer: '???',
+    trainerImage: '/images/gymleaders/trainersquad01.png', // Added trainer image
+    hp: 100,
+    attack: 0,
+    defense: 40,
+    specialAttack: 110,
+    specialDefense: 50,
+    speed: 0,
+    type: ElementType.Dark,
+    secondType: ElementType.Fire,
+    image: '/images/monsters/pkmnsquad01a.png',
+    description: 'It sucks the souls of it\'s enemies leaving a path of permanent decay where it hovers. BE CAREFUL!',
+    inspiration: 'Mordor', // Added inspiration
+    attack1: {
+      name: 'Shadow Spear',
+      type: ElementType.Dark,
+      isPhysical: false,
+      damage: 25,
+      powerPoints: 10,
+      accuracy: 1,
+    },
+    attack2: {
+      name: 'Consume',
+      type: ElementType.Ghost,
+      isPhysical: false,
+      damage: 40,
+      powerPoints: 4,
+      accuracy: 0.75,
+    },
+  },
+  {
+    name: 'Bloodmask',
+    trainer: '???',
+    trainerImage: '/images/gymleaders/trainersquad01.png', // Added trainer image
+    hp: 90,
+    attack: 0,
+    defense: 40,
+    specialAttack: 50,
+    specialDefense: 50,
+    speed:40 ,
+    type: ElementType.Psychic,
+    secondType: ElementType.Ghost,
+    image: '/images/monsters/pkmnsquad01b.png',
+    description: 'Is it the mask or not? If it isn\'t, what is behind it?',
+    inspiration: 'Blood', // Added inspiration
+    attack1: {
+      name: 'Gut Strangle',
+      type: ElementType.Ghost,
+      isPhysical: false,
+      damage: 40,
+      powerPoints: 4,
+      accuracy: 0.75,
+    },
+    attack2: {
+      name: 'Blood Launch',
+      type: ElementType.Ghost,
+      isPhysical: false,
+      damage: 40,
+      powerPoints: 4,
+      accuracy: 0.75,
+    },
+  },
+  {
+    name: 'Sunflare',
+    trainer: 'Jim',
+    trainerImage: '/images/gymleaders/trainersquad02.png', // Added trainer image
+    hp: 100,
+    attack: 50,
+    defense: 50,
+    specialAttack: 50,
+    specialDefense: 45,
+    speed:5,
+    type: ElementType.Fire,
+    secondType: ElementType.Electric,
+    image: '/images/monsters/pkmnsquad02a.png',
+    description: 'He is always mad. He lives in the nether. He liked lava and he hates water.',
+    inspiration: 'Sun', // Added inspiration
+    attack1: {
+      name: 'Sun Beam',
+      type: ElementType.Electric,
+      isPhysical: false,
+      damage: 25,
+      powerPoints: 10,
+      accuracy: 1,
+    },
+    attack2: {
+      name: 'Flare',
+      type: ElementType.Fire,
+      isPhysical: true,
+      damage: 60,
+      powerPoints: 2,
+      accuracy: 0.5,
+    },
+  },
+  {
+    name: 'Toxatoin',
+    trainer: 'Tom',
+    trainerImage: '/images/gymleaders/trainersquad03.png', // Added trainer image
+    hp: 100,
+    attack: 70,
+    defense: 0,
+    specialAttack: 60,
+    specialDefense: 50,
+    speed:20,
+    type: ElementType.Grass,
+    secondType: ElementType.Ground,
+    image: '/images/monsters/pkmnsquad03a.png',
+    description: 'He is calm but when something attacks him, he literally goes into rage mode.',
+    inspiration: 'Bat', // Added inspiration
+    attack1: {
+      name: 'Vine Whip',
+      type: ElementType.Grass,
+      isPhysical: false,
+      damage: 60,
+      powerPoints: 2,
+      accuracy: 1,
+    },
+    attack2: {
+      name: 'Double Smash',
+      type: ElementType.Ground,
+      isPhysical: false,
+      damage: 60,
+      powerPoints: 2,
+      accuracy: 1,
+    },
+  },
+];
+
+export const getClaremoreMonsters = () => {
+  return [...monstersClaremore, ...monsters];
+}

@@ -7,6 +7,7 @@ import '../navigation.css';
 import '../mobile-support.css';
 import type { Monster } from '../monsters';
 import { getTypeColor } from '../typeColors';
+import ROUTES from '~/consts/ROUTES';
 
 interface MonsterSelectionResultsProps {
   monster1: Monster;
@@ -133,7 +134,7 @@ export default function SelectionResultsScreen({
           {StartButtonColumn}
         </Row>
       </Container>
-      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)}></BackNavigationConfirmModal>)}
+      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={ROUTES.pokePeru.battle}></BackNavigationConfirmModal>)}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import mockSelectedMonsters from '../mockMonsters';
 
 describe('PokePeruStart Component', () => {
   test('handleMonsterSelect modifies the selected monsters', () => {
-    render(<PokePeruContent monsters={mockSelectedMonsters} />);
+    render(<PokePeruContent monsters={mockSelectedMonsters} dexRoute='' />);
 
     // Find the buttons for the monsters
     const pikachuButton = screen.getByText(/Pikachu/i);

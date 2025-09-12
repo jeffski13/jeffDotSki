@@ -8,6 +8,7 @@ import './battle.css';
 import './battleAttacks.css';
 import '../navigationOverride.css';
 import { calculateAdjustedDamage, typeEffectiveness } from './battleAttack';
+import ROUTES from '~/consts/ROUTES';
 
 interface BattleProps {
   selectedMonsters: Monster[];
@@ -56,7 +57,7 @@ export default function Battle({
 
   useEffect(() => {
     // Randomly select an image from the /perulandscape folder on mount
-    const randomImageIndex = Math.floor(Math.random() * 8) + 1; // Random number between 1 and 8
+    const randomImageIndex = Math.floor(Math.random() * 11) + 1; // Random number for background
     setBackgroundImage(`/images/perulandscape/peru-${randomImageIndex}.jpg`);
   }, []);
 
@@ -411,7 +412,7 @@ export default function Battle({
           <Typewriter text={effectivenessResult} isInstantTextRender={isTextRenderInstant} />
         </div>
       </div>
-      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)}></BackNavigationConfirmModal>)}
+      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={ROUTES.pokePeru.battle}></BackNavigationConfirmModal>)}
     </div>
   );
 }

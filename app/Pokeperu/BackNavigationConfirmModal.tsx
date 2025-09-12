@@ -5,17 +5,19 @@ import './navigation.css';
 
 interface BackNavigationConfirmModalProps {
     onCancelNavigation: () => void;
+    destination: string;
 }
 
 export default function BackNavigationConfirmModal({
     onCancelNavigation,
+    destination
 }: BackNavigationConfirmModalProps) {
 
     return (
         <div className="back-confirm-modal">
             <div className="back-confirm-content">
                 <p>Are you sure?</p>
-                <Button onClick={() => window.location.href = ROUTES.pokePeru.battle}>Yes</Button>
+                <Button onClick={() => window.location.href = destination}>Yes</Button>
                 <Button onClick={() => onCancelNavigation()}>No</Button>
             </div>
         </div>
