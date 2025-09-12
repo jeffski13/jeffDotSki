@@ -15,6 +15,7 @@ interface BattleProps {
 export default function PokedexContainer() {
   return (<Pokedex selectedMonsters={monsters} />);
 }
+
 export function Pokedex({
   selectedMonsters,
 }: BattleProps) {

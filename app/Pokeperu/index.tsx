@@ -15,18 +15,6 @@ export default function PokePeru() {
   );
 }
 
-export function PokePeru2() {
-  const monsters2 = {...monsters}
-  return (
-    <div className="TitlePage" >
-      <div className="pokeperu-img-container">
-        <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
-      </div>
-      <PokePeruContent monsters={monsters2} />
-    </div>
-  );
-}
-
 interface PokePeruContentProps {
   monsters: Monster[];
 }

@@ -5,6 +5,7 @@ const ROUTES = {
       tvShows: '/aboutme/hobbies/tvShows',
     },
     pokePeru: {
+      pokeClaremore: '/pokeClaremore/battle',
       battle: '/pokePeru/battle',
       pokedex: '/pokePeru/pokedex',
       gymleaders: '/pokePeru/gymleaders',
