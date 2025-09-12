@@ -8,6 +8,7 @@ import './battle.css';
 import './battleAttacks.css';
 import '../navigationOverride.css';
 import { calculateAdjustedDamage, typeEffectiveness } from './battleAttack';
+import ROUTES from '~/consts/ROUTES';
 
 interface BattleProps {
   selectedMonsters: Monster[];
@@ -411,7 +412,7 @@ export default function Battle({
           <Typewriter text={effectivenessResult} isInstantTextRender={isTextRenderInstant} />
         </div>
       </div>
-      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)}></BackNavigationConfirmModal>)}
+      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={ROUTES.pokePeru.battle}></BackNavigationConfirmModal>)}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import type { Monster } from '../monsters';
 import './battle.css';
 import '../infolink.css';
 import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
+import ROUTES from '~/consts/ROUTES';
 
 interface BattleProps {
   selectedMonsters: Monster[]
@@ -39,7 +40,7 @@ export default function BattleContainer({ selectedMonsters }: BattleProps) {
           className="info-link-icon clickable-link-icon"
         />
       </a>
-      {showInfoNavigationConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setInfoNavigationConfirm(false)}></BackNavigationConfirmModal>)}
+      {showInfoNavigationConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setInfoNavigationConfirm(false)} destination={ROUTES.pokePeru.info}></BackNavigationConfirmModal>)}
     </div>
   );
 }
