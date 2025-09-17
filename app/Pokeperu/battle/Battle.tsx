@@ -12,11 +12,12 @@ import ROUTES from '~/consts/ROUTES';
 
 interface BattleProps {
   selectedMonsters: Monster[];
-  attackMissedPercentage?: number; // Optional property to dynamically control the miss chance
-  isAttackRandomDamage?: boolean; // Optional property to dynamically control the attack random damage
-  isTextRenderInstant?: boolean; // Optional property to dynamically control the attack random damage
-  isInstantStruggleEnabled?: boolean; // Optional property to dynamically control the attack random damage
-  isAllAttackCriticalHit?: boolean; // Optional property to dynamically control the attack random damage
+  attackMissedPercentage?: number;
+  isAttackRandomDamage?: boolean;
+  isTextRenderInstant?: boolean;
+  isInstantStruggleEnabled?: boolean;
+  isAllAttackCriticalHit?: boolean;
+  battleRoute?: string;
 }
 
 const STRUGGLE_ATTACK: MonsterAttack = {
@@ -35,6 +36,7 @@ export default function Battle({
   isTextRenderInstant = false,
   isInstantStruggleEnabled = false,
   isAllAttackCriticalHit = false,
+  battleRoute = ROUTES.pokePeru.battle
 }: BattleProps) {
   const isMonster1First = selectedMonsters[0].speed >= selectedMonsters[1].speed;
   const [monster1Hp, setMonster1Hp] = useState(selectedMonsters[0].hp);
@@ -412,7 +414,7 @@ export default function Battle({
           <Typewriter text={effectivenessResult} isInstantTextRender={isTextRenderInstant} />
         </div>
       </div>
-      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={ROUTES.pokePeru.battle}></BackNavigationConfirmModal>)}
+      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
     </div>
   );
 }

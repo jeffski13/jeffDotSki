@@ -13,12 +13,14 @@ interface MonsterSelectionResultsProps {
   monster1: Monster;
   monster2: Monster;
   setBattleClicked: () => void;
+  battleRoute: string;
 }
 
 export default function SelectionResultsScreen({
   monster1,
   monster2,
   setBattleClicked,
+  battleRoute
 }: MonsterSelectionResultsProps) {
   const [showBackConfirm, setShowBackConfirm] = useState(false);
 
@@ -134,7 +136,7 @@ export default function SelectionResultsScreen({
           {StartButtonColumn}
         </Row>
       </Container>
-      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={ROUTES.pokePeru.battle}></BackNavigationConfirmModal>)}
+      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
     </div>
   );
 }

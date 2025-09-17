@@ -10,7 +10,7 @@ export const gymLeadersClaremore: GymLeader[] = [
   {
     name: "Jim",
     image: "/images/gymleaders/trainersquad02.png",
-    environmentImage: "/images/perulandscape/peru-10.png",
+    environmentImage: "/images/perulandscape/peru-10.jpg",
     biome: "Nether",
   },
   {

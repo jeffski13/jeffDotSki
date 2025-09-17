@@ -8,10 +8,11 @@ import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 import ROUTES from '~/consts/ROUTES';
 
 interface BattleProps {
-  selectedMonsters: Monster[]
+  selectedMonsters: Monster[];
+  battleRoute: string;
 }
 
-export default function BattleContainer({ selectedMonsters }: BattleProps) {
+export default function BattleContainer({ selectedMonsters, battleRoute }: BattleProps) {
   const [isBattleClicked, setBattleClicked] = useState(false);
 
   const [showInfoNavigationConfirm, setInfoNavigationConfirm] = useState(false);
@@ -27,9 +28,10 @@ export default function BattleContainer({ selectedMonsters }: BattleProps) {
           monster1={selectedMonsters[0]}
           monster2={selectedMonsters[1]}
           setBattleClicked={() => setBattleClicked(true)}
+          battleRoute={battleRoute}
         />
       ) : (
-        <Battle selectedMonsters={selectedMonsters} />
+        <Battle selectedMonsters={selectedMonsters} battleRoute={battleRoute} />
       )}
 
       <a className="info-link-fixed-location" onClick={() => setInfoNavigationConfirm(true)}
