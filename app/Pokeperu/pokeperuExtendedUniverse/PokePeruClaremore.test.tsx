@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import PokePeruClaremore, {PokedexClaremoreContainer, GymLeaderListContainer} from './PokePeruClaremore';
 
 describe('PokePeruClaremore Component', () => {

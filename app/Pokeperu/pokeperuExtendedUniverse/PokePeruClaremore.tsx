@@ -25,6 +25,6 @@ export function PokedexClaremoreContainer() {
   return (<Pokedex selectedMonsters={getClaremoreMonsters()} battleRoute={ROUTES.pokePeru.pokeClaremore} />);
 }
 
-export function GymLeaderListContainer() {
+export function GymLeaderListClaremoreContainer() {
   return (<GymLeaderList gymLeaders={getClaremoreGymLeaders()} battleRoute={ROUTES.pokePeru.pokeClaremore} />);
 }
