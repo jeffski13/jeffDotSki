@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Pokedex } from './Pokedex';
 import mockSelectedMonsters from '../mockMonsters';
+import ROUTES from '~/consts/ROUTES';
 
 describe('Pokedex Component', () => {
   it('displays the monster name when rendered', () => {
@@ -20,5 +21,10 @@ describe('Pokedex Component', () => {
     const link = screen.getByRole('link', { name: 'Back' });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', battleRoute);
+
+    const infoRoute = ROUTES.pokePeru.info;
+    const infoLink = screen.getByRole('link', { name: 'Information Link' });
+    expect(infoLink).toBeInTheDocument();
+    expect(infoLink).toHaveAttribute('href', infoRoute);
   });
 });

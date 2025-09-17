@@ -47,7 +47,7 @@ export default function MonsterSelection({
         <a href={gymLeaderRoute} className="gym-link">
           <img
             src="/images/gym-icon.png"
-            alt="Gym"
+            alt="Gym Leaders"
             className="gym-link-icon clickable-link-icon"
           />
         </a>
