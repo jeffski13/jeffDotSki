@@ -15,7 +15,7 @@
         {"source":"/pokePeru/info","destination":"/index.html"},
         {"source":"/pokePeru/pokedex","destination":"/index.html"},
         {"source":"/pokeClaremore/battle","destination":"/index.html"},
-        {"source":"/pokeClaremore/pokedex","destination":"/index.html"},
+        {"source":"/pokeClaremore/pokedex","destination":"/index.html"}
     ]
   }
 }
