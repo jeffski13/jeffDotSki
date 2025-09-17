@@ -28,6 +28,7 @@ export default function BattleContainer({ selectedMonsters, battleRoute }: Battl
           monster1={selectedMonsters[0]}
           monster2={selectedMonsters[1]}
           setBattleClicked={() => setBattleClicked(true)}
+          battleRoute={battleRoute}
         />
       ) : (
         <Battle selectedMonsters={selectedMonsters} battleRoute={battleRoute} />

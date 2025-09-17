@@ -25,7 +25,8 @@ describe('BattleStartScreen Component', () => {
   });
 
   test('shows "Are you sure?" popup with Yes and No buttons when back button is clicked', () => {
-      render(<BattleContainer selectedMonsters={mockSelectedMonsters} />);
+      const battleRoute = '/battletest'
+      render(<BattleContainer selectedMonsters={mockSelectedMonsters} battleRoute={battleRoute} />);
   
       // Click the back button (find by alt text of the image or by role)
       const backButton = screen.getByRole('button', { name: /back/i });

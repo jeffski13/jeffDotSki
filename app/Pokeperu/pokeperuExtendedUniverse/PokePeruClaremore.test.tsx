@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import PokePeruClaremore, {PokedexClaremoreContainer, GymLeaderListContainer} from './PokePeruClaremore';
+import PokePeruClaremore, {PokedexClaremoreContainer, GymLeaderListClaremoreContainer} from './PokePeruClaremore';
 
 describe('PokePeruClaremore Component', () => {
   it('renders the component', () => {
@@ -9,6 +9,6 @@ describe('PokePeruClaremore Component', () => {
     render(<PokedexClaremoreContainer />);
   });
   it('renders the component', () => {
-    render(<GymLeaderListContainer />);
+    render(<GymLeaderListClaremoreContainer />);
   });
 });
