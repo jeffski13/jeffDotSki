@@ -1,6 +1,6 @@
-import type { Route } from "../+types/home";
-import { GymLeaderListClaremoreContainer } from "~/Pokeperu/pokeperuExtendedUniverse/PokePeruClaremore";
 import JeffSkiPageWithContent from "~/Inf/JeffSkiPageWithContent";
+import type { Route } from "../../../routes/+types/home";
+import { GymLeaderListClaremoreContainer } from "../PokePeruClaremore";
 
 export function meta({ }: Route.MetaArgs) {
   return [
