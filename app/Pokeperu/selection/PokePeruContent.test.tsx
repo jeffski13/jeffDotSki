@@ -31,7 +31,7 @@ describe('PokePeruStart Component', () => {
     render(<PokePeruContent monsters={mockSelectedMonsters} dexRoute={dexRoute} battleRoute={battleRoute} gymRoute={gymRoute} />);
     // Look for a link with the correct href
     const gymLink = screen.getByRole('link', { name: 'Gym Leaders' });
-    expe`ct(gymLink).toBeInTheDocument();
+    expect(gymLink).toBeInTheDocument();
     expect(gymLink).toHaveAttribute('href', gymRoute);
     
     const dexLink = screen.getByRole('link', { name: 'Pokedex' });
