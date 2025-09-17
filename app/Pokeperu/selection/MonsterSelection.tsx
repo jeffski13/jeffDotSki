@@ -12,6 +12,7 @@ interface MonsterSelectionProps {
   currentUser: number;
   handleMonsterSelect: (monster: Monster) => void;
   dexRoute: string;
+  gymLeaderRoute: string;
 }
 
 export default function MonsterSelection({
@@ -19,7 +20,8 @@ export default function MonsterSelection({
   selectedMonstersNames,
   currentUser,
   handleMonsterSelect,
-  dexRoute
+  dexRoute,
+  gymLeaderRoute
 }: MonsterSelectionProps) {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -42,7 +44,7 @@ export default function MonsterSelection({
     <div className="PokePeruStart">
       <div className="secondary-page-header">
         {/* Gym button in upper left */}
-        <a href={ROUTES.pokePeru.gymleaders} className="gym-link">
+        <a href={gymLeaderRoute} className="gym-link">
           <img
             src="/images/gym-icon.png"
             alt="Gym"

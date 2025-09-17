@@ -11,7 +11,11 @@ export default function PokePeru() {
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
-      <PokePeruContent monsters={monsters} dexRoute={ROUTES.pokePeru.pokedex} />
+      <PokePeruContent monsters={monsters}
+        dexRoute={ROUTES.pokePeru.pokedex}
+        battleRoute={ROUTES.pokePeru.battle}
+        gymRoute={ROUTES.pokePeru.gymleaders}
+      />
     </div>
   );
 }
@@ -19,11 +23,15 @@ export default function PokePeru() {
 interface PokePeruContentProps {
   monsters: Monster[];
   dexRoute: string;
+  battleRoute: string;
+  gymRoute: string;
 }
 
 export function PokePeruContent({
   monsters,
-  dexRoute
+  dexRoute,
+  battleRoute,
+  gymRoute
 }: PokePeruContentProps) {
   const [selectedMonstersNames, setSelectedMonstersNames] = useState<string[]>([]);
   const [selectedMonsters, setSelectedMonsters] = useState<Monster[]>([]);
@@ -46,9 +54,10 @@ export function PokePeruContent({
           currentUser={currentUser}
           handleMonsterSelect={handleMonsterSelect}
           dexRoute={dexRoute}
+          gymLeaderRoute={gymRoute}
         />
       ) : (
-        <BattleContainer selectedMonsters={selectedMonsters} />
+        <BattleContainer selectedMonsters={selectedMonsters} battleRoute={battleRoute} />
       )}
     </>
   );

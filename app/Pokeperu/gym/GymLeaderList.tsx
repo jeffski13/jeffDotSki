@@ -15,11 +15,11 @@ export default function GymLeaderListContainer() {
   return (<GymLeaderList gymLeaders={gymLeaders} battleRoute={ROUTES.pokePeru.battle} />);
 }
 
-export function GymLeaderList({ gymLeaders }: GymLeaderListProps) {
+export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
-        <a href={ROUTES.pokePeru.battle} className="back-button">
+        <a href={battleRoute} className="back-button">
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
         </a>
         <Container>

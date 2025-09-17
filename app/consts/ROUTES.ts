@@ -7,6 +7,7 @@ const ROUTES = {
     pokePeru: {
       pokeClaremore: '/pokeClaremore/battle',
       pokeClaremoreDex: '/pokeClaremore/pokedex',
+      pokeClaremoreGym: '/pokeClaremore/gymleaders',
       battle: '/pokePeru/battle',
       pokedex: '/pokePeru/pokedex',
       gymleaders: '/pokePeru/gymleaders',
