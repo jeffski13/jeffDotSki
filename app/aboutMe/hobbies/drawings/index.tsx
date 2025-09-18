@@ -21,6 +21,7 @@ export function Drawings({
 }: DrawingsProps) {
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
   const [overlayIndex, setOverlayIndex] = useState<{ list: 'normal' | 'halloween'; idx: number } | null>(null);
+  const [swipeAnim, setSwipeAnim] = useState<'left' | 'right' | null>(null);
 
   // Combine both lists for navigation
   const combinedLists = [
@@ -45,11 +46,19 @@ export function Drawings({
       const currentIdx = getOverlayIdx();
       if (currentIdx === -1) return;
       if (e.key === 'ArrowLeft') {
-        const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-        setOverlayImg(combinedLists[prevIdx].full);
+        setSwipeAnim('left');
+        setTimeout(() => {
+          const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+          setOverlayImg(combinedLists[prevIdx].full);
+          setSwipeAnim(null);
+        }, 200);
       } else if (e.key === 'ArrowRight') {
-        const nextIdx = (currentIdx + 1) % combinedLists.length;
-        setOverlayImg(combinedLists[nextIdx].full);
+        setSwipeAnim('right');
+        setTimeout(() => {
+          const nextIdx = (currentIdx + 1) % combinedLists.length;
+          setOverlayImg(combinedLists[nextIdx].full);
+          setSwipeAnim(null);
+        }, 200);
       }
     };
 
@@ -69,13 +78,19 @@ export function Drawings({
         const currentIdx = getOverlayIdx();
         if (Math.abs(diff) > minSwipeDistance && currentIdx !== -1) {
           if (diff < 0) {
-            // Swipe left
-            const nextIdx = (currentIdx + 1) % combinedLists.length;
-            setOverlayImg(combinedLists[nextIdx].full);
+            setSwipeAnim('left');
+            setTimeout(() => {
+              const nextIdx = (currentIdx + 1) % combinedLists.length;
+              setOverlayImg(combinedLists[nextIdx].full);
+              setSwipeAnim(null);
+            }, 200);
           } else if (diff > 0) {
-            // Swipe right
-            const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-            setOverlayImg(combinedLists[prevIdx].full);
+            setSwipeAnim('right');
+            setTimeout(() => {
+              const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+              setOverlayImg(combinedLists[prevIdx].full);
+              setSwipeAnim(null);
+            }, 200);
           }
         }
       }
@@ -177,6 +192,7 @@ export function Drawings({
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
+              overflow: 'hidden',
             }}
             onClick={() => setOverlayImg(null)}
             aria-label="Close full screen image"
@@ -184,11 +200,14 @@ export function Drawings({
             <img
               src={overlayImg}
               alt="Full drawing"
+              className={swipeAnim ? `drawing-swipe-${swipeAnim}` : ''}
               style={{
                 maxWidth: '90vw',
                 maxHeight: '90vh',
                 borderRadius: 12,
                 boxShadow: '0 2px 24px rgba(0,0,0,0.5)',
+                transition: 'transform 0.2s cubic-bezier(.4,2,.6,1)',
+                transform: swipeAnim === 'left' ? 'translateX(-100vw)' : swipeAnim === 'right' ? 'translateX(100vw)' : 'translateX(0)',
               }}
             />
           </div>
