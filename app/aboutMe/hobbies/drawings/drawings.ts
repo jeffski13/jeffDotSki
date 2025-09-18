@@ -33,12 +33,12 @@ export const drawings: DrawingItem[] = [
   {
     "name": "Squirtle 007",
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_7squirtle.png",
-    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_7squirtle.PNG"
+    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_7squirtle.jpeg"
   },
   {
     "name": "Wartortle 008",
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_8wortortle.png",
-    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_8wortortle.PNG"
+    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_8wortortle.jpg"
   },
   {
     "name": "Blastoise 009",
