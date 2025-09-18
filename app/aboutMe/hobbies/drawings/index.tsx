@@ -1,15 +1,8 @@
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import drawings from './hobbies-drawings.json';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
-import drawingsHalloween from './hobbies-drawings-halloween.json';
 import '../styles.css';
-
-interface DrawingItem {
-  name: string;
-  thumb: string;
-  full: string;
-}
+import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 
 // Fullscreen overlay state and handler will be managed in Drawings component
 const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onImageClicked: Function) => {
