@@ -1,12 +1,11 @@
 import NavigationBar from "./NavigationBar";
-import FooterBarski from "./FooterBarski";
 import React from 'react';
 import '../styles.css';
 
 interface ComponentWithProps {}
 
 /**
- * HOC that has the navbar, bottom bar, etc for the webside content.
+ * HOC that has the navbar, etc for the webside content.
  * @param PageContent the content of the page
  * @returns the page with the common website components.
  */

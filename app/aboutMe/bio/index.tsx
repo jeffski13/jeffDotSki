@@ -4,7 +4,7 @@ import '../styles.css';
 import './styles.css';
 import { getContentByLanguage, getBrowserLanguage } from '../../langSupport';
 
-export default function Bio() {
+export function Bio() {
   const multiLangContent = {
     es: {
       aboutMe: 'Sobre Mí',
