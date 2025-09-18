@@ -4,7 +4,13 @@ import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import drawingsHalloween from './hobbies-drawings-halloween.json';
 import '../styles.css';
 
-const renderDrawings = (drawingItem, index, titleLabel) => {
+export interface DrawingItem {
+  name: string;
+  thumb: string;
+  full: string;
+}
+
+const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string) => {
   return (
     <Col xs={12} md={6} lg={4}>
       <li key={index} >
