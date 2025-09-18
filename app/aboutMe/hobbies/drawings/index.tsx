@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
-import '../styles.css';
+import '../hobbiesStyles.css';
 
 interface DrawingsProps {
   drawingsList: DrawingItem[];
