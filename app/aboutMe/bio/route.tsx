@@ -1,7 +1,6 @@
 import type { Route } from "./+types/home";
-import JeffSkiPageWithContent from "../Inf/JeffSkiPageWithContent"
-import Bio from "../AboutMe/Bio";
-
+import JeffSkiPageWithContent from "../../Inf/JeffSkiPageWithContent"
+import {Bio} from ".";
 export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Bio" },

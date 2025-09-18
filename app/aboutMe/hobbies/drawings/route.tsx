@@ -1,6 +1,6 @@
+import JeffSkiPageWithContent from "~/Inf/JeffSkiPageWithContent";
 import type { Route } from "./+types/home";
-import JeffSkiPageWithContent from "../Inf/JeffSkiPageWithContent"
-import Drawings from "../AboutMe/Hobbies/drawings";
+import Drawings from ".";
 
 export function meta({ }: Route.MetaArgs) {
   return [
