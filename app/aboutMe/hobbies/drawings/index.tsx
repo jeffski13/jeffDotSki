@@ -22,6 +22,7 @@ export function Drawings({
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
   const [overlayIndex, setOverlayIndex] = useState<{ list: 'normal' | 'halloween'; idx: number } | null>(null);
   const [swipeAnim, setSwipeAnim] = useState<'left' | 'right' | null>(null);
+  const [zoomedIn, setZoomedIn] = useState(false);
 
   // Combine both lists for navigation
   const combinedLists = [
@@ -43,20 +44,45 @@ export function Drawings({
     }
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (zoomedIn) return; // Prevent navigation if zoomed in
       const currentIdx = getOverlayIdx();
       if (currentIdx === -1) return;
-        if (e.key === 'ArrowLeft') {
-          const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-          setOverlayImg(combinedLists[prevIdx].full);
-        } else if (e.key === 'ArrowRight') {
-          const nextIdx = (currentIdx + 1) % combinedLists.length;
-          setOverlayImg(combinedLists[nextIdx].full);
+      if (e.key === 'ArrowLeft') {
+        const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+        setOverlayImg(combinedLists[prevIdx].full);
+      } else if (e.key === 'ArrowRight') {
+        const nextIdx = (currentIdx + 1) % combinedLists.length;
+        setOverlayImg(combinedLists[nextIdx].full);
+      }
+    };
+    // Detect zoom gesture (Ctrl/Cmd + wheel or pinch)
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        setZoomedIn(true);
+      } else {
+        setZoomedIn(false);
+      }
+    };
+    // Detect pinch zoom on touch devices
+    let lastTouchDist: number | null = null;
+    const handleTouchMoveZoom = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (lastTouchDist !== null && Math.abs(dist - lastTouchDist) > 10) {
+          setZoomedIn(true);
         }
+        lastTouchDist = dist;
+      } else {
+        setZoomedIn(false);
+        lastTouchDist = null;
+      }
     };
 
     let touchStartX: number | null = null;
     let touchEndX: number | null = null;
-    const minSwipeDistance = 150;
+    const minSwipeDistance = 75;
 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartX = e.touches[0].clientX;
@@ -92,14 +118,18 @@ export function Drawings({
     };
 
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('wheel', handleWheel, { passive: true });
     window.addEventListener('touchstart', handleTouchStart);
     window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchmove', handleTouchMoveZoom);
     window.addEventListener('touchend', handleTouchEnd);
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchmove', handleTouchMoveZoom);
       window.removeEventListener('touchend', handleTouchEnd);
     };
   }, [overlayImg]);
