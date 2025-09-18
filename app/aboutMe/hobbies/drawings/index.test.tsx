@@ -11,6 +11,36 @@ const mockDrawings: DrawingItem[] = [
 ];
 
 describe('Drawings Component', () => {
+  it('switches full screen image with left/right arrow keys', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+      { name: 'Drawing 3', thumb: '/thumb3.jpg', full: '/full3.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} />);
+    // Open overlay for Drawing 2
+    const thumbImg = screen.getByAltText(/Drawing 2 Drawing/i);
+    fireEvent.click(thumbImg);
+    // Overlay should show Drawing 2
+    let fullImg = screen.getByAltText(/Full drawing/i);
+    expect(fullImg).toHaveAttribute('src', '/full2.jpg');
+
+    // Press right arrow to go to Drawing 3
+    fireEvent.keyDown(window, { key: 'ArrowRight' });
+    fullImg = screen.getByAltText(/Full drawing/i);
+    expect(fullImg).toHaveAttribute('src', '/full3.jpg');
+
+    // Press left arrow to go back to Drawing 2
+    fireEvent.keyDown(window, { key: 'ArrowLeft' });
+    fullImg = screen.getByAltText(/Full drawing/i);
+    expect(fullImg).toHaveAttribute('src', '/full2.jpg');
+
+    // Press left arrow to go to Drawing 1
+    fireEvent.keyDown(window, { key: 'ArrowLeft' });
+    fullImg = screen.getByAltText(/Full drawing/i);
+    expect(fullImg).toHaveAttribute('src', '/full1.jpg');
+  });
+  
   it('renders full image overlay when hobbieImage is clicked', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
     // Find the thumbnail image and click it

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
@@ -20,6 +20,88 @@ export function Drawings({
   drawingsHalloweenList
 }: DrawingsProps) {
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
+  const [overlayIndex, setOverlayIndex] = useState<{ list: 'normal' | 'halloween'; idx: number } | null>(null);
+  const [swipeAnim, setSwipeAnim] = useState<'left' | 'right' | null>(null);
+
+  // Combine both lists for navigation
+  const combinedLists = [
+    ...drawingsList.map((item, idx) => ({ ...item, list: 'normal', idx })),
+    ...drawingsHalloweenList.map((item, idx) => ({ ...item, list: 'halloween', idx }))
+  ];
+
+  // Find the current overlay index in combinedLists
+  const getOverlayIdx = () => {
+    if (!overlayImg) return -1;
+    return combinedLists.findIndex(item => item.full === overlayImg);
+  };
+
+  // Keyboard, touch navigation, and scroll lock effect
+  useEffect(() => {
+    if (!overlayImg) {
+      document.body.style.overflow = '';
+      return;
+    }
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const currentIdx = getOverlayIdx();
+      if (currentIdx === -1) return;
+        if (e.key === 'ArrowLeft') {
+          const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+          setOverlayImg(combinedLists[prevIdx].full);
+        } else if (e.key === 'ArrowRight') {
+          const nextIdx = (currentIdx + 1) % combinedLists.length;
+          setOverlayImg(combinedLists[nextIdx].full);
+        }
+    };
+
+    let touchStartX: number | null = null;
+    let touchEndX: number | null = null;
+    const minSwipeDistance = 50;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      touchEndX = e.touches[0].clientX;
+    };
+    const handleTouchEnd = () => {
+      if (touchStartX !== null && touchEndX !== null) {
+        const diff = touchEndX - touchStartX;
+        const currentIdx = getOverlayIdx();
+        if (Math.abs(diff) > minSwipeDistance && currentIdx !== -1) {
+          if (diff < 0) {
+            setSwipeAnim('left');
+            setTimeout(() => {
+              const nextIdx = (currentIdx + 1) % combinedLists.length;
+              setOverlayImg(combinedLists[nextIdx].full);
+              setSwipeAnim(null);
+            }, 200);
+          } else if (diff > 0) {
+            setSwipeAnim('right');
+            setTimeout(() => {
+              const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+              setOverlayImg(combinedLists[prevIdx].full);
+              setSwipeAnim(null);
+            }, 200);
+          }
+        }
+      }
+      touchStartX = null;
+      touchEndX = null;
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [overlayImg]);
 
   const multiLangContent = {
     es: {
@@ -55,7 +137,10 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                  setOverlayImg(item.full);
+                  // Optionally set overlayIndex if you want to track which list
+                })
               )}
             </Row>
           </ul>
@@ -75,7 +160,10 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsHalloweenList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                  setOverlayImg(item.full);
+                  // Optionally set overlayIndex if you want to track which list
+                })
               )}
             </Row>
           </ul>
@@ -96,6 +184,7 @@ export function Drawings({
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
+              overflow: 'hidden',
             }}
             onClick={() => setOverlayImg(null)}
             aria-label="Close full screen image"
@@ -103,11 +192,14 @@ export function Drawings({
             <img
               src={overlayImg}
               alt="Full drawing"
+              className={swipeAnim ? `drawing-swipe-${swipeAnim}` : ''}
               style={{
                 maxWidth: '90vw',
                 maxHeight: '90vh',
                 borderRadius: 12,
                 boxShadow: '0 2px 24px rgba(0,0,0,0.5)',
+                transition: 'transform 0.2s cubic-bezier(.4,2,.6,1)',
+                transform: swipeAnim === 'left' ? 'translateX(-100vw)' : swipeAnim === 'right' ? 'translateX(100vw)' : 'translateX(0)',
               }}
             />
           </div>
