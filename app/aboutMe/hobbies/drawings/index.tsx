@@ -12,7 +12,7 @@ interface DrawingItem {
 }
 
 // Fullscreen overlay state and handler will be managed in Drawings component
-const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string) => {
+const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onImageClicked: Function) => {
   return (
     <Col xs={12} md={6} lg={4} key={index}>
       <li>
@@ -29,7 +29,9 @@ const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string) => 
               src={drawingItem.thumb}
               alt={`${drawingItem.name} Drawing`}
               style={{ cursor: 'pointer' }}
-              onClick={() => setOverlayImg(drawingItem.full)}
+              onClick={() => {
+                console.log(index)
+                onImageClicked();}}
             />
           </div>
         </div>
@@ -74,7 +76,7 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawings.map((item, i) => renderDrawings(item, i, content.titleLabel))}
+              {drawings.map((item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)}))}
             </Row>
           </ul>
         </Container>
@@ -92,7 +94,7 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawingsHalloween.map((item, i) => renderDrawings(item, i, content.titleLabel))}
+              {drawingsHalloween.map((item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)}))}
             </Row>
           </ul>
         </Container>
