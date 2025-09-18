@@ -1,40 +1,32 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import '../hobbiesStyles.css';
 
-class TvShow extends React.Component {
-  render() {
+export interface TvShowProps {
+  title: string;
+  season?: number;
+  thumb: string;
+}
 
-    let seasonRender = null;
-    if (this.props.season) {
-      seasonRender = (<div className="hobbieItemInfo" >
-        <div className="hobbieItemTitle" >Season:</div>
-        <div className="hobbieItemText" >{this.props.season}</div>
+const TvShow: React.FC<TvShowProps> = ({ title, season, thumb }) => {
+  return (
+    <div className="HobbieContentItem" >
+      <div className="hobbieImageContainer" >
+        <img className="hobbieImage tvshowImage" src={thumb} alt={`${title} Show`} />
       </div>
-      );
-    }
-
-    return (
-      <div className="HobbieContentItem" >
-        <div className="hobbieImageContainer" >
-          <img className="hobbieImage tvshowImage" src={this.props.thumb} alt={`${this.props.title} Show`} />
+      <div className="hobbieItemInfoContainer">
+        <div className="hobbieItemInfo" >
+          <div className="hobbieItemTitle" >Show:</div>
+          <div className="hobbieItemText" >{title}</div>
         </div>
-        <div className="hobbieItemInfoContainer">
+        {season !== undefined && (
           <div className="hobbieItemInfo" >
-            <div className="hobbieItemTitle" >Show:</div>
-            <div className="hobbieItemText" >{this.props.title}</div>
+            <div className="hobbieItemTitle" >Season:</div>
+            <div className="hobbieItemText" >{season}</div>
           </div>
-          {seasonRender}
-        </div >
-      </div>
-    );
-  }
-}
-
-TvShow.propTypes = {
-  title: PropTypes.string.isRequired,
-  season: PropTypes.number,
-  thumb: PropTypes.string
-}
+        )}
+      </div >
+    </div>
+  );
+};
 
 export default TvShow;

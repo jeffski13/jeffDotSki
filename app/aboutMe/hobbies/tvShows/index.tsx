@@ -1,15 +1,14 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import TvShow from './TvShow';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
-import tvshows from './hobbies-tvshows.json';
-import tvshowsFinished from './hobbies-tvshows-finished.json';
+import { tvshows, tvshowsFinished, type TvShowInfo } from './tvshows';
 import '../hobbiesStyles.css';
 
 
-const renderTvShows = (tvshowItem, index) => {
+const renderTvShows = (tvshowItem: TvShowInfo, index: number) => {
   return (
-    <Col xs={12} sm={6} md={4}>
-      <li key={index} >
+    <Col xs={12} sm={6} md={4} key={index}>
+      <li>
         <TvShow
           title={tvshowItem.title}
           season={tvshowItem.season}
