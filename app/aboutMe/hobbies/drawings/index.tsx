@@ -34,7 +34,21 @@ const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onI
   );
 };
 
-export default function Drawings() {
+interface DrawingsProps {
+  drawingsList: DrawingItem[];
+  drawingsHalloweenList: DrawingItem[];
+}
+
+export default function DrawingsPage() {
+  return (
+    <Drawings drawingsList={drawings} drawingsHalloweenList={drawingsHalloween} />
+  );
+}
+
+export function Drawings({
+  drawingsList,
+  drawingsHalloweenList
+}: DrawingsProps) {
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
 
   const multiLangContent = {
@@ -70,7 +84,7 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawings.map(
+              {drawingsList.map(
                 (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
               )}
             </Row>
@@ -90,7 +104,7 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawingsHalloween.map(
+              {drawingsHalloweenList.map(
                 (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
               )}
             </Row>
