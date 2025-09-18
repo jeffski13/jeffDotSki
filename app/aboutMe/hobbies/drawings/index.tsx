@@ -34,9 +34,13 @@ export function Drawings({
     return combinedLists.findIndex(item => item.full === overlayImg);
   };
 
-  // Keyboard and touch navigation effect
+  // Keyboard, touch navigation, and scroll lock effect
   useEffect(() => {
-    if (!overlayImg) return;
+    if (!overlayImg) {
+      document.body.style.overflow = '';
+      return;
+    }
+    document.body.style.overflow = 'hidden';
     const handleKeyDown = (e: KeyboardEvent) => {
       const currentIdx = getOverlayIdx();
       if (currentIdx === -1) return;
@@ -84,6 +88,7 @@ export function Drawings({
     window.addEventListener('touchmove', handleTouchMove);
     window.addEventListener('touchend', handleTouchEnd);
     return () => {
+      document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
