@@ -1,14 +1,17 @@
 [
   {
     "name": "Venasaur 003",
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_3venasaur_halloween.png"
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_3venasaur_halloween.png",
+    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_3venasaur_halloween.PNG"
   },
   {
     "name": "Charizard 006",
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_6charizard_halloween.png"
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_6charizard_halloween.png",
+    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_6charizard_halloween.PNG"
   },
   {
     "name": "Blastoise 009",
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_9blastoise_halloween.png"
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_9blastoise_halloween.png",
+    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_9blastoise_halloween.PNG"
   }
 ]
