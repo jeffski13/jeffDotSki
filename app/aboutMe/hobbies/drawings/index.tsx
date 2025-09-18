@@ -56,7 +56,7 @@ export function Drawings({
 
     let touchStartX: number | null = null;
     let touchEndX: number | null = null;
-    const minSwipeDistance = 50;
+    const minSwipeDistance = 150;
 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartX = e.touches[0].clientX;
@@ -67,6 +67,7 @@ export function Drawings({
     const handleTouchEnd = () => {
       if (touchStartX !== null && touchEndX !== null) {
         const diff = touchEndX - touchStartX;
+        console.log(diff)
         const currentIdx = getOverlayIdx();
         if (Math.abs(diff) > minSwipeDistance && currentIdx !== -1) {
           if (diff < 0) {
