@@ -24,7 +24,8 @@ const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onI
               style={{ cursor: 'pointer' }}
               onClick={() => {
                 console.log(index)
-                onImageClicked();}}
+                onImageClicked();
+              }}
             />
           </div>
         </div>
@@ -69,7 +70,9 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawings.map((item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)}))}
+              {drawings.map(
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+              )}
             </Row>
           </ul>
         </Container>
@@ -87,7 +90,9 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawingsHalloween.map((item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)}))}
+              {drawingsHalloween.map(
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+              )}
             </Row>
           </ul>
         </Container>
