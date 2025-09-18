@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
@@ -20,6 +20,37 @@ export function Drawings({
   drawingsHalloweenList
 }: DrawingsProps) {
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
+  const [overlayIndex, setOverlayIndex] = useState<{ list: 'normal' | 'halloween'; idx: number } | null>(null);
+
+  // Combine both lists for navigation
+  const combinedLists = [
+    ...drawingsList.map((item, idx) => ({ ...item, list: 'normal', idx })),
+    ...drawingsHalloweenList.map((item, idx) => ({ ...item, list: 'halloween', idx }))
+  ];
+
+  // Find the current overlay index in combinedLists
+  const getOverlayIdx = () => {
+    if (!overlayImg) return -1;
+    return combinedLists.findIndex(item => item.full === overlayImg);
+  };
+
+  // Keyboard navigation effect
+  useEffect(() => {
+    if (!overlayImg) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const currentIdx = getOverlayIdx();
+      if (currentIdx === -1) return;
+      if (e.key === 'ArrowLeft') {
+        const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+        setOverlayImg(combinedLists[prevIdx].full);
+      } else if (e.key === 'ArrowRight') {
+        const nextIdx = (currentIdx + 1) % combinedLists.length;
+        setOverlayImg(combinedLists[nextIdx].full);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [overlayImg]);
 
   const multiLangContent = {
     es: {
@@ -55,7 +86,10 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                  setOverlayImg(item.full);
+                  // Optionally set overlayIndex if you want to track which list
+                })
               )}
             </Row>
           </ul>
@@ -75,7 +109,10 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsHalloweenList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                  setOverlayImg(item.full);
+                  // Optionally set overlayIndex if you want to track which list
+                })
               )}
             </Row>
           </ul>
