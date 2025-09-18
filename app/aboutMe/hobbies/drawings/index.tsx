@@ -4,36 +4,6 @@ import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../styles.css';
 
-// Fullscreen overlay state and handler will be managed in Drawings component
-const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onImageClicked: Function) => {
-  return (
-    <Col xs={12} md={6} lg={4} key={index}>
-      <li>
-        <div className="hobbieItemInfoContainer">
-          <div className="hobbieItemInfo" >
-            <div className="hobbieItemTitle" >{titleLabel}</div>
-            <div className="hobbieItemText" >{drawingItem.name}</div>
-          </div>
-        </div >
-        <div className="HobbieContentItem" >
-          <div className="hobbieImageContainer" >
-            <img
-              className="hobbieImage drawingImage"
-              src={drawingItem.thumb}
-              alt={`${drawingItem.name} Drawing`}
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                console.log(index)
-                onImageClicked();
-              }}
-            />
-          </div>
-        </div>
-      </li>
-    </Col>
-  );
-};
-
 interface DrawingsProps {
   drawingsList: DrawingItem[];
   drawingsHalloweenList: DrawingItem[];
@@ -146,3 +116,34 @@ export function Drawings({
     </div>
   );
 }
+
+
+// Fullscreen overlay state and handler will be managed in Drawings component
+const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onImageClicked: Function) => {
+  return (
+    <Col xs={12} md={6} lg={4} key={index}>
+      <li>
+        <div className="hobbieItemInfoContainer">
+          <div className="hobbieItemInfo" >
+            <div className="hobbieItemTitle" >{titleLabel}</div>
+            <div className="hobbieItemText" >{drawingItem.name}</div>
+          </div>
+        </div >
+        <div className="HobbieContentItem" >
+          <div className="hobbieImageContainer" >
+            <img
+              className="hobbieImage drawingImage"
+              src={drawingItem.thumb}
+              alt={`${drawingItem.name} Drawing`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                console.log(index)
+                onImageClicked();
+              }}
+            />
+          </div>
+        </div>
+      </li>
+    </Col>
+  );
+};

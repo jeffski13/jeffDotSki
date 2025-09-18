@@ -24,21 +24,25 @@ describe('Drawings Component', () => {
 
   it('renders correct number of drawings from both lists', () => {
     const drawingsList = [
-      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
-      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+      { name: 'NormalDrawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'NormalDrawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
     ];
     const drawingsHalloweenList = [
-      { name: 'Spooky 1', thumb: '/spooky1.jpg', full: '/spookyfull1.jpg' },
-      { name: 'Spooky 2', thumb: '/spooky2.jpg', full: '/spookyfull2.jpg' },
-      { name: 'Spooky 3', thumb: '/spooky3.jpg', full: '/spookyfull3.jpg' },
+      { name: 'VerySpooky 1', thumb: '/spooky1.jpg', full: '/spookyfull1.jpg' },
+      { name: 'VerySpooky 2', thumb: '/spooky2.jpg', full: '/spookyfull2.jpg' },
+      { name: 'VerySpooky 3', thumb: '/spooky3.jpg', full: '/spookyfull3.jpg' },
     ];
     render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={drawingsHalloweenList} />);
     // All images should be rendered
     const allImages = screen.getAllByRole('img');
     // There may be other images (e.g. overlay), so filter by alt text containing 'Drawing' or 'Spooky'
     const drawingImages = allImages.filter(img =>
-      img.alt.includes('Drawing') || img.alt.includes('Spooky')
+      img.alt.includes('NormalDrawing')
     );
-    expect(drawingImages.length).toBe(drawingsList.length + drawingsHalloweenList.length);
+    const drawingImagesSpooky = allImages.filter(img =>
+      img.alt.includes('VerySpooky')
+    );
+    expect(drawingImages.length).toBe(drawingsList.length);
+    expect(drawingImagesSpooky.length).toBe(drawingsHalloweenList.length);
   });
 });
