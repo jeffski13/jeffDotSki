@@ -1,27 +1,23 @@
+
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import TvShow from './TvShow';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
-import tvshows from './hobbies-tvshows.json';
-import tvshowsFinished from './hobbies-tvshows-finished.json';
+import { tvshows, tvshowsFinished, type TvShowInfo } from './tvshows';
 import '../hobbiesStyles.css';
 
+interface TvShowsProps {
+  tvShowsList: TvShowInfo[];
+  tvShowsFinishedList: TvShowInfo[];
+}
 
-const renderTvShows = (tvshowItem, index) => {
+export default function TvShowsPage() {
   return (
-    <Col xs={12} sm={6} md={4}>
-      <li key={index} >
-        <TvShow
-          title={tvshowItem.title}
-          season={tvshowItem.season}
-          thumb={tvshowItem.thumb}
-        />
-      </li>
-    </Col>
+    <TvShows tvShowsList={tvshows} tvShowsFinishedList={tvshowsFinished} />
   );
 }
 
-
-export default function TvShows() {
+export function TvShows({ tvShowsList, tvShowsFinishedList }: TvShowsProps) {
   const multiLangContent = {
     es: {
       title: 'Series',
@@ -39,6 +35,21 @@ export default function TvShows() {
     }
   };
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+
+  const renderTvShows = (tvshowItem: TvShowInfo, index: number) => {
+    return (
+      <Col xs={12} sm={6} md={4} key={index}>
+        <li>
+          <TvShow
+            title={tvshowItem.title}
+            season={tvshowItem.season}
+            thumb={tvshowItem.thumb}
+          />
+        </li>
+      </Col>
+    );
+  };
+
   return (
     <div className="aboutmeWrapper">
       <div className="hobbiesSection" >
@@ -55,7 +66,7 @@ export default function TvShows() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {tvshows.map(renderTvShows)}
+              {tvShowsList.map(renderTvShows)}
             </Row>
           </ul>
         </Container>
@@ -73,7 +84,7 @@ export default function TvShows() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {tvshowsFinished.map(renderTvShows)}
+              {tvShowsFinishedList.map(renderTvShows)}
             </Row>
           </ul>
           <Row className="show-grid BioHobbiesImg">
