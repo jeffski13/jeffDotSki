@@ -45,21 +45,13 @@ export function Drawings({
     const handleKeyDown = (e: KeyboardEvent) => {
       const currentIdx = getOverlayIdx();
       if (currentIdx === -1) return;
-      if (e.key === 'ArrowLeft') {
-        setSwipeAnim('left');
-        setTimeout(() => {
+        if (e.key === 'ArrowLeft') {
           const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
           setOverlayImg(combinedLists[prevIdx].full);
-          setSwipeAnim(null);
-        }, 200);
-      } else if (e.key === 'ArrowRight') {
-        setSwipeAnim('right');
-        setTimeout(() => {
+        } else if (e.key === 'ArrowRight') {
           const nextIdx = (currentIdx + 1) % combinedLists.length;
           setOverlayImg(combinedLists[nextIdx].full);
-          setSwipeAnim(null);
-        }, 200);
-      }
+        }
     };
 
     let touchStartX: number | null = null;
