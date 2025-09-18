@@ -1,29 +1,26 @@
+import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import drawings from './hobbies-drawings.json';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
-import drawingsHalloween from './hobbies-drawings-halloween.json';
-import '../styles.css';
+import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
+import '../hobbiesStyles.css';
 
-const renderDrawings = (drawingItem, index, titleLabel) => {
+interface DrawingsProps {
+  drawingsList: DrawingItem[];
+  drawingsHalloweenList: DrawingItem[];
+}
+
+export default function DrawingsPage() {
   return (
-    <Col xs={12} md={6} lg={4}>
-      <li key={index} >
-        <div className="hobbieItemInfoContainer">
-          <div className="hobbieItemInfo" >
-            <div className="hobbieItemTitle" >{titleLabel}</div>
-            <div className="hobbieItemText" >{drawingItem.name}</div>
-          </div>
-        </div >
-        <div className="HobbieContentItem" >
-          <div className="hobbieImageContainer" >
-            <img className="hobbieImage drawingImage" src={drawingItem.thumb} alt={`${drawingItem.name} Drawing`} />
-          </div>
-        </div>
-      </li>
-    </Col>
+    <Drawings drawingsList={drawings} drawingsHalloweenList={drawingsHalloween} />
   );
 }
-export default function Drawings() {
+
+export function Drawings({
+  drawingsList,
+  drawingsHalloweenList
+}: DrawingsProps) {
+  const [overlayImg, setOverlayImg] = useState<string | null>(null);
+
   const multiLangContent = {
     es: {
       title: 'Dibujos',
@@ -57,7 +54,9 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawings.map((item, i) => renderDrawings(item, i, content.titleLabel))}
+              {drawingsList.map(
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+              )}
             </Row>
           </ul>
         </Container>
@@ -75,11 +74,76 @@ export default function Drawings() {
           </Row>
           <ul className="hobbiesContentList" >
             <Row>
-              {drawingsHalloween.map((item, i) => renderDrawings(item, i, content.titleLabel))}
+              {drawingsHalloweenList.map(
+                (item, i) => renderDrawings(item, i, content.titleLabel, () => {setOverlayImg(item.full)})
+              )}
             </Row>
           </ul>
         </Container>
+        {/* Fullscreen overlay for image */}
+        {overlayImg && (
+          <div
+            className="drawing-fullscreen-overlay"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              background: 'rgba(0,0,0,0.85)',
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+            onClick={() => setOverlayImg(null)}
+            aria-label="Close full screen image"
+          >
+            <img
+              src={overlayImg}
+              alt="Full drawing"
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '90vh',
+                borderRadius: 12,
+                boxShadow: '0 2px 24px rgba(0,0,0,0.5)',
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
 }
+
+
+// Fullscreen overlay state and handler will be managed in Drawings component
+const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onImageClicked: Function) => {
+  return (
+    <Col xs={12} md={6} lg={4} key={index}>
+      <li>
+        <div className="hobbieItemInfoContainer">
+          <div className="hobbieItemInfo" >
+            <div className="hobbieItemTitle" >{titleLabel}</div>
+            <div className="hobbieItemText" >{drawingItem.name}</div>
+          </div>
+        </div >
+        <div className="HobbieContentItem" >
+          <div className="hobbieImageContainer" >
+            <img
+              className="hobbieImage drawingImage"
+              src={drawingItem.thumb}
+              alt={`${drawingItem.name} Drawing`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                console.log(index)
+                onImageClicked();
+              }}
+            />
+          </div>
+        </div>
+      </li>
+    </Col>
+  );
+};

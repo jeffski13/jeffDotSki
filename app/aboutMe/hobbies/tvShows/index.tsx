@@ -3,7 +3,7 @@ import TvShow from './TvShow';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import tvshows from './hobbies-tvshows.json';
 import tvshowsFinished from './hobbies-tvshows-finished.json';
-import '../styles.css';
+import '../hobbiesStyles.css';
 
 
 const renderTvShows = (tvshowItem, index) => {

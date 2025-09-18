@@ -8,7 +8,7 @@ import '../secondaryPage.css';
 import '../infolink.css';
 import '../mobile-support.css';
 
-interface BattleProps {
+interface PokedexProps {
   selectedMonsters: Monster[];
   battleRoute: string;
 }
@@ -20,7 +20,7 @@ export default function PokedexContainer() {
 export function Pokedex({
   selectedMonsters,
   battleRoute
-}: BattleProps) {
+}: PokedexProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
