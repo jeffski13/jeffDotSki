@@ -34,7 +34,7 @@ export function Drawings({
     return combinedLists.findIndex(item => item.full === overlayImg);
   };
 
-  // Keyboard navigation effect
+  // Keyboard and touch navigation effect
   useEffect(() => {
     if (!overlayImg) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -48,8 +48,47 @@ export function Drawings({
         setOverlayImg(combinedLists[nextIdx].full);
       }
     };
+
+    let touchStartX: number | null = null;
+    let touchEndX: number | null = null;
+    const minSwipeDistance = 50;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      touchEndX = e.touches[0].clientX;
+    };
+    const handleTouchEnd = () => {
+      if (touchStartX !== null && touchEndX !== null) {
+        const diff = touchEndX - touchStartX;
+        const currentIdx = getOverlayIdx();
+        if (Math.abs(diff) > minSwipeDistance && currentIdx !== -1) {
+          if (diff < 0) {
+            // Swipe left
+            const nextIdx = (currentIdx + 1) % combinedLists.length;
+            setOverlayImg(combinedLists[nextIdx].full);
+          } else if (diff > 0) {
+            // Swipe right
+            const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+            setOverlayImg(combinedLists[prevIdx].full);
+          }
+        }
+      }
+      touchStartX = null;
+      touchEndX = null;
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
   }, [overlayImg]);
 
   const multiLangContent = {
