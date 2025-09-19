@@ -20,9 +20,6 @@ export function Drawings({
   drawingsHalloweenList
 }: DrawingsProps) {
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
-  const [overlayIndex, setOverlayIndex] = useState<{ list: 'normal' | 'halloween'; idx: number } | null>(null);
-  const [swipeAnim, setSwipeAnim] = useState<'left' | 'right' | null>(null);
-  const [zoomedIn, setZoomedIn] = useState(false);
 
   // Combine both lists for navigation
   const combinedLists = [
@@ -44,7 +41,6 @@ export function Drawings({
     }
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (zoomedIn) return; // Prevent navigation if zoomed in
       const currentIdx = getOverlayIdx();
       if (currentIdx === -1) return;
       if (e.key === 'ArrowLeft') {
@@ -55,82 +51,11 @@ export function Drawings({
         setOverlayImg(combinedLists[nextIdx].full);
       }
     };
-    // Detect zoom gesture (Ctrl/Cmd + wheel or pinch)
-    const handleWheel = (e: WheelEvent) => {
-      if (e.ctrlKey || e.metaKey) {
-        setZoomedIn(true);
-      } else {
-        setZoomedIn(false);
-      }
-    };
-    // Detect pinch zoom on touch devices
-    let lastTouchDist: number | null = null;
-    const handleTouchMoveZoom = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        const dx = e.touches[0].clientX - e.touches[1].clientX;
-        const dy = e.touches[0].clientY - e.touches[1].clientY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (lastTouchDist !== null && Math.abs(dist - lastTouchDist) > 10) {
-          setZoomedIn(true);
-        }
-        lastTouchDist = dist;
-      } else {
-        setZoomedIn(false);
-        lastTouchDist = null;
-      }
-    };
-
-    let touchStartX: number | null = null;
-    let touchEndX: number | null = null;
-    const minSwipeDistance = 75;
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartX = e.touches[0].clientX;
-    };
-    const handleTouchMove = (e: TouchEvent) => {
-      touchEndX = e.touches[0].clientX;
-    };
-    const handleTouchEnd = () => {
-      if (touchStartX !== null && touchEndX !== null) {
-        const diff = touchEndX - touchStartX;
-        console.log(diff)
-        const currentIdx = getOverlayIdx();
-        if (Math.abs(diff) > minSwipeDistance && currentIdx !== -1) {
-          if (diff < 0) {
-            setSwipeAnim('left');
-            setTimeout(() => {
-              const nextIdx = (currentIdx + 1) % combinedLists.length;
-              setOverlayImg(combinedLists[nextIdx].full);
-              setSwipeAnim(null);
-            }, 200);
-          } else if (diff > 0) {
-            setSwipeAnim('right');
-            setTimeout(() => {
-              const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-              setOverlayImg(combinedLists[prevIdx].full);
-              setSwipeAnim(null);
-            }, 200);
-          }
-        }
-      }
-      touchStartX = null;
-      touchEndX = null;
-    };
 
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('wheel', handleWheel, { passive: true });
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchmove', handleTouchMoveZoom);
-    window.addEventListener('touchend', handleTouchEnd);
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchmove', handleTouchMoveZoom);
-      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, [overlayImg]);
 
@@ -200,6 +125,7 @@ export function Drawings({
           </ul>
         </Container>
         {/* Fullscreen overlay for image */}
+        
         {overlayImg && (
           <div
             className="drawing-fullscreen-overlay"
@@ -210,27 +136,47 @@ export function Drawings({
               width: '100vw',
               height: '100vh',
               background: 'rgba(0,0,0,0.85)',
-              zIndex: 9999,
+              zIndex: 10,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
               overflow: 'hidden',
             }}
-            onClick={() => setOverlayImg(null)}
-            aria-label="Close full screen image"
+            onClick={e => {
+              // Only close overlay if click is outside the image
+              if (e.target === e.currentTarget) {
+                setOverlayImg(null);
+                return;
+              }
+              // Otherwise, handle navigation
+              const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+              const x = (e as React.MouseEvent).clientX - rect.left;
+              const currentIdx = getOverlayIdx();
+              if (x < rect.width / 2) {
+                // Left side: previous image
+                if (currentIdx !== -1) {
+                  const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+                  setOverlayImg(combinedLists[prevIdx].full);
+                }
+              } else {
+                // Right side: next image
+                if (currentIdx !== -1) {
+                  const nextIdx = (currentIdx + 1) % combinedLists.length;
+                  setOverlayImg(combinedLists[nextIdx].full);
+                }
+              }
+            }}
+            aria-label="Navigate or close full screen image"
           >
             <img
               src={overlayImg}
               alt="Full drawing"
-              className={swipeAnim ? `drawing-swipe-${swipeAnim}` : ''}
               style={{
                 maxWidth: '90vw',
                 maxHeight: '90vh',
                 borderRadius: 12,
                 boxShadow: '0 2px 24px rgba(0,0,0,0.5)',
-                transition: 'transform 0.2s cubic-bezier(.4,2,.6,1)',
-                transform: swipeAnim === 'left' ? 'translateX(-100vw)' : swipeAnim === 'right' ? 'translateX(100vw)' : 'translateX(0)',
               }}
             />
           </div>
