@@ -1,0 +1,32 @@
+.fullImageDirectionClose {
+    width: 10%;
+    padding-left: 10px;
+}
+
+.fullImageDirectionLabelContainer {
+    width: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.fullImageDirectionLabelContent {
+    display: flex;
+}
+.fullImageDirectionLabel {
+    width: 50%;
+    text-align: left;
+    color: #aaa;
+    font-size: 20;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8
+}
+
+.fullImageDirectionLabelLeft {
+    padding-left: 32;
+}
+
+.fullImageDirectionLabelRight {
+    padding-right: 32;
+    justify-content: flex-end;
+}

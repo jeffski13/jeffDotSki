@@ -1,4 +1,3 @@
-/* On small screens, display attack buttons side by side */
 @media (max-width: 600px) {
   .desktop-view {
     display: none;

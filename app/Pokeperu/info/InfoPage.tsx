@@ -5,7 +5,7 @@ import ROUTES from '../../consts/ROUTES';
 import './infopage.css';
 import '../navigation.css';
 import '../secondaryPage.css';
-import '../mobile-support.css';
+import '../../Inf/mobile-support.css';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../langSupport';
 
 interface InfoPageProps { }

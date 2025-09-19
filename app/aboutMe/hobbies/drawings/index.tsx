@@ -3,6 +3,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
+import '../../../Inf/mobile-support.css';
+import './styles.css';
 
 interface DrawingsProps {
   drawingsList: DrawingItem[];
@@ -170,20 +172,45 @@ export function Drawings({
             }}
             aria-label="Navigate or close full screen image"
           >
-            <div style={{ width: '100vw', display: 'flex', justifyContent: 'space-between', position: 'absolute', top: 75, left: 0, pointerEvents: 'none' }}>
-              <div style={{ width: '50%', textAlign: 'left', paddingLeft: 32, color: '#aaa', fontSize: 20, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 28 }}>←</span> Tap Left
+            <div style={{ width: '90vw', display: 'flex', justifyContent: 'space-between', position: 'absolute', top: 85, left: 0, pointerEvents: 'none' }}>
+              <div className="fullImageDirectionClose">
+                <button
+                  aria-label="Close full screen image"
+                  style={{
+                    background: 'rgba(0,0,0,0.6)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: 30,
+                    height: 30,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    color: '#aaa',
+                    fontSize: 24,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  &#10005;
+                </button>
               </div>
-              <div style={{ width: '50%', textAlign: 'right', paddingRight: 32, color: '#aaa', fontSize: 20, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-end' }}>
-                Tap Right <span style={{ fontSize: 28 }}>→</span>
+              <div className="mobile-view fullImageDirectionLabelContainer">
+                <div className="mobile-view fullImageDirectionLabelContent">
+                  <div className="fullImageDirectionLabel fullImageDirectionLabelLeft">
+                    <span style={{ fontSize: 20 }}>←</span> Tap Left
+                  </div>
+                  <div className="fullImageDirectionLabel fullImageDirectionLabelRight">
+                    Tap Right <span style={{ fontSize: 20 }}>→</span>
+                  </div>
+                </div>
               </div>
             </div>
             <img
               src={overlayImg}
               alt="Full drawing"
               style={{
-                maxWidth: '90vw',
-                maxHeight: '90vh',
+                maxWidth: '80vw',
+                maxHeight: '80vh',
                 borderRadius: 12,
                 boxShadow: '0 2px 24px rgba(0,0,0,0.5)',
                 zIndex: 11,

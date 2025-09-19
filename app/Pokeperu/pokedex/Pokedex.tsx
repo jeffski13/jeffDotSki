@@ -6,7 +6,7 @@ import './pokedex.css';
 import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
-import '../mobile-support.css';
+import '../../Inf/mobile-support.css';
 
 interface PokedexProps {
   selectedMonsters: Monster[];
