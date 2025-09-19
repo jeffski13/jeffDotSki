@@ -10,7 +10,7 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "start": "react-router dev",
+    "start": "react-router dev --host",
     "copyBuildToFirebase": "node copyBuildToFirebase.cjs",
     "startofficial": "react-router-serve ./build/server/index.js",
     "test": "vitest",
