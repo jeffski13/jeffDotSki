@@ -125,7 +125,7 @@ export function Drawings({
           </ul>
         </Container>
         {/* Fullscreen overlay for image */}
-        
+
         {overlayImg && (
           <div
             className="drawing-fullscreen-overlay"
@@ -142,6 +142,7 @@ export function Drawings({
               justifyContent: 'center',
               cursor: 'pointer',
               overflow: 'hidden',
+              flexDirection: 'column',
             }}
             onClick={e => {
               // Only close overlay if click is outside the image
@@ -169,6 +170,14 @@ export function Drawings({
             }}
             aria-label="Navigate or close full screen image"
           >
+            <div style={{ width: '100vw', display: 'flex', justifyContent: 'space-between', position: 'absolute', top: 75, left: 0, pointerEvents: 'none' }}>
+              <div style={{ width: '50%', textAlign: 'left', paddingLeft: 32, color: '#aaa', fontSize: 20, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 28 }}>←</span> Tap Left
+              </div>
+              <div style={{ width: '50%', textAlign: 'right', paddingRight: 32, color: '#aaa', fontSize: 20, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-end' }}>
+                Tap Right <span style={{ fontSize: 28 }}>→</span>
+              </div>
+            </div>
             <img
               src={overlayImg}
               alt="Full drawing"
@@ -177,6 +186,7 @@ export function Drawings({
                 maxHeight: '90vh',
                 borderRadius: 12,
                 boxShadow: '0 2px 24px rgba(0,0,0,0.5)',
+                zIndex: 11,
               }}
             />
           </div>
