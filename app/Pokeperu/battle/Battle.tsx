@@ -358,14 +358,11 @@ export default function Battle({
             disabled={isMonster1Attack1Enabled}
             className={isMonster1Attack1Enabled ? 'attack-button disabled' : 'attack-button enabled'}
           >
-            <div className="mobile-view attack-button-label-mobile-container">
-              <span className="attack-button-label-mobile">{selectedMonsters[0].attack1.name}</span>
-              <br />
-              <span className="attack-button-label-pp-mobile">PP: {monster1Attack1PP}/{selectedMonsters[0].attack1.powerPoints}</span>
+            <div className="attack-button-label-container">
+              <span className="attack-button-label">{selectedMonsters[0].attack1.name}</span>
+              <br/>
+              <span className="attack-button-label-pp">PP: {monster1Attack1PP}/{selectedMonsters[0].attack1.powerPoints}</span>
             </div>
-            <span className="desktop-view attack-button-label-desktop">{selectedMonsters[0].attack1.name}</span>
-            <br className="desktop-view"/>
-            <span className="desktop-view attack-button-label-desktop">PP: {monster1Attack1PP}/{selectedMonsters[0].attack1.powerPoints}</span>
           </button>
           <button
             onClick={() =>
@@ -374,14 +371,11 @@ export default function Battle({
             disabled={isMonster1Attack2Enabled}
             className={isMonster1Attack2Enabled ? 'attack-button disabled' : 'attack-button enabled'}
           >
-            <div className="mobile-view attack-button-label-mobile-container">
-              <span className="attack-button-label-mobile">{selectedMonsters[0].attack2.name}</span>
-              <br />
-              <span className="attack-button-label-pp-mobile">PP: {monster1Attack1PP}/{selectedMonsters[0].attack2.powerPoints}</span>
+            <div className="attack-button-label-container">
+              <span className="attack-button-label">{selectedMonsters[0].attack2.name}</span>
+              <br/>
+              <span className="attack-button-label-pp">PP: {monster1Attack2PP}/{selectedMonsters[0].attack2.powerPoints}</span>
             </div>
-            <span className="desktop-view attack-button-label-desktop">{selectedMonsters[0].attack2.name}</span>
-            <br className="desktop-view"/>
-            <span className="desktop-view attack-button-label-desktop">PP: {monster1Attack1PP}/{selectedMonsters[0].attack2.powerPoints}</span>
           </button>
         </div>
         <div className={`monster battle-text-with-backdrop ${isMonster2Winner ? 'monster-winner' : ''} ${isMonster1Winner ? 'monster-loser' : ''}`}>
@@ -408,14 +402,11 @@ export default function Battle({
             disabled={isMonster2Attack1Enabled}
             className={isMonster2Attack1Enabled ? 'attack-button disabled' : 'attack-button enabled'}
           >
-            <div className="mobile-view attack-button-label-mobile-container">
-              <span className="attack-button-label-mobile">{selectedMonsters[1].attack1.name}</span>
-              <br />
-              <span className="attack-button-label-pp-mobile">PP: {monster1Attack1PP}/{selectedMonsters[1].attack1.powerPoints}</span>
+            <div className="attack-button-label-container">
+              <span className="attack-button-label">{selectedMonsters[1].attack1.name}</span>
+              <br/>
+              <span className="attack-button-label-pp">PP: {monster2Attack1PP}/{selectedMonsters[1].attack1.powerPoints}</span>
             </div>
-            <span className="desktop-view attack-button-label-desktop">{selectedMonsters[1].attack1.name}</span>
-            <br className="desktop-view"/>
-            <span className="desktop-view attack-button-label-desktop">PP: {monster1Attack1PP}/{selectedMonsters[0].attack1.powerPoints}</span>
           </button>
           <button
             onClick={() =>
@@ -424,14 +415,11 @@ export default function Battle({
             disabled={isMonster2Attack2Enabled}
             className={isMonster2Attack2Enabled ? 'attack-button disabled' : 'attack-button enabled'}
           >
-            <div className="mobile-view attack-button-label-mobile-container">
-              <span className="attack-button-label-mobile">{selectedMonsters[1].attack2.name}</span>
-              <br />
-              <span className="attack-button-label-pp-mobile">PP: {monster1Attack1PP}/{selectedMonsters[1].attack2.powerPoints}</span>
+            <div className="attack-button-label-container">
+              <span className="attack-button-label">{selectedMonsters[1].attack2.name}</span>
+              <br/>
+              <span className="attack-button-label-pp">PP: {monster2Attack2PP}/{selectedMonsters[1].attack2.powerPoints}</span>
             </div>
-            <span className="desktop-view attack-button-label-desktop">{selectedMonsters[1].attack2.name}</span>
-            <br className="desktop-view"/>
-            <span className="desktop-view attack-button-label-desktop">PP: {monster1Attack1PP}/{selectedMonsters[1].attack2.powerPoints}</span>
           </button>
         </div>
       </div>

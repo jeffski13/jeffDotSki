@@ -143,16 +143,12 @@ button {
   opacity: 0.6;
 }
 
-.attack-button-label-mobile-container {
-  line-height: 1em;
+.attack-button-label-container {
+  line-height: 1.5em;
 }
 
 
-.attack-button-label-mobile {
-  font-size: small;
-  overflow: auto;
-  white-space: pre-wrap;
-}
+.attack-button-label-mobile {}
 
 .attack-button-label-pp-mobile {
   font-size: small;
@@ -174,6 +170,20 @@ button {
     box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .attack-button-label-container {
+    line-height: 1em;
+  }
+
+  .attack-button-label{
+    font-size: small;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+
+  .attack-button-label-pp{
+    font-size: small;
   }
 
   .monster .attack-button:last-child {
