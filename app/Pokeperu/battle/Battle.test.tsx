@@ -89,8 +89,8 @@ describe('Battle Component', () => {
     expect(monster1Attack2Button).toBeEnabled();
 
     // Verify monster2's attack buttons are disabled
-    const monster2Attack1Button = screen.getByText(/Scratch/i);
-    const monster2Attack2Button = screen.getByText(/Flamethrower/i);
+    const monster2Attack1Button = screen.getByText(/Scratch/i).parentElement?.parentElement;
+    const monster2Attack2Button = screen.getByText(/Flamethrower/i).parentElement?.parentElement;
     expect(monster2Attack1Button).toBeDisabled();
     expect(monster2Attack2Button).toBeDisabled();
   });
@@ -129,10 +129,10 @@ describe('Battle Component', () => {
 
     testMonster1Hp(0);
 
-    const monster1Attack1Button = screen.getByText(/Quick Attack/i);
-    const monster1Attack2Button = screen.getByText(/Thunderbolt/i);
-    const monster2Attack1Button = screen.getByText(/Scratch/i);
-    const monster2Attack2Button = screen.getByText(/Flamethrower/i);
+    const monster1Attack1Button = screen.getByText(/Quick Attack/i).parentElement?.parentElement;
+    const monster1Attack2Button = screen.getByText(/Thunderbolt/i).parentElement?.parentElement;
+    const monster2Attack1Button = screen.getByText(/Scratch/i).parentElement?.parentElement;
+    const monster2Attack2Button = screen.getByText(/Flamethrower/i).parentElement?.parentElement;
 
     expect(monster1Attack1Button).toBeDisabled();
     expect(monster1Attack2Button).toBeDisabled();
@@ -288,9 +288,9 @@ describe('Battle Component', () => {
     expect(screen.getByText(/PP: 0\/1/i)).toBeInTheDocument();
 
     // Verify attack 1 button is disabled and attack 2 is enabled
-    const monster1Attack1Button = screen.getByText(/Quick Attack/i);
-    expect(monster1Attack1Button).toBeDisabled();
-    const monster1Attack2Button = screen.getByText(/Thunderbolt/i);
+    const monster1Attack1Button = screen.getByText(/Quick Attack/i).parentElement?.parentElement;
+    expect(monster1Attack1Button).toBeDisabled(); 
+    const monster1Attack2Button = screen.getByText(/Thunderbolt/i).parentElement?.parentElement;
     expect(monster1Attack2Button).toBeEnabled();
   });
   test('attack buttons are disabled once an attack has 0 power points', () => {

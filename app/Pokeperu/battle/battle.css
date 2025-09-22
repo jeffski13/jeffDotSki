@@ -143,6 +143,17 @@ button {
   opacity: 0.6;
 }
 
+.attack-button-label-container {
+  line-height: 1.5em;
+}
+
+
+.attack-button-label-mobile {}
+
+.attack-button-label-pp-mobile {
+  font-size: small;
+}
+
 @media (max-width: 600px) {
 
   .battle-title {
@@ -152,7 +163,7 @@ button {
 
   .monster .attack-button {
     display: inline-block;
-    width: 48%;
+    width: 90%;
     margin-bottom: 8px;
     margin-right: 2%;
     margin-left: 0;
@@ -161,9 +172,23 @@ button {
     white-space: nowrap;
   }
 
+  .attack-button-label-container {
+    line-height: 1em;
+  }
+
+  .attack-button-label{
+    font-size: small;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+
+  .attack-button-label-pp{
+    font-size: small;
+  }
+
   .monster .attack-button:last-child {
     margin-right: 0;
-    width: 50%;
+    width: 90%;
   }
 
   .monster-battle-image {
