@@ -75,8 +75,8 @@ describe('Battle Component', () => {
     fireEvent.click(attackButton);
 
     // Verify that monster2's HP is reduced
-    expect(screen.getByText(/Pikachu did /i)).toBeInTheDocument(); // 
-    expect(screen.getByText(/damage to Charmander./i)).toBeInTheDocument(); // 
+    expect(screen.getByText(/Pikachu used Quick Attack. It did /i)).toBeInTheDocument(); // 
+    expect(screen.getByText(/damage./i)).toBeInTheDocument(); // 
   });
 
   test('monster2 attack buttons are disabled and monster1 attack buttons are enabled when the UI appears', () => {
