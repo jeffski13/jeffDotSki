@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import ROUTES from '../../consts/ROUTES';
-import './infopage.css';
+import '../../Inf/mobile-support.css';
+import { getBrowserLanguage, getContentByLanguage, type MultiLangContent } from '../../langSupport';
 import '../navigation.css';
 import '../secondaryPage.css';
-import '../../Inf/mobile-support.css';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../langSupport';
+import './infopage.css';
 
 interface InfoPageProps { }
 
