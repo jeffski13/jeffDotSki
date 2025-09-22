@@ -187,11 +187,8 @@ export default function Battle({
       }
     }
 
-    setAttackResult(
-      `${attackerMonster.name} did ${Math.round(
-        adjustedDamage
-      )} damage to ${defenderMonster.name}.`
-    );
+    const attackResultText = `${attackerMonster.name} used ${selectedAttack.name}. It did ${Math.round(adjustedDamage)} damage.`;
+    setAttackResult(attackResultText);
     if (attackMissed) {
       setEffectivenessResult(`${attackerMonster.name}'s attack missed!`);
     } else {

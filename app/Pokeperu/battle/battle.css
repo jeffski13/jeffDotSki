@@ -156,6 +156,10 @@ button {
 
 @media (max-width: 600px) {
 
+  .Battle {
+    min-height: 720px;
+  }
+
   .battle-title {
     font-size: medium;
     padding: 5px;

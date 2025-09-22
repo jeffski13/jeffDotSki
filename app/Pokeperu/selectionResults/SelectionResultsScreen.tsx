@@ -7,7 +7,6 @@ import '../navigation.css';
 import '../../Inf/mobile-support.css';
 import type { Monster } from '../monsters';
 import { getTypeColor } from '../typeColors';
-import ROUTES from '~/consts/ROUTES';
 
 interface MonsterSelectionResultsProps {
   monster1: Monster;
@@ -56,8 +55,6 @@ export default function SelectionResultsScreen({
     <div
       className='selection-results-screen'
       style={{
-        position: 'relative',
-        minHeight: '75vh',
         '--monster1-gradient-color': getTypeColor(monster1.type),
         '--monster1-second-gradient-color': monster1SecondTypeColor,
         '--monster2-gradient-color': getTypeColor(monster2.type),

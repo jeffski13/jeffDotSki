@@ -2,6 +2,11 @@
   z-index: 1;
 }
 
+.selection-results-screen {
+  position: relative;
+  min-height: 85vh;
+}
+
 .results-vs {
   align-items: right;
   justify-content: right;
