@@ -143,6 +143,21 @@ button {
   opacity: 0.6;
 }
 
+.attack-button-label-mobile-container {
+  line-height: 1em;
+}
+
+
+.attack-button-label-mobile {
+  font-size: small;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.attack-button-label-pp-mobile {
+  font-size: small;
+}
+
 @media (max-width: 600px) {
 
   .battle-title {
