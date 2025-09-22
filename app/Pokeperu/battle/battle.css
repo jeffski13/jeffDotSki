@@ -167,7 +167,7 @@ button {
 
   .monster .attack-button {
     display: inline-block;
-    width: 48%;
+    width: 90%;
     margin-bottom: 8px;
     margin-right: 2%;
     margin-left: 0;
@@ -178,7 +178,7 @@ button {
 
   .monster .attack-button:last-child {
     margin-right: 0;
-    width: 50%;
+    width: 90%;
   }
 
   .monster-battle-image {
