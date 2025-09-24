@@ -1,8 +1,8 @@
 import ROUTES from '../../consts/ROUTES';
 import { getTypeColor } from '../typeColors';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Dropdown, Form } from 'react-bootstrap';
-import { monsters, type Monster, type MonsterAttack } from '../monsters';
+import { monsters, type Monster } from '../monsters';
 import { ElementType } from '../ElementType';
 import './pokedex.css';
 import '../navigation.css';

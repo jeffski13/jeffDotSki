@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BattleContainer from './battle/BattleParent';
 import MonsterSelection from './selection/MonsterSelection';
 import { monsters, type Monster } from './monsters';
@@ -6,12 +6,35 @@ import ROUTES from '~/consts/ROUTES';
 import './pokeperu.css';
 
 export default function PokePeru() {
+  // Load edits from localStorage and merge with monsters
+  const [editedMonsters, setEditedMonsters] = useState<Monster[]>(monsters);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('pokedexEdits');
+    if (stored) {
+      const editData = JSON.parse(stored);
+      const getMonsterWithEdits = (monster: Monster) => {
+        const edit = editData[monster.name];
+        if (!edit) return monster;
+        return {
+          ...monster,
+          ...edit,
+          attack1: { ...monster.attack1, ...(edit.attack1 || {}) },
+          attack2: { ...monster.attack2, ...(edit.attack2 || {}) },
+        };
+      };
+      setEditedMonsters(monsters.map(getMonsterWithEdits));
+    } else {
+      setEditedMonsters(monsters);
+    }
+  }, []);
+
   return (
     <div className="TitlePage" >
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
-      <PokePeruContent monsters={monsters}
+      <PokePeruContent monsters={editedMonsters}
         dexRoute={ROUTES.pokePeru.pokedex}
         battleRoute={ROUTES.pokePeru.battle}
         gymRoute={ROUTES.pokePeru.gymleaders}
