@@ -165,7 +165,7 @@ export function Drawings({
                 </button>
               </div>
               <div className="mobile-view fullImageDirectionLabelContainer">
-                <div className="mobile-view fullImageDirectionLabelContent">
+                <div className="fullImageDirectionLabelContent">
                   <div className="fullImageDirectionLabel fullImageDirectionLabelLeft"
                     onClick={() => { imageFullPrevious() }}
                   >
