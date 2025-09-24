@@ -195,7 +195,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                         </Col>
                       </Row>
                     </Container>
-                    {/* desktop header */}
+                    {/* desktop header (name, types) */}
                     <h2 className="monster-name-types desktop-view">
                       {monstersWithEditsList.name}
                       <span className="monster-types">
@@ -230,6 +230,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                         )}
                       </span>
                     </h2>
+                    {/* desktop inspiration/description */}
                     <div className="monster-inspiration">
                       {isEditing ? (
                         <Form.Control
@@ -244,6 +245,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                         <span><strong>Inspiration:</strong> {monstersWithEditsList.inspiration}</span>
                       )}
                     </div>
+                    {/* desktop description */}
                     <p className="monster-description desktop-view">
                       {isEditing ? (
                         <Form.Control
@@ -252,14 +254,14 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                           onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
                           as="textarea"
                           rows={2}
-                          style={{ maxWidth: 400, marginBottom: 4 }}
+                          style={{ maxWidth: 400 }}
                         />
                       ) : description}
                     </p>
                   </div>
                 </div>
                 {/* mobile description */}
-                <div className='monster-details-top mobile-view'>
+                <div className='mobile-view'>
                   <p className="monster-description">
                     {isEditing ? (
                       <Form.Control
@@ -268,12 +270,16 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                         onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
                         as="textarea"
                         rows={2}
-                        style={{ maxWidth: 400, marginBottom: 4 }}
                       />
-                    ) : description}
+                    ) : (
+                      <div className='monster-details-top'>
+                        {description}
+                      </div>
+                    )}
                   </p>
                 </div>
               </div>
+              {/* stats */}
               <div className="monster-stats-section monster-details">
                 <Container>
                   {statsList.map((stat) => (
