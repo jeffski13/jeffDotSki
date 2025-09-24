@@ -169,12 +169,12 @@ export function Drawings({
                   <div className="fullImageDirectionLabel fullImageDirectionLabelLeft noselect"
                     onClick={() => { imageFullPrevious() }}
                   >
-                    <span className="noselect" style={{ fontSize: 20 }}>←</span> Tap Left
+                    <span className="noselect">←</span> Tap Left
                   </div>
                   <div className="fullImageDirectionLabel fullImageDirectionLabelRight noselect"
                     onClick={() => { imageFullNext() }}
                   >
-                    Tap Right <span className="noselect" style={{ fontSize: 20 }}>→</span>
+                    Tap Right <span className="noselect">→</span>
                   </div>
                 </div>
               </div>
