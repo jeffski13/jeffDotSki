@@ -184,22 +184,12 @@ export function Drawings({
               alt="Full drawing"
               className="fullImage"
               onClick={e => {
-                // Otherwise, handle navigation
                 const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
                 const x = (e as React.MouseEvent).clientX - rect.left;
-                const currentIdx = getOverlayIdx();
                 if (x < rect.width / 2) {
-                  // Left side: previous image
-                  if (currentIdx !== -1) {
-                    const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-                    setOverlayImg(combinedLists[prevIdx].full);
-                  }
+                  imageFullPrevious();
                 } else {
-                  // Right side: next image
-                  if (currentIdx !== -1) {
-                    const nextIdx = (currentIdx + 1) % combinedLists.length;
-                    setOverlayImg(combinedLists[nextIdx].full);
-                  }
+                  imageFullNext();
                 }
               }}
             />
