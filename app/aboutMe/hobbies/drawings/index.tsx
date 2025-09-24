@@ -147,7 +147,6 @@ export function Drawings({
             className="drawing-fullscreen-overlay fullImageArea"
             onClick={e => {
               // Only close overlay if click is outside the image
-              console.log('got it')
               console.log(e.currentTarget)
               if (e.target === e.currentTarget) {
                 imageFullNone();
