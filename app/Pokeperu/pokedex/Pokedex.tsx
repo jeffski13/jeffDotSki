@@ -73,11 +73,11 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
   ];
   const attackStyleOptions = [
     {
-      label: 'High Power/Low Accuracy',
+      label: 'Low Power, High Accuracy',
       value: {
-        damage: 60,
-        powerPoints: 2,
-        accuracy: 0.5,
+        damage: 25,
+        powerPoints: 10,
+        accuracy: 1,
       }
     },
     {
@@ -89,11 +89,11 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
       }
     },
     {
-      label: 'Low Power, High Accuracy',
+      label: 'High Power/Low Accuracy',
       value: {
-        damage: 25,
-        powerPoints: 10,
-        accuracy: 1,
+        damage: 60,
+        powerPoints: 2,
+        accuracy: 0.5,
       }
     },
   ];
@@ -348,26 +348,47 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                       </Col>
                       <Col xs={8} sm={5} md={4} className="attack-name-container attack-stats">
                         {isEditing ? (
-                          <>
-                            <Form.Control
-                              type="number"
-                              value={attack.damage}
-                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'damage', Number(e.target.value))}
-                              style={{ maxWidth: 60, display: 'inline-block', marginRight: 4 }}
-                            />
-                            <Form.Control
-                              type="number"
-                              value={attack.powerPoints}
-                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'powerPoints', Number(e.target.value))}
-                              style={{ maxWidth: 60, display: 'inline-block', marginRight: 4 }}
-                            />
-                            <Form.Control
-                              type="number"
-                              value={attack.accuracy}
-                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'accuracy', Number(e.target.value))}
-                              style={{ maxWidth: 60, display: 'inline-block' }}
-                            />
-                          </>
+                          <Dropdown
+                            onSelect={val => {
+                              const selected = attackStyleOptions.find(opt => opt.label === val);
+                              if (selected) {
+                                handleAttackChange(
+                                  monstersWithEditsList.name,
+                                  `attack${index + 1}` as 'attack1' | 'attack2',
+                                  'damage',
+                                  selected.value.damage
+                                );
+                                handleAttackChange(
+                                  monstersWithEditsList.name,
+                                  `attack${index + 1}` as 'attack1' | 'attack2',
+                                  'powerPoints',
+                                  selected.value.powerPoints
+                                );
+                                handleAttackChange(
+                                  monstersWithEditsList.name,
+                                  `attack${index + 1}` as 'attack1' | 'attack2',
+                                  'accuracy',
+                                  selected.value.accuracy
+                                );
+                              }
+                            }}
+                          >
+                            <Dropdown.Toggle variant="info" id={`dropdown-attack-style-${index}`} size="sm">
+                              {(() => {
+                                const found = attackStyleOptions.find(opt =>
+                                  attack.damage === opt.value.damage &&
+                                  attack.powerPoints === opt.value.powerPoints &&
+                                  attack.accuracy === opt.value.accuracy
+                                );
+                                return found ? found.label : 'Custom';
+                              })()}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              {attackStyleOptions.map(opt => (
+                                <Dropdown.Item eventKey={opt.label} key={opt.label}>{opt.label}</Dropdown.Item>
+                              ))}
+                            </Dropdown.Menu>
+                          </Dropdown>
                         ) : (
                           <span className="attack-name"><strong>Pow:</strong> {attack.damage} <strong>PP:</strong> {attack.powerPoints} <strong>Acc:</strong> {(attack.accuracy * 100)}%</span>
                         )}
