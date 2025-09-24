@@ -141,6 +141,23 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
               >
                 {isEditing ? 'Save' : 'Edit'}
               </Button>
+              {isEditing && (
+                <Button
+                  variant="danger"
+                  size="sm"
+                  style={{ position: 'absolute', top: 10, right: 70, zIndex: 2 }}
+                  onClick={() => {
+                    setEditData(prev => {
+                      const updated = { ...prev };
+                      delete updated[monstersWithEditsList.name];
+                      localStorage.setItem('pokedexEdits', JSON.stringify(updated));
+                      return updated;
+                    });
+                  }}
+                >
+                  Restore
+                </Button>
+              )}
               <div className="monster-details">
                 <div className='monster-details-top'>
                   <img className="monster-details-top-image"
