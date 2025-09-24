@@ -156,7 +156,7 @@ export function Drawings({
             aria-label="Navigate or close full screen image"
           >
             <div className='fullImageNavigation'>
-              <div className="fullImageDirectionClose">
+              <div className="fullImageDirectionClose noselect">
                 <button
                   aria-label="Close full screen image"
                   onClick={() => imageFullNone()}
@@ -166,15 +166,15 @@ export function Drawings({
               </div>
               <div className="mobile-view fullImageDirectionLabelContainer">
                 <div className="fullImageDirectionLabelContent">
-                  <div className="fullImageDirectionLabel fullImageDirectionLabelLeft"
+                  <div className="fullImageDirectionLabel fullImageDirectionLabelLeft noselect"
                     onClick={() => { imageFullPrevious() }}
                   >
-                    <span style={{ fontSize: 20 }}>←</span> Tap Left
+                    <span className="noselect" style={{ fontSize: 20 }}>←</span> Tap Left
                   </div>
-                  <div className="fullImageDirectionLabel fullImageDirectionLabelRight"
+                  <div className="fullImageDirectionLabel fullImageDirectionLabelRight noselect"
                     onClick={() => { imageFullNext() }}
                   >
-                    Tap Right <span style={{ fontSize: 20 }}>→</span>
+                    Tap Right <span className="noselect" style={{ fontSize: 20 }}>→</span>
                   </div>
                 </div>
               </div>
