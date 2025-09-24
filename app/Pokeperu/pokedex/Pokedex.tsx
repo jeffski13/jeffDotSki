@@ -153,11 +153,11 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                           </h2>
                         </Col>
                         <Col xs={12}>
-                          <h2 className="monster-name-types">
+                          <h2 className="monster-name-types" id="primary-type">
                             <span className="monster-types">
                               {isEditing ? (
                                 <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'type', val)}>
-                                  <Dropdown.Toggle variant="info" id="dropdown-type" size="sm">
+                                  <Dropdown.Toggle id="dropdown-type" variant='secondary'>
                                     {monstersWithEditsList.type}
                                   </Dropdown.Toggle>
                                   <Dropdown.Menu>
@@ -173,11 +173,11 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                           </h2>
                         </Col>
                         <Col xs={12}>
-                          <h2 className="monster-name-types">
+                          <h2 className="monster-name-types" id="secondary-type">
                             <span className="monster-types">
                               {isEditing ? (
                                 <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'secondType', val === 'None' ? null : val)}>
-                                  <Dropdown.Toggle variant="info" id="dropdown-second-type" size="sm">
+                                  <Dropdown.Toggle id="dropdown-second-type" variant='secondary'>
                                     {monstersWithEditsList.secondType || 'None'}
                                   </Dropdown.Toggle>
                                   <Dropdown.Menu>
@@ -201,7 +201,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                       <span className="monster-types">
                         {isEditing ? (
                           <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'type', val)}>
-                            <Dropdown.Toggle variant="info" id="dropdown-type-desktop" size="sm">
+                            <Dropdown.Toggle variant="secondary" id="dropdown-type-desktop">
                               {monstersWithEditsList.type}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -211,11 +211,11 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                             </Dropdown.Menu>
                           </Dropdown>
                         ) : (
-                          <span className="type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.type) }}>{monstersWithEditsList.type}</span>
+                          <span className="type-badge" id="primary-type" style={{ backgroundColor: getTypeColor(monstersWithEditsList.type) }}>{monstersWithEditsList.type}</span>
                         )}
                         {isEditing ? (
                           <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'secondType', val === 'None' ? null : val)}>
-                            <Dropdown.Toggle variant="info" id="dropdown-second-type-desktop" size="sm">
+                            <Dropdown.Toggle variant="secondary" id="dropdown-second-type-desktop">
                               {monstersWithEditsList.secondType || 'None'}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -226,7 +226,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                             </Dropdown.Menu>
                           </Dropdown>
                         ) : monstersWithEditsList.secondType && (
-                          <span className="type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.secondType) }}>{monstersWithEditsList.secondType}</span>
+                          <span className="type-badge" id="secondary-type" style={{ backgroundColor: getTypeColor(monstersWithEditsList.secondType) }}>{monstersWithEditsList.secondType}</span>
                         )}
                       </span>
                     </h2>
@@ -319,7 +319,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                         {isEditing ? (
                           <>
                             <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
-                              <Dropdown.Toggle variant="info" id={`dropdown-physical-${index}`} size="sm">
+                              <Dropdown.Toggle variant="secondary" id={`dropdown-physical-${index}`} size="sm">
                                 {attack.isPhysical ? 'Physical' : 'Special'}
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
@@ -373,7 +373,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                               }
                             }}
                           >
-                            <Dropdown.Toggle variant="info" id={`dropdown-attack-style-${index}`} size="sm">
+                            <Dropdown.Toggle variant="secondary" id={`dropdown-attack-style-${index}`} size="sm">
                               {(() => {
                                 const found = attackStyleOptions.find(opt =>
                                   attack.damage === opt.value.damage &&
@@ -396,7 +396,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                       <Col xs={4} sm={3} md={4}>
                         {isEditing ? (
                           <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
-                            <Dropdown.Toggle variant="info" id={`dropdown-attack-type-${index}`} size="sm">
+                            <Dropdown.Toggle variant="secondary" id={`dropdown-attack-type-${index}`} size="sm">
                               {attack.type}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
