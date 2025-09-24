@@ -1,9 +1,34 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Pokedex } from './Pokedex';
 import mockSelectedMonsters from '../mockMonsters';
 import ROUTES from '~/consts/ROUTES';
 
 describe('Pokedex Component', () => {
+
+  it('allows editing the inspiration text of a monster', async () => {
+    render(<Pokedex selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
+    // Click the Edit button for the first monster
+    const editButtons = screen.getAllByRole('button', { name: /edit/i });
+    fireEvent.click(editButtons[0]);
+    
+    // Find the inspiration textarea (should be the only one for this monster)
+    const inspirationInput = screen.getAllByRole('textbox').find(input => input.value === mockSelectedMonsters[0].inspiration);
+    expect(inspirationInput).toBeInTheDocument();
+    
+    // Type new inspiration
+    await userEvent.clear(inspirationInput!);
+    await userEvent.type(inspirationInput!, 'Test Inspiration');
+    expect(inspirationInput).toHaveValue('Test Inspiration');
+    
+    // Save
+    fireEvent.click(editButtons[0]);
+
+    // Inspiration should now be visible in the non-edit view (mobile and desktop views)
+    const items = screen.findAllByText(/The Test Inspiration Pokemon/)
+    expect((await items).length).toBe(2);
+  });
+
   it('displays the monster name when rendered', () => {
     // Render the Pokedex component
     render(<Pokedex selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
