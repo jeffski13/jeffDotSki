@@ -35,21 +35,21 @@ export function Drawings({
     return combinedLists.findIndex(item => item.full === overlayImg);
   };
 
-  const imageFullNext = () => {
+  const showImageFullNext = () => {
     const currentIdx = getOverlayIdx();
     if (currentIdx === -1) return;
     const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
     setOverlayImg(combinedLists[prevIdx].full);
   }
 
-  const imageFullPrevious = () => {
+  const showImageFullPrevious = () => {
     const currentIdx = getOverlayIdx();
     if (currentIdx === -1) return;
     const nextIdx = (currentIdx + 1) % combinedLists.length;
     setOverlayImg(combinedLists[nextIdx].full);
   }
 
-  const imageFullNone = () => {
+  const doNotShowImageFull = () => {
     setOverlayImg(null);
   }
 
@@ -62,9 +62,9 @@ export function Drawings({
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        imageFullNext();
+        showImageFullNext();
       } else if (e.key === 'ArrowRight') {
-        imageFullPrevious();
+        showImageFullPrevious();
       }
     };
 
@@ -149,7 +149,7 @@ export function Drawings({
               // Only close overlay if click is outside the image
               console.log(e.currentTarget)
               if (e.target === e.currentTarget) {
-                imageFullNone();
+                doNotShowImageFull();
                 return;
               }
             }}
@@ -159,7 +159,7 @@ export function Drawings({
               <div className="fullImageDirectionClose noselect">
                 <button
                   aria-label="Close full screen image"
-                  onClick={() => imageFullNone()}
+                  onClick={() => doNotShowImageFull()}
                 >
                   &#10005;
                 </button>
@@ -167,12 +167,12 @@ export function Drawings({
               <div className="mobile-view fullImageDirectionLabelContainer">
                 <div className="fullImageDirectionLabelContent">
                   <div className="fullImageDirectionLabel fullImageDirectionLabelLeft noselect"
-                    onClick={() => { imageFullPrevious() }}
+                    onClick={() => { showImageFullPrevious() }}
                   >
                     <span className="noselect">←</span> Tap Left
                   </div>
                   <div className="fullImageDirectionLabel fullImageDirectionLabelRight noselect"
-                    onClick={() => { imageFullNext() }}
+                    onClick={() => { showImageFullNext() }}
                   >
                     Tap Right <span className="noselect">→</span>
                   </div>
@@ -187,9 +187,9 @@ export function Drawings({
                 const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
                 const x = (e as React.MouseEvent).clientX - rect.left;
                 if (x < rect.width / 2) {
-                  imageFullPrevious();
+                  showImageFullPrevious();
                 } else {
-                  imageFullNext();
+                  showImageFullNext();
                 }
               }}
             />
