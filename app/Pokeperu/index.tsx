@@ -3,6 +3,7 @@ import BattleContainer from './battle/BattleParent';
 import MonsterSelection from './selection/MonsterSelection';
 import { monsters, type Monster } from './monsters';
 import ROUTES from '~/consts/ROUTES';
+import KEYS from '~/consts/KEYS';
 import './pokeperu.css';
 
 export default function PokePeru() {
@@ -11,13 +12,34 @@ export default function PokePeru() {
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
-      <PokePeruContent monsters={monsters}
+      <PokePeruContent monsters={getEditedMonstersList(monsters)}
         dexRoute={ROUTES.pokePeru.pokedex}
         battleRoute={ROUTES.pokePeru.battle}
         gymRoute={ROUTES.pokePeru.gymleaders}
       />
     </div>
   );
+}
+
+export const getEditedMonstersList = (monstersList: Monster[]) => {
+  // Load edits from localStorage and merge with monsters
+  let finalMonstersList = monstersList;
+  const stored = localStorage.getItem(KEYS.pokePeru.monsterEditsKey);
+  if (stored) {
+    const editData = JSON.parse(stored);
+    const getMonsterWithEdits = (monster: Monster) => {
+      const edit = editData[monster.name];
+      if (!edit) return monster;
+      return {
+        ...monster,
+        ...edit,
+        attack1: { ...monster.attack1, ...(edit.attack1 || {}) },
+        attack2: { ...monster.attack2, ...(edit.attack2 || {}) },
+      };
+    };
+    finalMonstersList = monstersList.map(getMonsterWithEdits);
+  }
+  return finalMonstersList;
 }
 
 interface PokePeruContentProps {
