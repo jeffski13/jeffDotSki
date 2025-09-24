@@ -7,7 +7,7 @@ export interface MonsterAttack {
   isPhysical: boolean; // True for physical attacks, false for special attacks
   damage: number;
   powerPoints: number; // New attribute for Power Points (PP)
-  accuracy: Number;
+  accuracy: number;
 }
 
 // Define the structure of a monster
