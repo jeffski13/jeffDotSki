@@ -96,55 +96,48 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
       </div>
       <ul className="monster-list">
         {selectedMonsters.map((monster: Monster) => {
-          const m = getMonsterWithEdits(monster);
+          const monstersWithEditsList = getMonsterWithEdits(monster);
           const statsList = [
-            { name: 'Hit Points', value: m.hp, color: '#FF5959', key: 'hp' },
-            { name: 'Attack', value: m.attack, color: '#F5AC78', key: 'attack' },
-            { name: 'Defense', value: m.defense, color: '#FAE078', key: 'defense' },
-            { name: 'Special Attack', value: m.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
-            { name: 'Special Defense', value: m.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
-            { name: 'Speed', value: m.speed, color: '#FA92B2', key: 'speed' },
+            { name: 'Hit Points', value: monstersWithEditsList.hp, color: '#FF5959', key: 'hp' },
+            { name: 'Attack', value: monstersWithEditsList.attack, color: '#F5AC78', key: 'attack' },
+            { name: 'Defense', value: monstersWithEditsList.defense, color: '#FAE078', key: 'defense' },
+            { name: 'Special Attack', value: monstersWithEditsList.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
+            { name: 'Special Defense', value: monstersWithEditsList.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
+            { name: 'Speed', value: monstersWithEditsList.speed, color: '#FA92B2', key: 'speed' },
           ];
-          const totalStats = m.hp + m.attack + m.defense + m.specialAttack + m.specialDefense + m.speed;
-          const attackList = [m.attack1, m.attack2];
-          const description = `The ${m.inspiration} Pokemon: ${m.description}`;
-          const isEditing = !!editMode[m.name];
+          const totalStats = monstersWithEditsList.hp + monstersWithEditsList.attack + monstersWithEditsList.defense + monstersWithEditsList.specialAttack + monstersWithEditsList.specialDefense + monstersWithEditsList.speed;
+          const attackList = [monstersWithEditsList.attack1, monstersWithEditsList.attack2];
+          const description = `The ${monstersWithEditsList.inspiration} Pokemon: ${monstersWithEditsList.description}`;
+          const isEditing = !!editMode[monstersWithEditsList.name];
           return (
-            <li key={m.name} className="monster-item" style={{ position: 'relative' }}>
+            <li key={monstersWithEditsList.name} className="monster-item" style={{ position: 'relative' }}>
               <Button
                 variant={isEditing ? 'success' : 'outline-secondary'}
                 size="sm"
                 style={{ position: 'absolute', top: 10, right: 10, zIndex: 2 }}
-                onClick={() => setEditMode(prev => ({ ...prev, [m.name]: !isEditing }))}
+                onClick={() => setEditMode(prev => ({ ...prev, [monstersWithEditsList.name]: !isEditing }))}
               >
                 {isEditing ? 'Save' : 'Edit'}
               </Button>
               <div className="monster-details">
                 <div className='monster-details-top'>
-                  <img src={m.image} alt={m.name} className="monster-image-dex" />
+                  <img src={monstersWithEditsList.image} alt={monstersWithEditsList.name} className="monster-image-dex" />
                   <div>
-                    {/* mobile only header */}
+                    {/* mobile header */}
                     <Container className="monster-name-types mobile-view">
                       <Row>
                         <Col xs={12}>
                           <h2 className="monster-name-types">
-                            {isEditing ? (
-                              <Form.Control
-                                type="text"
-                                value={m.name}
-                                readOnly
-                                style={{ maxWidth: 180, display: 'inline-block' }}
-                              />
-                            ) : m.name}
+                            {monstersWithEditsList.name}
                           </h2>
                         </Col>
                         <Col xs={12}>
                           <h2 className="monster-name-types">
                             <span className="monster-types">
                               {isEditing ? (
-                                <Dropdown onSelect={val => handleEditChange(m.name, 'type', val)}>
+                                <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'type', val)}>
                                   <Dropdown.Toggle variant="info" id="dropdown-type" size="sm">
-                                    {m.type}
+                                    {monstersWithEditsList.type}
                                   </Dropdown.Toggle>
                                   <Dropdown.Menu>
                                     {elementTypeOptions.map(type => (
@@ -153,7 +146,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                                   </Dropdown.Menu>
                                 </Dropdown>
                               ) : (
-                                <span className="type-badge" style={{ backgroundColor: getTypeColor(m.type) }}>{m.type}</span>
+                                <span className="type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.type) }}>{monstersWithEditsList.type}</span>
                               )}
                             </span>
                           </h2>
@@ -162,9 +155,9 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                           <h2 className="monster-name-types">
                             <span className="monster-types">
                               {isEditing ? (
-                                <Dropdown onSelect={val => handleEditChange(m.name, 'secondType', val === 'None' ? null : val)}>
+                                <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'secondType', val === 'None' ? null : val)}>
                                   <Dropdown.Toggle variant="info" id="dropdown-second-type" size="sm">
-                                    {m.secondType || 'None'}
+                                    {monstersWithEditsList.secondType || 'None'}
                                   </Dropdown.Toggle>
                                   <Dropdown.Menu>
                                     <Dropdown.Item eventKey="None" key="none">None</Dropdown.Item>
@@ -173,8 +166,8 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                                     ))}
                                   </Dropdown.Menu>
                                 </Dropdown>
-                              ) : m.secondType && (
-                                <span className="type-badge" style={{ backgroundColor: getTypeColor(m.secondType) }}>{m.secondType}</span>
+                              ) : monstersWithEditsList.secondType && (
+                                <span className="type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.secondType) }}>{monstersWithEditsList.secondType}</span>
                               )}
                             </span>
                           </h2>
@@ -183,14 +176,12 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                     </Container>
                     {/* desktop header */}
                     <h2 className="monster-name-types desktop-view">
-                      {isEditing ? (
-                        <Form.Control type="text" value={m.name} readOnly style={{ maxWidth: 180, display: 'inline-block' }} />
-                      ) : m.name}
+                      {monstersWithEditsList.name}
                       <span className="monster-types">
                         {isEditing ? (
-                          <Dropdown onSelect={val => handleEditChange(m.name, 'type', val)}>
+                          <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'type', val)}>
                             <Dropdown.Toggle variant="info" id="dropdown-type-desktop" size="sm">
-                              {m.type}
+                              {monstersWithEditsList.type}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                               {elementTypeOptions.map(type => (
@@ -199,12 +190,12 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                             </Dropdown.Menu>
                           </Dropdown>
                         ) : (
-                          <span className="type-badge" style={{ backgroundColor: getTypeColor(m.type) }}>{m.type}</span>
+                          <span className="type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.type) }}>{monstersWithEditsList.type}</span>
                         )}
                         {isEditing ? (
-                          <Dropdown onSelect={val => handleEditChange(m.name, 'secondType', val === 'None' ? null : val)}>
+                          <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'secondType', val === 'None' ? null : val)}>
                             <Dropdown.Toggle variant="info" id="dropdown-second-type-desktop" size="sm">
-                              {m.secondType || 'None'}
+                              {monstersWithEditsList.secondType || 'None'}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                               <Dropdown.Item eventKey="None" key="none">None</Dropdown.Item>
@@ -213,8 +204,8 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                               ))}
                             </Dropdown.Menu>
                           </Dropdown>
-                        ) : m.secondType && (
-                          <span className="type-badge" style={{ backgroundColor: getTypeColor(m.secondType) }}>{m.secondType}</span>
+                        ) : monstersWithEditsList.secondType && (
+                          <span className="type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.secondType) }}>{monstersWithEditsList.secondType}</span>
                         )}
                       </span>
                     </h2>
@@ -222,22 +213,22 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                       {isEditing ? (
                         <Form.Control
                           type="text"
-                          value={m.inspiration}
-                          onChange={e => handleEditChange(m.name, 'inspiration', e.target.value)}
+                          value={monstersWithEditsList.inspiration}
+                          onChange={e => handleEditChange(monstersWithEditsList.name, 'inspiration', e.target.value)}
                           as="textarea"
                           rows={1}
                           style={{ maxWidth: 300, marginBottom: 4 }}
                         />
                       ) : (
-                        <span><strong>Inspiration:</strong> {m.inspiration}</span>
+                        <span><strong>Inspiration:</strong> {monstersWithEditsList.inspiration}</span>
                       )}
                     </div>
                     <p className="monster-description desktop-view">
                       {isEditing ? (
                         <Form.Control
                           type="text"
-                          value={m.description || ''}
-                          onChange={e => handleEditChange(m.name, 'description', e.target.value)}
+                          value={monstersWithEditsList.description || ''}
+                          onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
                           as="textarea"
                           rows={2}
                           style={{ maxWidth: 400, marginBottom: 4 }}
@@ -252,8 +243,8 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                     {isEditing ? (
                       <Form.Control
                         type="text"
-                        value={m.description || ''}
-                        onChange={e => handleEditChange(m.name, 'description', e.target.value)}
+                        value={monstersWithEditsList.description || ''}
+                        onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
                         as="textarea"
                         rows={2}
                         style={{ maxWidth: 400, marginBottom: 4 }}
@@ -275,8 +266,8 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                         {isEditing ? (
                           <Form.Control
                             type="number"
-                            value={m[stat.key]}
-                            onChange={e => handleEditChange(m.name, stat.key, Number(e.target.value))}
+                            value={monstersWithEditsList[stat.key]}
+                            onChange={e => handleEditChange(monstersWithEditsList.name, stat.key, Number(e.target.value))}
                             style={{ maxWidth: 100, display: 'inline-block' }}
                           />
                         ) : (
@@ -306,7 +297,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                       <Col xs={12} sm={4} md={4} className="attack-name-container">
                         {isEditing ? (
                           <>
-                            <Dropdown onSelect={val => handleAttackChange(m.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
+                            <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
                               <Dropdown.Toggle variant="info" id={`dropdown-physical-${index}`} size="sm">
                                 {attack.isPhysical ? 'Physical' : 'Special'}
                               </Dropdown.Toggle>
@@ -319,7 +310,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                             <Form.Control
                               type="text"
                               value={attack.name}
-                              onChange={e => handleAttackChange(m.name, `attack${index + 1}` as 'attack1' | 'attack2', 'name', e.target.value)}
+                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'name', e.target.value)}
                               style={{ maxWidth: 120, display: 'inline-block', marginLeft: 8 }}
                             />
                           </>
@@ -340,19 +331,19 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                             <Form.Control
                               type="number"
                               value={attack.damage}
-                              onChange={e => handleAttackChange(m.name, `attack${index + 1}` as 'attack1' | 'attack2', 'damage', Number(e.target.value))}
+                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'damage', Number(e.target.value))}
                               style={{ maxWidth: 60, display: 'inline-block', marginRight: 4 }}
                             />
                             <Form.Control
                               type="number"
                               value={attack.powerPoints}
-                              onChange={e => handleAttackChange(m.name, `attack${index + 1}` as 'attack1' | 'attack2', 'powerPoints', Number(e.target.value))}
+                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'powerPoints', Number(e.target.value))}
                               style={{ maxWidth: 60, display: 'inline-block', marginRight: 4 }}
                             />
                             <Form.Control
                               type="number"
                               value={attack.accuracy}
-                              onChange={e => handleAttackChange(m.name, `attack${index + 1}` as 'attack1' | 'attack2', 'accuracy', Number(e.target.value))}
+                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'accuracy', Number(e.target.value))}
                               style={{ maxWidth: 60, display: 'inline-block' }}
                             />
                           </>
@@ -362,7 +353,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                       </Col>
                       <Col xs={4} sm={3} md={4}>
                         {isEditing ? (
-                          <Dropdown onSelect={val => handleAttackChange(m.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
+                          <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
                             <Dropdown.Toggle variant="info" id={`dropdown-attack-type-${index}`} size="sm">
                               {attack.type}
                             </Dropdown.Toggle>
