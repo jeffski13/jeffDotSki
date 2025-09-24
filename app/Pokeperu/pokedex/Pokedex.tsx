@@ -1,9 +1,10 @@
-import ROUTES from '../../consts/ROUTES';
 import { getTypeColor } from '../typeColors';
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Dropdown, Form } from 'react-bootstrap';
 import { monsters, type Monster } from '../monsters';
 import { ElementType } from '../ElementType';
+import ROUTES from '../../consts/ROUTES';
+import KEYS from '~/consts/KEYS';
 import './pokedex.css';
 import '../navigation.css';
 import '../secondaryPage.css';
@@ -25,7 +26,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
 
   useEffect(() => {
-    const stored = localStorage.getItem('pokedexEdits');
+    const stored = localStorage.getItem(KEYS.pokePeru.monsterEditsKey);
     if (stored) {
       setEditData(JSON.parse(stored));
     }
@@ -34,7 +35,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
   const handleEditChange = (editID: string, field: string, value: any) => {
     setEditData(prev => {
       const updated = { ...prev, [editID]: { ...prev[editID], [field]: value } };
-      localStorage.setItem('pokedexEdits', JSON.stringify(updated));
+      localStorage.setItem(KEYS.pokePeru.monsterEditsKey, JSON.stringify(updated));
       return updated;
     });
   };
@@ -49,7 +50,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
           [attackKey]: { ...prevAttack, [field]: value }
         }
       };
-      localStorage.setItem('pokedexEdits', JSON.stringify(updated));
+      localStorage.setItem(KEYS.pokePeru.monsterEditsKey, JSON.stringify(updated));
       return updated;
     });
   };
