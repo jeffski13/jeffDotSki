@@ -72,9 +72,30 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
     { label: 'Special', value: false },
   ];
   const attackStyleOptions = [
-    { label: 'High Power/Low Accuracy', value: 'high' },
-    { label: 'Balanced', value: 'balanced' },
-    { label: 'Low Power, High Accuracy', value: 'low' },
+    {
+      label: 'High Power/Low Accuracy',
+      value: {
+        damage: 60,
+        powerPoints: 2,
+        accuracy: 0.5,
+      }
+    },
+    {
+      label: 'Balanced',
+      value: {
+        damage: 40,
+        powerPoints: 4,
+        accuracy: 0.75,
+      }
+    },
+    {
+      label: 'Low Power, High Accuracy',
+      value: {
+        damage: 25,
+        powerPoints: 10,
+        accuracy: 1,
+      }
+    },
   ];
 
   return (
