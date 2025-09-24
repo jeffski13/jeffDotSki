@@ -1,4 +1,4 @@
-import { PokePeruContent } from "..";
+import { getEditedMonstersList, PokePeruContent } from "..";
 import { getClaremoreMonsters } from "./monstersClaremore"
 import { Pokedex } from "../pokedex/Pokedex"
 import ROUTES from "~/consts/ROUTES";
@@ -12,7 +12,7 @@ export default function PokePeruClaremore() {
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
       <PokePeruContent
-        monsters={getClaremoreMonsters()}
+        monsters={getEditedMonstersList(getClaremoreMonsters())}
         dexRoute={ROUTES.pokePeru.pokeClaremoreDex} 
         battleRoute={ROUTES.pokePeru.pokeClaremore} 
         gymRoute={ROUTES.pokePeru.pokeClaremoreGym}
