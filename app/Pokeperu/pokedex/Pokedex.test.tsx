@@ -6,6 +6,32 @@ import ROUTES from '~/consts/ROUTES';
 
 describe('Pokedex Component', () => {
 
+  it('allows editing the speed stat of a monster', async () => {
+    render(<Pokedex selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
+    // Click the Edit button for the first monster
+    const editButtons = screen.getAllByRole('button', { name: /edit/i });
+    fireEvent.click(editButtons[0]);
+
+    // Find the speed input (should be a number input with the current speed value)
+    const speedInput = screen.getAllByDisplayValue(String(mockSelectedMonsters[0].speed)).find(
+      input => input.getAttribute('type') === 'number'
+    );
+    expect(speedInput).toBeInTheDocument();
+
+    // Change the speed value
+    await userEvent.clear(speedInput!);
+    await userEvent.type(speedInput!, '123');
+    expect(speedInput).toHaveValue(123);
+
+    // Save
+    fireEvent.click(editButtons[0]);
+
+    // The new speed value should be reflected in the stat bar (look for style width: 123%)
+    // and in the total stats
+    const totalStats = mockSelectedMonsters[0].hp + mockSelectedMonsters[0].attack + mockSelectedMonsters[0].defense + mockSelectedMonsters[0].specialAttack + mockSelectedMonsters[0].specialDefense + 123;
+    expect(screen.getAllByText(`Total Stats: ${totalStats}`)[0]).toBeInTheDocument();
+  });
+
   it('allows editing the inspiration text of a monster', async () => {
     render(<Pokedex selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
     // Click the Edit button for the first monster
