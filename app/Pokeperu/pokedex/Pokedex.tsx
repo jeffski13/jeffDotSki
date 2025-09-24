@@ -145,7 +145,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                   <img className="monster-details-top-image"
                     src={monstersWithEditsList.image}
                     alt={monstersWithEditsList.name}
-                    />
+                  />
                   <div className="monster-details-top-textinfo" >
                     {/* mobile header */}
                     <Container className="monster-name-types mobile-view">
@@ -244,9 +244,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                           rows={1}
                           style={{ marginBottom: 4 }}
                         />
-                      ) : (
-                        <span><strong>Inspiration:</strong> {monstersWithEditsList.inspiration}</span>
-                      )}
+                      ) : (<></>)}
                     </div>
                     {/* desktop description */}
                     <div className="desktop-view">
@@ -268,21 +266,19 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                 </div>
                 {/* mobile description */}
                 <div className='mobile-view'>
-                  <p className="monster-description">
-                    {isEditing ? (
-                      <Form.Control
-                        type="text"
-                        value={monstersWithEditsList.description || ''}
-                        onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
-                        as="textarea"
-                        rows={2}
-                      />
-                    ) : (
-                      <div className='monster-details-top'>
-                        {description}
-                      </div>
-                    )}
-                  </p>
+                  {isEditing ? (
+                    <Form.Control
+                      type="text"
+                      value={monstersWithEditsList.description || ''}
+                      onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
+                      as="textarea"
+                      rows={2}
+                    />
+                  ) : (
+                    <div className='monster-details-top'>
+                      {description}
+                    </div>
+                  )}
                 </div>
               </div>
               {/* stats */}

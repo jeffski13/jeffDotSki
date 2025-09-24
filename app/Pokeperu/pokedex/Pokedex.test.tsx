@@ -48,7 +48,7 @@ describe('Pokedex Component', () => {
     fireEvent.click(editButtons[0]);
 
     // Inspiration should now be visible in the non-edit view (mobile and desktop views)
-    const items = screen.findAllByText(/The Test Inspiration Pokemon/)
+    const items = screen.findAllByText(/Test Desc/)
     expect((await items).length).toBe(2);
   });
 
