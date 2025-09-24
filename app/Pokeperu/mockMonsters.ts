@@ -32,7 +32,7 @@ const mockSelectedMonsters: Monster[] = [
       accuracy: 1 
     },
     trainerImage: '',
-    inspiration: ''
+    inspiration: 'intitialInspiration'
   },
   {
     name: 'Charmander',

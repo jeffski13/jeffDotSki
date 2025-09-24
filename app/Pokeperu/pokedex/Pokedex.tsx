@@ -14,19 +14,24 @@ import '../../Inf/mobile-support.css';
 interface PokedexProps {
   selectedMonsters: Monster[];
   battleRoute: string;
+  storageKey: string;
 }
 
 export default function PokedexContainer() {
-  return (<Pokedex selectedMonsters={monsters} battleRoute={ROUTES.pokePeru.battle} />);
+  return (<Pokedex
+    selectedMonsters={monsters}
+    battleRoute={ROUTES.pokePeru.battle}
+    storageKey={KEYS.pokePeru.monsterEditsKey}
+  />);
 }
 
-export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
+export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexProps) {
   // Load edits from localStorage
   const [editData, setEditData] = useState<{ [editID: string]: any }>({});
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
 
   useEffect(() => {
-    const stored = localStorage.getItem(KEYS.pokePeru.monsterEditsKey);
+    const stored = localStorage.getItem(storageKey);
     if (stored) {
       setEditData(JSON.parse(stored));
     }
@@ -35,7 +40,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
   const handleEditChange = (editID: string, field: string, value: any) => {
     setEditData(prev => {
       const updated = { ...prev, [editID]: { ...prev[editID], [field]: value } };
-      localStorage.setItem(KEYS.pokePeru.monsterEditsKey, JSON.stringify(updated));
+      localStorage.setItem(storageKey, JSON.stringify(updated));
       return updated;
     });
   };
@@ -50,7 +55,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
           [attackKey]: { ...prevAttack, [field]: value }
         }
       };
-      localStorage.setItem(KEYS.pokePeru.monsterEditsKey, JSON.stringify(updated));
+      localStorage.setItem(storageKey, JSON.stringify(updated));
       return updated;
     });
   };
@@ -150,7 +155,7 @@ export function Pokedex({ selectedMonsters, battleRoute }: PokedexProps) {
                     setEditData(prev => {
                       const updated = { ...prev };
                       delete updated[monstersWithEditsList.name];
-                      localStorage.setItem('pokedexEdits', JSON.stringify(updated));
+                      localStorage.setItem(storageKey, JSON.stringify(updated));
                       return updated;
                     });
                   }}
