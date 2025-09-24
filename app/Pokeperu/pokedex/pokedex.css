@@ -17,9 +17,12 @@
   margin: 20px;
 }
 
+.monster-details-top-textinfo {
+  flex: 1;
+}
+
 .monster-details-top {
   display: flex;
-  align-items: flex-start;
   text-align: left;
 }
 
@@ -30,15 +33,11 @@
   margin-top: 10px;
 }
 
-.monster-image-dex {
+.monster-details-top-image {
   width: 150px;
   height: 150px;
   object-fit: contain;
   margin-right: 15px;
-}
-
-.monster-details {
-  flex: 1;
 }
 
 .monster-name {
