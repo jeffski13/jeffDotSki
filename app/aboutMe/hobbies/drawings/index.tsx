@@ -35,6 +35,24 @@ export function Drawings({
     return combinedLists.findIndex(item => item.full === overlayImg);
   };
 
+  const imageFullNext = () => {
+    const currentIdx = getOverlayIdx();
+    if (currentIdx === -1) return;
+    const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+    setOverlayImg(combinedLists[prevIdx].full);
+  }
+
+  const imageFullPrevious = () => {
+    const currentIdx = getOverlayIdx();
+    if (currentIdx === -1) return;
+    const nextIdx = (currentIdx + 1) % combinedLists.length;
+    setOverlayImg(combinedLists[nextIdx].full);
+  }
+
+  const imageFullNone = () => {
+    setOverlayImg(null);
+  }
+
   // Keyboard, touch navigation, and scroll lock effect
   useEffect(() => {
     if (!overlayImg) {
@@ -43,14 +61,10 @@ export function Drawings({
     }
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (e: KeyboardEvent) => {
-      const currentIdx = getOverlayIdx();
-      if (currentIdx === -1) return;
       if (e.key === 'ArrowLeft') {
-        const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-        setOverlayImg(combinedLists[prevIdx].full);
+        imageFullNext();
       } else if (e.key === 'ArrowRight') {
-        const nextIdx = (currentIdx + 1) % combinedLists.length;
-        setOverlayImg(combinedLists[nextIdx].full);
+        imageFullPrevious();
       }
     };
 
@@ -130,76 +144,37 @@ export function Drawings({
 
         {overlayImg && (
           <div
-            className="drawing-fullscreen-overlay"
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100vw',
-              height: '100vh',
-              background: 'rgba(0,0,0,0.85)',
-              zIndex: 10,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              overflow: 'hidden',
-              flexDirection: 'column',
-            }}
+            className="drawing-fullscreen-overlay fullImageArea"
             onClick={e => {
               // Only close overlay if click is outside the image
+              console.log('got it')
+              console.log(e.currentTarget)
               if (e.target === e.currentTarget) {
-                setOverlayImg(null);
+                imageFullNone();
                 return;
-              }
-              // Otherwise, handle navigation
-              const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
-              const x = (e as React.MouseEvent).clientX - rect.left;
-              const currentIdx = getOverlayIdx();
-              if (x < rect.width / 2) {
-                // Left side: previous image
-                if (currentIdx !== -1) {
-                  const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-                  setOverlayImg(combinedLists[prevIdx].full);
-                }
-              } else {
-                // Right side: next image
-                if (currentIdx !== -1) {
-                  const nextIdx = (currentIdx + 1) % combinedLists.length;
-                  setOverlayImg(combinedLists[nextIdx].full);
-                }
               }
             }}
             aria-label="Navigate or close full screen image"
           >
-            <div style={{ width: '90vw', display: 'flex', justifyContent: 'space-between', position: 'absolute', top: 85, left: 0, pointerEvents: 'none' }}>
+            <div className='fullImageNavigation'>
               <div className="fullImageDirectionClose">
                 <button
                   aria-label="Close full screen image"
-                  style={{
-                    background: 'rgba(0,0,0,0.6)',
-                    border: 'none',
-                    borderRadius: '50%',
-                    width: 30,
-                    height: 30,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: '#aaa',
-                    fontSize: 24,
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                  }}
+                  onClick={() => imageFullNone()}
                 >
                   &#10005;
                 </button>
               </div>
               <div className="mobile-view fullImageDirectionLabelContainer">
                 <div className="mobile-view fullImageDirectionLabelContent">
-                  <div className="fullImageDirectionLabel fullImageDirectionLabelLeft">
+                  <div className="fullImageDirectionLabel fullImageDirectionLabelLeft"
+                    onClick={() => { imageFullPrevious() }}
+                  >
                     <span style={{ fontSize: 20 }}>←</span> Tap Left
                   </div>
-                  <div className="fullImageDirectionLabel fullImageDirectionLabelRight">
+                  <div className="fullImageDirectionLabel fullImageDirectionLabelRight"
+                    onClick={() => { imageFullNext() }}
+                  >
                     Tap Right <span style={{ fontSize: 20 }}>→</span>
                   </div>
                 </div>
@@ -208,12 +183,25 @@ export function Drawings({
             <img
               src={overlayImg}
               alt="Full drawing"
-              style={{
-                maxWidth: '80vw',
-                maxHeight: '80vh',
-                borderRadius: 12,
-                boxShadow: '0 2px 24px rgba(0,0,0,0.5)',
-                zIndex: 11,
+              className="fullImage"
+              onClick={e => {
+                // Otherwise, handle navigation
+                const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+                const x = (e as React.MouseEvent).clientX - rect.left;
+                const currentIdx = getOverlayIdx();
+                if (x < rect.width / 2) {
+                  // Left side: previous image
+                  if (currentIdx !== -1) {
+                    const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+                    setOverlayImg(combinedLists[prevIdx].full);
+                  }
+                } else {
+                  // Right side: next image
+                  if (currentIdx !== -1) {
+                    const nextIdx = (currentIdx + 1) % combinedLists.length;
+                    setOverlayImg(combinedLists[nextIdx].full);
+                  }
+                }
               }}
             />
           </div>
