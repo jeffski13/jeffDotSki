@@ -6,6 +6,44 @@ import ROUTES from '~/consts/ROUTES';
 
 describe('Pokedex Component', () => {
 
+  it('allows editing attack: physical/special, type, and stats via style dropdown', async () => {
+    render(<Pokedex selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
+    // Click the Edit button for the first monster
+    const editButtons = screen.getAllByRole('button', { name: /edit/i });
+    fireEvent.click(editButtons[0]);
+
+    // Change attack1 from physical to special
+    const physicalDropdown = screen.getAllByRole('button', { name: /physical/i })[0];
+    fireEvent.click(physicalDropdown);
+    const specialOption = await screen.findAllByText('Special');
+    console.log('yolo')
+    fireEvent.click(specialOption[0]);
+    expect(physicalDropdown).toHaveTextContent('Special');
+
+    // Change attack1 type to Fire
+    const typeDropdown = screen.getAllByRole('button', { name: mockSelectedMonsters[0].attack1.type })[0];
+    fireEvent.click(typeDropdown);
+    const fireOption = await screen.findByText('Ghost');
+    fireEvent.click(fireOption);
+    expect(typeDropdown).toHaveTextContent('Ghost');
+
+    // Change attack1 stats via style dropdown to 'High Power/Low Accuracy'
+    const styleDropdown = screen.getAllByRole('button', { name: /balanced|high power|low power/i })[0];
+    fireEvent.click(styleDropdown);
+    const highPowerOption = await screen.findByText('High Power/Low Accuracy');
+    fireEvent.click(highPowerOption);
+    expect(styleDropdown).toHaveTextContent('High Power/Low Accuracy');
+
+    // Save
+    fireEvent.click(editButtons[0]);
+
+    // Check that the attack1 stats are updated in the display
+    expect(screen.getByText(/50%/)).toBeInTheDocument();
+    // Check that the type is Fire
+    expect(screen.getAllByText('Ghost').length).toBe(1);
+    // Check that the icon is for special (alt text not available, but button text is checked above)
+  });
+
   it('allows editing the speed stat of a monster', async () => {
     render(<Pokedex selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
     // Click the Edit button for the first monster
