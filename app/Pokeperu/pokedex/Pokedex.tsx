@@ -295,7 +295,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                       value={monstersWithEditsList.description || ''}
                       onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
                       as="textarea"
-                      rows={2}
+                      rows={3}
                     />
                   ) : (
                     <div className='monster-details-top'>
