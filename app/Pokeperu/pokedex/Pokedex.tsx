@@ -128,8 +128,8 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
             { name: 'Hit Points', nameShort: 'HP', value: monstersWithEditsList.hp, color: '#FF5959', key: 'hp' },
             { name: 'Attack', nameShort: 'ATK', value: monstersWithEditsList.attack, color: '#F5AC78', key: 'attack' },
             { name: 'Defense', nameShort: 'DEF', value: monstersWithEditsList.defense, color: '#FAE078', key: 'defense' },
-            { name: 'Special Attack', nameShort: 'SpATK', value: monstersWithEditsList.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
-            { name: 'Special Defense', nameShort: 'SpDEF', value: monstersWithEditsList.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
+            { name: 'Special Attack', nameShort: 'SP ATK', value: monstersWithEditsList.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
+            { name: 'Special Defense', nameShort: 'SP DEF', value: monstersWithEditsList.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
             { name: 'Speed', nameShort: 'SPD', value: monstersWithEditsList.speed, color: '#FA92B2', key: 'speed' },
           ];
           const totalStats = monstersWithEditsList.hp + monstersWithEditsList.attack + monstersWithEditsList.defense + monstersWithEditsList.specialAttack + monstersWithEditsList.specialDefense + monstersWithEditsList.speed;
