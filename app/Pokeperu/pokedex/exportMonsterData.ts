@@ -6,9 +6,15 @@ const balancedDefaultAttack = {
     accuracy: 0.75,
 };
 
+/**
+ * 
+ * @param editData an array of monsters with the key as the monster name
+ * @param selectedMonsters original monsters array
+ * @returns 
+ */
 export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
     return new Promise((resolve, reject) => {
-        Object.keys(editData).map(monsterName => {
+        const allMonsters = Object.keys(editData).map(monsterName => {
             const monster = selectedMonsters.find(monster => monster.name === monsterName);
             if (!monster) {
                 return null
@@ -34,7 +40,7 @@ export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
                 hp, attack, defense, specialAttack, specialDefense, speed,
                 attack1,attack2
             } = merged;
-            resolve({
+            return ({
                 name: mergedName,
                 trainer,
                 trainerImage,
@@ -47,5 +53,6 @@ export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
                 attack1, attack2
             });
         }).filter(Boolean);
-    })
+        resolve(allMonsters);
+    });
 }
