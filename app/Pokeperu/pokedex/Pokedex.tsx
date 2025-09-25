@@ -79,7 +79,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
   ];
   const attackStyleOptions = [
     {
-      label: 'Low Power, High Accuracy',
+      label: 'Low Pow, High Acc',
       value: {
         damage: 25,
         powerPoints: 10,
@@ -95,7 +95,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
       }
     },
     {
-      label: 'High Power/Low Accuracy',
+      label: 'High Pow, Low Acc',
       value: {
         damage: 60,
         powerPoints: 2,
@@ -125,12 +125,12 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
         {selectedMonsters.map((monster: Monster) => {
           const monstersWithEditsList = getMonsterWithEdits(monster);
           const statsList = [
-            { name: 'Hit Points', value: monstersWithEditsList.hp, color: '#FF5959', key: 'hp' },
-            { name: 'Attack', value: monstersWithEditsList.attack, color: '#F5AC78', key: 'attack' },
-            { name: 'Defense', value: monstersWithEditsList.defense, color: '#FAE078', key: 'defense' },
-            { name: 'Special Attack', value: monstersWithEditsList.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
-            { name: 'Special Defense', value: monstersWithEditsList.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
-            { name: 'Speed', value: monstersWithEditsList.speed, color: '#FA92B2', key: 'speed' },
+            { name: 'Hit Points', nameShort: 'HP', value: monstersWithEditsList.hp, color: '#FF5959', key: 'hp' },
+            { name: 'Attack', nameShort: 'ATK', value: monstersWithEditsList.attack, color: '#F5AC78', key: 'attack' },
+            { name: 'Defense', nameShort: 'DEF', value: monstersWithEditsList.defense, color: '#FAE078', key: 'defense' },
+            { name: 'Special Attack', nameShort: 'SP ATK', value: monstersWithEditsList.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
+            { name: 'Special Defense', nameShort: 'SP DEF', value: monstersWithEditsList.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
+            { name: 'Speed', nameShort: 'SPD', value: monstersWithEditsList.speed, color: '#FA92B2', key: 'speed' },
           ];
           const totalStats = monstersWithEditsList.hp + monstersWithEditsList.attack + monstersWithEditsList.defense + monstersWithEditsList.specialAttack + monstersWithEditsList.specialDefense + monstersWithEditsList.speed;
           const attackList = [monstersWithEditsList.attack1, monstersWithEditsList.attack2];
@@ -295,7 +295,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                       value={monstersWithEditsList.description || ''}
                       onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
                       as="textarea"
-                      rows={2}
+                      rows={3}
                     />
                   ) : (
                     <div className='monster-details-top'>
@@ -309,18 +309,19 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                 <Container>
                   {statsList.map((stat) => (
                     <Row key={stat.name}>
-                      <Col xs={12} sm={4} md={3} className="stats-container">
+                      <Col xs={2} sm={3} className="stats-container">
                         <div className="stats-label-container">
-                          <span className="stats-label">{stat.name}:</span>
+                          <span className="stats-label desktop-view">{stat.name}:</span>
+                          <span className="stats-label mobile-view">{stat.nameShort}:</span>
                         </div>
                       </Col>
-                      <Col xs={12} sm={8} md={9}>
+                      <Col xs={10} sm={9}>
                         {isEditing ? (
                           <Form.Control
                             type="number"
                             value={monstersWithEditsList[stat.key]}
                             onChange={e => handleEditChange(monstersWithEditsList.name, stat.key, Number(e.target.value))}
-                            style={{ maxWidth: 100, display: 'inline-block' }}
+                            style={{ maxWidth: 100 }}
                           />
                         ) : (
                           <div className="stat-bar" title={`${stat.name}: ${stat.value}`}>
@@ -346,10 +347,10 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                 <Container className="attacks-list">
                   {attackList.map((attack, index) => (
                     <Row key={index} className="attack-item">
-                      <Col xs={12} sm={4} md={4} className="attack-name-container">
-                        {isEditing ? (
-                          <>
-                            <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
+                      {isEditing ? (
+                        <>
+                          <Col xs={12} sm={6} className="attack-container">
+                            <Dropdown id={`attack-${index}-edit-isPhysical`} onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
                               <Dropdown.Toggle variant="secondary" id={`dropdown-physical-${index}`} size="sm">
                                 {attack.isPhysical ? 'Physical' : 'Special'}
                               </Dropdown.Toggle>
@@ -360,91 +361,86 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                               </Dropdown.Menu>
                             </Dropdown>
                             <Form.Control
+                              id={`attack-${index}-edit-name`}
                               type="text"
                               value={attack.name}
                               onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'name', e.target.value)}
-                              style={{ maxWidth: 120, display: 'inline-block', marginLeft: 8 }}
+                              className="attack-name-edit"
                             />
-                          </>
-                        ) : (
-                          <>
+                          </Col>
+                          <Col xs={6} sm={3} className="attack-details-container">
+                            <Dropdown
+                              id={`attack-${index}-edit-attack-power-accuracy`}
+                              onSelect={val => {
+                                const selected = attackStyleOptions.find(opt => opt.label === val);
+                                if (selected) {
+                                  const attackId = `attack${index + 1}` as 'attack1' | 'attack2';
+                                  //save damage
+                                  handleAttackChange(monstersWithEditsList.name, attackId, 'damage', selected.value.damage);
+                                  //save powerpoints
+                                  handleAttackChange(monstersWithEditsList.name, attackId, 'powerPoints', selected.value.powerPoints);
+                                  //save accuracy
+                                  handleAttackChange(monstersWithEditsList.name, attackId, 'accuracy', selected.value.accuracy);
+                                }
+                              }}
+                            >
+                              <Dropdown.Toggle
+                                variant="secondary"
+                                id={`dropdown-attack-style-${index}`}
+                                size="sm"
+                              >
+                                {(() => {
+                                  const found = attackStyleOptions.find(opt =>
+                                    attack.damage === opt.value.damage &&
+                                    attack.powerPoints === opt.value.powerPoints &&
+                                    attack.accuracy === opt.value.accuracy
+                                  );
+                                  return found ? found.label : 'Custom';
+                                })()}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                {attackStyleOptions.map(opt => (
+                                  <Dropdown.Item eventKey={opt.label} key={opt.label}>{opt.label}</Dropdown.Item>
+                                ))}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </Col>
+                          <Col xs={6} sm={3}>
+                            <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
+                              <Dropdown.Toggle variant="secondary" id={`dropdown-attack-type-${index}`} size="sm">
+                                {attack.type}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                {elementTypeOptions.map(type => (
+                                  <Dropdown.Item eventKey={type} key={type}>{type}</Dropdown.Item>
+                                ))}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </Col>
+                        </>
+                      ) : (
+                        <>
+                          <Col xs={12} sm={4} md={4} className="attack-container">
                             <span>
                               {attack.isPhysical ?
                                 <img className="attack-type-physical" src="/images/pokedex/attack_physical.png" /> :
                                 <img className="attack-type-physical" src="/images/pokedex/attack_special.png" />}
                             </span>
                             <span className="attack-name">{attack.name}</span>
-                          </>
-                        )}
-                      </Col>
-                      <Col xs={8} sm={5} md={4} className="attack-name-container attack-stats">
-                        {isEditing ? (
-                          <Dropdown
-                            onSelect={val => {
-                              const selected = attackStyleOptions.find(opt => opt.label === val);
-                              if (selected) {
-                                handleAttackChange(
-                                  monstersWithEditsList.name,
-                                  `attack${index + 1}` as 'attack1' | 'attack2',
-                                  'damage',
-                                  selected.value.damage
-                                );
-                                handleAttackChange(
-                                  monstersWithEditsList.name,
-                                  `attack${index + 1}` as 'attack1' | 'attack2',
-                                  'powerPoints',
-                                  selected.value.powerPoints
-                                );
-                                handleAttackChange(
-                                  monstersWithEditsList.name,
-                                  `attack${index + 1}` as 'attack1' | 'attack2',
-                                  'accuracy',
-                                  selected.value.accuracy
-                                );
-                              }
-                            }}
-                          >
-                            <Dropdown.Toggle variant="secondary" id={`dropdown-attack-style-${index}`} size="sm">
-                              {(() => {
-                                const found = attackStyleOptions.find(opt =>
-                                  attack.damage === opt.value.damage &&
-                                  attack.powerPoints === opt.value.powerPoints &&
-                                  attack.accuracy === opt.value.accuracy
-                                );
-                                return found ? found.label : 'Custom';
-                              })()}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {attackStyleOptions.map(opt => (
-                                <Dropdown.Item eventKey={opt.label} key={opt.label}>{opt.label}</Dropdown.Item>
-                              ))}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        ) : (
-                          <span className="attack-name"><strong>Pow:</strong> {attack.damage} <strong>PP:</strong> {attack.powerPoints} <strong>Acc:</strong> {(attack.accuracy * 100)}%</span>
-                        )}
-                      </Col>
-                      <Col xs={4} sm={3} md={4}>
-                        {isEditing ? (
-                          <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
-                            <Dropdown.Toggle variant="secondary" id={`dropdown-attack-type-${index}`} size="sm">
+                          </Col>
+                          <Col xs={8} sm={5} md={4} className="attack-name-container attack-stats">
+                            <span className="attack-name"><strong>Pow:</strong> {attack.damage} <strong>PP:</strong> {attack.powerPoints} <strong>Acc:</strong> {(attack.accuracy * 100)}%</span>
+                          </Col>
+                          <Col xs={4} sm={3} md={4}>
+                            <div
+                              className="type-badge type-badge-attack"
+                              style={{ backgroundColor: getTypeColor(attack.type) }}
+                            >
                               {attack.type}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {elementTypeOptions.map(type => (
-                                <Dropdown.Item eventKey={type} key={type}>{type}</Dropdown.Item>
-                              ))}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        ) : (
-                          <div
-                            className="type-badge type-badge-attack"
-                            style={{ backgroundColor: getTypeColor(attack.type) }}
-                          >
-                            {attack.type}
-                          </div>
-                        )}
-                      </Col>
+                            </div>
+                          </Col>
+                        </>
+                      )}
                     </Row>
                   ))}
                 </Container>
