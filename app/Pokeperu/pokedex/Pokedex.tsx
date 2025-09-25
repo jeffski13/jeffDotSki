@@ -10,6 +10,7 @@ import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
 import '../../Inf/mobile-support.css';
+import { getMonsterData } from './exportMonsterData';
 
 interface PokedexProps {
   selectedMonsters: Monster[];
@@ -27,7 +28,7 @@ export default function PokedexContainer() {
 
 export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexProps) {
   // Load edits from localStorage
-  const [editData, setEditData] = useState<{ [editID: string]: any }>({});
+  const [editData, setEditData] = useState<{ [editID: string]: Monster }>({});
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
 
   useEffect(() => {
@@ -449,6 +450,28 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
           );
         })}
       </ul>
+      <div style={{ textAlign: 'center', margin: '32px 0' }}>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={async () => {
+            // Collect all edited monsters
+            const editedMonsters = await getMonsterData(editData, selectedMonsters);
+            // Export as JSON file
+            const blob = new Blob([JSON.stringify(editedMonsters, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'edited-monsters.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }}
+        >
+          Export Monster Data
+        </Button>
+      </div>
       <a href={ROUTES.pokePeru.info}>
         <img
           src="/images/info-icon.png"
