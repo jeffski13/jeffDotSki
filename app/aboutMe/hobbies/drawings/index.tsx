@@ -151,7 +151,6 @@ export function Drawings({
             className="drawing-fullscreen-overlay fullImageArea"
             onClick={e => {
               // Only close overlay if click is outside the image
-              console.log(e.currentTarget)
               if (e.target === e.currentTarget) {
                 doNotShowImageFull();
                 return;
@@ -225,7 +224,6 @@ const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onI
               alt={`${drawingItem.name} Drawing`}
               style={{ cursor: 'pointer' }}
               onClick={() => {
-                console.log(index)
                 onImageClicked();
               }}
             />

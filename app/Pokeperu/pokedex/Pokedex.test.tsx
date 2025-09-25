@@ -112,7 +112,6 @@ describe('Pokedex Component', () => {
     const physicalDropdown = screen.getAllByRole('button', { name: /physical/i })[0];
     fireEvent.click(physicalDropdown);
     const specialOption = await screen.findAllByText('Special');
-    console.log('yolo')
     fireEvent.click(specialOption[0]);
     expect(physicalDropdown).toHaveTextContent('Special');
 
