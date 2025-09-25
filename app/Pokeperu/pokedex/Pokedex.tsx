@@ -125,12 +125,12 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
         {selectedMonsters.map((monster: Monster) => {
           const monstersWithEditsList = getMonsterWithEdits(monster);
           const statsList = [
-            { name: 'Hit Points', value: monstersWithEditsList.hp, color: '#FF5959', key: 'hp' },
-            { name: 'Attack', value: monstersWithEditsList.attack, color: '#F5AC78', key: 'attack' },
-            { name: 'Defense', value: monstersWithEditsList.defense, color: '#FAE078', key: 'defense' },
-            { name: 'Special Attack', value: monstersWithEditsList.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
-            { name: 'Special Defense', value: monstersWithEditsList.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
-            { name: 'Speed', value: monstersWithEditsList.speed, color: '#FA92B2', key: 'speed' },
+            { name: 'Hit Points', nameShort: 'HP', value: monstersWithEditsList.hp, color: '#FF5959', key: 'hp' },
+            { name: 'Attack', nameShort: 'ATK', value: monstersWithEditsList.attack, color: '#F5AC78', key: 'attack' },
+            { name: 'Defense', nameShort: 'DEF', value: monstersWithEditsList.defense, color: '#FAE078', key: 'defense' },
+            { name: 'Special Attack', nameShort: 'SpATK', value: monstersWithEditsList.specialAttack, color: '#9DB7F5', key: 'specialAttack' },
+            { name: 'Special Defense', nameShort: 'SpDEF', value: monstersWithEditsList.specialDefense, color: '#A7DB8D', key: 'specialDefense' },
+            { name: 'Speed', nameShort: 'SPD', value: monstersWithEditsList.speed, color: '#FA92B2', key: 'speed' },
           ];
           const totalStats = monstersWithEditsList.hp + monstersWithEditsList.attack + monstersWithEditsList.defense + monstersWithEditsList.specialAttack + monstersWithEditsList.specialDefense + monstersWithEditsList.speed;
           const attackList = [monstersWithEditsList.attack1, monstersWithEditsList.attack2];
@@ -309,12 +309,13 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                 <Container>
                   {statsList.map((stat) => (
                     <Row key={stat.name}>
-                      <Col xs={12} sm={4} md={3} className="stats-container">
+                      <Col xs={2} sm={3} className="stats-container">
                         <div className="stats-label-container">
-                          <span className="stats-label">{stat.name}:</span>
+                          <span className="stats-label desktop-view">{stat.name}:</span>
+                          <span className="stats-label mobile-view">{stat.nameShort}:</span>
                         </div>
                       </Col>
-                      <Col xs={12} sm={8} md={9}>
+                      <Col xs={10} sm={9}>
                         {isEditing ? (
                           <Form.Control
                             type="number"
