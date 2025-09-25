@@ -348,7 +348,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                     <Row key={index} className="attack-item">
                       {isEditing ? (
                         <>
-                          <Col xs={12} sm={4} md={6} className="attack-container">
+                          <Col xs={12} sm={6} className="attack-container">
                             <Dropdown id={`attack-${index}-edit-isPhysical`} onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
                               <Dropdown.Toggle variant="secondary" id={`dropdown-physical-${index}`} size="sm">
                                 {attack.isPhysical ? 'Physical' : 'Special'}
@@ -367,7 +367,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                               className="attack-name-edit"
                             />
                           </Col>
-                          <Col xs={6} sm={5} md={3} className="attack-details-container">
+                          <Col xs={6} sm={3} className="attack-details-container">
                             <Dropdown
                               id={`attack-${index}-edit-attack-power-accuracy`}
                               onSelect={val => {
@@ -404,7 +404,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                               </Dropdown.Menu>
                             </Dropdown>
                           </Col>
-                          <Col xs={6} sm={3} md={3}>
+                          <Col xs={6} sm={3}>
                             <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
                               <Dropdown.Toggle variant="secondary" id={`dropdown-attack-type-${index}`} size="sm">
                                 {attack.type}
