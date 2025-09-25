@@ -1,6 +1,9 @@
 import type { Monster } from "../monsters";
 
 const balancedDefaultAttack = {
+    name: "Tackle",
+    type: "Normal",
+    isPhysical: true,
     damage: 40,
     powerPoints: 4,
     accuracy: 0.75,
@@ -40,7 +43,7 @@ export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
                 hp, attack, defense, specialAttack, specialDefense, speed,
                 attack1,attack2
             } = merged;
-            
+
             return ({
                 name: mergedName,
                 trainer,
