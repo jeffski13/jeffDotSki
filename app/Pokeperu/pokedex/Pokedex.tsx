@@ -321,7 +321,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                             type="number"
                             value={monstersWithEditsList[stat.key]}
                             onChange={e => handleEditChange(monstersWithEditsList.name, stat.key, Number(e.target.value))}
-                            style={{ maxWidth: 100, display: 'inline-block' }}
+                            style={{ maxWidth: 100 }}
                           />
                         ) : (
                           <div className="stat-bar" title={`${stat.name}: ${stat.value}`}>
