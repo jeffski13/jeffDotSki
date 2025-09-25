@@ -37,16 +37,20 @@ export function Drawings({
 
   const showImageFullNext = () => {
     const currentIdx = getOverlayIdx();
-    if (currentIdx === -1) return;
-    const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-    setOverlayImg(combinedLists[prevIdx].full);
-  }
-
-  const showImageFullPrevious = () => {
-    const currentIdx = getOverlayIdx();
-    if (currentIdx === -1) return;
+    if (currentIdx === -1) { 
+      return; 
+    }
     const nextIdx = (currentIdx + 1) % combinedLists.length;
     setOverlayImg(combinedLists[nextIdx].full);
+  }
+  
+  const showImageFullPrevious = () => {
+    const currentIdx = getOverlayIdx();
+    if (currentIdx === -1) { 
+      return; 
+    }
+    const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
+    setOverlayImg(combinedLists[prevIdx].full);
   }
 
   const doNotShowImageFull = () => {
@@ -62,9 +66,9 @@ export function Drawings({
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
-        showImageFullNext();
-      } else if (e.key === 'ArrowRight') {
         showImageFullPrevious();
+      } else if (e.key === 'ArrowRight') {
+        showImageFullNext();
       }
     };
 
@@ -180,6 +184,7 @@ export function Drawings({
               </div>
             </div>
             <img
+              id={`full-image-${getOverlayIdx()}`}
               src={overlayImg}
               alt="Full drawing"
               className="fullImage"
