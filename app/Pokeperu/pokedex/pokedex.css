@@ -129,7 +129,7 @@
   margin-bottom: 10px;
 }
 
-.attack-name-container {
+.attack-container {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -138,6 +138,13 @@
 
 .attack-name {
   margin-right: 5px;
+}
+
+.attack-name-edit {
+  width: 150px;
+  max-width: 150px;
+  display: inline-block;
+  margin-left: 8px;
 }
 
 .attack-stats {
