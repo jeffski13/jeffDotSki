@@ -40,6 +40,7 @@ export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
                 hp, attack, defense, specialAttack, specialDefense, speed,
                 attack1,attack2
             } = merged;
+            
             return ({
                 name: mergedName,
                 trainer,

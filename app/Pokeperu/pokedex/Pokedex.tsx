@@ -242,7 +242,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                         )}
                         {isEditing ? (
                           <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'secondType', val === 'None' ? null : val)}>
-                            <Dropdown.Toggle variant="secondary" id="dropdown-second-type-desktop">
+                            <Dropdown.Toggle id="dropdown-second-type-desktop" variant="secondary">
                               {monstersWithEditsList.secondType || 'None'}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
