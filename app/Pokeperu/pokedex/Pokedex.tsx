@@ -348,7 +348,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                     <Row key={index} className="attack-item">
                       {isEditing ? (
                         <>
-                          <Col xs={12} sm={4} md={4} className="attack-edit-container">
+                          <Col xs={12} sm={4} md={6} className="attack-container">
                             <Dropdown id={`attack-${index}-edit-isPhysical`} onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
                               <Dropdown.Toggle variant="secondary" id={`dropdown-physical-${index}`} size="sm">
                                 {attack.isPhysical ? 'Physical' : 'Special'}
@@ -367,29 +367,19 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                               className="attack-name-edit"
                             />
                           </Col>
-                          <Col xs={8} sm={5} md={4} className="attack-name-container attack-stats">
+                          <Col xs={6} sm={5} md={3} className="attack-details-container">
                             <Dropdown
+                              id={`attack-${index}-edit-attack-power-accuracy`}
                               onSelect={val => {
                                 const selected = attackStyleOptions.find(opt => opt.label === val);
                                 if (selected) {
-                                  handleAttackChange(
-                                    monstersWithEditsList.name,
-                                    `attack${index + 1}` as 'attack1' | 'attack2',
-                                    'damage',
-                                    selected.value.damage
-                                  );
-                                  handleAttackChange(
-                                    monstersWithEditsList.name,
-                                    `attack${index + 1}` as 'attack1' | 'attack2',
-                                    'powerPoints',
-                                    selected.value.powerPoints
-                                  );
-                                  handleAttackChange(
-                                    monstersWithEditsList.name,
-                                    `attack${index + 1}` as 'attack1' | 'attack2',
-                                    'accuracy',
-                                    selected.value.accuracy
-                                  );
+                                  const attackId = `attack${index + 1}` as 'attack1' | 'attack2';
+                                  //save damage
+                                  handleAttackChange(monstersWithEditsList.name, attackId, 'damage', selected.value.damage);
+                                  //save powerpoints
+                                  handleAttackChange(monstersWithEditsList.name, attackId, 'powerPoints', selected.value.powerPoints);
+                                  //save accuracy
+                                  handleAttackChange(monstersWithEditsList.name, attackId, 'accuracy', selected.value.accuracy);
                                 }
                               }}
                             >
@@ -414,18 +404,18 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                               </Dropdown.Menu>
                             </Dropdown>
                           </Col>
-                          <Col xs={4} sm={3} md={4}>
-                          <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
-                            <Dropdown.Toggle variant="secondary" id={`dropdown-attack-type-${index}`} size="sm">
-                              {attack.type}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {elementTypeOptions.map(type => (
-                                <Dropdown.Item eventKey={type} key={type}>{type}</Dropdown.Item>
-                              ))}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </Col>
+                          <Col xs={6} sm={3} md={3}>
+                            <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
+                              <Dropdown.Toggle variant="secondary" id={`dropdown-attack-type-${index}`} size="sm">
+                                {attack.type}
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu>
+                                {elementTypeOptions.map(type => (
+                                  <Dropdown.Item eventKey={type} key={type}>{type}</Dropdown.Item>
+                                ))}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </Col>
                         </>
                       ) : (
                         <>
@@ -441,13 +431,13 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                             <span className="attack-name"><strong>Pow:</strong> {attack.damage} <strong>PP:</strong> {attack.powerPoints} <strong>Acc:</strong> {(attack.accuracy * 100)}%</span>
                           </Col>
                           <Col xs={4} sm={3} md={4}>
-                          <div
-                            className="type-badge type-badge-attack"
-                            style={{ backgroundColor: getTypeColor(attack.type) }}
-                          >
-                            {attack.type}
-                          </div>
-                        </Col>
+                            <div
+                              className="type-badge type-badge-attack"
+                              style={{ backgroundColor: getTypeColor(attack.type) }}
+                            >
+                              {attack.type}
+                            </div>
+                          </Col>
                         </>
                       )}
                     </Row>
