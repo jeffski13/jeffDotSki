@@ -184,6 +184,7 @@ export function Drawings({
               </div>
             </div>
             <img
+              id={`full-image-${getOverlayIdx()}`}
               src={overlayImg}
               alt="Full drawing"
               className="fullImage"
