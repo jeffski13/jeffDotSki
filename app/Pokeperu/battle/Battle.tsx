@@ -198,7 +198,7 @@ export default function Battle({
       if (effectivenessFactor === 0.5) {
         setEffectivenessResult(`It's not very effective.`);
       } else if (effectivenessFactor === 0) {
-        setEffectivenessResult(`It doesn't affect ${defenderMonster.name}`);
+        setEffectivenessResult(`It doesn't affect ${defenderMonster.name}.`);
       } else if (effectivenessFactor === 2 || effectivenessFactor === 4) {
         setEffectivenessResult(`It's super effective!`);
       } else if (isCritical) {
