@@ -124,11 +124,11 @@ describe('Pokedex Component', () => {
     expect(typeDropdown).toHaveTextContent('Ghost');
 
     // Change attack1 stats via style dropdown to 'High Power/Low Accuracy'
-    const styleDropdown = screen.getAllByRole('button', { name: /balanced|high power|low power/i })[0];
+    const styleDropdown = screen.getAllByRole('button', { name: /balanced|high pow|low pow/i })[0];
     fireEvent.click(styleDropdown);
-    const highPowerOption = await screen.findByText('High Power/Low Accuracy');
+    const highPowerOption = await screen.findByText('High Pow, Low Acc');
     fireEvent.click(highPowerOption);
-    expect(styleDropdown).toHaveTextContent('High Power/Low Accuracy');
+    expect(styleDropdown).toHaveTextContent('High Pow, Low Acc');
 
     // Save
     fireEvent.click(editButtons[0]);
