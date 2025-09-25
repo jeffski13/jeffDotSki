@@ -105,7 +105,6 @@
 
 .stats-label {
   white-space: nowrap; /* Prevent line breaks */
-  display: block; /* Ensure the label takes up the full width */
 }
 
 .total-stats {
