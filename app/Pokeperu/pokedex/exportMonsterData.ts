@@ -1,4 +1,5 @@
 import type { Monster } from "../monsters";
+import { ElementType } from "../ElementType";
 
 const balancedDefaultAttack = {
     name: "Tackle",
@@ -15,13 +16,26 @@ const balancedDefaultAttack = {
  * @param selectedMonsters original monsters array
  * @returns 
  */
-export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
-    return new Promise((resolve, reject) => {
-        const allMonsters = Object.keys(editData).map(monsterName => {
+export const getMonsterData = (
+    editData: { [monsterName: string]: Partial<Monster> & { attack1?: Partial<Monster['attack1']>, attack2?: Partial<Monster['attack2']> } },
+    selectedMonsters: Monster[]
+): Promise<any[]> => {
+    return new Promise((resolve) => {
+        // Helper to transform type fields to ElementType
+        const toElementType = (val: any) => {
+            if (val == null) return null;
+            if (Object.values(ElementType).includes(val)) return val as ElementType;
+            const found = Object.values(ElementType).find(e => e.toLowerCase() === String(val).toLowerCase());
+            return found || null;
+        };
+
+        // Edited monsters
+        const editedMonsterNames = new Set(Object.keys(editData));
+        const editedMonsters = Object.keys(editData).map(monsterName => {
             const monster = selectedMonsters.find(monster => monster.name === monsterName);
             if (!monster) {
-                return null
-            };
+                return null;
+            }
             const edit = editData[monsterName];
             // Merge edits into monster
             const merged = {
@@ -30,7 +44,6 @@ export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
                 attack1: { ...monster.attack1, ...(edit.attack1 || { ...balancedDefaultAttack }) },
                 attack2: { ...monster.attack2, ...(edit.attack2 || { ...balancedDefaultAttack }) },
             };
-
             const {
                 name: mergedName,
                 trainer,
@@ -43,28 +56,63 @@ export const getMonsterData = (editData, selectedMonsters: Monster[]) => {
                 hp, attack, defense, specialAttack, specialDefense, speed,
                 attack1, attack2
             } = merged;
-            const finalMonsterExportData = {
+            return {
                 name: mergedName,
                 trainer,
                 trainerImage,
-                type: type,
-                secondType: secondType,
+                type: toElementType(type),
+                secondType: toElementType(secondType),
                 image,
                 description,
                 inspiration,
                 hp, attack, defense, specialAttack, specialDefense, speed,
                 attack1: {
                     ...attack1,
-                    type: attack1.type
+                    type: toElementType(attack1.type)
                 },
                 attack2: {
                     ...attack2,
-                    type: attack2.type
+                    type: toElementType(attack2.type)
                 }
-            }
-            console.log('finalMonsterExportData: ', finalMonsterExportData)
-            return finalMonsterExportData;
+            };
         }).filter(Boolean);
+
+        // Unedited monsters
+        const uneditedMonsters = selectedMonsters.filter(monster => !editedMonsterNames.has(monster.name)).map(monster => {
+            const {
+                name,
+                trainer,
+                trainerImage,
+                type,
+                secondType,
+                image,
+                description,
+                inspiration,
+                hp, attack, defense, specialAttack, specialDefense, speed,
+                attack1, attack2
+            } = monster;
+            return {
+                name,
+                trainer,
+                trainerImage,
+                type: toElementType(type),
+                secondType: toElementType(secondType),
+                image,
+                description,
+                inspiration,
+                hp, attack, defense, specialAttack, specialDefense, speed,
+                attack1: {
+                    ...attack1,
+                    type: toElementType(attack1.type)
+                },
+                attack2: {
+                    ...attack2,
+                    type: toElementType(attack2.type)
+                }
+            };
+        });
+
+        const allMonsters = [...editedMonsters, ...uneditedMonsters];
         resolve(allMonsters);
     });
-}
+};
