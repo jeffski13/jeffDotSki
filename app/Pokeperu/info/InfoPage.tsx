@@ -56,7 +56,9 @@ function InfoPage({ }: InfoPageProps) {
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const esContent: InfoTextContentPerLanguage = {
     about: 'Pokémon en Perú',
-    aboutProject: 'Sobre el Proyecto',
+    aboutProjectTitle: 'Sobre el Proyecto',
+    goToExperience: '¡Puebalo ',
+    goToExperienceLink: 'aqui',
     projectDesc: 'Pokémon en Perú fue un proyecto educativo diseñado para expandir el vocabulario descriptivo de los estudiantes en las siguientes categorías:',
     elements: 'Elementos',
     animals: 'Nombres de Animales',
@@ -113,7 +115,9 @@ function InfoPage({ }: InfoPageProps) {
 
   const defaultContent: InfoTextContentPerLanguage = {
     about: 'Pocket Monsters in Peru',
-    aboutProject: 'About the Project',
+    aboutProjectTitle: 'About the Project',
+    goToExperience: 'Try it out ',
+    goToExperienceLink: 'here',
     projectDesc: 'Pocket Monsters in Peru was an educational project designed to expand students descriptive vocabulary in the following categories:',
     elements: 'Elements',
     animals: 'Names of Animals',
@@ -167,7 +171,7 @@ function InfoPage({ }: InfoPageProps) {
     images: 'Images with the monsters and gym leader data can be placed here: ',
     environments: 'New environments can be added inside of /public/images/perulandscape',
   };
-  
+
   const multiLangContent: MultiLangContent = {
     es: esContent,
     default: defaultContent
@@ -199,7 +203,8 @@ function InfoPage({ }: InfoPageProps) {
         <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon desktop-view" />
       </div>
       <div className="project-info">
-        <h2>{content.aboutProject}</h2>
+        <h2>{content.aboutProjectTitle}</h2>
+        <p>{content.goToExperience} <a href={ROUTES.pokePeru.battle}>{content.goToExperienceLink}</a>!</p>
         <p>{content.projectDesc}</p>
         <ul>
           <li>{content.elements}</li>
@@ -419,7 +424,9 @@ function CopyableField({ blankData }: CopyableFieldProps) {
 
 export interface InfoTextContentPerLanguage {
   about: string;
-  aboutProject: string;
+  aboutProjectTitle: string;
+  goToExperience: string;
+  goToExperienceLink: string;
   projectDesc: string;
   elements: string;
   animals: string;
