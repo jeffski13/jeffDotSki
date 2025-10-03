@@ -8,7 +8,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 interface MonsterSelectionProps {
   monsters: Monster[];
-  selectedMonstersNames: string[];
+  selectedMonstersIds: string[];
   currentUser: number;
   handleMonsterSelect: (monster: Monster) => void;
   dexRoute: string;
@@ -17,7 +17,7 @@ interface MonsterSelectionProps {
 
 export default function MonsterSelection({
   monsters,
-  selectedMonstersNames,
+  selectedMonstersIds,
   currentUser,
   handleMonsterSelect,
   dexRoute,
@@ -28,7 +28,7 @@ export default function MonsterSelection({
       const key = parseInt(event.key, 10);
       if (!isNaN(key) && key > 0 && key <= monsters.length) {
         const monster = monsters[key - 1];
-        if (!selectedMonstersNames.includes(monster.name)) {
+        if (!selectedMonstersIds.includes(monster.id)) {
           handleMonsterSelect(monster);
         }
       }
@@ -38,7 +38,7 @@ export default function MonsterSelection({
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [monsters, selectedMonstersNames, handleMonsterSelect]);
+  }, [monsters, selectedMonstersIds, handleMonsterSelect]);
 
   return (
     <div className="PokePeruStart">
@@ -74,7 +74,7 @@ export default function MonsterSelection({
           <button
             key={monster.name}
             onClick={() => handleMonsterSelect(monster)}
-            disabled={selectedMonstersNames.includes(monster.name)}
+            disabled={selectedMonstersIds.includes(monster.id)}
             className="monster-button"
           >
             <div><strong>{monster.name}</strong></div>

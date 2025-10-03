@@ -167,4 +167,57 @@ describe('Pokedex Component', () => {
     const restoredInspiration = screen.findAllByText(/intitialInspiration/)
     expect((await restoredInspiration).length).toBe(2);
   });
+
+  it('displays an error banner with duplicate monster names when there are duplicate ids', () => {
+    // Create two monsters with the same id but different names
+    const duplicateId = 'dup-123';
+    const monstersWithDupes = [
+      {
+        ...mockSelectedMonsters[0],
+        id: duplicateId,
+        name: 'MonsterOne',
+      },
+      {
+        ...mockSelectedMonsters[1],
+        id: duplicateId,
+        name: 'MonsterTwo',
+      },
+    ];
+    render(<Pokedex storageKey="testKeyDupes" selectedMonsters={monstersWithDupes} battleRoute="/battle" />);
+    // The error banner should be in the document
+    const banner = screen.getByText(/duplicate monster id\(s\) found/i);
+    expect(banner).toBeInTheDocument();
+    // The banner should include both monster names
+    expect(banner.textContent).toMatch(/MonsterOne/);
+    expect(banner.textContent).toMatch(/MonsterTwo/);
+  });
+
+  it('displays an error banner with missing monster ids and shows the monster names', () => {
+    // Create two monsters, one with an id, one without
+    const monstersWithMissingIds = [
+      {
+        ...mockSelectedMonsters[0],
+        id: '', // empty string to simulate missing id
+        name: 'MissingIdOne',
+      },
+      {
+        ...mockSelectedMonsters[1],
+        id: '',
+        name: 'MissingIdTwo',
+      },
+      {
+        ...mockSelectedMonsters[0],
+        name: 'HasId',
+      },
+    ];
+    render(<Pokedex storageKey="testKeyMissingIds" selectedMonsters={monstersWithMissingIds} battleRoute="/battle" />);
+    // The error banner should be in the document
+    const banner = screen.getByText(/missing id for monster\(s\)/i);
+    expect(banner).toBeInTheDocument();
+    // The banner should include both monster names with missing ids
+    expect(banner.textContent).toMatch(/MissingIdOne/);
+    expect(banner.textContent).toMatch(/MissingIdTwo/);
+    // The banner should not include the name of the monster with a valid id
+    expect(banner.textContent).not.toMatch(/HasId/);
+  });
 });

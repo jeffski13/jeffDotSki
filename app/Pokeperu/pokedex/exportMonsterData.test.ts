@@ -1,0 +1,39 @@
+import { getMonsterData } from './exportMonsterData';
+import { monsters } from '../monsters';
+import { ElementType } from '../ElementType';
+
+describe('getMonsterData', () => {
+  it('should reflect edits to a monster by id in the output array', async () => {
+    // Pick a monster and create an edit for it
+    const monster = monsters[0];
+    const editData = {
+      [monster.id]: {
+        name: 'EditedName',
+        hp: 123,
+        attack1: {
+          name: 'Edited Attack',
+          type: ElementType.Fire,
+          isPhysical: false,
+          damage: 99,
+          powerPoints: 1,
+          accuracy: 0.5,
+        },
+      },
+    };
+    const result = await getMonsterData(editData, monsters);
+    // Find the edited monster in the result
+    const edited = result.find((m: any) => m.id === monster.id);
+    expect(edited).toBeDefined();
+    expect(edited.name).toBe('EditedName');
+    expect(edited.hp).toBe(123);
+    expect(edited.attack1.name).toBe('Edited Attack');
+    expect(edited.attack1.type).toBe(ElementType.Fire);
+    expect(edited.attack1.damage).toBe(99);
+    expect(edited.attack1.powerPoints).toBe(1);
+    expect(edited.attack1.accuracy).toBe(0.5);
+    // Unedited monster should remain unchanged
+    const unedited = result.find((m: any) => m.id !== monster.id);
+    expect(unedited).toBeDefined();
+    expect(unedited.name).not.toBe('EditedName');
+  });
+});

@@ -7,6 +7,7 @@ import { getBrowserLanguage, getContentByLanguage, type MultiLangContent } from 
 import '../navigation.css';
 import '../secondaryPage.css';
 import './infopage.css';
+import { v4 as uuidv4 } from 'uuid';
 
 interface InfoPageProps { }
 
@@ -16,15 +17,16 @@ export default function InfoPageContainer() {
 
 function InfoPage({ }: InfoPageProps) {
   const blankDataPokemon = `{
+ id: '${uuidv4()}',
  name: '',
  trainer: '/images/monsters/',
  trainerImage: '/images/gymleaders/',
- hp: 0,
- attack: 0,
- defense: 0,
- specialAttack: 0,
- specialDefense: 0,
- speed: 0,
+ hp: 10,
+ attack: 10,
+ defense: 10,
+ specialAttack: 10,
+ specialDefense: 10,
+ speed: 10,
  image: '', 
  description: '',
  inspiration: '',
@@ -33,18 +35,18 @@ function InfoPage({ }: InfoPageProps) {
  attack1: {
   name: '',
   type: ElementType.Normal,
-  damage: 0,
-  powerPoints: 0,
-  accuracy: 1,
+  damage: 40,
+  powerPoints: 4,
+  accuracy: 0.75,
   isPhysical: true
  },
  attack2: {
   name: '',
   type: ElementType.Normal,
-  damage: 0,
-  powerPoints: 0,
-  accuracy: 1,
-  isPhysical: false
+  damage: 40,
+  powerPoints: 4,
+  accuracy: 0.75,
+  isPhysical: true
  }
 }`;
   const blankDataGymLeader = `{

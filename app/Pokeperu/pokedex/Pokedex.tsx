@@ -10,6 +10,8 @@ import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
 import '../../Inf/mobile-support.css';
+import { getMonsterData } from './exportMonsterData';
+import { getDuplicateIdNames, getMissingIdNames } from './monsterDuplicationCheck';
 
 interface PokedexProps {
   selectedMonsters: Monster[];
@@ -27,8 +29,10 @@ export default function PokedexContainer() {
 
 export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexProps) {
   // Load edits from localStorage
-  const [editData, setEditData] = useState<{ [editID: string]: any }>({});
+  const [editData, setEditData] = useState<{ [editID: string]: Monster }>({});
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
+  const duplicateIdNameArray = getDuplicateIdNames(selectedMonsters);
+  const missingIdNameArray = getMissingIdNames(selectedMonsters);
 
   useEffect(() => {
     const stored = localStorage.getItem(storageKey);
@@ -61,7 +65,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
   };
 
   const getMonsterWithEdits = (monster: Monster) => {
-    const edit = editData[monster.name];
+    const edit = editData[monster.id];
     if (!edit) return monster;
     // Merge edits into monster
     return {
@@ -106,6 +110,16 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
 
   return (
     <div className="PokePeruSecondaryPage">
+      {missingIdNameArray.length > 0 && (
+        <div id="missing-id-banner" className='errorBanner'>
+          {`Missing id for monster(s): ${missingIdNameArray.join(', ')}. Please ensure all monsters have an id.`}
+        </div>
+      )}
+      {duplicateIdNameArray.length > 0 && (
+        <div id="duplicate-id-banner" className='errorBanner'>
+          {`Duplicate monster id(s) found: ${duplicateIdNameArray.join(', ')}. Please ensure all monsters have unique ids.`}
+        </div>
+      )}
       <div className="secondary-page-header">
         <a href={battleRoute} className="back-button">
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
@@ -135,14 +149,14 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
           const totalStats = monstersWithEditsList.hp + monstersWithEditsList.attack + monstersWithEditsList.defense + monstersWithEditsList.specialAttack + monstersWithEditsList.specialDefense + monstersWithEditsList.speed;
           const attackList = [monstersWithEditsList.attack1, monstersWithEditsList.attack2];
           const description = `The ${monstersWithEditsList.inspiration} Pokemon: ${monstersWithEditsList.description}`;
-          const isEditing = !!editMode[monstersWithEditsList.name];
+          const isEditing = !!editMode[monstersWithEditsList.id];
           return (
-            <li key={monstersWithEditsList.name} className="monster-item" style={{ position: 'relative' }}>
+            <li key={monstersWithEditsList.id} className="monster-item" style={{ position: 'relative' }}>
               <Button
                 variant={isEditing ? 'success' : 'outline-secondary'}
                 size="sm"
                 style={{ position: 'absolute', top: 10, right: 10, zIndex: 2 }}
-                onClick={() => setEditMode(prev => ({ ...prev, [monstersWithEditsList.name]: !isEditing }))}
+                onClick={() => setEditMode(prev => ({ ...prev, [monstersWithEditsList.id]: !isEditing }))}
               >
                 {isEditing ? 'Save' : 'Edit'}
               </Button>
@@ -154,7 +168,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                   onClick={() => {
                     setEditData(prev => {
                       const updated = { ...prev };
-                      delete updated[monstersWithEditsList.name];
+                      delete updated[monstersWithEditsList.id];
                       localStorage.setItem(storageKey, JSON.stringify(updated));
                       return updated;
                     });
@@ -175,14 +189,24 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                       <Row>
                         <Col xs={12}>
                           <h2 className="monster-name-types">
-                            {monstersWithEditsList.name}
+                            {isEditing ? (
+                              <Form.Control
+                                type="text"
+                                value={monstersWithEditsList.name}
+                                onChange={e => handleEditChange(monstersWithEditsList.id, 'name', e.target.value)}
+                                as="input"
+                                style={{ marginBottom: 4, marginTop: '15px' }}
+                              />
+                            ) : (
+                              monstersWithEditsList.name
+                            )}
                           </h2>
                         </Col>
                         <Col xs={12}>
                           <h2 className="monster-name-types" id="primary-type">
                             <span className="monster-types">
                               {isEditing ? (
-                                <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'type', val)}>
+                                <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.id, 'type', val)}>
                                   <Dropdown.Toggle id="dropdown-type" variant='secondary'>
                                     {monstersWithEditsList.type}
                                   </Dropdown.Toggle>
@@ -202,7 +226,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                           <h2 className="monster-name-types" id="secondary-type">
                             <span className="monster-types">
                               {isEditing ? (
-                                <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'secondType', val === 'None' ? null : val)}>
+                                <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.id, 'secondType', val === 'None' ? null : val)}>
                                   <Dropdown.Toggle id="dropdown-second-type" variant='secondary'>
                                     {monstersWithEditsList.secondType || 'None'}
                                   </Dropdown.Toggle>
@@ -223,10 +247,20 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                     </Container>
                     {/* desktop header (name, types) */}
                     <h2 className="monster-name-types desktop-view">
-                      {monstersWithEditsList.name}
+                      {isEditing ? (
+                        <Form.Control
+                          type="text"
+                          value={monstersWithEditsList.name}
+                          onChange={e => handleEditChange(monstersWithEditsList.id, 'name', e.target.value)}
+                          as="input"
+                          style={{ marginBottom: 4 }}
+                        />
+                      ) : (
+                        monstersWithEditsList.name
+                      )}
                       <span className="monster-types">
                         {isEditing ? (
-                          <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'type', val)}>
+                          <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.id, 'type', val)}>
                             <Dropdown.Toggle variant="secondary" id="dropdown-type-desktop">
                               {monstersWithEditsList.type}
                             </Dropdown.Toggle>
@@ -240,8 +274,8 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                           <span className="type-badge" id="primary-type" style={{ backgroundColor: getTypeColor(monstersWithEditsList.type) }}>{monstersWithEditsList.type}</span>
                         )}
                         {isEditing ? (
-                          <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.name, 'secondType', val === 'None' ? null : val)}>
-                            <Dropdown.Toggle variant="secondary" id="dropdown-second-type-desktop">
+                          <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.id, 'secondType', val === 'None' ? null : val)}>
+                            <Dropdown.Toggle id="dropdown-second-type-desktop" variant="secondary">
                               {monstersWithEditsList.secondType || 'None'}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -262,7 +296,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                         <Form.Control
                           type="text"
                           value={monstersWithEditsList.inspiration}
-                          onChange={e => handleEditChange(monstersWithEditsList.name, 'inspiration', e.target.value)}
+                          onChange={e => handleEditChange(monstersWithEditsList.id, 'inspiration', e.target.value)}
                           as="textarea"
                           rows={1}
                           style={{ marginBottom: 4 }}
@@ -275,7 +309,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                         <Form.Control
                           type="text"
                           value={monstersWithEditsList.description || ''}
-                          onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
+                          onChange={e => handleEditChange(monstersWithEditsList.id, 'description', e.target.value)}
                           as="textarea"
                           rows={3}
                         />
@@ -293,7 +327,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                     <Form.Control
                       type="text"
                       value={monstersWithEditsList.description || ''}
-                      onChange={e => handleEditChange(monstersWithEditsList.name, 'description', e.target.value)}
+                      onChange={e => handleEditChange(monstersWithEditsList.id, 'description', e.target.value)}
                       as="textarea"
                       rows={3}
                     />
@@ -320,7 +354,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                           <Form.Control
                             type="number"
                             value={monstersWithEditsList[stat.key]}
-                            onChange={e => handleEditChange(monstersWithEditsList.name, stat.key, Number(e.target.value))}
+                            onChange={e => handleEditChange(monstersWithEditsList.id, stat.key, Number(e.target.value))}
                             style={{ maxWidth: 100 }}
                           />
                         ) : (
@@ -350,7 +384,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                       {isEditing ? (
                         <>
                           <Col xs={12} sm={6} className="attack-container">
-                            <Dropdown id={`attack-${index}-edit-isPhysical`} onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
+                            <Dropdown id={`attack-${index}-edit-isPhysical`} onSelect={val => handleAttackChange(monstersWithEditsList.id, `attack${index + 1}` as 'attack1' | 'attack2', 'isPhysical', val === 'true')}>
                               <Dropdown.Toggle variant="secondary" id={`dropdown-physical-${index}`} size="sm">
                                 {attack.isPhysical ? 'Physical' : 'Special'}
                               </Dropdown.Toggle>
@@ -364,7 +398,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                               id={`attack-${index}-edit-name`}
                               type="text"
                               value={attack.name}
-                              onChange={e => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'name', e.target.value)}
+                              onChange={e => handleAttackChange(monstersWithEditsList.id, `attack${index + 1}` as 'attack1' | 'attack2', 'name', e.target.value)}
                               className="attack-name-edit"
                             />
                           </Col>
@@ -376,11 +410,11 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                                 if (selected) {
                                   const attackId = `attack${index + 1}` as 'attack1' | 'attack2';
                                   //save damage
-                                  handleAttackChange(monstersWithEditsList.name, attackId, 'damage', selected.value.damage);
+                                  handleAttackChange(monstersWithEditsList.id, attackId, 'damage', selected.value.damage);
                                   //save powerpoints
-                                  handleAttackChange(monstersWithEditsList.name, attackId, 'powerPoints', selected.value.powerPoints);
+                                  handleAttackChange(monstersWithEditsList.id, attackId, 'powerPoints', selected.value.powerPoints);
                                   //save accuracy
-                                  handleAttackChange(monstersWithEditsList.name, attackId, 'accuracy', selected.value.accuracy);
+                                  handleAttackChange(monstersWithEditsList.id, attackId, 'accuracy', selected.value.accuracy);
                                 }
                               }}
                             >
@@ -406,7 +440,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                             </Dropdown>
                           </Col>
                           <Col xs={6} sm={3}>
-                            <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.name, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
+                            <Dropdown onSelect={val => handleAttackChange(monstersWithEditsList.id, `attack${index + 1}` as 'attack1' | 'attack2', 'type', val)}>
                               <Dropdown.Toggle variant="secondary" id={`dropdown-attack-type-${index}`} size="sm">
                                 {attack.type}
                               </Dropdown.Toggle>
@@ -449,6 +483,28 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
           );
         })}
       </ul>
+      <div style={{ textAlign: 'center', margin: '32px 0' }}>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={async () => {
+            // Collect all edited monsters
+            const editedMonsters = await getMonsterData(editData, selectedMonsters);
+            // Export as JSON file
+            const blob = new Blob([JSON.stringify(editedMonsters, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'edited-monsters.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }}
+        >
+          Export Monster Data
+        </Button>
+      </div>
       <a href={ROUTES.pokePeru.info}>
         <img
           src="/images/info-icon.png"

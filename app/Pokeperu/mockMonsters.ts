@@ -3,6 +3,7 @@ import type { Monster } from "./monsters";
 
 const mockSelectedMonsters: Monster[] = [
   {
+    id: '11111111-1111-1111-1111-111111111111',
     name: 'Pikachu',
     trainer: 'Ash',
     description: '',
@@ -35,6 +36,7 @@ const mockSelectedMonsters: Monster[] = [
     inspiration: 'intitialInspiration'
   },
   {
+    id: '22222222-2222-2222-2222-222222222222',
     name: 'Charmander',
     trainer: 'Brock',
     description: '',

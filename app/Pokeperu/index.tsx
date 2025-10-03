@@ -12,7 +12,9 @@ export default function PokePeru() {
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
-      <PokePeruContent monsters={getEditedMonstersList(monsters)}
+      <PokePeruContent 
+        monsters={monsters}
+        monstersEditKey={KEYS.pokePeru.monsterEditsKey}
         dexRoute={ROUTES.pokePeru.pokedex}
         battleRoute={ROUTES.pokePeru.battle}
         gymRoute={ROUTES.pokePeru.gymleaders}
@@ -21,14 +23,14 @@ export default function PokePeru() {
   );
 }
 
-export const getEditedMonstersList = (monstersList: Monster[]) => {
+export const getEditedMonstersList = (monstersList: Monster[], storageKey: string) => {
   // Load edits from localStorage and merge with monsters
-  let finalMonstersList = monstersList;
-  const stored = localStorage.getItem(KEYS.pokePeru.monsterEditsKey);
+  let editedMonstersList = monstersList;
+  const stored = localStorage.getItem(storageKey);
   if (stored) {
     const editData = JSON.parse(stored);
     const getMonsterWithEdits = (monster: Monster) => {
-      const edit = editData[monster.name];
+      const edit = editData[monster.id];
       if (!edit) return monster;
       return {
         ...monster,
@@ -37,9 +39,9 @@ export const getEditedMonstersList = (monstersList: Monster[]) => {
         attack2: { ...monster.attack2, ...(edit.attack2 || {}) },
       };
     };
-    finalMonstersList = monstersList.map(getMonsterWithEdits);
+    editedMonstersList = monstersList.map(getMonsterWithEdits);
   }
-  return finalMonstersList;
+  return editedMonstersList;
 }
 
 interface PokePeruContentProps {
@@ -47,32 +49,36 @@ interface PokePeruContentProps {
   dexRoute: string;
   battleRoute: string;
   gymRoute: string;
+  monstersEditKey: string;
 }
 
 export function PokePeruContent({
   monsters,
   dexRoute,
   battleRoute,
-  gymRoute
+  gymRoute,
+  monstersEditKey
 }: PokePeruContentProps) {
-  const [selectedMonstersNames, setSelectedMonstersNames] = useState<string[]>([]);
+  const [selectedMonstersIds, setSelectedMonstersIds] = useState<string[]>([]);
   const [selectedMonsters, setSelectedMonsters] = useState<Monster[]>([]);
   const [currentUser, setCurrentUser] = useState(1);
-
+  
+  const editedMonsters = getEditedMonstersList(monsters, monstersEditKey)
+  console.log(editedMonsters)
   const handleMonsterSelect = (monster: Monster) => {
-    if (selectedMonstersNames.includes(monster.name)) return; // Prevent duplicate selection
+    if (selectedMonstersIds.includes(monster.id)) return; // Prevent duplicate selection
 
-    setSelectedMonstersNames([...selectedMonstersNames, monster.name]);
+    setSelectedMonstersIds([...selectedMonstersIds, monster.id]);
     setSelectedMonsters([...selectedMonsters, monster]);
     setCurrentUser(currentUser === 1 ? 2 : 1); // Switch user
   };
 
   return (
     <>
-      {selectedMonstersNames.length < 2 ? (
+      {selectedMonstersIds.length < 2 ? (
         <MonsterSelection
-          monsters={monsters}
-          selectedMonstersNames={selectedMonstersNames}
+          monsters={editedMonsters}
+          selectedMonstersIds={selectedMonstersIds}
           currentUser={currentUser}
           handleMonsterSelect={handleMonsterSelect}
           dexRoute={dexRoute}

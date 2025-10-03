@@ -85,26 +85,33 @@
 
 .bar {
   height: 100%;
-  background-color: #4caf50; /* Green for remaining HP */
+  background-color: #4caf50;
+  /* Green for remaining HP */
   transition: width 0.3s ease-in-out;
 }
 
 .stats-container {
   display: flex;
-  justify-content: space-between; /* Space between labels */
-  margin-top: 5px; /* Space between the bar and labels */
-  align-items: center; /* Center vertically inside the parent div */
+  justify-content: space-between;
+  /* Space between labels */
+  margin-top: 5px;
+  /* Space between the bar and labels */
+  align-items: center;
+  /* Center vertically inside the parent div */
   padding: 0;
 }
 
 .stats-label-container {
   display: flex;
-  justify-content: flex-start; /* Space between labels */
-  align-items: left; /* Center vertically inside the parent div */
+  justify-content: flex-start;
+  /* Space between labels */
+  align-items: left;
+  /* Center vertically inside the parent div */
 }
 
 .stats-label {
-  white-space: nowrap; /* Prevent line breaks */
+  white-space: nowrap;
+  /* Prevent line breaks */
 }
 
 .total-stats {
@@ -132,7 +139,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  text-align: left; 
+  text-align: left;
 }
 
 .attack-name {
@@ -161,5 +168,16 @@
 }
 
 .total-statstotal-container {
-  text-align: left; 
+  text-align: left;
+}
+
+.errorBanner {
+  background: #ffdddd;
+  color: #a00;
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid #a00;
+  border-radius: 6;
+  text-align: center;
+  font-Weight: 600;
 }
