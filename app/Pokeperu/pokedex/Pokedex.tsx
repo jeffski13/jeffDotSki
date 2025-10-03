@@ -189,7 +189,17 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                       <Row>
                         <Col xs={12}>
                           <h2 className="monster-name-types">
-                            {monstersWithEditsList.name}
+                            {isEditing ? (
+                              <Form.Control
+                                type="text"
+                                value={monstersWithEditsList.name}
+                                onChange={e => handleEditChange(monstersWithEditsList.id, 'name', e.target.value)}
+                                as="input"
+                                style={{ marginBottom: 4, marginTop: '15px' }}
+                              />
+                            ) : (
+                              monstersWithEditsList.name
+                            )}
                           </h2>
                         </Col>
                         <Col xs={12}>
@@ -237,7 +247,17 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                     </Container>
                     {/* desktop header (name, types) */}
                     <h2 className="monster-name-types desktop-view">
-                      {monstersWithEditsList.name}
+                      {isEditing ? (
+                        <Form.Control
+                          type="text"
+                          value={monstersWithEditsList.name}
+                          onChange={e => handleEditChange(monstersWithEditsList.id, 'name', e.target.value)}
+                          as="input"
+                          style={{ marginBottom: 4 }}
+                        />
+                      ) : (
+                        monstersWithEditsList.name
+                      )}
                       <span className="monster-types">
                         {isEditing ? (
                           <Dropdown onSelect={val => handleEditChange(monstersWithEditsList.id, 'type', val)}>
