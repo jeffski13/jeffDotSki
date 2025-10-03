@@ -56,7 +56,9 @@ function InfoPage({ }: InfoPageProps) {
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const esContent: InfoTextContentPerLanguage = {
     about: 'Pokémon en Perú',
-    aboutProject: 'Sobre el Proyecto',
+    aboutProjectTitle: 'Sobre el Proyecto',
+    goToExperience: '¡Puebalo ',
+    goToExperienceLink: 'aqui',
     projectDesc: 'Pokémon en Perú fue un proyecto educativo diseñado para expandir el vocabulario descriptivo de los estudiantes en las siguientes categorías:',
     elements: 'Elementos',
     animals: 'Nombres de Animales',
@@ -101,9 +103,9 @@ function InfoPage({ }: InfoPageProps) {
     diyNontechnicalMonsterCreationWorksheetTitle: 'Ficha de Creación de Monstruos',
     diyNontechnicalGymleaderCreationWorksheetTitle: 'Ficha de Creación de Líderes de Gimnasio',
     diyTechnicalTitle: 'Manera Técnica',
-    diyDesc: '¡Por supuesto! Este juego está hecho con node v20.9.0. Puedes descargar el contenido desde mi github (https://github.com/jeffski13/jeffDotSki) y ejecutar los siguientes comandos:',
-    npmInstall: 'npm install',
-    npmStart: 'npm start',
+    diyDescPreLink: '¡Por supuesto! Este juego está hecho con node v20.9.0. Puedes descargar el contenido desde mi github en https://github.com/jeffski13/jeffDotSki(descargalo directamente ',
+    diyDescDownloadLink: 'aqui',
+    diyDescPostLink: ') y ejecutar los siguientes comandos:',
     browser: 'En el navegador, ve a',
     modify: 'Los archivos siguientes pueden modificarse con los datos respectivos.',
     conjunction: 'y',
@@ -113,7 +115,9 @@ function InfoPage({ }: InfoPageProps) {
 
   const defaultContent: InfoTextContentPerLanguage = {
     about: 'Pocket Monsters in Peru',
-    aboutProject: 'About the Project',
+    aboutProjectTitle: 'About the Project',
+    goToExperience: 'Try it out ',
+    goToExperienceLink: 'here',
     projectDesc: 'Pocket Monsters in Peru was an educational project designed to expand students descriptive vocabulary in the following categories:',
     elements: 'Elements',
     animals: 'Names of Animals',
@@ -158,16 +162,16 @@ function InfoPage({ }: InfoPageProps) {
     diyNontechnicalMonsterCreationWorksheetTitle: 'Monster Creation Worksheet',
     diyNontechnicalGymleaderCreationWorksheetTitle: 'Gym Leader Creation Worksheet',
     diyTechnicalTitle: 'Technical Method (with Battle Simulation and Pokedex)',
-    diyDesc: 'This game is built with node v20.9.0. The contents can be downloaded from my github repo (https://github.com/jeffski13/jeffDotSki) and then run the following commands inside of the unzipped folder:',
-    npmInstall: 'npm install',
-    npmStart: 'npm start',
+    diyDescPreLink: 'This game is built with node v20.9.0. The contents can be downloaded from my github repo at https://github.com/jeffski13/jeffDotSki (direct download ',
+    diyDescDownloadLink: 'here',
+    diyDescPostLink: ') and then run the following commands inside of the unzipped folder:',
     browser: 'In the browser, go to',
     modify: 'The following files can be modified with the respective monster and gym leader data:',
     conjunction: 'and',
     images: 'Images with the monsters and gym leader data can be placed here: ',
     environments: 'New environments can be added inside of /public/images/perulandscape',
   };
-  
+
   const multiLangContent: MultiLangContent = {
     es: esContent,
     default: defaultContent
@@ -199,7 +203,8 @@ function InfoPage({ }: InfoPageProps) {
         <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon desktop-view" />
       </div>
       <div className="project-info">
-        <h2>{content.aboutProject}</h2>
+        <h2>{content.aboutProjectTitle}</h2>
+        <p>{content.goToExperience} <a href={ROUTES.pokePeru.battle}>{content.goToExperienceLink}</a>!</p>
         <p>{content.projectDesc}</p>
         <ul>
           <li>{content.elements}</li>
@@ -330,7 +335,7 @@ function InfoPage({ }: InfoPageProps) {
             </Row>
           </Container>
           <h4>{content.diyTechnicalTitle}</h4>
-          <p>{content.diyDesc}</p>
+          <p>{content.diyDescPreLink}<a href="https://github.com/jeffski13/jeffDotSki/archive/refs/heads/master.zip">{content.diyDescDownloadLink}</a>{content.diyDescPostLink}</p>
           <p><strong>npm install</strong></p>
           <p><strong>npm start</strong></p>
           <p>{content.browser} <a href={pokePeruLink}>{pokePeruLink}</a></p>
@@ -419,7 +424,9 @@ function CopyableField({ blankData }: CopyableFieldProps) {
 
 export interface InfoTextContentPerLanguage {
   about: string;
-  aboutProject: string;
+  aboutProjectTitle: string;
+  goToExperience: string;
+  goToExperienceLink: string;
   projectDesc: string;
   elements: string;
   animals: string;
@@ -464,9 +471,9 @@ export interface InfoTextContentPerLanguage {
   diyNontechnicalMonsterCreationWorksheetTitle: string;
   diyNontechnicalGymleaderCreationWorksheetTitle: string;
   diyTechnicalTitle: string;
-  diyDesc: string;
-  npmInstall: string;
-  npmStart: string;
+  diyDescPreLink: string;
+  diyDescDownloadLink: string;
+  diyDescPostLink: string;
   browser: string;
   modify: string;
   conjunction: string;
