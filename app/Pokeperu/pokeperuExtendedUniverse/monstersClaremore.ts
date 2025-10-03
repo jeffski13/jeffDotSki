@@ -3,6 +3,7 @@ import { monsters, type Monster } from "../monsters";
 
 export const monstersClaremore: Monster[] = [
   {
+    id:'2',
     name: 'Moradder',
     trainer: '???',
     trainerImage: '/images/gymleaders/trainersquad01.png', // Added trainer image
@@ -35,6 +36,7 @@ export const monstersClaremore: Monster[] = [
     },
   },
   {
+    id:'2',
     name: 'Bloodmask',
     trainer: '???',
     trainerImage: '/images/gymleaders/trainersquad01.png', // Added trainer image

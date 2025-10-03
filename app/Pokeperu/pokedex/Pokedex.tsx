@@ -11,6 +11,7 @@ import '../secondaryPage.css';
 import '../infolink.css';
 import '../../Inf/mobile-support.css';
 import { getMonsterData } from './exportMonsterData';
+import { getDuplicateIdNames } from './monsterDuplicationCheck';
 
 interface PokedexProps {
   selectedMonsters: Monster[];
@@ -30,6 +31,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
   // Load edits from localStorage
   const [editData, setEditData] = useState<{ [editID: string]: Monster }>({});
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
+  const duplicateIdNameArray = getDuplicateIdNames(selectedMonsters);
 
   useEffect(() => {
     const stored = localStorage.getItem(storageKey);
@@ -107,6 +109,11 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
 
   return (
     <div className="PokePeruSecondaryPage">
+      {duplicateIdNameArray.length > 0 && (
+        <div style={{ background: '#ffdddd', color: '#a00', padding: '16px', margin: '16px 0', border: '1px solid #a00', borderRadius: 6, textAlign: 'center', fontWeight: 600 }}>
+          {`Duplicate monster id(s) found: ${duplicateIdNameArray.join(', ')}. Please ensure all monsters have unique ids.`}
+        </div>
+      )}
       <div className="secondary-page-header">
         <a href={battleRoute} className="back-button">
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
