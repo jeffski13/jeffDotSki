@@ -191,4 +191,33 @@ describe('Pokedex Component', () => {
     expect(banner.textContent).toMatch(/MonsterOne/);
     expect(banner.textContent).toMatch(/MonsterTwo/);
   });
+
+  it('displays an error banner with missing monster ids and shows the monster names', () => {
+    // Create two monsters, one with an id, one without
+    const monstersWithMissingIds = [
+      {
+        ...mockSelectedMonsters[0],
+        id: '', // empty string to simulate missing id
+        name: 'MissingIdOne',
+      },
+      {
+        ...mockSelectedMonsters[1],
+        id: '',
+        name: 'MissingIdTwo',
+      },
+      {
+        ...mockSelectedMonsters[0],
+        name: 'HasId',
+      },
+    ];
+    render(<Pokedex storageKey="testKeyMissingIds" selectedMonsters={monstersWithMissingIds} battleRoute="/battle" />);
+    // The error banner should be in the document
+    const banner = screen.getByText(/missing id for monster\(s\)/i);
+    expect(banner).toBeInTheDocument();
+    // The banner should include both monster names with missing ids
+    expect(banner.textContent).toMatch(/MissingIdOne/);
+    expect(banner.textContent).toMatch(/MissingIdTwo/);
+    // The banner should not include the name of the monster with a valid id
+    expect(banner.textContent).not.toMatch(/HasId/);
+  });
 });
