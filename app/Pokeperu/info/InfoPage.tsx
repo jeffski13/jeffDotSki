@@ -21,12 +21,12 @@ function InfoPage({ }: InfoPageProps) {
  name: '',
  trainer: '/images/monsters/',
  trainerImage: '/images/gymleaders/',
- hp: 0,
- attack: 0,
- defense: 0,
- specialAttack: 0,
- specialDefense: 0,
- speed: 0,
+ hp: 10,
+ attack: 10,
+ defense: 10,
+ specialAttack: 10,
+ specialDefense: 10,
+ speed: 10,
  image: '', 
  description: '',
  inspiration: '',
@@ -35,18 +35,18 @@ function InfoPage({ }: InfoPageProps) {
  attack1: {
   name: '',
   type: ElementType.Normal,
-  damage: 0,
-  powerPoints: 0,
-  accuracy: 1,
+  damage: 40,
+  powerPoints: 4,
+  accuracy: 0.75,
   isPhysical: true
  },
  attack2: {
   name: '',
   type: ElementType.Normal,
-  damage: 0,
-  powerPoints: 0,
-  accuracy: 1,
-  isPhysical: false
+  damage: 40,
+  powerPoints: 4,
+  accuracy: 0.75,
+  isPhysical: true
  }
 }`;
   const blankDataGymLeader = `{
