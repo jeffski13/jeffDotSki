@@ -110,7 +110,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
   return (
     <div className="PokePeruSecondaryPage">
       {duplicateIdNameArray.length > 0 && (
-        <div className='errorBanner'>
+        <div id="duplicate-id-banner" className='errorBanner'>
           {`Duplicate monster id(s) found: ${duplicateIdNameArray.join(', ')}. Please ensure all monsters have unique ids.`}
         </div>
       )}

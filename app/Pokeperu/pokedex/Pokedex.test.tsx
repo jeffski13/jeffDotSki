@@ -167,4 +167,28 @@ describe('Pokedex Component', () => {
     const restoredInspiration = screen.findAllByText(/intitialInspiration/)
     expect((await restoredInspiration).length).toBe(2);
   });
+
+  it('displays an error banner with duplicate monster names when there are duplicate ids', () => {
+    // Create two monsters with the same id but different names
+    const duplicateId = 'dup-123';
+    const monstersWithDupes = [
+      {
+        ...mockSelectedMonsters[0],
+        id: duplicateId,
+        name: 'MonsterOne',
+      },
+      {
+        ...mockSelectedMonsters[1],
+        id: duplicateId,
+        name: 'MonsterTwo',
+      },
+    ];
+    render(<Pokedex storageKey="testKeyDupes" selectedMonsters={monstersWithDupes} battleRoute="/battle" />);
+    // The error banner should be in the document
+    const banner = screen.getByText(/duplicate monster id\(s\) found/i);
+    expect(banner).toBeInTheDocument();
+    // The banner should include both monster names
+    expect(banner.textContent).toMatch(/MonsterOne/);
+    expect(banner.textContent).toMatch(/MonsterTwo/);
+  });
 });
