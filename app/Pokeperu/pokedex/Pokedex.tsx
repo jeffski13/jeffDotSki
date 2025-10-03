@@ -11,7 +11,7 @@ import '../secondaryPage.css';
 import '../infolink.css';
 import '../../Inf/mobile-support.css';
 import { getMonsterData } from './exportMonsterData';
-import { getDuplicateIdNames } from './monsterDuplicationCheck';
+import { getDuplicateIdNames, getMissingIdNames } from './monsterDuplicationCheck';
 
 interface PokedexProps {
   selectedMonsters: Monster[];
@@ -32,6 +32,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
   const [editData, setEditData] = useState<{ [editID: string]: Monster }>({});
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
   const duplicateIdNameArray = getDuplicateIdNames(selectedMonsters);
+  const missingIdNameArray = getMissingIdNames(selectedMonsters);
 
   useEffect(() => {
     const stored = localStorage.getItem(storageKey);
@@ -109,6 +110,11 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
 
   return (
     <div className="PokePeruSecondaryPage">
+      {missingIdNameArray.length > 0 && (
+        <div id="missing-id-banner" className='errorBanner'>
+          {`Missing id for monster(s): ${missingIdNameArray.join(', ')}. Please ensure all monsters have an id.`}
+        </div>
+      )}
       {duplicateIdNameArray.length > 0 && (
         <div id="duplicate-id-banner" className='errorBanner'>
           {`Duplicate monster id(s) found: ${duplicateIdNameArray.join(', ')}. Please ensure all monsters have unique ids.`}

@@ -1,3 +1,8 @@
+import type { Monster } from "../monsters";
+
+export const getMissingIdNames = (monsters: Monster[]) => {
+  return monsters.filter(m => !m.id).map(m => m.name);
+}
 export const getDuplicateIdNames = (monsters: Monster[]) => {
   // Check for duplicate ids
   const idCounts: Record<string, number> = {};
