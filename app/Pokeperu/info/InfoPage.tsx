@@ -7,6 +7,7 @@ import { getBrowserLanguage, getContentByLanguage, type MultiLangContent } from 
 import '../navigation.css';
 import '../secondaryPage.css';
 import './infopage.css';
+import { v4 as uuidv4 } from 'uuid';
 
 interface InfoPageProps { }
 
@@ -16,6 +17,7 @@ export default function InfoPageContainer() {
 
 function InfoPage({ }: InfoPageProps) {
   const blankDataPokemon = `{
+ id: '${uuidv4()}',
  name: '',
  trainer: '/images/monsters/',
  trainerImage: '/images/gymleaders/',
