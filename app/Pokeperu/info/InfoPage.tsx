@@ -103,9 +103,9 @@ function InfoPage({ }: InfoPageProps) {
     diyNontechnicalMonsterCreationWorksheetTitle: 'Ficha de Creación de Monstruos',
     diyNontechnicalGymleaderCreationWorksheetTitle: 'Ficha de Creación de Líderes de Gimnasio',
     diyTechnicalTitle: 'Manera Técnica',
-    diyDesc: '¡Por supuesto! Este juego está hecho con node v20.9.0. Puedes descargar el contenido desde mi github (https://github.com/jeffski13/jeffDotSki) y ejecutar los siguientes comandos:',
-    npmInstall: 'npm install',
-    npmStart: 'npm start',
+    diyDescPreLink: '¡Por supuesto! Este juego está hecho con node v20.9.0. Puedes descargar el contenido desde mi github en https://github.com/jeffski13/jeffDotSki(descargalo directamente ',
+    diyDescDownloadLink: 'aqui',
+    diyDescPostLink: ') y ejecutar los siguientes comandos:',
     browser: 'En el navegador, ve a',
     modify: 'Los archivos siguientes pueden modificarse con los datos respectivos.',
     conjunction: 'y',
@@ -162,9 +162,9 @@ function InfoPage({ }: InfoPageProps) {
     diyNontechnicalMonsterCreationWorksheetTitle: 'Monster Creation Worksheet',
     diyNontechnicalGymleaderCreationWorksheetTitle: 'Gym Leader Creation Worksheet',
     diyTechnicalTitle: 'Technical Method (with Battle Simulation and Pokedex)',
-    diyDesc: 'This game is built with node v20.9.0. The contents can be downloaded from my github repo (https://github.com/jeffski13/jeffDotSki) and then run the following commands inside of the unzipped folder:',
-    npmInstall: 'npm install',
-    npmStart: 'npm start',
+    diyDescPreLink: 'This game is built with node v20.9.0. The contents can be downloaded from my github repo at https://github.com/jeffski13/jeffDotSki (direct download ',
+    diyDescDownloadLink: 'here',
+    diyDescPostLink: ') and then run the following commands inside of the unzipped folder:',
     browser: 'In the browser, go to',
     modify: 'The following files can be modified with the respective monster and gym leader data:',
     conjunction: 'and',
@@ -335,7 +335,7 @@ function InfoPage({ }: InfoPageProps) {
             </Row>
           </Container>
           <h4>{content.diyTechnicalTitle}</h4>
-          <p>{content.diyDesc}</p>
+          <p>{content.diyDescPreLink}<a href="https://github.com/jeffski13/jeffDotSki/archive/refs/heads/master.zip">{content.diyDescDownloadLink}</a>{content.diyDescPostLink}</p>
           <p><strong>npm install</strong></p>
           <p><strong>npm start</strong></p>
           <p>{content.browser} <a href={pokePeruLink}>{pokePeruLink}</a></p>
@@ -471,9 +471,9 @@ export interface InfoTextContentPerLanguage {
   diyNontechnicalMonsterCreationWorksheetTitle: string;
   diyNontechnicalGymleaderCreationWorksheetTitle: string;
   diyTechnicalTitle: string;
-  diyDesc: string;
-  npmInstall: string;
-  npmStart: string;
+  diyDescPreLink: string;
+  diyDescDownloadLink: string;
+  diyDescPostLink: string;
   browser: string;
   modify: string;
   conjunction: string;
