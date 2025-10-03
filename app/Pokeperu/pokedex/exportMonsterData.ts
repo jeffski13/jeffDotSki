@@ -17,7 +17,7 @@ const balancedDefaultAttack = {
  * @returns 
  */
 export const getMonsterData = (
-    editData: { [monsterName: string]: Partial<Monster> & { attack1?: Partial<Monster['attack1']>, attack2?: Partial<Monster['attack2']> } },
+    editData: { [monsterId: string]: Partial<Monster> & { attack1?: Partial<Monster['attack1']>, attack2?: Partial<Monster['attack2']> } },
     selectedMonsters: Monster[]
 ): Promise<any[]> => {
     return new Promise((resolve) => {
@@ -31,12 +31,12 @@ export const getMonsterData = (
 
         // Edited monsters
         const editedMonsterNames = new Set(Object.keys(editData));
-        const editedMonsters = Object.keys(editData).map(monsterName => {
-            const monster = selectedMonsters.find(monster => monster.name === monsterName);
+        const editedMonsters = Object.keys(editData).map(monsterId => {
+            const monster = selectedMonsters.find(monster => monster.id === monsterId);
             if (!monster) {
                 return null;
             }
-            const edit = editData[monsterName];
+            const edit = editData[monsterId];
             // Merge edits into monster
             const merged = {
                 ...monster,
@@ -46,6 +46,7 @@ export const getMonsterData = (
             };
             const {
                 name: mergedName,
+                id,
                 trainer,
                 trainerImage,
                 type,
@@ -58,6 +59,7 @@ export const getMonsterData = (
             } = merged;
             return {
                 name: mergedName,
+                id,
                 trainer,
                 trainerImage,
                 type: toElementType(type),
@@ -78,8 +80,9 @@ export const getMonsterData = (
         }).filter(Boolean);
 
         // Unedited monsters
-        const uneditedMonsters = selectedMonsters.filter(monster => !editedMonsterNames.has(monster.name)).map(monster => {
+        const uneditedMonsters = selectedMonsters.filter(monster => !editedMonsterNames.has(monster.id)).map(monster => {
             const {
+                id,
                 name,
                 trainer,
                 trainerImage,
@@ -92,6 +95,7 @@ export const getMonsterData = (
                 attack1, attack2
             } = monster;
             return {
+                id,
                 name,
                 trainer,
                 trainerImage,
