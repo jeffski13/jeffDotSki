@@ -12,6 +12,7 @@ export interface MonsterAttack {
 
 // Define the structure of a monster
 export interface Monster {
+  id: string;
   name: string;
   trainer: string;
   trainerImage: string; // Add this line for the trainer image
@@ -33,6 +34,7 @@ export interface Monster {
 // Use the Monster interface for the monsters array
 export const monsters: Monster[] = [
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000001',
     name: 'Buxic',
     trainer: 'Lily',
     trainerImage: '/images/gymleaders/trainersquad1.png', // Added trainer image
@@ -65,6 +67,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000002',
     name: 'Psychiry',
     image: '/images/monsters/pkmnsquad1b.png',
     trainer: 'Lily',
@@ -97,6 +100,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000003',
     name: 'Dragoncond',
     trainer: 'Monty',
     trainerImage: '/images/gymleaders/trainersquad2.png', // Added trainer image
@@ -129,6 +133,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000004',
     name: 'Conty',
     trainer: 'Monty',
     trainerImage: '/images/gymleaders/trainersquad2.png', // Added trainer image
@@ -161,6 +166,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000005',
     name: 'Palka',
     trainer: 'Inty',
     trainerImage: '/images/gymleaders/trainersquad3.png', // Added trainer image
@@ -193,6 +199,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000006',
     name: 'Raymi',
     trainer: 'Inty',
     trainerImage: '/images/gymleaders/trainersquad3.png', // Added trainer image
@@ -225,6 +232,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000007',
     name: 'Tident',
     trainer: 'Ainbo',
     trainerImage: '/images/gymleaders/trainersquad4.png', // Added trainer image
@@ -257,6 +265,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000008',
     name: 'Rotie',
     trainer: 'Ainbo',
     trainerImage: '/images/gymleaders/trainersquad4.png', // Added trainer image
@@ -289,6 +298,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-000000000009',
     name: 'Washishi',
     trainer: 'Bababoy',
     trainerImage: '/images/gymleaders/trainersquad5.png', // Added trainer image
@@ -321,6 +331,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-00000000000a',
     name: 'Tsumtsum',
     trainer: 'Bababoy',
     trainerImage: '/images/gymleaders/trainersquad5.png', // Added trainer image
@@ -353,6 +364,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-00000000000b',
     name: 'Eternal Fire',
     trainer: 'Alex',
     trainerImage: '/images/gymleaders/trainersquad6.png', // Added trainer image
@@ -385,6 +397,7 @@ export const monsters: Monster[] = [
     },
   },
   {
+    id: 'b7e1e7c2-1a1a-4b1a-8e1a-00000000000c',
     name: 'Tornado',
     trainer: 'Alex',
     trainerImage: '/images/gymleaders/trainersquad6.png', // Added trainer image
