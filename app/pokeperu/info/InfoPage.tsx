@@ -55,7 +55,6 @@ function InfoPage({ }: InfoPageProps) {
   image: "/images/gymleaders/",
   environmentImage: "/images/perulandscape/",
   biome: "",
-  monsterTeamIds: [],
 }`;
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const esContent: InfoTextContentPerLanguage = {
