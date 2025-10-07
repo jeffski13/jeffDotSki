@@ -19,8 +19,7 @@ function InfoPage({ }: InfoPageProps) {
   const blankDataPokemon = `{
  id: '${uuidv4()}',
  name: '',
- trainer: '/images/monsters/',
- trainerImage: '/images/gymleaders/',
+ trainerId: '',
  hp: 10,
  attack: 10,
  defense: 10,
