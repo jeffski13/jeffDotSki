@@ -7,10 +7,13 @@ import '../navigation.css';
 import '../../Inf/mobile-support.css';
 import type { Monster } from '../monsters';
 import { getTypeColor } from '../typeColors';
+import type { GymLeader } from '../gymleaders';
 
 interface MonsterSelectionResultsProps {
   monster1: Monster;
   monster2: Monster;
+  trainer1: GymLeader | undefined;
+  trainer2: GymLeader | undefined;
   setBattleClicked: () => void;
   battleRoute: string;
 }
@@ -18,6 +21,8 @@ interface MonsterSelectionResultsProps {
 export default function SelectionResultsScreen({
   monster1,
   monster2,
+  trainer1,
+  trainer2,
   setBattleClicked,
   battleRoute
 }: MonsterSelectionResultsProps) {
@@ -88,7 +93,7 @@ export default function SelectionResultsScreen({
                 </div>
                 <div style={{ position: 'relative', width: 220, height: 200 }}>
                   <img
-                    src={monster1.trainerImage}
+                    src={trainer1.image}
                     alt="Trainer 1"
                     className="trainer-image trainer1"
                   />
@@ -115,7 +120,7 @@ export default function SelectionResultsScreen({
                 </div>
                 <div style={{ position: 'relative', width: 220, height: 200 }}>
                   <img
-                    src={monster2.trainerImage}
+                    src={trainer2.image}
                     alt="Trainer 2"
                     className="trainer-image trainer2"
                   />

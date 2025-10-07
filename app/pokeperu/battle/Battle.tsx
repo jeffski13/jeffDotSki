@@ -9,6 +9,7 @@ import './battleAttacks.css';
 import '../navigationOverride.css';
 import { calculateAdjustedDamage, typeEffectiveness } from './battleAttack';
 import ROUTES from '~/consts/ROUTES';
+import type { GymLeader } from '../gymleaders';
 
 interface BattleProps {
   selectedMonsters: Monster[];
@@ -18,6 +19,8 @@ interface BattleProps {
   isInstantStruggleEnabled?: boolean;
   isAllAttackCriticalHit?: boolean;
   battleRoute?: string;
+  trainer1 : GymLeader | undefined;
+  trainer2: GymLeader | undefined;
 }
 
 const STRUGGLE_ATTACK: MonsterAttack = {
@@ -31,6 +34,8 @@ const STRUGGLE_ATTACK: MonsterAttack = {
 
 export default function Battle({
   selectedMonsters,
+  trainer1,
+  trainer2,
   attackMissedPercentage,
   isAttackRandomDamage = true,
   isTextRenderInstant = false,
@@ -136,7 +141,7 @@ export default function Battle({
         selectedAttack.isPhysical,
         isAttackRandomDamage
       );
-      
+
       if (isAllAttackCriticalHit || (isAttackRandomDamage && Math.random() < 0.1)) {
         adjustedDamage *= 2;
         isCritical = true;
@@ -298,12 +303,12 @@ export default function Battle({
     };
   }, [isMonster1Turn, isGameOver, monster1Attack1PP, monster1Attack2PP, monster2Attack1PP, monster2Attack2PP]);
 
-  let battleTitle = `${selectedMonsters[0].trainer} vs ${selectedMonsters[1].trainer}`;
+  let battleTitle = `${trainer1?.name} vs ${trainer2?.name}`;
   if (isMonster2Winner) {
-    battleTitle = `${selectedMonsters[1].trainer} Wins!`
+    battleTitle = `${trainer2?.name} Wins!`;
   }
   else if (isMonster1Winner) {
-    battleTitle = `${selectedMonsters[0].trainer} Wins!`
+    battleTitle = `${trainer1?.name} Wins!`;
   }
 
   return (
@@ -357,7 +362,7 @@ export default function Battle({
           >
             <div className="attack-button-label-container">
               <span className="attack-button-label">{selectedMonsters[0].attack1.name}</span>
-              <br/>
+              <br />
               <span className="attack-button-label-pp">PP: {monster1Attack1PP}/{selectedMonsters[0].attack1.powerPoints}</span>
             </div>
           </button>
@@ -370,7 +375,7 @@ export default function Battle({
           >
             <div className="attack-button-label-container">
               <span className="attack-button-label">{selectedMonsters[0].attack2.name}</span>
-              <br/>
+              <br />
               <span className="attack-button-label-pp">PP: {monster1Attack2PP}/{selectedMonsters[0].attack2.powerPoints}</span>
             </div>
           </button>
@@ -401,7 +406,7 @@ export default function Battle({
           >
             <div className="attack-button-label-container">
               <span className="attack-button-label">{selectedMonsters[1].attack1.name}</span>
-              <br/>
+              <br />
               <span className="attack-button-label-pp">PP: {monster2Attack1PP}/{selectedMonsters[1].attack1.powerPoints}</span>
             </div>
           </button>
@@ -414,7 +419,7 @@ export default function Battle({
           >
             <div className="attack-button-label-container">
               <span className="attack-button-label">{selectedMonsters[1].attack2.name}</span>
-              <br/>
+              <br />
               <span className="attack-button-label-pp">PP: {monster2Attack2PP}/{selectedMonsters[1].attack2.powerPoints}</span>
             </div>
           </button>

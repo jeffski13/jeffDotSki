@@ -1,11 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import {PokePeruContent} from '../index';
-import mockSelectedMonsters from '../mockMonsters';
+import mockSelectedMonsters, { mockTrainers } from '../mockMonsters';
 import ROUTES from '~/consts/ROUTES';
 
 describe('PokePeruStart Component', () => {
   test('handleMonsterSelect modifies the selected monsters', () => {
-    render(<PokePeruContent monsters={mockSelectedMonsters} dexRoute='' battleRoute={''} gymRoute={''} />);
+    render(<PokePeruContent 
+      monsters={mockSelectedMonsters} 
+      gymLeaders={mockTrainers}
+      dexRoute='' battleRoute={''} gymRoute={''} />);
 
     // Find the buttons for the monsters
     const pikachuButton = screen.getByText(/Pikachu/i);
@@ -28,7 +31,10 @@ describe('PokePeruStart Component', () => {
     const battleRoute = '/battle';
     const dexRoute = '/dex';
     const gymRoute = '/gym';
-    render(<PokePeruContent monsters={mockSelectedMonsters} dexRoute={dexRoute} battleRoute={battleRoute} gymRoute={gymRoute} />);
+    render(<PokePeruContent 
+      monsters={mockSelectedMonsters} 
+      gymLeaders={mockTrainers}
+      dexRoute={dexRoute} battleRoute={battleRoute} gymRoute={gymRoute} />);
     // Look for a link with the correct href
     const gymLink = screen.getByRole('link', { name: 'Gym Leaders' });
     expect(gymLink).toBeInTheDocument();

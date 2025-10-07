@@ -15,6 +15,7 @@ export default function PokePeruClaremore() {
       </div>
       <PokePeruContent
         monsters={getClaremoreMonsters()}
+        gymLeaders={getClaremoreGymLeaders()}
         monstersEditKey={CLAREMORE_EDIT_KEY}
         dexRoute={ROUTES.pokePeru.pokeClaremoreDex} 
         battleRoute={ROUTES.pokePeru.pokeClaremore} 

@@ -5,8 +5,7 @@ export const monstersClaremore: Monster[] = [
   {
     id:'claremore-0001',
     name: 'Moradder',
-    trainer: '???',
-    trainerImage: '/images/gymleaders/trainersquad01.png', // Added trainer image
+    trainerId: 'c1a303-1234-4b1a-4321-000000000001',
     hp: 100,
     attack: 0,
     defense: 40,
@@ -38,8 +37,7 @@ export const monstersClaremore: Monster[] = [
   {
     id:'claremore-0002',
     name: 'Bloodmask',
-    trainer: '???',
-    trainerImage: '/images/gymleaders/trainersquad01.png', // Added trainer image
+    trainerId: 'c1a303-1234-4b1a-4321-000000000001',
     hp: 90,
     attack: 0,
     defense: 40,
@@ -71,8 +69,7 @@ export const monstersClaremore: Monster[] = [
   {
     id:'claremore-0003',
     name: 'Sunflare',
-    trainer: 'Jim',
-    trainerImage: '/images/gymleaders/trainersquad02.png', // Added trainer image
+    trainerId: 'c1a303-1234-4b1a-4321-000000000002',
     hp: 100,
     attack: 50,
     defense: 50,
@@ -104,8 +101,7 @@ export const monstersClaremore: Monster[] = [
   {
     id:'claremore-0004',
     name: 'Toxatoin',
-    trainer: 'Tom',
-    trainerImage: '/images/gymleaders/trainersquad03.png', // Added trainer image
+    trainerId: 'c1a303-1234-4b1a-4321-000000000003',
     hp: 100,
     attack: 70,
     defense: 0,

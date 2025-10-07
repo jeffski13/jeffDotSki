@@ -5,6 +5,7 @@ import { monsters, type Monster } from './monsters';
 import ROUTES from '~/consts/ROUTES';
 import KEYS from '~/consts/KEYS';
 import './pokeperu.css';
+import { gymLeaders, type GymLeader } from './gymleaders';
 
 export default function PokePeru() {
   return (
@@ -12,8 +13,9 @@ export default function PokePeru() {
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>
-      <PokePeruContent 
+      <PokePeruContent
         monsters={monsters}
+        gymLeaders={gymLeaders}
         monstersEditKey={KEYS.pokePeru.monsterEditsKey}
         dexRoute={ROUTES.pokePeru.pokedex}
         battleRoute={ROUTES.pokePeru.battle}
@@ -46,6 +48,7 @@ export const getEditedMonstersList = (monstersList: Monster[], storageKey: strin
 
 interface PokePeruContentProps {
   monsters: Monster[];
+  gymLeaders: GymLeader[];
   dexRoute: string;
   battleRoute: string;
   gymRoute: string;
@@ -54,6 +57,7 @@ interface PokePeruContentProps {
 
 export function PokePeruContent({
   monsters,
+  gymLeaders,
   dexRoute,
   battleRoute,
   gymRoute,
@@ -62,7 +66,7 @@ export function PokePeruContent({
   const [selectedMonstersIds, setSelectedMonstersIds] = useState<string[]>([]);
   const [selectedMonsters, setSelectedMonsters] = useState<Monster[]>([]);
   const [currentUser, setCurrentUser] = useState(1);
-  
+
   const editedMonsters = getEditedMonstersList(monsters, monstersEditKey)
   const handleMonsterSelect = (monster: Monster) => {
     if (selectedMonstersIds.includes(monster.id)) return; // Prevent duplicate selection
@@ -77,6 +81,7 @@ export function PokePeruContent({
       {selectedMonstersIds.length < 2 ? (
         <MonsterSelection
           monsters={editedMonsters}
+          gymLeaders={gymLeaders}
           selectedMonstersIds={selectedMonstersIds}
           currentUser={currentUser}
           handleMonsterSelect={handleMonsterSelect}
@@ -84,7 +89,10 @@ export function PokePeruContent({
           gymLeaderRoute={gymRoute}
         />
       ) : (
-        <BattleContainer selectedMonsters={selectedMonsters} battleRoute={battleRoute} />
+        <BattleContainer
+          selectedMonsters={selectedMonsters}
+          gymLeaders={gymLeaders}
+          battleRoute={battleRoute} />
       )}
     </>
   );

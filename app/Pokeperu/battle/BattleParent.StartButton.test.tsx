@@ -1,10 +1,13 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import BattleContainer from './BattleParent';
-import mockSelectedMonsters from '../mockMonsters';
+import mockSelectedMonsters, { mockTrainers } from '../mockMonsters';
 
 describe('BattleStartScreen Component', () => {
   test('clicking "Start Battle" transitions to the battle phase', () => {
-    render(<BattleContainer selectedMonsters={mockSelectedMonsters} />);
+    render(<BattleContainer
+      selectedMonsters={mockSelectedMonsters}
+      gymLeaders={mockTrainers}
+    />);
 
     // Verify the initial UI shows the selection results
     expect(screen.getByText(/Selection Results/i)).toBeInTheDocument();
@@ -25,16 +28,18 @@ describe('BattleStartScreen Component', () => {
   });
 
   test('shows "Are you sure?" popup with Yes and No buttons when back button is clicked', () => {
-      const battleRoute = '/battletest'
-      render(<BattleContainer selectedMonsters={mockSelectedMonsters} battleRoute={battleRoute} />);
-  
-      // Click the back button (find by alt text of the image or by role)
-      const backButton = screen.getByRole('button', { name: /back/i });
-      fireEvent.click(backButton);
-  
-      // Assert that the confirmation popup appears
-      expect(screen.getByText(/Are you sure\?/i)).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /Yes/i })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /No/i })).toBeInTheDocument();
-    });
+    const battleRoute = '/battletest'
+    render(<BattleContainer selectedMonsters={mockSelectedMonsters}
+      gymLeaders={mockTrainers}
+      battleRoute={battleRoute} />);
+
+    // Click the back button (find by alt text of the image or by role)
+    const backButton = screen.getByRole('button', { name: /back/i });
+    fireEvent.click(backButton);
+
+    // Assert that the confirmation popup appears
+    expect(screen.getByText(/Are you sure\?/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Yes/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /No/i })).toBeInTheDocument();
+  });
 });

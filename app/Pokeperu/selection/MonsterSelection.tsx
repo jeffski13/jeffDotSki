@@ -5,9 +5,11 @@ import './monsterselection.css';
 import '../secondaryPage.css';
 import '../infolink.css';
 import { Col, Container, Row } from 'react-bootstrap';
+import type { GymLeader } from '../gymleaders';
 
 interface MonsterSelectionProps {
   monsters: Monster[];
+  gymLeaders: GymLeader[];
   selectedMonstersIds: string[];
   currentUser: number;
   handleMonsterSelect: (monster: Monster) => void;
@@ -17,6 +19,7 @@ interface MonsterSelectionProps {
 
 export default function MonsterSelection({
   monsters,
+  gymLeaders,
   selectedMonstersIds,
   currentUser,
   handleMonsterSelect,
@@ -70,19 +73,25 @@ export default function MonsterSelection({
       </div>
       <h2>User {currentUser}, choose your monster:</h2>
       <div className="monster-grid">
-        {monsters.map((monster, index) => (
-          <button
-            key={monster.name}
-            onClick={() => handleMonsterSelect(monster)}
-            disabled={selectedMonstersIds.includes(monster.id)}
-            className="monster-button"
-          >
-            <div><strong>{monster.name}</strong></div>
-            <div>({monster.trainer})</div>
-            <img src={monster.image} alt={monster.name} className="monster-image-selection" />
-            <div className="shortcut-label">Press {index + 1}</div>
-          </button>
-        ))}
+        {monsters.map((monster, index) => {
+
+          //get the trainer information
+          const trainer = gymLeaders.find(e => e.id.toLowerCase() === monster.trainerId.toLowerCase());
+          return (
+            <button
+              key={monster.name}
+              onClick={() => handleMonsterSelect(monster)}
+              disabled={selectedMonstersIds.includes(monster.id)}
+              className="monster-button"
+            >
+              <div><strong>{monster.name}</strong></div>
+              <div>{trainer?.name}</div>
+              <img src={monster.image} alt={monster.name} className="monster-image-selection" />
+              <div className="shortcut-label">Press {index + 1}</div>
+            </button>
+          )
+        }
+        )}
       </div>
 
       <a href={ROUTES.pokePeru.info} className="info-link-fixed-location">

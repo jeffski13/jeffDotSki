@@ -6,13 +6,15 @@ import './battle.css';
 import '../infolink.css';
 import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 import ROUTES from '~/consts/ROUTES';
+import type { GymLeader } from '../gymleaders';
 
 interface BattleProps {
   selectedMonsters: Monster[];
+  gymLeaders: GymLeader[];
   battleRoute: string;
 }
 
-export default function BattleContainer({ selectedMonsters, battleRoute }: BattleProps) {
+export default function BattleContainer({ selectedMonsters, gymLeaders, battleRoute }: BattleProps) {
   const [isBattleClicked, setBattleClicked] = useState(false);
 
   const [showInfoNavigationConfirm, setInfoNavigationConfirm] = useState(false);
@@ -21,21 +23,31 @@ export default function BattleContainer({ selectedMonsters, battleRoute }: Battl
     return <></>;
   }
 
+  const trainer1 = gymLeaders.find(e => e.id.toLowerCase() === selectedMonsters[0].trainerId.toLowerCase());
+  const trainer2 = gymLeaders.find(e => e.id.toLowerCase() === selectedMonsters[1].trainerId.toLowerCase());
+
   return (
     <div className="MonsterSelectionResults">
       {!isBattleClicked ? (
         <SelectionResultsScreen
           monster1={selectedMonsters[0]}
           monster2={selectedMonsters[1]}
+          trainer1={trainer1}
+          trainer2={trainer2}
           setBattleClicked={() => setBattleClicked(true)}
           battleRoute={battleRoute}
         />
       ) : (
-        <Battle selectedMonsters={selectedMonsters} battleRoute={battleRoute} />
+        <Battle
+          selectedMonsters={selectedMonsters}
+          battleRoute={battleRoute}
+          trainer1={trainer1}
+          trainer2={trainer2}
+        />
       )}
 
       <a className="info-link-fixed-location" onClick={() => setInfoNavigationConfirm(true)}
-        >
+      >
         <img
           src="/images/info-icon.png"
           alt="Information Link"

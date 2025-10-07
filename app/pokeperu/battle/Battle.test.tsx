@@ -3,7 +3,7 @@ import Battle from './Battle';
 import { ElementType } from '../ElementType';
 import type { Monster } from '../monsters';
 import { calculateAdjustedDamage } from './battleAttack';
-import mockSelectedMonsters from '../mockMonsters';
+import mockSelectedMonsters, { mockTrainers } from '../mockMonsters';
 
 const mocksWithMonster1VeryWeak = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
 mocksWithMonster1VeryWeak[0].hp = 60;
@@ -42,20 +42,20 @@ const testMonster2Hp = (hpExpected: Number) => {
 
 describe('Battle Component', () => {
   test('verify initial HP', () => {
-    render(<Battle selectedMonsters={mockSelectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
     // Verify initial HP values
     testMonster1Hp(35);
     testMonster2Hp(47);
   });
 
   test('verify initial title message', () => {
-    render(<Battle selectedMonsters={mockSelectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     expect(screen.getByText(/Ash vs Brock/i)).toBeInTheDocument();
   });
 
   test('when monster1 attacks, monster2Hp is reduced', () => {
-    render(<Battle selectedMonsters={mockSelectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} />);
 
     // Find and click the attack button for monster1 (Pikachu)
     const attackButton = screen.getByText(/Quick Attack/i);
@@ -68,7 +68,7 @@ describe('Battle Component', () => {
   });
 
   test('when monster1 attacks, the results of the attack are displayed', () => {
-    render(<Battle selectedMonsters={mockSelectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     // Find and click the attack button for monster1 (Pikachu)
     const attackButton = screen.getByText(/Quick Attack/i);
@@ -80,7 +80,7 @@ describe('Battle Component', () => {
   });
 
   test('monster2 attack buttons are disabled and monster1 attack buttons are enabled when the UI appears', () => {
-    render(<Battle selectedMonsters={mockSelectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     // Verify monster1's attack buttons are enabled
     const monster1Attack1Button = screen.getByText(/Quick Attack/i);
@@ -142,7 +142,7 @@ describe('Battle Component', () => {
 
   test('correct messages when monster has won', () => {
     const veryWeakPokemon = {
-      name: 'Charmander', trainer: 'Brock', description: '', inspiration: '',
+      name: 'Charmander', trainerId: 'trainer2id', description: '', inspiration: '',
       hp: 1, attack: 1, defense: 1, specialAttack: 1, specialDefense: 1, speed: 1,
       type: ElementType.Fire,
       secondType: null,
@@ -153,7 +153,7 @@ describe('Battle Component', () => {
 
     const oneSidedBattleMonsters = [mockSelectedMonsters[0], veryWeakPokemon];
 
-    render(<Battle selectedMonsters={oneSidedBattleMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={oneSidedBattleMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     // Simulate Monster 1 attacking Monster 2 until Monster 2's HP reaches 0
     const attackButtonMonster1 = screen.getByText(/Quick Attack/i);
@@ -234,7 +234,7 @@ describe('Battle Component', () => {
 
   it('displays "attack missed!" when the attack misses', () => {
     // Render the Battle component with attackMissedPercentage set to 1 (guaranteed miss)
-    render(<Battle selectedMonsters={mockSelectedMonsters} attackMissedPercentage={1} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={1} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     // Simulate an attack by clicking the first monster's first attack button
     const attackButton = screen.getByText('Quick Attack', { exact: false });
@@ -295,7 +295,7 @@ describe('Battle Component', () => {
   });
   test('attack buttons are disabled once an attack has 0 power points', () => {
 
-    render(<Battle selectedMonsters={mockSelectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isAllAttackCriticalHit={true} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isAllAttackCriticalHit={true} isTextRenderInstant={true} />);
 
     // Simulate Monster 1 attacking Monster 2 until Monster 2's HP reaches 0
     const attackButtonMonster1 = screen.getByText(/Quick Attack/i);
@@ -359,7 +359,7 @@ describe('Battle Component', () => {
     expect(screen.getByText(/Pikachu is hurt by recoil!/i)).toBeInTheDocument();
   });
 
-  test('pokemon struggle loop once all attacks have 0 power points', () => {
+  test.only('pokemon struggle loop once all attacks have 0 power points', () => {
     const mockSelectedMonstersPowerPointsMod = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
     mockSelectedMonstersPowerPointsMod[0].hp = 500
     mockSelectedMonstersPowerPointsMod[0].defense = 100
@@ -396,7 +396,9 @@ describe('Battle Component', () => {
       accuracy: 1,
     }
 
+    console.error(mockTrainers[0])
     render(<Battle selectedMonsters={mockSelectedMonstersPowerPointsMod}
+      trainer1={mockTrainers[0]} trainer2={mockTrainers[1]}
       attackMissedPercentage={0} isAttackRandomDamage={false}
       isTextRenderInstant={true} isInstantStruggleEnabled={true} />);
 
@@ -410,7 +412,7 @@ describe('Battle Component', () => {
     const attackButtonMonster2Attack2 = screen.getByText(/Bite/i);
     fireEvent.click(attackButtonMonster2Attack2);
 
-    // Verify that attack 1's power points is 0
+    // Verify that pokemon won
     expect(screen.getByText(/Ash wins!/i)).toBeInTheDocument();
   });
 
