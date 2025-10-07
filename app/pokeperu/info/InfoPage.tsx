@@ -50,10 +50,12 @@ function InfoPage({ }: InfoPageProps) {
  }
 }`;
   const blankDataGymLeader = `{
+  id: '${uuidv4()}',
   name: "",
   image: "/images/gymleaders/",
   environmentImage: "/images/perulandscape/",
   biome: "",
+  monsters: [],
 }`;
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
   const esContent: InfoTextContentPerLanguage = {
