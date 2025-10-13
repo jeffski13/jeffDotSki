@@ -101,6 +101,7 @@ export const monstersClaremore: Monster[] = [
   {
     "name": "Flamebat",
     "id": "claremore-0004",
+    trainerId: 'c1a303-1234-4b1a-4321-000000000002',
     "type": "Fire",
     "secondType": null,
     "image": "/images/monsters/pkmnsquad02b.png",
