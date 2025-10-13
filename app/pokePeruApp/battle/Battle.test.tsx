@@ -359,7 +359,7 @@ describe('Battle Component', () => {
     expect(screen.getByText(/Pikachu is hurt by recoil!/i)).toBeInTheDocument();
   });
 
-  test.only('pokemon struggle loop once all attacks have 0 power points', () => {
+  test('pokemon struggle loop once all attacks have 0 power points', () => {
     const mockSelectedMonstersPowerPointsMod = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
     mockSelectedMonstersPowerPointsMod[0].hp = 500
     mockSelectedMonstersPowerPointsMod[0].defense = 100
