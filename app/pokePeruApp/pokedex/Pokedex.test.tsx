@@ -220,4 +220,49 @@ describe('Pokedex Component', () => {
     // The banner should not include the name of the monster with a valid id
     expect(banner.textContent).not.toMatch(/HasId/);
   });
+
+  it('sanitizes negative stat input to 0 after save', async () => {
+    render(<Pokedex storageKey="testKeyNegative" selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
+    const editButtons = screen.getAllByRole('button', { name: /edit/i });
+    fireEvent.click(editButtons[0]);
+
+    // Find the speed input (number input)
+    const speedInput = screen.getAllByDisplayValue(String(mockSelectedMonsters[0].speed)).find(
+      input => input.getAttribute('type') === 'number'
+    );
+    expect(speedInput).toBeInTheDocument();
+
+    // Enter a negative value
+    await userEvent.clear(speedInput!);
+    await userEvent.type(speedInput!, '-5');
+    // Confirm edit box contains -5 (as a number input, testing library exposes numeric value)
+    expect(speedInput).toHaveValue(-5);
+
+    // Save edits
+    fireEvent.click(editButtons[0]);
+
+    // Negative should be sanitized to 0 in the final totals
+    const totalStatsNegative = mockSelectedMonsters[0].hp + mockSelectedMonsters[0].attack + mockSelectedMonsters[0].defense + mockSelectedMonsters[0].specialAttack + mockSelectedMonsters[0].specialDefense + 0;
+    expect(screen.getAllByText(`Total Stats: ${totalStatsNegative}`)[0]).toBeInTheDocument();
+  });
+
+  it('sanitizes non-numeric stat input to 0 after save', async () => {
+    render(<Pokedex storageKey="testKeyNonNumber" selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
+    const editButtons = screen.getAllByRole('button', { name: /edit/i });
+    fireEvent.click(editButtons[0]);
+
+    const speedInput = screen.getAllByDisplayValue(String(mockSelectedMonsters[0].speed)).find(
+      input => input.getAttribute('type') === 'number'
+    );
+    expect(speedInput).toBeInTheDocument();
+
+    // Enter a non-numeric value
+    await userEvent.clear(speedInput!);
+    await userEvent.type(speedInput!, 'abc');
+    // Browser may coerce, but the edit box should reflect the typed value as empty or NaN — assert that saving leads to 0
+    fireEvent.click(editButtons[0]);
+
+    const totalStatsNonNumber = mockSelectedMonsters[0].hp + mockSelectedMonsters[0].attack + mockSelectedMonsters[0].defense + mockSelectedMonsters[0].specialAttack + mockSelectedMonsters[0].specialDefense + 0;
+    expect(screen.getAllByText(`Total Stats: ${totalStatsNonNumber}`)[0]).toBeInTheDocument();
+  });
 });
