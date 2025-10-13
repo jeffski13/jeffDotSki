@@ -7,12 +7,12 @@ export default [
     route(ROUTES.aboutMe.drawing, "aboutMe/hobbies/drawings/route.tsx"),
     route(ROUTES.aboutMe.tvShows, "aboutMe/hobbies/tvShows/route.tsx"),
     
-    route(ROUTES.pokePeru.battle, "pokeperu/routes/pokeperubattle.tsx"),
-    route(ROUTES.pokePeru.pokedex, "pokeperu/routes/pokeperupokedex.tsx"),
-    route(ROUTES.pokePeru.gymleaders, "pokeperu/routes/pokeperugymleaders.tsx"),
-    route(ROUTES.pokePeru.info, "pokeperu/routes/pokeperuinfo.tsx"),
+    route(ROUTES.pokePeru.battle, "pokePeruApp/routes/pokeperubattle.tsx"),
+    route(ROUTES.pokePeru.pokedex, "pokePeruApp/routes/pokeperupokedex.tsx"),
+    route(ROUTES.pokePeru.gymleaders, "pokePeruApp/routes/pokeperugymleaders.tsx"),
+    route(ROUTES.pokePeru.info, "pokePeruApp/routes/pokeperuinfo.tsx"),
     
-    route(ROUTES.pokePeru.pokeClaremore, "pokeperu/pokeperuExtendedUniverse/routes/pokeperuClaremore.tsx"),
-    route(ROUTES.pokePeru.pokeClaremoreDex, "pokeperu/pokeperuExtendedUniverse/routes/pokeperuClaremoreDex.tsx"),
-    route(ROUTES.pokePeru.pokeClaremoreGym, "pokeperu/pokeperuExtendedUniverse/routes/pokeperuClaremoreGym.tsx"),
+    route(ROUTES.pokePeru.pokeClaremore, "pokePeruApp/pokeperuExtendedUniverse/routes/pokeperuClaremore.tsx"),
+    route(ROUTES.pokePeru.pokeClaremoreDex, "pokePeruApp/pokeperuExtendedUniverse/routes/pokeperuClaremoreDex.tsx"),
+    route(ROUTES.pokePeru.pokeClaremoreGym, "pokePeruApp/pokeperuExtendedUniverse/routes/pokeperuClaremoreGym.tsx"),
 ] satisfies RouteConfig;
