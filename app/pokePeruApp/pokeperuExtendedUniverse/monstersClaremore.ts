@@ -104,7 +104,7 @@ export const monstersClaremore: Monster[] = [
     "type": "Fire",
     "secondType": null,
     "image": "/images/monsters/pkmnsquad02b.png",
-    "description": "this bat went in to a volcano and now he looks     like this",
+    "description": "this bat went in to a volcano and now he looks like this",
     "inspiration": "crazy bat",
     "hp": 100,
     "attack": 100,

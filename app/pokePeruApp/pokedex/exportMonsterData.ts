@@ -47,8 +47,7 @@ export const getMonsterData = (
             const {
                 name: mergedName,
                 id,
-                trainer,
-                trainerImage,
+                trainerId,
                 type,
                 secondType,
                 image,
@@ -60,8 +59,7 @@ export const getMonsterData = (
             return {
                 name: mergedName,
                 id,
-                trainer,
-                trainerImage,
+                trainerId,
                 type: toElementType(type),
                 secondType: toElementType(secondType),
                 image,
