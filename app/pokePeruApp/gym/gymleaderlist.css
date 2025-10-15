@@ -1,0 +1,91 @@
+.gymleader-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gymleader-item {
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  max-width: 600px;
+  margin: 20px 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gymleader-details {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  position: relative;
+  /* Needed for overlay */
+  padding: 24px;
+  box-sizing: border-box;
+  /* background image and border radius are set inline from the component */
+  overflow: hidden;
+}
+
+.gymleader-details::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.45);
+  /* Adjust opacity as needed */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gymleader-details-top,
+.gymleader-image,
+.gymleader-name {
+  position: relative;
+  z-index: 1;
+}
+
+.gymleader-details-top {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.gymleader-image {
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+}
+
+.gymleader-name,
+.gymleader-biome {
+  position: absolute;
+  right: 18px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 2px #000;
+  background: rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.gymleader-name {
+  padding: 4px 16px;
+  font-size: 2rem;
+  border-radius: 8px;
+  top: 12px;
+}
+
+.gymleader-biome {
+  padding: 6px 14px;
+  font-size: 1.1em;
+  border-radius: 12px;
+  bottom: 12px;
+}
+
+.gymleader-environment-image {
+  width: 220px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #b2bec3;
+  margin-top: 8px;
+}

@@ -1,0 +1,93 @@
+.fullImageArea {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.fullImageNavigation {
+    width: 90vw;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 85px;
+    left: 0;
+    z-index: 11;
+}
+
+.fullImageDirectionClose {
+    width: 10%;
+    padding-left: 10px;
+}
+
+.fullImageDirectionLabelContainer {
+    width: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.fullImageDirectionLabelContent {
+    display: flex;
+}
+
+.fullImageDirectionClose {
+    background: rgba(0, 0, 0, 0);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
+}
+
+.fullImageDirectionLabel {
+    width: 50%;
+    text-align: left;
+    color: #aaa;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8;
+}
+
+.fullImageDirectionLabelLeft {
+    padding-left: 20px;
+}
+
+.fullImageDirectionLabelRight {
+    padding-right: 20px;
+    justify-content: flex-end;
+}
+
+.fullImage {
+    max-Width: 80vw;
+    max-Height: 80vh;
+    border-Radius: 12;
+    box-Shadow: 0 2px 24px rgba(0,0,0,0.5);
+    z-Index: 11;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
