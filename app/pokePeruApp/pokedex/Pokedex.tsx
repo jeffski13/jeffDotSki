@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Dropdown, Form } from 'react-bootstrap';
 import { monsters, type Monster } from '../monsters';
 import { ElementType } from '../ElementType';
+import { getMonsterData } from './exportMonsterData';
+import { getDuplicateIdNames, getMissingIdNames } from './monsterDuplicationCheck';
 import ROUTES from '../../consts/ROUTES';
 import KEYS from '~/consts/KEYS';
 import './pokedex.css';
@@ -10,8 +12,6 @@ import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
 import '../../Inf/mobile-support.css';
-import { getMonsterData } from './exportMonsterData';
-import { getDuplicateIdNames, getMissingIdNames } from './monsterDuplicationCheck';
 
 interface PokedexProps {
   selectedMonsters: Monster[];
