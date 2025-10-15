@@ -3,7 +3,7 @@
 Howdy! I decided it would be fun to build an opensource website. It has been a blast sipping coffee in the evenings while creating this
 and doing some collaboration with my friends at work.
 
-Feel free to look through this as examples! I'm not going to say I know everything, but I did manage to get the various frameworks working together!
+Feel free to look through this as examples! I did manage to get the various frameworks working together, which is always fun.
 
 ## PokePeru
 
@@ -14,6 +14,8 @@ npm install
 
 npm start
 ```
+
+NOTE: all folders inside of `app` should be camel cased starting with a lower case. Due to issues with casing and git and windows/unix file systems this might be a problem on install.
 
 In the browser, go to http://localhost:5173/pokePeru/battle
 
