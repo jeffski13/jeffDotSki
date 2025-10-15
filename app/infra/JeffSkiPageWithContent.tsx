@@ -1,7 +1,8 @@
 import NavigationBar from "./NavigationBar";
 import React from 'react';
 import '../styles.css';
-import DevBanner from "./devBanner";
+import DevBanner from "./DevBanner";
+import { env } from "process";
 
 interface ComponentWithProps { }
 
@@ -13,7 +14,6 @@ interface ComponentWithProps { }
 const jeffDotSkiPage = <P extends object>(PageContent: React.ComponentType<P>) =>
   class JeffSkiPageWithContent extends React.Component<P & ComponentWithProps> {
     render() {
-      const isDev = true;
       const { ...props } = this.props;
       return (
         <div id="App" >
@@ -21,7 +21,7 @@ const jeffDotSkiPage = <P extends object>(PageContent: React.ComponentType<P>) =
           <div className="webpagecontent">
             <PageContent {...props} />
           </div>
-          {isDev && (<DevBanner />)}
+          <DevBanner env={process.env.NODE_ENV} />
         </div>
       );
     }
