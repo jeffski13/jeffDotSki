@@ -147,9 +147,6 @@ button {
   line-height: 1.5em;
 }
 
-
-.attack-button-label-mobile {}
-
 .attack-button-label-pp-mobile {
   font-size: small;
 }
@@ -198,5 +195,25 @@ button {
   .monster-battle-image {
     width: 120px;
     height: 120px;
+  }
+
+  /* Mobile-only fixed overlay for battle results */
+  .battle-results-mobile {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    margin: 0 8px 8px 8px;
+    padding: 12px;
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
+  }
+
+  /* Hide the desktop battle-results area on mobile to avoid duplicate messages */
+  #battle-results-container > .battle-results {
+    display: none;
   }
 }
