@@ -1,4 +1,4 @@
-import JeffSkiPageWithContent from "~/inf/JeffSkiPageWithContent";
+import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
 import type { Route } from "./+types/home";
 import TvShows from ".";
 
