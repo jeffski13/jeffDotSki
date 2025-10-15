@@ -12,6 +12,7 @@ const ROUTES = {
       pokeClaremore: '/pokeperu/claremore/battle',
       pokeClaremoreDex: '/pokeperu/claremore/pokedex',
       pokeClaremoreGym: '/pokeperu/claremore/gymleaders',
+      pokeClaremoreGymbo: '/pokeperu/claremore/gymleadersbo',
     },
     external: {
       instagram: 'https://www.instagram.com/jeffski13/',
