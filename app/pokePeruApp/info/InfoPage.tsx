@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import ROUTES from '../../consts/ROUTES';
-import '../../Inf/mobile-support.css';
+import '../../infra/mobile-support.css';
 import { getBrowserLanguage, getContentByLanguage, type MultiLangContent } from '../../langSupport';
 import '../navigation.css';
 import '../secondaryPage.css';

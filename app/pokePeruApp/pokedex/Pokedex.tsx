@@ -12,7 +12,7 @@ import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
 import '../types.css';
-import '../../Inf/mobile-support.css';
+import '../../infra/mobile-support.css';
 
 interface PokedexProps {
   selectedMonsters: Monster[];

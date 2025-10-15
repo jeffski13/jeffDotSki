@@ -4,7 +4,7 @@ import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 import './selectionResults.css';
 import '../navigationOverride.css';
 import '../navigation.css';
-import '../../Inf/mobile-support.css';
+import '../../infra/mobile-support.css';
 import type { Monster } from '../monsters';
 import { getTypeColor } from '../typeColors';
 import type { GymLeader } from '../gymleaders';
