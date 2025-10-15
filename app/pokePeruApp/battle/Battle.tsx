@@ -431,12 +431,18 @@ export default function Battle({
           </button>
         </div>
       </div>
-      <div id="battle-results-container" className="battle-container">
-        <div className="battle-results battle-text-with-backdrop">
+      <div id="battle-results-container" className="battle-container desktop-view">
+        <div className="battle-results battle-text-with-backdrop desktop-view">
           <Typewriter text={attackResult} isInstantTextRender={isTextRenderInstant} />
           <br />
           <Typewriter text={effectivenessResult} isInstantTextRender={isTextRenderInstant} />
         </div>
+        {/* Mobile-only fixed overlay for battle results (appears on small screens and overlays other content) */}
+      </div>
+      <div id="battle-results-container" className="battle-results-mobile battle-text-with-backdrop mobile-view">
+        <Typewriter text={attackResult} isInstantTextRender={isTextRenderInstant} />
+        <br />
+        <Typewriter text={effectivenessResult} isInstantTextRender={isTextRenderInstant} />
       </div>
       {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
     </div>
