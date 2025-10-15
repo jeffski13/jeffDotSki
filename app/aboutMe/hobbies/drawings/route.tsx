@@ -1,4 +1,4 @@
-import JeffSkiPageWithContent from "~/Inf/JeffSkiPageWithContent";
+import JeffSkiPageWithContent from "~/inf/JeffSkiPageWithContent";
 import type { Route } from "./+types/home";
 import Drawings from ".";
 

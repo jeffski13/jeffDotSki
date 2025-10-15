@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
-import FooterBarski from "~/Inf/FooterBarski";
+import FooterBarski from "~/inf/FooterBarski";
 import ROUTES from "~/consts/ROUTES";
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 

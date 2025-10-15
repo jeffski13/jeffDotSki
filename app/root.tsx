@@ -49,7 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           crossOrigin="true"></script>
 
         <script
-          src="https://cdn.jsdelivr.net/npm/react-bootstrap@next/dist/react-bootstrap.min.js"
+          src="https://cdn.jsdelivr.net/npm/react-bootstrap@2.10.4/dist/react-bootstrap.min.js"
           crossOrigin="true"></script>
 
         <script>var Alert = ReactBootstrap.Alert;</script>

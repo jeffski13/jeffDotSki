@@ -24,7 +24,7 @@ export default function NavigationBar() {
             englishTeacherResume: 'English Teacher (Spanish)',
             softwareEngineer: 'Software Engineering',
             softwareEngineerResume: 'Software Engineering (Spanish)',
-            pokePeru: 'Poke Peru',
+            pokePeru: 'Poké Peru',
             hobbies: 'Hobbies and Bio',
             drawing: 'Drawing',
             tvShows: 'TV Shows',
