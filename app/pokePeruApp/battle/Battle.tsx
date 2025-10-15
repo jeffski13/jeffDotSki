@@ -431,7 +431,7 @@ export default function Battle({
           </button>
         </div>
       </div>
-      <div className="battle-container">
+      <div id="battle-results-container" className="battle-container">
         <div className="battle-results battle-text-with-backdrop">
           <Typewriter text={attackResult} isInstantTextRender={isTextRenderInstant} />
           <br />
