@@ -1,5 +1,5 @@
 import type { Route } from "../../../routes/+types/home";
-import JeffSkiPageWithContent from "~/inf/JeffSkiPageWithContent";
+import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
 import { PokedexClaremoreContainer } from "../PokePeruClaremore";
 
 export function meta({ }: Route.MetaArgs) {

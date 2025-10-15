@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import JeffSkiPageWithContent from "~/inf/JeffSkiPageWithContent";
+import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
 import GymLeaderListContainer from "../gym/GymLeaderList";
 
 export function meta({ }: Route.MetaArgs) {

@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
-import '../../../Inf/mobile-support.css';
+import '../../../infra/mobile-support.css';
 import './styles.css';
 
 interface DrawingsProps {
