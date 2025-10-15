@@ -3,13 +3,15 @@ import { ElementType } from '../ElementType';
 import type { Monster, MonsterAttack } from '../monsters';
 import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 import Typewriter from './Typewriter';
+import { calculateAdjustedDamage, typeEffectiveness } from './battleAttack';
+import type { GymLeader } from '../gymleaders';
+import ROUTES from '~/consts/ROUTES';
 import '../navigation.css';
 import './battle.css';
 import './battleAttacks.css';
+import '../types.css';
 import '../navigationOverride.css';
-import { calculateAdjustedDamage, typeEffectiveness } from './battleAttack';
-import ROUTES from '~/consts/ROUTES';
-import type { GymLeader } from '../gymleaders';
+import { getTypeColor } from '../typeColors';
 
 interface BattleProps {
   selectedMonsters: Monster[];
@@ -364,6 +366,7 @@ export default function Battle({
               <span className="attack-button-label">{selectedMonsters[0].attack1.name}</span>
               <br />
               <span className="attack-button-label-pp">PP: {monster1Attack1PP}/{selectedMonsters[0].attack1.powerPoints}</span>
+              <div className="attack-button-type type-badge desktop-view" style={{ marginTop: 6, backgroundColor: getTypeColor(selectedMonsters[0].attack1.type) }}>{selectedMonsters[0].attack1.type}</div>
             </div>
           </button>
           <button
@@ -377,6 +380,7 @@ export default function Battle({
               <span className="attack-button-label">{selectedMonsters[0].attack2.name}</span>
               <br />
               <span className="attack-button-label-pp">PP: {monster1Attack2PP}/{selectedMonsters[0].attack2.powerPoints}</span>
+              <div className="attack-button-type type-badge desktop-view" style={{ marginTop: 6, backgroundColor: getTypeColor(selectedMonsters[0].attack2.type) }}>{selectedMonsters[0].attack2.type}</div>
             </div>
           </button>
         </div>
@@ -408,6 +412,7 @@ export default function Battle({
               <span className="attack-button-label">{selectedMonsters[1].attack1.name}</span>
               <br />
               <span className="attack-button-label-pp">PP: {monster2Attack1PP}/{selectedMonsters[1].attack1.powerPoints}</span>
+              <div className="attack-button-type type-badge desktop-view" style={{ marginTop: 6, backgroundColor: getTypeColor(selectedMonsters[1].attack1.type) }}>{selectedMonsters[1].attack1.type}</div>
             </div>
           </button>
           <button
@@ -421,6 +426,7 @@ export default function Battle({
               <span className="attack-button-label">{selectedMonsters[1].attack2.name}</span>
               <br />
               <span className="attack-button-label-pp">PP: {monster2Attack2PP}/{selectedMonsters[1].attack2.powerPoints}</span>
+              <div className="attack-button-type type-badge desktop-view" style={{ marginTop: 6, backgroundColor: getTypeColor(selectedMonsters[1].attack2.type) }}>{selectedMonsters[1].attack2.type}</div>
             </div>
           </button>
         </div>
