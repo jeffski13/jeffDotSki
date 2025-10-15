@@ -29,7 +29,7 @@ export default function PokedexContainer() {
 
 export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexProps) {
   // Load edits from localStorage
-  const [editData, setEditData] = useState<{ [editID: string]: Monster }>({});
+  const [editData, setEditData] = useState<{ [editID: string]: any }>({});
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
   const duplicateIdNameArray = getDuplicateIdNames(selectedMonsters);
   const missingIdNameArray = getMissingIdNames(selectedMonsters);
@@ -64,16 +64,52 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
     });
   };
 
+  // Toggle edit mode for a monster. If currently editing, sanitize stat fields before saving.
+  const handleToggleEdit = (editID: string) => {
+    const currentlyEditing = !!editMode[editID];
+    if (currentlyEditing) {
+      // about to save -> sanitize numeric stat fields in editData for this monster
+      setEditData(prev => {
+        const edit = prev[editID];
+        if (!edit) {
+          return prev
+        };
+        const updatedEdit = { ...edit } as any;
+        const statKeys: Array<keyof Monster> = ['hp', 'attack', 'defense', 'specialAttack', 'specialDefense', 'speed'];
+        statKeys.forEach((k) => {
+          const raw = updatedEdit[k];
+          //make sure we are editting that value
+          if (raw !== undefined) {
+            const parsed = Number(raw);
+            updatedEdit[k] = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+          }
+        });
+        const updated = { ...prev, [editID]: updatedEdit };
+        localStorage.setItem(storageKey, JSON.stringify(updated));
+        return updated;
+      });
+    }
+    setEditMode(prev => ({ ...prev, [editID]: !currentlyEditing }));
+  };
+
   const getMonsterWithEdits = (monster: Monster) => {
     const edit = editData[monster.id];
     if (!edit) return monster;
     // Merge edits into monster
-    return {
+    const merged: any = {
       ...monster,
       ...edit,
       attack1: { ...monster.attack1, ...(edit.attack1 || {}) },
       attack2: { ...monster.attack2, ...(edit.attack2 || {}) },
     };
+    // Sanitize numeric stat fields so UI totals and bars use numbers.
+    const statKeys = ['hp', 'attack', 'defense', 'specialAttack', 'specialDefense', 'speed'];
+    statKeys.forEach((k) => {
+      const raw = merged[k];
+      const parsed = Number(raw);
+      merged[k] = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+    });
+    return merged as Monster;
   };
 
   const elementTypeOptions = Object.values(ElementType);
@@ -138,7 +174,8 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
       <ul className="monster-list">
         {selectedMonsters.map((monster: Monster) => {
           const monstersWithEditsList = getMonsterWithEdits(monster);
-          const statsList = [
+          type StatKey = 'hp' | 'attack' | 'defense' | 'specialAttack' | 'specialDefense' | 'speed';
+          const statsList: { name: string; nameShort: string; value: number; color: string; key: StatKey }[] = [
             { name: 'Hit Points', nameShort: 'HP', value: monstersWithEditsList.hp, color: '#FF5959', key: 'hp' },
             { name: 'Attack', nameShort: 'ATK', value: monstersWithEditsList.attack, color: '#F5AC78', key: 'attack' },
             { name: 'Defense', nameShort: 'DEF', value: monstersWithEditsList.defense, color: '#FAE078', key: 'defense' },
@@ -156,7 +193,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                 variant={isEditing ? 'success' : 'outline-secondary'}
                 size="sm"
                 style={{ position: 'absolute', top: 10, right: 10, zIndex: 2 }}
-                onClick={() => setEditMode(prev => ({ ...prev, [monstersWithEditsList.id]: !isEditing }))}
+                onClick={() => handleToggleEdit(monstersWithEditsList.id)}
               >
                 {isEditing ? 'Save' : 'Edit'}
               </Button>
@@ -353,8 +390,12 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                         {isEditing ? (
                           <Form.Control
                             type="number"
-                            value={monstersWithEditsList[stat.key]}
-                            onChange={e => handleEditChange(monstersWithEditsList.id, stat.key, Number(e.target.value))}
+                            // prefer any raw edit value (may be empty string) so the input can be blank while editing
+                            value={(editData as any)[monstersWithEditsList.id]?.[stat.key] ?? monstersWithEditsList[stat.key]}
+                            onChange={e => {
+                              // store raw input so blank is allowed; sanitization happens when merging edits
+                              handleEditChange(monstersWithEditsList.id, stat.key, e.target.value);
+                            }}
                             style={{ maxWidth: 100 }}
                           />
                         ) : (
