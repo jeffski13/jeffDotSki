@@ -67,7 +67,7 @@ describe('Battle Component', () => {
     testMonster2Hp(expectedHp);
   });
 
-  test('when monster1 attacks, the results of the attack are displayed', () => {
+  test('when monster1 attacks, the results of the attack are displayed', async () => {
     render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     // Find and click the attack button for monster1 (Pikachu)
@@ -75,8 +75,10 @@ describe('Battle Component', () => {
     fireEvent.click(attackButton);
 
     // Verify that monster2's HP is reduced
-    expect(screen.getByText(/Pikachu used Quick Attack. It did /i)).toBeInTheDocument(); // 
-    expect(screen.getByText(/damage./i)).toBeInTheDocument(); // 
+    const battleResultMessages = screen.findAllByText(/Pikachu used Quick Attack. It did /i);
+    expect((await battleResultMessages).length).toBe(2);
+    const battleResultMessagesSuffix = screen.findAllByText(/damage./i);
+    expect((await battleResultMessagesSuffix).length).toBe(2);
   });
 
   test('monster2 attack buttons are disabled and monster1 attack buttons are enabled when the UI appears', () => {
@@ -95,7 +97,7 @@ describe('Battle Component', () => {
     expect(monster2Attack2Button).toBeDisabled();
   });
 
-  test('monster with the highest speed attacks first', () => {
+  test('monster with the highest speed attacks first', async () => {
     const mockSelectedMonstersSpeedMod = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
     mockSelectedMonstersSpeedMod[0].speed = 50; // Pikachu's speed
     mockSelectedMonstersSpeedMod[1].speed = 60; // Charmander's speed
@@ -109,7 +111,8 @@ describe('Battle Component', () => {
       isTextRenderInstant={true} />);
 
     // Verify that the initial message indicates that the monster with the highest speed attacks first
-    expect(screen.getByText(/Charmander attacks first./i)).toBeInTheDocument();
+    const effectivenessResultMessages = screen.findAllByText(/Charmander attacks first./i);
+    expect((await effectivenessResultMessages).length).toBe(2);
 
     // Verify that the monster with the highest speed (Pikachu) attacks first
     const monster2Attack1Button = screen.getByText(/Scratch/i);
@@ -170,7 +173,7 @@ describe('Battle Component', () => {
     expect(screen.getByText(/Ash Wins!/i)).toBeInTheDocument();
   });
 
-  it('should deal no damage when an Electric type attack is used against a Ground type monster', () => {
+  it('should deal no damage when an Electric type attack is used against a Ground type monster', async () => {
     const selectedMonsters = [
       { ...mockSelectedMonsters[0] },
       { ...mockSelectedMonsters[1] },
@@ -192,10 +195,11 @@ describe('Battle Component', () => {
 
     // Assert that Diglett's HP remains unchanged
     testMonster2Hp(100);
-    expect(screen.getByText(/It doesn't affect/i)).toBeInTheDocument();
+    const effectivenessResultMessages = screen.findAllByText(/It doesn't affect/i);
+    expect((await effectivenessResultMessages).length).toBe(2);
   });
 
-  it('should deal no damage when an Electric type attack is used against a Ghost type monster with secondary type Ground', () => {
+  it('should deal no damage when an Electric type attack is used against a Ghost type monster with secondary type Ground', async () => {
     const gengar: Monster = {
       name: 'Nidoking',
       trainer: 'Giovanni',
@@ -241,10 +245,11 @@ describe('Battle Component', () => {
 
     // Assert that Gengar's HP remains unchanged
     testMonster2Hp(100);
-    expect(screen.getByText(/It doesn't affect/i)).toBeInTheDocument();
+    const effectivenessResultMessages = screen.findAllByText(/It doesn't affect/i);
+    expect((await effectivenessResultMessages).length).toBe(2);
   });
 
-  it('displays "attack missed!" when the attack misses', () => {
+  it('displays "attack missed!" when the attack misses', async () => {
     // Render the Battle component with attackMissedPercentage set to 1 (guaranteed miss)
     render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={1} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
@@ -253,10 +258,11 @@ describe('Battle Component', () => {
     fireEvent.click(attackButton);
 
     // Assert that the "attack missed!" message is displayed
-    expect(screen.getByText(/attack missed!/i)).toBeInTheDocument();
+    const effectivenessResultMessages = screen.findAllByText(/attack missed!/i);
+    expect((await effectivenessResultMessages).length).toBe(2);
   });
 
-  it('displays "attack missed!" when the attack misses due to accuracy', () => {
+  it('displays "attack missed!" when the attack misses due to accuracy', async () => {
     const mockSelectedMonstersAccuracyMod = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
     mockSelectedMonstersAccuracyMod[0].attack1 = {
       name: 'Quick Attack',
@@ -274,7 +280,8 @@ describe('Battle Component', () => {
     fireEvent.click(attackButton);
 
     // Assert that the "attack missed!" message is displayed
-    expect(screen.getByText(/attack missed!/i)).toBeInTheDocument();
+    const effectivenessResultMessages = screen.findAllByText(/attack missed!/i);
+    expect((await effectivenessResultMessages).length).toBe(2);
   });
 
   test('attack buttons are disabled once an attack has 0 power points', () => {
@@ -305,19 +312,20 @@ describe('Battle Component', () => {
     const monster1Attack2Button = screen.getByText(/Thunderbolt/i).parentElement?.parentElement;
     expect(monster1Attack2Button).toBeEnabled();
   });
-  test('attack buttons are disabled once an attack has 0 power points', () => {
 
+  test('attack buttons are disabled once an attack has 0 power points', async () => {
     render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isAllAttackCriticalHit={true} isTextRenderInstant={true} />);
 
     // Simulate Monster 1 attacking Monster 2 until Monster 2's HP reaches 0
     const attackButtonMonster1 = screen.getByText(/Quick Attack/i);
     fireEvent.click(attackButtonMonster1);
 
-    // Verify that attack 1's power points is 0
-    expect(screen.getByText(/Critical Hit!/i)).toBeInTheDocument();
+    // Verify that attack critical hit occured
+    const effectivenessResultMessages = screen.findAllByText(/Critical Hit!/);
+    expect((await effectivenessResultMessages).length).toBe(2);
   });
 
-  test('pokemon struggles once both attacks have 0 power points', () => {
+  test('pokemon struggles once both attacks have 0 power points', async () => {
     const mockSelectedMonstersPowerPointsMod = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
     mockSelectedMonstersPowerPointsMod[0].attack1 = {
       name: 'Quick Attack',
@@ -366,9 +374,11 @@ describe('Battle Component', () => {
     const attackButtonMonster2Attack2 = screen.getByText(/Bite/i);
     fireEvent.click(attackButtonMonster2Attack2);
 
-    // Verify that attack 1's power points is 0
-    expect(screen.getByText(/Pikachu used struggle!/i)).toBeInTheDocument();
-    expect(screen.getByText(/Pikachu is hurt by recoil!/i)).toBeInTheDocument();
+    // Verify that struggle is used
+    const attackResultMessages = screen.findAllByText(/Pikachu used Struggle!/);
+    expect((await attackResultMessages).length).toBe(2);
+    const effectivenessResultMessages = screen.findAllByText(/Pikachu is hurt by recoil!/);
+    expect((await effectivenessResultMessages).length).toBe(2);
   });
 
   test('attack types appear inside attack buttons', () => {
