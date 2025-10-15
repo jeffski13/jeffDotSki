@@ -1,4 +1,3 @@
-
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
 import ROUTES from '../consts/ROUTES';
 import './styles.css';

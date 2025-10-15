@@ -2,7 +2,6 @@ import NavigationBar from "./NavigationBar";
 import React from 'react';
 import '../styles.css';
 import DevBanner from "./DevBanner";
-import { env } from "process";
 
 interface ComponentWithProps { }
 

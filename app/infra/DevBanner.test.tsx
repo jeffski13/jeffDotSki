@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import DevBanner from './DevBanner';
+
 describe('Dev Banner', () => {
   it('renders the dev banner in dev', () => {
     render(<DevBanner env={"development"} />);
