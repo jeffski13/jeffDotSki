@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { ElementType } from '../ElementType';
 import type { Monster, MonsterAttack } from '../monsters';
+import { getTypeColor } from '../typeColors';
 import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 import Typewriter from './Typewriter';
 import '../navigation.css';
 import './battle.css';
+import '../pokedex/pokedex.css';
 import './battleAttacks.css';
 import '../navigationOverride.css';
 import { calculateAdjustedDamage, typeEffectiveness } from './battleAttack';
@@ -335,6 +337,12 @@ export default function Battle({
       >
         <div className={`monster battle-text-with-backdrop ${isMonster1Winner ? 'monster-winner' : ''} ${isMonster2Winner ? 'monster-loser' : ''}`}>
           <div>
+            <div className="monster-types" style={{ marginBottom: 6 }}>
+              <span className="type-badge" style={{ backgroundColor: getTypeColor(selectedMonsters[0].type), marginRight: 6 }}>{selectedMonsters[0].type}</span>
+              {selectedMonsters[0].secondType && (
+                <span className="type-badge" style={{ backgroundColor: getTypeColor(selectedMonsters[0].secondType) }}>{selectedMonsters[0].secondType}</span>
+              )}
+            </div>
             <h2>{selectedMonsters[0].name}</h2>
             <img
               src={selectedMonsters[0].image}
@@ -381,6 +389,12 @@ export default function Battle({
           </button>
         </div>
         <div className={`monster battle-text-with-backdrop ${isMonster2Winner ? 'monster-winner' : ''} ${isMonster1Winner ? 'monster-loser' : ''}`}>
+          <div className="monster-types" style={{ marginBottom: 6 }}>
+            <span className="type-badge" style={{ backgroundColor: getTypeColor(selectedMonsters[1].type), marginRight: 6 }}>{selectedMonsters[1].type}</span>
+            {selectedMonsters[1].secondType && (
+              <span className="type-badge" style={{ backgroundColor: getTypeColor(selectedMonsters[1].secondType) }}>{selectedMonsters[1].secondType}</span>
+            )}
+          </div>
           <h2>{selectedMonsters[1].name}</h2>
           <img
             src={selectedMonsters[1].image}

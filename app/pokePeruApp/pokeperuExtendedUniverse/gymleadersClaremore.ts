@@ -22,6 +22,13 @@ export const gymLeadersClaremore: GymLeader[] = [
     environmentImage: "/images/perulandscape/peru-11.jpg",
     biome: "Forest",
   },
+  {
+    name: "Jimbobjoe",
+    id: 'c1a303-1234-4b1a-4321-000000000004',
+    image: "/images/gymleaders/trainersquad04.png",
+    environmentImage: "/images/perulandscape/peru-12.jpg",
+    biome: "67 land",
+  },
 ];
 
 export const getClaremoreGymLeaders = (): GymLeader[] => {
