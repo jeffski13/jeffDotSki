@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import Battle from './Battle';
 import { ElementType } from '../ElementType';
 import type { Monster } from '../monsters';
@@ -31,12 +31,12 @@ mocksWithMonster1VeryWeak[1].attack1 = {
 
 const testMonster1Hp = (hpExpected: Number) => {
   const hpValueMonster1 = document.querySelector('.hp-value-monster1');
-  const monster1Hp = parseInt(hpValueMonster1?.innerHTML);
+  const monster1Hp = parseInt(hpValueMonster1?.innerHTML ?? '0');
   expect(monster1Hp).toBe(hpExpected);
 }
 const testMonster2Hp = (hpExpected: Number) => {
   const hpValueMonster2 = document.querySelector('.hp-value-monster2');
-  const monster2Hp = parseInt(hpValueMonster2?.innerHTML);
+  const monster2Hp = parseInt(hpValueMonster2?.innerHTML ?? '0');
   expect(monster2Hp).toBe(hpExpected);
 }
 
@@ -100,7 +100,13 @@ describe('Battle Component', () => {
     mockSelectedMonstersSpeedMod[0].speed = 50; // Pikachu's speed
     mockSelectedMonstersSpeedMod[1].speed = 60; // Charmander's speed
 
-    render(<Battle selectedMonsters={mockSelectedMonstersSpeedMod} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle
+      selectedMonsters={mockSelectedMonstersSpeedMod}
+      trainer1={mockTrainers[0]}
+      trainer2={mockTrainers[1]}
+      attackMissedPercentage={0}
+      isAttackRandomDamage={false}
+      isTextRenderInstant={true} />);
 
     // Verify that the initial message indicates that the monster with the highest speed attacks first
     expect(screen.getByText(/Charmander attacks first./i)).toBeInTheDocument();
@@ -117,7 +123,7 @@ describe('Battle Component', () => {
   });
 
   test('attack buttons are disabled once a monster has won', () => {
-    render(<Battle selectedMonsters={mocksWithMonster1VeryWeak} attackMissedPercentage={0} isAttackRandomDamage={false} />);
+    render(<Battle selectedMonsters={mocksWithMonster1VeryWeak} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} />);
 
     // Simulate Monster 1 attacking Monster 2 until Monster 2's HP reaches 0
     const attackButtonMonster1 = screen.getByText(/Quick Attack/i);
@@ -163,7 +169,7 @@ describe('Battle Component', () => {
 
     expect(screen.getByText(/Ash Wins!/i)).toBeInTheDocument();
   });
-  
+
   it('should deal no damage when an Electric type attack is used against a Ground type monster', () => {
     const selectedMonsters = [
       { ...mockSelectedMonsters[0] },
@@ -171,13 +177,19 @@ describe('Battle Component', () => {
     ];
     selectedMonsters[1].type = ElementType.Ground;
     selectedMonsters[1].hp = 100;
-    
-    render(<Battle selectedMonsters={selectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
-    
+
+    render(<Battle
+      selectedMonsters={selectedMonsters}
+      trainer1={mockTrainers[0]}
+      trainer2={mockTrainers[1]}
+      attackMissedPercentage={0}
+      isAttackRandomDamage={false}
+      isTextRenderInstant={true} />);
+
     // Monster 1 (Pikachu) uses Thunderbolt on Monster 2 (Diglett)
     const thunderboltButton = screen.getByText('Thunderbolt', { exact: false });
     fireEvent.click(thunderboltButton);
-    
+
     // Assert that Diglett's HP remains unchanged
     testMonster2Hp(100);
     expect(screen.getByText(/It doesn't affect/i)).toBeInTheDocument();
@@ -221,7 +233,7 @@ describe('Battle Component', () => {
       gengar,
     ];
 
-    render(<Battle selectedMonsters={selectedMonsters} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={selectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     // Monster 1 (Pikachu) uses Thunderbolt on Monster 2 (Gengar)
     const thunderboltButton = screen.getByText('Thunderbolt', { exact: false });
@@ -255,7 +267,7 @@ describe('Battle Component', () => {
       accuracy: 0,
     }
 
-    render(<Battle selectedMonsters={mockSelectedMonstersAccuracyMod} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+    render(<Battle selectedMonsters={mockSelectedMonstersAccuracyMod} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
 
     // Simulate an attack by clicking the first monster's first attack button
     const attackButton = screen.getByText('Quick Attack', { exact: false });
@@ -276,7 +288,7 @@ describe('Battle Component', () => {
       accuracy: 1,
     }
 
-    render(<Battle selectedMonsters={mockSelectedMonstersPowerPointsMod} attackMissedPercentage={0} isAttackRandomDamage={false} />);
+    render(<Battle selectedMonsters={mockSelectedMonstersPowerPointsMod} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} />);
 
     // Simulate Monster 1 attacking Monster 2 until Monster 2's HP reaches 0
     const attackButtonMonster1 = screen.getByText(/Quick Attack/i);
@@ -289,7 +301,7 @@ describe('Battle Component', () => {
 
     // Verify attack 1 button is disabled and attack 2 is enabled
     const monster1Attack1Button = screen.getByText(/Quick Attack/i).parentElement?.parentElement;
-    expect(monster1Attack1Button).toBeDisabled(); 
+    expect(monster1Attack1Button).toBeDisabled();
     const monster1Attack2Button = screen.getByText(/Thunderbolt/i).parentElement?.parentElement;
     expect(monster1Attack2Button).toBeEnabled();
   });
@@ -359,6 +371,21 @@ describe('Battle Component', () => {
     expect(screen.getByText(/Pikachu is hurt by recoil!/i)).toBeInTheDocument();
   });
 
+  test('attack types appear inside attack buttons', () => {
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isTextRenderInstant={true} />);
+
+    // For each monster, ensure both attack buttons contain the attack type text
+    const attack1Button = screen.getByText(/Quick Attack/i).closest('button') as HTMLElement;
+    const attack2Button = screen.getByText(/Thunderbolt/i).closest('button') as HTMLElement;
+    const attack3Button = screen.getByText(/Scratch/i).closest('button') as HTMLElement;
+    const attack4Button = screen.getByText(/Flamethrower/i).closest('button') as HTMLElement;
+
+    expect(within(attack1Button).getByText(String(mockSelectedMonsters[0].attack1.type))).toBeInTheDocument();
+    expect(within(attack2Button).getByText(String(mockSelectedMonsters[0].attack2.type))).toBeInTheDocument();
+    expect(within(attack3Button).getByText(String(mockSelectedMonsters[1].attack1.type))).toBeInTheDocument();
+    expect(within(attack4Button).getByText(String(mockSelectedMonsters[1].attack2.type))).toBeInTheDocument();
+  });
+
   test('pokemon struggle loop once all attacks have 0 power points', () => {
     const mockSelectedMonstersPowerPointsMod = [{ ...mockSelectedMonsters[0] }, { ...mockSelectedMonsters[1] }];
     mockSelectedMonstersPowerPointsMod[0].hp = 500
@@ -420,6 +447,8 @@ describe('Battle Component', () => {
     render(
       <Battle
         selectedMonsters={mockSelectedMonsters}
+        trainer1={mockTrainers[0]}
+        trainer2={mockTrainers[1]}
         attackMissedPercentage={0}
         isAttackRandomDamage={false}
         isTextRenderInstant={true}
@@ -432,8 +461,8 @@ describe('Battle Component', () => {
 
     // Assert that the confirmation popup appears
     expect(screen.getByText(/Are you sure\?/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Yes/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /No/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument();
   });
 
   test('hp bar has "low" class when monster hp is below 50%', () => {
@@ -457,7 +486,7 @@ describe('Battle Component', () => {
     while (monster1Hp > (0.5 * mocksWithMonster1VeryWeak[0].hp)) {
       fireEvent.click(attackButtonMonster1Attack1);
       fireEvent.click(attackButtonMonster2Attack1);
-      monster1Hp = parseInt(hpValueMonster1?.innerHTML);
+      monster1Hp = parseInt(hpValueMonster1?.innerHTML ?? '0');
     }
 
     expect(monster1Hp < (mocksWithMonster1VeryWeak[0].hp / 2)).toBe(true);

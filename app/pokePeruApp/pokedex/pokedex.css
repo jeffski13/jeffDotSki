@@ -26,6 +26,10 @@
   text-align: left;
 }
 
+.dex-type-badge {
+  display: inline-block;
+}
+
 .monster-stats-section {
   display: block;
   justify-content: space-between;
@@ -51,16 +55,6 @@
 .monster-types {
   display: flex;
   gap: 5px;
-}
-
-.type-badge {
-  display: inline-block;
-  padding: 5px 10px;
-  margin: 5px 5px 5px 0;
-  border-radius: 12px;
-  color: white;
-  font-weight: bold;
-  text-align: center;
 }
 
 .monster-inspiration {

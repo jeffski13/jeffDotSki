@@ -11,6 +11,7 @@ import './pokedex.css';
 import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
+import '../types.css';
 import '../../Inf/mobile-support.css';
 
 interface PokedexProps {
@@ -271,7 +272,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                                   </Dropdown.Menu>
                                 </Dropdown>
                               ) : (
-                                <span className="type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.type) }}>{monstersWithEditsList.type}</span>
+                                <span className="type-badge dex-type-badge" style={{ backgroundColor: getTypeColor(monstersWithEditsList.type) }}>{monstersWithEditsList.type}</span>
                               )}
                             </span>
                           </h2>
