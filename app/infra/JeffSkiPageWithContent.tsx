@@ -1,7 +1,7 @@
 import NavigationBar from "./NavigationBar";
 import React from 'react';
 import '../styles.css';
-import DevBanner from "./DevBanner";
+import DevEnvBanner from "./DevEnvBanner";
 
 interface ComponentWithProps { }
 
@@ -20,7 +20,7 @@ const jeffDotSkiPage = <P extends object>(PageContent: React.ComponentType<P>) =
           <div className="webpagecontent">
             <PageContent {...props} />
           </div>
-          <DevBanner env={process.env.NODE_ENV} />
+          <DevEnvBanner env={process.env.NODE_ENV} />
         </div>
       );
     }

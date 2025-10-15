@@ -1,11 +1,11 @@
 import './styles.css';
 
-interface DevBannerProps {
+interface DevEnvBannerProps {
     env: string | undefined | null;
 }
 
-export default function DevBanner({env: isDev}:DevBannerProps) {
-    if (isDev === 'development'){
+export default function DevEnvBanner({env = null}:DevEnvBannerProps) {
+    if (env === 'development'){
         return (
             <div className="dev-banner">
                 DEV BUILD
