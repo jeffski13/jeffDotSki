@@ -1,0 +1,42 @@
+.project-info {
+    text-align: left;
+    padding: 10px 50px;
+}
+
+.info-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.infoSection {
+    padding-top: 30px;
+}
+
+.info-images-container {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.info-image {
+    margin-top: 5px;
+    width: 100%;
+}
+
+.info-arrow-separator {
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: x-large;
+}
+
+ul {
+    list-style-type: circle;
+}
+
+.promo-video { 
+    max-width: 600;
+    border-radius: 12;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}

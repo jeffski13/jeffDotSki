@@ -1,6 +1,6 @@
 {
   "name": "jeff.ski",
-  "version": "2.0.15",
+  "version": "2.0.95",
   "description": "jeff.ski website source code",
   "author": "Jeff Szcinski",
   "repository": "git@github.com:jeffski13",
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "start": "react-router dev",
+    "start": "react-router dev --host",
     "copyBuildToFirebase": "node copyBuildToFirebase.cjs",
     "startofficial": "react-router-serve ./build/server/index.js",
     "test": "vitest",
@@ -19,16 +19,19 @@
   "dependencies": {
     "@react-router/node": "^7.5.2",
     "@react-router/serve": "^7.5.2",
+    "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^4.4.1",
     "bootstrap": "^5.3.5",
     "isbot": "^5.1.17",
     "ncp": "^2.0.0",
     "path": "^0.12.7",
     "react": "^19.0.0",
-    "react-bootstrap": "^2.10.9",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.0.0",
+    "react-helmet": "^6.1.0",
     "react-loading": "^2.0.3",
-    "react-router": "^7.5.2"
+    "react-router": "^7.5.2",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@react-router/dev": "^7.5.2",
