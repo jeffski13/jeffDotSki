@@ -461,8 +461,8 @@ describe('Battle Component', () => {
 
     // Assert that the confirmation popup appears
     expect(screen.getByText(/Are you sure\?/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Yes/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /No/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument();
   });
 
   test('hp bar has "low" class when monster hp is below 50%', () => {
