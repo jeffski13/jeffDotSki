@@ -71,13 +71,18 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
       // about to save -> sanitize numeric stat fields in editData for this monster
       setEditData(prev => {
         const edit = prev[editID];
-        if (!edit) return prev;
+        if (!edit) {
+          return prev
+        };
         const updatedEdit = { ...edit } as any;
         const statKeys: Array<keyof Monster> = ['hp', 'attack', 'defense', 'specialAttack', 'specialDefense', 'speed'];
         statKeys.forEach((k) => {
           const raw = updatedEdit[k];
-          const parsed = Number(raw);
-          updatedEdit[k] = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+          //make sure we are editting that value
+          if (raw !== undefined) {
+            const parsed = Number(raw);
+            updatedEdit[k] = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+          }
         });
         const updated = { ...prev, [editID]: updatedEdit };
         localStorage.setItem(storageKey, JSON.stringify(updated));
