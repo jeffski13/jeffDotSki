@@ -265,4 +265,19 @@ describe('Pokedex Component', () => {
     const totalStatsNonNumber = mockSelectedMonsters[0].hp + mockSelectedMonsters[0].attack + mockSelectedMonsters[0].defense + mockSelectedMonsters[0].specialAttack + mockSelectedMonsters[0].specialDefense + 0;
     expect(screen.getAllByText(`Total Stats: ${totalStatsNonNumber}`)[0]).toBeInTheDocument();
   });
+
+  it('shows export toast after saving edits', async () => {
+    render(<Pokedex storageKey="testKeyToast" selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
+    // Enter edit mode
+    const editButtons = screen.getAllByRole('button', { name: /edit/i });
+    fireEvent.click(editButtons[0]);
+
+    // Save (the button label becomes 'Save')
+    const saveButton = screen.getAllByRole('button', { name: /save/i })[0];
+    fireEvent.click(saveButton);
+
+    // The toast message should appear
+    const toast = await screen.findByText(/You can now export the updated monster data\./i);
+    expect(toast).toBeInTheDocument();
+  });
 });

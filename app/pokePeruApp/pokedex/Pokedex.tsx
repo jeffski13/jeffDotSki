@@ -1,6 +1,6 @@
 import { getTypeColor } from '../typeColors';
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Dropdown, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Dropdown, Form, Toast, ToastContainer } from 'react-bootstrap';
 import { monsters, type Monster } from '../monsters';
 import { ElementType } from '../ElementType';
 import { getMonsterData } from './exportMonsterData';
@@ -31,6 +31,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
   // Load edits from localStorage
   const [editData, setEditData] = useState<{ [editID: string]: any }>({});
   const [editMode, setEditMode] = useState<{ [editID: string]: boolean }>({});
+  const [showExportToast, setShowExportToast] = useState(false);
   const duplicateIdNameArray = getDuplicateIdNames(selectedMonsters);
   const missingIdNameArray = getMissingIdNames(selectedMonsters);
 
@@ -88,6 +89,8 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
         localStorage.setItem(storageKey, JSON.stringify(updated));
         return updated;
       });
+      // Show toast informing user they can export updated monster data
+      setShowExportToast(true);
     }
     setEditMode(prev => ({ ...prev, [editID]: !currentlyEditing }));
   };
@@ -110,6 +113,20 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
       merged[k] = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
     });
     return merged as Monster;
+  };
+
+  // Helper to export edited monsters (used by main button and toast)
+  const exportEditedMonsters = async () => {
+    const editedMonsters = await getMonsterData(editData, selectedMonsters);
+    const blob = new Blob([JSON.stringify(editedMonsters, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'edited-monsters.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const elementTypeOptions = Object.values(ElementType);
@@ -525,27 +542,25 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
         })}
       </ul>
       <div style={{ textAlign: 'center', margin: '32px 0' }}>
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={async () => {
-            // Collect all edited monsters
-            const editedMonsters = await getMonsterData(editData, selectedMonsters);
-            // Export as JSON file
-            const blob = new Blob([JSON.stringify(editedMonsters, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'edited-monsters.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          }}
-        >
+        <Button variant="primary" size="lg" onClick={() => exportEditedMonsters()}>
           Export Monster Data
         </Button>
       </div>
+      <ToastContainer position="bottom-end" className="p-3">
+        <Toast onClose={() => setShowExportToast(false)} show={showExportToast} delay={5000} autohide>
+          <Toast.Header>
+            <strong className="me-auto">Pokedex</strong>
+          </Toast.Header>
+          <Toast.Body>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span>You can now export the updated monster data.</span>
+              <Button size="sm" variant="primary" onClick={async () => { await exportEditedMonsters(); setShowExportToast(false); }}>
+                Export
+              </Button>
+            </div>
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
       <a href={ROUTES.pokePeru.info}>
         <img
           src="/images/info-icon.png"
