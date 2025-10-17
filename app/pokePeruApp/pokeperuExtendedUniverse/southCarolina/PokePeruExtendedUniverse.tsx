@@ -1,4 +1,4 @@
-import { PokePeruContent } from "../..";
+import PokePeruExtendedUniverseBattle from "../PokePeruExtendedUniverse";
 import { Pokedex } from "../../pokedex/Pokedex"
 import { GymLeaderList } from "../../gym/GymLeaderList";
 import ROUTES from "~/consts/ROUTES";
@@ -13,29 +13,26 @@ const gymRoute = ROUTES.pokePeru.extendedUnivers.southCarolina.gym;
 
 export default function PokePeruExtendedUniverse() {
   return (
-    <div className="TitlePage" >
-      <div className="pokeperu-img-container">
-        <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
-      </div>
-      <PokePeruContent
-        monsters={getExtendedUniverseMonsters()}
-        gymLeaders={getExtendedUniverseGymLeaders()}
-        monstersEditKey={EDIT_KEY}
-        dexRoute={dexRoute} 
-        battleRoute={battleRoute} 
-        gymRoute={gymRoute}
-      />
-    </div>
+    <PokePeruExtendedUniverseBattle
+      monsters={getExtendedUniverseMonsters()}
+      gymLeaders={getExtendedUniverseGymLeaders()}
+      monstersEditKey={EDIT_KEY}
+      dexRoute={dexRoute}
+      battleRoute={battleRoute}
+      gymRoute={gymRoute}
+    />
   );
 }
 
 export function PokedexExtendedUniverseContainer() {
-  return (<Pokedex 
+  return (<Pokedex
     storageKey={EDIT_KEY}
-    selectedMonsters={getExtendedUniverseMonsters()} 
+    selectedMonsters={getExtendedUniverseMonsters()}
     battleRoute={battleRoute} />);
 }
 
 export function GymLeaderListExtendedUniverseContainer() {
-  return (<GymLeaderList gymLeaders={getExtendedUniverseGymLeaders()} battleRoute={battleRoute} />);
+  return (<GymLeaderList
+    gymLeaders={getExtendedUniverseGymLeaders()}
+    battleRoute={battleRoute} />);
 }
