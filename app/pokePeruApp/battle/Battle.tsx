@@ -184,7 +184,9 @@ export default function Battle({
       setMonster1Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
       if (!attackMissed) {
         setIsMonster1Blinking(true);
-        setTimeout(() => setIsMonster1Blinking(false), damageAnimtionDelay);
+        if(!isAnimationInstant) {
+          setTimeout(() => setIsMonster1Blinking(false), damageAnimtionDelay);
+        }
       }
 
       // Reduce Power Points for Monster 2
