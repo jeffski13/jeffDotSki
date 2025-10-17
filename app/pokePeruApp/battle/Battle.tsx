@@ -179,7 +179,9 @@ export default function Battle({
       }
     } else {
       setMonster2AttackAnim(true);
-      setTimeout(() => setMonster2AttackAnim(false), attackAnimtionDelay); // duration matches animation
+      if(!isAnimationInstant)  {
+        setTimeout(() => setMonster2AttackAnim(false), attackAnimtionDelay); // duration matches animation
+      }
       setIsMonster1Turn(true);
       setMonster1Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
       if (!attackMissed) {
