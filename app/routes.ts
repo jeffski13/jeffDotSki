@@ -12,7 +12,7 @@ export default [
     route(ROUTES.pokePeru.gymleaders, "pokePeruApp/routes/pokeperugymleaders.tsx"),
     route(ROUTES.pokePeru.info, "pokePeruApp/routes/pokeperuinfo.tsx"),
     
-    route(ROUTES.pokePeru.pokeClaremore, "pokePeruApp/pokeperuExtendedUniverse/routes/pokeperuClaremore.tsx"),
-    route(ROUTES.pokePeru.pokeClaremoreDex, "pokePeruApp/pokeperuExtendedUniverse/routes/pokeperuClaremoreDex.tsx"),
-    route(ROUTES.pokePeru.pokeClaremoreGym, "pokePeruApp/pokeperuExtendedUniverse/routes/pokeperuClaremoreGym.tsx"),
+    route(ROUTES.pokePeru.pokeClaremore, "pokePeruApp/pokeperuExtendedUniverse/claremore/routes/pokeperuExtendedUniverse.tsx"),
+    route(ROUTES.pokePeru.pokeClaremoreDex, "pokePeruApp/pokeperuExtendedUniverse/claremore/routes/pokeperuExtendedUniverseDex.tsx"),
+    route(ROUTES.pokePeru.pokeClaremoreGym, "pokePeruApp/pokeperuExtendedUniverse/claremore/routes/pokeperuExtendedUniverseGym.tsx"),
 ] satisfies RouteConfig;

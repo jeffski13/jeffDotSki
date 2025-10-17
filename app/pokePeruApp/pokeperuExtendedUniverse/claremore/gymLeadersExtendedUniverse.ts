@@ -1,6 +1,6 @@
-import { gymLeaders, type GymLeader } from "../gymleaders";
+import { gymLeaders, type GymLeader } from "../../gymleaders";
 
-export const gymLeadersClaremore: GymLeader[] = [
+export const gymLeadersExtendedUniverse: GymLeader[] = [
   {
     id: 'c1a303-1234-4b1a-4321-000000000001',
     name: "???",
@@ -24,6 +24,6 @@ export const gymLeadersClaremore: GymLeader[] = [
   },
 ];
 
-export const getClaremoreGymLeaders = (): GymLeader[] => {
-  return [...gymLeadersClaremore, ...gymLeaders];
+export const getExtendedUniverseGymLeaders = (): GymLeader[] => {
+  return [...gymLeadersExtendedUniverse, ...gymLeaders];
 }

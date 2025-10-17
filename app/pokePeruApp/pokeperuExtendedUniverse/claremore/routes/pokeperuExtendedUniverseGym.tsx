@@ -1,6 +1,6 @@
-import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
 import type { Route } from "../../../routes/+types/home";
-import { GymLeaderListClaremoreContainer } from "../PokePeruClaremore";
+import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
+import { GymLeaderListExtendedUniverseContainer } from "../PokePeruExtendedUniverse";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -8,7 +8,7 @@ export function meta({ }: Route.MetaArgs) {
     { name: "Gym Leaders in Peru", content: "Gym Leaders in Peru" },
   ];
 }
-const Content = JeffSkiPageWithContent(() => <GymLeaderListClaremoreContainer />);
+const Content = JeffSkiPageWithContent(() => <GymLeaderListExtendedUniverseContainer />);
 
 export default function PokePeruGymLeaders() {
   return <Content />;

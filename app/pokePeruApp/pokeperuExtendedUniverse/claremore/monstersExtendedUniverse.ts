@@ -1,5 +1,5 @@
-import { ElementType } from "../ElementType";
-import { monsters, type Monster } from "../monsters";
+import { ElementType } from "../../ElementType";
+import { monsters, type Monster } from "../../monsters";
 
 export const monstersClaremore: Monster[] = [
   {
@@ -196,6 +196,6 @@ export const monstersClaremore: Monster[] = [
   },
 ];
 
-export const getClaremoreMonsters = () => {
+export const getExtendedUniverseMonsters = () => {
   return [...monstersClaremore, ...monsters];
 }
