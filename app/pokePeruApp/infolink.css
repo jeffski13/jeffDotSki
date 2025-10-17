@@ -2,10 +2,19 @@
   position: fixed;
   bottom: 20px;
   left: 18px;
-  z-index: 2;
+  z-index: 10;
 }
 
 .info-link-icon {
   width: 40px;
   height: 40px;
+}
+
+@media (max-width: 601px) {
+  .info-link-fixed-location {
+    all: unset;
+    position: fixed;
+    top: 100px;
+    right: 18px;
+  }
 }

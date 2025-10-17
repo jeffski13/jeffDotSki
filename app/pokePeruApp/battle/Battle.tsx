@@ -5,13 +5,13 @@ import BackNavigationConfirmModal from '../BackNavigationConfirmModal';
 import Typewriter from './Typewriter';
 import { calculateAdjustedDamage, typeEffectiveness } from './battleAttack';
 import type { GymLeader } from '../gymleaders';
+import { getTypeColor } from '../typeColors';
 import ROUTES from '~/consts/ROUTES';
 import '../navigation.css';
 import './battle.css';
 import './battleAttacks.css';
 import '../types.css';
 import '../navigationOverride.css';
-import { getTypeColor } from '../typeColors';
 
 interface BattleProps {
   selectedMonsters: Monster[];
