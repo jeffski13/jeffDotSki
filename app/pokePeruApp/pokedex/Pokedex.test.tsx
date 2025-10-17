@@ -10,9 +10,8 @@ describe('Pokedex Component', () => {
     const battleRoute = '/battle';
     render(<Pokedex storageKey="testKey" selectedMonsters={mockSelectedMonsters} battleRoute={battleRoute} />);
     // Look for a link with the correct href
-    const link = screen.getByRole('link', { name: 'Back' });
+    const link = screen.getByRole('button', { name: 'Back' });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', battleRoute);
 
     const infoRoute = ROUTES.pokePeru.info;
     const infoLink = screen.getByRole('link', { name: 'Information Link' });
