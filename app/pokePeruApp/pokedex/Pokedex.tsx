@@ -73,12 +73,12 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
     // Collect all monster ids currently being edited
     const editingIds = Object.keys(editMode).filter(id => !!editMode[id]);
     // Toggle edit (save) for each one
-    editingIds.forEach(id => {
-      // call handleToggleEdit only if still editing
-      if (editMode[id]){
+    for (let index = 0; index < editingIds.length; index++) {
+      const id = editingIds[index];
+      if (editMode[id]) {
         handleToggleEdit(id);
       }
-    });
+    }
     window.location.href = battleRoute;
   };
 
