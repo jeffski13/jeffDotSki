@@ -112,8 +112,7 @@ export default function Battle({
   }
 
   const damageAnimtionDelay = isAnimationInstant ? 0: 500;
-  const attackAnimtionDelay = isAnimationInstant ? 0: 400;
-
+  
   const handleAttack = (
     attacker: number,
     attackIndex: number
@@ -163,12 +162,16 @@ export default function Battle({
 
     if (attacker === 1) {
       setMonster1AttackAnim(true);
-      setTimeout(() => setMonster1AttackAnim(false), attackAnimtionDelay); // duration matches animation
+      if(!isAnimationInstant)  {
+        setTimeout(() => setMonster1AttackAnim(false), 400); // duration matches animation
+      }
       setIsMonster1Turn(false);
       setMonster2Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
       if (!attackMissed) {
         setIsMonster2Blinking(true);
-        setTimeout(() => setIsMonster2Blinking(false), damageAnimtionDelay);
+        if(!isAnimationInstant)  {
+          setTimeout(() => setIsMonster2Blinking(false), damageAnimtionDelay);
+        }
       }
 
       // Reduce Power Points for Monster 1
@@ -180,7 +183,7 @@ export default function Battle({
     } else {
       setMonster2AttackAnim(true);
       if(!isAnimationInstant)  {
-        setTimeout(() => setMonster2AttackAnim(false), attackAnimtionDelay); // duration matches animation
+        setTimeout(() => setMonster2AttackAnim(false), 400); // duration matches animation
       }
       setIsMonster1Turn(true);
       setMonster1Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
