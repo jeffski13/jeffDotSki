@@ -7,7 +7,7 @@ Feel free to look through this as examples! I did manage to get the various fram
 
 ## PokePeru
 
-This website is built with node v20.9.0. Please download the repo: https://github.com/jeffski13/jeffDotSki. Navigate to the downloaded repo in the terminal and install and start:
+This website is built with node v22.20.0. Please download the repo: https://github.com/jeffski13/jeffDotSki. Navigate to the downloaded repo in the terminal and install and start:
 
 ``` bash
 npm install
