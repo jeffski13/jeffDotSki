@@ -526,7 +526,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
                           </Col>
                           <Col xs={4} sm={3} md={4}>
                             <div
-                              className="type-badge type-badge-attack"
+                              className="type-badge type-badge-attack dex-type-badge"
                               style={{ backgroundColor: getTypeColor(attack.type) }}
                             >
                               {attack.type}
