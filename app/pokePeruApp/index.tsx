@@ -46,7 +46,7 @@ export const getEditedMonstersList = (monstersList: Monster[], storageKey: strin
   return editedMonstersList;
 }
 
-interface PokePeruContentProps {
+export interface PokePeruContentProps {
   monsters: Monster[];
   gymLeaders: GymLeader[];
   dexRoute: string;
