@@ -14,7 +14,7 @@ export const monstersExtendedUniverse: Monster[] = [
     speed: 80,
     type: ElementType.Water,
     secondType: null,
-    image: '/images/monsters/pkmnsquadSc1a.png',
+    image: '/images/monsters/extendedUniverse/southCarolina/pkmnsquadSc1a.png',
     description: 'Dripkin is a playfull pokemon who loves to play with water',
     inspiration: 'Water Droplet', // Added inspiration
     attack1: {
@@ -46,7 +46,7 @@ export const monstersExtendedUniverse: Monster[] = [
     speed: 100,
     type: ElementType.Water,
     secondType: ElementType.Psychic,
-    image: '/images/monsters/pkmnsquadSc1b.png',
+    image: '/images/monsters/extendedUniverse/southCarolina/pkmnsquadSc1b.png',
     description: 'Aquastride still has a playfull nature like Dripkin but learns its psychic power and gets more serious',
     inspiration: 'baby water horse', // Added inspiration
     attack1: {
@@ -78,7 +78,7 @@ export const monstersExtendedUniverse: Monster[] = [
     speed:120,
     type: ElementType.Water,
     secondType: ElementType.Psychic,
-    image: '/images/monsters/pkmnsquadSc1c.png',
+    image: '/images/monsters/extendedUniverse/southCarolina/pkmnsquadSc1c.png',
     description: 'It is said Splishingo can use its infinite water source on its mane to launch at enemies with its psychic mind.',
     inspiration: 'Water horse', // Added inspiration
     attack1: {
@@ -110,7 +110,7 @@ export const monstersExtendedUniverse: Monster[] = [
     speed: 58,
     type: ElementType.Fairy,
     secondType: null,
-    image: '/images/monsters/pkmnsquadSc2a.png',
+    image: '/images/monsters/extendedUniverse/southCarolina/pkmnsquadSc2a.png',
     description: 'This pokemon is found on cold mountains. Many trainers think they were left behind but really go there to train.',
     inspiration: 'Pixie', // Added inspiration
     attack1: {
@@ -142,7 +142,7 @@ export const monstersExtendedUniverse: Monster[] = [
     speed: 78,
     type: ElementType.Fairy,
     secondType: ElementType.Ice,
-    image: '/images/monsters/pkmnsquadSc2b.png',
+    image: '/images/monsters/extendedUniverse/southCarolina/pkmnsquadSc2b.png',
     description: 'After training in the mountains this pokemon has adapted to its environment.',
     inspiration: 'Pixie', // Added inspiration
     attack1: {
@@ -174,7 +174,7 @@ export const monstersExtendedUniverse: Monster[] = [
     speed: 94,
     type: ElementType.Fairy,
     secondType: ElementType.Ice,
-    image: '/images/monsters/pkmnsquadSc2c.png',
+    image: '/images/monsters/extendedUniverse/southCarolina/pkmnsquadSc2c.png',
     description: 'Queenstix have conquered the moutain they are on. They protect the moutain with might.',
     inspiration: 'Pixie', // Added inspiration
     attack1: {

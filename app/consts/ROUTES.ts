@@ -9,9 +9,18 @@ const ROUTES = {
       pokedex: '/pokeperu/pokedex',
       gymleaders: '/pokeperu/gymleaders',
       info: '/pokeperu/info',
-      pokeClaremore: '/pokeperu/claremore/battle',
-      pokeClaremoreDex: '/pokeperu/claremore/pokedex',
-      pokeClaremoreGym: '/pokeperu/claremore/gymleaders',
+      extendedUnivers: {
+        claremore: {
+          battle: '/pokeperu/claremore/battle',
+          dex: '/pokeperu/claremore/pokedex',
+          gym: '/pokeperu/claremore/gymleaders',
+        },
+        southCarolina: {
+          battle: '/pokeperu/southCarolina/battle',
+          dex: '/pokeperu/southCarolina/pokedex',
+          gym: '/pokeperu/southCarolina/gymleaders',
+        }
+      }
     },
     external: {
       instagram: 'https://www.instagram.com/jeffski13/',

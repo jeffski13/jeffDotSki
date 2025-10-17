@@ -1,4 +1,4 @@
-import type { Route } from "../../../../routes/+types/home";
+import type { Route } from "../../../routes/+types/home";
 import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
 import { PokedexExtendedUniverseContainer } from "../PokePeruExtendedUniverse";
 

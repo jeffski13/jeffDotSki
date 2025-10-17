@@ -6,10 +6,10 @@ import ROUTES from "~/consts/ROUTES";
 import { getExtendedUniverseMonsters } from "./monstersExtendedUniverse"
 import { getExtendedUniverseGymLeaders } from "./gymLeadersExtendedUniverse";
 
-const EDIT_KEY = 'pokedexEditsClaremore';
-const battleRoute = ROUTES.pokePeru.extendedUnivers.claremore.battle;
-const dexRoute = ROUTES.pokePeru.extendedUnivers.claremore.dex;
-const gymRoute = ROUTES.pokePeru.extendedUnivers.claremore.gym;
+const EDIT_KEY = 'pokedexEditsSouthCarolina';
+const battleRoute = ROUTES.pokePeru.extendedUnivers.southCarolina.battle;
+const dexRoute = ROUTES.pokePeru.extendedUnivers.southCarolina.dex;
+const gymRoute = ROUTES.pokePeru.extendedUnivers.southCarolina.gym;
 
 export default function PokePeruExtendedUniverse() {
   return (
