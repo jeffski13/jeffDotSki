@@ -6,13 +6,12 @@ import ROUTES from '~/consts/ROUTES';
 
 describe('Pokedex Component', () => {
 
-  it('renders the battleRoute link', () => {
+  it('renders the page links', () => {
     const battleRoute = '/battle';
     render(<Pokedex storageKey="testKey" selectedMonsters={mockSelectedMonsters} battleRoute={battleRoute} />);
     // Look for a link with the correct href
-    const link = screen.getByRole('link', { name: 'Back' });
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', battleRoute);
+    const backLink = screen.getByRole('button', { name: 'Back' });
+    expect(backLink).toBeInTheDocument();
 
     const infoRoute = ROUTES.pokePeru.info;
     const infoLink = screen.getByRole('link', { name: 'Information Link' });
@@ -279,5 +278,27 @@ describe('Pokedex Component', () => {
     // The toast message should appear
     const toast = await screen.findByText(/You can now export the updated monster data\./i);
     expect(toast).toBeInTheDocument();
+  });
+
+  it('saves stats on back pressed', async () => {
+    render(<Pokedex storageKey="testKeyBackPressedSave" selectedMonsters={mockSelectedMonsters} battleRoute="/battle" />);
+    const editButtons = screen.getAllByRole('button', { name: /edit/i });
+    fireEvent.click(editButtons[0]);
+
+    // Find the speed input (number input)
+    const speedInput = screen.getAllByDisplayValue(String(mockSelectedMonsters[0].speed)).find(
+      input => input.getAttribute('type') === 'number'
+    );
+
+    // Enter a negative value
+    await userEvent.clear(speedInput!);
+
+    // back pressed
+    const backLink = screen.getByRole('button', { name: 'Back' });
+    fireEvent.click(backLink);
+
+    //check that the value was saved as 0
+    const totalStatsNegative = mockSelectedMonsters[0].hp + mockSelectedMonsters[0].attack + mockSelectedMonsters[0].defense + mockSelectedMonsters[0].specialAttack + mockSelectedMonsters[0].specialDefense + 0;
+    expect(screen.getAllByText(`Total Stats: ${totalStatsNegative}`)[0]).toBeInTheDocument();
   });
 });

@@ -1,5 +1,6 @@
 import { getTypeColor } from '../typeColors';
 import { useState, useEffect } from 'react';
+import type { MouseEvent } from 'react';
 import { Container, Row, Col, Button, Dropdown, Form, Toast, ToastContainer } from 'react-bootstrap';
 import { monsters, type Monster } from '../monsters';
 import { ElementType } from '../ElementType';
@@ -64,6 +65,21 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
       localStorage.setItem(storageKey, JSON.stringify(updated));
       return updated;
     });
+  };
+
+  // When navigating back, save edits for any monsters currently in edit mode,
+  // then perform navigation to the battle route.
+  const handleBackClick = () => {
+    // Collect all monster ids currently being edited
+    const editingIds = Object.keys(editMode).filter(id => !!editMode[id]);
+    // Toggle edit (save) for each one
+    editingIds.forEach(id => {
+      // call handleToggleEdit only if still editing
+      if (editMode[id]){
+        handleToggleEdit(id);
+      }
+    });
+    window.location.href = battleRoute;
   };
 
   // Toggle edit mode for a monster. If currently editing, sanitize stat fields before saving.
@@ -175,9 +191,14 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
         </div>
       )}
       <div className="secondary-page-header">
-        <a href={battleRoute} className="back-button">
+        <button
+          type="button"
+          className="back-button battle-back-button"
+          onClick={() => handleBackClick()}
+          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+        >
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
-        </a>
+        </button>
         <Container>
           <Row>
             <Col xs={2} />
