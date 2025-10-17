@@ -17,7 +17,7 @@ interface BattleProps {
   selectedMonsters: Monster[];
   attackMissedPercentage?: number;
   isAttackRandomDamage?: boolean;
-  isTextRenderInstant?: boolean;
+  isAnimationInstant?: boolean;
   isInstantStruggleEnabled?: boolean;
   isAllAttackCriticalHit?: boolean;
   battleRoute?: string;
@@ -40,7 +40,7 @@ export default function Battle({
   trainer2,
   attackMissedPercentage,
   isAttackRandomDamage = true,
-  isTextRenderInstant = false,
+  isAnimationInstant = false,
   isInstantStruggleEnabled = false,
   isAllAttackCriticalHit = false,
   battleRoute = ROUTES.pokePeru.battle
@@ -111,6 +111,9 @@ export default function Battle({
     setEffectivenessResult(`${attackerMonster.name} is hurt by recoil!`);
   }
 
+  const damageAnimtionDelay = isAnimationInstant ? 0: 500;
+  const attackAnimtionDelay = isAnimationInstant ? 0: 400;
+
   const handleAttack = (
     attacker: number,
     attackIndex: number
@@ -151,21 +154,21 @@ export default function Battle({
 
       if (attacker === 1) {
         setDamageToMonster2Animation(selectedAttack.type); // Set the attack animation based on the attackType
-        setTimeout(() => setDamageToMonster2Animation(null), 500); // Clear the animation after 500ms
+        setTimeout(() => setDamageToMonster2Animation(null), damageAnimtionDelay); // Clear the animation after 500ms
       } else {
         setDamageToMonster1Animation(selectedAttack.type); // Set the attack animation based on the attackType
-        setTimeout(() => setDamageToMonster1Animation(null), 500); // Clear the animation after 500ms
+        setTimeout(() => setDamageToMonster1Animation(null), damageAnimtionDelay); // Clear the animation after 500ms
       }
     }
 
     if (attacker === 1) {
       setMonster1AttackAnim(true);
-      setTimeout(() => setMonster1AttackAnim(false), 400); // duration matches animation
+      setTimeout(() => setMonster1AttackAnim(false), attackAnimtionDelay); // duration matches animation
       setIsMonster1Turn(false);
       setMonster2Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
       if (!attackMissed) {
         setIsMonster2Blinking(true);
-        setTimeout(() => setIsMonster2Blinking(false), 500);
+        setTimeout(() => setIsMonster2Blinking(false), damageAnimtionDelay);
       }
 
       // Reduce Power Points for Monster 1
@@ -176,12 +179,12 @@ export default function Battle({
       }
     } else {
       setMonster2AttackAnim(true);
-      setTimeout(() => setMonster2AttackAnim(false), 400); // duration matches animation
+      setTimeout(() => setMonster2AttackAnim(false), attackAnimtionDelay); // duration matches animation
       setIsMonster1Turn(true);
       setMonster1Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
       if (!attackMissed) {
         setIsMonster1Blinking(true);
-        setTimeout(() => setIsMonster1Blinking(false), 500);
+        setTimeout(() => setIsMonster1Blinking(false), damageAnimtionDelay);
       }
 
       // Reduce Power Points for Monster 2
@@ -329,7 +332,7 @@ export default function Battle({
           <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
         </button>
         <div className="battle-text-with-backdrop">
-          <h1 className="battle-title"><Typewriter text={battleTitle} isInstantTextRender={isTextRenderInstant} /></h1>
+          <h1 className="battle-title"><Typewriter text={battleTitle} isInstantTextRender={isAnimationInstant} /></h1>
         </div>
       </div>
       <div
@@ -433,16 +436,16 @@ export default function Battle({
       </div>
       <div id="battle-results-container" className="battle-container desktop-view">
         <div className="battle-results battle-text-with-backdrop desktop-view">
-          <Typewriter text={attackResult} isInstantTextRender={isTextRenderInstant} />
+          <Typewriter text={attackResult} isInstantTextRender={isAnimationInstant} />
           <br />
-          <Typewriter text={effectivenessResult} isInstantTextRender={isTextRenderInstant} />
+          <Typewriter text={effectivenessResult} isInstantTextRender={isAnimationInstant} />
         </div>
         {/* Mobile-only fixed overlay for battle results (appears on small screens and overlays other content) */}
       </div>
       <div id="battle-results-container" className="battle-results-mobile battle-text-with-backdrop mobile-view">
-        <Typewriter text={attackResult} isInstantTextRender={isTextRenderInstant} />
+        <Typewriter text={attackResult} isInstantTextRender={isAnimationInstant} />
         <br />
-        <Typewriter text={effectivenessResult} isInstantTextRender={isTextRenderInstant} />
+        <Typewriter text={effectivenessResult} isInstantTextRender={isAnimationInstant} />
       </div>
       {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
     </div>
