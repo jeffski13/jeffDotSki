@@ -5,13 +5,16 @@
   z-index: 10;
 }
 
+.info-link-fixed-location-battle {
+}
+
 .info-link-icon {
   width: 40px;
   height: 40px;
 }
 
 @media (max-width: 601px) {
-  .info-link-fixed-location {
+  .info-link-fixed-location-battle {
     all: unset;
     position: fixed;
     top: 100px;

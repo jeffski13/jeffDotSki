@@ -46,7 +46,7 @@ export default function BattleContainer({ selectedMonsters, gymLeaders, battleRo
         />
       )}
 
-      <a className="info-link-fixed-location" onClick={() => setInfoNavigationConfirm(true)}
+      <a className="info-link-fixed-location info-link-fixed-location-battle" onClick={() => setInfoNavigationConfirm(true)}
       >
         <img
           src="/images/info-icon.png"
