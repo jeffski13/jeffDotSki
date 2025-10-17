@@ -1,6 +1,5 @@
 import { getTypeColor } from '../typeColors';
 import { useState, useEffect } from 'react';
-import type { MouseEvent } from 'react';
 import { Container, Row, Col, Button, Dropdown, Form, Toast, ToastContainer } from 'react-bootstrap';
 import { monsters, type Monster } from '../monsters';
 import { ElementType } from '../ElementType';
