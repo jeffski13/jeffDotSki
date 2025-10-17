@@ -40,7 +40,7 @@
     width: 10vw;
     display: flex;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     right: 0px;
     z-index: 10000;
