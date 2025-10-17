@@ -1,5 +1,5 @@
-import { ElementType } from "../ElementType";
-import { monsters, type Monster } from "../monsters";
+import { ElementType } from "../../ElementType";
+import { monsters, type Monster } from "../../monsters";
 
 export const monstersClaremore: Monster[] = [
   {
@@ -14,7 +14,7 @@ export const monstersClaremore: Monster[] = [
     speed: 0,
     type: ElementType.Dark,
     secondType: ElementType.Fire,
-    image: '/images/monsters/pkmnsquad01a.png',
+    image: '/images/monsters/extendedUniverse/claremore/pkmnsquad01a.png',
     description: 'It sucks the souls of it\'s enemies leaving a path of permanent decay where it hovers. BE CAREFUL!',
     inspiration: 'Mordor', // Added inspiration
     attack1: {
@@ -46,7 +46,7 @@ export const monstersClaremore: Monster[] = [
     speed:40 ,
     type: ElementType.Psychic,
     secondType: ElementType.Ghost,
-    image: '/images/monsters/pkmnsquad01b.png',
+    image: '/images/monsters/extendedUniverse/claremore/pkmnsquad01b.png',
     description: 'Is it the mask or not? If it isn\'t, what is behind it?',
     inspiration: 'Blood', // Added inspiration
     attack1: {
@@ -78,7 +78,7 @@ export const monstersClaremore: Monster[] = [
     speed:5,
     type: ElementType.Fire,
     secondType: ElementType.Electric,
-    image: '/images/monsters/pkmnsquad02a.png',
+    image: '/images/monsters/extendedUniverse/claremore/pkmnsquad02a.png',
     description: 'He is always mad. He lives in the nether. He liked lava and he hates water.',
     inspiration: 'Sun', // Added inspiration
     attack1: {
@@ -104,7 +104,7 @@ export const monstersClaremore: Monster[] = [
     trainerId: 'c1a303-1234-4b1a-4321-000000000002',
     "type": "Fire",
     "secondType": null,
-    "image": "/images/monsters/pkmnsquad02b.png",
+    "image": "/images/monsters/extendedUniverse/claremore/pkmnsquad02b.png",
     "description": "this bat went in to a volcano and now he looks like this",
     "inspiration": "crazy bat",
     "hp": 100,
@@ -142,7 +142,7 @@ export const monstersClaremore: Monster[] = [
     speed:20,
     type: ElementType.Grass,
     secondType: ElementType.Ground,
-    image: '/images/monsters/pkmnsquad03a.png',
+    image: '/images/monsters/extendedUniverse/claremore/pkmnsquad03a.png',
     description: 'He is calm but when something attacks him, he literally goes into rage mode.',
     inspiration: 'Bat', // Added inspiration
     attack1: {
@@ -168,7 +168,7 @@ export const monstersClaremore: Monster[] = [
     "trainerId": "c1a303-1234-4b1a-4321-000000000003",
     "type": "Electric",
     "secondType": "Fire",
-    "image": "/images/monsters/pkmnsquad03c.png",
+    "image": "/images/monsters/extendedUniverse/claremore/pkmnsquad03b.png",
     "description": "He is evil. He has no family because he would have eaten them if he had family.",
     "inspiration": "Demon",
     "hp": 50,
@@ -196,6 +196,6 @@ export const monstersClaremore: Monster[] = [
   },
 ];
 
-export const getClaremoreMonsters = () => {
+export const getExtendedUniverseMonsters = () => {
   return [...monstersClaremore, ...monsters];
 }
