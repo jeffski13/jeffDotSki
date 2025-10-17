@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import PokePeruExtendedUniverse, {PokedexExtendedUniverseContainer, GymLeaderListExtendedUniverseContainer} from './PokePeruExtendedUniverse';
 
-describe('PokePeruClaremore Component', () => {
+describe('PokePeruExtendedUniverse Component', () => {
   it('renders the component', () => {
     render(<PokePeruExtendedUniverse />);
   });
