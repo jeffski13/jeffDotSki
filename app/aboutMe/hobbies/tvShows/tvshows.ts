@@ -32,6 +32,11 @@ export const tvshowsFinished: TvShowInfo[] = [
     thumb: "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/cowboybebop.jpg"
   },
   {
+    title: "Demon Slayer",
+    season: 2,
+    thumb: "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/demonSlayer.jpg"
+  },
+  {
     title: "Digimon",
     season: 3,
     thumb: "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/tvshows/digimon.jpg"
