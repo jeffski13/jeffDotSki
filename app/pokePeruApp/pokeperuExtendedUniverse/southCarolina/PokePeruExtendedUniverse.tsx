@@ -34,5 +34,6 @@ export function PokedexExtendedUniverseContainer() {
 export function GymLeaderListExtendedUniverseContainer() {
   return (<GymLeaderList
     gymLeaders={getExtendedUniverseGymLeaders()}
+    monsterList={getExtendedUniverseMonsters()}
     battleRoute={battleRoute} />);
 }

@@ -19,11 +19,13 @@
   gap: 32px;
   width: 100%;
   position: relative;
-  /* Needed for overlay */
-  padding: 24px;
+  padding: 12px;
   box-sizing: border-box;
-  /* background image and border radius are set inline from the component */
   overflow: hidden;
+  background-Size: cover;
+  background-Position: center;
+  border-Radius: 16px;
+  min-Height: 180px;
 }
 
 .gymleader-details::before {
@@ -88,4 +90,13 @@
   border-radius: 12px;
   border: 2px solid #b2bec3;
   margin-top: 8px;
+}
+
+.gymleader-mons-team-container {
+  position: absolute;
+  right: 12px;
+  bottom: 66px;
+  display: flex;
+  align-Items: center;
+  pointer-Events: auto;
 }

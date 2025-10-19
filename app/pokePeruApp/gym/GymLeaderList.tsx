@@ -1,5 +1,6 @@
 import ROUTES from '../../consts/ROUTES';
 import { gymLeaders, type GymLeader } from '../gymleaders';
+import { monsters, type Monster } from '../monsters';
 import './gymleaderlist.css';
 import '../navigation.css';
 import '../secondaryPage.css';
@@ -8,14 +9,15 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 interface GymLeaderListProps {
   gymLeaders: GymLeader[];
+  monsterList: Monster[];
   battleRoute: string;
 }
 
 export default function GymLeaderListContainer() {
-  return (<GymLeaderList gymLeaders={gymLeaders} battleRoute={ROUTES.pokePeru.battle} />);
+  return (<GymLeaderList gymLeaders={gymLeaders} monsterList={monsters} battleRoute={ROUTES.pokePeru.battle} />);
 }
 
-export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
+export function GymLeaderList({ gymLeaders, monsterList, battleRoute }: GymLeaderListProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
@@ -34,33 +36,52 @@ export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
         <img src="/images/gym-icon.png" alt="Pokedex" className="secondary-page-icon" />
       </div>
       <ul className="gymleader-list">
-        {gymLeaders.map((leader) => (
-          <li key={leader.name} className="gymleader-item">
-            <div
-              className="gymleader-details"
-              style={{
-                backgroundImage: `url(${leader.environmentImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                borderRadius: '16px',
-                minHeight: '180px',
-                position: 'relative',
-              }}
-            >
-              <img src={leader.image} alt={leader.name} className="gymleader-image" />
-              <div>
-                <h2 className="gymleader-name">
-                  {leader.name}
-                </h2>
-              </div>
+        {gymLeaders.map((leader) => {
+          const owned = monsterList.filter((m: Monster) => m.trainerId === leader.id);
+          return (
+            <li key={leader.name} className="gymleader-item">
               <div
-                className="gymleader-biome"
+                className="gymleader-details"
+                style={{
+                  backgroundImage: `url(${leader.environmentImage})`,
+                }}
               >
-                {leader.biome}
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                  <img src={leader.image} alt={leader.name} className="gymleader-image" />
+                  <div style={{ flex: 1 }}>
+                    <h2 className="gymleader-name">{leader.name}</h2>
+                    <div className="gymleader-biome">{leader.biome}</div>
+                  </div>
+
+                  {/* Owned monsters column to the right of the leader image */}
+                  {owned.length > 0 && (
+                    // Overlapping horizontal stack of owned monster thumbnails positioned on lower-right
+                    <div className="gymleader-mons-team-container">
+                      {owned.map((mon, idx) => {
+                        const computedHeight = 170 - (idx * 80);
+                        const computedZIndex = 100 - idx;
+                        const computedMarginLeft = idx * -36;
+                        return (
+                          <img
+                            key={mon.id}
+                            src={mon.image}
+                            alt={mon.name}
+                            title={mon.name}
+                            style={{
+                              height: computedHeight,
+                              objectFit: 'cover',
+                              marginLeft: computedMarginLeft,
+                              zIndex: computedZIndex,
+                            }}
+                          />)
+                      })}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
       <a href={ROUTES.pokePeru.info}>
         <img
