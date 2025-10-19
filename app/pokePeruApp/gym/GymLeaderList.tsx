@@ -43,14 +43,6 @@ export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
                 className="gymleader-details"
                 style={{
                   backgroundImage: `url(${leader.environmentImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '16px',
-                  minHeight: '180px',
-                  position: 'relative',
-                  padding: '12px',
-                  boxSizing: 'border-box',
-                  overflow: 'hidden'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
@@ -63,17 +55,17 @@ export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
                   {/* Owned monsters column to the right of the leader image */}
                   {owned.length > 0 && (
                     // Overlapping horizontal stack of owned monster thumbnails positioned on lower-right
-                    <div style={{ position: 'absolute', right: 12, bottom: 66, display: 'flex', alignItems: 'center', pointerEvents: 'auto' }}>
-                      {owned.map((m, idx) => {
+                    <div className="gymleader-mons-team-container">
+                      {owned.map((mon, idx) => {
                         const computedHeight = 170 - (idx * 80);
                         const computedZIndex = 100 - idx;
                         const computedMarginLeft = idx * -36;
                         return (
                           <img
-                            key={m.id}
-                            src={m.image}
-                            alt={m.name}
-                            title={m.name}
+                            key={mon.id}
+                            src={mon.image}
+                            alt={mon.name}
+                            title={mon.name}
                             style={{
                               height: computedHeight,
                               objectFit: 'cover',
