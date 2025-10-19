@@ -5,7 +5,7 @@ import ROUTES from '~/consts/ROUTES';
 
 describe('GymLeaderList', () => {
   it('renders the name of each GymLeader', () => {
-    render(<GymLeaderList gymLeaders={gymLeaders} battleRoute={''} />);
+    render(<GymLeaderList gymLeaders={gymLeaders} monsterList={[]} battleRoute={''} />);
     gymLeaders.forEach((leader) => {
       expect(screen.getByText(leader.name)).toBeInTheDocument();
     });
@@ -16,7 +16,7 @@ describe('GymLeaderList', () => {
 
   it('check for navigation links', () => {
     const battleRoute = '/battle';
-    render(<GymLeaderList gymLeaders={gymLeaders} battleRoute={battleRoute} />);
+    render(<GymLeaderList gymLeaders={gymLeaders} monsterList={[]} battleRoute={battleRoute} />);
     // Look for a link with the correct href
     const link = screen.getByRole('link', { name: 'Back' });
     expect(link).toBeInTheDocument();

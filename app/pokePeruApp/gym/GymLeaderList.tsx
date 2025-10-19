@@ -1,6 +1,6 @@
 import ROUTES from '../../consts/ROUTES';
 import { gymLeaders, type GymLeader } from '../gymleaders';
-import { monsters, type Monster } from '../monsters';
+import { monsters type Monster } from '../monsters';
 import './gymleaderlist.css';
 import '../navigation.css';
 import '../secondaryPage.css';
@@ -9,14 +9,15 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 interface GymLeaderListProps {
   gymLeaders: GymLeader[];
+  monsterList: Monster[];
   battleRoute: string;
 }
 
 export default function GymLeaderListContainer() {
-  return (<GymLeaderList gymLeaders={gymLeaders} battleRoute={ROUTES.pokePeru.battle} />);
+  return (<GymLeaderList gymLeaders={gymLeaders} monsterList={monsters} battleRoute={ROUTES.pokePeru.battle} />);
 }
 
-export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
+export function GymLeaderList({ gymLeaders, monsterList, battleRoute }: GymLeaderListProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
@@ -36,7 +37,7 @@ export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
       </div>
       <ul className="gymleader-list">
         {gymLeaders.map((leader) => {
-          const owned = monsters.filter((m: Monster) => m.trainerId === leader.id);
+          const owned = monsterList.filter((m: Monster) => m.trainerId === leader.id);
           return (
             <li key={leader.name} className="gymleader-item">
               <div
