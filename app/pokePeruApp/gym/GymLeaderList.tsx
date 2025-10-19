@@ -1,5 +1,6 @@
 import ROUTES from '../../consts/ROUTES';
 import { gymLeaders, type GymLeader } from '../gymleaders';
+import { monsters, type Monster } from '../monsters';
 import './gymleaderlist.css';
 import '../navigation.css';
 import '../secondaryPage.css';
@@ -34,33 +35,60 @@ export function GymLeaderList({ gymLeaders, battleRoute }: GymLeaderListProps) {
         <img src="/images/gym-icon.png" alt="Pokedex" className="secondary-page-icon" />
       </div>
       <ul className="gymleader-list">
-        {gymLeaders.map((leader) => (
-          <li key={leader.name} className="gymleader-item">
-            <div
-              className="gymleader-details"
-              style={{
-                backgroundImage: `url(${leader.environmentImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                borderRadius: '16px',
-                minHeight: '180px',
-                position: 'relative',
-              }}
-            >
-              <img src={leader.image} alt={leader.name} className="gymleader-image" />
-              <div>
-                <h2 className="gymleader-name">
-                  {leader.name}
-                </h2>
-              </div>
+        {gymLeaders.map((leader) => {
+          const owned = monsters.filter((m: Monster) => m.trainerId === leader.id);
+          return (
+            <li key={leader.name} className="gymleader-item">
               <div
-                className="gymleader-biome"
+                className="gymleader-details"
+                style={{
+                  backgroundImage: `url(${leader.environmentImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '16px',
+                  minHeight: '180px',
+                  position: 'relative',
+                  padding: '12px',
+                  boxSizing: 'border-box',
+                  overflow: 'hidden'
+                }}
               >
-                {leader.biome}
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                  <img src={leader.image} alt={leader.name} className="gymleader-image" />
+                  <div style={{ flex: 1 }}>
+                    <h2 className="gymleader-name">{leader.name}</h2>
+                    <div className="gymleader-biome">{leader.biome}</div>
+                  </div>
+
+                  {/* Owned monsters column to the right of the leader image */}
+                  {owned.length > 0 && (
+                    // Overlapping horizontal stack of owned monster thumbnails positioned on lower-right
+                    <div style={{ position: 'absolute', right: 12, bottom: 66, display: 'flex', alignItems: 'center', pointerEvents: 'auto' }}>
+                      {owned.map((m, idx) => {
+                        const computedHeight = 170 - (idx * 80);
+                        const computedZIndex = 100 - idx;
+                        const computedMarginLeft = idx * -36;
+                        return (
+                          <img
+                            key={m.id}
+                            src={m.image}
+                            alt={m.name}
+                            title={m.name}
+                            style={{
+                              height: computedHeight,
+                              objectFit: 'cover',
+                              marginLeft: computedMarginLeft,
+                              zIndex: computedZIndex,
+                            }}
+                          />)
+                      })}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
       <a href={ROUTES.pokePeru.info}>
         <img
