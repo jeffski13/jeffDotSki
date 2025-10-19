@@ -55,7 +55,7 @@ describe('Battle Component', () => {
   });
 
   test('when monster1 attacks, monster2Hp is reduced', () => {
-    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} />);
+    render(<Battle selectedMonsters={mockSelectedMonsters} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isAnimationInstant={true} />);
 
     // Find and click the attack button for monster1 (Pikachu)
     const attackButton = screen.getByText(/Quick Attack/i);
@@ -125,8 +125,8 @@ describe('Battle Component', () => {
     expect(monster2Attack2Button).toBeEnabled();
   });
 
-  test('attack buttons are disabled once a monster has won', () => {
-    render(<Battle selectedMonsters={mocksWithMonster1VeryWeak} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} />);
+  test('attack buttons are disabled once a monster has won', async () => {
+    render(<Battle selectedMonsters={mocksWithMonster1VeryWeak} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isAnimationInstant={true} />);
 
     // Simulate Monster 1 attacking Monster 2 until Monster 2's HP reaches 0
     const attackButtonMonster1 = screen.getByText(/Quick Attack/i);
@@ -140,7 +140,9 @@ describe('Battle Component', () => {
 
     const monster1Attack1Button = screen.getByText(/Quick Attack/i).parentElement?.parentElement;
     const monster1Attack2Button = screen.getByText(/Thunderbolt/i).parentElement?.parentElement;
-    const monster2Attack1Button = screen.getByText(/Scratch/i).parentElement?.parentElement;
+    //get
+    const monster2Attack1ButtonRef = screen.findAllByText(/Scratch/i);
+    const monster2Attack1Button = (await monster2Attack1ButtonRef)[0].parentElement?.parentElement;
     const monster2Attack2Button = screen.getByText(/Flamethrower/i).parentElement?.parentElement;
 
     expect(monster1Attack1Button).toBeDisabled();
@@ -295,7 +297,7 @@ describe('Battle Component', () => {
       accuracy: 1,
     }
 
-    render(<Battle selectedMonsters={mockSelectedMonstersPowerPointsMod} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} />);
+    render(<Battle selectedMonsters={mockSelectedMonstersPowerPointsMod} trainer1={mockTrainers[0]} trainer2={mockTrainers[1]} attackMissedPercentage={0} isAttackRandomDamage={false} isAnimationInstant={true} />);
 
     // Simulate Monster 1 attacking Monster 2 until Monster 2's HP reaches 0
     const attackButtonMonster1 = screen.getByText(/Quick Attack/i);
