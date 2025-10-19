@@ -1,6 +1,6 @@
 import ROUTES from '../../consts/ROUTES';
 import { gymLeaders, type GymLeader } from '../gymleaders';
-import { monsters type Monster } from '../monsters';
+import { monsters, type Monster } from '../monsters';
 import './gymleaderlist.css';
 import '../navigation.css';
 import '../secondaryPage.css';

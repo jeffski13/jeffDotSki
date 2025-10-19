@@ -17,22 +17,23 @@ export default function PokePeruExtendedUniverse() {
       monsters={getExtendedUniverseMonsters()}
       gymLeaders={getExtendedUniverseGymLeaders()}
       monstersEditKey={EDIT_KEY}
-      dexRoute={dexRoute} 
-      battleRoute={battleRoute} 
+      dexRoute={dexRoute}
+      battleRoute={battleRoute}
       gymRoute={gymRoute}
     />
   );
 }
 
 export function PokedexExtendedUniverseContainer() {
-  return (<Pokedex 
+  return (<Pokedex
     storageKey={EDIT_KEY}
-    selectedMonsters={getExtendedUniverseMonsters()} 
+    selectedMonsters={getExtendedUniverseMonsters()}
     battleRoute={battleRoute} />);
 }
 
 export function GymLeaderListExtendedUniverseContainer() {
   return (<GymLeaderList
     gymLeaders={getExtendedUniverseGymLeaders()}
+    monsterList={getExtendedUniverseMonsters()}
     battleRoute={battleRoute} />);
 }
