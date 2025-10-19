@@ -1,6 +1,14 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { TvShows } from './index';
+import TvShowsPage, { TvShows } from './index';
 import type { TvShowInfo } from './tvshows';
+
+describe('TvShowsPage', () => {
+  it('renders Demon Slayer in the page', () => {
+    render(<TvShowsPage />);
+    expect(screen.getByText(/demon slayer/i)).toBeInTheDocument();
+  });
+});
 
 describe('TvShows Component', () => {
   it('renders correct number of tv shows and finished tv shows', () => {
