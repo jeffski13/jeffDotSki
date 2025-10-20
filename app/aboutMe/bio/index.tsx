@@ -28,7 +28,7 @@ export function Bio() {
       southam: 'I moved to El Paso to improve my spanish. My desire for fluency led me to move to Medellin, Colombia (2023). From there I lived in Santiago, Chile (2024) and then Lima, Perú (2025). In Lima I studied spanish communications and took the B2 DELE certification exam.',
       professionalWhat: 'A Professional What?',
       afterGrad: 'After graduating in December of 2014 I moved Dallas, far away from my familiar family and friends. So many people had told me that while I was young and single I needed go out and experience the world. So I left Oklahoma and started traveling.',
-      becomingTeacher: 'While in Perú I got my first teaching job with 5th and 6th graders. And I loved it. I have decided that teaching English as a Foreign Language is what I want to do with my life.',
+      becomingTeacher: 'While in Peru I got my first teaching job with 5th and 6th graders. And I loved it. I have decided that teaching English as a Foreign Language is what I want to do with my life.',
       teacherPokePeru: 'While teaching my English Workshop, I made the "Pocket Monsters in Peru" educational program, which can be accessed within this site.',
       sayHello: 'Say Hello!',
       interests: 'At the end of the day I am just a nerd. A threw a collage* together of things I have enjoyed.',
@@ -40,7 +40,7 @@ export function Bio() {
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
   return (
     <div className="aboutmeWrapper">
-      <div className="shotGlassTextSection" >
+      <div className="aboutmeTextSection" >
         <Container>
           <Row className="show-grid">
             <Col sm={2} md={4}>
@@ -54,11 +54,15 @@ export function Bio() {
         </Container>
         <Container>
           <Row className="show-grid aboutMePargraph">
+            <Col sm={0} md={1}>
+            </Col>
             <Col sm={10} >
               <h2 className="aboutMeSectionTitle" >{content.howDidIGetHere}</h2>
             </Col>
           </Row>
           <Row className="show-grid aboutMePargraph" >
+            <Col sm={0} md={1}>
+            </Col>
             <Col sm={10} md={5} className="aboutMePargraphWithImage" >
               <p>{content.intro}</p>
             </Col>
@@ -66,6 +70,8 @@ export function Bio() {
               <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/aboutme-myjourneymap.png' fluid />
             </Col>
             <Row className="show-grid aboutMePargraph">
+              <Col sm={0} md={1}>
+              </Col>
               <Col sm={10} md={3} >
                 <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/aboutme-myjourneymap_southam.png' fluid />
               </Col>
@@ -75,12 +81,16 @@ export function Bio() {
             </Row>
           </Row>
           <Row className="show-grid aboutMePargraph">
+            <Col sm={0} md={1}>
+            </Col>
             <Col sm={10} >
               <h2 className="aboutMeSectionTitle">{content.professionalWhat}</h2>
               <p>{content.afterGrad}</p>
             </Col>
           </Row>
           <Row className="show-grid aboutMePargraph">
+            <Col sm={0} md={1}>
+            </Col>
             <Col sm={10} md={5} className="aboutMePargraphWithImage" >
               {content.becomingTeacher}
             </Col>
@@ -89,6 +99,8 @@ export function Bio() {
             </Col>
           </Row>
           <Row className="show-grid aboutMePargraph">
+            <Col sm={0} md={1}>
+            </Col>
             <Col sm={10} >
               <p>
                 {content.teacherPokePeru}<a href={ROUTES.pokePeru.battle}>Pocket Monsters In Peru Project</a>
@@ -100,18 +112,26 @@ export function Bio() {
             </Col>
           </Row>
           <Row className="show-grid aboutMePargraph">
+            <Col sm={0} md={1}>
+            </Col>
             <Col sm={10} >
               <h2 className="aboutMeSectionTitle">{content.sayHello}</h2>
               <p>{content.interests}</p>
               <p>{content.commonInterests}</p>
-              <p>{content.directions} <span className="Bio_emailAddress">coffee@jeff.ski</span></p>
+              <p>{content.directions} <span className="bio_emailAddress">coffee@jeff.ski</span></p>
             </Col>
           </Row>
-          <Row className="show-grid BioHobbiesImg">
+          <Row className="show-grid bioHobbies-img">
+            <Col sm={0} md={1}>
+            </Col>
             <Col sm={10}  >
               <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/myhobbies.png' fluid />
             </Col>
-            <Col sm={8} smOffset={1} className="bioHobbieDisclaimer" >
+          </Row>
+          <Row className="show-grid">
+            <Col sm={0} md={1}>
+            </Col>
+            <Col sm={8} smOffset={1} className="bioHobbie-disclaimer" >
               <p>*{content.disclaimer}</p>
             </Col>
           </Row>

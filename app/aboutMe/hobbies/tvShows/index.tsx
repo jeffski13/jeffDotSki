@@ -87,8 +87,8 @@ export function TvShows({ tvShowsList, tvShowsFinishedList }: TvShowsProps) {
               {tvShowsFinishedList.map(renderTvShows)}
             </Row>
           </ul>
-          <Row className="show-grid BioHobbiesImg">
-            <Col sm={8} smOffset={1} className="bioHobbieDisclaimer" >
+          <Row className="show-grid bioHobbies-img">
+            <Col sm={8} smOffset={1} className="bioHobbie-disclaimer" >
               <p>*{content.disclaimer}</p>
             </Col>
           </Row>

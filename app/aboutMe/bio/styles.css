@@ -1,13 +1,20 @@
-.BioHobbiesImg {
+.bioHobbies-img {
     padding-top: 10px;
-    padding-bottom: 50px;
+    padding-bottom: 10px;
 }
 
-.bioHobbieDisclaimer {
+.bioHobbie-disclaimer {
     font-size: 1;
+    padding-bottom: 20px;
 }
 
-.Bio_emailAddress {
+.bio_emailAddress {
     color: darkblue;
     font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .aboutmeTextSection {
+    padding: 20px;
+  }
 }

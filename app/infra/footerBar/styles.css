@@ -1,4 +1,4 @@
-.FooterBarski {
+.FooterBar {
   position: fixed;
   right: 0;
   bottom: 0;
@@ -8,7 +8,7 @@
   z-index: 10;
 }
 
-.footerBarskiLinkWrapper {
+.footerBarLinkWrapper {
   color: white;
   line-height: 50px;
 }
@@ -17,24 +17,24 @@
   display: flex;
 }
 
-.footerBarskiLink {
+.footerBarLink {
   color: white;
   text-decoration: none;
   font-weight: 700;
 }
 
-.footerBarskiLink:hover {
+.footerBarLink:hover {
   color: white;
   text-decoration: none;
   text-shadow: 2px 1px #444;
 }
 
-.footerBarskiLink:visited {
+.footerBarLink:visited {
   text-decoration: none;
   color: white;
 }
 
-.footerBarskiLink:focus {
+.footerBarLink:focus {
   text-decoration: none;
   color: white;
 }

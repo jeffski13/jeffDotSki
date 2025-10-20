@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
-import FooterBarski from "~/infra/footerBarski";
+import FooterBar from "~/infra/footerBar";
 import ROUTES from "~/consts/ROUTES";
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 
@@ -62,7 +62,7 @@ export default function TitlePage() {
           </Col>
         </Row>
       </Container>
-      <FooterBarski />
+      <FooterBar />
     </div>
   );
 }

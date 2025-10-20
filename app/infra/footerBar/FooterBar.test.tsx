@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import packageJson from '../../../package.json';
-import FooterBarski from '.';
+import FooterBar from '.';
 
-describe('FooterBarski Component', () => {
+describe('FooterBar Component', () => {
   test('renders main content along with version', () => {
-    render(<FooterBarski />);
+    render(<FooterBar />);
     expect(screen.getByText(`Version: ${packageJson.version}`)).toBeInTheDocument();
   });
 
   test('displays the correct version number', () => {
-      render(<FooterBarski />);
+      render(<FooterBar />);
       
       // Check that the specific version number is displayed
       const versionElement = screen.getByText(/Version: \d+\.\d+\.\d+/);
