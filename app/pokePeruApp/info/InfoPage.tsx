@@ -105,7 +105,7 @@ function InfoPage({ }: InfoPageProps) {
     diyNontechnicalMonsterCreationWorksheetTitle: 'Ficha de Creación de Monstruos',
     diyNontechnicalGymleaderCreationWorksheetTitle: 'Ficha de Creación de Líderes de Gimnasio',
     diyTechnicalTitle: 'Manera Técnica',
-    diyDescPreLink: '¡Por supuesto! Este juego está hecho con node v22.20.0. Puedes descargar el contenido desde mi github en https://github.com/jeffski13/jeffDotSki(descargalo directamente ',
+    diyDescPreLink: '¡Por supuesto! Este juego está hecho con node v22.20.0. Puedes descargar el contenido (descarga la versión simplificada directamente ',
     diyDescDownloadLink: 'aqui',
     diyDescPostLink: ') y ejecutar los siguientes comandos:',
     browser: 'En el navegador, ve a',
@@ -164,7 +164,7 @@ function InfoPage({ }: InfoPageProps) {
     diyNontechnicalMonsterCreationWorksheetTitle: 'Monster Creation Worksheet',
     diyNontechnicalGymleaderCreationWorksheetTitle: 'Gym Leader Creation Worksheet',
     diyTechnicalTitle: 'Technical Method (with Battle Simulation and Pokedex)',
-    diyDescPreLink: 'This game is built with node v22.20.0. The contents can be downloaded from my github repo at https://github.com/jeffski13/jeffDotSki (direct download ',
+    diyDescPreLink: 'This game is built with node v22.20.0. The contents can be downloaded (simplified direct download ',
     diyDescDownloadLink: 'here',
     diyDescPostLink: ') and then run the following commands inside of the unzipped folder:',
     browser: 'In the browser, go to',
@@ -337,7 +337,7 @@ function InfoPage({ }: InfoPageProps) {
             </Row>
           </Container>
           <h4>{content.diyTechnicalTitle}</h4>
-          <p>{content.diyDescPreLink}<a href="https://github.com/jeffski13/jeffDotSki/archive/refs/heads/master.zip">{content.diyDescDownloadLink}</a>{content.diyDescPostLink}</p>
+          <p>{content.diyDescPreLink}<a href="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/pokeperuproject.zip">{content.diyDescDownloadLink}</a>{content.diyDescPostLink}</p>
           <p><strong>npm install</strong></p>
           <p><strong>npm start</strong></p>
           <p>{content.browser} <a href={pokePeruLink}>{pokePeruLink}</a></p>
