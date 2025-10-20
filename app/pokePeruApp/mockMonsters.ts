@@ -60,14 +60,14 @@ export const mockTrainers: GymLeader[] = [
     id: 'trainer1id',
     name: "Ash",
     image: "/images/gymleaders/trainersquad1.png",
-    environmentImage: "/images/perulandscape/peru-1.jpg",
+    environmentImage: "/images/landscape/peru-1.jpg",
     biome: "Countryside",
   },
   {
     id: 'trainer2id',
     name: "Brock",
     image: "/images/gymleaders/trainersquad2.png",
-    environmentImage: "/images/perulandscape/peru-2.jpg",
+    environmentImage: "/images/landscape/peru-2.jpg",
     biome: "Badlands",
   },
 ]

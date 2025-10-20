@@ -52,7 +52,7 @@ function InfoPage({ }: InfoPageProps) {
   id: '${uuidv4()}',
   name: "",
   image: "/images/gymleaders/",
-  environmentImage: "/images/perulandscape/",
+  environmentImage: "/images/landscape/",
   biome: "",
 }`;
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
@@ -171,7 +171,7 @@ function InfoPage({ }: InfoPageProps) {
     modify: 'The following files can be modified with the respective monster and gym leader data:',
     conjunction: 'and',
     images: 'Images with the monsters and gym leader data can be placed here: ',
-    environments: 'New environments can be added inside of /public/images/perulandscape',
+    environments: 'New environments can be added inside of /public/images/landscape',
   };
 
   const multiLangContent: MultiLangContent = {
@@ -294,7 +294,7 @@ function InfoPage({ }: InfoPageProps) {
           </Container>
           <p>{content.gymLeaderDataModInstructions}<strong>gymleaders.tsx</strong></p>
           <p>{content.gymLeaderImagesModInstructions}<strong>/public/images/gymleaders</strong></p>
-          <p>{content.gymLeaderEnvironmentsModInstructions}<strong>/public/images/perulandscape</strong></p>
+          <p>{content.gymLeaderEnvironmentsModInstructions}<strong>/public/images/landscape</strong></p>
         </div>
         <div className="infoSection" id="sectionBattle">
           <h3>{content.battle}</h3>
@@ -344,7 +344,7 @@ function InfoPage({ }: InfoPageProps) {
           <p>{content.modify}</p>
           <p><strong>monsters.tsx</strong> {content.conjunction} <strong>gymleaders.tsx</strong></p>
           <p>{content.images}: <strong>/public/images/monsters</strong> {content.conjunction} <strong>/public/images/gymleaders</strong></p>
-          <p>{content.environments} <strong>/public/images/perulandscape</strong></p>
+          <p>{content.environments} <strong>/public/images/landscape</strong></p>
           <Container>
             <Row className="info-images-container">
               <Col sm={11} md={5}>
