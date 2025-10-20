@@ -7,9 +7,9 @@ import { getExtendedUniverseMonsters } from "./monstersExtendedUniverse"
 import { getExtendedUniverseGymLeaders } from "./gymLeadersExtendedUniverse";
 
 const EDIT_KEY = 'pokedexEditsClaremore';
-const battleRoute = ROUTES.pokePeru.extendedUnivers.claremore.battle;
-const dexRoute = ROUTES.pokePeru.extendedUnivers.claremore.dex;
-const gymRoute = ROUTES.pokePeru.extendedUnivers.claremore.gym;
+const battleRoute = ROUTES.pokePeru.extendedUniverse.claremore.battle;
+const dexRoute = ROUTES.pokePeru.extendedUniverse.claremore.dex;
+const gymRoute = ROUTES.pokePeru.extendedUniverse.claremore.gym;
 
 export default function PokePeruExtendedUniverse() {
   return (
