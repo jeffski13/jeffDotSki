@@ -9,7 +9,7 @@ const ROUTES = {
       pokedex: '/pokeperu/pokedex',
       gymleaders: '/pokeperu/gymleaders',
       info: '/pokeperu/info',
-      extendedUnivers: {
+      extendedUniverse: {
         claremore: {
           battle: '/pokeperu/claremore/battle',
           dex: '/pokeperu/claremore/pokedex',
