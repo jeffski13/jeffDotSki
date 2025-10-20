@@ -10,7 +10,7 @@ import './styles.css';
 import ROUTES from '~/consts/ROUTES';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/langSupport';
 
-export function FooterBarski() {
+export function FooterBar() {
   const [isGithubImgMouseOver, setIsGithubImgMouseOver] = useState(false);
   const [isInstaMouseOver, setIsInstaMouseOver] = useState(false);
 
@@ -33,10 +33,10 @@ export function FooterBarski() {
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   return(
-    <Container className="FooterBarski" fluid>
+    <Container className="FooterBar" fluid>
       <Row className="show-grid">
         <Col xs={1} />
-        <Col xs={5} sm={3} className="footerBarskiLinkWrapper">
+        <Col xs={5} sm={3} className="footerBarLinkWrapper">
           <div className="footerLinksArea" >
               {content.version}: {packageJson.version}
           </div>
@@ -77,4 +77,4 @@ export function FooterBarski() {
   );
 }
 
-export default FooterBarski;
+export default FooterBar;
