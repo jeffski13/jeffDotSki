@@ -65,9 +65,9 @@ export default function Battle({
   const [showBackConfirm, setShowBackConfirm] = useState(false);
 
   useEffect(() => {
-    // Randomly select an image from the /perulandscape folder on mount
-    const randomImageIndex = Math.floor(Math.random() * 11) + 1; // Random number for background
-    setBackgroundImage(`/images/perulandscape/peru-${randomImageIndex}.jpg`);
+    // Randomly select an image from the /landscape folder on mount
+    const randomImageIndex = Math.floor(Math.random() * 8) + 1; // Random number for background
+    setBackgroundImage(`/images/landscape/peru-${randomImageIndex}.jpg`);
   }, []);
 
   const handleStruggle = (attacker: number) => {
