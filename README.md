@@ -27,11 +27,11 @@ A portable version of pokeperu is available [here](https://s3.us-east-2.amazonaw
 
 To create this portable version, delete the following folders:
 
-- [aboutMe](./app/aboutMe)
+- [aboutMe](./app/aboutMeSection)
 - [footerBarski](./app/infra/footerBarski)
 - [pokeperuExtendedUniverse](./app/pokePeruApp/pokeperuExtendedUniverse)
 - [extendedUniverse](./public/images/monsters/extendedUniverse)
-- [titlePage](./app/titlePage)
+- [homePage](./app/homePage)
 - [firebaseski](./firebaseski)
 - [build](./build)
 - [.github](./github)

@@ -11,7 +11,7 @@ interface Role {
   link: string;
 }
 
-export default function TitlePage() {
+export default function HomePage() {
   const multiLangContent: MultiLangContent = {
     es: {
       whoIs: '¿Quién Es Jeff (Jeffski) Szcinski?',
@@ -36,25 +36,25 @@ export default function TitlePage() {
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage())
 
   return (
-    <div className="titlePage" >
+    <div className="homePage" >
       <div>
         <div className="TitleImage" >
           <Image src="https://s3.us-east-2.amazonaws.com/jeff.ski/title/jeff_villarica_horse_2025_1080.jpg" fluid />
         </div>
-        <h1 className="titlePage_title-container"><span className="titlePage_title-websiteName">JEFF</span> <span className="titlePage_title-nonwebsitename">SZCIN</span><span className="titlePage_title-websiteName">SKI</span></h1>
+        <h1 className="homePage_title-container"><span className="homePage_title-websiteName">JEFF</span> <span className="homePage_title-nonwebsitename">SZCIN</span><span className="homePage_title-websiteName">SKI</span></h1>
       </div>
-      <Container fluid className="titlePage_aboutJeff">
+      <Container fluid className="homePage_aboutJeff">
         <Row>
-          <Col xs={12} sm={12} md={5} className="titlePage_aboutJeff-image">
+          <Col xs={12} sm={12} md={5} className="homePage_aboutJeff-image">
             <Image src="https://s3.us-east-2.amazonaws.com/jeff.ski/title/titlePage-info1-md.jpg" roundedCircle fluid />
           </Col>
-          <Col xs={12} sm={12} md={7} className="titlePage_aboutJeff-text">
-            <div className="titlePage_aboutJeff-text-container">
+          <Col xs={12} sm={12} md={7} className="homePage_aboutJeff-text">
+            <div className="homePage_aboutJeff-text-container">
               <h3>{content.whoIs}</h3>
               <ul>
                 {content.roles.map((role: Role, i) => (
                   <li key={i}>
-                    <strong><a className="titlePage-link" href={role.link}>{role.label}</a>:</strong> {role.desc}
+                    <strong><a className="homePage-link" href={role.link}>{role.label}</a>:</strong> {role.desc}
                   </li>
                 ))}
               </ul>
