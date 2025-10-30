@@ -9,5 +9,14 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './vitest.setup.ts',
+    coverage: {
+      exclude: [
+        'build/client/assets/**', // Build
+        'firebaseski/public/assets/**', // Build
+        '**/+types/**', // react router
+        '.react-router/**', // react router
+        'react-router.config.ts', // react router
+      ],
+    },
   },
 });
