@@ -13,6 +13,10 @@
     font-weight: bold;
 }
 
+.bio-betweenParagraphs {
+  white-space: 20px;
+}
+
 @media (max-width: 600px) {
   .aboutmeTextSection {
     padding: 20px;
