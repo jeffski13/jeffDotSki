@@ -4,5 +4,6 @@
 # React Router
 /.react-router/
 /build/
+/coverage/
 
 **/firebaseski/public
