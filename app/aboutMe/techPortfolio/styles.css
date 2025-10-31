@@ -66,6 +66,7 @@
 }
 
 .logo-item img {
+    margin: 25px;
     max-width: 140px;
     max-height: 80px;
     object-fit: contain;

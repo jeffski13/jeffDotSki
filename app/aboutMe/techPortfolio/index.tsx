@@ -7,7 +7,7 @@ export default function TechPortfolio() {
   const multiLangContent: MultiLangContent = {
     es: {
       heroTitle: 'Portafolio Tecnológico',
-      heroText: 'Desarrollador de aplicaciones Android y sitios web con experiencia en bluetooth, redes y pruebas automatizadas.',
+      heroText: 'Desarrollador de aplicaciones Android y sitios web con experiencia en redes, bluetooth, y pruebas automatizadas.',
       logosTitle: 'Empresas con las que he trabajado',
       tandemTitle: 'Trabajo en Tandem Diabetes Care',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
@@ -17,8 +17,8 @@ export default function TechPortfolio() {
     },
     default: {
       heroTitle: 'Tech Portfolio',
-      heroText: 'Developer of Android apps and websites; experienced with Bluetooth, networking, and automated testing.',
-      logosTitle: 'Companies I have worked with',
+      heroText: 'Developer of Android apps and websites; experienced with networking, Bluetooth, and automated testing.',
+      logosTitle: 'Who I\'ve worked with',
       tandemTitle: 'Work at Tandem Diabetes Care',
       tandemText: 'At Tandem I transformed the Bluetooth and networking layers of the Android app. I mocked the insulin pump Bluetooth connection to the Android app as well as the networking layer for testing and demos.',
       reelTitle: 'Images (mock data and explanation)',
