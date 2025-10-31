@@ -1,3 +1,4 @@
+import { Col, Container, Row } from 'react-bootstrap';
 import './styles.css';
 import FooterBar from "~/infra/footerBar";
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
@@ -29,12 +30,12 @@ export default function TechPortfolio() {
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   const companies = [
-    { name: 'Beardon Services', img: '/images/companies/beardon.png' },
-    { name: 'USAA', img: '/images/companies/usaa.png' },
-    { name: 'Availity', img: '/images/companies/availity.png' },
-    { name: 'Boeing', img: '/images/companies/boeing.png' },
-    { name: 'Tandem Diabetes Care', img: '/images/companies/tandem.png' },
-    { name: 'Colegio Santa Margarita', img: '/images/companies/collegiosantamargarita.png' },
+    { name: 'Beardon Services', img: '/images/techPortfolio/companies/beardon.png' },
+    { name: 'USAA', img: '/images/techPortfolio/companies/usaa.png' },
+    { name: 'Availity', img: '/images/techPortfolio/companies/availity.png' },
+    { name: 'Boeing', img: '/images/techPortfolio/companies/boeing.png' },
+    { name: 'Tandem Diabetes Care', img: '/images/techPortfolio/companies/tandem.png' },
+    { name: 'Colegio Santa Margarita', img: '/images/techPortfolio/companies/santaMargarita.png' },
   ];
 
   const tandemReel = [
@@ -59,13 +60,15 @@ export default function TechPortfolio() {
 
       <section className="companies container">
         <h2>{content.logosTitle}</h2>
-        <div className="logos-grid">
-          {companies.map(c => (
-            <div key={c.name} className="logo-item" title={c.name}>
-              <img src={c.img} alt={c.name} />
-            </div>
-          ))}
-        </div>
+        <Container>
+          <Row>
+            {companies.map(c => (
+              <Col xs={6} md={4} key={c.name} className="logo-item" title={c.name}>
+                <img src={c.img} alt={c.name} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
       </section>
 
       <div className="parallax parallax-2" />
