@@ -87,7 +87,7 @@ export default function TechPortfolio() {
   return (
     <div className="paralax-portfolio">
 
-      <div className="paralax-bgimg-1">
+      <div className="paralax-bgimg paralax-bgimg-1">
         <div className="caption">
           <span className="border">{content.heroTitle}</span>
         </div>
@@ -132,9 +132,9 @@ export default function TechPortfolio() {
         <a href={ROUTES.external.resume.softwareEngineer} >{content.resumeLink}</a>
       </section>
 
-      <div className="paralax-bgimg-2">
+      <div className="paralax-bgimg paralax-bgimg-2">
         <div className="caption">
-          <span className="border paralax-image2-overlay-text">Code Transformation</span>
+          <span className="border paralax-image2-overlay-text">ENABLING BUSINESS</span>
         </div>
       </div>
 
@@ -157,21 +157,25 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-bgimg-3">
+      <div className="paralax-bgimg paralax-bgimg-3">
         <div className="caption">
-          <span className="border paralax-image3-overlay-text">SCROLL UP</span>
+          <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
         </div>
       </div>
 
       <div className="betweenContainer2">
         <div className="betweenText2">
-          <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
+          <section className="passion container">
+            <h2>{content.passionTitle}</h2>
+            <p>{content.passionText}</p>
+            <p>Code coverage: <strong>82%</strong></p>
+          </section>
         </div>
       </div>
 
-      <div className=".paralax-bgimg-4">
+      <div className="paralax-bgimg paralax-bgimg-4">
         <div className="caption">
-          <span className="border">COOL!</span>
+          <span className="border">THANKS FOR VISITING!</span>
         </div>
       </div>
       <FooterBar />
@@ -190,11 +194,7 @@ export default function TechPortfolio() {
 
 
 
-      <section className="passion container">
-        <h2>{content.passionTitle}</h2>
-        <p>{content.passionText}</p>
-        <p>Code coverage: <strong>82%</strong></p>
-      </section>
+
     </div>
 
   );
