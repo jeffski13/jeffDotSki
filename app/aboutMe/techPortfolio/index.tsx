@@ -8,7 +8,15 @@ export default function TechPortfolio() {
   const multiLangContent: MultiLangContent = {
     es: {
       heroTitle: 'Portafolio Tecnológico',
-      heroText: 'Desarrollador de aplicaciones Android y sitios web con experiencia en redes, bluetooth, y pruebas automatizadas.',
+      heroText1prefix: 'Desarrollador de ',
+      heroText1highlight: 'aplicaciones Android y paginas web',
+      heroText1suffix: '. Cuenta con diez años de experiencia en negocios de todos tamaños, de emprendamientos hasta corporaciones grandes. Sus especialidades:',
+      skills1: 'Redes',
+      skills2: 'Bluetooth',
+      skills3: 'Pruebas Unitarias',
+      heroText2prefix: 'Tiene una pasión por ',
+      heroText2highlight: 'productividad',
+      heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
       logosTitle: 'Empresas con las que he trabajado',
       tandemTitle: 'Trabajo en Tandem Diabetes Care',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
@@ -18,7 +26,15 @@ export default function TechPortfolio() {
     },
     default: {
       heroTitle: 'Tech Portfolio',
-      heroText: 'Developer of Android apps and websites; experienced with networking, Bluetooth, and automated testing.',
+      heroText1prefix: 'Developer of ',
+      heroText1highlight: 'Android apps and websites',
+      heroText1suffix: ' Ten years of experience in companies ranging from startup all the way to large coorporations. Specializing in:',
+      skills1: 'Networking',
+      skills2: 'Bluetooth',
+      skills3: 'Unit Testing',
+      heroText2prefix: 'Passion for ',
+      heroText2highlight: 'productivity',
+      heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
       logosTitle: 'Who I\'ve worked with',
       tandemTitle: 'Work at Tandem Diabetes Care',
       tandemText: 'At Tandem I transformed the Bluetooth and networking layers of the Android app. I mocked the insulin pump Bluetooth connection to the Android app as well as the networking layer for testing and demos.',
@@ -50,13 +66,33 @@ export default function TechPortfolio() {
 
       <div className="bgimg-1">
         <div className="caption">
-        <span className="border">TECH PORTFOLIO</span>
+        <span className="border">{content.heroTitle}</span>
         </div>
       </div>
 
       <div className="paralax-top">
-        <h3 className="paralax-paragraph">Parallax Demo</h3>
-        <p>Parallax scrolling is a web site trend where the background content is moved at a different speed than the foreground content while scrolling. Nascetur per nec posuere turpis, lectus nec libero turpis nunc at, sed posuere mollis ullamcorper libero ante lectus, blandit pellentesque a, magna turpis est sapien duis blandit dignissim. Viverra interdum mi magna mi, morbi sociis. Condimentum dui ipsum consequat morbi, curabitur aliquam pede, nullam vitae eu placerat eget et vehicula. Varius quisque non molestie dolor, nunc nisl dapibus vestibulum at, sodales tincidunt mauris ullamcorper, dapibus pulvinar, in in neque risus odio. Accumsan fringilla vulputate at quibusdam sociis eleifend, aenean maecenas vulputate, non id vehicula lorem mattis, ratione interdum sociis ornare. Suscipit proin magna cras vel, non sit platea sit, maecenas ante augue etiam maecenas, porta porttitor placerat leo.</p>
+        <section className="hero">
+        <Container>
+          <Row>
+            <Col xs={6} md={4} >
+              <img className="hero-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
+            </Col>
+            <Col xs={6} md={8} >
+              <div className="hero-text">
+                <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
+                <ul>
+                  <li>{content.skills1}</li>
+                  <li>{content.skills2}</li>
+                  <li>{content.skills3}</li>
+                </ul>
+                <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+        <div className="hero-inner container">
+        </div>
+      </section>
       </div>
 
       <div className="bgimg-2">
@@ -94,33 +130,7 @@ export default function TechPortfolio() {
   );
   return (
     <div className="techPortfolio">
-      <section className="hero">
-        <Container>
-          <Row>
-            <Col xs={6} md={4} >
-              <img className="hero-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
-            </Col>
-            <Col xs={6} md={8} >
-              <div className="hero-text">
-                <h1>{content.heroTitle}</h1>
-                <p>{content.heroText}</p>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6} md={8} >
-              <div className="hero-text">
-                <p>{content.heroText}</p>
-              </div>
-            </Col>
-            <Col xs={6} md={4} >
-              <img className="hero-image" src="/images/techPortfolio/hero-dev-desk.jpg" alt="Developer at work" />
-            </Col>
-          </Row>
-        </Container>
-        <div className="hero-inner container">
-        </div>
-      </section>
+      
 
       <div className="parallax parallax-1" />
 
