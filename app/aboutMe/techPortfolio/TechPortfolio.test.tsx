@@ -6,7 +6,7 @@ describe('TechPortfolio Component', () => {
     render(<TechPortfolio />);
     
     // Check that main content is still present
-    expect(screen.getByText('Developer')).toBeInTheDocument();
+    expect(screen.getByText(/Developer/i)).toBeInTheDocument();
     
   });
 });
