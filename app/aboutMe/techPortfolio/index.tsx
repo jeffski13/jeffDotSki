@@ -94,14 +94,14 @@ export default function TechPortfolio() {
       </div>
 
       <div className="paralax-paragraph-top">
-        <section className="hero">
+        <section className="techPortfolio-overview">
           <Container>
             <Row>
               <Col xs={12} md={4} >
-                <img className="hero-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
+                <img className="techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
               </Col>
               <Col xs={12} md={8} >
-                <div className="hero-text">
+                <div className="techPortfolio-overview-text">
                   <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
                   <ul className="skills-list">
                     <li>{content.skills1}</li>
@@ -113,7 +113,7 @@ export default function TechPortfolio() {
               </Col>
             </Row>
           </Container>
-          <div className="hero-inner container">
+          <div className="techPortfolio-overview-inner container">
           </div>
         </section>
       </div>
