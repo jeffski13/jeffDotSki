@@ -1,9 +1,12 @@
 import { Col, Container, Row } from 'react-bootstrap';
+import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
+import ROUTES from '~/consts/ROUTES';
 import './styles.css';
 import './stylesParalax.css';
-import ROUTES from '~/consts/ROUTES';
+
+import "react-image-gallery/styles/css/image-gallery.css";
 
 export interface TechPortfolioContentPerLanguage {
   heroTitle: string;
@@ -58,9 +61,9 @@ export default function TechPortfolio() {
       heroText2highlight: 'productivity',
       heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
       logosTitle: 'Who I\'ve worked with',
-      tandemTitle: 'Enabling a Faster Business',
+      tandemTitle: 'Efficiency Gains at Tandem',
       resumeLink: 'Click Here for Resume',
-      tandemText: 'At Tandem I transformed the Bluetooth and networking layers of the Android app. I mocked the insulin pump Bluetooth connection to the Android app as well as the networking layer for testing and demos.',
+      tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
       reelTitle: 'Images (mock data and explanation)',
       passionTitle: 'Passion for high-quality code',
       passionText: 'I transformed a codebase by introducing a high-coverage unit test suite. This web site you are viewing has a code coverage of 82%.'
@@ -79,9 +82,21 @@ export default function TechPortfolio() {
   ];
 
   const tandemReel = [
-    { img: '/images/techPortfolio/noMorePumpOrPhone.png', caption: 'Mock insulin pump data stream' },
-    { img: '/images/tandem/mock-2.png', caption: 'Mock network responses' },
-    { img: '/images/tandem/mock-3.png', caption: 'Bluetooth connection emulator UI' },
+    {
+      original: '/images/techPortfolio/tandemImprovements/noMorePumpOrPhone.png',
+      thumbnail: '/images/techPortfolio/tandemImprovements/noMorePumpOrPhone.png',
+      caption: 'Emulated Insulin Pump Bluetooth Connection'
+    },
+    {
+      original: '/images/techPortfolio/tandemImprovements/patientPlayback.png',
+      thumbnail: '/images/techPortfolio/tandemImprovements/patientPlayback.png',
+      caption: 'Sanitized patient data could be replayed inside of the development environment.'
+    },
+    {
+      original: '/images/techPortfolio/tandemImprovements/simulatedGraphData.png',
+      thumbnail: '/images/techPortfolio/tandemImprovements/simulatedGraphData.png',
+      caption: 'Simulated Insulin Data to test app in different therapy situations.'
+    },
   ];
 
   return (
@@ -145,13 +160,21 @@ export default function TechPortfolio() {
             <p className="tandem-text">{content.tandemText}</p>
 
             <h3>{content.reelTitle}</h3>
-            <div className="reel" role="list">
-              {tandemReel.map((r, i) => (
-                <div key={i} className="reel-item" role="listitem">
-                  <img src={r.img} alt={r.caption} />
-                  <div className="reel-caption">{r.caption}</div>
-                </div>
-              ))}
+            <div className="tandemImprovements-gallery-container">
+              <Container>
+                <Row>
+                  <Col xs={12} md={2} >
+                  </Col>
+                  <Col xs={12} md={8} >
+                    <ImageGallery items={tandemReel}
+                     slideDuration={1000} 
+                     slideInterval={10000} 
+                     autoPlay />
+                  </Col>
+                  <Col xs={12} md={2} >
+                  </Col>
+                </Row>
+              </Container>
             </div>
           </section>
         </div>

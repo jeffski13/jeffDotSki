@@ -33,7 +33,7 @@
     margin: 0 0 8px 0;
 }
 
-.skills-list{
+.skills-list {
     list-style: disc;
 }
 
@@ -64,31 +64,6 @@
 
 .tandem {
     padding: 48px 0;
-}
-
-.reel {
-    display: flex;
-    gap: 16px;
-    overflow-x: auto;
-    padding-bottom: 12px;
-}
-
-.reel-item {
-    min-width: 280px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.reel-item img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-}
-
-.reel-caption {
-    padding: 8px;
 }
 
 .passion {
