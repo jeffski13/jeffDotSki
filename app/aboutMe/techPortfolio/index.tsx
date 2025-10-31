@@ -50,7 +50,7 @@ export default function TechPortfolio() {
       heroTitle: 'Tech Portfolio',
       heroText1prefix: 'Developer of ',
       heroText1highlight: 'Android apps and websites',
-      heroText1suffix: ' Ten years of experience in companies ranging from startup all the way to large coorporations. Specializing in:',
+      heroText1suffix: '. Ten years of experience in companies ranging from startups all the way to large coorporations. Specializing in:',
       skills1: 'Networking',
       skills2: 'Bluetooth',
       skills3: 'Unit Testing',
@@ -58,7 +58,7 @@ export default function TechPortfolio() {
       heroText2highlight: 'productivity',
       heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
       logosTitle: 'Who I\'ve worked with',
-      tandemTitle: 'Work at Tandem Diabetes Care',
+      tandemTitle: 'Enabling a Faster Business',
       resumeLink: 'Click Here for Resume',
       tandemText: 'At Tandem I transformed the Bluetooth and networking layers of the Android app. I mocked the insulin pump Bluetooth connection to the Android app as well as the networking layer for testing and demos.',
       reelTitle: 'Images (mock data and explanation)',
@@ -79,7 +79,7 @@ export default function TechPortfolio() {
   ];
 
   const tandemReel = [
-    { img: '/images/tandem/mock-1.png', caption: 'Mock insulin pump data stream' },
+    { img: '/images/techPortfolio/noMorePumpOrPhone.png', caption: 'Mock insulin pump data stream' },
     { img: '/images/tandem/mock-2.png', caption: 'Mock network responses' },
     { img: '/images/tandem/mock-3.png', caption: 'Bluetooth connection emulator UI' },
   ];
@@ -87,13 +87,13 @@ export default function TechPortfolio() {
   return (
     <div className="paralax-portfolio">
 
-      <div className="bgimg-1">
+      <div className="paralax-bgimg-1">
         <div className="caption">
           <span className="border">{content.heroTitle}</span>
         </div>
       </div>
 
-      <div className="paralax-top">
+      <div className="paralax-paragraph-top">
         <section className="hero">
           <Container>
             <Row>
@@ -132,13 +132,13 @@ export default function TechPortfolio() {
         <a href={ROUTES.external.resume.softwareEngineer} >{content.resumeLink}</a>
       </section>
 
-      <div className="bgimg-2">
+      <div className="paralax-bgimg-2">
         <div className="caption">
           <span className="border paralax-image2-overlay-text">Code Transformation</span>
         </div>
       </div>
 
-      <div className="betweenContainer">
+      <div className="paralax-contentBetweenContainer">
         <div className="betweenText">
           <section className="tandem container">
             <h2>{content.tandemTitle}</h2>
@@ -157,7 +157,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="bgimg-3">
+      <div className="paralax-bgimg-3">
         <div className="caption">
           <span className="border paralax-image3-overlay-text">SCROLL UP</span>
         </div>
@@ -169,7 +169,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="bgimg-1">
+      <div className="paralax-bgimg-1">
         <div className="caption">
           <span className="border">COOL!</span>
         </div>
