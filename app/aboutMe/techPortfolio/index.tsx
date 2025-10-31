@@ -3,6 +3,27 @@ import FooterBar from "~/infra/footerBar";
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import './styles.css';
 import './stylesParalax.css';
+import ROUTES from '~/consts/ROUTES';
+
+export interface TechPortfolioContentPerLanguage {
+  heroTitle: string;
+  heroText1prefix: string;
+  heroText1highlight: string;
+  heroText1suffix: string;
+  skills1: string;
+  skills2: string;
+  skills3: string;
+  heroText2prefix: string;
+  heroText2highlight: string;
+  heroText2suffix: string;
+  logosTitle: string;
+  resumeLink: string;
+  tandemTitle: string;
+  tandemText: string;
+  reelTitle: string;
+  passionTitle: string;
+  passionText: string;
+}
 
 export default function TechPortfolio() {
   const multiLangContent: MultiLangContent = {
@@ -18,6 +39,7 @@ export default function TechPortfolio() {
       heroText2highlight: 'productividad',
       heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
       logosTitle: 'Empresas con las que he trabajado',
+      resumeLink: 'Haz Click acá por Curriculum Vitae',
       tandemTitle: 'Trabajo en Tandem Diabetes Care',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
       reelTitle: 'Imágenes (mock data y explicación)',
@@ -37,6 +59,7 @@ export default function TechPortfolio() {
       heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
       logosTitle: 'Who I\'ve worked with',
       tandemTitle: 'Work at Tandem Diabetes Care',
+      resumeLink: 'Click Here for Resume',
       tandemText: 'At Tandem I transformed the Bluetooth and networking layers of the Android app. I mocked the insulin pump Bluetooth connection to the Android app as well as the networking layer for testing and demos.',
       reelTitle: 'Images (mock data and explanation)',
       passionTitle: 'Passion for high-quality code',
@@ -44,15 +67,15 @@ export default function TechPortfolio() {
     }
   };
 
-  const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+  const content: TechPortfolioContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   const companies = [
-    { name: 'Beardon Services', img: '/images/techPortfolio/companies/beardon.png' },
-    { name: 'USAA', img: '/images/techPortfolio/companies/usaa.png' },
-    { name: 'Availity', img: '/images/techPortfolio/companies/availity.png' },
     { name: 'Boeing', img: '/images/techPortfolio/companies/boeing.png' },
-    { name: 'Tandem Diabetes Care', img: '/images/techPortfolio/companies/tandem.png' },
+    { name: 'USAA', img: '/images/techPortfolio/companies/usaa.png' },
     { name: 'Colegio Santa Margarita', img: '/images/techPortfolio/companies/santaMargarita.png' },
+    { name: 'Tandem Diabetes Care', img: '/images/techPortfolio/companies/tandem.png' },
+    { name: 'Availity', img: '/images/techPortfolio/companies/availity.png' },
+    { name: 'Beardon Services', img: '/images/techPortfolio/companies/beardon.png' },
   ];
 
   const tandemReel = [
@@ -66,73 +89,34 @@ export default function TechPortfolio() {
 
       <div className="bgimg-1">
         <div className="caption">
-        <span className="border">{content.heroTitle}</span>
+          <span className="border">{content.heroTitle}</span>
         </div>
       </div>
 
       <div className="paralax-top">
         <section className="hero">
-        <Container>
-          <Row>
-            <Col xs={6} md={4} >
-              <img className="hero-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
-            </Col>
-            <Col xs={6} md={8} >
-              <div className="hero-text">
-                <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
-                <ul>
-                  <li>{content.skills1}</li>
-                  <li>{content.skills2}</li>
-                  <li>{content.skills3}</li>
-                </ul>
-                <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-        <div className="hero-inner container">
-        </div>
-      </section>
+          <Container>
+            <Row>
+              <Col xs={12} md={4} >
+                <img className="hero-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
+              </Col>
+              <Col xs={12} md={8} >
+                <div className="hero-text">
+                  <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
+                  <ul className="skills-list">
+                    <li>{content.skills1}</li>
+                    <li>{content.skills2}</li>
+                    <li>{content.skills3}</li>
+                  </ul>
+                  <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+          <div className="hero-inner container">
+          </div>
+        </section>
       </div>
-
-      <div className="bgimg-2">
-        <div className="caption">
-        <span className="border paralax-image2-overlay-text">LESS HEIGHT</span>
-        </div>
-      </div>
-
-      <div className="betweenContainer">
-        <div className="betweenText">
-        <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
-        </div>
-      </div>
-
-      <div className="bgimg-3">
-        <div className="caption">
-        <span className="border paralax-image3-overlay-text">SCROLL UP</span>
-        </div>
-      </div>
-
-      <div className="betweenContainer2">
-        <div className="betweenText2">
-        <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
-        </div>
-      </div>
-
-      <div className="bgimg-1">
-        <div className="caption">
-        <span className="border">COOL!</span>
-        </div>
-      </div>
-      <FooterBar />
-    </div>
-
-  );
-  return (
-    <div className="techPortfolio">
-      
-
-      <div className="parallax parallax-1" />
 
       <section className="companies container">
         <h2>{content.logosTitle}</h2>
@@ -145,24 +129,66 @@ export default function TechPortfolio() {
             ))}
           </Row>
         </Container>
+        <a href={ROUTES.external.resume.softwareEngineer} >{content.resumeLink}</a>
       </section>
+
+      <div className="bgimg-2">
+        <div className="caption">
+          <span className="border paralax-image2-overlay-text">Code Transformation</span>
+        </div>
+      </div>
+
+      <div className="betweenContainer">
+        <div className="betweenText">
+          <section className="tandem container">
+            <h2>{content.tandemTitle}</h2>
+            <p className="tandem-text">{content.tandemText}</p>
+
+            <h3>{content.reelTitle}</h3>
+            <div className="reel" role="list">
+              {tandemReel.map((r, i) => (
+                <div key={i} className="reel-item" role="listitem">
+                  <img src={r.img} alt={r.caption} />
+                  <div className="reel-caption">{r.caption}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div className="bgimg-3">
+        <div className="caption">
+          <span className="border paralax-image3-overlay-text">SCROLL UP</span>
+        </div>
+      </div>
+
+      <div className="betweenContainer2">
+        <div className="betweenText2">
+          <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
+        </div>
+      </div>
+
+      <div className="bgimg-1">
+        <div className="caption">
+          <span className="border">COOL!</span>
+        </div>
+      </div>
+      <FooterBar />
+    </div>
+
+  );
+  return (
+    <div className="techPortfolio">
+
+
+      <div className="parallax parallax-1" />
+
+
 
       <div className="parallax parallax-2" />
 
-      <section className="tandem container">
-        <h2>{content.tandemTitle}</h2>
-        <p className="tandem-text">{content.tandemText}</p>
 
-        <h3>{content.reelTitle}</h3>
-        <div className="reel" role="list">
-          {tandemReel.map((r, i) => (
-            <div key={i} className="reel-item" role="listitem">
-              <img src={r.img} alt={r.caption} />
-              <div className="reel-caption">{r.caption}</div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="passion container">
         <h2>{content.passionTitle}</h2>

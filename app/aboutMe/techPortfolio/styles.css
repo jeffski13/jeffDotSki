@@ -34,23 +34,8 @@
     margin: 0 0 8px 0;
 }
 
-.parallax {
-    height: 200px;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-}
-
-.parallax-1 {
-    background-image: url('/images/tech/parallax-1.jpg');
-}
-
-.parallax-2 {
-    background-image: url('/images/tech/parallax-2.jpg');
-}
-
-.parallax-3 {
-    background-image: url('/images/tech/parallax-3.jpg');
+.skills-list{
+    list-style: disc;
 }
 
 .companies {
