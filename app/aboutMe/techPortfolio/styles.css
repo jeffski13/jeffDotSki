@@ -2,7 +2,8 @@
 .techPortfolio {
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     color: #222;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .container {
@@ -13,7 +14,7 @@
 
 .hero {
     padding: 48px 0;
-    background: #fff;
+    background: #eee;
 }
 
 .hero-inner {

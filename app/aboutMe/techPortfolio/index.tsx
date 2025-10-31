@@ -1,7 +1,8 @@
 import { Col, Container, Row } from 'react-bootstrap';
-import './styles.css';
 import FooterBar from "~/infra/footerBar";
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
+import './styles.css';
+import './stylesParalax.css';
 
 export default function TechPortfolio() {
   const multiLangContent: MultiLangContent = {
@@ -45,14 +46,79 @@ export default function TechPortfolio() {
   ];
 
   return (
+    <div className="paralax-portfolio">
+
+      <div className="bgimg-1">
+        <div className="caption">
+        <span className="border">TECH PORTFOLIO</span>
+        </div>
+      </div>
+
+      <div className="paralax-top">
+        <h3 className="paralax-paragraph">Parallax Demo</h3>
+        <p>Parallax scrolling is a web site trend where the background content is moved at a different speed than the foreground content while scrolling. Nascetur per nec posuere turpis, lectus nec libero turpis nunc at, sed posuere mollis ullamcorper libero ante lectus, blandit pellentesque a, magna turpis est sapien duis blandit dignissim. Viverra interdum mi magna mi, morbi sociis. Condimentum dui ipsum consequat morbi, curabitur aliquam pede, nullam vitae eu placerat eget et vehicula. Varius quisque non molestie dolor, nunc nisl dapibus vestibulum at, sodales tincidunt mauris ullamcorper, dapibus pulvinar, in in neque risus odio. Accumsan fringilla vulputate at quibusdam sociis eleifend, aenean maecenas vulputate, non id vehicula lorem mattis, ratione interdum sociis ornare. Suscipit proin magna cras vel, non sit platea sit, maecenas ante augue etiam maecenas, porta porttitor placerat leo.</p>
+      </div>
+
+      <div className="bgimg-2">
+        <div className="caption">
+        <span className="border paralax-image2-overlay-text">LESS HEIGHT</span>
+        </div>
+      </div>
+
+      <div className="betweenContainer">
+        <div className="betweenText">
+        <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
+        </div>
+      </div>
+
+      <div className="bgimg-3">
+        <div className="caption">
+        <span className="border paralax-image3-overlay-text">SCROLL UP</span>
+        </div>
+      </div>
+
+      <div className="betweenContainer2">
+        <div className="betweenText2">
+        <p>Scroll up and down to really get the feeling of how Parallax Scrolling works.</p>
+        </div>
+      </div>
+
+      <div className="bgimg-1">
+        <div className="caption">
+        <span className="border">COOL!</span>
+        </div>
+      </div>
+      <FooterBar />
+    </div>
+
+  );
+  return (
     <div className="techPortfolio">
       <section className="hero">
+        <Container>
+          <Row>
+            <Col xs={6} md={4} >
+              <img className="hero-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
+            </Col>
+            <Col xs={6} md={8} >
+              <div className="hero-text">
+                <h1>{content.heroTitle}</h1>
+                <p>{content.heroText}</p>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6} md={8} >
+              <div className="hero-text">
+                <p>{content.heroText}</p>
+              </div>
+            </Col>
+            <Col xs={6} md={4} >
+              <img className="hero-image" src="/images/techPortfolio/hero-dev-desk.jpg" alt="Developer at work" />
+            </Col>
+          </Row>
+        </Container>
         <div className="hero-inner container">
-          <img className="hero-image" src="/images/tech/hero-dev.png" alt="Developer at work" />
-          <div className="hero-text">
-            <h1>{content.heroTitle}</h1>
-            <p>{content.heroText}</p>
-          </div>
         </div>
       </section>
 
@@ -88,15 +154,12 @@ export default function TechPortfolio() {
         </div>
       </section>
 
-      <div className="parallax parallax-3" />
-
       <section className="passion container">
         <h2>{content.passionTitle}</h2>
         <p>{content.passionText}</p>
         <p>Code coverage: <strong>82%</strong></p>
       </section>
-
-      <FooterBar />
     </div>
+
   );
 }
