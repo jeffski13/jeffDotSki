@@ -3,9 +3,10 @@ import ROUTES from './consts/ROUTES';
 
 export default [
     index("titlePage/route.tsx"),
-    route(ROUTES.aboutMe.bio, "aboutMe/bio/route.tsx"),
+    route(ROUTES.aboutMe.techPortfolio, "aboutMe/techPortfolio/route.tsx"),
     route(ROUTES.aboutMe.drawing, "aboutMe/hobbies/drawings/route.tsx"),
     route(ROUTES.aboutMe.tvShows, "aboutMe/hobbies/tvShows/route.tsx"),
+    route(ROUTES.aboutMe.bio, "aboutMe/bio/route.tsx"),
     
     route(ROUTES.pokePeru.battle, "pokePeruApp/routes/pokeperubattle.tsx"),
     route(ROUTES.pokePeru.pokedex, "pokePeruApp/routes/pokeperupokedex.tsx"),
