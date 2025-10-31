@@ -28,7 +28,7 @@ export interface TechPortfolioContentPerLanguage {
 export default function TechPortfolio() {
   const multiLangContent: MultiLangContent = {
     es: {
-      heroTitle: 'Portafolio Tecnológico',
+      heroTitle: 'PORTAFOLIO TECNOLÓGICO',
       heroText1prefix: 'Desarrollador de ',
       heroText1highlight: 'aplicaciones Android y paginas web',
       heroText1suffix: '. Cuenta con diez años de experiencia en negocios de todos tamaños, de emprendamientos hasta corporaciones grandes. Sus especialidades:',
@@ -47,7 +47,7 @@ export default function TechPortfolio() {
       passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.'
     },
     default: {
-      heroTitle: 'Tech Portfolio',
+      heroTitle: 'TECH PORTFOLIO',
       heroText1prefix: 'Developer of ',
       heroText1highlight: 'Android apps and websites',
       heroText1suffix: '. Ten years of experience in companies ranging from startups all the way to large coorporations. Specializing in:',
@@ -169,7 +169,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-bgimg-1">
+      <div className=".paralax-bgimg-4">
         <div className="caption">
           <span className="border">COOL!</span>
         </div>
