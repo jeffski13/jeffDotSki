@@ -23,7 +23,6 @@ export interface TechPortfolioContentPerLanguage {
   resumeLink: string;
   tandemTitle: string;
   tandemText: string;
-  reelTitle: string;
   passionTitle: string;
   passionText: string;
 }
@@ -45,7 +44,6 @@ export default function TechPortfolio() {
       resumeLink: 'Haz Click acá por Curriculum Vitae',
       tandemTitle: 'Trabajo en Tandem Diabetes Care',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
-      reelTitle: 'Imágenes (mock data y explicación)',
       passionTitle: 'Pasión por código de alta calidad',
       passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.'
     },
@@ -64,7 +62,6 @@ export default function TechPortfolio() {
       tandemTitle: 'Efficiency Gains at Tandem',
       resumeLink: 'Click Here for Resume',
       tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
-      reelTitle: 'Images (mock data and explanation)',
       passionTitle: 'Passion for high-quality code',
       passionText: 'I transformed a codebase by introducing a high-coverage unit test suite. This web site you are viewing has a code coverage of 82%.'
     }
@@ -159,7 +156,6 @@ export default function TechPortfolio() {
             <h2>{content.tandemTitle}</h2>
             <p className="tandem-text">{content.tandemText}</p>
 
-            <h3>{content.reelTitle}</h3>
             <div className="tandemImprovements-gallery-container">
               <Container>
                 <Row>
@@ -186,14 +182,12 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="betweenContainer2">
-        <div className="betweenText2">
-          <section className="passion container">
-            <h2>{content.passionTitle}</h2>
-            <p>{content.passionText}</p>
-            <p>Code coverage: <strong>82%</strong></p>
-          </section>
-        </div>
+      <div className="betweenContainer2 passion">
+        <section className="container">
+          <h2>{content.passionTitle}</h2>
+          <p>{content.passionText}</p>
+          <p>Code coverage: <strong>82%</strong></p>
+        </section>
       </div>
 
       <div className="paralax-bgimg paralax-bgimg-4">
