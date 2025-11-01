@@ -203,22 +203,5 @@ export default function TechPortfolio() {
       </div>
       <FooterBar />
     </div>
-
-  );
-  return (
-    <div className="techPortfolio">
-
-
-      <div className="parallax parallax-1" />
-
-
-
-      <div className="parallax parallax-2" />
-
-
-
-
-    </div>
-
   );
 }

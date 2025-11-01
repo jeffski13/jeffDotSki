@@ -42,6 +42,11 @@
     text-align: center;
 }
 
+.logo-item {
+    justify-content: center;
+    display: flex;
+}
+
 .logo-item img {
     margin: 25px;
     max-width: 140px;
