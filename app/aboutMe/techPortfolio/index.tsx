@@ -108,7 +108,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-paragraph-top">
+      <div className="paralax-paragraph-top textContentSection">
         <section className="techPortfolio-overview">
           <Container>
             <Row>
@@ -133,7 +133,7 @@ export default function TechPortfolio() {
         </section>
       </div>
 
-      <section className="companies container">
+      <section className="textContentSection companies container">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>

@@ -13,7 +13,6 @@
 }
 
 .techPortfolio-overview {
-    padding: 48px 0;
     background: #fff;
 }
 
@@ -67,16 +66,16 @@
     }
 }
 
-.tandem {
-    padding: 48px 0;
-}
-
 .passion {
-    padding: 48px 0;
     background: #fafafa;
 }
 
 /* small polish */
 h2 {
     margin-top: 0;
+}
+
+.textContentSection {
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
