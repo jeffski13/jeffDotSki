@@ -23,6 +23,8 @@ export interface TechPortfolioContentPerLanguage {
   resumeLink: string;
   tandemTitle: string;
   tandemText: string;
+  productiveTitle: string;
+  productiveText: string;
   passionTitle: string;
   passionText: string;
 }
@@ -44,6 +46,8 @@ export default function TechPortfolio() {
       resumeLink: 'Haz Click acá por Curriculum Vitae',
       tandemTitle: 'Trabajo en Tandem Diabetes Care',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
+      productiveTitle: 'Highly Productive for High Quality',
+      productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the github commits speak for speak the daily dedication and persistence.',
       passionTitle: 'Pasión por código de alta calidad',
       passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.'
     },
@@ -60,6 +64,8 @@ export default function TechPortfolio() {
       heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
       logosTitle: 'Who I\'ve worked with',
       tandemTitle: 'Efficiency Gains at Tandem',
+      productiveTitle: 'Highly Productive for High Quality Code',
+      productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the github commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       resumeLink: 'Click Here for Resume',
       tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
       passionTitle: 'Passion for high-quality code',
@@ -110,7 +116,7 @@ export default function TechPortfolio() {
           <Container>
             <Row>
               <Col xs={12} md={4} >
-                <img className="techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
+                <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
               </Col>
               <Col xs={12} md={8} >
                 <div className="techPortfolio-overview-text">
@@ -163,7 +169,7 @@ export default function TechPortfolio() {
                   </Col>
                   <Col xs={12} md={8} >
                     <ImageGallery items={tandemReel}
-                     slideDuration={1000} 
+                     slideDuration={700} 
                      slideInterval={10000} 
                      autoPlay />
                   </Col>
@@ -172,6 +178,21 @@ export default function TechPortfolio() {
                 </Row>
               </Container>
             </div>
+          </section>
+          <section className="tandem container">
+            <h2>{content.productiveTitle}</h2>
+            <p className="tandem-text">{content.productiveText}</p>
+            <Container>
+              <Row>
+                <Col xs={12} md={2} >
+                </Col>
+                <Col xs={12} md={8} >
+                  <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsByDay.png" alt="Github Commits per Day" />
+                </Col>
+                <Col xs={12} md={2} >
+                </Col>
+              </Row>
+            </Container>
           </section>
         </div>
       </div>

@@ -25,18 +25,18 @@ For info on modifying the project with your students' monsters, please see http:
 
 A portable version of pokeperu is available [here](https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/pokeperuproject.zip). Download the zip, uncompress,  and in the terminal run `npm install`, `npm start`.
 
-To create this portable version, remove the following folders:
+To create this portable version, delete the following folders:
 
-- [aboutMe](./app/aboutMe)
+- [aboutMe](./app/aboutMeSection)
 - [footerBarski](./app/infra/footerBarski)
 - [pokeperuExtendedUniverse](./app/pokePeruApp/pokeperuExtendedUniverse)
 - [extendedUniverse](./public/images/monsters/extendedUniverse)
-- [titlePage](./app/titlePage)
+- [homePage](./app/homePage)
 - [firebaseski](./firebaseski)
 - [build](./build)
 - [.github](./github)
 
-And the following Files:
+Delete the following Files:
 
 - [.dockerignore](./.dockerignore)
 - [.gitignore](./.gitignore)

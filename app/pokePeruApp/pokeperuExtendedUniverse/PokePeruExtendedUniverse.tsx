@@ -9,7 +9,7 @@ export default function PokePeruExtendedUniverseBattle({
   monstersEditKey
 }: PokePeruContentProps) {
   return (
-    <div className="TitlePage" >
+    <div >
       <div className="pokeperu-img-container">
         <img src="/images/pokemoninperu.png" alt="PokePeru" className="pokeperu-logo" />
       </div>

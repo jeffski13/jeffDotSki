@@ -93,7 +93,7 @@ export default function SelectionResultsScreen({
                 </div>
                 <div style={{ position: 'relative', width: 220, height: 200 }}>
                   <img
-                    src={trainer1.image}
+                    src={trainer1?.image}
                     alt="Trainer 1"
                     className="trainer-image trainer1"
                   />
@@ -120,7 +120,7 @@ export default function SelectionResultsScreen({
                 </div>
                 <div style={{ position: 'relative', width: 220, height: 200 }}>
                   <img
-                    src={trainer2.image}
+                    src={trainer2?.image}
                     alt="Trainer 2"
                     className="trainer-image trainer2"
                   />
