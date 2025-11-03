@@ -99,4 +99,5 @@
   display: flex;
   align-Items: center;
   pointer-Events: auto;
+  filter: brightness(0.8);
 }

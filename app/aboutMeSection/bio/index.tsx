@@ -4,8 +4,31 @@ import '../styles.css';
 import './styles.css';
 import { getContentByLanguage, getBrowserLanguage } from '../../langSupport';
 
+interface BioContent {
+    aboutMe: string;
+    howDidIGetHere: string;
+    intro: string;
+    southam: string;
+    professionalWhat: string;
+    afterGrad: string;
+    becomingTeacher: string;
+    studyingInJapan: string;
+    teacherPokePeru: string;
+    sayHello: string;
+    interests: string;
+    commonInterests: string;
+    directions: string;
+    disclaimer: string;
+}
+
+interface MultiLangContent {
+  es: BioContent;
+  default: BioContent;
+}
+
+
 export function Bio() {
-  const multiLangContent = {
+  const multiLangContent: MultiLangContent = {
     es: {
       aboutMe: 'Sobre Mí',
       howDidIGetHere: '¿Cómo llegué aquí?',
@@ -14,6 +37,7 @@ export function Bio() {
       professionalWhat: '¿Una profesiónal de verdad?',
       afterGrad: 'Después de graduarme en diciembre de 2014 me mudé a Dallas, lejos de mi familia y amigos. Muchos me dijeron que mientras fuera joven y soltero debía salir y conocer el mundo. Así que dejé Oklahoma y empecé a viajar.',
       becomingTeacher: 'En Perú conseguí mi primer puesto como profe con 5o y 6o grado. Y a mi me encantó. He decidido que voy a dedicarme a enseñar inglés como lenguaje extranjera.',
+      studyingInJapan: 'Mi ultima aventura fue un viaje de casi 3 meses en Japón. Allí aprendí un poco de japones (chotto nihongo hanashimasu) y ahora he regresado a Chile para perseguir mi certificación como profe de inglés.',
       teacherPokePeru: 'Al enseñar mi taller de inglés, hice el plataforma "Pocket Monsters en Peru", lo cual se puede acceder aquí en esta pagina web.',
       sayHello: '¡Salúdame!',
       interests: 'Al final soy un nerdo nomás. Hice un muro de mis intereses.',
@@ -26,6 +50,7 @@ export function Bio() {
       howDidIGetHere: 'How Did I Get Here?',
       intro: 'I was born in 1991 and grew up in a small town of Claremore, Oklahoma. I graduated from Claremore High School (Oklahoma) in 2009 and went to Oklahoma State University. While in college I was lucky enough to get a job in a different city every summer, including Las Vegas (2011), and Cessna in Wichita (2012). In the summer of 2014 I interned at the USAA Bank in San Antonio, Texas. I enjoyed my summer internship, and decided I wanted to try programming as a profession.',
       southam: 'I moved to El Paso to improve my spanish. My desire for fluency led me to move to Medellin, Colombia (2023). From there I lived in Santiago, Chile (2024) and then Lima, Perú (2025). In Lima I studied spanish communications and took the B2 DELE certification exam.',
+      studyingInJapan: 'My last adventure was a trip to a trip to Japan. I was there for almost three months. While I was there I studied Japanese (chotto nihongo hanashimasu). Now I have returned to Chile to pursue a certification as an English teacher.',
       professionalWhat: 'A Professional What?',
       afterGrad: 'After graduating in December of 2014 I moved Dallas, far away from my familiar family and friends. So many people had told me that while I was young and single I needed go out and experience the world. So I left Oklahoma and started traveling.',
       becomingTeacher: 'While in Peru I got my first teaching job with 5th and 6th graders. And I loved it. I have decided that teaching English as a Foreign Language is what I want to do with my life.',
@@ -73,10 +98,16 @@ export function Bio() {
               <Col sm={0} md={1}>
               </Col>
               <Col sm={10} md={3} >
-                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/aboutme-myjourneymap_southam.png' fluid />
+                <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/aboutme-myjourneymap_southamPlusJapan.png' fluid />
               </Col>
               <Col sm={10} md={7} className="aboutMePargraphWithImage" >
+                <div>
                 {content.southam}
+                </div>
+                <br className='bio-betweenParagraphs' />
+                <div>
+                {content.studyingInJapan}
+                </div>
               </Col>
             </Row>
           </Row>
