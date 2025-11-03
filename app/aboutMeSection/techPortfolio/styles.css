@@ -23,11 +23,15 @@
     align-items: center;
 }
 
+.techPortfolio-image {
+    border-radius: 12px;
+}
+
 .techPortfolio-overview-image {
     height: 300px;
     object-fit: cover;
-    border-radius: 12px;
 }
+
 
 .techPortfolio-overview-text h1 {
     margin: 0 0 8px 0;
@@ -64,6 +68,10 @@
 
 .tandem {
     padding: 48px 0;
+}
+
+.techPortfolio-githubCommits-image {
+    
 }
 
 .passion {
