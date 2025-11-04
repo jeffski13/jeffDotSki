@@ -114,12 +114,12 @@ export default function TechPortfolio() {
   return (
     <div className="paralax-portfolio">
 
-      <div className="paralax-bgimg-container">
-        <div className="paralax-bgimg paralax-bgimg-1">
-          <div className="caption">
-            <span className="border">{content.heroTitle}</span>
-          </div>
+      <div className="paralax-bgimg paralax-bgimg-1">
+        <div className="caption">
+          <span className="border">{content.heroTitle}</span>
         </div>
+      </div>
+      <div className="paralax-bgimg-container">
       </div>
 
       <div className="paralax-paragraph-top textContentSection">
@@ -165,11 +165,9 @@ export default function TechPortfolio() {
         <a href={ROUTES.external.resume.softwareEngineer} >{content.resumeLink}</a>
       </section>
 
-      <div className="paralax-bgimg-container">
-        <div className="paralax-bgimg paralax-bgimg-2">
-          <div className="caption">
-            <span className="border paralax-image2-overlay-text">ENABLING BUSINESS</span>
-          </div>
+      <div className="paralax-bgimg paralax-bgimg-2">
+        <div className="caption">
+          <span className="border paralax-image2-overlay-text">ENABLING BUSINESS</span>
         </div>
       </div>
 
@@ -233,11 +231,9 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-bgimg-container">
-        <div className="paralax-bgimg paralax-bgimg-3">
-          <div className="caption">
-            <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
-          </div>
+      <div className="paralax-bgimg paralax-bgimg-3">
+        <div className="caption">
+          <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
         </div>
       </div>
 
@@ -286,13 +282,12 @@ export default function TechPortfolio() {
         </section>
       </div>
 
-      <div className="paralax-bgimg-container">
-        <div className="paralax-bgimg paralax-bgimg-4">
-          <div className="caption">
-            <span className="border">THANKS FOR VISITING!</span>
-          </div>
+      <div className="paralax-bgimg paralax-bgimg-4">
+        <div className="caption">
+          <span className="border">THANKS FOR VISITING!</span>
         </div>
       </div>
+      
       <FooterBar />
     </div>
   );
