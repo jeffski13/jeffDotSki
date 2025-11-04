@@ -195,7 +195,7 @@ export default function TechPortfolio() {
                     <ImageGallery items={tandemReel}
                       slideDuration={700}
                       slideInterval={10000}
-                      autoPlay />
+                       />
                   </Col>
                   <Col xs={12} md={2} >
                   </Col>
