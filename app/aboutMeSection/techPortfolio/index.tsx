@@ -223,7 +223,7 @@ export default function TechPortfolio() {
                 <Col xs={12} md={2} >
                 </Col>
                 <Col xs={12} md={8} >
-                  <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
+                  <img className="techPortfolio-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
                 </Col>
                 <Col xs={12} md={2} >
                 </Col>
