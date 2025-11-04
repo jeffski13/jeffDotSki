@@ -78,7 +78,7 @@ export default function TechPortfolio() {
       passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
       passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
       highQualityToolsTitle: 'Creating the Right Tools for the Job',
-      highQualityToolsText: 'Facade dev environments created control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
+      highQualityToolsText: 'Facade dev environments allowed control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
     }
   };
 
@@ -287,7 +287,7 @@ export default function TechPortfolio() {
           <span className="border">THANKS FOR VISITING!</span>
         </div>
       </div>
-      
+
       <FooterBar />
     </div>
   );
