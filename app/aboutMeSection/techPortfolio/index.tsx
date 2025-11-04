@@ -114,7 +114,9 @@ export default function TechPortfolio() {
   return (
     <div className="paralax-portfolio">
 
-      <div className="paralax-bgimg paralax-bgimg-1">
+      <div className="paralax-bgimg-container">
+        <div className="paralax-bgimg paralax-bgimg-1">
+        </div>
         <div className="caption">
           <span className="border">{content.heroTitle}</span>
         </div>
@@ -207,8 +209,8 @@ export default function TechPortfolio() {
                 <Col xs={12} md={1} >
                 </Col>
                 <Col xs={12} md={10} >
-                  <h2>{content.productiveTitle}</h2>
-                  <p className="tandem-text">{content.productiveText}</p>
+                  <h2>{content.highQualityToolsTitle}</h2>
+                  <p>{content.highQualityToolsText}</p>
                 </Col>
                 <Col xs={12} md={1} >
                 </Col>
@@ -219,7 +221,7 @@ export default function TechPortfolio() {
                 <Col xs={12} md={2} >
                 </Col>
                 <Col xs={12} md={8} >
-                  <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsByDay.png" alt="Github Commits per Day" />
+                  <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
                 </Col>
                 <Col xs={12} md={2} >
                 </Col>
@@ -253,13 +255,14 @@ export default function TechPortfolio() {
               </Col>
             </Row>
           </Container>
+
           <Container>
             <Row>
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2>{content.highQualityToolsTitle}</h2>
-                <p>{content.highQualityToolsText}</p>
+                <h2>{content.productiveTitle}</h2>
+                <p className="tandem-text">{content.productiveText}</p>
               </Col>
               <Col xs={12} md={1} >
               </Col>
@@ -270,7 +273,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
+                <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsByDay.png" alt="Github Commits per Day" />
               </Col>
               <Col xs={12} md={2} >
               </Col>

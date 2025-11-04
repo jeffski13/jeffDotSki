@@ -5,6 +5,14 @@
     color: #555;
 }
 
+.paralax-bgimg-containerf {
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .paralax-bgimg {
     min-height: 500px;
     position: relative;
@@ -17,6 +25,8 @@
 
 .paralax-bgimg-1 {
     background-image: url(/images/techPortfolio/hero-dev-desk.jpg);
+    height: 100%;
+    width: 100%;
 }
 
 .paralax-bgimg-2 {
@@ -88,12 +98,10 @@
     width: 100%;
     text-align: center;
     opacity: 1;
-    color: #000;
 }
 
 .caption span.border {
-    opacity: 1;
-    background-color: #111;
+    background-color: #333;
     color: #fff;
     padding: 18px;
     font-size: 25px;
