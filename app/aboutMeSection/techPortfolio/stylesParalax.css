@@ -5,8 +5,7 @@
     color: #555;
 }
 
-.paralax-bgimg-container {
-}
+.paralax-bgimg-container {}
 
 .paralax-bgimg {
     min-height: 500px;
@@ -57,14 +56,6 @@
     position: relative;
 }
 
-.betweenText {
-    color: #ddd;
-    background-color: #282E34;
-    text-align: center;
-    padding: 50px 80px;
-    text-align: justify;
-}
-
 .paralax-image3-overlay-text {
     background-color: transparent;
     font-size: 25px;
@@ -106,5 +97,9 @@
 
     .paralax-bgimg {
         min-height: 300px;
+    }
+
+    .betweenText {
+        padding: 50px 20px;
     }
 }
