@@ -10,11 +10,23 @@
 .paralax-bgimg {
     min-height: 500px;
     position: relative;
-    opacity: 0.5;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+/* Keep the background visually at ~50% while keeping children (caption) fully opaque.
+   Using a pseudo-element overlay avoids applying `opacity` to the container which
+   would also dim/transparent its children. */
+.paralax-bgimg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* a light overlay to simulate the previous 0.5 opacity effect */
+    background: rgba(255,255,255,0.5);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .paralax-bgimg-1 {
@@ -79,6 +91,7 @@
     text-align: center;
     position: relative;
     top: 250px;
+    z-index: 2; /* ensure caption sits above the overlay */
 }
 
 .caption span.border {
