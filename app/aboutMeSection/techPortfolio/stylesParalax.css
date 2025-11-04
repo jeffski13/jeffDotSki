@@ -87,8 +87,9 @@
 .caption {
     width: 100%;
     text-align: center;
-    position: relative;
-    top: 250px;
+    position: absolute;
+    left: 0;
+    top: 50%;
     z-index: 2; /* ensure caption sits above the overlay */
 }
 
@@ -102,9 +103,6 @@
 
 /* Small screens: two per row */
 @media (max-width: 600px) {
-    .caption {
-        top: 130px;
-    }
 
     .caption span.border {
         font-size: 12px;
