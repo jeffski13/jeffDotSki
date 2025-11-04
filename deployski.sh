@@ -26,7 +26,7 @@ if [ "$isMinorPatch" = true ] ; then
 else
   npm version patch
 fi
-
+exit 0
 npm run build
 npm run copyBuildToFirebase
 
