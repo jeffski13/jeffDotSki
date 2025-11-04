@@ -273,7 +273,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsByDay.png" alt="Github Commits per Day" />
+                <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
               </Col>
               <Col xs={12} md={2} >
               </Col>
