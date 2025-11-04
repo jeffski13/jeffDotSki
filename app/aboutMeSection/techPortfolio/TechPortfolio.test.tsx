@@ -5,8 +5,7 @@ describe('TechPortfolio Component', () => {
   test('renders main content', () => {
     render(<TechPortfolio />);
     
-    // Check that main content is still present
-    expect(screen.getByText(/Developer/i)).toBeInTheDocument();
-    
+    // smoke test for render
+    expect(screen.getByText(/Developer of/i)).toBeInTheDocument();
   });
 });
