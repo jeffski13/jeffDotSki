@@ -5,12 +5,7 @@
     color: #555;
 }
 
-.paralax-bgimg-containerf {
-    position: relative;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.paralax-bgimg-container {
 }
 
 .paralax-bgimg {
@@ -25,8 +20,6 @@
 
 .paralax-bgimg-1 {
     background-image: url(/images/techPortfolio/hero-dev-desk.jpg);
-    height: 100%;
-    width: 100%;
 }
 
 .paralax-bgimg-2 {
@@ -38,7 +31,6 @@
 }
 
 .paralax-bgimg-4 {
-    margin-bottom: 50px;
     background-image: url(/images/techPortfolio/hero-dev-desk-cat.jpg);
 }
 
@@ -92,12 +84,10 @@
 }
 
 .caption {
-    position: absolute;
-    left: 0;
-    top: 50%;
     width: 100%;
     text-align: center;
-    opacity: 1;
+    position: relative;
+    bottom: 250px;
 }
 
 .caption span.border {

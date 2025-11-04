@@ -165,7 +165,9 @@ export default function TechPortfolio() {
         <a href={ROUTES.external.resume.softwareEngineer} >{content.resumeLink}</a>
       </section>
 
-      <div className="paralax-bgimg paralax-bgimg-2">
+      <div className="paralax-bgimg-container">
+        <div className="paralax-bgimg paralax-bgimg-2">
+        </div>
         <div className="caption">
           <span className="border paralax-image2-overlay-text">ENABLING BUSINESS</span>
         </div>
@@ -231,7 +233,9 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-bgimg paralax-bgimg-3">
+      <div className="paralax-bgimg-container">
+        <div className="paralax-bgimg paralax-bgimg-3">
+        </div>
         <div className="caption">
           <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
         </div>
@@ -282,7 +286,9 @@ export default function TechPortfolio() {
         </section>
       </div>
 
-      <div className="paralax-bgimg paralax-bgimg-4">
+      <div className="paralax-bgimg-container">
+        <div className="paralax-bgimg paralax-bgimg-4">
+        </div>
         <div className="caption">
           <span className="border">THANKS FOR VISITING!</span>
         </div>
