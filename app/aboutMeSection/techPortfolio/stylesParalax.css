@@ -1,0 +1,119 @@
+.paralax-portfolio {
+    height: 100%;
+    margin: 0;
+    font: 400 15px / 1.8 "Lato", sans-serif;
+    color: #555;
+}
+
+.paralax-bgimg {
+    min-height: 500px;
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Keep the background visually at ~50% while keeping children (caption) fully opaque.
+   Using a pseudo-element overlay avoids applying `opacity` to the container which
+   would also dim/transparent its children. */
+.paralax-bgimg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* a light overlay to simulate the previous 0.5 opacity effect */
+    background: rgba(255,255,255,0.5);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.paralax-bgimg-1 {
+    background-image: url(/images/techPortfolio/hero-dev-desk.jpg);
+}
+
+.paralax-bgimg-2 {
+    background-image: url(/images/techPortfolio/softwareTestingGenericBackground.jpg);
+}
+
+.paralax-bgimg-3 {
+    background-image: url(/images/techPortfolio/unitTesting.png);
+}
+
+.paralax-bgimg-4 {
+    background-image: url(/images/techPortfolio/hero-dev-desk-cat.jpg);
+    margin-bottom: 50px;
+}
+
+.paralax-paragraph-top {
+    color: #777;
+    background-color: white;
+    text-align: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    text-align: justify;
+}
+
+.paralax-paragraph {
+    text-align: center;
+}
+
+.paralax-image2-overlay-text {
+    background-color: transparent;
+    font-size: 25px;
+    color: #f7f7f7;
+}
+
+.paralax-contentBetweenContainer {
+    position: relative;
+}
+
+.paralax-image3-overlay-text {
+    background-color: transparent;
+    font-size: 25px;
+    color: #f7f7f7;
+}
+
+.paralax-contentBetweenContainer {
+    position: relative;
+}
+
+.betweenText {
+    color: #ddd;
+    background-color: #282E34;
+    text-align: center;
+    padding: 50px 80px;
+    text-align: justify;
+}
+
+.caption {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 2; /* ensure caption sits above the overlay */
+}
+
+.caption span.border {
+    background-color: #333;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+/* Small screens: two per row */
+@media (max-width: 600px) {
+
+    .caption span.border {
+        font-size: 12px;
+    }
+
+    .paralax-bgimg {
+        min-height: 300px;
+    }
+
+    .betweenText {
+        padding: 50px 20px;
+    }
+}

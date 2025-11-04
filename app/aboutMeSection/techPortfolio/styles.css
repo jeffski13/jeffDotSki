@@ -1,0 +1,93 @@
+/* Tech Portfolio styles */
+.techPortfolio {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    color: #222;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.container {
+    width: 100%;
+    padding: 24px;
+}
+
+.techPortfolio-overview {
+    background: #fff;
+}
+
+.techPortfolio-overview-inner {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.techPortfolio-image {
+    border-radius: 12px;
+}
+
+.techPortfolio-overview-image {
+    height: 300px;
+    object-fit: cover;
+}
+
+
+.techPortfolio-overview-text h1 {
+    margin: 0 0 8px 0;
+}
+
+.skills-list {
+    list-style: disc;
+}
+
+.companies {
+    padding: 48px 0;
+    text-align: center;
+}
+
+.logo-item {
+    justify-content: center;
+    display: flex;
+}
+
+.logo-item img {
+    margin: 25px;
+    max-width: 140px;
+    max-height: 80px;
+    object-fit: contain;
+    filter: grayscale(0.0);
+}
+
+/* Small screens: two per row */
+@media (max-width: 600px) {
+    .techPortfolio-overview-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .techPortfolio-overview-text {
+        padding-top: 50px;
+    }
+}
+
+.tandem {
+    padding: 48px 0;
+}
+
+.techPortfolio-githubCommits-image {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.passion {
+    background: #fafafa;
+}
+
+/* small polish */
+h2 {
+    margin-top: 0;
+}
+
+.textContentSection {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
