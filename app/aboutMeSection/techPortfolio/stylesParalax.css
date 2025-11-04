@@ -91,6 +91,10 @@
 
 /* Small screens: two per row */
 @media (max-width: 600px) {
+    .caption {
+        bottom: 170px;
+    }
+
     .caption span.border {
         font-size: 12px;
     }
