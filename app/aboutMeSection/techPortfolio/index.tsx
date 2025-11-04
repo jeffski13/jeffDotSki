@@ -115,10 +115,12 @@ export default function TechPortfolio() {
         <section className="techPortfolio-overview">
           <Container>
             <Row>
-              <Col xs={12} md={4} >
+              <Col xs={0} md={1} >
+              </Col>
+              <Col xs={12} md={3} >
                 <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
               </Col>
-              <Col xs={12} md={8} >
+              <Col xs={12} md={7} >
                 <div className="techPortfolio-overview-text">
                   <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
                   <ul className="skills-list">
@@ -128,6 +130,8 @@ export default function TechPortfolio() {
                   </ul>
                   <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
                 </div>
+              </Col>
+              <Col xs={0} md={1} >
               </Col>
             </Row>
           </Container>
@@ -159,9 +163,18 @@ export default function TechPortfolio() {
       <div className="paralax-contentBetweenContainer">
         <div className="betweenText">
           <section className="tandem container">
-            <h2>{content.tandemTitle}</h2>
-            <p className="tandem-text">{content.tandemText}</p>
-
+            <Container>
+              <Row>
+                <Col xs={12} md={1} >
+                </Col>
+                <Col xs={12} md={10} >
+                  <h2>{content.tandemTitle}</h2>
+                  <p className="tandem-text">{content.tandemText}</p>
+                </Col>
+                <Col xs={12} md={1} >
+                </Col>
+              </Row>
+            </Container>
             <div className="tandemImprovements-gallery-container">
               <Container>
                 <Row>
@@ -169,9 +182,9 @@ export default function TechPortfolio() {
                   </Col>
                   <Col xs={12} md={8} >
                     <ImageGallery items={tandemReel}
-                     slideDuration={700} 
-                     slideInterval={10000} 
-                     autoPlay />
+                      slideDuration={700}
+                      slideInterval={10000}
+                      autoPlay />
                   </Col>
                   <Col xs={12} md={2} >
                   </Col>
@@ -180,8 +193,18 @@ export default function TechPortfolio() {
             </div>
           </section>
           <section className="tandem container">
-            <h2>{content.productiveTitle}</h2>
-            <p className="tandem-text">{content.productiveText}</p>
+            <Container>
+              <Row>
+                <Col xs={12} md={1} >
+                </Col>
+                <Col xs={12} md={10} >
+                  <h2>{content.productiveTitle}</h2>
+                  <p className="tandem-text">{content.productiveText}</p>
+                </Col>
+                <Col xs={12} md={1} >
+                </Col>
+              </Row>
+            </Container>
             <Container>
               <Row>
                 <Col xs={12} md={2} >
@@ -205,9 +228,19 @@ export default function TechPortfolio() {
 
       <div className="betweenContainer2 passion">
         <section className="container">
-          <h2>{content.passionTitle}</h2>
-          <p>{content.passionText}</p>
-          <p>Code coverage: <strong>82%</strong></p>
+          <Container>
+              <Row>
+                <Col xs={12} md={1} >
+                </Col>
+                <Col xs={12} md={10} >
+                  <h2>{content.passionTitle}</h2>
+                  <p>{content.passionText}</p>
+                  <p>Code coverage: <strong>82%</strong></p>
+                </Col>
+                <Col xs={12} md={1} >
+                </Col>
+              </Row>
+            </Container>
         </section>
       </div>
 
