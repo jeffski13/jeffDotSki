@@ -27,6 +27,9 @@ export interface TechPortfolioContentPerLanguage {
   productiveText: string;
   passionTitle: string;
   passionText: string;
+  passionText2: string;
+  highQualityToolsTitle: string;
+  highQualityToolsText: string;
 }
 
 export default function TechPortfolio() {
@@ -46,10 +49,13 @@ export default function TechPortfolio() {
       resumeLink: 'Haz Click acá por Curriculum Vitae',
       tandemTitle: 'Trabajo en Tandem Diabetes Care',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
-      productiveTitle: 'Highly Productive for High Quality',
-      productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the github commits speak for speak the daily dedication and persistence.',
+      productiveTitle: 'Productividad para alcanzar Calidad',
+      productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Solo superado por bots, la frecuencia de commits de Github destacan la dedicación y perseverancia mostrado en la oficina.',
       passionTitle: 'Pasión por código de alta calidad',
-      passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.'
+      passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
+      passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
+      highQualityToolsTitle: 'La Herramienta que corresponde con la Obra',
+      highQualityToolsText: 'Ambientes de desarrollo fachades crearon control de las respuestas de la nuba a la aplicación, así como la verificación de los datos enviados a la nube.',
     },
     default: {
       heroTitle: 'TECH PORTFOLIO',
@@ -65,11 +71,14 @@ export default function TechPortfolio() {
       logosTitle: 'Who I\'ve worked with',
       tandemTitle: 'Efficiency Gains at Tandem',
       productiveTitle: 'Highly Productive for High Quality Code',
-      productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the github commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
+      productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the Github commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       resumeLink: 'Click Here for Resume',
       tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
       passionTitle: 'Passion for high-quality code',
-      passionText: 'I transformed a codebase by introducing a high-coverage unit test suite. This web site you are viewing has a code coverage of 82%.'
+      passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
+      passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
+      highQualityToolsTitle: 'Creating the Right Tools for the Job',
+      highQualityToolsText: 'Facade dev environments created control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
     }
   };
 
@@ -229,18 +238,44 @@ export default function TechPortfolio() {
       <div className="betweenContainer2 passion">
         <section className="container">
           <Container>
-              <Row>
-                <Col xs={12} md={1} >
-                </Col>
-                <Col xs={12} md={10} >
-                  <h2>{content.passionTitle}</h2>
-                  <p>{content.passionText}</p>
-                  <p>Code coverage: <strong>82%</strong></p>
-                </Col>
-                <Col xs={12} md={1} >
-                </Col>
-              </Row>
-            </Container>
+            <Row>
+              <Col xs={12} md={1} >
+              </Col>
+              <Col xs={12} md={10} >
+                <h2>{content.passionTitle}</h2>
+                <p>{content.passionText}</p>
+                <p>Current Website Code coverage: <strong>82.84%</strong></p>
+                <p>Tandem Dev Server Tool: <strong>82%</strong></p>
+                <p>t:connect Android App: <strong>60%</strong></p>
+                <p>{content.passionText2}</p>
+              </Col>
+              <Col xs={12} md={1} >
+              </Col>
+            </Row>
+          </Container>
+          <Container>
+            <Row>
+              <Col xs={12} md={1} >
+              </Col>
+              <Col xs={12} md={10} >
+                <h2>{content.highQualityToolsTitle}</h2>
+                <p>{content.highQualityToolsText}</p>
+              </Col>
+              <Col xs={12} md={1} >
+              </Col>
+            </Row>
+          </Container>
+          <Container>
+            <Row>
+              <Col xs={12} md={2} >
+              </Col>
+              <Col xs={12} md={8} >
+                <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
+              </Col>
+              <Col xs={12} md={2} >
+              </Col>
+            </Row>
+          </Container>
         </section>
       </div>
 
