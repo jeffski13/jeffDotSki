@@ -15,10 +15,10 @@ flagsProcessed=0
 isMinorPatch=false
 for var in "$@"
 do
-  if [[ "$var" = "-all" ]]; then
+  if [[ "$var" = "-m" ]]; then
     isMinorPatch=true
   fi
-  flagsProcessed=$((currentFlagCount+1))
+  flagsProcessed=$((flagsProcessed+1))
 done
 
 if [ "$isMinorPatch" = true ] ; then
