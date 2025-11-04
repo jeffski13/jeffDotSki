@@ -78,7 +78,7 @@
     width: 100%;
     text-align: center;
     position: relative;
-    bottom: 250px;
+    top: 250px;
 }
 
 .caption span.border {
@@ -92,7 +92,7 @@
 /* Small screens: two per row */
 @media (max-width: 600px) {
     .caption {
-        bottom: 170px;
+        top: 130px;
     }
 
     .caption span.border {
