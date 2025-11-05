@@ -15,8 +15,16 @@ describe('HomePage Component', () => {
     multiLangContent.default.roles.forEach(route => {
       deafultRoutes.push(route.link);
     });
+    const spanishRoutes: string[] = [];
+    //check everything in spanish routes is in default routes
     multiLangContent.es.roles.forEach(route => {
+      spanishRoutes.push(route.link);
       expect(deafultRoutes).toContain(route.link);
     });
+    
+    //check everything in default routes is in spanish routes
+    deafultRoutes.forEach(link => {
+      expect(spanishRoutes).toContain(link);
+    })
   });
 });
