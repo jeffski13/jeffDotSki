@@ -1,11 +1,4 @@
-/* Tech Portfolio styles */
-.techPortfolio {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    color: #222;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
+/* modifies the react-bootstrap container, col, row class. Spaces everything out  */
 .container {
     width: 100%;
     padding: 24px;
@@ -16,6 +9,7 @@
 }
 
 .techPortfolio-overview-inner {
+    padding: 24px;
     display: flex;
     gap: 24px;
     align-items: center;
@@ -57,11 +51,17 @@
     filter: grayscale(0.0);
 }
 
-/* Small screens: two per row */
 @media (max-width: 600px) {
+    
+    /* Small screens: two per row */
+    .logo-item img {
+        max-width: 110px;
+    }
+    
     .techPortfolio-overview-inner {
         flex-direction: column;
         align-items: flex-start;
+        padding: 0px;
     }
 
     .techPortfolio-overview-text {
@@ -76,10 +76,6 @@
 .techPortfolio-githubCommits-image {
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-.passion {
-    background: #fafafa;
 }
 
 /* small polish */

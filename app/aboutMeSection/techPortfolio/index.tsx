@@ -5,6 +5,7 @@ import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from 
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
 import './stylesParalax.css';
+import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
@@ -74,7 +75,7 @@ export default function TechPortfolio() {
       productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the Github commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       resumeLink: 'Click Here for Resume',
       tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
-      passionTitle: 'Passion for high-quality code',
+      passionTitle: 'Creating with Craftsmanship',
       passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
       passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
       highQualityToolsTitle: 'Creating the Right Tools for the Job',
@@ -122,36 +123,34 @@ export default function TechPortfolio() {
       <div className="paralax-bgimg-container">
       </div>
 
-      <div className="paralax-paragraph-top textContentSection">
-        <section className="techPortfolio-overview">
-          <Container>
-            <Row>
-              <Col xs={0} md={1} >
-              </Col>
-              <Col xs={12} md={3} >
-                <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
-              </Col>
-              <Col xs={12} md={7} >
-                <div className="techPortfolio-overview-text">
-                  <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
-                  <ul className="skills-list">
-                    <li>{content.skills1}</li>
-                    <li>{content.skills2}</li>
-                    <li>{content.skills3}</li>
-                  </ul>
-                  <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
-                </div>
-              </Col>
-              <Col xs={0} md={1} >
-              </Col>
-            </Row>
-          </Container>
-          <div className="techPortfolio-overview-inner container">
-          </div>
-        </section>
-      </div>
+      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+        <Container>
+          <Row>
+            <Col xs={0} md={1} >
+            </Col>
+            <Col xs={12} md={3} >
+              <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
+            </Col>
+            <Col xs={12} md={7} >
+              <div className="techPortfolio-overview-text">
+                <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
+                <ul className="skills-list">
+                  <li>{content.skills1}</li>
+                  <li>{content.skills2}</li>
+                  <li>{content.skills3}</li>
+                </ul>
+                <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
+              </div>
+            </Col>
+            <Col xs={0} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <div className="techPortfolio-overview-inner">
+        </div>
+      </section>
 
-      <section className="textContentSection companies container">
+      <section className="textContentSection companies">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>
@@ -171,98 +170,45 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-contentBetweenContainer">
-        <div className="betweenText">
-          <section className="tandem container">
-            <Container>
-              <Row>
-                <Col xs={12} md={1} >
-                </Col>
-                <Col xs={12} md={10} >
-                  <h2>{content.tandemTitle}</h2>
-                  <p className="tandem-text">{content.tandemText}</p>
-                </Col>
-                <Col xs={12} md={1} >
-                </Col>
-              </Row>
-            </Container>
-            <div className="tandemImprovements-gallery-container">
-              <Container>
-                <Row>
-                  <Col xs={12} md={2} >
-                  </Col>
-                  <Col xs={12} md={8} >
-                    <ImageGallery items={tandemReel}
-                      slideDuration={700}
-                      slideInterval={10000}
-                       />
-                  </Col>
-                  <Col xs={12} md={2} >
-                  </Col>
-                </Row>
-              </Container>
-            </div>
-          </section>
-          <section className="tandem container">
-            <Container>
-              <Row>
-                <Col xs={12} md={1} >
-                </Col>
-                <Col xs={12} md={10} >
-                  <h2>{content.highQualityToolsTitle}</h2>
-                  <p>{content.highQualityToolsText}</p>
-                </Col>
-                <Col xs={12} md={1} >
-                </Col>
-              </Row>
-            </Container>
-            <Container>
-              <Row>
-                <Col xs={12} md={2} >
-                </Col>
-                <Col xs={12} md={8} >
-                  <img className="techPortfolio-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
-                </Col>
-                <Col xs={12} md={2} >
-                </Col>
-              </Row>
-            </Container>
-          </section>
-        </div>
-      </div>
-
-      <div className="paralax-bgimg paralax-bgimg-3">
-        <div className="caption">
-          <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
-        </div>
-      </div>
-
-      <div className="betweenContainer2 passion">
-        <section className="container">
+      <div className="paralax-contentBetweenContainer betweenText">
+        <section className="tandem">
           <Container>
             <Row>
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2>{content.passionTitle}</h2>
-                <p>{content.passionText}</p>
-                <p>jeff.ski Website Code coverage: <strong>82.84%</strong></p>
-                <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
-                <p>t:connect Android App: <strong>60%</strong></p>
-                <p>{content.passionText2}</p>
+                <h2>{content.tandemTitle}</h2>
+                <p className="tandem-text">{content.tandemText}</p>
               </Col>
               <Col xs={12} md={1} >
               </Col>
             </Row>
           </Container>
-
+          <div className="tandemImprovements-gallery-container">
+            <Container>
+              <Row>
+                <Col xs={12} md={2} >
+                </Col>
+                <Col xs={12} md={8} >
+                  <ImageGallery items={tandemReel}
+                    slideDuration={700}
+                    slideInterval={10000}
+                  />
+                </Col>
+                <Col xs={12} md={2} >
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </section>
+        <section className="tandem">
           <Container>
             <Row>
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2>{content.productiveTitle}</h2>
-                <p className="tandem-text">{content.productiveText}</p>
+                <h2>{content.highQualityToolsTitle}</h2>
+                <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
               </Col>
@@ -273,7 +219,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
+                <img className="techPortfolio-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
               </Col>
               <Col xs={12} md={2} >
               </Col>
@@ -281,6 +227,55 @@ export default function TechPortfolio() {
           </Container>
         </section>
       </div>
+
+      <div className="paralax-bgimg paralax-bgimg-3">
+        <div className="caption">
+          <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
+        </div>
+      </div>
+
+      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+        <Container>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <h2>{content.passionTitle}</h2>
+              <p>{content.passionText}</p>
+              <p>jeff.ski Website Code coverage: <strong>82.84%</strong></p>
+              <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
+              <p>t:connect Android App: <strong>60%</strong></p>
+              <p>{content.passionText2}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
+
+        <Container>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <h2>{content.productiveTitle}</h2>
+              <p className="tandem-text">{content.productiveText}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Col xs={12} md={2} >
+            </Col>
+            <Col xs={12} md={8} >
+              <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
+            </Col>
+            <Col xs={12} md={2} >
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
       <div className="paralax-bgimg paralax-bgimg-4">
         <div className="caption">
