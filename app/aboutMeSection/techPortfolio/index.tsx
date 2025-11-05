@@ -234,50 +234,48 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="betweenContainer2 passion">
-        <section>
-          <Container>
-            <Row>
-              <Col xs={12} md={1} >
-              </Col>
-              <Col xs={12} md={10} >
-                <h2>{content.passionTitle}</h2>
-                <p>{content.passionText}</p>
-                <p>jeff.ski Website Code coverage: <strong>82.84%</strong></p>
-                <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
-                <p>t:connect Android App: <strong>60%</strong></p>
-                <p>{content.passionText2}</p>
-              </Col>
-              <Col xs={12} md={1} >
-              </Col>
-            </Row>
-          </Container>
+      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+        <Container>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <h2>{content.passionTitle}</h2>
+              <p>{content.passionText}</p>
+              <p>jeff.ski Website Code coverage: <strong>82.84%</strong></p>
+              <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
+              <p>t:connect Android App: <strong>60%</strong></p>
+              <p>{content.passionText2}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
 
-          <Container>
-            <Row>
-              <Col xs={12} md={1} >
-              </Col>
-              <Col xs={12} md={10} >
-                <h2>{content.productiveTitle}</h2>
-                <p className="tandem-text">{content.productiveText}</p>
-              </Col>
-              <Col xs={12} md={1} >
-              </Col>
-            </Row>
-          </Container>
-          <Container>
-            <Row>
-              <Col xs={12} md={2} >
-              </Col>
-              <Col xs={12} md={8} >
-                <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
-              </Col>
-              <Col xs={12} md={2} >
-              </Col>
-            </Row>
-          </Container>
-        </section>
-      </div>
+        <Container>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <h2>{content.productiveTitle}</h2>
+              <p className="tandem-text">{content.productiveText}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Col xs={12} md={2} >
+            </Col>
+            <Col xs={12} md={8} >
+              <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
+            </Col>
+            <Col xs={12} md={2} >
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
       <div className="paralax-bgimg paralax-bgimg-4">
         <div className="caption">
