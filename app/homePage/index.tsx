@@ -26,7 +26,7 @@ export default function HomePage() {
       whoIs: 'Who Is Jeff (Jeffski) Szcinski?',
       roles: [
         { label: 'English Education Innovator', desc: 'Elementry School and Private Lessons for Spanish Speakers', link: ROUTES.pokePeru.info },
-        { label: 'Software Engineer', desc: 'Web Developer and Android Native Applications', link: ROUTES.external.resume.softwareEngineer },
+        { label: 'Software Engineer', desc: 'Web Developer and Android Native Applications', link: ROUTES.aboutMe.techPortfolio },
         { label: 'World Traveler', desc: 'Tokyo, Japan • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
         { label: 'Artist and Performer', desc: 'Fan Artist and Leader of the Señora Fátima Choir in Miraflores, Lima, Perú', link: ROUTES.aboutMe.drawing },
       ]
