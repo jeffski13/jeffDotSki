@@ -1,4 +1,5 @@
-.parallaxContentSection {
+/* modifies the react-bootstrap container, col, row class. Spaces everything out  */
+.container {
     width: 100%;
     padding: 24px;
 }

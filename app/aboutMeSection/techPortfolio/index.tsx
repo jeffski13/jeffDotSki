@@ -123,36 +123,34 @@ export default function TechPortfolio() {
       <div className="paralax-bgimg-container">
       </div>
 
-      <div className="paralax-paragraph-top textContentSection">
-        <section className="techPortfolio-overview">
-          <Container>
-            <Row>
-              <Col xs={0} md={1} >
-              </Col>
-              <Col xs={12} md={3} >
-                <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
-              </Col>
-              <Col xs={12} md={7} >
-                <div className="techPortfolio-overview-text">
-                  <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
-                  <ul className="skills-list">
-                    <li>{content.skills1}</li>
-                    <li>{content.skills2}</li>
-                    <li>{content.skills3}</li>
-                  </ul>
-                  <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
-                </div>
-              </Col>
-              <Col xs={0} md={1} >
-              </Col>
-            </Row>
-          </Container>
-          <div className="techPortfolio-overview-inner">
-          </div>
-        </section>
-      </div>
+      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+        <Container>
+          <Row>
+            <Col xs={0} md={1} >
+            </Col>
+            <Col xs={12} md={3} >
+              <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
+            </Col>
+            <Col xs={12} md={7} >
+              <div className="techPortfolio-overview-text">
+                <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
+                <ul className="skills-list">
+                  <li>{content.skills1}</li>
+                  <li>{content.skills2}</li>
+                  <li>{content.skills3}</li>
+                </ul>
+                <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
+              </div>
+            </Col>
+            <Col xs={0} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <div className="techPortfolio-overview-inner">
+        </div>
+      </section>
 
-      <section className="textContentSection companies parallaxContentSection">
+      <section className="textContentSection companies">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>
@@ -174,7 +172,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-contentBetweenContainer">
         <div className="betweenText">
-          <section className="tandem parallaxContentSection">
+          <section className="tandem">
             <Container>
               <Row>
                 <Col xs={12} md={1} >
@@ -204,7 +202,7 @@ export default function TechPortfolio() {
               </Container>
             </div>
           </section>
-          <section className="tandem parallaxContentSection">
+          <section className="tandem">
             <Container>
               <Row>
                 <Col xs={12} md={1} >
@@ -239,7 +237,7 @@ export default function TechPortfolio() {
       </div>
 
       <div className="betweenContainer2 passion">
-        <section className="parallaxContentSection">
+        <section>
           <Container>
             <Row>
               <Col xs={12} md={1} >
