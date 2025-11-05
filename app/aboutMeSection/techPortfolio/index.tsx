@@ -170,64 +170,62 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-contentBetweenContainer">
-        <div className="betweenText">
-          <section className="tandem">
-            <Container>
-              <Row>
-                <Col xs={12} md={1} >
-                </Col>
-                <Col xs={12} md={10} >
-                  <h2>{content.tandemTitle}</h2>
-                  <p className="tandem-text">{content.tandemText}</p>
-                </Col>
-                <Col xs={12} md={1} >
-                </Col>
-              </Row>
-            </Container>
-            <div className="tandemImprovements-gallery-container">
-              <Container>
-                <Row>
-                  <Col xs={12} md={2} >
-                  </Col>
-                  <Col xs={12} md={8} >
-                    <ImageGallery items={tandemReel}
-                      slideDuration={700}
-                      slideInterval={10000}
-                       />
-                  </Col>
-                  <Col xs={12} md={2} >
-                  </Col>
-                </Row>
-              </Container>
-            </div>
-          </section>
-          <section className="tandem">
-            <Container>
-              <Row>
-                <Col xs={12} md={1} >
-                </Col>
-                <Col xs={12} md={10} >
-                  <h2>{content.highQualityToolsTitle}</h2>
-                  <p>{content.highQualityToolsText}</p>
-                </Col>
-                <Col xs={12} md={1} >
-                </Col>
-              </Row>
-            </Container>
+      <div className="paralax-contentBetweenContainer betweenText">
+        <section className="tandem">
+          <Container>
+            <Row>
+              <Col xs={12} md={1} >
+              </Col>
+              <Col xs={12} md={10} >
+                <h2>{content.tandemTitle}</h2>
+                <p className="tandem-text">{content.tandemText}</p>
+              </Col>
+              <Col xs={12} md={1} >
+              </Col>
+            </Row>
+          </Container>
+          <div className="tandemImprovements-gallery-container">
             <Container>
               <Row>
                 <Col xs={12} md={2} >
                 </Col>
                 <Col xs={12} md={8} >
-                  <img className="techPortfolio-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
+                  <ImageGallery items={tandemReel}
+                    slideDuration={700}
+                    slideInterval={10000}
+                  />
                 </Col>
                 <Col xs={12} md={2} >
                 </Col>
               </Row>
             </Container>
-          </section>
-        </div>
+          </div>
+        </section>
+        <section className="tandem">
+          <Container>
+            <Row>
+              <Col xs={12} md={1} >
+              </Col>
+              <Col xs={12} md={10} >
+                <h2>{content.highQualityToolsTitle}</h2>
+                <p>{content.highQualityToolsText}</p>
+              </Col>
+              <Col xs={12} md={1} >
+              </Col>
+            </Row>
+          </Container>
+          <Container>
+            <Row>
+              <Col xs={12} md={2} >
+              </Col>
+              <Col xs={12} md={8} >
+                <img className="techPortfolio-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
+              </Col>
+              <Col xs={12} md={2} >
+              </Col>
+            </Row>
+          </Container>
+        </section>
       </div>
 
       <div className="paralax-bgimg paralax-bgimg-3">
