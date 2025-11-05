@@ -117,8 +117,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-1">
         <div className="caption">
-          <span className="border desktop-view">{content.heroTitle}</span>
-          <span className="border-mobile mobile-view">{content.heroTitle}</span>
+          <span className="border">{content.heroTitle}</span>
         </div>
       </div>
       <div className="paralax-bgimg-container">

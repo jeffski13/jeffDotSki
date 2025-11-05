@@ -103,15 +103,13 @@
     letter-spacing: 10px;
 }
 
-.border-mobile {
-    background-color: #333;
-    color: #fff;
-    padding: 18px;
-    letter-spacing: 1px;
-}
-
 /* Small screens: two per row */
 @media (max-width: 600px) {
+    
+    .caption span.border {
+        letter-spacing: 1px;
+        font-size: 12px;
+    }
 
     .paralax-bgimg {
         min-height: 300px;
