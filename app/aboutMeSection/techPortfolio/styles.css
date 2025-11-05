@@ -52,7 +52,16 @@
 }
 
 @media (max-width: 600px) {
-    
+    .companies {
+        padding: 0px;
+        text-align: center;
+    }
+
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
     /* Small screens: two per row */
     .logo-item img {
         max-width: 110px;
