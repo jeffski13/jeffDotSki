@@ -22,7 +22,7 @@
     position: absolute;
     inset: 0;
     /* a light overlay to simulate the previous 0.5 opacity effect */
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
     pointer-events: none;
     z-index: 1;
 }
@@ -91,7 +91,8 @@
     position: absolute;
     left: 0;
     top: 50%;
-    z-index: 2; /* ensure caption sits above the overlay */
+    z-index: 2;
+    /* ensure caption sits above the overlay */
 }
 
 .caption span.border {
@@ -102,15 +103,22 @@
     letter-spacing: 10px;
 }
 
+.border-mobile {
+    background-color: #333;
+    color: #fff;
+    padding: 18px;
+    letter-spacing: 1px;
+}
+
 /* Small screens: two per row */
 @media (max-width: 600px) {
 
-    .caption span.border {
-        font-size: 12px;
-    }
-
     .paralax-bgimg {
         min-height: 300px;
+        background-attachment: scroll;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     .betweenText {

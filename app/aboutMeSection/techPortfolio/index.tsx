@@ -5,6 +5,7 @@ import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from 
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
 import './stylesParalax.css';
+import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
@@ -116,7 +117,8 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-1">
         <div className="caption">
-          <span className="border">{content.heroTitle}</span>
+          <span className="border desktop-view">{content.heroTitle}</span>
+          <span className="border-mobile mobile-view">{content.heroTitle}</span>
         </div>
       </div>
       <div className="paralax-bgimg-container">
