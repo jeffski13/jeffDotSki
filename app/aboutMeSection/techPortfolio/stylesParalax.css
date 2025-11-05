@@ -116,9 +116,6 @@
     .paralax-bgimg {
         min-height: 300px;
         background-attachment: scroll;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
     }
 
     .betweenText {
