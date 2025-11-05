@@ -147,7 +147,7 @@ export default function TechPortfolio() {
               </Col>
             </Row>
           </Container>
-          <div className="techPortfolio-overview-inner container">
+          <div className="techPortfolio-overview-inner">
           </div>
         </section>
       </div>
