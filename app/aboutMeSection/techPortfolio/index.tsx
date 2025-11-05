@@ -152,7 +152,7 @@ export default function TechPortfolio() {
         </section>
       </div>
 
-      <section className="textContentSection companies container">
+      <section className="textContentSection companies parallaxContentSection">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>
@@ -174,7 +174,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-contentBetweenContainer">
         <div className="betweenText">
-          <section className="tandem container">
+          <section className="tandem parallaxContentSection">
             <Container>
               <Row>
                 <Col xs={12} md={1} >
@@ -204,7 +204,7 @@ export default function TechPortfolio() {
               </Container>
             </div>
           </section>
-          <section className="tandem container">
+          <section className="tandem parallaxContentSection">
             <Container>
               <Row>
                 <Col xs={12} md={1} >
@@ -239,7 +239,7 @@ export default function TechPortfolio() {
       </div>
 
       <div className="betweenContainer2 passion">
-        <section className="container">
+        <section className="parallaxContentSection">
           <Container>
             <Row>
               <Col xs={12} md={1} >
