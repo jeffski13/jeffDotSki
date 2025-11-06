@@ -171,14 +171,14 @@ export default function TechPortfolio() {
       </div>
 
       <div className="paralax-section-blackBackground">
-        <section className="tandem paralax-paragraph paralax-content-section">
+        <section className="paralax-paragraph paralax-content-section">
           <Container>
             <Row>
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
                 <h2>{content.tandemTitle}</h2>
-                <p className="tandem-text">{content.tandemText}</p>
+                <p >{content.tandemText}</p>
               </Col>
               <Col xs={12} md={1} >
               </Col>
@@ -201,7 +201,7 @@ export default function TechPortfolio() {
             </Container>
           </div>
         </section>
-        <section className="tandem paralax-content-section">
+        <section className="paralax-content-section">
           <Container>
             <Row>
               <Col xs={12} md={1} >
@@ -258,7 +258,7 @@ export default function TechPortfolio() {
             </Col>
             <Col xs={12} md={10} >
               <h2>{content.productiveTitle}</h2>
-              <p className="tandem-text">{content.productiveText}</p>
+              <p>{content.productiveText}</p>
             </Col>
             <Col xs={12} md={1} >
             </Col>
