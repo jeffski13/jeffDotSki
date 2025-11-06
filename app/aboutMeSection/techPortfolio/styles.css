@@ -60,6 +60,7 @@ h2 {
     }
 
     .techPortfolio-companies {
+        margin-top: 0px;
         margin-left: 40px;
         margin-right: 40px;
     }
@@ -70,8 +71,6 @@ h2 {
     }
 
     .techPortfolio-top-section-spacer {
-        flex-direction: column;
-        align-items: flex-start;
         padding: 0px;
     }
 

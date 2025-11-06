@@ -126,4 +126,13 @@ would also dim/transparent its children. */
     .paralax-section-blackBackground {
         padding: 50px 20px;
     }
+
+    .paralax-section-whiteBackground {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .paralax-content-section-last {
+        margin-top: 50px;
+    }
 }

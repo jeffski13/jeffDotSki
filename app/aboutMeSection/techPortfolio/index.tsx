@@ -160,7 +160,7 @@ export default function TechPortfolio() {
         </div>
       </section>
 
-      <section className="techPortfolio-companies paralax-section-whiteBackground paralax-content-section">
+      <section className="paralax-section-whiteBackground paralax-content-section techPortfolio-companies">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>
