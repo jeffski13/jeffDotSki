@@ -59,14 +59,18 @@ h2 {
         padding-right: 0px;
     }
 
+    .techPortfolio-companies {
+        margin-top: 0px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
     /* Small screens: two per row */
     .company-logo-item img {
         max-width: 110px;
     }
 
     .techPortfolio-top-section-spacer {
-        flex-direction: column;
-        align-items: flex-start;
         padding: 0px;
     }
 
