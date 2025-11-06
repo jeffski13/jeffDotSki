@@ -55,7 +55,7 @@ export default function TechPortfolio() {
       tandemTitle: 'Logros de Eficiencia más Recientamente',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
       productiveTitle: 'Productividad para alcanzar Calidad',
-      productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Solo superado por bots, la frecuencia de commits de Github destacan la dedicación y perseverancia mostrado en la oficina.',
+      productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
       passionTitle: 'Pasión por código de alta calidad',
       passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
       passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
@@ -78,7 +78,7 @@ export default function TechPortfolio() {
       logosTitle: 'Who I\'ve worked with',
       tandemTitle: 'Most Recent Efficiency Gains',
       productiveTitle: 'Highly Productive for High Quality Code',
-      productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the Github commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
+      productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       resumeLink: 'Click Here for Resume',
       workToolsTitle: 'ENABLING BUSINESS',
       tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
@@ -105,19 +105,20 @@ export default function TechPortfolio() {
 
   const tandemReel = [
     {
-      original: '/images/techPortfolio/tandemImprovements/noMorePumpOrPhone.png',
-      thumbnail: '/images/techPortfolio/tandemImprovements/noMorePumpOrPhone.png',
-      caption: 'Emulated Insulin Pump Bluetooth Connection'
+      original: '/images/techPortfolio/recentJobImprovements/noMorePumpOrPhone.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/noMorePumpOrPhone.png',
     },
     {
-      original: '/images/techPortfolio/tandemImprovements/patientPlayback.png',
-      thumbnail: '/images/techPortfolio/tandemImprovements/patientPlayback.png',
-      caption: 'Sanitized patient data could be replayed inside of the development environment.'
+      original: '/images/techPortfolio/recentJobImprovements/patientPlayback.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/patientPlayback.png',
     },
     {
-      original: '/images/techPortfolio/tandemImprovements/simulatedGraphData.png',
-      thumbnail: '/images/techPortfolio/tandemImprovements/simulatedGraphData.png',
-      caption: 'Simulated Insulin Data to test app in different therapy situations.'
+      original: '/images/techPortfolio/recentJobImprovements/simulatedGraphData.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/simulatedGraphData.png',
+    },
+    {
+      original: '/images/techPortfolio/recentJobImprovements/customizableDashboard.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/customizableDashboard.png',
     },
   ];
 
@@ -193,22 +194,20 @@ export default function TechPortfolio() {
               </Col>
             </Row>
           </Container>
-          <div className="tandemImprovements-gallery-container">
-            <Container>
-              <Row>
-                <Col xs={12} md={2} >
-                </Col>
-                <Col xs={12} md={8} >
-                  <ImageGallery items={tandemReel}
-                    slideDuration={700}
-                    slideInterval={10000}
-                  />
-                </Col>
-                <Col xs={12} md={2} >
-                </Col>
-              </Row>
-            </Container>
-          </div>
+          <Container>
+            <Row>
+              <Col xs={12} md={2} >
+              </Col>
+              <Col xs={12} md={8} >
+                <ImageGallery items={tandemReel}
+                  slideDuration={700}
+                  slideInterval={10000}
+                />
+              </Col>
+              <Col xs={12} md={2} >
+              </Col>
+            </Row>
+          </Container>
         </section>
         <section className="paralax-content-section">
           <Container>
