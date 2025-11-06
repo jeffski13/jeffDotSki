@@ -57,20 +57,8 @@
     text-align: center;
 }
 
-.paralax-image2-overlay-text {
-    background-color: transparent;
-    font-size: 25px;
-    color: #f7f7f7;
-}
-
 .paralax-contentBetweenContainer {
     position: relative;
-}
-
-.paralax-image3-overlay-text {
-    background-color: transparent;
-    font-size: 25px;
-    color: #f7f7f7;
 }
 
 .paralax-contentBetweenContainer {
@@ -95,7 +83,7 @@
     /* ensure paralax-section-title-container sits above the overlay */
 }
 
-.paralax-section-title-container span.border {
+.paralax-section-title-container span.paralax-section-title {
     background-color: #333;
     color: #fff;
     padding: 18px;
@@ -106,7 +94,7 @@
 /* Small screens: two per row */
 @media (max-width: 600px) {
     
-    .paralax-section-title-container span.border {
+    .paralax-section-title-container span.paralax-section-title {
         letter-spacing: 1px;
         font-size: 12px;
     }

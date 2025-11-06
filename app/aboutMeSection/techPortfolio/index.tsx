@@ -117,7 +117,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-1">
         <div className="paralax-section-title-container">
-          <span className="border">{content.heroTitle}</span>
+          <span className="paralax-section-title">{content.heroTitle}</span>
         </div>
       </div>
       <div className="paralax-bgimg-container">
@@ -166,7 +166,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-2">
         <div className="paralax-section-title-container">
-          <span className="border paralax-image2-overlay-text">ENABLING BUSINESS</span>
+          <span className="paralax-section-title">ENABLING BUSINESS</span>
         </div>
       </div>
 
@@ -230,7 +230,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-3">
         <div className="paralax-section-title-container">
-          <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
+          <span className="paralax-section-title">QUALITY CODE</span>
         </div>
       </div>
 
@@ -279,7 +279,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-4">
         <div className="paralax-section-title-container">
-          <span className="border">THANKS FOR VISITING!</span>
+          <span className="paralax-section-title">THANKS FOR VISITING!</span>
         </div>
       </div>
 
