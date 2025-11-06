@@ -170,7 +170,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="paralax-contentBetweenContainer betweenText">
+      <div className="betweenText">
         <section className="tandem">
           <Container>
             <Row>
