@@ -1,3 +1,7 @@
+h2 {
+    margin-top: 0;
+}
+
 /* modifies the react-bootstrap container, col, row class. Spaces everything out  */
 .container {
     width: 100%;
@@ -17,7 +21,7 @@
     margin: 0 0 8px 0;
 }
 
-.skills-list {
+.techPortfolio-overview-skills-list {
     list-style: disc;
 }
 
@@ -39,11 +43,17 @@
     filter: grayscale(0.0);
 }
 
+.techPortfolio-githubCommits-image {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 @media (max-width: 600px) {
     .techPortfolio-companies {
         padding: 0px;
     }
 
+    /* modifies the react-bootstrap container, col, row class. Spaces everything out  */
     .container {
         padding-left: 0px;
         padding-right: 0px;
@@ -53,7 +63,7 @@
     .company-logo-item img {
         max-width: 110px;
     }
-    
+
     .techPortfolio-top-section-spacer {
         flex-direction: column;
         align-items: flex-start;
@@ -63,14 +73,4 @@
     .techPortfolio-overview-text {
         padding-top: 50px;
     }
-}
-
-.techPortfolio-githubCommits-image {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* small polish */
-h2 {
-    margin-top: 0;
 }

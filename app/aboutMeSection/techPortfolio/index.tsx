@@ -134,7 +134,7 @@ export default function TechPortfolio() {
             <Col xs={12} md={6} >
               <div className="techPortfolio-overview-text">
                 <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
-                <ul className="skills-list">
+                <ul className="techPortfolio-overview-skills-list">
                   <li>{content.skills1}</li>
                   <li>{content.skills2}</li>
                   <li>{content.skills3}</li>
