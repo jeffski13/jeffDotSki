@@ -22,6 +22,7 @@ export interface TechPortfolioContentPerLanguage {
   heroText2suffix: string;
   logosTitle: string;
   resumeLink: string;
+  workToolsTitle: string;
   tandemTitle: string;
   tandemText: string;
   productiveTitle: string;
@@ -29,8 +30,10 @@ export interface TechPortfolioContentPerLanguage {
   passionTitle: string;
   passionText: string;
   passionText2: string;
+  qualityCodeTitle: string;
   highQualityToolsTitle: string;
   highQualityToolsText: string;
+  endingNote: string;
 }
 
 export default function TechPortfolio() {
@@ -48,6 +51,7 @@ export default function TechPortfolio() {
       heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
       logosTitle: 'Empresas con las que he trabajado',
       resumeLink: 'Haz Click acá por Curriculum Vitae',
+      workToolsTitle: ' HABILITANDO LA EMPRESA',
       tandemTitle: 'Logros de Eficiencia más Recientamente',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
       productiveTitle: 'Productividad para alcanzar Calidad',
@@ -55,8 +59,10 @@ export default function TechPortfolio() {
       passionTitle: 'Pasión por código de alta calidad',
       passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
       passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
+      qualityCodeTitle: 'CÓDIGO DE ALTA CALIDAD',
       highQualityToolsTitle: 'La Herramienta que corresponde con la Obra',
       highQualityToolsText: 'Ambientes de desarrollo fachades crearon control de las respuestas de la nuba a la aplicación, así como la verificación de los datos enviados a la nube.',
+      endingNote: 'GRACIAS POR VISITAR!',
     },
     default: {
       heroTitle: 'TECH PORTFOLIO',
@@ -74,12 +80,15 @@ export default function TechPortfolio() {
       productiveTitle: 'Highly Productive for High Quality Code',
       productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the Github commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       resumeLink: 'Click Here for Resume',
+      workToolsTitle: 'ENABLING BUSINESS',
       tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
       passionTitle: 'Creating with Craftsmanship',
       passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
       passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
+      qualityCodeTitle: 'QUALITY CODE',
       highQualityToolsTitle: 'Creating the Right Tools for the Job',
       highQualityToolsText: 'Facade dev environments allowed control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
+      endingNote: 'THANKS FOR VISITING!',
     }
   };
 
@@ -166,7 +175,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-2">
         <div className="paralax-section-title-container">
-          <span className="paralax-section-title">ENABLING BUSINESS</span>
+          <span className="paralax-section-title">{content.workToolsTitle}</span>
         </div>
       </div>
 
@@ -230,7 +239,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-3">
         <div className="paralax-section-title-container">
-          <span className="paralax-section-title">QUALITY CODE</span>
+          <span className="paralax-section-title">{content.qualityCodeTitle}</span>
         </div>
       </div>
 
@@ -279,7 +288,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-4">
         <div className="paralax-section-title-container">
-          <span className="paralax-section-title">THANKS FOR VISITING!</span>
+          <span className="paralax-section-title">{content.endingNote}</span>
         </div>
       </div>
 
