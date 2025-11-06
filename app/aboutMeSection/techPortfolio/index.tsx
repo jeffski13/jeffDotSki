@@ -123,7 +123,7 @@ export default function TechPortfolio() {
       <div className="paralax-bgimg-container">
       </div>
 
-      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+      <section className="paralax-paragraph-top paralax-text-section-whiteBackground techPortfolio-overview">
         <Container>
           <Row>
             <Col xs={0} md={1} >
@@ -150,7 +150,7 @@ export default function TechPortfolio() {
         </div>
       </section>
 
-      <section className="textContentSection companies">
+      <section className="paralax-text-section-whiteBackground companies">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>
@@ -234,7 +234,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+      <section className="paralax-paragraph-top paralax-text-section-whiteBackground techPortfolio-overview">
         <Container>
           <Row>
             <Col xs={12} md={1} >
