@@ -54,7 +54,7 @@
     position: relative;
 }
 
-.betweenText {
+.paralax-text-section-blackBackground {
     color: #ddd;
     background-color: #282E34;
     text-align: center;
@@ -93,7 +93,7 @@
         background-attachment: scroll;
     }
 
-    .betweenText {
+    .paralax-text-section-blackBackground {
         padding: 50px 20px;
     }
 }

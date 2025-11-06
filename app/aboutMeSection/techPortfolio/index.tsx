@@ -170,7 +170,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <div className="betweenText">
+      <div className="paralax-text-section-blackBackground">
         <section className="tandem">
           <Container>
             <Row>
