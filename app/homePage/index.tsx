@@ -52,9 +52,9 @@ export default function HomePage() {
           <Col xs={12} sm={12} md={7} className="homePage_aboutJeff-text">
             <div className="homePage_aboutJeff-text-container">
               <h3>{content.whoIs}</h3>
-              <ul>
+              <ul className="homePage-link-list-container">
                 {content.roles.map((role: Role, i) => (
-                  <li key={i}>
+                  <li key={i} className="homePage-link-container">
                     <strong><a className="homePage-link" href={role.link}>{role.label}</a>:</strong> {role.desc}
                   </li>
                 ))}

@@ -76,16 +76,29 @@
     padding: 20px;
 }
 
+.homePage-link-list-container {
+    margin-top: 15px;
+    padding-left: 0px;
+}
+
+.homePage-link-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .homePage-link {
     color: #2d4a8e;
     font-size: large;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
     .homePage_aboutJeff-text-container {
         padding-top: 0px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 50px;
     }
-    
+
     .homePage_aboutJeff-image {
         padding-bottom: 0px;
     }
