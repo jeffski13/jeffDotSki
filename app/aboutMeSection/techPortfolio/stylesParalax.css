@@ -67,6 +67,8 @@
 
 
 .paralax-section-blackBackground {
+    padding-top: 50px;
+    padding-bottom: 50px;
     color: #ddd;
     background-color: #282E34;
 }
