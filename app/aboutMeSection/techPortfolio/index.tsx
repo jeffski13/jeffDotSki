@@ -150,12 +150,12 @@ export default function TechPortfolio() {
         </div>
       </section>
 
-      <section className="paralax-section-whiteBackground companies paralax-content-section">
+      <section className="techPortfolio-companies paralax-section-whiteBackground paralax-content-section">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>
             {companies.map(c => (
-              <Col xs={6} md={4} key={c.name} className="logo-item" title={c.name}>
+              <Col xs={6} md={4} key={c.name} className="company-logo-item" title={c.name}>
                 <img src={c.img} alt={c.name} />
               </Col>
             ))}

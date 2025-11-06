@@ -21,17 +21,17 @@
     list-style: disc;
 }
 
-.companies {
+.techPortfolio-companies {
     padding: 48px 0;
     text-align: center;
 }
 
-.logo-item {
+.company-logo-item {
     justify-content: center;
     display: flex;
 }
 
-.logo-item img {
+.company-logo-item img {
     margin: 25px;
     max-width: 140px;
     max-height: 80px;
@@ -40,9 +40,8 @@
 }
 
 @media (max-width: 600px) {
-    .companies {
+    .techPortfolio-companies {
         padding: 0px;
-        text-align: center;
     }
 
     .container {
@@ -51,7 +50,7 @@
     }
 
     /* Small screens: two per row */
-    .logo-item img {
+    .company-logo-item img {
         max-width: 110px;
     }
     
