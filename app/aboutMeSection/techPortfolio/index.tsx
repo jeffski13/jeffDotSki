@@ -209,7 +209,7 @@ export default function TechPortfolio() {
             </Row>
           </Container>
         </section>
-        <section className="paralax-content-section">
+        <section className="paralax-paragraph paralax-content-section">
           <Container>
             <Row>
               <Col xs={12} md={1} >
