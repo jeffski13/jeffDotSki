@@ -44,15 +44,15 @@
     margin-bottom: 50px;
 }
 
-.paralax-paragraph-top {
+.paralax-paragraph {
     padding-left: 40px;
     padding-right: 40px;
-    margin-top: 50px;
-    margin-bottom: 50px;
     text-align: justify;
 }
 
 .paralax-section-whiteBackground {
+    margin-top: 50px;
+    margin-bottom: 50px;
     color: #666;
     background-color: white;
     position: relative;
@@ -61,8 +61,6 @@
 .paralax-section-blackBackground {
     color: #ddd;
     background-color: #282E34;
-    padding: 50px 80px;
-    text-align: justify;
 }
 
 .paralax-section-title-container {
