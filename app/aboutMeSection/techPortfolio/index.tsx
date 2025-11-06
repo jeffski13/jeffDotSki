@@ -146,7 +146,7 @@ export default function TechPortfolio() {
             </Col>
           </Row>
         </Container>
-        <div className="techPortfolio-overview-inner">
+        <div className="techPortfolio-top-section-spacer">
         </div>
       </section>
 
