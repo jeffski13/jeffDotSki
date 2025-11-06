@@ -105,19 +105,20 @@ export default function TechPortfolio() {
 
   const tandemReel = [
     {
-      original: '/images/techPortfolio/tandemImprovements/noMorePumpOrPhone.png',
-      thumbnail: '/images/techPortfolio/tandemImprovements/noMorePumpOrPhone.png',
-      caption: 'Emulated Insulin Pump Bluetooth Connection'
+      original: '/images/techPortfolio/recentJobImprovements/noMorePumpOrPhone.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/noMorePumpOrPhone.png',
     },
     {
-      original: '/images/techPortfolio/tandemImprovements/patientPlayback.png',
-      thumbnail: '/images/techPortfolio/tandemImprovements/patientPlayback.png',
-      caption: 'Sanitized patient data could be replayed inside of the development environment.'
+      original: '/images/techPortfolio/recentJobImprovements/patientPlayback.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/patientPlayback.png',
     },
     {
-      original: '/images/techPortfolio/tandemImprovements/simulatedGraphData.png',
-      thumbnail: '/images/techPortfolio/tandemImprovements/simulatedGraphData.png',
-      caption: 'Simulated Insulin Data to test app in different therapy situations.'
+      original: '/images/techPortfolio/recentJobImprovements/simulatedGraphData.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/simulatedGraphData.png',
+    },
+    {
+      original: '/images/techPortfolio/recentJobImprovements/customizableDashboard.png',
+      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/customizableDashboard.png',
     },
   ];
 
@@ -193,7 +194,7 @@ export default function TechPortfolio() {
               </Col>
             </Row>
           </Container>
-          <div className="tandemImprovements-gallery-container">
+          <div>
             <Container>
               <Row>
                 <Col xs={12} md={2} >
