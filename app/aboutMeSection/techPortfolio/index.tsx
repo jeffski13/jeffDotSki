@@ -128,10 +128,10 @@ export default function TechPortfolio() {
           <Row>
             <Col xs={0} md={1} >
             </Col>
-            <Col xs={12} md={3} >
+            <Col xs={12} md={4} >
               <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
             </Col>
-            <Col xs={12} md={7} >
+            <Col xs={12} md={6} >
               <div className="techPortfolio-overview-text">
                 <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
                 <ul className="skills-list">
