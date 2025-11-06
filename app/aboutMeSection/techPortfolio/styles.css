@@ -1,18 +1,11 @@
+h2 {
+    margin-top: 0;
+}
+
 /* modifies the react-bootstrap container, col, row class. Spaces everything out  */
 .container {
     width: 100%;
     padding: 24px;
-}
-
-.techPortfolio-overview {
-    background: #fff;
-}
-
-.techPortfolio-overview-inner {
-    padding: 24px;
-    display: flex;
-    gap: 24px;
-    align-items: center;
 }
 
 .techPortfolio-image {
@@ -24,26 +17,25 @@
     object-fit: cover;
 }
 
-
 .techPortfolio-overview-text h1 {
     margin: 0 0 8px 0;
 }
 
-.skills-list {
+.techPortfolio-overview-skills-list {
     list-style: disc;
 }
 
-.companies {
+.techPortfolio-companies {
     padding: 48px 0;
     text-align: center;
 }
 
-.logo-item {
+.company-logo-item {
     justify-content: center;
     display: flex;
 }
 
-.logo-item img {
+.company-logo-item img {
     margin: 25px;
     max-width: 140px;
     max-height: 80px;
@@ -51,14 +43,28 @@
     filter: grayscale(0.0);
 }
 
+.techPortfolio-githubCommits-image {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 @media (max-width: 600px) {
-    
+    .techPortfolio-companies {
+        padding: 0px;
+    }
+
+    /* modifies the react-bootstrap container, col, row class. Spaces everything out  */
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
     /* Small screens: two per row */
-    .logo-item img {
+    .company-logo-item img {
         max-width: 110px;
     }
-    
-    .techPortfolio-overview-inner {
+
+    .techPortfolio-top-section-spacer {
         flex-direction: column;
         align-items: flex-start;
         padding: 0px;
@@ -67,23 +73,4 @@
     .techPortfolio-overview-text {
         padding-top: 50px;
     }
-}
-
-.tandem {
-    padding: 48px 0;
-}
-
-.techPortfolio-githubCommits-image {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* small polish */
-h2 {
-    margin-top: 0;
-}
-
-.textContentSection {
-    margin-top: 50px;
-    margin-bottom: 50px;
 }

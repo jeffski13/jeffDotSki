@@ -22,6 +22,7 @@ export interface TechPortfolioContentPerLanguage {
   heroText2suffix: string;
   logosTitle: string;
   resumeLink: string;
+  workToolsTitle: string;
   tandemTitle: string;
   tandemText: string;
   productiveTitle: string;
@@ -29,8 +30,10 @@ export interface TechPortfolioContentPerLanguage {
   passionTitle: string;
   passionText: string;
   passionText2: string;
+  qualityCodeTitle: string;
   highQualityToolsTitle: string;
   highQualityToolsText: string;
+  endingNote: string;
 }
 
 export default function TechPortfolio() {
@@ -48,15 +51,18 @@ export default function TechPortfolio() {
       heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
       logosTitle: 'Empresas con las que he trabajado',
       resumeLink: 'Haz Click acá por Curriculum Vitae',
-      tandemTitle: 'Trabajo en Tandem Diabetes Care',
+      workToolsTitle: ' HABILITANDO LA EMPRESA',
+      tandemTitle: 'Logros de Eficiencia más Recientamente',
       tandemText: 'En Tandem reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
       productiveTitle: 'Productividad para alcanzar Calidad',
       productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Solo superado por bots, la frecuencia de commits de Github destacan la dedicación y perseverancia mostrado en la oficina.',
       passionTitle: 'Pasión por código de alta calidad',
       passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
       passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
+      qualityCodeTitle: 'CÓDIGO DE ALTA CALIDAD',
       highQualityToolsTitle: 'La Herramienta que corresponde con la Obra',
       highQualityToolsText: 'Ambientes de desarrollo fachades crearon control de las respuestas de la nuba a la aplicación, así como la verificación de los datos enviados a la nube.',
+      endingNote: 'GRACIAS POR VISITAR!',
     },
     default: {
       heroTitle: 'TECH PORTFOLIO',
@@ -70,16 +76,19 @@ export default function TechPortfolio() {
       heroText2highlight: 'productivity',
       heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
       logosTitle: 'Who I\'ve worked with',
-      tandemTitle: 'Efficiency Gains at Tandem',
+      tandemTitle: 'Most Recent Efficiency Gains',
       productiveTitle: 'Highly Productive for High Quality Code',
       productiveText: 'High quality software takes a lot of coffee and a lot of work. Second only to the commit bot, the Github commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       resumeLink: 'Click Here for Resume',
+      workToolsTitle: 'ENABLING BUSINESS',
       tandemText: 'The Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
       passionTitle: 'Creating with Craftsmanship',
       passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
       passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
+      qualityCodeTitle: 'QUALITY CODE',
       highQualityToolsTitle: 'Creating the Right Tools for the Job',
       highQualityToolsText: 'Facade dev environments allowed control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
+      endingNote: 'THANKS FOR VISITING!',
     }
   };
 
@@ -116,25 +125,25 @@ export default function TechPortfolio() {
     <div className="paralax-portfolio">
 
       <div className="paralax-bgimg paralax-bgimg-1">
-        <div className="caption">
-          <span className="border">{content.heroTitle}</span>
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.heroTitle}</span>
         </div>
       </div>
       <div className="paralax-bgimg-container">
       </div>
 
-      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section">
         <Container>
           <Row>
             <Col xs={0} md={1} >
             </Col>
-            <Col xs={12} md={3} >
+            <Col xs={12} md={4} >
               <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/hero-dev.png" alt="Developer at work" />
             </Col>
-            <Col xs={12} md={7} >
+            <Col xs={12} md={6} >
               <div className="techPortfolio-overview-text">
                 <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
-                <ul className="skills-list">
+                <ul className="techPortfolio-overview-skills-list">
                   <li>{content.skills1}</li>
                   <li>{content.skills2}</li>
                   <li>{content.skills3}</li>
@@ -146,16 +155,16 @@ export default function TechPortfolio() {
             </Col>
           </Row>
         </Container>
-        <div className="techPortfolio-overview-inner">
+        <div className="techPortfolio-top-section-spacer">
         </div>
       </section>
 
-      <section className="textContentSection companies">
+      <section className="techPortfolio-companies paralax-section-whiteBackground paralax-content-section">
         <h2>{content.logosTitle}</h2>
         <Container>
           <Row>
             {companies.map(c => (
-              <Col xs={6} md={4} key={c.name} className="logo-item" title={c.name}>
+              <Col xs={6} md={4} key={c.name} className="company-logo-item" title={c.name}>
                 <img src={c.img} alt={c.name} />
               </Col>
             ))}
@@ -165,20 +174,20 @@ export default function TechPortfolio() {
       </section>
 
       <div className="paralax-bgimg paralax-bgimg-2">
-        <div className="caption">
-          <span className="border paralax-image2-overlay-text">ENABLING BUSINESS</span>
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.workToolsTitle}</span>
         </div>
       </div>
 
-      <div className="paralax-contentBetweenContainer betweenText">
-        <section className="tandem">
+      <div className="paralax-section-blackBackground">
+        <section className="paralax-paragraph paralax-content-section">
           <Container>
             <Row>
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
                 <h2>{content.tandemTitle}</h2>
-                <p className="tandem-text">{content.tandemText}</p>
+                <p >{content.tandemText}</p>
               </Col>
               <Col xs={12} md={1} >
               </Col>
@@ -201,7 +210,7 @@ export default function TechPortfolio() {
             </Container>
           </div>
         </section>
-        <section className="tandem">
+        <section className="paralax-content-section">
           <Container>
             <Row>
               <Col xs={12} md={1} >
@@ -229,12 +238,12 @@ export default function TechPortfolio() {
       </div>
 
       <div className="paralax-bgimg paralax-bgimg-3">
-        <div className="caption">
-          <span className="border paralax-image3-overlay-text">QUALITY CODE</span>
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.qualityCodeTitle}</span>
         </div>
       </div>
 
-      <section className="paralax-paragraph-top textContentSection techPortfolio-overview">
+      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-last">
         <Container>
           <Row>
             <Col xs={12} md={1} >
@@ -258,7 +267,7 @@ export default function TechPortfolio() {
             </Col>
             <Col xs={12} md={10} >
               <h2>{content.productiveTitle}</h2>
-              <p className="tandem-text">{content.productiveText}</p>
+              <p>{content.productiveText}</p>
             </Col>
             <Col xs={12} md={1} >
             </Col>
@@ -278,8 +287,8 @@ export default function TechPortfolio() {
       </section>
 
       <div className="paralax-bgimg paralax-bgimg-4">
-        <div className="caption">
-          <span className="border">THANKS FOR VISITING!</span>
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.endingNote}</span>
         </div>
       </div>
 

@@ -14,7 +14,7 @@
     background-size: cover;
 }
 
-/* Keep the background visually at ~50% while keeping children (caption) fully opaque.
+/* Keep the background visually at ~50% while keeping children (paralax-section-title-container) fully opaque.
    Using a pseudo-element overlay avoids applying `opacity` to the container which
    would also dim/transparent its children. */
 .paralax-bgimg::before {
@@ -43,59 +43,47 @@
     background-image: url(/images/techPortfolio/hero-dev-desk-cat.jpg);
     margin-bottom: 50px;
 }
+.paralax-content-section {
+    padding: 48px 0;
+}
 
-.paralax-paragraph-top {
-    color: #666;
-    background-color: white;
-    text-align: center;
+.paralax-content-section-last {
+    padding: 0px 0px 48px 0;
+}
+
+.paralax-paragraph {
     padding-left: 40px;
     padding-right: 40px;
     text-align: justify;
 }
 
-.paralax-paragraph {
-    text-align: center;
-}
-
-.paralax-image2-overlay-text {
-    background-color: transparent;
-    font-size: 25px;
-    color: #f7f7f7;
-}
-
-.paralax-contentBetweenContainer {
+.paralax-section-whiteBackground {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: #666;
+    background-color: white;
     position: relative;
 }
 
-.paralax-image3-overlay-text {
-    background-color: transparent;
-    font-size: 25px;
-    color: #f7f7f7;
-}
 
-.paralax-contentBetweenContainer {
-    position: relative;
-}
-
-.betweenText {
+.paralax-section-blackBackground {
+    padding-top: 50px;
+    padding-bottom: 50px;
     color: #ddd;
     background-color: #282E34;
-    text-align: center;
-    padding: 50px 80px;
-    text-align: justify;
 }
 
-.caption {
+.paralax-section-title-container {
     width: 100%;
     text-align: center;
     position: absolute;
     left: 0;
     top: 50%;
     z-index: 2;
-    /* ensure caption sits above the overlay */
+    /* ensure paralax-section-title-container sits above the overlay */
 }
 
-.caption span.border {
+.paralax-section-title-container span.paralax-section-title {
     background-color: #333;
     color: #fff;
     padding: 18px;
@@ -106,7 +94,7 @@
 /* Small screens: two per row */
 @media (max-width: 600px) {
     
-    .caption span.border {
+    .paralax-section-title-container span.paralax-section-title {
         letter-spacing: 1px;
         font-size: 12px;
     }
@@ -116,7 +104,7 @@
         background-attachment: scroll;
     }
 
-    .betweenText {
+    .paralax-section-blackBackground {
         padding: 50px 20px;
     }
 }
