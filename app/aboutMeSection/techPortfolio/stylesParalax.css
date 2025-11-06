@@ -6,7 +6,6 @@
 }
 
 .paralax-bgimg {
-    min-height: 500px;
     position: relative;
     background-attachment: fixed;
     background-position: center;
@@ -15,8 +14,8 @@
 }
 
 /* Keep the background visually at ~50% while keeping children (paralax-section-title-container) fully opaque.
-   Using a pseudo-element overlay avoids applying `opacity` to the container which
-   would also dim/transparent its children. */
+Using a pseudo-element overlay avoids applying `opacity` to the container which
+would also dim/transparent its children. */
 .paralax-bgimg::before {
     content: "";
     position: absolute;
@@ -28,18 +27,22 @@
 }
 
 .paralax-bgimg-1 {
+    min-height: 500px;
     background-image: url(/images/techPortfolio/hero-dev-desk.jpg);
 }
 
 .paralax-bgimg-2 {
+    min-height: 500px;
     background-image: url(/images/techPortfolio/softwareTestingGenericBackground.jpg);
 }
 
 .paralax-bgimg-3 {
+    min-height: 500px;
     background-image: url(/images/techPortfolio/unitTestingOutput.png);
 }
 
 .paralax-bgimg-4 {
+    min-height: 500px;
     background-image: url(/images/techPortfolio/hero-dev-desk-cat.jpg);
     margin-bottom: 50px;
 }
@@ -93,14 +96,28 @@
 
 /* Small screens: two per row */
 @media (max-width: 600px) {
+    .paralax-bgimg-1 {
+        min-height: 200px;
+    }
     
+    .paralax-bgimg-2 {
+        min-height: 300px;
+    }
+
+    .paralax-bgimg-3 {
+        min-height: 300px;
+    }
+
+    .paralax-bgimg-4 {
+        min-height: 300px;
+    }
+
     .paralax-section-title-container span.paralax-section-title {
         letter-spacing: 1px;
         font-size: 12px;
     }
 
     .paralax-bgimg {
-        min-height: 300px;
         background-attachment: scroll;
     }
 
