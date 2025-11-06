@@ -194,22 +194,20 @@ export default function TechPortfolio() {
               </Col>
             </Row>
           </Container>
-          <div>
-            <Container>
-              <Row>
-                <Col xs={12} md={2} >
-                </Col>
-                <Col xs={12} md={8} >
-                  <ImageGallery items={tandemReel}
-                    slideDuration={700}
-                    slideInterval={10000}
-                  />
-                </Col>
-                <Col xs={12} md={2} >
-                </Col>
-              </Row>
-            </Container>
-          </div>
+          <Container>
+            <Row>
+              <Col xs={12} md={2} >
+              </Col>
+              <Col xs={12} md={8} >
+                <ImageGallery items={tandemReel}
+                  slideDuration={700}
+                  slideInterval={10000}
+                />
+              </Col>
+              <Col xs={12} md={2} >
+              </Col>
+            </Row>
+          </Container>
         </section>
         <section className="paralax-content-section">
           <Container>
