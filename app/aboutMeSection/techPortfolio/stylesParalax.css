@@ -47,6 +47,10 @@
     padding: 48px 0;
 }
 
+.paralax-content-section-last {
+    padding: 0px 0px 48px 0;
+}
+
 .paralax-paragraph {
     padding-left: 40px;
     padding-right: 40px;

@@ -234,7 +234,7 @@ export default function TechPortfolio() {
         </div>
       </div>
 
-      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section">
+      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-last">
         <Container>
           <Row>
             <Col xs={12} md={1} >
