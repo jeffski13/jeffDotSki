@@ -123,7 +123,7 @@ export default function TechPortfolio() {
       <div className="paralax-bgimg-container">
       </div>
 
-      <section className="paralax-paragraph-top paralax-section-whiteBackground techPortfolio-overview">
+      <section className="paralax-paragraph-top paralax-section-whiteBackground">
         <Container>
           <Row>
             <Col xs={0} md={1} >

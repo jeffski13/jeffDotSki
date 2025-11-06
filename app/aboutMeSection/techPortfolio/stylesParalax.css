@@ -45,12 +45,16 @@
 }
 
 .paralax-paragraph-top {
-    color: #666;
-    background-color: white;
-    text-align: center;
     padding-left: 40px;
     padding-right: 40px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     text-align: justify;
+}
+
+.paralax-section-whiteBackground {
+    color: #666;
+    background-color: white;
     position: relative;
 }
 
