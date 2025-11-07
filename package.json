@@ -1,6 +1,6 @@
 {
   "name": "jeff.ski",
-  "version": "2.0.126",
+  "version": "2.1.12",
   "description": "jeff.ski website source code",
   "author": "Jeff Szcinski",
   "repository": "git@github.com:jeffski13",
@@ -30,6 +30,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.0.0",
     "react-helmet": "^6.1.0",
+    "react-image-gallery": "^1.4.0",
     "react-loading": "^2.0.3",
     "react-router": "^7.5.2",
     "uuid": "^13.0.0"
