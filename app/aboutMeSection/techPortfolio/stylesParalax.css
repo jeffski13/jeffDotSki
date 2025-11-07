@@ -66,23 +66,27 @@ would also dim/transparent its children. */
 }
 
 .paralax-content-section-overview {
-
+    margin-top: 80px;
+    margin-bottom: 40px;
 }
 
 .paralax-content-section-overview-companies {
-
+    margin-bottom: 50px;
 }
 
 .paralax-content-section-efficiencyGains {
-
+    padding-top: 80px;
+    padding-bottom: 40px;
 }
 
 .paralax-content-section-toolsForTheJob {
-
+    padding-top: 40px;
+    padding-bottom: 80px;
 }
 
 .paralax-content-section-qualityCode {
-
+    margin-top: 60px;
+    margin-bottom: 80px;
 }
 
 .paralax-paragraph {
@@ -135,5 +139,30 @@ would also dim/transparent its children. */
     .paralax-section-blackBackground {
         padding-left: 20px;
         padding-right: 20px;
+    }
+
+
+    .paralax-content-section-overview {
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+
+    .paralax-content-section-overview-companies {
+
+    }
+
+    .paralax-content-section-efficiencyGains {
+        padding-top: 40px;
+        padding-bottom: 0px;
+    }
+
+    .paralax-content-section-toolsForTheJob {
+        padding-top: 40px;
+        padding-bottom: 60px;
+    }
+
+    .paralax-content-section-qualityCode {
+        margin-top: 40px;
+        margin-bottom: 40px;
     }
 }
