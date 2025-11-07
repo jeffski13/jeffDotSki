@@ -13,6 +13,24 @@
     background-size: cover;
 }
 
+.paralax-section-title-container {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 2;
+    /* ensure paralax-section-title-container sits above the overlay */
+}
+
+.paralax-section-title-container span.paralax-section-title {
+    background-color: #333;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
 /* Keep the background visually at ~50% while keeping children (paralax-section-title-container) fully opaque.
 Using a pseudo-element overlay avoids applying `opacity` to the container which
 would also dim/transparent its children. */
@@ -46,11 +64,25 @@ would also dim/transparent its children. */
     background-image: url(/images/techPortfolio/hero-dev-desk-cat.jpg);
     margin-bottom: 50px;
 }
-.paralax-content-section {
+
+.paralax-content-section-overview {
+
 }
 
-.paralax-content-section-last {
-    /* padding-bottom: 48px; */
+.paralax-content-section-overview-companies {
+
+}
+
+.paralax-content-section-efficiencyGains {
+
+}
+
+.paralax-content-section-toolsForTheJob {
+
+}
+
+.paralax-content-section-qualityCode {
+
 }
 
 .paralax-paragraph {
@@ -69,24 +101,6 @@ would also dim/transparent its children. */
 .paralax-section-blackBackground {
     color: #ddd;
     background-color: #282E34;
-}
-
-.paralax-section-title-container {
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    z-index: 2;
-    /* ensure paralax-section-title-container sits above the overlay */
-}
-
-.paralax-section-title-container span.paralax-section-title {
-    background-color: #333;
-    color: #fff;
-    padding: 18px;
-    font-size: 25px;
-    letter-spacing: 10px;
 }
 
 /* Small screens: two per row */
