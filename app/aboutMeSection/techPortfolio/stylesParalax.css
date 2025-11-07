@@ -47,11 +47,10 @@ would also dim/transparent its children. */
     margin-bottom: 50px;
 }
 .paralax-content-section {
-    padding: 48px 0;
 }
 
 .paralax-content-section-last {
-    padding: 0px 0px 48px 0;
+    /* padding-bottom: 48px; */
 }
 
 .paralax-paragraph {
@@ -61,8 +60,6 @@ would also dim/transparent its children. */
 }
 
 .paralax-section-whiteBackground {
-    margin-top: 50px;
-    margin-bottom: 50px;
     color: #666;
     background-color: white;
     position: relative;
@@ -70,8 +67,6 @@ would also dim/transparent its children. */
 
 
 .paralax-section-blackBackground {
-    padding-top: 50px;
-    padding-bottom: 50px;
     color: #ddd;
     background-color: #282E34;
 }
@@ -128,11 +123,8 @@ would also dim/transparent its children. */
     }
 
     .paralax-section-whiteBackground {
-        margin-top: 0px;
-        margin-bottom: 0px;
     }
 
     .paralax-content-section-last {
-        margin-top: 50px;
     }
 }
