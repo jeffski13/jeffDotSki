@@ -22,6 +22,7 @@ export interface TechPortfolioContentPerLanguage {
   heroText2suffix: string;
   logosTitle: string;
   resumeLink: string;
+  resumeLinkText: string;
   workToolsTitle: string;
   tandemTitle: string;
   tandemText: string;
@@ -50,7 +51,8 @@ export default function TechPortfolio() {
       heroText2highlight: 'productividad',
       heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
       logosTitle: 'Empresas con las que he Trabajado',
-      resumeLink: 'Haz Click acá por Curriculum Vitae',
+      resumeLink: ROUTES.external.resume.ingenieroDeSoftware,
+      resumeLinkText: 'Haz Click acá por Curriculum Vitae',
       workToolsTitle: ' HABILITANDO LA EMPRESA',
       tandemTitle: 'Logros de Eficiencia más Recientamente',
       tandemText: 'En Tandem Diabetes Care, reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
@@ -80,7 +82,8 @@ export default function TechPortfolio() {
       tandemText: 'While at Tandem Diabetes Care, the Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
       productiveTitle: 'Highly Productive for High Quality Code',
       productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
-      resumeLink: 'Click Here for Resume',
+      resumeLink: ROUTES.external.resume.softwareEngineer,
+      resumeLinkText: 'Click Here for Resume',
       workToolsTitle: 'ENABLING BUSINESS',
       passionTitle: 'Creating with Craftsmanship',
       passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
@@ -171,7 +174,7 @@ export default function TechPortfolio() {
             ))}
           </Row>
         </Container>
-        <a href={ROUTES.external.resume.softwareEngineer} >{content.resumeLink}</a>
+        <a href={content.resumeLink} >{content.resumeLinkText}</a>
       </section>
 
       <div className="paralax-bgimg paralax-bgimg-2">
