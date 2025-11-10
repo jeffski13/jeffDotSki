@@ -11,8 +11,8 @@ describe('BattleStartScreen Component', () => {
 
     // Verify the initial UI shows the selection results
     expect(screen.getByText(/Selection Results/i)).toBeInTheDocument();
-    expect(screen.getByText(/User 1 chose: Pikachu/i)).toBeInTheDocument();
-    expect(screen.getByText(/User 2 chose: Charmander/i)).toBeInTheDocument();
+    expect(screen.getByText(/Player 1 chose: Pikachu/i)).toBeInTheDocument();
+    expect(screen.getByText(/Player 2 chose: Charmander/i)).toBeInTheDocument();
 
     // Find and click the "Start Battle" button
     const startBattleButton = screen.getAllByText(/Start Battle/i)[0];

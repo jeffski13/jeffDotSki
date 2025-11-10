@@ -24,8 +24,8 @@ describe('PokePeruStart Component', () => {
     expect(screen.getByText(/Selection Results/i)).toBeInTheDocument();
 
     // Verify that the selected monsters are displayed in the results
-    expect(screen.getByText(/User 1 chose: Pikachu/i)).toBeInTheDocument();
-    expect(screen.getByText(/User 2 chose: Charmander/i)).toBeInTheDocument();
+    expect(screen.getByText(/Player 1 chose: Pikachu/i)).toBeInTheDocument();
+    expect(screen.getByText(/Player 2 chose: Charmander/i)).toBeInTheDocument();
   });
 
   it('check for navigation links', () => {
