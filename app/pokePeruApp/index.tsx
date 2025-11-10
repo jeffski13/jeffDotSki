@@ -65,7 +65,7 @@ export function PokePeruContent({
 }: PokePeruContentProps) {
   const [selectedMonstersIds, setSelectedMonstersIds] = useState<string[]>([]);
   const [selectedMonsters, setSelectedMonsters] = useState<Monster[]>([]);
-  const [currentUser, setCurrentUser] = useState(1);
+  const [currentPlayer, setCurrentUser] = useState(1);
 
   const editedMonsters = getEditedMonstersList(monsters, monstersEditKey)
   const handleMonsterSelect = (monster: Monster) => {
@@ -73,7 +73,7 @@ export function PokePeruContent({
 
     setSelectedMonstersIds([...selectedMonstersIds, monster.id]);
     setSelectedMonsters([...selectedMonsters, monster]);
-    setCurrentUser(currentUser === 1 ? 2 : 1); // Switch user
+    setCurrentUser(currentPlayer === 1 ? 2 : 1); // Switch user
   };
 
   return (
@@ -83,7 +83,7 @@ export function PokePeruContent({
           monsters={editedMonsters}
           gymLeaders={gymLeaders}
           selectedMonstersIds={selectedMonstersIds}
-          currentUser={currentUser}
+          currentPlayer={currentPlayer}
           handleMonsterSelect={handleMonsterSelect}
           dexRoute={dexRoute}
           gymLeaderRoute={gymRoute}

@@ -11,7 +11,7 @@ interface MonsterSelectionProps {
   monsters: Monster[];
   gymLeaders: GymLeader[];
   selectedMonstersIds: string[];
-  currentUser: number;
+  currentPlayer: number;
   handleMonsterSelect: (monster: Monster) => void;
   dexRoute: string;
   gymLeaderRoute: string;
@@ -21,7 +21,7 @@ export default function MonsterSelection({
   monsters,
   gymLeaders,
   selectedMonstersIds,
-  currentUser,
+  currentPlayer,
   handleMonsterSelect,
   dexRoute,
   gymLeaderRoute
@@ -71,7 +71,7 @@ export default function MonsterSelection({
           />
         </a>
       </div>
-      <h2>User {currentUser}, choose your monster:</h2>
+      <h2>Player {currentPlayer}, choose your monster:</h2>
       <div className="monster-grid">
         {monsters.map((monster, index) => {
 
@@ -87,7 +87,7 @@ export default function MonsterSelection({
               <div><strong>{monster.name}</strong></div>
               <div>{trainer?.name}</div>
               <img src={monster.image} alt={monster.name} className="monster-image-selection" />
-              <div className="shortcut-label">Press {index + 1}</div>
+              {(index+1 < 10) ? <div className="shortcut-label">Press {index + 1}</div> : null}
             </button>
           )
         }

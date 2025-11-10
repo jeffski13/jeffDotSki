@@ -85,11 +85,11 @@ export default function SelectionResultsScreen({
         </Row>
         <Row>
           <Col xs={12} sm={5}>
-            {/* User 1 */}
+            {/* Player 1 */}
             <div className="monster-trainer-container" style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div className='selection-results-ui-element' style={{ marginBottom: 8, fontWeight: 'bold', textAlign: 'center' }}>
-                  User 1 chose: {monster1.name}
+                  Player 1 chose: {monster1.name}
                 </div>
                 <div style={{ position: 'relative', width: 220, height: 200 }}>
                   <img
@@ -112,11 +112,11 @@ export default function SelectionResultsScreen({
             </div>
           </Col>
           <Col xs={12} sm={5}>
-            {/* User 2 */}
+            {/* Player 2 */}
             <div className="monster-trainer-container" style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div className='selection-results-ui-element' style={{ marginBottom: 8, fontWeight: 'bold', textAlign: 'center' }}>
-                  User 2 chose: {monster2.name}
+                  Player 2 chose: {monster2.name}
                 </div>
                 <div style={{ position: 'relative', width: 220, height: 200 }}>
                   <img
