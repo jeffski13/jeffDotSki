@@ -5,6 +5,7 @@ import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
 import '../../../infra/mobile-support.css';
 import './styles.css';
+import Loadingski from '~/infra/loadingski';
 
 interface DrawingsProps {
   drawingsList: DrawingItem[];
@@ -182,6 +183,7 @@ export function Drawings({
                 </div>
               </div>
             </div>
+            <p className="hobbieImageLoadingLabelFullImage">loading...</p>
             <img
               id={`full-image-${getOverlayIdx()}`}
               src={overlayImg}
@@ -218,6 +220,7 @@ const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onI
         </div >
         <div className="HobbieContentItem" >
           <div className="hobbieImageContainer" >
+            <p className="hobbieImageLoadingLabel">loading...</p>
             <img
               className="hobbieImage drawingImage"
               src={drawingItem.thumb}
