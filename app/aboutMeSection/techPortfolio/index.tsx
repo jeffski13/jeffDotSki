@@ -253,7 +253,7 @@ export default function TechPortfolio() {
             <Col xs={12} md={10} >
               <h2>{content.passionTitle}</h2>
               <p>{content.passionText}</p>
-              <p>jeff.ski Website Code coverage: <strong>82.84%</strong></p>
+              <p>jeff.ski Website Code Coverage: <strong>86.09%</strong></p>
               <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
               <p>t:connect Android App: <strong>60%</strong></p>
               <p>{content.passionText2}</p>
