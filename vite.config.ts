@@ -16,6 +16,8 @@ export default defineConfig({
         '**/+types/**', // react router
         '.react-router/**', // react router
         'react-router.config.ts', // react router
+        '**/route.tsx',
+        'vite.config.ts',
       ],
     },
   },
