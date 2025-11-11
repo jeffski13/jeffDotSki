@@ -3,7 +3,8 @@ const ROUTES = {
       bio: '/aboutme/bio',
       drawing: '/aboutme/hobbies/drawing',
       tvShows: '/aboutme/hobbies/tvShows',
-      techPortfolio: '/aboutme/techPortfolio'
+      techPortfolio: '/aboutme/techPortfolio',
+      teacherPortfolio: '/aboutme/teacherPortfolio'
     },
     pokePeru: {
       battle: '/pokeperu/battle',

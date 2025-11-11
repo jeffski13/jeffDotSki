@@ -9,7 +9,7 @@ import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
-export interface TechPortfolioContentPerLanguage {
+export interface TeacherPortfolioContentPerLanguage {
   heroTitle: string;
   heroText1prefix: string;
   heroText1highlight: string;
@@ -20,7 +20,6 @@ export interface TechPortfolioContentPerLanguage {
   heroText2prefix: string;
   heroText2highlight: string;
   heroText2suffix: string;
-  logosTitle: string;
   resumeLink: string;
   resumeLinkText: string;
   recentWorkSectionTitle: string;
@@ -37,7 +36,7 @@ export interface TechPortfolioContentPerLanguage {
   endingNote: string;
 }
 
-export default function TechPortfolio() {
+export default function TeacherPortfolio() {
   const multiLangContent: MultiLangContent = {
     es: {
       heroTitle: 'PORTAFOLIO TECNOLÓGICO',
@@ -50,8 +49,7 @@ export default function TechPortfolio() {
       heroText2prefix: 'Tiene una pasión por ',
       heroText2highlight: 'productividad',
       heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
-      logosTitle: 'Empresas con las que he Trabajado',
-      resumeLink: ROUTES.external.resume.ingenieroDeSoftware,
+      resumeLink: ROUTES.external.resume.profeIngles,
       resumeLinkText: 'Haz Click acá por Curriculum Vitae',
       recentWorkSectionTitle: ' HABILITANDO LA EMPRESA',
       accomplishmentsTitle: 'Logros de Eficiencia más Recientamente',
@@ -67,46 +65,36 @@ export default function TechPortfolio() {
       endingNote: 'GRACIAS POR VISITAR!',
     },
     default: {
-      heroTitle: 'TECH PORTFOLIO',
-      heroText1prefix: 'Developer of ',
-      heroText1highlight: 'Android apps and websites',
-      heroText1suffix: '. Ten years of experience in companies ranging from startups all the way to large coorporations. Specializing in:',
-      skills1: 'Networking',
-      skills2: 'Bluetooth',
-      skills3: 'Unit Testing',
+      heroTitle: 'TEACHER PORTFOLIO',
+      heroText1prefix: 'Teaches  ',
+      heroText1highlight: 'English',
+      heroText1suffix: '. Experience in large classrooms and one-on-one private lessons. Specialized in',
+      skills1: 'Communication',
+      skills2: 'Innovative Classroom Experiences',
+      skills3: 'Personlized Material',
       heroText2prefix: 'Passion for ',
-      heroText2highlight: 'productivity',
-      heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
-      logosTitle: 'Who I\'ve worked with',
-      accomplishmentsTitle: 'Most Recent Efficiency Gains',
-      accomplishmentsText: 'While at Tandem Diabetes Care, the Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
-      productiveTitle: 'Highly Productive for High Quality Code',
-      productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
-      resumeLink: ROUTES.external.resume.softwareEngineer,
+      heroText2highlight: 'classroom experience',
+      heroText2suffix: ' and a patience with learners that is needed to create a challenging but fun classroom experience.',
+      recentWorkSectionTitle: 'MAKING IT FUN',
+      accomplishmentsTitle: 'Most Recent Class',
+      accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
+      productiveTitle: 'Making teaching Fun',
+      productiveText: 'Students need to be met where they are at in life. ',
+      resumeLink: ROUTES.external.resume.teacherEnglish,
       resumeLinkText: 'Click Here for Resume',
-      recentWorkSectionTitle: 'ENABLING BUSINESS',
-      passionTitle: 'Creating with Craftsmanship',
+      passionTitle: 'Creating Custom ',
       passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
       passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
-      qualityCodeTitle: 'QUALITY CODE',
+      qualityCodeTitle: 'AI MAKING A DIFFERENCE',
       highQualityToolsTitle: 'Creating the Right Tools for the Job',
       highQualityToolsText: 'Facade dev environments allowed control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
       endingNote: 'THANKS FOR VISITING!',
     }
   };
 
-  const content: TechPortfolioContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
+  const content: TeacherPortfolioContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
-  const companies = [
-    { name: 'Boeing', img: '/images/techPortfolio/companies/boeing.png' },
-    { name: 'USAA', img: '/images/techPortfolio/companies/usaa.png' },
-    { name: 'Colegio Santa Margarita', img: '/images/techPortfolio/companies/santaMargarita.png' },
-    { name: 'Tandem Diabetes Care', img: '/images/techPortfolio/companies/tandem.png' },
-    { name: 'Availity', img: '/images/techPortfolio/companies/availity.png' },
-    { name: 'Beardon Services', img: '/images/techPortfolio/companies/beardon.png' },
-  ];
-
-  const tandemReel = [
+  const photoReel = [
     {
       original: '/images/techPortfolio/recentJobImprovements/noMorePumpOrPhone.png',
       thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/noMorePumpOrPhone.png',
@@ -142,7 +130,7 @@ export default function TechPortfolio() {
             <Col xs={0} md={1} >
             </Col>
             <Col xs={12} md={4} >
-              <img className="techPortfolio-image techPortfolio-overview-image" src="/images/techPortfolio/developerWorkingImage.png" alt="Developer at work" />
+              <img className="techPortfolio-image techPortfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
               <div className="techPortfolio-overview-text">
@@ -161,20 +149,6 @@ export default function TechPortfolio() {
         </Container>
         <div className="techPortfolio-top-section-spacer">
         </div>
-      </section>
-
-      <section className="paralax-section-whiteBackground paralax-content-section-overview-companies techPortfolio-companies">
-        <h2>{content.logosTitle}</h2>
-        <Container>
-          <Row>
-            {companies.map(c => (
-              <Col xs={6} md={4} key={c.name} className="company-logo-item" title={c.name}>
-                <img src={c.img} alt={c.name} />
-              </Col>
-            ))}
-          </Row>
-        </Container>
-        <a href={content.resumeLink} >{content.resumeLinkText}</a>
       </section>
 
       <div className="paralax-bgimg paralax-bgimg-2 paralax-bgimg-2-source">
@@ -202,7 +176,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <ImageGallery items={tandemReel}
+                <ImageGallery items={photoReel}
                   slideDuration={700}
                   slideInterval={10000}
                 />

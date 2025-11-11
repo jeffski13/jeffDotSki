@@ -4,6 +4,7 @@ import ROUTES from './consts/ROUTES';
 export default [
     index("homePage/route.tsx"),
     route(ROUTES.aboutMe.techPortfolio, "aboutMeSection/techPortfolio/route.tsx"),
+    route(ROUTES.aboutMe.teacherPortfolio, "aboutMeSection/teacherPortfolio/route.tsx"),
     route(ROUTES.aboutMe.drawing, "aboutMeSection/hobbies/drawings/route.tsx"),
     route(ROUTES.aboutMe.tvShows, "aboutMeSection/hobbies/tvShows/route.tsx"),
     route(ROUTES.aboutMe.bio, "aboutMeSection/bio/route.tsx"),

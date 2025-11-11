@@ -14,6 +14,7 @@ export default function NavigationBar() {
             pokePeru: 'Poke Perú',
             hobbies: 'Más Sobre Mí',
             techPortfolio: 'Portfolio Técnico',
+            teacherPortfolio: 'Portfolio de Profe de Inglés',
             drawing: 'Dibujos',
             tvShows: 'Series',
             bio: 'Biografía',
@@ -27,6 +28,7 @@ export default function NavigationBar() {
             pokePeru: 'Poké Peru',
             hobbies: 'More About Me',
             techPortfolio: 'Technical Portfolio',
+            teacherPortfolio: 'Teacher Portfolio',
             drawing: 'Drawing',
             tvShows: 'TV Shows',
             bio: 'Bio',
@@ -53,6 +55,7 @@ export default function NavigationBar() {
                         <Nav.Link href={ROUTES.pokePeru.battle}>{content.pokePeru}</Nav.Link>
                         <NavDropdown title={content.hobbies} id="navigationbar-resume">
                             <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio} >{content.techPortfolio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio} >{content.teacherPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing} >{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows} >{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>

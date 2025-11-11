@@ -44,24 +44,21 @@ would also dim/transparent its children. */
     z-index: 1;
 }
 
-.paralax-bgimg-1 {
+.paralax-bgimg-1   {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/desk.jpg);
 }
 
-.paralax-bgimg-2 {
+.paralax-bgimg-2  {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/softwareDashbaord.jpg);
 }
 
-.paralax-bgimg-3 {
+
+.paralax-bgimg-3  {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/unitTestingOutput.png);
 }
 
-.paralax-bgimg-4 {
+.paralax-bgimg-4  {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/deskCat.jpg);
     margin-bottom: 50px;
 }
 
@@ -111,22 +108,15 @@ would also dim/transparent its children. */
 @media (max-width: 600px) {
     .paralax-bgimg-1 {
         min-height: 200px;
-        background-image: url(/images/techPortfolio/paralaxMobile/deskTop.jpg);
     }
-    
     .paralax-bgimg-2 {
         min-height: 300px;
-        background-image: url(/images/techPortfolio/paralaxMobile/softwareDashbaord.jpg);
     }
-    
     .paralax-bgimg-3 {
         min-height: 300px;
-        background-image: url(/images/techPortfolio/paralaxMobile/unitTestingOutput.png);
     }
-    
     .paralax-bgimg-4 {
         min-height: 300px;
-        background-image: url(/images/techPortfolio/paralaxMobile/deskCatBottom.jpg);
     }
 
     .paralax-section-title-container span.paralax-section-title {
@@ -140,7 +130,6 @@ would also dim/transparent its children. */
 
     .paralax-section-blackBackground {
     }
-
 
     .paralax-content-section-overview {
         margin-top: 50px;

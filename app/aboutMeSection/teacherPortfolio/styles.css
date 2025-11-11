@@ -50,33 +50,33 @@ h2 {
 
 
 .paralax-bgimg-1-source {
-    background-image: url(/images/techPortfolio/paralax/desk.jpg);
+    background-image: url(/images/teacherPortfolio/paralax/classroomWide.jpg);
 }
 
 .paralax-bgimg-2-source {
-    background-image: url(/images/techPortfolio/paralax/softwareDashbaord.jpg);
+    background-image: url(/images/teacherPortfolio/paralax/classroomWide.jpg);
 }
 
 .paralax-bgimg-3-source {
-    background-image: url(/images/techPortfolio/paralax/unitTestingOutput.png);
+    background-image: url(/images/teacherPortfolio/paralax/unitTestingOutput.png);
 }
 
 .paralax-bgimg-4-source {
-    background-image: url(/images/techPortfolio/paralax/deskCat.jpg);
+    background-image: url(/images/teacherPortfolio/paralax/deskCat.jpg);
 }
 
 
 @media (max-width: 600px) {
     .paralax-bgimg-1-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/deskTop.jpg);
+        background-image: url(/images/teacherPortfolio/paralaxMobile/classroomWide.jpg);
     }
     
     .paralax-bgimg-2-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/softwareDashbaord.jpg);
+        background-image: url(/images/teacherPortfolio/paralaxMobile/classroomWide.jpg);
     }
     
     .paralax-bgimg-3-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/unitTestingOutput.png);
+        background-image: url(/images/teacherPortfolio/paralaxMobile/unitTestingOutput.png);
     }
     
     .paralax-bgimg-4-source {
