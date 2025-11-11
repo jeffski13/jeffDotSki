@@ -31,7 +31,7 @@ export interface TechPortfolioContentPerLanguage {
   passionTitle: string;
   passionText: string;
   passionText2: string;
-  qualityCodeTitle: string;
+  passionSectionTitle: string;
   highQualityToolsTitle: string;
   highQualityToolsText: string;
   endingNote: string;
@@ -56,14 +56,14 @@ export default function TechPortfolio() {
       recentWorkSectionTitle: ' HABILITANDO LA EMPRESA',
       accomplishmentsTitle: 'Logros de Eficiencia más Recientamente',
       accomplishmentsText: 'En Tandem Diabetes Care, reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
-      productiveTitle: 'Productividad para alcanzar Calidad',
-      productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
+      highQualityToolsTitle: 'La Herramienta que Corresponde a la Obra',
+      highQualityToolsText: 'Ambientes de desarrollo fachades crearon control de las respuestas de la nuba a la aplicación, así como la verificación de los datos enviados a la nube.',
       passionTitle: 'Pasión por código de alta calidad',
       passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
       passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
-      qualityCodeTitle: 'CÓDIGO DE ALTA CALIDAD',
-      highQualityToolsTitle: 'La Herramienta que Corresponde a la Obra',
-      highQualityToolsText: 'Ambientes de desarrollo fachades crearon control de las respuestas de la nuba a la aplicación, así como la verificación de los datos enviados a la nube.',
+      passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
+      productiveTitle: 'Productividad para alcanzar Calidad',
+      productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
       endingNote: 'GRACIAS POR VISITAR!',
     },
     default: {
@@ -78,19 +78,19 @@ export default function TechPortfolio() {
       heroText2highlight: 'productivity',
       heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
       logosTitle: 'Who I\'ve worked with',
-      accomplishmentsTitle: 'Most Recent Efficiency Gains',
-      accomplishmentsText: 'While at Tandem Diabetes Care, the Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
-      productiveTitle: 'Highly Productive for High Quality Code',
-      productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       resumeLink: ROUTES.external.resume.softwareEngineer,
       resumeLinkText: 'Click Here for Resume',
       recentWorkSectionTitle: 'ENABLING BUSINESS',
+      accomplishmentsTitle: 'Most Recent Efficiency Gains',
+      accomplishmentsText: 'While at Tandem Diabetes Care, the Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
+      highQualityToolsTitle: 'Creating the Right Tools for the Job',
+      highQualityToolsText: 'Facade dev environments allowed control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
+      passionSectionTitle: 'QUALITY CODE',
       passionTitle: 'Creating with Craftsmanship',
       passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
       passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
-      qualityCodeTitle: 'QUALITY CODE',
-      highQualityToolsTitle: 'Creating the Right Tools for the Job',
-      highQualityToolsText: 'Facade dev environments allowed control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
+      productiveTitle: 'Highly Productive for High Quality Code',
+      productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
       endingNote: 'THANKS FOR VISITING!',
     }
   };
@@ -241,7 +241,7 @@ export default function TechPortfolio() {
 
       <div className="paralax-bgimg paralax-bgimg-3 paralax-bgimg-3-source">
         <div className="paralax-section-title-container">
-          <span className="paralax-section-title">{content.qualityCodeTitle}</span>
+          <span className="paralax-section-title">{content.passionSectionTitle}</span>
         </div>
       </div>
 
