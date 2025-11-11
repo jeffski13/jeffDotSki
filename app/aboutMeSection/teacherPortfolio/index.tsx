@@ -25,14 +25,14 @@ export interface TeacherPortfolioContentPerLanguage {
   recentWorkSectionTitle: string;
   accomplishmentsTitle: string;
   accomplishmentsText: string;
-  productiveTitle: string;
-  productiveText: string;
+  highQualityToolsTitle: string;
+  highQualityToolsText: string;
+  passionSectionTitle: string;
   passionTitle: string;
   passionText: string;
   passionText2: string;
-  passionSectionTitle: string;
-  highQualityToolsTitle: string;
-  highQualityToolsText: string;
+  productiveTitle: string;
+  productiveText: string;
   endingNote: string;
 }
 
