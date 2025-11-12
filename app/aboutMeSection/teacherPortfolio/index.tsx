@@ -30,6 +30,9 @@ export interface TeacherPortfolioContentPerLanguage {
   passionSectionTitle: string;
   passionTitle: string;
   passionText: string;
+  aiImpovement1: string;
+  aiImpovement2: string;
+  aiImpovement3: string;
   passionText2: string;
   productiveTitle: string;
   productiveText: string;
@@ -58,6 +61,9 @@ export default function TeacherPortfolio() {
     passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
     passionTitle: 'Pasión por código de alta calidad',
     passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
+    aiImpovement1: '',
+    aiImpovement2: '',
+    aiImpovement3: '',
     passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
     productiveTitle: 'Productividad para alcanzar Calidad',
     productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
@@ -82,10 +88,13 @@ export default function TeacherPortfolio() {
     accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
     highQualityToolsTitle: 'Making Learning Memories',
     highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
-    passionSectionTitle: 'AI MAKING A DIFFERENCE',
+    passionSectionTitle: 'INNOVATING WITH AI',
     passionTitle: 'Creating Custom Learning Content',
-    passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
-    passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
+    passionText: 'With modern AI technology, even as something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experience for ',
+    aiImpovement1: 'Educational Presentations',
+    aiImpovement2: 'Worksheets',
+    aiImpovement3: 'Targeted Songs for Learning',
+    passionText2: 'With each step forward in technology, there is an opportunity to enrich the learning experience.',
     productiveTitle: 'Making teaching Fun',
     productiveText: 'Students need to be met where they are at in life. ',
     endingNote: 'THANKS FOR VISITING!',
@@ -222,9 +231,11 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={10} >
               <h2>{content.passionTitle}</h2>
               <p>{content.passionText}</p>
-              <p>jeff.ski Website Code Coverage: <strong>86.09%</strong></p>
-              <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
-              <p>t:connect Android App: <strong>60%</strong></p>
+              <ul className="techPortfolio-overview-skills-list">
+                <li>{content.aiImpovement1}</li>
+                <li>{content.aiImpovement2}</li>
+                <li>{content.aiImpovement3}</li>
+              </ul>
               <p>{content.passionText2}</p>
             </Col>
             <Col xs={12} md={1} >

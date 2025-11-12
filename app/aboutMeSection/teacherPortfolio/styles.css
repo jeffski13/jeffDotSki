@@ -50,7 +50,7 @@ h2 {
 
 
 .paralax-bgimg-1-source {
-    background-image: url(/images/teacherPortfolio/paralax/classroomWide.jpg);
+    background-image: url(/images/teacherPortfolio/paralax/kidsRunningToSchool.jpg);
 }
 
 .paralax-bgimg-2-source {
@@ -58,7 +58,7 @@ h2 {
 }
 
 .paralax-bgimg-3-source {
-    background-image: url(/images/teacherPortfolio/paralax/unitTestingOutput.png);
+    background-image: url(/images/teacherPortfolio/paralax/artificialInteligenceInLearning.png);
 }
 
 .paralax-bgimg-4-source {
@@ -68,7 +68,7 @@ h2 {
 
 @media (max-width: 600px) {
     .paralax-bgimg-1-source {
-        background-image: url(/images/teacherPortfolio/paralaxMobile/classroomWide.jpg);
+        background-image: url(/images/teacherPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
     }
     
     .paralax-bgimg-2-source {
@@ -76,7 +76,7 @@ h2 {
     }
     
     .paralax-bgimg-3-source {
-        background-image: url(/images/teacherPortfolio/paralaxMobile/unitTestingOutput.png);
+        background-image: url(/images/teacherPortfolio/paralaxMobile/artificialInteligenceInLearning.png);
     }
     
     .paralax-bgimg-4-source {
