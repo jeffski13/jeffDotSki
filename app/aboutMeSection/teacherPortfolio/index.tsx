@@ -38,23 +38,23 @@ export interface TeacherPortfolioContentPerLanguage {
 
 export default function TeacherPortfolio() {
   const es: TeacherPortfolioContentPerLanguage = {
-    heroTitle: 'PORTAFOLIO TECNOLÓGICO',
-    heroText1prefix: 'Desarrollador de ',
-    heroText1highlight: 'aplicaciones Android y paginas web',
-    heroText1suffix: '. Cuenta con diez años de experiencia en negocios de todos tamaños, de emprendamientos hasta corporaciones grandes. Sus especialidades:',
-    skills1: 'Redes',
-    skills2: 'Bluetooth',
-    skills3: 'Pruebas Unitarias',
+    heroTitle: 'PORTAFOLIO DE PROFESOR',
+    heroText1prefix: 'Enseña ',
+    heroText1highlight: 'Inglés',
+    heroText1suffix: '. Cuenta con experiencia en clases grandes y clases particulares. Sus especialidades:',
+    skills1: 'Comunicaciones Conversacionales',
+    skills2: 'Experiencias del Aula',
+    skills3: 'Materiales Personalizadas',
     heroText2prefix: 'Tiene una pasión por ',
-    heroText2highlight: 'productividad',
-    heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
+    heroText2highlight: 'Experiences del Aula',
+    heroText2suffix: ' y una paciencia con alumnos que hace falta para crear un ambiente que no es solo desfiante, sino divertido.',
     resumeLink: ROUTES.external.resume.profeIngles,
     resumeLinkText: 'Haz Click acá por Curriculum Vitae',
-    recentWorkSectionTitle: ' HABILITANDO LA EMPRESA',
-    accomplishmentsTitle: 'Logros de Eficiencia más Recientamente',
-    accomplishmentsText: 'En Tandem Diabetes Care, reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
-    highQualityToolsTitle: 'La Herramienta que Corresponde a la Obra',
-    highQualityToolsText: 'Ambientes de desarrollo fachades crearon control de las respuestas de la nuba a la aplicación, así como la verificación de los datos enviados a la nube.',
+    recentWorkSectionTitle: 'QUE SEA DIVERTIDO!',
+    accomplishmentsTitle: 'Clase más Recientamente',
+    accomplishmentsText: 'En Colegio Santa Margarita, enseñe un taller de inglés (Projects in Action) en el que los estudientes aumentaron de vocabulario y fluencia a traves de proyectos conmovedores.',
+    highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
+    highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
     passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
     passionTitle: 'Pasión por código de alta calidad',
     passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
@@ -69,7 +69,7 @@ export default function TeacherPortfolio() {
     heroText1prefix: 'Teaches  ',
     heroText1highlight: 'English',
     heroText1suffix: ' with experience in large classrooms and one-on-one private lessons. Specialized in',
-    skills1: 'Communication',
+    skills1: 'Conversational Communication',
     skills2: 'Innovative Classroom Experiences',
     skills3: 'Personlized Material',
     heroText2prefix: 'Passion for ',
@@ -81,9 +81,9 @@ export default function TeacherPortfolio() {
     accomplishmentsTitle: 'Most Recent Class',
     accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
     highQualityToolsTitle: 'Making Learning Memories',
-    highQualityToolsText: 'A digital platform was created so that students could see they artwork displayed in a beautiful format. ',
+    highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
     passionSectionTitle: 'AI MAKING A DIFFERENCE',
-    passionTitle: 'Creating Custom ',
+    passionTitle: 'Creating Custom Learning Content',
     passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
     passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
     productiveTitle: 'Making teaching Fun',
@@ -199,7 +199,7 @@ export default function TeacherPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <img className="techPortfolio-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
+                <img className="techPortfolio-image" src="/images/teacherPortfolio/recentWork/pokemonInPeruMasterSlide.png" alt="Dev server tool for cloud interactions" />
               </Col>
               <Col xs={12} md={2} >
               </Col>
