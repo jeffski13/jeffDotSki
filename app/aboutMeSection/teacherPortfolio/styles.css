@@ -29,20 +29,7 @@ h2 {
     text-align: center;
 }
 
-.company-logo-item {
-    justify-content: center;
-    display: flex;
-}
-
-.company-logo-item img {
-    margin: 25px;
-    max-width: 140px;
-    max-height: 80px;
-    object-fit: contain;
-    filter: grayscale(0.0);
-}
-
-.techPortfolio-githubCommits-image {
+.techPortfolio-qualityWork-content-image {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -61,7 +48,7 @@ h2 {
 }
 
 .paralax-bgimg-4-source {
-    background-image: url(/images/teacherPortfolio/paralax/deskCat.jpg);
+    background-image: url(/images/teacherPortfolio/paralax/kidsRunningToSchool.jpg);
 }
 
 
@@ -79,7 +66,7 @@ h2 {
     }
     
     .paralax-bgimg-4-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/deskCatBottom.jpg);
+        background-image: url(/images/techPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
     }
     
     .techPortfolio-companies {

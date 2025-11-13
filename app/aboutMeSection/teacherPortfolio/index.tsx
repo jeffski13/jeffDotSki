@@ -77,7 +77,7 @@ export default function TeacherPortfolio() {
   const defaultText: ContentPerLanguage = {
     heroTitle: 'TEACHER PORTFOLIO',
     heroText1prefix: 'Teaches  ',
-    heroText1highlight: 'English',
+    heroText1highlight: 'English and Technology',
     heroText1suffix: ' with experience in large classrooms and one-on-one private lessons. Specialized in',
     skills1: 'Conversational Communication',
     skills2: 'Innovative Classroom Experiences',
@@ -96,13 +96,13 @@ export default function TeacherPortfolio() {
     highQualityToolsLinkText: 'Click Here for Pokemon In Peru',
     passionSectionTitle: 'INNOVATING WITH AI',
     passionTitle: 'Creating Custom Learning Content',
-    passionText: 'With modern AI technology, even as something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experience for ',
+    passionText: 'With modern AI technology, even as something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experiences in:',
     aiImpovement1: 'Educational Presentations',
     aiImpovement2: 'Worksheets',
     aiImpovement3: 'Targeted Songs for Learning',
     passionText2: 'With each step forward in technology, there is an opportunity to enrich the learning experience.',
-    productiveTitle: 'Making teaching Fun',
-    productiveText: 'Students need to be met where they are at in life. ',
+    productiveTitle: 'Robots in the Classroom',
+    productiveText: 'Three levels of robotics were offered in which adult students learned about mirco-controller programming, motor movement, and reactive programming to sensor input.',
     endingNote: 'THANKS FOR VISITING!',
   };
 
@@ -233,7 +233,7 @@ export default function TeacherPortfolio() {
         </div>
       </div>
 
-      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-qualityCode">
+      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-qualityWork">
         <Container>
           <Row>
             <Col xs={12} md={1} >
@@ -270,7 +270,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="techPortfolio-image techPortfolio-githubCommits-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
+              <img className="techPortfolio-image techPortfolio-qualityWork-content-image" src="/images/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
             </Col>
             <Col xs={12} md={2} >
             </Col>
