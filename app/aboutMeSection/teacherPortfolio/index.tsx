@@ -27,6 +27,7 @@ interface ContentPerLanguage {
   accomplishmentsText: string;
   highQualityToolsTitle: string;
   highQualityToolsText: string;
+  highQualityToolsLink: string;
   highQualityToolsLinkText: string;
   passionSectionTitle: string;
   passionTitle: string;
@@ -60,6 +61,7 @@ export default function TeacherPortfolio() {
     highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
     highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
     highQualityToolsLinkText: 'Click Here for Resume',
+    highQualityToolsLink: ROUTES.pokePeru.battle,
     passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
     passionTitle: 'Pasión por código de alta calidad',
     passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
@@ -71,7 +73,7 @@ export default function TeacherPortfolio() {
     productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
     endingNote: 'GRACIAS POR VISITAR!',
   };
-
+  
   const defaultText: ContentPerLanguage = {
     heroTitle: 'TEACHER PORTFOLIO',
     heroText1prefix: 'Teaches  ',
@@ -90,7 +92,8 @@ export default function TeacherPortfolio() {
     accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
     highQualityToolsTitle: 'Making Learning Memories',
     highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
-    highQualityToolsLinkText: 'Click Here for Resume',
+    highQualityToolsLink: ROUTES.pokePeru.battle,
+    highQualityToolsLinkText: 'Click Here for Pokemon In Peru',
     passionSectionTitle: 'INNOVATING WITH AI',
     passionTitle: 'Creating Custom Learning Content',
     passionText: 'With modern AI technology, even as something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experience for ',
@@ -148,6 +151,7 @@ export default function TeacherPortfolio() {
                   <li>{content.skills3}</li>
                 </ul>
                 <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
+                <a href={content.resumeLink} >{content.resumeLinkText}</a>
               </div>
             </Col>
             <Col xs={0} md={1} >
@@ -217,6 +221,9 @@ export default function TeacherPortfolio() {
               </Col>
             </Row>
           </Container>
+          <div className="pokeperuLink">
+            <a href={content.highQualityToolsLink} >{content.highQualityToolsLinkText}</a>
+          </div>
         </section>
       </div>
 
