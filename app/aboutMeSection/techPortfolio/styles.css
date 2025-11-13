@@ -1,11 +1,3 @@
-.techPortfolio-overview-text h1 {
-    margin: 0 0 8px 0;
-}
-
-.techPortfolio-overview-skills-list {
-    list-style: disc;
-}
-
 .techPortfolio-companies {
     padding: 48px 0;
     text-align: center;
@@ -23,12 +15,6 @@
     object-fit: contain;
     filter: grayscale(0.0);
 }
-
-.techPortfolio-qualityWork-content-image {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 
 .paralax-bgimg-1-source {
     background-image: url(/images/techPortfolio/paralax/desk.jpg);
@@ -66,9 +52,6 @@
     
     .techPortfolio-companies {
         padding: 0px;
-    }
-
-    .techPortfolio-companies {
         margin-top: 0px;
         margin-left: 40px;
         margin-right: 40px;
@@ -77,13 +60,5 @@
     /* Small screens: two per row */
     .company-logo-item img {
         max-width: 110px;
-    }
-
-    .techPortfolio-top-section-spacer {
-        padding: 0px;
-    }
-
-    .techPortfolio-overview-text {
-        padding-top: 50px;
     }
 }

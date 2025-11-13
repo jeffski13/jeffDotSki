@@ -148,9 +148,9 @@ export default function TechPortfolio() {
               <img className="portfolio-image portfolio-overview-image" src="/images/techPortfolio/developerWorkingImage.png" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
-              <div className="techPortfolio-overview-text">
+              <div className="portfolio-overview-text">
                 <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
-                <ul className="techPortfolio-overview-skills-list">
+                <ul className="portfolio-bullet-list">
                   <li>{content.skills1}</li>
                   <li>{content.skills2}</li>
                   <li>{content.skills3}</li>
@@ -162,7 +162,7 @@ export default function TechPortfolio() {
             </Col>
           </Row>
         </Container>
-        <div className="techPortfolio-top-section-spacer">
+        <div className="portfolio-top-section-spacer">
         </div>
       </section>
 
@@ -283,7 +283,7 @@ export default function TechPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="portfolio-image techPortfolio-qualityWork-content-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
+              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
             </Col>
             <Col xs={12} md={2} >
             </Col>

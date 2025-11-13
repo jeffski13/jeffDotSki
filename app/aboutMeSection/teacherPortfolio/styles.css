@@ -1,20 +1,7 @@
-.techPortfolio-overview-text h1 {
-    margin: 0 0 8px 0;
-}
-
-.techPortfolio-overview-skills-list {
-    list-style: disc;
-}
 
 .pokeperuLink {
     text-align: center;
 }
-
-.techPortfolio-qualityWork-content-image {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 
 .paralax-bgimg-1-source {
     background-image: url(/images/teacherPortfolio/paralax/kidsRunningToSchool.jpg);
@@ -48,13 +35,5 @@
     
     .paralax-bgimg-4-source {
         background-image: url(/images/techPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
-    }
-
-    .techPortfolio-top-section-spacer {
-        padding: 0px;
-    }
-
-    .techPortfolio-overview-text {
-        padding-top: 50px;
     }
 }

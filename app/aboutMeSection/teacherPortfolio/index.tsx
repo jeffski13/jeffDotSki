@@ -144,9 +144,9 @@ export default function TeacherPortfolio() {
               <img className="portfolio-image portfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
-              <div className="techPortfolio-overview-text">
+              <div className="portfolio-overview-text">
                 <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
-                <ul className="techPortfolio-overview-skills-list">
+                <ul className="portfolio-bullet-list">
                   <li>{content.skills1}</li>
                   <li>{content.skills2}</li>
                   <li>{content.skills3}</li>
@@ -159,7 +159,7 @@ export default function TeacherPortfolio() {
             </Col>
           </Row>
         </Container>
-        <div className="techPortfolio-top-section-spacer">
+        <div className="portfolio-top-section-spacer">
         </div>
       </section>
 
@@ -242,7 +242,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={10} >
               <h2>{content.passionTitle}</h2>
               <p>{content.passionText}</p>
-              <ul className="techPortfolio-overview-skills-list">
+              <ul className="portfolio-bullet-list">
                 <li>{content.aiImpovement1}</li>
                 <li>{content.aiImpovement2}</li>
                 <li>{content.aiImpovement3}</li>
@@ -271,7 +271,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="portfolio-image techPortfolio-qualityWork-content-image" src="/images/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
+              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
             </Col>
             <Col xs={12} md={2} >
             </Col>
