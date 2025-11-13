@@ -1,12 +1,3 @@
-.techPortfolio-image {
-    border-radius: 12px;
-}
-
-.techPortfolio-overview-image {
-    height: 300px;
-    object-fit: cover;
-}
-
 .techPortfolio-overview-text h1 {
     margin: 0 0 8px 0;
 }

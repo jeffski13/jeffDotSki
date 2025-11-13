@@ -5,6 +5,7 @@ import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from 
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
 import '../stylesParalax.css';
+import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -140,7 +141,7 @@ export default function TeacherPortfolio() {
             <Col xs={0} md={1} >
             </Col>
             <Col xs={12} md={4} >
-              <img className="techPortfolio-image techPortfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
+              <img className="portfolio-image portfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
               <div className="techPortfolio-overview-text">
@@ -215,7 +216,7 @@ export default function TeacherPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <img className="techPortfolio-image" src="/images/teacherPortfolio/recentWork/pokemonInPeruMasterSlide.png" alt="Dev server tool for cloud interactions" />
+                <img className="portfolio-image" src="/images/teacherPortfolio/recentWork/pokemonInPeruMasterSlide.png" alt="Dev server tool for cloud interactions" />
               </Col>
               <Col xs={12} md={2} >
               </Col>
@@ -270,7 +271,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="techPortfolio-image techPortfolio-qualityWork-content-image" src="/images/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
+              <img className="portfolio-image techPortfolio-qualityWork-content-image" src="/images/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
             </Col>
             <Col xs={12} md={2} >
             </Col>
