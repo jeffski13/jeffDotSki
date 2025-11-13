@@ -9,7 +9,7 @@ import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
-export interface TeacherPortfolioContentPerLanguage {
+interface ContentPerLanguage {
   heroTitle: string;
   heroText1prefix: string;
   heroText1highlight: string;
@@ -27,6 +27,7 @@ export interface TeacherPortfolioContentPerLanguage {
   accomplishmentsText: string;
   highQualityToolsTitle: string;
   highQualityToolsText: string;
+  highQualityToolsLinkText: string;
   passionSectionTitle: string;
   passionTitle: string;
   passionText: string;
@@ -40,7 +41,7 @@ export interface TeacherPortfolioContentPerLanguage {
 }
 
 export default function TeacherPortfolio() {
-  const es: TeacherPortfolioContentPerLanguage = {
+  const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO DE PROFESOR',
     heroText1prefix: 'Enseña ',
     heroText1highlight: 'Inglés',
@@ -58,6 +59,7 @@ export default function TeacherPortfolio() {
     accomplishmentsText: 'En Colegio Santa Margarita, enseñe un taller de inglés (Projects in Action) en el que los estudientes aumentaron de vocabulario y fluencia a traves de proyectos conmovedores.',
     highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
     highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
+    highQualityToolsLinkText: 'Click Here for Resume',
     passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
     passionTitle: 'Pasión por código de alta calidad',
     passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
@@ -70,7 +72,7 @@ export default function TeacherPortfolio() {
     endingNote: 'GRACIAS POR VISITAR!',
   };
 
-  const defaultText: TeacherPortfolioContentPerLanguage = {
+  const defaultText: ContentPerLanguage = {
     heroTitle: 'TEACHER PORTFOLIO',
     heroText1prefix: 'Teaches  ',
     heroText1highlight: 'English',
@@ -88,6 +90,7 @@ export default function TeacherPortfolio() {
     accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
     highQualityToolsTitle: 'Making Learning Memories',
     highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
+    highQualityToolsLinkText: 'Click Here for Resume',
     passionSectionTitle: 'INNOVATING WITH AI',
     passionTitle: 'Creating Custom Learning Content',
     passionText: 'With modern AI technology, even as something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experience for ',
@@ -104,7 +107,7 @@ export default function TeacherPortfolio() {
     es,
     default: defaultText
   };
-  const content: TeacherPortfolioContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
+  const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   const photoReel = [
     {

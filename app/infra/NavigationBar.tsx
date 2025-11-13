@@ -3,38 +3,56 @@ import ROUTES from '../consts/ROUTES';
 import './styles.css';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../langSupport';
 
+export interface ContentPerLanguage {
+    resume: string;
+    englishTeacher: string;
+    englishTeacherResume: string;
+    softwareEngineer: string;
+    softwareEngineerResume: string;
+    pokePeru: string;
+    hobbies: string;
+    techPortfolio: string;
+    teacherPortfolio: string;
+    drawing: string;
+    tvShows: string;
+    bio: string;
+}
+
 export default function NavigationBar() {
-    const multiLangContent: MultiLangContent = {
-        es: {
-            resume: 'Currículum',
-            englishTeacher: 'Profesor de Inglés',
-            englishTeacherResume: 'Profesor de Inglés (Español)',
-            softwareEngineer: 'Ingeniero Informático',
-            softwareEngineerResume: 'Ingeniero Informático (Español)',
-            pokePeru: 'Poke Perú',
-            hobbies: 'Más Sobre Mí',
-            techPortfolio: 'Portfolio Técnico',
-            teacherPortfolio: 'Portfolio de Profe de Inglés',
-            drawing: 'Dibujos',
-            tvShows: 'Series',
-            bio: 'Biografía',
-        },
-        default: {
-            resume: 'Resume',
-            englishTeacher: 'English Teacher',
-            englishTeacherResume: 'English Teacher (Spanish)',
-            softwareEngineer: 'Software Engineering',
-            softwareEngineerResume: 'Software Engineering (Spanish)',
-            pokePeru: 'Poké Peru',
-            hobbies: 'More About Me',
-            techPortfolio: 'Technical Portfolio',
-            teacherPortfolio: 'Teacher Portfolio',
-            drawing: 'Drawing',
-            tvShows: 'TV Shows',
-            bio: 'Bio',
-        }
+    const es: ContentPerLanguage = {
+        resume: 'Currículum',
+        englishTeacher: 'Profesor de Inglés',
+        englishTeacherResume: 'Profesor de Inglés (Español)',
+        softwareEngineer: 'Ingeniero Informático',
+        softwareEngineerResume: 'Ingeniero Informático (Español)',
+        pokePeru: 'Poke Perú',
+        hobbies: 'Más Sobre Mí',
+        techPortfolio: 'Portfolio Técnico',
+        teacherPortfolio: 'Portfolio de Profe de Inglés',
+        drawing: 'Dibujos',
+        tvShows: 'Series',
+        bio: 'Biografía',
     };
-    const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+    const defaultText: ContentPerLanguage = {
+        resume: 'Resume',
+        englishTeacher: 'English Teacher',
+        englishTeacherResume: 'English Teacher (Spanish)',
+        softwareEngineer: 'Software Engineering',
+        softwareEngineerResume: 'Software Engineering (Spanish)',
+        pokePeru: 'Poké Peru',
+        hobbies: 'More About Me',
+        techPortfolio: 'Technical Portfolio',
+        teacherPortfolio: 'Teacher Portfolio',
+        drawing: 'Drawing',
+        tvShows: 'TV Shows',
+        bio: 'Bio',
+    };
+    const multiLangContent: MultiLangContent = {
+        es,
+        default: defaultText
+    };
+    const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
+
     return (
         <>
             <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">

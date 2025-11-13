@@ -9,7 +9,7 @@ import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
-export interface TechPortfolioContentPerLanguage {
+interface ContentPerLanguage {
   heroTitle: string;
   heroText1prefix: string;
   heroText1highlight: string;
@@ -38,7 +38,7 @@ export interface TechPortfolioContentPerLanguage {
 }
 
 export default function TechPortfolio() {
-  const es: TechPortfolioContentPerLanguage = {
+  const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO TECNOLÓGICO',
     heroText1prefix: 'Desarrollador de ',
     heroText1highlight: 'aplicaciones Android y paginas web',
@@ -65,7 +65,7 @@ export default function TechPortfolio() {
     productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
     endingNote: 'GRACIAS POR VISITAR!',
   }
-  const defaultText: TechPortfolioContentPerLanguage = {
+  const defaultText: ContentPerLanguage = {
     heroTitle: 'TECH PORTFOLIO',
     heroText1prefix: 'Developer of ',
     heroText1highlight: 'Android apps and websites',
@@ -97,7 +97,7 @@ export default function TechPortfolio() {
     es,
     default: defaultText
   };
-  const content: TechPortfolioContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
+  const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   const companies = [
     { name: 'Boeing', img: '/images/techPortfolio/companies/boeing.png' },

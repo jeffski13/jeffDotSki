@@ -56,7 +56,7 @@ function InfoPage({ }: InfoPageProps) {
   biome: "",
 }`;
   const pokePeruLink = `http://localhost:5173${ROUTES.pokePeru.battle}`;
-  const esContent: InfoTextContentPerLanguage = {
+  const es: ContentPerLanguage = {
     about: 'Pokémon en Perú',
     aboutProjectTitle: 'Sobre el Proyecto',
     goToExperience: '¡Puebalo ',
@@ -115,7 +115,7 @@ function InfoPage({ }: InfoPageProps) {
     environments: 'Nuevos entornos pueden agregarse en: ',
   };
 
-  const defaultContent: InfoTextContentPerLanguage = {
+  const defaultContent: ContentPerLanguage = {
     about: 'Pocket Monsters in Peru',
     aboutProjectTitle: 'About the Project',
     goToExperience: 'Try it out ',
@@ -175,10 +175,10 @@ function InfoPage({ }: InfoPageProps) {
   };
 
   const multiLangContent: MultiLangContent = {
-    es: esContent,
+    es,
     default: defaultContent
   };
-  const content: InfoTextContentPerLanguage = getInfoContentByLanguage(multiLangContent, getBrowserLanguage());
+  const content: ContentPerLanguage = getInfoContentByLanguage(multiLangContent, getBrowserLanguage());
   const posterUrl = "https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/PokePeruPromoPoster.png";
 
   return (
@@ -424,7 +424,7 @@ function CopyableField({ blankData }: CopyableFieldProps) {
   );
 }
 
-export interface InfoTextContentPerLanguage {
+export interface ContentPerLanguage {
   about: string;
   aboutProjectTitle: string;
   goToExperience: string;
@@ -483,6 +483,6 @@ export interface InfoTextContentPerLanguage {
   environments: string;
 }
 
-const getInfoContentByLanguage = (content: MultiLangContent, lang: string): InfoTextContentPerLanguage => {
+const getInfoContentByLanguage = (content: MultiLangContent, lang: string): ContentPerLanguage => {
   return getContentByLanguage(content, lang)
 }
