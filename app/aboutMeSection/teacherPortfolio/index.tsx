@@ -25,19 +25,23 @@ interface ContentPerLanguage {
   resumeLinkText: string;
   recentWorkSectionTitle: string;
   accomplishmentsTitle: string;
+  accomplishmentsTitleLink: string;
   accomplishmentsText: string;
   highQualityToolsTitle: string;
+  highQualityToolsTitleLink: string;
   highQualityToolsText: string;
   highQualityToolsLink: string;
   highQualityToolsLinkText: string;
   passionSectionTitle: string;
   passionTitle: string;
+  passionTitleLink: string;
   passionText: string;
   aiImpovement1: string;
   aiImpovement2: string;
   aiImpovement3: string;
   passionText2: string;
   productiveTitle: string;
+  productiveTitleLink: string;
   productiveText: string;
   endingNote: string;
 }
@@ -58,13 +62,16 @@ export default function TeacherPortfolio() {
     resumeLinkText: 'Haz Click acá por Curriculum Vitae',
     recentWorkSectionTitle: 'QUE SEA DIVERTIDO!',
     accomplishmentsTitle: 'Clase más Recientamente',
+    accomplishmentsTitleLink: 'Clase-mas-Recientamente',
     accomplishmentsText: 'En Colegio Santa Margarita, enseñe un taller de inglés (Projects in Action) en el que los estudientes aumentaron de vocabulario y fluencia a traves de proyectos conmovedores.',
     highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
+    highQualityToolsTitleLink: 'robotics-in-the-classroom',
     highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
     highQualityToolsLinkText: 'Click Here for Resume',
     highQualityToolsLink: ROUTES.pokePeru.battle,
     passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
     passionTitle: 'Pasión por código de alta calidad',
+    passionTitleLink: '',
     passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
     aiImpovement1: '',
     aiImpovement2: '',
@@ -90,19 +97,23 @@ export default function TeacherPortfolio() {
     resumeLinkText: 'Click Here for Resume',
     recentWorkSectionTitle: 'MAKING IT FUN',
     accomplishmentsTitle: 'Most Recent Class',
+    accomplishmentsTitleLink: 'Most-Recent-Class',
     accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
     highQualityToolsTitle: 'Making Learning Memories',
+    highQualityToolsTitleLink: 'robotics-in-the-classroom',
     highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
     highQualityToolsLink: ROUTES.pokePeru.battle,
     highQualityToolsLinkText: 'Click Here for Pokemon In Peru',
     passionSectionTitle: 'INNOVATING WITH AI',
     passionTitle: 'Creating Custom Learning Content',
+    passionTitleLink: 'Creating-Custom-Learning-Content',
     passionText: 'With modern AI technology, even as something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experiences in:',
     aiImpovement1: 'Educational Presentations',
     aiImpovement2: 'Worksheets',
     aiImpovement3: 'Targeted Songs for Learning',
     passionText2: 'With each step forward in technology, there is an opportunity to enrich the learning experience.',
     productiveTitle: 'Robots in the Classroom',
+    productiveTitleLink: 'Robots-in-the-Classroom',
     productiveText: 'Three levels of robotics were offered in which adult students learned about mirco-controller programming, motor movement, and reactive programming to sensor input.',
     endingNote: 'THANKS FOR VISITING!',
   };
@@ -176,7 +187,7 @@ export default function TeacherPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2>{content.accomplishmentsTitle}</h2>
+                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}</h2>
                 <p >{content.accomplishmentsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -204,7 +215,7 @@ export default function TeacherPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2>{content.highQualityToolsTitle}</h2>
+                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}</h2>
                 <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -240,7 +251,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <h2>{content.passionTitle}</h2>
+              <h2 id={content.passionTitleLink}>{content.passionTitle}</h2>
               <p>{content.passionText}</p>
               <ul className="portfolio-bullet-list">
                 <li>{content.aiImpovement1}</li>
@@ -259,7 +270,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <h2>{content.productiveTitle}</h2>
+              <h2 id={content.productiveTitleLink}>{content.productiveTitle}</h2>
               <p>{content.productiveText}</p>
             </Col>
             <Col xs={12} md={1} >
