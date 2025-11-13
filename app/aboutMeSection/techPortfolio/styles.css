@@ -1,13 +1,3 @@
-h2 {
-    margin-top: 0;
-}
-
-/* modifies the react-bootstrap container, col, row class. Spaces everything out  */
-.container {
-    width: 100%;
-    padding: 24px;
-}
-
 .techPortfolio-image {
     border-radius: 12px;
 }
@@ -85,12 +75,6 @@ h2 {
     
     .techPortfolio-companies {
         padding: 0px;
-    }
-
-    /* modifies the react-bootstrap container, col, row class. Spaces everything out  */
-    .container {
-        padding-left: 0px;
-        padding-right: 0px;
     }
 
     .techPortfolio-companies {
