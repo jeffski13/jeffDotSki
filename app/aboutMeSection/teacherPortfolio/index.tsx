@@ -8,7 +8,6 @@ import './styles.css';
 import '../stylesParalax.css';
 import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
-import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
