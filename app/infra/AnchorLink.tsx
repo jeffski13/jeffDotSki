@@ -23,9 +23,11 @@ export default function AnchorLink({ targetId, isDarkMode = false }: AnchorLinkP
   };
 
   
-  let source = "/images/aboutMeSection/link-icon-light-mode.png";
+  let sourceLinkIcon = "/images/aboutMeSection/link-icon-light-mode.png";
+  let sourceCopiedIcon = "/images/aboutMeSection/copied-icon-light-mode.png";
   if(isDarkMode) {
-    source = "/images/aboutMeSection/link-icon-dark-mode.png";
+    sourceLinkIcon = "/images/aboutMeSection/link-icon-dark-mode.png";
+    sourceCopiedIcon = "/images/aboutMeSection/copied-icon-dark-mode.png";
   }
 
   return (
@@ -37,9 +39,9 @@ export default function AnchorLink({ targetId, isDarkMode = false }: AnchorLinkP
       title={copied ? 'Copied!' : 'Copy link'}
     >
       {copied ? (
-        <span className="anchor-link-copied">✓</span>
+        <img className="anchor-link-icon" src={sourceCopiedIcon} />
       ) : (
-        <img className="anchor-link-icon" src={source} />
+        <img className="anchor-link-icon" src={sourceLinkIcon} />
       )}
     </button>
   );

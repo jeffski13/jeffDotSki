@@ -41,7 +41,7 @@ export default function NavigationBar() {
         softwareEngineerResume: 'Software Engineering (Spanish)',
         pokePeru: 'Poké Peru',
         hobbies: 'More About Me',
-        techPortfolio: 'Technical Portfolio',
+        techPortfolio: 'Tech Portfolio',
         teacherPortfolio: 'Teacher Portfolio',
         drawing: 'Drawing',
         tvShows: 'TV Shows',
@@ -72,8 +72,8 @@ export default function NavigationBar() {
                     <Nav >
                         <Nav.Link href={ROUTES.pokePeru.battle}>{content.pokePeru}</Nav.Link>
                         <NavDropdown title={content.hobbies} id="navigationbar-resume">
-                            <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio} >{content.techPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio} >{content.teacherPortfolio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio} >{content.techPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing} >{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows} >{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
