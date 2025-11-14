@@ -209,7 +209,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink targetId={content.accomplishmentsTitleLink} /></h2>
+                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={content.accomplishmentsTitleLink} /></h2>
                 <p >{content.accomplishmentsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -237,7 +237,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink targetId={content.highQualityToolsTitleLink} /></h2>
+                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={content.highQualityToolsTitleLink} /></h2>
                 <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
