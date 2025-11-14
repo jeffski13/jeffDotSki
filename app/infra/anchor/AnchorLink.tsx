@@ -4,17 +4,23 @@ import './anchor-link.css';
 interface AnchorLinkProps {
   targetId: string;
   isDarkMode?: boolean;
+  animationTime?: number;
+  isWindowLocationAvailable?: boolean;
 }
 
-export default function AnchorLink({ targetId, isDarkMode = false }: AnchorLinkProps) {
+export default function AnchorLink({ targetId, isDarkMode = false, animationTime = 1500, isWindowLocationAvailable = true }: AnchorLinkProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
-      const url = window.location.origin + window.location.pathname + window.location.search + `#${targetId}`;
-      await navigator.clipboard.writeText(url);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if(isWindowLocationAvailable) {
+        const url = window.location.origin + window.location.pathname + window.location.search + `#${targetId}`;
+        await navigator.clipboard.writeText(url);
+      }
+      setTimeout(() => {
+        setCopied(false);
+      }, animationTime);
     } catch (e) {
       // fallback: try prompt so user can copy manually
       // eslint-disable-next-line no-alert
@@ -39,7 +45,7 @@ export default function AnchorLink({ targetId, isDarkMode = false }: AnchorLinkP
       title={copied ? 'Copied!' : 'Copy link'}
     >
       {copied ? (
-        <img className="anchor-link-icon" src={sourceCopiedIcon} alt="Link Copy Successful" />
+        <img className="anchor-link-icon" src={sourceCopiedIcon} alt="Copied Successfully Icon" />
       ) : (
         <img className="anchor-link-icon" src={sourceLinkIcon} alt="Copy Link Icon" />
       )}
