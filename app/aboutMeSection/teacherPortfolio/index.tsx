@@ -265,7 +265,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/aboutMeSection/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
+              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/aboutMeSection/teacherPortfolio/pastGraduatedStudent.png" alt="Past student that enjoyed the program" />
             </Col>
             <Col xs={12} md={2} >
             </Col>
