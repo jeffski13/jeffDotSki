@@ -11,6 +11,7 @@
         {"source":"/aboutme/hobbies/drawing","destination":"/index.html"},
         {"source":"/aboutme/hobbies/tvShows","destination":"/index.html"},
         {"source":"/aboutme/techPortfolio","destination":"/index.html"},
+        {"source":"/aboutme/teacherPortfolio","destination":"/index.html"},
         {"source":"/pokeperu/battle","destination":"/index.html"},
         {"source":"/pokeperu/gymleaders","destination":"/index.html"},
         {"source":"/pokeperu/info","destination":"/index.html"},
