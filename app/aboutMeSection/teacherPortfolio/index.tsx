@@ -8,6 +8,7 @@ import './styles.css';
 import '../stylesParalax.css';
 import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
+import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
@@ -148,8 +149,8 @@ export default function TeacherPortfolio() {
           <Row>
             <Col xs={0} md={1} >
             </Col>
-            <Col xs={12} md={4} >
-              <img className="portfolio-image portfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
+            <Col xs={12} md={4} className="teacher-portfolio-overview-image-container mobile-view" >
+              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
               <div className="portfolio-overview-text">
@@ -162,6 +163,9 @@ export default function TeacherPortfolio() {
                 <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
                 <a href={content.resumeLink} >{content.resumeLinkText}</a>
               </div>
+            </Col>
+            <Col xs={12} md={4} className="teacher-portfolio-overview-image-container desktop-view" >
+              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
             </Col>
             <Col xs={0} md={1} >
             </Col>

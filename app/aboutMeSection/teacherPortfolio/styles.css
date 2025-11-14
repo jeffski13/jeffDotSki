@@ -1,3 +1,7 @@
+.teacher-portfolio-overview-image {
+    display: block;
+    margin: auto;
+}
 
 .pokeperuLink {
     text-align: center;
@@ -20,19 +24,19 @@
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
     .paralax-bgimg-1-source {
         background-image: url(/images/teacherPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
     }
-    
+
     .paralax-bgimg-2-source {
         background-image: url(/images/teacherPortfolio/paralaxMobile/classroomWide.jpg);
     }
-    
+
     .paralax-bgimg-3-source {
         background-image: url(/images/teacherPortfolio/paralaxMobile/artificialInteligenceInLearning.png);
     }
-    
+
     .paralax-bgimg-4-source {
         background-image: url(/images/techPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
     }
