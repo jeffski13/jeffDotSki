@@ -41,9 +41,6 @@ interface ContentPerLanguage {
   aiImpovement2: string;
   aiImpovement3: string;
   passionText2: string;
-  productiveTitle: string;
-  productiveTitleLink: string;
-  productiveText: string;
   endingNote: string;
 }
 
@@ -68,7 +65,7 @@ export default function TeacherPortfolio() {
     highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
     highQualityToolsTitleLink: 'robotics-in-the-classroom',
     highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
-    highQualityToolsLinkText: 'Click Here for Resume',
+    highQualityToolsLinkText: 'Haz click acá para Acceder',
     highQualityToolsLink: ROUTES.pokePeru.battle,
     passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
     passionTitle: 'Pasión por código de alta calidad',
@@ -78,9 +75,6 @@ export default function TeacherPortfolio() {
     aiImpovement2: '',
     aiImpovement3: '',
     passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
-    productiveTitle: 'Productividad para alcanzar Calidad',
-  productiveTitleLink: 'Productividad-para-alcanzar-Calidad',
-    productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
     endingNote: 'GRACIAS POR VISITAR!',
   };
   
@@ -105,7 +99,7 @@ export default function TeacherPortfolio() {
     highQualityToolsTitleLink: 'robotics-in-the-classroom',
     highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
     highQualityToolsLink: ROUTES.pokePeru.battle,
-    highQualityToolsLinkText: 'Click Here for Pokemon In Peru',
+    highQualityToolsLinkText: 'Click Here to access Pokemon In Peru',
     passionSectionTitle: 'INNOVATING WITH AI',
     passionTitle: 'Creating Custom Learning Content',
     passionTitleLink: 'Creating-Custom-Learning-Content',
@@ -114,9 +108,6 @@ export default function TeacherPortfolio() {
     aiImpovement2: 'Worksheets',
     aiImpovement3: 'Targeted Songs for Learning',
     passionText2: 'With each step forward in technology, there is an opportunity to enrich the learning experience.',
-    productiveTitle: 'Robots in the Classroom',
-    productiveTitleLink: 'Robots-in-the-Classroom',
-    productiveText: 'Three levels of robotics were offered in which adult students learned about mirco-controller programming, motor movement, and reactive programming to sensor input.',
     endingNote: 'THANKS FOR VISITING!',
   };
 
@@ -134,6 +125,10 @@ export default function TeacherPortfolio() {
     {
       original: '/images/teacherPortfolio/recentWork/learningWithPokemon.png',
       thumbnail: '/images/teacherPortfolio/recentWork/thumbnails/learningWithPokemon.png',
+    },
+    {
+      original: '/images/teacherPortfolio/recentWork/learningWithComics.png',
+      thumbnail: '/images/teacherPortfolio/recentWork/thumbnails/learningWithComics.png',
     },
   ];
 
@@ -263,21 +258,6 @@ export default function TeacherPortfolio() {
               <p>{content.passionText2}</p>
             </Col>
           </Row>
-        </Container>
-
-        <Container>
-          <Row>
-            <Col xs={12} md={1} >
-            </Col>
-            <Col xs={12} md={10} >
-              <h2 id={content.productiveTitleLink}>{content.productiveTitle}<AnchorLink targetId={content.productiveTitleLink} /></h2>
-              <p>{content.productiveText}</p>
-            </Col>
-            <Col xs={12} md={1} >
-            </Col>
-          </Row>
-        </Container>
-        <Container>
           <Row>
             <Col xs={12} md={2} >
             </Col>
