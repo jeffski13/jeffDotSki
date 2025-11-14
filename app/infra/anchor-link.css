@@ -1,0 +1,31 @@
+.anchor-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #777;
+  margin-left: 8px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.anchor-link:hover {
+  color: #222;
+}
+
+.anchor-link-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.anchor-link-copied {
+  font-weight: 700;
+  color: #2a9d8f; /* greenish check */
+}
+
+/* Make sure button doesn't disrupt heading flow */
+.anchor-link,
+.anchor-link * {
+  vertical-align: middle;
+}

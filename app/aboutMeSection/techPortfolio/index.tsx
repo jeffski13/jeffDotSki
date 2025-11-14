@@ -1,6 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
+import AnchorLink from '~/infra/AnchorLink';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
@@ -182,7 +183,7 @@ export default function TechPortfolio() {
       </section>
 
       <section className="paralax-section-whiteBackground paralax-content-section-overview-companies techPortfolio-companies">
-        <h2 id={content.logosTitleLink}>{content.logosTitle}</h2>
+        <h2 id={content.logosTitleLink}>{content.logosTitle}<AnchorLink targetId={content.logosTitleLink} /></h2>
         <Container>
           <Row>
             {companies.map(c => (
@@ -208,7 +209,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}</h2>
+                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink targetId={content.accomplishmentsTitleLink} /></h2>
                 <p >{content.accomplishmentsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -236,7 +237,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}</h2>
+                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink targetId={content.highQualityToolsTitleLink} /></h2>
                 <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -268,8 +269,8 @@ export default function TechPortfolio() {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-            <Col xs={12} md={10} >
-              <h2 id={content.passionTitleLink}>{content.passionTitle}</h2>
+              <Col xs={12} md={10} >
+              <h2 id={content.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={content.passionTitleLink} /></h2>
               <p>{content.passionText}</p>
               <p>jeff.ski Website Code Coverage: <strong>86.09%</strong></p>
               <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
@@ -285,8 +286,8 @@ export default function TechPortfolio() {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-            <Col xs={12} md={10} >
-              <h2 id={content.productiveTitleLink}>{content.productiveTitle}</h2>
+              <Col xs={12} md={10} >
+              <h2 id={content.productiveTitleLink}>{content.productiveTitle}<AnchorLink targetId={content.productiveTitleLink} /></h2>
               <p>{content.productiveText}</p>
             </Col>
             <Col xs={12} md={1} >

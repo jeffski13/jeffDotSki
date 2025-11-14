@@ -1,6 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
+import AnchorLink from '~/infra/AnchorLink';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
@@ -78,6 +79,7 @@ export default function TeacherPortfolio() {
     aiImpovement3: '',
     passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
     productiveTitle: 'Productividad para alcanzar Calidad',
+  productiveTitleLink: 'Productividad-para-alcanzar-Calidad',
     productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
     endingNote: 'GRACIAS POR VISITAR!',
   };
@@ -186,8 +188,8 @@ export default function TeacherPortfolio() {
             <Row>
               <Col xs={12} md={1} >
               </Col>
-              <Col xs={12} md={10} >
-                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}</h2>
+                <Col xs={12} md={10} >
+                  <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink targetId={content.accomplishmentsTitleLink} /></h2>
                 <p >{content.accomplishmentsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -214,8 +216,8 @@ export default function TeacherPortfolio() {
             <Row>
               <Col xs={12} md={1} >
               </Col>
-              <Col xs={12} md={10} >
-                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}</h2>
+                <Col xs={12} md={10} >
+                  <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink targetId={content.highQualityToolsTitleLink} /></h2>
                 <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -250,8 +252,8 @@ export default function TeacherPortfolio() {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-            <Col xs={12} md={10} >
-              <h2 id={content.passionTitleLink}>{content.passionTitle}</h2>
+                <Col xs={12} md={10} >
+                  <h2 id={content.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={content.passionTitleLink} /></h2>
               <p>{content.passionText}</p>
               <ul className="portfolio-bullet-list">
                 <li>{content.aiImpovement1}</li>
@@ -259,8 +261,6 @@ export default function TeacherPortfolio() {
                 <li>{content.aiImpovement3}</li>
               </ul>
               <p>{content.passionText2}</p>
-            </Col>
-            <Col xs={12} md={1} >
             </Col>
           </Row>
         </Container>
@@ -270,7 +270,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <h2 id={content.productiveTitleLink}>{content.productiveTitle}</h2>
+              <h2 id={content.productiveTitleLink}>{content.productiveTitle}<AnchorLink targetId={content.productiveTitleLink} /></h2>
               <p>{content.productiveText}</p>
             </Col>
             <Col xs={12} md={1} >
