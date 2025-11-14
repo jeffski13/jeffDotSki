@@ -39,9 +39,9 @@ export default function AnchorLink({ targetId, isDarkMode = false }: AnchorLinkP
       title={copied ? 'Copied!' : 'Copy link'}
     >
       {copied ? (
-        <img className="anchor-link-icon" src={sourceCopiedIcon} />
+        <img className="anchor-link-icon" src={sourceCopiedIcon} alt="Link Copy Successful" />
       ) : (
-        <img className="anchor-link-icon" src={sourceLinkIcon} />
+        <img className="anchor-link-icon" src={sourceLinkIcon} alt="Copy Link Icon" />
       )}
     </button>
   );
