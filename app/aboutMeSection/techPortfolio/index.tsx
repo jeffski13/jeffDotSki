@@ -117,30 +117,30 @@ export default function TechPortfolio() {
   const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   const companies = [
-    { name: 'Boeing', img: '/images/techPortfolio/companies/boeing.png' },
-    { name: 'USAA', img: '/images/techPortfolio/companies/usaa.png' },
-    { name: 'Colegio Santa Margarita', img: '/images/techPortfolio/companies/santaMargarita.png' },
-    { name: 'Tandem Diabetes Care', img: '/images/techPortfolio/companies/tandem.png' },
-    { name: 'Availity', img: '/images/techPortfolio/companies/availity.png' },
-    { name: 'Beardon Services', img: '/images/techPortfolio/companies/beardon.png' },
+    { name: 'Boeing', img: '/images/aboutMeSection/techPortfolio/companies/boeing.png' },
+    { name: 'USAA', img: '/images/aboutMeSection/techPortfolio/companies/usaa.png' },
+    { name: 'Colegio Santa Margarita', img: '/images/aboutMeSection/techPortfolio/companies/santaMargarita.png' },
+    { name: 'Tandem Diabetes Care', img: '/images/aboutMeSection/techPortfolio/companies/tandem.png' },
+    { name: 'Availity', img: '/images/aboutMeSection/techPortfolio/companies/availity.png' },
+    { name: 'Beardon Services', img: '/images/aboutMeSection/techPortfolio/companies/beardon.png' },
   ];
 
   const tandemReel = [
     {
-      original: '/images/techPortfolio/recentJobImprovements/noMorePumpOrPhone.png',
-      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/noMorePumpOrPhone.png',
+      original: '/images/aboutMeSection/techPortfolio/recentJobImprovements/noMorePumpOrPhone.png',
+      thumbnail: '/images/aboutMeSection/techPortfolio/recentJobImprovements/thumbnails/noMorePumpOrPhone.png',
     },
     {
-      original: '/images/techPortfolio/recentJobImprovements/patientPlayback.png',
-      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/patientPlayback.png',
+      original: '/images/aboutMeSection/techPortfolio/recentJobImprovements/patientPlayback.png',
+      thumbnail: '/images/aboutMeSection/techPortfolio/recentJobImprovements/thumbnails/patientPlayback.png',
     },
     {
-      original: '/images/techPortfolio/recentJobImprovements/simulatedGraphData.png',
-      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/simulatedGraphData.png',
+      original: '/images/aboutMeSection/techPortfolio/recentJobImprovements/simulatedGraphData.png',
+      thumbnail: '/images/aboutMeSection/techPortfolio/recentJobImprovements/thumbnails/simulatedGraphData.png',
     },
     {
-      original: '/images/techPortfolio/recentJobImprovements/customizableDashboard.png',
-      thumbnail: '/images/techPortfolio/recentJobImprovements/thumbnails/customizableDashboard.png',
+      original: '/images/aboutMeSection/techPortfolio/recentJobImprovements/customizableDashboard.png',
+      thumbnail: '/images/aboutMeSection/techPortfolio/recentJobImprovements/thumbnails/customizableDashboard.png',
     },
   ];
 
@@ -161,7 +161,7 @@ export default function TechPortfolio() {
             <Col xs={0} md={1} >
             </Col>
             <Col xs={12} md={4} >
-              <img className="portfolio-image portfolio-overview-image" src="/images/techPortfolio/developerWorkingImage.png" alt="Developer at work" />
+              <img className="portfolio-image portfolio-overview-image" src="/images/aboutMeSection/techPortfolio/developerWorkingImage.png" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
               <div className="portfolio-overview-text">
@@ -249,7 +249,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <img className="portfolio-image" src="/images/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
+                <img className="portfolio-image" src="/images/aboutMeSection/techPortfolio/devServerTools.png" alt="Dev server tool for cloud interactions" />
               </Col>
               <Col xs={12} md={2} >
               </Col>
@@ -299,7 +299,7 @@ export default function TechPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
+              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/aboutMeSection/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
             </Col>
             <Col xs={12} md={2} >
             </Col>

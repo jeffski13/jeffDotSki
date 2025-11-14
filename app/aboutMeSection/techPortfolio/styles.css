@@ -17,37 +17,37 @@
 }
 
 .paralax-bgimg-1-source {
-    background-image: url(/images/techPortfolio/paralax/desk.jpg);
+    background-image: url(/images/aboutMeSection/techPortfolio/paralax/desk.jpg);
 }
 
 .paralax-bgimg-2-source {
-    background-image: url(/images/techPortfolio/paralax/softwareDashbaord.jpg);
+    background-image: url(/images/aboutMeSection/techPortfolio/paralax/softwareDashbaord.jpg);
 }
 
 .paralax-bgimg-3-source {
-    background-image: url(/images/techPortfolio/paralax/unitTestingOutput.png);
+    background-image: url(/images/aboutMeSection/techPortfolio/paralax/unitTestingOutput.png);
 }
 
 .paralax-bgimg-4-source {
-    background-image: url(/images/techPortfolio/paralax/deskCat.jpg);
+    background-image: url(/images/aboutMeSection/techPortfolio/paralax/deskCat.jpg);
 }
 
 
 @media (max-width: 600px) {
     .paralax-bgimg-1-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/deskTop.jpg);
+        background-image: url(/images/aboutMeSection/techPortfolio/paralaxMobile/deskTop.jpg);
     }
     
     .paralax-bgimg-2-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/softwareDashbaord.jpg);
+        background-image: url(/images/aboutMeSection/techPortfolio/paralaxMobile/softwareDashbaord.jpg);
     }
     
     .paralax-bgimg-3-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/unitTestingOutput.png);
+        background-image: url(/images/aboutMeSection/techPortfolio/paralaxMobile/unitTestingOutput.png);
     }
     
     .paralax-bgimg-4-source {
-        background-image: url(/images/techPortfolio/paralaxMobile/deskCatBottom.jpg);
+        background-image: url(/images/aboutMeSection/techPortfolio/paralaxMobile/deskCatBottom.jpg);
     }
     
     .techPortfolio-companies {

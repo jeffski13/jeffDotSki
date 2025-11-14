@@ -119,16 +119,16 @@ export default function TeacherPortfolio() {
 
   const photoReel = [
     {
-      original: '/images/teacherPortfolio/recentWork/learningWithMinecraft.png',
-      thumbnail: '/images/teacherPortfolio/recentWork/thumbnails/learningWithMinecraft.png',
+      original: '/images/aboutMeSection/teacherPortfolio/recentWork/learningWithMinecraft.png',
+      thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithMinecraft.png',
     },
     {
-      original: '/images/teacherPortfolio/recentWork/learningWithPokemon.png',
-      thumbnail: '/images/teacherPortfolio/recentWork/thumbnails/learningWithPokemon.png',
+      original: '/images/aboutMeSection/teacherPortfolio/recentWork/learningWithPokemon.png',
+      thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithPokemon.png',
     },
     {
-      original: '/images/teacherPortfolio/recentWork/learningWithComics.png',
-      thumbnail: '/images/teacherPortfolio/recentWork/thumbnails/learningWithComics.png',
+      original: '/images/aboutMeSection/teacherPortfolio/recentWork/learningWithComics.png',
+      thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithComics.png',
     },
   ];
 
@@ -149,7 +149,7 @@ export default function TeacherPortfolio() {
             <Col xs={0} md={1} >
             </Col>
             <Col xs={12} md={4} className="teacher-portfolio-overview-image-container mobile-view" >
-              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
+              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/aboutMeSection/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
               <div className="portfolio-overview-text">
@@ -164,7 +164,7 @@ export default function TeacherPortfolio() {
               </div>
             </Col>
             <Col xs={12} md={4} className="teacher-portfolio-overview-image-container desktop-view" >
-              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
+              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/aboutMeSection/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
             </Col>
             <Col xs={0} md={1} >
             </Col>
@@ -227,7 +227,7 @@ export default function TeacherPortfolio() {
               <Col xs={12} md={2} >
               </Col>
               <Col xs={12} md={8} >
-                <img className="portfolio-image" src="/images/teacherPortfolio/recentWork/pokemonInPeruMasterSlide.png" alt="Dev server tool for cloud interactions" />
+                <img className="portfolio-image" src="/images/aboutMeSection/teacherPortfolio/recentWork/pokemonInPeruMasterSlide.png" alt="Dev server tool for cloud interactions" />
               </Col>
               <Col xs={12} md={2} >
               </Col>
@@ -265,7 +265,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
+              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/aboutMeSection/teacherPortfolio/roboticsClass.jpg" alt="Github Commits per Day" />
             </Col>
             <Col xs={12} md={2} >
             </Col>
