@@ -4,24 +4,26 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: #777;
   margin-left: 8px;
   padding: 2px;
   cursor: pointer;
 }
 
-.anchor-link:hover {
-  color: #222;
-}
-
 .anchor-link-icon {
-  width: 1rem;
-  height: 1rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .anchor-link-copied {
-  font-weight: 700;
-  color: #2a9d8f; /* greenish check */
+  font-weight: 600;
+}
+
+.anchor-link-copied-light-mode {
+  color: #656565;
+}
+
+.anchor-link-copied-dark-mode {
+  color: #d7d7d7;
 }
 
 /* Make sure button doesn't disrupt heading flow */

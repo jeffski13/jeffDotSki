@@ -3,9 +3,10 @@ import './anchor-link.css';
 
 interface AnchorLinkProps {
   targetId: string;
+  isDarkMode?: boolean;
 }
 
-export default function AnchorLink({ targetId }: AnchorLinkProps) {
+export default function AnchorLink({ targetId, isDarkMode = false }: AnchorLinkProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -21,6 +22,12 @@ export default function AnchorLink({ targetId }: AnchorLinkProps) {
     }
   };
 
+  
+  let source = "/images/aboutMeSection/link-icon-light-mode.png";
+  if(isDarkMode) {
+    source = "/images/aboutMeSection/link-icon-dark-mode.png";
+  }
+
   return (
     <button
       type="button"
@@ -32,7 +39,7 @@ export default function AnchorLink({ targetId }: AnchorLinkProps) {
       {copied ? (
         <span className="anchor-link-copied">✓</span>
       ) : (
-        <img className="anchor-link-icon" src="/images/info/.png" />
+        <img className="anchor-link-icon" src={source} />
       )}
     </button>
   );
