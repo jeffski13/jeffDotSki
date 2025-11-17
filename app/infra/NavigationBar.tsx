@@ -28,7 +28,7 @@ export default function NavigationBar() {
         pokePeru: 'Poke Perú',
         hobbies: 'Más Sobre Mí',
         techPortfolio: 'Portfolio Técnico',
-        teacherPortfolio: 'Portfolio de Profe de Inglés',
+        teacherPortfolio: 'Portfolio de Profe',
         drawing: 'Dibujos',
         tvShows: 'Series',
         bio: 'Biografía',

@@ -38,6 +38,6 @@
 @media (min-width: 600px) {
     /* moving the full screen dropdown meny to the left to make the options more readable */
     #App > nav > div > div:nth-child(2) > div > div {
-        left: -15px;
+        left: -20px;
     }
 }
