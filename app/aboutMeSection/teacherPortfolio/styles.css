@@ -3,6 +3,11 @@
     margin: auto;
 }
 
+.certified-text {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
 .pokeperuLink {
     text-align: center;
 }
@@ -22,7 +27,6 @@
 .paralax-bgimg-4-source {
     background-image: url(/images/aboutMeSection/teacherPortfolio/paralax/kidsRunningToSchool.jpg);
 }
-
 
 @media (max-width: 767px) {
     .paralax-bgimg-1-source {

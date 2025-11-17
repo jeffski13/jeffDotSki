@@ -15,7 +15,12 @@
     list-style: disc;
 }
 
-.portfolio-qualityWork-content-image {
+.portfolio-accredidation {
+    padding: 48px 0;
+    text-align: center;
+}
+
+.portfolio-content-image {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -27,5 +32,12 @@
 
     .portfolio-top-section-spacer {
         padding: 0px;
+    }
+
+    .portfolio-accredidation {
+        padding: 0px;
+        margin-top: 0px;
+        margin-left: 40px;
+        margin-right: 40px;
     }
 }

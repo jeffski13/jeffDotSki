@@ -161,7 +161,7 @@ export default function TechPortfolio() {
             <Col xs={0} md={1} >
             </Col>
             <Col xs={12} md={4} >
-              <img className="portfolio-image portfolio-overview-image" src="/images/aboutMeSection/techPortfolio/developerWorkingImage.png" alt="Developer at work" />
+              <img className="portfolio-overview-image" src="/images/aboutMeSection/techPortfolio/developerWorkingImage.png" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
               <div className="portfolio-overview-text">
@@ -182,7 +182,7 @@ export default function TechPortfolio() {
         </div>
       </section>
 
-      <section className="paralax-section-whiteBackground paralax-content-section-overview-companies techPortfolio-companies">
+      <section className="paralax-section-whiteBackground paralax-content-section-overview-companies portfolio-accredidation">
         <h2 id={content.logosTitleLink}>{content.logosTitle}<AnchorLink targetId={content.logosTitleLink} /></h2>
         <Container>
           <Row>
@@ -299,7 +299,7 @@ export default function TechPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/aboutMeSection/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
+              <img className="portfolio-content-image" src="/images/aboutMeSection/techPortfolio/tandemProductvity/githubCommitsPerDay.png" alt="Github Commits per Day" />
             </Col>
             <Col xs={12} md={2} >
             </Col>

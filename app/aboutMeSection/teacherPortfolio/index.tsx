@@ -24,6 +24,13 @@ interface ContentPerLanguage {
   heroText2suffix: string;
   resumeLink: string;
   resumeLinkText: string;
+  certificationTitleLink: string;
+  certificationTitle: string;
+  certificationText: string;
+  certificationText2: string;
+  certificationText3: string;
+  certificationLink: string;
+  certificationLinkText: string;
   recentWorkSectionTitle: string;
   accomplishmentsTitle: string;
   accomplishmentsTitleLink: string;
@@ -58,6 +65,13 @@ export default function TeacherPortfolio() {
     heroText2suffix: ' y una paciencia con alumnos que hace falta para crear un ambiente que no es solo desfiante, sino divertido.',
     resumeLink: ROUTES.external.resume.profeIngles,
     resumeLinkText: 'Haz Click acá por Curriculum Vitae',
+    certificationTitleLink: 'TEFL-Certified',
+    certificationTitle: 'TEFL Certified',
+    certificationText: 'Con una certificación reconocida a nivel mundial, ',
+    certificationText2: 'TEFL (Teaching english as a Foreign Language) y ',
+    certificationText3: 'TESOL(Teaching English to Speakers of Other Languages).',
+    certificationLink: ROUTES.external.certification,
+    certificationLinkText: 'Haz Click acá por la Certificación Oficial',
     recentWorkSectionTitle: 'QUE SEA DIVERTIDO!',
     accomplishmentsTitle: 'Clase más Recientamente',
     accomplishmentsTitleLink: 'Clase-mas-Recientamente',
@@ -77,7 +91,7 @@ export default function TeacherPortfolio() {
     passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
     endingNote: 'GRACIAS POR VISITAR!',
   };
-  
+
   const defaultText: ContentPerLanguage = {
     heroTitle: 'TEACHER PORTFOLIO',
     heroText1prefix: 'Teaches  ',
@@ -91,6 +105,13 @@ export default function TeacherPortfolio() {
     heroText2suffix: ' and a patience with learners that is needed to create a challenging but fun classroom experience.',
     resumeLink: ROUTES.external.resume.teacherEnglish,
     resumeLinkText: 'Click Here for Resume',
+    certificationTitleLink: 'TEFL-Certified',
+    certificationTitle: 'TEFL Certified',
+    certificationText: 'Certified with the globally recognized ',
+    certificationText2: 'TEFL (Teaching english as a Foreign Language) and ',
+    certificationText3: 'TESOL(Teaching English to Speakers of Other Languages) certification.',
+    certificationLink: ROUTES.external.certification,
+    certificationLinkText: 'Click here for Official Certficiation',
     recentWorkSectionTitle: 'MAKING IT FUN',
     accomplishmentsTitle: 'Most Recent Class',
     accomplishmentsTitleLink: 'Most-Recent-Class',
@@ -174,6 +195,71 @@ export default function TeacherPortfolio() {
         </div>
       </section>
 
+      <section className="paralax-section-whiteBackground paralax-content-section-overview-companies portfolio-accredidation">
+        <h2 id={content.certificationTitleLink}>{content.certificationTitle}<AnchorLink targetId={content.certificationTitleLink} /></h2>
+        <Container className="desktop-view">
+          <Row >
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="certified-text">{content.certificationText}{content.certificationText2}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="certified-text">{content.certificationText3}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <Container className="mobile-view">
+          <Row >
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="certified-text">{content.certificationText}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+          <Row >
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="certified-text">{content.certificationText2}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="certified-text">{content.certificationText3}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Col xs={12} md={3} >
+            </Col>
+            <Col xs={12} md={6} >
+              <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/teflCertification.png" alt="TEFL Certification Screenshot" />
+            </Col>
+            <Col xs={12} md={3} >
+            </Col>
+          </Row>
+        </Container>
+        <a href={content.certificationLink} >{content.certificationLinkText}</a>
+      </section>
+
       <div className="paralax-bgimg paralax-bgimg-2 paralax-bgimg-2-source">
         <div className="paralax-section-title-container">
           <span className="paralax-section-title">{content.recentWorkSectionTitle}</span>
@@ -186,8 +272,8 @@ export default function TeacherPortfolio() {
             <Row>
               <Col xs={12} md={1} >
               </Col>
-                <Col xs={12} md={10} >
-                  <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={content.accomplishmentsTitleLink} /></h2>
+              <Col xs={12} md={10} >
+                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={content.accomplishmentsTitleLink} /></h2>
                 <p >{content.accomplishmentsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -214,8 +300,8 @@ export default function TeacherPortfolio() {
             <Row>
               <Col xs={12} md={1} >
               </Col>
-                <Col xs={12} md={10} >
-                  <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={content.highQualityToolsTitleLink} /></h2>
+              <Col xs={12} md={10} >
+                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={content.highQualityToolsTitleLink} /></h2>
                 <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -250,8 +336,8 @@ export default function TeacherPortfolio() {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-                <Col xs={12} md={10} >
-                  <h2 id={content.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={content.passionTitleLink} /></h2>
+            <Col xs={12} md={10} >
+              <h2 id={content.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={content.passionTitleLink} /></h2>
               <p>{content.passionText}</p>
               <ul className="portfolio-bullet-list">
                 <li>{content.aiImpovement1}</li>
@@ -265,7 +351,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={2} >
             </Col>
             <Col xs={12} md={8} >
-              <img className="portfolio-image portfolio-qualityWork-content-image" src="/images/aboutMeSection/teacherPortfolio/pastGraduatedStudent.png" alt="Past student that enjoyed the program" />
+              <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/pastGraduatedStudent.png" alt="Past student that enjoyed the program" />
             </Col>
             <Col xs={12} md={2} >
             </Col>
