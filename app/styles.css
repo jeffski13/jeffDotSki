@@ -5,3 +5,8 @@
 i {
     vertical-align: sub;
 }
+
+/* react bootsrtap overwrite for selection background of navbar item */
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #333
+}
