@@ -15,8 +15,7 @@ export const locationProviderImpl: LocationProvider = {
   }
 }
 
-
-export const mockLocationProvider: LocationProvider = {
+export const locationProviderMock: LocationProvider = {
   useLocation: function (): Location | undefined {
     return undefined;
   }
