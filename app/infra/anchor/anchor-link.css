@@ -1,0 +1,33 @@
+.anchor-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  margin-left: 8px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.anchor-link-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.anchor-link-copied {
+  font-weight: 600;
+}
+
+.anchor-link-copied-light-mode {
+  color: #656565;
+}
+
+.anchor-link-copied-dark-mode {
+  color: #d7d7d7;
+}
+
+/* Make sure button doesn't disrupt heading flow */
+.anchor-link,
+.anchor-link * {
+  vertical-align: middle;
+}

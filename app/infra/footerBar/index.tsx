@@ -1,14 +1,20 @@
 
 import { useMemo, useState } from 'react';
-import {Container, Row, Col, Image} from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import githubLogo from './github-logo.png';
 import githubLogoShadow from './github-logo-shadow.png';
 import instaLogo from './instagram-logo.png';
 import instaLogoShadow from './instagram-logo-shadow.png';
 import packageJson from "package.json";
-import './styles.css';
 import ROUTES from '~/consts/ROUTES';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/langSupport';
+import './styles.css';
+
+interface ContentPerLanguage {
+  version: string;
+  githubTitle: string;
+  instagramTitle: string;
+}
 
 export function FooterBar() {
   const [isGithubImgMouseOver, setIsGithubImgMouseOver] = useState(false);
@@ -17,28 +23,30 @@ export function FooterBar() {
   let githubLogoImage = isGithubImgMouseOver ? githubLogoShadow : githubLogo;
   let instaLogoImage = isInstaMouseOver ? instaLogoShadow : instaLogo;
 
+  const es: ContentPerLanguage = {
+    version: 'Versión',
+    githubTitle: '¡Mi sitio web de código abierto!',
+    instagramTitle: 'Instagram',
+  }
+  const defaultText: ContentPerLanguage = {
+    version: 'Version',
+    githubTitle: 'My Open Source Website!',
+    instagramTitle: 'Instagram',
+  }
+
   const multiLangContent: MultiLangContent = {
-    es: {
-      version: 'Versión',
-      githubTitle: '¡Mi sitio web de código abierto!',
-      instagramTitle: 'Instagram',
-    },
-    default: {
-      version: 'Version',
-      githubTitle: 'My Open Source Website!',
-      instagramTitle: 'Instagram',
-    }
+    es,
+    default: defaultText
   };
+  const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
-  const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
-
-  return(
+  return (
     <Container className="FooterBar" fluid>
       <Row className="show-grid">
         <Col xs={1} />
         <Col xs={5} sm={3} className="footerBarLinkWrapper">
           <div className="footerLinksArea" >
-              {content.version}: {packageJson.version}
+            {content.version}: {packageJson.version}
           </div>
         </Col>
         <Col xs={2} sm={6} />

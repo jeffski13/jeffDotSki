@@ -1,10 +1,17 @@
 
-import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import TvShow from './TvShow';
-import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../../langSupport';
 import { tvshows, tvshowsFinished, type TvShowInfo } from './tvshows';
 import '../hobbiesStyles.css';
+
+interface ContentPerLanguage {
+  title: string;
+  intro: string;
+  past: string;
+  pastDesc: string;
+  disclaimer: string;
+}
 
 interface TvShowsProps {
   tvShowsList: TvShowInfo[];
@@ -18,23 +25,26 @@ export default function TvShowsPage() {
 }
 
 export function TvShows({ tvShowsList, tvShowsFinishedList }: TvShowsProps) {
-  const multiLangContent = {
-    es: {
-      title: 'Series',
-      intro: 'A lo largo de los años he descubierto que conecto con los medios y el arte digital a nivel emocional y espiritual. Veo un episodio cada noche antes de dormir. Estas series han sido una constante en mi vida. Estas son las que estoy viendo hoy en día.',
-      past: 'Series Pasadas:',
-      pastDesc: 'Y aquí están las series que ya terminé (posiblemente más de una vez). A mi me encantaba cada una de ellas.',
-      disclaimer: 'Yo no soy el dueño de este contenido. Por favor, apoya los productos oficiales.'
-    },
-    default: {
-      title: 'Tv Shows',
-      intro: 'Over the years I have found that I connect with media and digital art on an emotional and spritual level. I watch one episode every night before I go to bed. I have found these shows over the years to be a constant comfort no matter what stage of life. Here are some things I am currently watching.',
-      past: 'Past Shows:',
-      pastDesc: 'And here are the shows I have finished (Possibly more than once). I enojoyed the heck out of every one of these.',
-      disclaimer: "I don't own any of these images. Please support the official releases."
-    }
+  const es: ContentPerLanguage = {
+    title: 'Series',
+    intro: 'A lo largo de los años he descubierto que conecto con los medios y el arte digital a nivel emocional y espiritual. Veo un episodio cada noche antes de dormir. Estas series han sido una constante en mi vida. Estas son las que estoy viendo hoy en día.',
+    past: 'Series Pasadas:',
+    pastDesc: 'Y aquí están las series que ya terminé (posiblemente más de una vez). A mi me encantaba cada una de ellas.',
+    disclaimer: 'Yo no soy el dueño de este contenido. Por favor, apoya los productos oficiales.'
+  }
+  const defaultText: ContentPerLanguage = {
+    title: 'Tv Shows',
+    intro: 'Over the years I have found that I connect with media and digital art on an emotional and spritual level. I watch one episode every night before I go to bed. I have found these shows over the years to be a constant comfort no matter what stage of life. Here are some things I am currently watching.',
+    past: 'Past Shows:',
+    pastDesc: 'And here are the shows I have finished (Possibly more than once). I enojoyed the heck out of every one of these.',
+    disclaimer: "I don't own any of these images. Please support the official releases."
+  }
+
+  const multiLangContent: MultiLangContent = {
+    es,
+    default: defaultText
   };
-  const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+  const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
   const renderTvShows = (tvshowItem: TvShowInfo, index: number) => {
     return (

@@ -11,26 +11,34 @@ export interface Role {
   link: string;
 }
 
-export const multiLangContent: MultiLangContent = {
-  es: {
-    whoIs: '¿Quién Es Jeff (Jeffski) Szcinski?',
-    roles: [
-      { label: 'Innovador en Educación de Inglés', desc: 'Escuela primaria y clases particulares para hispanohablantes', link: ROUTES.pokePeru.info },
-      { label: 'Ingeniero de Software', desc: 'Desarrollador web y aplicaciones nativas de Android', link: ROUTES.aboutMe.techPortfolio },
-      { label: 'Viajero del Mundo', desc: 'Tokio, Japón • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
-      { label: 'Artista y Músico', desc: 'Arte y Líder del coro Señora Fátima en Miraflores, Lima, Perú', link: ROUTES.aboutMe.drawing },
-    ]
-  },
-  default: {
-    whoIs: 'Who Is Jeff (Jeffski) Szcinski?',
-    roles: [
-      { label: 'English Education Innovator', desc: 'Elementry School and Private Lessons for Spanish Speakers', link: ROUTES.pokePeru.info },
-      { label: 'Software Engineer', desc: 'Web Developer and Android Native Applications', link: ROUTES.aboutMe.techPortfolio },
-      { label: 'World Traveler', desc: 'Tokyo, Japan • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
-      { label: 'Artist and Performer', desc: 'Fan Artist and Leader of the Señora Fátima Choir in Miraflores, Lima, Perú', link: ROUTES.aboutMe.drawing },
-    ]
-  }
+export interface ContentPerLanguage {
+  whoIs: string;
+  roles: Role[];
 }
+
+const es: ContentPerLanguage = {
+  whoIs: '¿Quién Es Jeff (Jeffski) Szcinski?',
+  roles: [
+    { label: 'Innovador en Educación de Inglés', desc: 'Escuela primaria y clases particulares para hispanohablantes', link: ROUTES.aboutMe.teacherPortfolio },
+    { label: 'Ingeniero de Software', desc: 'Desarrollador web y aplicaciones nativas de Android', link: ROUTES.aboutMe.techPortfolio },
+    { label: 'Viajero del Mundo', desc: 'Tokio, Japón • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
+    { label: 'Artista y Músico', desc: 'Arte y Líder del coro Señora Fátima en Miraflores, Lima, Perú', link: ROUTES.aboutMe.drawing },
+  ]
+}
+const defaultText: ContentPerLanguage = {
+  whoIs: 'Who Is Jeff (Jeffski) Szcinski?',
+  roles: [
+    { label: 'English Education Innovator', desc: 'Elementry School and Private Lessons for Spanish Speakers', link: ROUTES.aboutMe.teacherPortfolio },
+    { label: 'Software Engineer', desc: 'Web Developer and Android Native Applications', link: ROUTES.aboutMe.techPortfolio },
+    { label: 'World Traveler', desc: 'Tokyo, Japan • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
+    { label: 'Artist and Performer', desc: 'Fan Artist and Leader of the Señora Fátima Choir in Miraflores, Lima, Perú', link: ROUTES.aboutMe.drawing },
+  ]
+}
+
+export const multiLangContent: MultiLangContent = {
+  es,
+  default: defaultText
+};
 
 export default function HomePage() {
 

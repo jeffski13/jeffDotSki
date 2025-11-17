@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { getContentByLanguage, getBrowserLanguage } from '../../../langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../../langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
 import '../../../infra/mobile-support.css';
 import './styles.css';
-import Loadingski from '~/infra/loadingski';
+
+interface ContentPerLanguage {
+  title: string;
+  intro: string;
+  spooky: string;
+  spookyDesc: string;
+  titleLabel: string;
+}
+
 
 interface DrawingsProps {
   drawingsList: DrawingItem[];
@@ -22,6 +30,28 @@ export function Drawings({
   drawingsList,
   drawingsHalloweenList
 }: DrawingsProps) {
+  const es: ContentPerLanguage = {
+    title: 'Dibujos',
+    intro: 'Empecé a dibujar como pasatiempo durante la pandemia. ¡Con el tiempo encontré mi estilo! ¡Que disfrutas!',
+    spooky: 'Dibujos Espeluznantes:',
+    spookyDesc: 'A mi familia le gusta el estilo de El Mundo Loco De Jack, así que creé estos:',
+    titleLabel: 'Título:',
+  }
+  const defaultText: ContentPerLanguage = {
+    title: 'Drawings',
+    intro: 'I started drawing as a hobby during the pandemic. Over the years I feel I have found my style. Enjoy!',
+    spooky: 'Spooky Drawings:',
+    spookyDesc: 'My family likes the spooky nightmare before christmas style, so I created these:',
+    titleLabel: 'Title:',
+  }
+
+  const multiLangContent: MultiLangContent = {
+    es,
+    default: defaultText
+  };
+  const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
+
+  
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
 
   // Combine both lists for navigation
@@ -38,17 +68,17 @@ export function Drawings({
 
   const showImageFullNext = () => {
     const currentIdx = getOverlayIdx();
-    if (currentIdx === -1) { 
-      return; 
+    if (currentIdx === -1) {
+      return;
     }
     const nextIdx = (currentIdx + 1) % combinedLists.length;
     setOverlayImg(combinedLists[nextIdx].full);
   }
-  
+
   const showImageFullPrevious = () => {
     const currentIdx = getOverlayIdx();
-    if (currentIdx === -1) { 
-      return; 
+    if (currentIdx === -1) {
+      return;
     }
     const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
     setOverlayImg(combinedLists[prevIdx].full);
@@ -80,23 +110,6 @@ export function Drawings({
     };
   }, [overlayImg]);
 
-  const multiLangContent = {
-    es: {
-      title: 'Dibujos',
-      intro: 'Empecé a dibujar como pasatiempo durante la pandemia. ¡Con el tiempo encontré mi estilo! ¡Que disfrutas!',
-      spooky: 'Dibujos Espeluznantes:',
-      spookyDesc: 'A mi familia le gusta el estilo de El Mundo Loco De Jack, así que creé estos:',
-      titleLabel: 'Título:',
-    },
-    default: {
-      title: 'Drawings',
-      intro: 'I started drawing as a hobby during the pandemic. Over the years I feel I have found my style. Enjoy!',
-      spooky: 'Spooky Drawings:',
-      spookyDesc: 'My family likes the spooky nightmare before christmas style, so I created these:',
-      titleLabel: 'Title:',
-    }
-  };
-  const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
   return (
     <div className="aboutmeWrapper">
       <div className="hobbiesSection" >

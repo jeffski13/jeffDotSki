@@ -1,3 +1,13 @@
+h2 {
+    margin-top: 0;
+}
+
+/* modifies the react-bootstrap container, col, row class. Spaces everything out  */
+.container {
+    width: 100%;
+    padding: 24px;
+}
+
 .paralax-portfolio {
     height: 100%;
     margin: 0;
@@ -44,24 +54,21 @@ would also dim/transparent its children. */
     z-index: 1;
 }
 
-.paralax-bgimg-1 {
+.paralax-bgimg-1   {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/desk.jpg);
 }
 
-.paralax-bgimg-2 {
+.paralax-bgimg-2  {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/softwareDashbaord.jpg);
 }
 
-.paralax-bgimg-3 {
+
+.paralax-bgimg-3  {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/unitTestingOutput.png);
 }
 
-.paralax-bgimg-4 {
+.paralax-bgimg-4  {
     min-height: 500px;
-    background-image: url(/images/techPortfolio/paralax/deskCat.jpg);
     margin-bottom: 50px;
 }
 
@@ -70,7 +77,7 @@ would also dim/transparent its children. */
     margin-bottom: 40px;
 }
 
-.paralax-content-section-overview-companies {
+.paralax-content-section-overview-accredidation {
     margin-bottom: 50px;
 }
 
@@ -84,7 +91,7 @@ would also dim/transparent its children. */
     padding-bottom: 80px;
 }
 
-.paralax-content-section-qualityCode {
+.paralax-content-section-qualityWork {
     margin-top: 60px;
     margin-bottom: 80px;
 }
@@ -109,24 +116,24 @@ would also dim/transparent its children. */
 
 /* Small screens: two per row */
 @media (max-width: 600px) {
+
+    /* modifies the react-bootstrap container, col, row class. Spaces everything out  */
+    .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
     .paralax-bgimg-1 {
         min-height: 200px;
-        background-image: url(/images/techPortfolio/paralaxMobile/deskTop.jpg);
     }
-    
     .paralax-bgimg-2 {
         min-height: 300px;
-        background-image: url(/images/techPortfolio/paralaxMobile/softwareDashbaord.jpg);
     }
-    
     .paralax-bgimg-3 {
         min-height: 300px;
-        background-image: url(/images/techPortfolio/paralaxMobile/unitTestingOutput.png);
     }
-    
     .paralax-bgimg-4 {
         min-height: 300px;
-        background-image: url(/images/techPortfolio/paralaxMobile/deskCatBottom.jpg);
     }
 
     .paralax-section-title-container span.paralax-section-title {
@@ -141,13 +148,12 @@ would also dim/transparent its children. */
     .paralax-section-blackBackground {
     }
 
-
     .paralax-content-section-overview {
         margin-top: 50px;
         margin-bottom: 30px;
     }
 
-    .paralax-content-section-overview-companies {
+    .paralax-content-section-overview-accredidation {
 
     }
 
@@ -161,7 +167,7 @@ would also dim/transparent its children. */
         padding-bottom: 40px;
     }
 
-    .paralax-content-section-qualityCode {
+    .paralax-content-section-qualityWork {
         margin-top: 40px;
         margin-bottom: 40px;
     }

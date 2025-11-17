@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import TechPortfolio from './index';
+import TeacherPortfolio from './index';
 
 describe('TechPortfolio Component', () => {
   test('renders main content', () => {
-    render(<TechPortfolio isTestEnv={true} />);
+    render(<TeacherPortfolio isTestEnv={true} />);
     
     // smoke test for render
-    expect(screen.getByText(/Developer of/i)).toBeInTheDocument();
+    expect(screen.getByText(/Teacher/i)).toBeInTheDocument();
   });
 });

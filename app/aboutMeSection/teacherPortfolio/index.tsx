@@ -1,0 +1,394 @@
+import { Col, Container, Row } from 'react-bootstrap';
+import ImageGallery from "react-image-gallery";
+import FooterBar from "~/infra/footerBar";
+import AnchorLink from '~/infra/anchor/AnchorLink';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
+import ROUTES from '~/consts/ROUTES';
+import './styles.css';
+import '../stylesParalax.css';
+import '../stylesPortfolio.css';
+import '../../infra/mobile-support.css'
+
+import "react-image-gallery/styles/css/image-gallery.css";
+import { useLocation } from 'react-router';
+import { useEffect } from 'react';
+import type { PortfolioProps } from '../PortfolioProps';
+
+interface ContentPerLanguage {
+  heroTitle: string;
+  heroText1prefix: string;
+  heroText1highlight: string;
+  heroText1suffix: string;
+  skills1: string;
+  skills2: string;
+  skills3: string;
+  heroText2prefix: string;
+  heroText2highlight: string;
+  heroText2suffix: string;
+  resumeLink: string;
+  resumeLinkText: string;
+  certificationTitle: string;
+  certificationText: string;
+  certificationText2: string;
+  certificationText3: string;
+  certificationLink: string;
+  certificationLinkText: string;
+  recentWorkSectionTitle: string;
+  accomplishmentsTitle: string;
+  accomplishmentsText: string;
+  highQualityToolsTitle: string;
+  highQualityToolsText: string;
+  highQualityToolsLink: string;
+  highQualityToolsLinkText: string;
+  passionSectionTitle: string;
+  passionTitle: string;
+  passionText: string;
+  aiImpovement1: string;
+  aiImpovement2: string;
+  aiImpovement3: string;
+  passionText2: string;
+  endingNote: string;
+}
+
+interface TitleLinks {
+  highQualityToolsTitleLink: string;
+  certificationTitleLink: string;
+  accomplishmentsTitleLink: string;
+  passionTitleLink: string;
+}
+
+export default function TeacherPortfolio({isTestEnv = false}: PortfolioProps) {
+  const titleLinks: TitleLinks =  {
+    highQualityToolsTitleLink: 'Making-Learning-Memories',
+    certificationTitleLink: 'TEFL-Certified',
+    accomplishmentsTitleLink: 'Most-Recent-Class',
+    passionTitleLink: 'Creating-Custom-Learning-Content',
+  }
+  
+  if(!isTestEnv) {
+    // Jumping to anchors by id will work
+    const location = useLocation()
+    useEffect(() => {
+      // Scroll to the element with the ID from the fragment identifier
+      if (location.hash) {
+        const element = document.querySelector(location.hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }
+    }, [location.hash])
+  }
+
+  const es: ContentPerLanguage = {
+    heroTitle: 'PORTAFOLIO DE PROFESOR',
+    heroText1prefix: 'Enseña ',
+    heroText1highlight: 'Inglés',
+    heroText1suffix: '. Cuenta con experiencia en clases grandes y clases particulares. Sus especialidades:',
+    skills1: 'Comunicaciones Conversacionales',
+    skills2: 'Experiencias del Aula',
+    skills3: 'Materiales Personalizadas',
+    heroText2prefix: 'Tiene una pasión por ',
+    heroText2highlight: 'Experiencias del Aula',
+    heroText2suffix: ' y una paciencia con alumnos que hace falta para crear un ambiente que no es solo desfiante, sino divertido.',
+    resumeLink: ROUTES.external.resume.profeIngles,
+    resumeLinkText: 'Haz Click acá por Curriculum Vitae',
+    certificationTitle: 'TEFL Certified',
+    certificationText: 'Con una certificación reconocida a nivel mundial, ',
+    certificationText2: 'TEFL (Teaching english as a Foreign Language) y ',
+    certificationText3: 'TESOL(Teaching English to Speakers of Other Languages).',
+    certificationLink: ROUTES.external.certification,
+    certificationLinkText: 'Haz Click acá para ver la Certificación Oficial',
+    recentWorkSectionTitle: 'QUE SEA DIVERTIDO!',
+    accomplishmentsTitle: 'Clase más Recientamente',
+    accomplishmentsText: 'En Colegio Santa Margarita, un taller de inglés (Projects in Action) estaba enseñado en el que los estudientes aumentaron de vocabulario y fluencia a traves de proyectos conmovedores.',
+    highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
+    highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, y su arte estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
+    highQualityToolsLinkText: 'Haz click acá para Acceder',
+    highQualityToolsLink: ROUTES.pokePeru.battle,
+    passionSectionTitle: 'INOVACIÓN CON IA',
+    passionTitle: 'Creando Materiales Personalizadas',
+    passionText: 'Con la tecnología moderna de Inteligencia Artificial, incluso algo tan sencilla como una ficha puede transformarse en un experiencia impactante, personalizada según la vida y gustos del alumno. IA ha mejorado las experiencias de:',
+    aiImpovement1: 'Presentaciones Educacionales',
+    aiImpovement2: 'Fichas',
+    aiImpovement3: 'Canciones por Aprendizaje',
+    passionText2: 'Materiales personalizadas animan a los estudientes. Y Estudiantes animados siguen el camino y acaban.',
+    endingNote: 'GRACIAS POR VISITAR!',
+  };
+  const defaultText: ContentPerLanguage = {
+    heroTitle: 'TEACHER PORTFOLIO',
+    heroText1prefix: 'Teaches  ',
+    heroText1highlight: 'English and Technology',
+    heroText1suffix: ' with experience in large classrooms and one-on-one private lessons. Specialized in',
+    skills1: 'Conversational Communication',
+    skills2: 'Innovative Classroom Experiences',
+    skills3: 'Personlized Material',
+    heroText2prefix: 'Passion for ',
+    heroText2highlight: 'classroom experience',
+    heroText2suffix: ' and a patience with learners that is needed to create a challenging but fun classroom experience.',
+    resumeLink: ROUTES.external.resume.teacherEnglish,
+    resumeLinkText: 'Click Here for Resume',
+    certificationTitle: 'TEFL Certified',
+    certificationText: 'Certified with the globally recognized ',
+    certificationText2: 'TEFL (Teaching english as a Foreign Language) and ',
+    certificationText3: 'TESOL(Teaching English to Speakers of Other Languages) certification.',
+    certificationLink: ROUTES.external.certification,
+    certificationLinkText: 'Click here to see Official Certficiation',
+    recentWorkSectionTitle: 'MAKING IT FUN',
+    accomplishmentsTitle: 'Most Recent Class',
+    accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
+    highQualityToolsTitle: 'Making Learning Memories',
+    highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
+    highQualityToolsLinkText: 'Click Here to access Pokemon In Peru',
+    highQualityToolsLink: ROUTES.pokePeru.battle,
+    passionSectionTitle: 'INNOVATING WITH AI',
+    passionTitle: 'Creating Custom Learning Content',
+    passionText: 'With modern Artifial Inteligence technology, even something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experiences in:',
+    aiImpovement1: 'Educational Presentations',
+    aiImpovement2: 'Worksheets',
+    aiImpovement3: 'Targeted Songs for Learning',
+    passionText2: 'Custom content keeps students engaged. And engaged students keep going and finish.',
+    endingNote: 'THANKS FOR VISITING!',
+  };
+
+  const multiLangContent: MultiLangContent = {
+    es,
+    default: defaultText
+  };
+  const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
+
+  const photoReel = [
+    {
+      original: '/images/aboutMeSection/teacherPortfolio/recentWork/learningWithMinecraft.png',
+      thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithMinecraft.png',
+    },
+    {
+      original: '/images/aboutMeSection/teacherPortfolio/recentWork/learningWithPokemon.png',
+      thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithPokemon.png',
+    },
+    {
+      original: '/images/aboutMeSection/teacherPortfolio/recentWork/learningWithComics.png',
+      thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithComics.png',
+    },
+  ];
+
+  return (
+    <div className="paralax-portfolio">
+
+      <div className="paralax-bgimg paralax-bgimg-1 paralax-bgimg-1-source">
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.heroTitle}</span>
+        </div>
+      </div>
+      <div className="paralax-bgimg-container">
+      </div>
+
+      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-overview">
+        <Container>
+          <Row>
+            <Col xs={0} md={1} >
+            </Col>
+            <Col xs={12} md={4} className="teacher-portfolio-overview-image-container mobile-view" >
+              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/aboutMeSection/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
+            </Col>
+            <Col xs={12} md={6} >
+              <div className="portfolio-overview-text">
+                <p>{content.heroText1prefix}<strong>{content.heroText1highlight}</strong>{content.heroText1suffix}</p>
+                <ul className="portfolio-bullet-list">
+                  <li>{content.skills1}</li>
+                  <li>{content.skills2}</li>
+                  <li>{content.skills3}</li>
+                </ul>
+                <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
+                <a href={content.resumeLink} >{content.resumeLinkText}</a>
+              </div>
+            </Col>
+            <Col xs={12} md={4} className="teacher-portfolio-overview-image-container desktop-view" >
+              <img className="portfolio-image portfolio-overview-image teacher-portfolio-overview-image" src="/images/aboutMeSection/teacherPortfolio/teachingWorkingFullBody.jpg" alt="Developer at work" />
+            </Col>
+            <Col xs={0} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <div className="portfolio-top-section-spacer">
+        </div>
+      </section>
+
+      <section className="paralax-section-whiteBackground paralax-content-section-overview-accredidation portfolio-text-centered-content">
+        <h2 id={titleLinks.certificationTitleLink}>{content.certificationTitle}<AnchorLink targetId={titleLinks.certificationTitleLink} /></h2>
+        <Container className="desktop-view">
+          <Row >
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="close-space-text">{content.certificationText}{content.certificationText2}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="close-space-text">{content.certificationText3}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <Container className="mobile-view">
+          <Row >
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="close-space-text">{content.certificationText}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+          <Row >
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="close-space-text">{content.certificationText2}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <p className="close-space-text">{content.certificationText3}</p>
+            </Col>
+            <Col xs={12} md={1} >
+            </Col>
+          </Row>
+        </Container>
+        <Container>
+          <Row>
+            <Col xs={12} md={4} >
+            </Col>
+            <Col xs={12} md={4} >
+              <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/teflCertification.png" alt="TEFL Certification Screenshot" />
+            </Col>
+            <Col xs={12} md={4} >
+            </Col>
+          </Row>
+        </Container>
+        <a href={content.certificationLink} >{content.certificationLinkText}</a>
+      </section>
+
+      <div className="paralax-bgimg paralax-bgimg-2 paralax-bgimg-2-source">
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.recentWorkSectionTitle}</span>
+        </div>
+      </div>
+
+      <div className="paralax-section-blackBackground">
+        <section className="paralax-paragraph paralax-content-section-efficiencyGains">
+          <Container>
+            <Row>
+              <Col xs={12} md={1} >
+              </Col>
+              <Col xs={12} md={10} >
+                <h2 id={titleLinks.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={titleLinks.accomplishmentsTitleLink} /></h2>
+                <p >{content.accomplishmentsText}</p>
+              </Col>
+              <Col xs={12} md={1} >
+              </Col>
+            </Row>
+          </Container>
+          <Container>
+            <Row>
+              <Col xs={12} md={2} >
+              </Col>
+              <Col xs={12} md={8} >
+                <ImageGallery items={photoReel}
+                  slideDuration={700}
+                  slideInterval={10000}
+                />
+              </Col>
+              <Col xs={12} md={2} >
+              </Col>
+            </Row>
+          </Container>
+        </section>
+        <section className="paralax-paragraph paralax-content-section-toolsForTheJob">
+          <Container>
+            <Row>
+              <Col xs={12} md={1} >
+              </Col>
+              <Col xs={12} md={10} >
+                <h2 id={titleLinks.highQualityToolsTitleLink} >{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={titleLinks.highQualityToolsTitleLink} /></h2>
+                <p>{content.highQualityToolsText}</p>
+              </Col>
+              <Col xs={12} md={1} >
+              </Col>
+            </Row>
+          </Container>
+          <Container>
+            <Row>
+              <Col xs={12} md={2} >
+              </Col>
+              <Col xs={12} md={8} >
+                <img className="portfolio-image" src="/images/aboutMeSection/teacherPortfolio/recentWork/pokemonInPeruMasterSlide.png" alt="Dev server tool for cloud interactions" />
+              </Col>
+              <Col xs={12} md={2} >
+              </Col>
+            </Row>
+          </Container>
+          <div className="pokeperuLink">
+            <a href={content.highQualityToolsLink} >{content.highQualityToolsLinkText}</a>
+          </div>
+        </section>
+      </div>
+
+      <div className="paralax-bgimg paralax-bgimg-3 paralax-bgimg-3-source">
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.passionSectionTitle}</span>
+        </div>
+      </div>
+
+      <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-qualityWork">
+        <Container>
+          <Row>
+            <Col xs={12} md={1} >
+            </Col>
+            <Col xs={12} md={10} >
+              <h2 id={titleLinks.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={titleLinks.passionTitleLink} /></h2>
+              <p>{content.passionText}</p>
+              <ul className="portfolio-bullet-list">
+                <li>{content.aiImpovement1}</li>
+                <li>{content.aiImpovement2}</li>
+                <li>{content.aiImpovement3}</li>
+              </ul>
+              <p className="close-space-text">{content.passionText2}</p>
+            </Col>
+          </Row>
+        </Container>
+        <section className="portfolio-content-alumni-image-section">
+          <Container>
+            <Row>
+              <Col xs={12} md={4} >
+              </Col>
+              <Col xs={12} md={4}>
+                <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/pastGraduatedStudent.png" alt="Past student that enjoyed the program" />
+                <p>Past B1 English Alumni</p>
+              </Col>
+              <Col xs={12} md={4} >
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      </section>
+
+      <div className="paralax-bgimg paralax-bgimg-4 paralax-bgimg-4-source">
+        <div className="paralax-section-title-container">
+          <span className="paralax-section-title">{content.endingNote}</span>
+        </div>
+      </div>
+
+      <FooterBar />
+    </div>
+  );
+}

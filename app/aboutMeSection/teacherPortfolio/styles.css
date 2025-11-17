@@ -1,0 +1,55 @@
+.teacher-portfolio-overview-image {
+    display: block;
+    margin: auto;
+}
+
+.close-space-text {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.pokeperuLink {
+    text-align: center;
+}
+
+.portfolio-content-alumni-image-section {
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+.paralax-bgimg-1-source {
+    background-image: url(/images/aboutMeSection/teacherPortfolio/paralax/kidsRunningToSchool.jpg);
+}
+
+.paralax-bgimg-2-source {
+    background-image: url(/images/aboutMeSection/teacherPortfolio/paralax/classroomWide.jpg);
+}
+
+.paralax-bgimg-3-source {
+    background-image: url(/images/aboutMeSection/teacherPortfolio/paralax/artificialInteligenceInLearning.png);
+}
+
+.paralax-bgimg-4-source {
+    background-image: url(/images/aboutMeSection/teacherPortfolio/paralax/kidsRunningToSchool.jpg);
+}
+
+@media (max-width: 767px) {
+    .paralax-bgimg-1-source {
+        background-image: url(/images/aboutMeSection/teacherPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
+    }
+
+    .paralax-bgimg-2-source {
+        background-image: url(/images/aboutMeSection/teacherPortfolio/paralaxMobile/classroomWide.jpg);
+    }
+
+    .paralax-bgimg-3-source {
+        background-image: url(/images/aboutMeSection/teacherPortfolio/paralaxMobile/artificialInteligenceInLearning.png);
+    }
+
+    .paralax-bgimg-4-source {
+        background-image: url(/images/aboutMeSection/teacherPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
+    }
+}
