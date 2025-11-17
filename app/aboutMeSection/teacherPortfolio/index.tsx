@@ -159,8 +159,8 @@ export default function TeacherPortfolio() {
     },
   ];
 
-   const location = useLocation()
-
+  // Jumping to anchors by id will work
+  const location = useLocation()
   useEffect(() => {
     // Scroll to the element with the ID from the fragment identifier
     if (location.hash) {
