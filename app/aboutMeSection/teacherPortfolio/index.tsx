@@ -48,6 +48,7 @@ interface ContentPerLanguage {
   aiImpovement2: string;
   aiImpovement3: string;
   passionText2: string;
+  passionText3: string;
   endingNote: string;
 }
 
@@ -81,14 +82,15 @@ export default function TeacherPortfolio() {
     highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
     highQualityToolsLinkText: 'Haz click acá para Acceder',
     highQualityToolsLink: ROUTES.pokePeru.battle,
-    passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
-    passionTitle: 'Pasión por código de alta calidad',
+    passionSectionTitle: 'INOVACIÓN CON IA',
+    passionTitle: 'Materiales personalizadas',
     passionTitleLink: '',
     passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
-    aiImpovement1: '',
-    aiImpovement2: '',
-    aiImpovement3: '',
+    aiImpovement1: 'Presentaciones Educacionales',
+    aiImpovement2: 'Fichas',
+    aiImpovement3: 'Canciones por Aprendizaje',
     passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
+    passionText3: 'Materiales personalizadas animan a los estudientes. Y Estudiantes animados siguen el camino y acaban.',
     endingNote: 'GRACIAS POR VISITAR!',
   };
 
@@ -129,6 +131,7 @@ export default function TeacherPortfolio() {
     aiImpovement2: 'Worksheets',
     aiImpovement3: 'Targeted Songs for Learning',
     passionText2: 'With each step forward in technology, there is an opportunity to enrich the learning experience.',
+    passionText3: 'Custom content keeps students engaged. And engaged students keep going and finish.',
     endingNote: 'THANKS FOR VISITING!',
   };
 
@@ -202,7 +205,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <p className="certified-text">{content.certificationText}{content.certificationText2}</p>
+              <p className="close-space-text">{content.certificationText}{content.certificationText2}</p>
             </Col>
             <Col xs={12} md={1} >
             </Col>
@@ -211,7 +214,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <p className="certified-text">{content.certificationText3}</p>
+              <p className="close-space-text">{content.certificationText3}</p>
             </Col>
             <Col xs={12} md={1} >
             </Col>
@@ -222,7 +225,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <p className="certified-text">{content.certificationText}</p>
+              <p className="close-space-text">{content.certificationText}</p>
             </Col>
             <Col xs={12} md={1} >
             </Col>
@@ -231,7 +234,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <p className="certified-text">{content.certificationText2}</p>
+              <p className="close-space-text">{content.certificationText2}</p>
             </Col>
             <Col xs={12} md={1} >
             </Col>
@@ -240,7 +243,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <p className="certified-text">{content.certificationText3}</p>
+              <p className="close-space-text">{content.certificationText3}</p>
             </Col>
             <Col xs={12} md={1} >
             </Col>
@@ -344,7 +347,8 @@ export default function TeacherPortfolio() {
                 <li>{content.aiImpovement2}</li>
                 <li>{content.aiImpovement3}</li>
               </ul>
-              <p>{content.passionText2}</p>
+              <p className="close-space-text">{content.passionText2}</p>
+              <p className="close-space-text">{content.passionText3}</p>
             </Col>
           </Row>
         </Container>
