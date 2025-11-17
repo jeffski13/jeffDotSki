@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
-import AnchorLink from '~/infra/anchor/AnchorLink';
+import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
@@ -50,27 +50,21 @@ interface TitleLinks {
   productiveTitleLink: string;
 }
 
-export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
-  
-  const titleLinks: TitleLinks =  {
+export default function TechPortfolio({ isTestEnv = false }: PortfolioProps) {
+
+  const titleLinks: TitleLinks = {
     logosTitleLink: 'Who-Ive-worked-with',
     accomplishmentsTitleLink: 'Most-Recent-Efficiency-Gains',
     highQualityToolsTitleLink: 'Creating-the-Right-Tools-for-the-Job',
     passionTitleLink: 'Creating-with-Craftsmanship',
     productiveTitleLink: 'Highly-Productive-for-High-Quality-Code',
   }
-  
-  if(!isTestEnv) {
+
+  if (!isTestEnv) {
     // Jumping to anchors by id will work
-    const location = useLocation()
+    const location = useLocation();
     useEffect(() => {
-      // Scroll to the element with the ID from the fragment identifier
-      if (location.hash) {
-        const element = document.querySelector(location.hash)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }
+      navigateToAnchor(location.hash)
     }, [location.hash])
   }
 
@@ -288,7 +282,7 @@ export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-              <Col xs={12} md={10} >
+            <Col xs={12} md={10} >
               <h2 id={titleLinks.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={titleLinks.passionTitleLink} /></h2>
               <p>{content.passionText}</p>
               <p>jeff.ski Website Code Coverage: <strong>86.09%</strong></p>
@@ -305,7 +299,7 @@ export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-              <Col xs={12} md={10} >
+            <Col xs={12} md={10} >
               <h2 id={titleLinks.productiveTitleLink}>{content.productiveTitle}<AnchorLink targetId={titleLinks.productiveTitleLink} /></h2>
               <p>{content.productiveText}</p>
             </Col>

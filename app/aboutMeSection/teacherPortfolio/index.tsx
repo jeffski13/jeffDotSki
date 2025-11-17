@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
-import AnchorLink from '~/infra/anchor/AnchorLink';
+import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
@@ -67,18 +67,9 @@ export default function TeacherPortfolio({ isTestEnv = false }: PortfolioProps) 
 
   if (!isTestEnv) {
     // Jumping to anchors by id will work
-    const location = useLocation()
+    const location = useLocation();
     useEffect(() => {
-      // Scroll to the element with the ID from the fragment identifier
-      if (location.hash) {
-        const element = document.querySelector(location.hash)
-        if (element) {
-          const timeMsForContentToLoadIn = 100;
-          setTimeout(() => {
-            element.scrollIntoView({ behavior: 'smooth' })
-          }, timeMsForContentToLoadIn);
-        }
-      }
+      navigateToAnchor(location.hash)
     }, [location.hash])
   }
 

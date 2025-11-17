@@ -14,7 +14,7 @@ export default function AnchorLink({ targetId, isDarkMode = false, animationTime
   const handleCopy = async () => {
     try {
       setCopied(true);
-      if(isWindowLocationAvailable) {
+      if (isWindowLocationAvailable) {
         const url = window.location.origin + window.location.pathname + window.location.search + `#${targetId}`;
         await navigator.clipboard.writeText(url);
       }
@@ -28,10 +28,10 @@ export default function AnchorLink({ targetId, isDarkMode = false, animationTime
     }
   };
 
-  
+
   let sourceLinkIcon = "/images/aboutMeSection/link-icon-light-mode.png";
   let sourceCopiedIcon = "/images/aboutMeSection/copied-icon-light-mode.png";
-  if(isDarkMode) {
+  if (isDarkMode) {
     sourceLinkIcon = "/images/aboutMeSection/link-icon-dark-mode.png";
     sourceCopiedIcon = "/images/aboutMeSection/copied-icon-dark-mode.png";
   }
@@ -51,4 +51,21 @@ export default function AnchorLink({ targetId, isDarkMode = false, animationTime
       )}
     </button>
   );
+}
+
+/**
+ * navigates to the indicated anchor
+ * @param locationHash string
+ */
+export const navigateToAnchor = (locationHash: string) => {
+  // Scroll to the element with the ID from the fragment identifier
+  if (locationHash) {
+    const element = document.querySelector(location.hash)
+    if (element) {
+      const timeMsForContentToLoadIn = 100;
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }, timeMsForContentToLoadIn);
+    }
+  }
 }
