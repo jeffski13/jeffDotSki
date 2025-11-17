@@ -10,7 +10,6 @@ import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useLocation } from 'react-router';
 import { useEffect } from 'react';
 import type { PortfolioProps } from '../PortfolioProps';
 
@@ -57,7 +56,7 @@ interface TitleLinks {
   passionTitleLink: string;
 }
 
-export default function TeacherPortfolio({ isTestEnv = false }: PortfolioProps) {
+export default function TeacherPortfolio({ isTestEnv = false, locationProvider }: PortfolioProps) {
   const titleLinks: TitleLinks = {
     highQualityToolsTitleLink: 'Making-Learning-Memories',
     certificationTitleLink: 'TEFL-Certified',
@@ -65,13 +64,11 @@ export default function TeacherPortfolio({ isTestEnv = false }: PortfolioProps) 
     passionTitleLink: 'Creating-Custom-Learning-Content',
   }
 
-  if (!isTestEnv) {
-    // Jumping to anchors by id will work
-    const location = useLocation();
-    useEffect(() => {
-      navigateToAnchor(location.hash)
-    }, [location.hash])
-  }
+  // Jumping to anchors by id will work
+  const location = locationProvider.useLocation();
+  useEffect(() => {
+    navigateToAnchor(location?.hash, isTestEnv)
+  }, [location?.hash])
 
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO DE PROFESOR',

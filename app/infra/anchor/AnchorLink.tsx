@@ -57,15 +57,17 @@ export default function AnchorLink({ targetId, isDarkMode = false, animationTime
  * navigates to the indicated anchor
  * @param locationHash string
  */
-export const navigateToAnchor = (locationHash: string) => {
-  // Scroll to the element with the ID from the fragment identifier
-  if (locationHash) {
-    const element = document.querySelector(location.hash)
-    if (element) {
-      const timeMsForContentToLoadIn = 100;
-      setTimeout(() => {
-        element.scrollIntoView({ behavior: 'smooth' })
-      }, timeMsForContentToLoadIn);
+export const navigateToAnchor = (locationHash: string | undefined, isTestEnv: boolean) => {
+  if(!isTestEnv) {
+    // Scroll to the element with the ID from the fragment identifier
+    if (locationHash) {
+      const element = document.querySelector(location.hash)
+      if (element) {
+        const timeMsForContentToLoadIn = 100;
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }, timeMsForContentToLoadIn);
+      }
     }
   }
 }

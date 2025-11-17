@@ -10,7 +10,6 @@ import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useLocation } from 'react-router';
 import { useEffect } from 'react';
 import type { PortfolioProps } from '../PortfolioProps';
 
@@ -50,7 +49,7 @@ interface TitleLinks {
   productiveTitleLink: string;
 }
 
-export default function TechPortfolio({ isTestEnv = false }: PortfolioProps) {
+export default function TechPortfolio({ isTestEnv = false, locationProvider }: PortfolioProps) {
 
   const titleLinks: TitleLinks = {
     logosTitleLink: 'Who-Ive-worked-with',
@@ -60,13 +59,11 @@ export default function TechPortfolio({ isTestEnv = false }: PortfolioProps) {
     productiveTitleLink: 'Highly-Productive-for-High-Quality-Code',
   }
 
-  if (!isTestEnv) {
-    // Jumping to anchors by id will work
-    const location = useLocation();
-    useEffect(() => {
-      navigateToAnchor(location.hash)
-    }, [location.hash])
-  }
+  // Jumping to anchors by id will work
+  const location = locationProvider.useLocation();
+  useEffect(() => {
+    navigateToAnchor(location?.hash, isTestEnv)
+  }, [location?.hash])
 
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO TECNOLÓGICO',
@@ -94,7 +91,8 @@ export default function TechPortfolio({ isTestEnv = false }: PortfolioProps) {
     productiveTitle: 'Productividad para alcanzar Calidad',
     productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
     endingNote: 'GRACIAS POR VISITAR!',
-  }
+  };
+
   const defaultText: ContentPerLanguage = {
     heroTitle: 'TECH PORTFOLIO',
     heroText1prefix: 'Developer of ',
@@ -121,7 +119,7 @@ export default function TechPortfolio({ isTestEnv = false }: PortfolioProps) {
     productiveTitle: 'Highly Productive for High Quality Code',
     productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
     endingNote: 'THANKS FOR VISITING!',
-  }
+  };
 
   const multiLangContent: MultiLangContent = {
     es,

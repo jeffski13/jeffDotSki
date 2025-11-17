@@ -1,6 +1,7 @@
 import type { Route } from "./+types/home";
 import JeffSkiPageWithContent from "../../infra/JeffSkiPageWithContent"
 import TechPortfolio from ".";
+import { locationProviderImpl } from "../PortfolioProps";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -11,5 +12,5 @@ export function meta({ }: Route.MetaArgs) {
 
 const Content = JeffSkiPageWithContent(TechPortfolio);
 export default function AboutMeTechPortfolio() {
-  return <Content />;
+  return (<Content locationProvider={locationProviderImpl}   />);
 }
