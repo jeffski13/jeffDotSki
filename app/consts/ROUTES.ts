@@ -4,7 +4,7 @@ const ROUTES = {
       drawing: '/aboutme/hobbies/drawing',
       tvShows: '/aboutme/hobbies/tvShows',
       techPortfolio: '/aboutme/techPortfolio',
-      teacherPortfolio: '/aboutme/teacherPortfolio'
+      teacherPortfolio: '/aboutme/teacherPortfolio',
     },
     pokePeru: {
       battle: '/pokeperu/battle',
