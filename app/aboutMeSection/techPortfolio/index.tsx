@@ -172,7 +172,7 @@ export default function TechPortfolio({ isTestEnv = false, locationProvider }: P
             <Col xs={0} md={1} >
             </Col>
             <Col xs={12} md={4} >
-              <img className="portfolio-overview-image" src="/images/aboutMeSection/techPortfolio/developerWorkingImage.png" alt="Developer at work" />
+              <img className="portfolio-overview-image portfolio-image" src="/images/aboutMeSection/techPortfolio/developerWorkingImage.jpg" alt="Developer at work" />
             </Col>
             <Col xs={12} md={6} >
               <div className="portfolio-overview-text">
