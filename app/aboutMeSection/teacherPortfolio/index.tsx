@@ -86,7 +86,7 @@ export default function TeacherPortfolio() {
     skills2: 'Experiencias del Aula',
     skills3: 'Materiales Personalizadas',
     heroText2prefix: 'Tiene una pasión por ',
-    heroText2highlight: 'Experiences del Aula',
+    heroText2highlight: 'Experiencias del Aula',
     heroText2suffix: ' y una paciencia con alumnos que hace falta para crear un ambiente que no es solo desfiante, sino divertido.',
     resumeLink: ROUTES.external.resume.profeIngles,
     resumeLinkText: 'Haz Click acá por Curriculum Vitae',
