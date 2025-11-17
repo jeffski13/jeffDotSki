@@ -1,3 +1,22 @@
-export interface PortfolioProps {
-    isTestEnv?: boolean;
+import { useLocation } from "react-router";
+
+export interface LocationProvider {
+  useLocation: () => Location | undefined;
 }
+
+export interface PortfolioProps {
+  isTestEnv?: boolean;
+  locationProvider: LocationProvider;
+}
+
+export const locationProviderImpl: LocationProvider = {
+  useLocation: function (): Location {
+    return useLocation();
+  }
+}
+
+export const locationProviderMock: LocationProvider = {
+  useLocation: function (): Location | undefined {
+    return undefined;
+  }
+};

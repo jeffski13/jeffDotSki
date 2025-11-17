@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
-import AnchorLink from '~/infra/anchor/AnchorLink';
+import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
@@ -10,7 +10,6 @@ import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useLocation } from 'react-router';
 import { useEffect } from 'react';
 import type { PortfolioProps } from '../PortfolioProps';
 
@@ -57,27 +56,19 @@ interface TitleLinks {
   passionTitleLink: string;
 }
 
-export default function TeacherPortfolio({isTestEnv = false}: PortfolioProps) {
-  const titleLinks: TitleLinks =  {
+export default function TeacherPortfolio({ isTestEnv = false, locationProvider }: PortfolioProps) {
+  const titleLinks: TitleLinks = {
     highQualityToolsTitleLink: 'Making-Learning-Memories',
     certificationTitleLink: 'TEFL-Certified',
     accomplishmentsTitleLink: 'Most-Recent-Class',
     passionTitleLink: 'Creating-Custom-Learning-Content',
   }
-  
-  if(!isTestEnv) {
-    // Jumping to anchors by id will work
-    const location = useLocation()
-    useEffect(() => {
-      // Scroll to the element with the ID from the fragment identifier
-      if (location.hash) {
-        const element = document.querySelector(location.hash)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }
-    }, [location.hash])
-  }
+
+  // Jumping to anchors by id will work
+  const location = locationProvider.useLocation();
+  useEffect(() => {
+    navigateToAnchor(location?.hash, isTestEnv)
+  }, [location?.hash])
 
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO DE PROFESOR',

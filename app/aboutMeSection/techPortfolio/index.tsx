@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
-import AnchorLink from '~/infra/anchor/AnchorLink';
+import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
@@ -10,7 +10,6 @@ import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
-import { useLocation } from 'react-router';
 import { useEffect } from 'react';
 import type { PortfolioProps } from '../PortfolioProps';
 
@@ -50,29 +49,21 @@ interface TitleLinks {
   productiveTitleLink: string;
 }
 
-export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
-  
-  const titleLinks: TitleLinks =  {
+export default function TechPortfolio({ isTestEnv = false, locationProvider }: PortfolioProps) {
+
+  const titleLinks: TitleLinks = {
     logosTitleLink: 'Who-Ive-worked-with',
     accomplishmentsTitleLink: 'Most-Recent-Efficiency-Gains',
     highQualityToolsTitleLink: 'Creating-the-Right-Tools-for-the-Job',
     passionTitleLink: 'Creating-with-Craftsmanship',
     productiveTitleLink: 'Highly-Productive-for-High-Quality-Code',
   }
-  
-  if(!isTestEnv) {
-    // Jumping to anchors by id will work
-    const location = useLocation()
-    useEffect(() => {
-      // Scroll to the element with the ID from the fragment identifier
-      if (location.hash) {
-        const element = document.querySelector(location.hash)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }
-    }, [location.hash])
-  }
+
+  // Jumping to anchors by id will work
+  const location = locationProvider.useLocation();
+  useEffect(() => {
+    navigateToAnchor(location?.hash, isTestEnv)
+  }, [location?.hash])
 
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO TECNOLÓGICO',
@@ -100,7 +91,8 @@ export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
     productiveTitle: 'Productividad para alcanzar Calidad',
     productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
     endingNote: 'GRACIAS POR VISITAR!',
-  }
+  };
+
   const defaultText: ContentPerLanguage = {
     heroTitle: 'TECH PORTFOLIO',
     heroText1prefix: 'Developer of ',
@@ -127,7 +119,7 @@ export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
     productiveTitle: 'Highly Productive for High Quality Code',
     productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
     endingNote: 'THANKS FOR VISITING!',
-  }
+  };
 
   const multiLangContent: MultiLangContent = {
     es,
@@ -288,7 +280,7 @@ export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-              <Col xs={12} md={10} >
+            <Col xs={12} md={10} >
               <h2 id={titleLinks.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={titleLinks.passionTitleLink} /></h2>
               <p>{content.passionText}</p>
               <p>jeff.ski Website Code Coverage: <strong>86.09%</strong></p>
@@ -305,7 +297,7 @@ export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
           <Row>
             <Col xs={12} md={1} >
             </Col>
-              <Col xs={12} md={10} >
+            <Col xs={12} md={10} >
               <h2 id={titleLinks.productiveTitleLink}>{content.productiveTitle}<AnchorLink targetId={titleLinks.productiveTitleLink} /></h2>
               <p>{content.productiveText}</p>
             </Col>
