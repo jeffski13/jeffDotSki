@@ -64,6 +64,18 @@ export default function TeacherPortfolio() {
     accomplishmentsTitleLink: 'Most-Recent-Class',
     passionTitleLink: 'Creating-Custom-Learning-Content',
   }
+  
+  // Jumping to anchors by id will work
+  const location = useLocation()
+  useEffect(() => {
+    // Scroll to the element with the ID from the fragment identifier
+    if (location.hash) {
+      const element = document.querySelector(location.hash)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }, [location.hash])
 
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO DE PROFESOR',
@@ -158,18 +170,6 @@ export default function TeacherPortfolio() {
       thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithComics.png',
     },
   ];
-
-  // Jumping to anchors by id will work
-  const location = useLocation()
-  useEffect(() => {
-    // Scroll to the element with the ID from the fragment identifier
-    if (location.hash) {
-      const element = document.querySelector(location.hash)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-      }
-    }
-  }, [location.hash])
 
   return (
     <div className="paralax-portfolio">

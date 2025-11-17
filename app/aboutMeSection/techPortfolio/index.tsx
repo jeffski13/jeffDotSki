@@ -10,6 +10,8 @@ import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
+import { useLocation } from 'react-router';
+import { useEffect } from 'react';
 
 interface ContentPerLanguage {
   heroTitle: string;
@@ -23,28 +25,52 @@ interface ContentPerLanguage {
   heroText2highlight: string;
   heroText2suffix: string;
   logosTitle: string;
-  logosTitleLink: string;
   resumeLink: string;
   resumeLinkText: string;
   recentWorkSectionTitle: string;
   accomplishmentsTitle: string;
-  accomplishmentsTitleLink: string;
   accomplishmentsText: string;
   highQualityToolsTitle: string;
-  highQualityToolsTitleLink: string;
   highQualityToolsText: string;
   passionSectionTitle: string;
   passionTitle: string;
-  passionTitleLink: string;
   passionText: string;
   passionText2: string;
   productiveTitle: string;
-  productiveTitleLink: string;
   productiveText: string;
   endingNote: string;
 }
 
+interface TitleLinks {
+  logosTitleLink: string;
+  accomplishmentsTitleLink: string;
+  highQualityToolsTitleLink: string;
+  passionTitleLink: string;
+  productiveTitleLink: string;
+}
+
 export default function TechPortfolio() {
+  
+  const titleLinks: TitleLinks =  {
+    logosTitleLink: 'Who-Ive-worked-with',
+    accomplishmentsTitleLink: 'Most-Recent-Efficiency-Gains',
+    highQualityToolsTitleLink: 'Creating-the-Right-Tools-for-the-Job',
+    passionTitleLink: 'Creating-with-Craftsmanship',
+    productiveTitleLink: 'Highly-Productive-for-High-Quality-Code',
+  }
+  
+  // Jumping to anchors by id will work
+  const location = useLocation()
+  useEffect(() => {
+    // Scroll to the element with the ID from the fragment identifier
+    if (location.hash) {
+      const element = document.querySelector(location.hash)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }, [location.hash])
+
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO TECNOLÓGICO',
     heroText1prefix: 'Desarrollador de ',
@@ -57,23 +83,18 @@ export default function TechPortfolio() {
     heroText2highlight: 'productividad',
     heroText2suffix: ' y cumpliendo con las necesidades del negocio. Competente en sus habilidades técnicas y siempre trasladando cosas a la derecha al explicar, en palabras accesibles, los desafios técnicos para que el negocio pueda tomar una decisión informada y correcta.',
     logosTitle: 'Empresas con las que he Trabajado',
-    logosTitleLink: 'Empresas-con-las-que-he-Trabajado',
     resumeLink: ROUTES.external.resume.ingenieroDeSoftware,
     resumeLinkText: 'Haz Click acá por Curriculum Vitae',
     recentWorkSectionTitle: ' HABILITANDO LA EMPRESA',
     accomplishmentsTitle: 'Logros de Eficiencia más Recientamente',
-    accomplishmentsTitleLink: 'Logros-de-Eficiencia-mas-Recientamente',
     accomplishmentsText: 'En Tandem Diabetes Care, reescribí y transformé las capas de bluetooth y networking de la app Android. Implementé mocks del enlace del pump de insulina al app Android y simulé la capa de networking para pruebas y demos.',
     highQualityToolsTitle: 'La Herramienta que Corresponde a la Obra',
-    highQualityToolsTitleLink: 'La-Herramienta-que-Corresponde-a-la-Obra',
     highQualityToolsText: 'Ambientes de desarrollo fachades crearon control de las respuestas de la nuba a la aplicación, así como la verificación de los datos enviados a la nube.',
     passionTitle: 'Pasión por código de alta calidad',
-    passionTitleLink: 'Pasion-por-codigo-de-alta-calidad',
     passionText: 'Transformé una base de código añadiendo una suite de pruebas unitarias con alta cobertura; este sitio tiene actualmente una cobertura de código del 82%.',
     passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
     passionSectionTitle: 'CÓDIGO DE ALTA CALIDAD',
     productiveTitle: 'Productividad para alcanzar Calidad',
-    productiveTitleLink: 'Productividad-para-alcanzar-Calidad',
     productiveText: 'Software de alta calidad requiere mucho café y mucho trabajo. Como el miembro del equipo más activo en Github, la frecuencia de commits destacan la dedicación y perseverancia mostrado en la oficina.',
     endingNote: 'GRACIAS POR VISITAR!',
   }
@@ -89,23 +110,18 @@ export default function TechPortfolio() {
     heroText2highlight: 'productivity',
     heroText2suffix: ' and meeting business needs. Technically capable of moving tasks to the right while able to explain in accessible terms the technical challenges and trade-offs so the business can make the smartest decision.',
     logosTitle: 'Who I\'ve worked with',
-    logosTitleLink: 'Who-Ive-worked-with',
     resumeLink: ROUTES.external.resume.softwareEngineer,
     resumeLinkText: 'Click Here for Resume',
     recentWorkSectionTitle: 'ENABLING BUSINESS',
     accomplishmentsTitle: 'Most Recent Efficiency Gains',
-    accomplishmentsTitleLink: 'Most-Recent-Efficiency-Gains',
     accomplishmentsText: 'While at Tandem Diabetes Care, the Bluetooth and networking layers of the Android app were transformed. What once required expensive hardware was virtualized, which allowed for contractors to work inside of the app.',
     highQualityToolsTitle: 'Creating the Right Tools for the Job',
-    highQualityToolsTitleLink: 'Creating-the-Right-Tools-for-the-Job',
     highQualityToolsText: 'Facade dev environments allowed control of the responses from the cloud to the app, as well as verification of the data uploaded to the cloud.',
     passionSectionTitle: 'QUALITY CODE',
     passionTitle: 'Creating with Craftsmanship',
-    passionTitleLink: 'Creating-with-Craftsmanship',
     passionText: 'A high-coverage unit test suite transformed past software projects from unstable to fun. This web site you are viewing has a code coverage of 82%.',
     passionText2: 'From green field projects all the way to legacy monoliths, unit tests are the code that keeps the code in a state of high quality. A special thank you is deserved for the mentors that understood the importance of unit tests and had the skills to teach a young developer how to make quality code.',
     productiveTitle: 'Highly Productive for High Quality Code',
-    productiveTitleLink: 'Highly-Productive-for-High-Quality-Code',
     productiveText: 'High quality software takes a lot of coffee and a lot of work. As the most active team member on Github, the commit frequency speaks to the daily dedication and persistence demonstrated in the work place.',
     endingNote: 'THANKS FOR VISITING!',
   }
@@ -183,7 +199,7 @@ export default function TechPortfolio() {
       </section>
 
       <section className="paralax-section-whiteBackground paralax-content-section-overview-accredidation portfolio-text-centered-content">
-        <h2 id={content.logosTitleLink}>{content.logosTitle}<AnchorLink targetId={content.logosTitleLink} /></h2>
+        <h2 id={titleLinks.logosTitleLink}>{content.logosTitle}<AnchorLink targetId={titleLinks.logosTitleLink} /></h2>
         <Container>
           <Row>
             {companies.map(c => (
@@ -209,7 +225,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={content.accomplishmentsTitleLink} /></h2>
+                <h2 id={titleLinks.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={titleLinks.accomplishmentsTitleLink} /></h2>
                 <p >{content.accomplishmentsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -237,7 +253,7 @@ export default function TechPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={content.highQualityToolsTitleLink} /></h2>
+                <h2 id={titleLinks.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={titleLinks.highQualityToolsTitleLink} /></h2>
                 <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -270,7 +286,7 @@ export default function TechPortfolio() {
             <Col xs={12} md={1} >
             </Col>
               <Col xs={12} md={10} >
-              <h2 id={content.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={content.passionTitleLink} /></h2>
+              <h2 id={titleLinks.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={titleLinks.passionTitleLink} /></h2>
               <p>{content.passionText}</p>
               <p>jeff.ski Website Code Coverage: <strong>86.09%</strong></p>
               <p>Tandem Dev Server Tool: <strong>82.41%</strong></p>
@@ -287,7 +303,7 @@ export default function TechPortfolio() {
             <Col xs={12} md={1} >
             </Col>
               <Col xs={12} md={10} >
-              <h2 id={content.productiveTitleLink}>{content.productiveTitle}<AnchorLink targetId={content.productiveTitleLink} /></h2>
+              <h2 id={titleLinks.productiveTitleLink}>{content.productiveTitle}<AnchorLink targetId={titleLinks.productiveTitleLink} /></h2>
               <p>{content.productiveText}</p>
             </Col>
             <Col xs={12} md={1} >
