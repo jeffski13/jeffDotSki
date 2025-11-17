@@ -46,7 +46,6 @@ interface ContentPerLanguage {
   aiImpovement2: string;
   aiImpovement3: string;
   passionText2: string;
-  passionText3: string;
   endingNote: string;
 }
 
@@ -98,9 +97,9 @@ export default function TeacherPortfolio() {
     certificationLinkText: 'Haz Click acá para ver la Certificación Oficial',
     recentWorkSectionTitle: 'QUE SEA DIVERTIDO!',
     accomplishmentsTitle: 'Clase más Recientamente',
-    accomplishmentsText: 'En Colegio Santa Margarita, enseñe un taller de inglés (Projects in Action) en el que los estudientes aumentaron de vocabulario y fluencia a traves de proyectos conmovedores.',
+    accomplishmentsText: 'En Colegio Santa Margarita, un taller de inglés (Projects in Action) estaba enseñado en el que los estudientes aumentaron de vocabulario y fluencia a traves de proyectos conmovedores.',
     highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
-    highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
+    highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, y su arte estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
     highQualityToolsLinkText: 'Haz click acá para Acceder',
     highQualityToolsLink: ROUTES.pokePeru.battle,
     passionSectionTitle: 'INOVACIÓN CON IA',
@@ -109,8 +108,7 @@ export default function TeacherPortfolio() {
     aiImpovement1: 'Presentaciones Educacionales',
     aiImpovement2: 'Fichas',
     aiImpovement3: 'Canciones por Aprendizaje',
-    passionText2: 'De un proyecto nuevo hasta un monolito antiguo, pruebas unitarias son el código que mantiene el código en un estado de calidad alta. En particular, un agradecimiento especial es merecido para los mentores que entendían la importancia de pruebas unitarias y tenían las habilidades necesarias para enseñar a un programador joven como se hace código de alta calidad.',
-    passionText3: 'Materiales personalizadas animan a los estudientes. Y Estudiantes animados siguen el camino y acaban.',
+    passionText2: 'Materiales personalizadas animan a los estudientes. Y Estudiantes animados siguen el camino y acaban.',
     endingNote: 'GRACIAS POR VISITAR!',
   };
   const defaultText: ContentPerLanguage = {
@@ -145,8 +143,7 @@ export default function TeacherPortfolio() {
     aiImpovement1: 'Educational Presentations',
     aiImpovement2: 'Worksheets',
     aiImpovement3: 'Targeted Songs for Learning',
-    passionText2: 'With each step forward in technology, there is an opportunity to enrich the learning experience.',
-    passionText3: 'Custom content keeps students engaged. And engaged students keep going and finish.',
+    passionText2: 'Custom content keeps students engaged. And engaged students keep going and finish.',
     endingNote: 'THANKS FOR VISITING!',
   };
 
@@ -363,7 +360,6 @@ export default function TeacherPortfolio() {
                 <li>{content.aiImpovement3}</li>
               </ul>
               <p className="close-space-text">{content.passionText2}</p>
-              <p className="close-space-text">{content.passionText3}</p>
             </Col>
           </Row>
         </Container>
