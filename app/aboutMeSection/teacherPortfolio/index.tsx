@@ -57,15 +57,15 @@ interface TitleLinks {
   passionTitleLink: string;
 }
 
-export default function TeacherPortfolio({isTestEnv = false}: PortfolioProps) {
-  const titleLinks: TitleLinks =  {
+export default function TeacherPortfolio({ isTestEnv = false }: PortfolioProps) {
+  const titleLinks: TitleLinks = {
     highQualityToolsTitleLink: 'Making-Learning-Memories',
     certificationTitleLink: 'TEFL-Certified',
     accomplishmentsTitleLink: 'Most-Recent-Class',
     passionTitleLink: 'Creating-Custom-Learning-Content',
   }
-  
-  if(!isTestEnv) {
+
+  if (!isTestEnv) {
     // Jumping to anchors by id will work
     const location = useLocation()
     useEffect(() => {
@@ -73,7 +73,10 @@ export default function TeacherPortfolio({isTestEnv = false}: PortfolioProps) {
       if (location.hash) {
         const element = document.querySelector(location.hash)
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
+          const timeMsForContentToLoadIn = 100;
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' })
+          }, timeMsForContentToLoadIn);
         }
       }
     }, [location.hash])
