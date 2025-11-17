@@ -20,7 +20,7 @@ describe('AnchorLink', () => {
     expect(img).toBeInTheDocument();
   });
 
-  it.only('icon changes back after', async () => {
+  it('icon changes back after', async () => {
     render(<AnchorLink animationTime={10} targetId='' isWindowLocationAvailable={false} />);
     const button = screen.getByRole('button', { name: /Copy link/i });
     fireEvent.click(button);
