@@ -3,7 +3,7 @@ import TechPortfolio from './index';
 
 describe('TechPortfolio Component', () => {
   test('renders main content', () => {
-    render(<TechPortfolio />);
+    render(<TechPortfolio isTestEnv={true} />);
     
     // smoke test for render
     expect(screen.getByText(/Developer of/i)).toBeInTheDocument();

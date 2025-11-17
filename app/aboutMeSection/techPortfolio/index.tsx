@@ -12,6 +12,7 @@ import '../../infra/mobile-support.css'
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useLocation } from 'react-router';
 import { useEffect } from 'react';
+import type { PortfolioProps } from '../PortfolioProps';
 
 interface ContentPerLanguage {
   heroTitle: string;
@@ -49,7 +50,7 @@ interface TitleLinks {
   productiveTitleLink: string;
 }
 
-export default function TechPortfolio() {
+export default function TechPortfolio({isTestEnv = false}: PortfolioProps) {
   
   const titleLinks: TitleLinks =  {
     logosTitleLink: 'Who-Ive-worked-with',
@@ -59,17 +60,19 @@ export default function TechPortfolio() {
     productiveTitleLink: 'Highly-Productive-for-High-Quality-Code',
   }
   
-  // Jumping to anchors by id will work
-  const location = useLocation()
-  useEffect(() => {
-    // Scroll to the element with the ID from the fragment identifier
-    if (location.hash) {
-      const element = document.querySelector(location.hash)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+  if(!isTestEnv) {
+    // Jumping to anchors by id will work
+    const location = useLocation()
+    useEffect(() => {
+      // Scroll to the element with the ID from the fragment identifier
+      if (location.hash) {
+        const element = document.querySelector(location.hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
       }
-    }
-  }, [location.hash])
+    }, [location.hash])
+  }
 
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO TECNOLÓGICO',
