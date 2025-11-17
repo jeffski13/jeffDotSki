@@ -26,8 +26,8 @@ const ROUTES = {
     external: {
       instagram: 'https://www.instagram.com/jeffski13/',
       resume: {
-        teacherEnglish: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TeacherEnglish_2025_11_14.pdf',
-        profeIngles: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_ProfeIngles_2025_11_14_ES.pdf',
+        teacherEnglish: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TeacherEnglish_2025_11_17.pdf',
+        profeIngles: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_ProfeIngles_2025_11_17_ES.pdf',
         softwareEngineer: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume_2025_10_20_1PAGE.pdf',
         ingenieroDeSoftware: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume_2025_10_20_1PAGE_ES.pdf',
       }
