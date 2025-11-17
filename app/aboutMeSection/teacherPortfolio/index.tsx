@@ -266,12 +266,12 @@ export default function TeacherPortfolio() {
         </Container>
         <Container>
           <Row>
-            <Col xs={12} md={3} >
+            <Col xs={12} md={4} >
             </Col>
-            <Col xs={12} md={6} >
+            <Col xs={12} md={4} >
               <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/teflCertification.png" alt="TEFL Certification Screenshot" />
             </Col>
-            <Col xs={12} md={3} >
+            <Col xs={12} md={4} >
             </Col>
           </Row>
         </Container>
