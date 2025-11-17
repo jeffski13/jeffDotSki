@@ -12,6 +12,14 @@
     text-align: center;
 }
 
+.portfolio-content-alumni-image-section {
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
 .paralax-bgimg-1-source {
     background-image: url(/images/aboutMeSection/teacherPortfolio/paralax/kidsRunningToSchool.jpg);
 }
@@ -42,6 +50,6 @@
     }
 
     .paralax-bgimg-4-source {
-        background-image: url(/images/aboutMeSection/techPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
+        background-image: url(/images/aboutMeSection/teacherPortfolio/paralaxMobile/kidsRunningToSchool.jpg);
     }
 }

@@ -347,17 +347,21 @@ export default function TeacherPortfolio() {
               <p>{content.passionText2}</p>
             </Col>
           </Row>
-          <Row>
-            <Col xs={12} md={3} >
-            </Col>
-            <Col xs={12} md={6} className="portfolio-text-centered-content">
-              <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/pastGraduatedStudent.png" alt="Past student that enjoyed the program" />
-              <p>Past B1 English Alumni</p>
-            </Col>
-            <Col xs={12} md={3} >
-            </Col>
-          </Row>
         </Container>
+        <section className="portfolio-content-alumni-image-section">
+          <Container>
+            <Row>
+              <Col xs={12} md={4} >
+              </Col>
+              <Col xs={12} md={4}>
+                <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/pastGraduatedStudent.png" alt="Past student that enjoyed the program" />
+                <p>Past B1 English Alumni</p>
+              </Col>
+              <Col xs={12} md={4} >
+              </Col>
+            </Row>
+          </Container>
+        </section>
       </section>
 
       <div className="paralax-bgimg paralax-bgimg-4 paralax-bgimg-4-source">
