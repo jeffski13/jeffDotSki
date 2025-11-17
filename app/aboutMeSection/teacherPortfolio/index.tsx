@@ -10,6 +10,8 @@ import '../stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
+import { useLocation } from 'react-router';
+import { useEffect } from 'react';
 
 interface ContentPerLanguage {
   heroTitle: string;
@@ -24,7 +26,6 @@ interface ContentPerLanguage {
   heroText2suffix: string;
   resumeLink: string;
   resumeLinkText: string;
-  certificationTitleLink: string;
   certificationTitle: string;
   certificationText: string;
   certificationText2: string;
@@ -33,16 +34,13 @@ interface ContentPerLanguage {
   certificationLinkText: string;
   recentWorkSectionTitle: string;
   accomplishmentsTitle: string;
-  accomplishmentsTitleLink: string;
   accomplishmentsText: string;
   highQualityToolsTitle: string;
-  highQualityToolsTitleLink: string;
   highQualityToolsText: string;
   highQualityToolsLink: string;
   highQualityToolsLinkText: string;
   passionSectionTitle: string;
   passionTitle: string;
-  passionTitleLink: string;
   passionText: string;
   aiImpovement1: string;
   aiImpovement2: string;
@@ -52,7 +50,21 @@ interface ContentPerLanguage {
   endingNote: string;
 }
 
+interface TitleLinks {
+  highQualityToolsTitleLink: string;
+  certificationTitleLink: string;
+  accomplishmentsTitleLink: string;
+  passionTitleLink: string;
+}
+
 export default function TeacherPortfolio() {
+  const titleLinks: TitleLinks =  {
+    highQualityToolsTitleLink: 'Making-Learning-Memories',
+    certificationTitleLink: 'TEFL-Certified',
+    accomplishmentsTitleLink: 'Most-Recent-Class',
+    passionTitleLink: 'Creating-Custom-Learning-Content',
+  }
+
   const es: ContentPerLanguage = {
     heroTitle: 'PORTAFOLIO DE PROFESOR',
     heroText1prefix: 'Enseña ',
@@ -66,7 +78,6 @@ export default function TeacherPortfolio() {
     heroText2suffix: ' y una paciencia con alumnos que hace falta para crear un ambiente que no es solo desfiante, sino divertido.',
     resumeLink: ROUTES.external.resume.profeIngles,
     resumeLinkText: 'Haz Click acá por Curriculum Vitae',
-    certificationTitleLink: 'TEFL-Certified',
     certificationTitle: 'TEFL Certified',
     certificationText: 'Con una certificación reconocida a nivel mundial, ',
     certificationText2: 'TEFL (Teaching english as a Foreign Language) y ',
@@ -75,16 +86,13 @@ export default function TeacherPortfolio() {
     certificationLinkText: 'Haz Click acá para ver la Certificación Oficial',
     recentWorkSectionTitle: 'QUE SEA DIVERTIDO!',
     accomplishmentsTitle: 'Clase más Recientamente',
-    accomplishmentsTitleLink: 'Clase-mas-Recientamente',
     accomplishmentsText: 'En Colegio Santa Margarita, enseñe un taller de inglés (Projects in Action) en el que los estudientes aumentaron de vocabulario y fluencia a traves de proyectos conmovedores.',
     highQualityToolsTitle: 'Creando Memorias de Aprendizaje',
-    highQualityToolsTitleLink: 'Creando-Memorias-de-Aprendizaje',
     highQualityToolsText: 'Los estudientes colaboraron juntos, creando arte original de monstruos, lo que estaba mostrado en una manera elegante. Los estudiantes crearon monstruos, un líderde gimnasio, y entradas científicas con información sobre sus obras.',
     highQualityToolsLinkText: 'Haz click acá para Acceder',
     highQualityToolsLink: ROUTES.pokePeru.battle,
     passionSectionTitle: 'INOVACIÓN CON IA',
     passionTitle: 'Creando Materiales Personalizadas',
-    passionTitleLink: 'Creando-Materiales-Personalizadas',
     passionText: 'Con la tecnología moderna de Inteligencia Artificial, incluso algo tan sencilla como una ficha puede transformarse en un experiencia impactante, personalizada según la vida y gustos del alumno. IA ha mejorado las experiencias de:',
     aiImpovement1: 'Presentaciones Educacionales',
     aiImpovement2: 'Fichas',
@@ -106,7 +114,6 @@ export default function TeacherPortfolio() {
     heroText2suffix: ' and a patience with learners that is needed to create a challenging but fun classroom experience.',
     resumeLink: ROUTES.external.resume.teacherEnglish,
     resumeLinkText: 'Click Here for Resume',
-    certificationTitleLink: 'TEFL-Certified',
     certificationTitle: 'TEFL Certified',
     certificationText: 'Certified with the globally recognized ',
     certificationText2: 'TEFL (Teaching english as a Foreign Language) and ',
@@ -115,16 +122,13 @@ export default function TeacherPortfolio() {
     certificationLinkText: 'Click here to see Official Certficiation',
     recentWorkSectionTitle: 'MAKING IT FUN',
     accomplishmentsTitle: 'Most Recent Class',
-    accomplishmentsTitleLink: 'Most-Recent-Class',
     accomplishmentsText: 'While at Colegio Santa Margarita, I taught an English workshop in which the students expanded vocabulary and fluency with engaging projects.',
     highQualityToolsTitle: 'Making Learning Memories',
-    highQualityToolsTitleLink: 'Making-Learning-Memories',
     highQualityToolsText: 'Students worked together, creating original monster artwork which was displayed in a beautiful format. Students created monsters, gym leaders, and pokedex entries.',
-    highQualityToolsLink: ROUTES.pokePeru.battle,
     highQualityToolsLinkText: 'Click Here to access Pokemon In Peru',
+    highQualityToolsLink: ROUTES.pokePeru.battle,
     passionSectionTitle: 'INNOVATING WITH AI',
     passionTitle: 'Creating Custom Learning Content',
-    passionTitleLink: 'Creating-Custom-Learning-Content',
     passionText: 'With modern Artifial Inteligence technology, even something as simple as a worksheet can be transformed into an impactful learning experience, customized to the life and interests of the student. AI has improved the experiences in:',
     aiImpovement1: 'Educational Presentations',
     aiImpovement2: 'Worksheets',
@@ -154,6 +158,18 @@ export default function TeacherPortfolio() {
       thumbnail: '/images/aboutMeSection/teacherPortfolio/recentWork/thumbnails/learningWithComics.png',
     },
   ];
+
+   const location = useLocation()
+
+  useEffect(() => {
+    // Scroll to the element with the ID from the fragment identifier
+    if (location.hash) {
+      const element = document.querySelector(location.hash)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }, [location.hash])
 
   return (
     <div className="paralax-portfolio">
@@ -198,7 +214,7 @@ export default function TeacherPortfolio() {
       </section>
 
       <section className="paralax-section-whiteBackground paralax-content-section-overview-accredidation portfolio-text-centered-content">
-        <h2 id={content.certificationTitleLink}>{content.certificationTitle}<AnchorLink targetId={content.certificationTitleLink} /></h2>
+        <h2 id={titleLinks.certificationTitleLink}>{content.certificationTitle}<AnchorLink targetId={titleLinks.certificationTitleLink} /></h2>
         <Container className="desktop-view">
           <Row >
             <Col xs={12} md={1} >
@@ -275,7 +291,7 @@ export default function TeacherPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={content.accomplishmentsTitleLink} /></h2>
+                <h2 id={titleLinks.accomplishmentsTitleLink}>{content.accomplishmentsTitle}<AnchorLink isDarkMode targetId={titleLinks.accomplishmentsTitleLink} /></h2>
                 <p >{content.accomplishmentsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -303,7 +319,7 @@ export default function TeacherPortfolio() {
               <Col xs={12} md={1} >
               </Col>
               <Col xs={12} md={10} >
-                <h2 id={content.highQualityToolsTitleLink}>{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={content.highQualityToolsTitleLink} /></h2>
+                <h2 id={titleLinks.highQualityToolsTitleLink} >{content.highQualityToolsTitle}<AnchorLink isDarkMode targetId={titleLinks.highQualityToolsTitleLink} /></h2>
                 <p>{content.highQualityToolsText}</p>
               </Col>
               <Col xs={12} md={1} >
@@ -339,7 +355,7 @@ export default function TeacherPortfolio() {
             <Col xs={12} md={1} >
             </Col>
             <Col xs={12} md={10} >
-              <h2 id={content.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={content.passionTitleLink} /></h2>
+              <h2 id={titleLinks.passionTitleLink}>{content.passionTitle}<AnchorLink targetId={titleLinks.passionTitleLink} /></h2>
               <p>{content.passionText}</p>
               <ul className="portfolio-bullet-list">
                 <li>{content.aiImpovement1}</li>
