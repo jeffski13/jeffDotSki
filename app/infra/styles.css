@@ -1,3 +1,16 @@
+/* react bootsrtap overwrite for selection background of navbar item */
+.navbar-nav>a {
+    padding-left: 10px;
+}
+
+.dropdown {
+    padding-left: 10px;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #333
+}
+
 .navBarLink {
     display: inline-block;
     width: 100%;
@@ -6,33 +19,6 @@
 .brand {
     cursor: pointer;
     margin-left: 10px;
-}
-
-.Loadingski {
-    display: table;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.Loadingski_container {
-    display: table-cell;
-    vertical-align: middle;
-    height: 100vh;
-}
-
-.Loadingski_container>div {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.navbar-nav>a {
-    padding-left: 10px;
-}
-
-.dropdown {
-    padding-left: 10px;
 }
 
 .dev-banner {
