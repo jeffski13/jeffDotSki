@@ -71,7 +71,7 @@ export default function TeacherPortfolio() {
     certificationText2: 'TEFL (Teaching english as a Foreign Language) y ',
     certificationText3: 'TESOL(Teaching English to Speakers of Other Languages).',
     certificationLink: ROUTES.external.certification,
-    certificationLinkText: 'Haz Click acá por la Certificación Oficial',
+    certificationLinkText: 'Haz Click acá para ver la Certificación Oficial',
     recentWorkSectionTitle: 'QUE SEA DIVERTIDO!',
     accomplishmentsTitle: 'Clase más Recientamente',
     accomplishmentsTitleLink: 'Clase-mas-Recientamente',
@@ -111,7 +111,7 @@ export default function TeacherPortfolio() {
     certificationText2: 'TEFL (Teaching english as a Foreign Language) and ',
     certificationText3: 'TESOL(Teaching English to Speakers of Other Languages) certification.',
     certificationLink: ROUTES.external.certification,
-    certificationLinkText: 'Click here for Official Certficiation',
+    certificationLinkText: 'Click here to see Official Certficiation',
     recentWorkSectionTitle: 'MAKING IT FUN',
     accomplishmentsTitle: 'Most Recent Class',
     accomplishmentsTitleLink: 'Most-Recent-Class',
@@ -195,7 +195,7 @@ export default function TeacherPortfolio() {
         </div>
       </section>
 
-      <section className="paralax-section-whiteBackground paralax-content-section-overview-companies portfolio-accredidation">
+      <section className="paralax-section-whiteBackground paralax-content-section-overview-accredidation portfolio-text-centered-content">
         <h2 id={content.certificationTitleLink}>{content.certificationTitle}<AnchorLink targetId={content.certificationTitleLink} /></h2>
         <Container className="desktop-view">
           <Row >
@@ -348,12 +348,13 @@ export default function TeacherPortfolio() {
             </Col>
           </Row>
           <Row>
-            <Col xs={12} md={2} >
+            <Col xs={12} md={3} >
             </Col>
-            <Col xs={12} md={8} >
+            <Col xs={12} md={6} className="portfolio-text-centered-content">
               <img className="portfolio-content-image" src="/images/aboutMeSection/teacherPortfolio/pastGraduatedStudent.png" alt="Past student that enjoyed the program" />
+              <p>Past B1 English Alumni</p>
             </Col>
-            <Col xs={12} md={2} >
+            <Col xs={12} md={3} >
             </Col>
           </Row>
         </Container>

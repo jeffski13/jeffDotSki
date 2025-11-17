@@ -15,7 +15,7 @@
     list-style: disc;
 }
 
-.portfolio-accredidation {
+.portfolio-text-centered-content {
     padding: 48px 0;
     text-align: center;
 }
@@ -34,7 +34,7 @@
         padding: 0px;
     }
 
-    .portfolio-accredidation {
+    .portfolio-text-centered-content {
         padding: 0px;
         margin-top: 0px;
         margin-left: 40px;

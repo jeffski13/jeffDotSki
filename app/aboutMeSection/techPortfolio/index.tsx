@@ -182,7 +182,7 @@ export default function TechPortfolio() {
         </div>
       </section>
 
-      <section className="paralax-section-whiteBackground paralax-content-section-overview-companies portfolio-accredidation">
+      <section className="paralax-section-whiteBackground paralax-content-section-overview-accredidation portfolio-text-centered-content">
         <h2 id={content.logosTitleLink}>{content.logosTitle}<AnchorLink targetId={content.logosTitleLink} /></h2>
         <Container>
           <Row>
