@@ -16,6 +16,7 @@ export const locationProviderImpl: LocationProvider = {
 
 export const locationProviderMock: LocationProvider = {
   useLocation: function (): Location | undefined {
-    return undefined;
+    const typeToWorkInTestEnv = undefined;
+    return typeToWorkInTestEnv; 
   }
 };
