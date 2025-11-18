@@ -5,7 +5,6 @@ export interface LocationProvider {
 }
 
 export interface PortfolioProps {
-  isTestEnv?: boolean;
   locationProvider: LocationProvider;
 }
 

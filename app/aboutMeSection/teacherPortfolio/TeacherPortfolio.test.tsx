@@ -4,7 +4,7 @@ import { locationProviderMock } from '../PortfolioProps';
 
 describe('TechPortfolio Component', () => {
   test('renders main content', () => {
-    render(<TeacherPortfolio isTestEnv={true} locationProvider={locationProviderMock} />);
+    render(<TeacherPortfolio locationProvider={locationProviderMock} />);
     
     // smoke test for render
     expect(screen.getByText(/Teacher/i)).toBeInTheDocument();
