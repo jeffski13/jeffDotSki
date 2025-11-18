@@ -5,7 +5,6 @@ export interface LocationProvider {
 }
 
 export interface PortfolioProps {
-  isTestEnv?: boolean;
   locationProvider: LocationProvider;
 }
 
@@ -17,6 +16,7 @@ export const locationProviderImpl: LocationProvider = {
 
 export const locationProviderMock: LocationProvider = {
   useLocation: function (): Location | undefined {
-    return undefined;
+    const typeToWorkInTestEnv = undefined;
+    return typeToWorkInTestEnv; 
   }
 };

@@ -67,7 +67,7 @@ export default function TeacherPortfolio({ isTestEnv = false, locationProvider }
   // Jumping to anchors by id will work
   const location = locationProvider.useLocation();
   useEffect(() => {
-    navigateToAnchor(location?.hash, isTestEnv)
+    navigateToAnchor(location?.hash)
   }, [location?.hash])
 
   const es: ContentPerLanguage = {

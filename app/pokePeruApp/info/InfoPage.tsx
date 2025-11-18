@@ -25,7 +25,7 @@ interface TitleLinks {
   diyTechnicalTitleLink: string;
 }
 
-export function InfoPage({ isTestEnv = false, locationProvider }: PortfolioProps) {
+export function InfoPage({ locationProvider }: PortfolioProps) {
   const titleLinks: TitleLinks = {
     aboutProjectTitleLink: 'About-the-Project',
     pokemonCreationLink: 'Monster-Creation',
@@ -39,7 +39,7 @@ export function InfoPage({ isTestEnv = false, locationProvider }: PortfolioProps
   // Jumping to anchors by id will work
     const location = locationProvider.useLocation();
     useEffect(() => {
-      navigateToAnchor(location?.hash, isTestEnv)
+      navigateToAnchor(location?.hash)
     }, [location?.hash])
   
 
