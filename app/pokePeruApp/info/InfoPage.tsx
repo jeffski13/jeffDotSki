@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { getBrowserLanguage, getContentByLanguage, type MultiLangContent } from '../../langSupport';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,14 +8,41 @@ import '../../infra/mobile-support.css';
 import '../navigation.css';
 import '../secondaryPage.css';
 import './infopage.css';
-
-interface InfoPageProps { }
+import { locationProviderImpl, type PortfolioProps } from '~/aboutMeSection/PortfolioProps';
+import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 
 export default function InfoPageContainer() {
-  return (<InfoPage />);
+  return (<InfoPage locationProvider={locationProviderImpl}   />);
 }
 
-function InfoPage({ }: InfoPageProps) {
+interface TitleLinks {
+  aboutProjectTitleLink: string;
+  pokemonCreationLink: string;
+  battleLink: string;
+  gymLeaderCreationLink: string;
+  diyLink: string;
+  diyNontechnicalTitleLink: string;
+  diyTechnicalTitleLink: string;
+}
+
+export function InfoPage({ isTestEnv = false, locationProvider }: PortfolioProps) {
+  const titleLinks: TitleLinks = {
+    aboutProjectTitleLink: 'About-the-Project',
+    pokemonCreationLink: 'Monster-Creation',
+    battleLink: 'Monster-Battle',
+    gymLeaderCreationLink: 'Gym-Leader-Creation',
+    diyLink: 'diy',
+    diyNontechnicalTitleLink: 'DIY-Easy-Way',
+    diyTechnicalTitleLink: 'DIY-Technical-Method',
+  }
+
+  // Jumping to anchors by id will work
+    const location = locationProvider.useLocation();
+    useEffect(() => {
+      navigateToAnchor(location?.hash, isTestEnv)
+    }, [location?.hash])
+  
+
   const blankDataPokemon = `{
  id: '${uuidv4()}',
  name: '',
@@ -205,7 +232,7 @@ function InfoPage({ }: InfoPageProps) {
         <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon desktop-view" />
       </div>
       <div className="project-info">
-        <h2>{content.aboutProjectTitle}</h2>
+        <h2 id={titleLinks.aboutProjectTitleLink}>{content.aboutProjectTitle}<AnchorLink targetId={titleLinks.aboutProjectTitleLink} /></h2>
         <p>{content.goToExperience} <a href={ROUTES.pokePeru.battle}>{content.goToExperienceLink}</a>!</p>
         <p>{content.projectDesc}</p>
         <ul>
@@ -241,7 +268,7 @@ function InfoPage({ }: InfoPageProps) {
         <p>{content.region}</p>
         {/* Video demonstration at the bottom of project-info */}
         <div className="infoSection" id="sectionPokemonCreation">
-          <h3>{content.pokemonCreation}</h3>
+          <h3 id={titleLinks.pokemonCreationLink}>{content.pokemonCreation}<AnchorLink targetId={titleLinks.pokemonCreationLink} /></h3>
           <p>{content.pokemonDesc}</p>
           <ul>
             <li>{content.name}</li>
@@ -271,7 +298,7 @@ function InfoPage({ }: InfoPageProps) {
           <p>{content.artDataInstructions}<strong>/public/images/monsters</strong></p>
         </div>
         <div className="infoSection" id="sectionGymLeaderCreation">
-          <h3>{content.gymLeaderCreation}</h3>
+          <h3 id={titleLinks.gymLeaderCreationLink}>{content.gymLeaderCreation}<AnchorLink targetId={titleLinks.gymLeaderCreationLink} /></h3>
           <p>{content.gymLeaderDesc}</p>
           <ul>
             <li>{content.gymLeaderName}</li>
@@ -297,7 +324,7 @@ function InfoPage({ }: InfoPageProps) {
           <p>{content.gymLeaderEnvironmentsModInstructions}<strong>/public/images/landscape</strong></p>
         </div>
         <div className="infoSection" id="sectionBattle">
-          <h3>{content.battle}</h3>
+          <h3 id={titleLinks.battleLink}>{content.battle}<AnchorLink targetId={titleLinks.battleLink} /></h3>
           <p>{content.battleDesc}</p>
           <Container>
             <Row className="info-images-container">
@@ -321,22 +348,22 @@ function InfoPage({ }: InfoPageProps) {
           <p>{content.statsNote}</p>
         </div>
         <div className="infoSection" id="sectionDIY">
-          <h3>{content.diy}</h3>
-          <h4>{content.diyNontechnicalTitle}</h4>
+          <h3 id={titleLinks.diyLink}>{content.diy}<AnchorLink targetId={titleLinks.diyLink} /></h3>
+          <h4 id={titleLinks.diyNontechnicalTitleLink}>{content.diyNontechnicalTitle}<AnchorLink targetId={titleLinks.diyNontechnicalTitleLink} /></h4>
           <p>{content.diyNontechnical}</p>
           <Container>
             <Row className="info-images-container">
               <Col sm={11} md={5}>
-                <h4>{content.diyNontechnicalMonsterCreationWorksheetTitle}</h4>
+                <h5>{content.diyNontechnicalMonsterCreationWorksheetTitle}</h5>
                 <img src="/images/info/info_monster_creation_printable.png" alt="Back" className="info-image" />
               </Col>
               <Col sm={11} md={5}>
-                <h4>{content.diyNontechnicalGymleaderCreationWorksheetTitle}</h4>
+                <h5>{content.diyNontechnicalGymleaderCreationWorksheetTitle}</h5>
                 <img src="/images/info/info_gymleader_creation_printable.png" alt="Back" className="info-image" />
               </Col>
             </Row>
           </Container>
-          <h4>{content.diyTechnicalTitle}</h4>
+          <h4 id={titleLinks.diyTechnicalTitleLink}>{content.diyTechnicalTitle}<AnchorLink targetId={titleLinks.diyTechnicalTitleLink} /></h4>
           <p>{content.diyDescPreLink}<a href="https://s3.us-east-2.amazonaws.com/jeff.ski/pokeperu/pokeperuproject.zip">{content.diyDescDownloadLink}</a>{content.diyDescPostLink}</p>
           <p><strong>npm install</strong></p>
           <p><strong>npm start</strong></p>

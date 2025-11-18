@@ -1,3 +1,7 @@
+h4 {
+    margin-top: 30px;
+}
+
 .project-info {
     text-align: left;
     padding: 10px 50px;
@@ -39,4 +43,10 @@ ul {
     max-width: 600;
     border-radius: 12;
     box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 600px) {
+    h5 {
+        margin-top: 20px;
+    }
 }
