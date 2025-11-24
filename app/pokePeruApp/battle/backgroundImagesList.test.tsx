@@ -1,4 +1,4 @@
-import { getRandomImagePathFromList } from "./backgroundImagesList";
+import backgroundImageList, { getRandomImagePathFromList, IMAGE_PATH_PREFIX } from "./backgroundImagesList";
 
 describe('backgroundImagesList', () => {
   test('list will return a string on happy path', () => {
@@ -21,4 +21,11 @@ describe('backgroundImagesList', () => {
     const imagePath = getRandomImagePathFromList(backgroundImagesListMock);
     expect(typeof imagePath).toBe('string');
   });
+
+  it('background images are correctly formatted', () => {
+      const imagesList = backgroundImageList;
+      imagesList.forEach(element => {
+        expect(element.includes(IMAGE_PATH_PREFIX)).toBe(true);
+      });
+    });
 });

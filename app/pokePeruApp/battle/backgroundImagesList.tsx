@@ -1,3 +1,5 @@
+export const IMAGE_PATH_PREFIX = '/images/';
+
 const backgroundImageList: string[] = [
     '/images/landscape/peru-1.jpg',
     '/images/landscape/peru-2.jpg',
