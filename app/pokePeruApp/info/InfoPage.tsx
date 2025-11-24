@@ -216,7 +216,7 @@ export function InfoPage({ locationProvider, battleRoute }: InfoPageProps) {
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
         <a href={battleRoute} className="back-button">
-          <img src="/images/battle-icon.png" alt="Back" className="battle-icon clickable-link-icon" />
+          <img src="/images/battle-icon.png" alt="Navigate to battle" className="battle-icon clickable-link-icon" />
         </a>
         <Container>
           <Row>

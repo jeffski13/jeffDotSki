@@ -38,7 +38,8 @@ describe('BattleStartScreen Component', () => {
     fireEvent.click(backButton);
 
     // Assert that the confirmation popup appears
-    expect(screen.getByText(/Are you sure\?/i)).toBeInTheDocument();
+    expect(screen.getByText(/Are you sure you want to return/i)).toBeInTheDocument();
+    expect(screen.getByText(/to the selection screen\?/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Yes/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /No/i })).toBeInTheDocument();
   });
