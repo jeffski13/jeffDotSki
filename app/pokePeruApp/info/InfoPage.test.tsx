@@ -7,7 +7,7 @@ import { locationProviderMock } from '~/aboutMeSection/PortfolioProps';
 describe('Pokedex Component', () => {
   it('renders the back link', () => {
     render(<InfoPage locationProvider={locationProviderMock} />);
-    const link = screen.getByRole('button', { name: 'Go back' });
+    const link = screen.getByRole('img', { name: 'Navigate to battle' });
     expect(link).toBeInTheDocument();
   });
 
