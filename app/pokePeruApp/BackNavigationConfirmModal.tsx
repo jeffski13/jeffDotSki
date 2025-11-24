@@ -15,8 +15,10 @@ export default function BackNavigationConfirmModal({
     return (
         <div className="back-confirm-modal">
             <div className="back-confirm-content">
-                <p>Are you sure you want to return</p>
-                <p>to the selection screen?</p>
+                <div className="back-confirm-content-text-container">
+                    <p className="back-confirm-content-text">Are you sure you want to return</p>
+                    <p className="back-confirm-content-text">to the selection screen?</p>
+                </div>
                 <Button onClick={() => window.location.href = destination}>Yes</Button>
                 <Button onClick={() => onCancelNavigation()}>No</Button>
             </div>
