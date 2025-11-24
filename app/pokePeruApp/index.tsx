@@ -6,6 +6,7 @@ import ROUTES from '~/consts/ROUTES';
 import KEYS from '~/consts/KEYS';
 import './pokeperu.css';
 import { gymLeaders, type GymLeader } from './gymleaders';
+import backgroundImageList from './battle/backgroundImagesList';
 
 export default function PokePeru() {
   return (
@@ -20,6 +21,7 @@ export default function PokePeru() {
         dexRoute={ROUTES.pokePeru.pokedex}
         battleRoute={ROUTES.pokePeru.battle}
         gymRoute={ROUTES.pokePeru.gymleaders}
+        backgroundImageList={backgroundImageList}
       />
     </div>
   );
@@ -53,6 +55,7 @@ export interface PokePeruContentProps {
   battleRoute: string;
   gymRoute: string;
   monstersEditKey: string;
+  backgroundImageList: string[];
 }
 
 export function PokePeruContent({
@@ -61,7 +64,8 @@ export function PokePeruContent({
   dexRoute,
   battleRoute,
   gymRoute,
-  monstersEditKey
+  monstersEditKey,
+  backgroundImageList
 }: PokePeruContentProps) {
   const [selectedMonstersIds, setSelectedMonstersIds] = useState<string[]>([]);
   const [selectedMonsters, setSelectedMonsters] = useState<Monster[]>([]);
@@ -92,7 +96,9 @@ export function PokePeruContent({
         <BattleContainer
           selectedMonsters={selectedMonsters}
           gymLeaders={gymLeaders}
-          battleRoute={battleRoute} />
+          battleRoute={battleRoute} 
+          backgroundImageList={backgroundImageList}
+          />
       )}
     </>
   );

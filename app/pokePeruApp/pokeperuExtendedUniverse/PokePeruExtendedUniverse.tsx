@@ -6,7 +6,8 @@ export default function PokePeruExtendedUniverseBattle({
   dexRoute,
   battleRoute,
   gymRoute,
-  monstersEditKey
+  monstersEditKey,
+  backgroundImageList,
 }: PokePeruContentProps) {
   return (
     <div >
@@ -20,6 +21,7 @@ export default function PokePeruExtendedUniverseBattle({
         dexRoute={dexRoute} 
         battleRoute={battleRoute} 
         gymRoute={gymRoute}
+        backgroundImageList={backgroundImageList}
       />
     </div>
   );

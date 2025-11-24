@@ -12,9 +12,10 @@ interface BattleProps {
   selectedMonsters: Monster[];
   gymLeaders: GymLeader[];
   battleRoute: string;
+  backgroundImageList: string[];
 }
 
-export default function BattleContainer({ selectedMonsters, gymLeaders, battleRoute }: BattleProps) {
+export default function BattleContainer({ selectedMonsters, gymLeaders, battleRoute, backgroundImageList }: BattleProps) {
   const [isBattleClicked, setBattleClicked] = useState(false);
 
   const [showInfoNavigationConfirm, setInfoNavigationConfirm] = useState(false);
@@ -43,6 +44,7 @@ export default function BattleContainer({ selectedMonsters, gymLeaders, battleRo
           battleRoute={battleRoute}
           trainer1={trainer1}
           trainer2={trainer2}
+          backgroundImageList={backgroundImageList}
         />
       )}
 

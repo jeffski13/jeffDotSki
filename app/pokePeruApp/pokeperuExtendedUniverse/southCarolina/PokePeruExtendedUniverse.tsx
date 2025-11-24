@@ -5,6 +5,7 @@ import ROUTES from "~/consts/ROUTES";
 
 import { getExtendedUniverseMonsters } from "./monstersExtendedUniverse"
 import { getExtendedUniverseGymLeaders } from "./gymLeadersExtendedUniverse";
+import backgroundImageList from "~/pokePeruApp/battle/backgroundImagesList";
 
 const EDIT_KEY = 'pokedexEditsSouthCarolina';
 const battleRoute = ROUTES.pokePeru.extendedUniverse.southCarolina.battle;
@@ -20,6 +21,7 @@ export default function PokePeruExtendedUniverse() {
       dexRoute={dexRoute}
       battleRoute={battleRoute}
       gymRoute={gymRoute}
+      backgroundImageList={backgroundImageList}
     />
   );
 }
