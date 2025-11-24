@@ -196,7 +196,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
           onClick={() => handleBackClick()}
           style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
         >
-          <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
+          <img src="/images/battle-icon.png" alt="Back" className="battle-icon clickable-link-icon" />
         </button>
         <Container>
           <Row>

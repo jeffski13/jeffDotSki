@@ -12,7 +12,11 @@ import { locationProviderImpl, type PortfolioProps } from '~/aboutMeSection/Port
 import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 
 export default function InfoPageContainer() {
-  return (<InfoPage locationProvider={locationProviderImpl}   />);
+  return (<InfoPage locationProvider={locationProviderImpl} battleRoute={ROUTES.pokePeru.battle} />);
+}
+
+export interface InfoPageProps extends PortfolioProps {
+  battleRoute: string;
 }
 
 interface TitleLinks {
@@ -25,7 +29,7 @@ interface TitleLinks {
   diyTechnicalTitleLink: string;
 }
 
-export function InfoPage({ locationProvider }: PortfolioProps) {
+export function InfoPage({ locationProvider, battleRoute }: InfoPageProps) {
   const titleLinks: TitleLinks = {
     aboutProjectTitleLink: 'About-the-Project',
     pokemonCreationLink: 'Monster-Creation',
@@ -211,15 +215,9 @@ export function InfoPage({ locationProvider }: PortfolioProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
-        <button
-          type="button"
-          className="back-button"
-          onClick={() => window.history.back()}
-          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-          aria-label="Go back"
-        >
-          <img src="/images/arrow-left.png" alt="Back" className="back-arrow clickable-link-icon" />
-        </button>
+        <a href={battleRoute} className="back-button">
+          <img src="/images/battle-icon.png" alt="Back" className="battle-icon clickable-link-icon" />
+        </a>
         <Container>
           <Row>
             <Col xs={2} />
