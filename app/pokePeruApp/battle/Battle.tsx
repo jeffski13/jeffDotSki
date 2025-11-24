@@ -12,6 +12,7 @@ import './battle.css';
 import './battleAttacks.css';
 import '../types.css';
 import '../navigationOverride.css';
+import { getRandomImagePathFromList } from './backgroundImagesList';
 
 interface BattleProps {
   selectedMonsters: Monster[];
@@ -23,6 +24,7 @@ interface BattleProps {
   battleRoute?: string;
   trainer1 : GymLeader | undefined;
   trainer2: GymLeader | undefined;
+  backgroundImageList?: string[];
 }
 
 const STRUGGLE_ATTACK: MonsterAttack = {
@@ -43,7 +45,8 @@ export default function Battle({
   isAnimationInstant = false,
   isInstantStruggleEnabled = false,
   isAllAttackCriticalHit = false,
-  battleRoute = ROUTES.pokePeru.battle
+  battleRoute = ROUTES.pokePeru.battle,
+  backgroundImageList = []
 }: BattleProps) {
   const isMonster1First = selectedMonsters[0].speed >= selectedMonsters[1].speed;
   const [monster1Hp, setMonster1Hp] = useState(selectedMonsters[0].hp);
@@ -66,8 +69,8 @@ export default function Battle({
 
   useEffect(() => {
     // Randomly select an image from the /landscape folder on mount
-    const randomImageIndex = Math.floor(Math.random() * 8) + 1; // Random number for background
-    setBackgroundImage(`/images/landscape/peru-${randomImageIndex}.jpg`);
+    const randomImagePath = getRandomImagePathFromList(backgroundImageList)
+    setBackgroundImage(randomImagePath);
   }, []);
 
   const handleStruggle = (attacker: number) => {

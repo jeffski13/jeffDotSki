@@ -5,6 +5,7 @@ import ROUTES from "~/consts/ROUTES";
 
 import { getExtendedUniverseMonsters } from "./monstersExtendedUniverse"
 import { getExtendedUniverseGymLeaders } from "./gymLeadersExtendedUniverse";
+import { getExtendedUniverseBackgroundImages } from "./backgroundImagesExtendedUniverse";
 
 const EDIT_KEY = 'pokedexEditsClaremore';
 const battleRoute = ROUTES.pokePeru.extendedUniverse.claremore.battle;
@@ -20,6 +21,7 @@ export default function PokePeruExtendedUniverse() {
       dexRoute={dexRoute}
       battleRoute={battleRoute}
       gymRoute={gymRoute}
+      backgroundImageList={getExtendedUniverseBackgroundImages()}
     />
   );
 }
