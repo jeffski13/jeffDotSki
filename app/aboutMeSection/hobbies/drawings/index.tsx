@@ -18,6 +18,7 @@ interface ContentPerLanguage {
 interface DrawingsProps {
   drawingsList: DrawingItem[];
   drawingsHalloweenList: DrawingItem[];
+  isTestEnvInstantLoad?: boolean;
 }
 
 export default function DrawingsPage() {
@@ -28,7 +29,8 @@ export default function DrawingsPage() {
 
 export function Drawings({
   drawingsList,
-  drawingsHalloweenList
+  drawingsHalloweenList,
+  isTestEnvInstantLoad = false
 }: DrawingsProps) {
   const es: ContentPerLanguage = {
     title: 'Dibujos',
@@ -51,8 +53,10 @@ export function Drawings({
   };
   const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
-  
+
+  const [isFullScreenMode, setIsFullScreenMode] = useState<boolean>(false);
   const [overlayImg, setOverlayImg] = useState<string | null>(null);
+  const [backgroundLoaded, setBackgroundLoaded] = useState<boolean>(false);
 
   // Combine both lists for navigation
   const combinedLists = [
@@ -62,9 +66,41 @@ export function Drawings({
 
   // Find the current overlay index in combinedLists
   const getOverlayIdx = () => {
-    if (!overlayImg) return -1;
+    if (!overlayImg) {
+      return -1;
+    }
     return combinedLists.findIndex(item => item.full === overlayImg);
   };
+
+  const loadOverlayImg = (fullScreenImagePath: string) => {
+    if (!fullScreenImagePath) {
+      return;
+    }
+    
+    setIsFullScreenMode(true);
+    
+    if(isTestEnvInstantLoad){
+      onImageLoadedSuccessfully(fullScreenImagePath)
+      return;
+    }
+    
+    setOverlayImg(null);
+    setBackgroundLoaded(false);
+    const img = new Image();
+    img.src = fullScreenImagePath;
+    img.onload = () => {
+      onImageLoadedSuccessfully(fullScreenImagePath)
+    };
+    img.onerror = () => {
+      // if there's an error loading, still set the path so the div can try
+      onImageLoadedSuccessfully(fullScreenImagePath)
+    };
+  }
+  
+  const onImageLoadedSuccessfully = (fullScreenImagePath: string) => {
+    setBackgroundLoaded(true);
+    setOverlayImg(fullScreenImagePath);
+  }
 
   const showImageFullNext = () => {
     const currentIdx = getOverlayIdx();
@@ -72,7 +108,7 @@ export function Drawings({
       return;
     }
     const nextIdx = (currentIdx + 1) % combinedLists.length;
-    setOverlayImg(combinedLists[nextIdx].full);
+    loadOverlayImg(combinedLists[nextIdx].full);
   }
 
   const showImageFullPrevious = () => {
@@ -81,10 +117,11 @@ export function Drawings({
       return;
     }
     const prevIdx = (currentIdx - 1 + combinedLists.length) % combinedLists.length;
-    setOverlayImg(combinedLists[prevIdx].full);
+    loadOverlayImg(combinedLists[prevIdx].full);
   }
 
   const doNotShowImageFull = () => {
+    setIsFullScreenMode(false);
     setOverlayImg(null);
   }
 
@@ -128,7 +165,7 @@ export function Drawings({
             <Row>
               {drawingsList.map(
                 (item, i) => renderDrawings(item, i, content.titleLabel, () => {
-                  setOverlayImg(item.full);
+                  loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
                 })
               )}
@@ -151,7 +188,7 @@ export function Drawings({
             <Row>
               {drawingsHalloweenList.map(
                 (item, i) => renderDrawings(item, i, content.titleLabel, () => {
-                  setOverlayImg(item.full);
+                  loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
                 })
               )}
@@ -160,7 +197,7 @@ export function Drawings({
         </Container>
         {/* Fullscreen overlay for image */}
 
-        {overlayImg && (
+        {isFullScreenMode && (
           <div
             className="drawing-fullscreen-overlay fullImageArea"
             onClick={e => {
@@ -196,12 +233,14 @@ export function Drawings({
                 </div>
               </div>
             </div>
-            <p className="hobbieImageLoadingLabelFullImage">loading...</p>
+            <div className={`full-screen-image-loading-text-container ${backgroundLoaded ? 'loaded' : 'loading'}`} >
+              <p className="full-screen-image-loading-text">loading...</p>
+            </div>
             <img
               id={`full-image-${getOverlayIdx()}`}
               src={overlayImg}
-              alt="Full drawing"
-              className="fullImage"
+              alt={`Full drawing${backgroundLoaded ? '' : ' loading...'}`}
+              className={`fullImage ${backgroundLoaded ? 'loaded' : 'loading'}`}
               onClick={e => {
                 const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
                 const x = (e as React.MouseEvent).clientX - rect.left;

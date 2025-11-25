@@ -22,7 +22,7 @@ interface BattleProps {
   isInstantStruggleEnabled?: boolean;
   isAllAttackCriticalHit?: boolean;
   battleRoute?: string;
-  trainer1 : GymLeader | undefined;
+  trainer1: GymLeader | undefined;
   trainer2: GymLeader | undefined;
   backgroundImageList?: string[];
 }
@@ -69,9 +69,11 @@ export default function Battle({
   const [showBackConfirm, setShowBackConfirm] = useState(false);
 
   useEffect(() => {
-    // Randomly select an image from the /landscape folder on mount and preload it
+    // Randomly select an image from the landscape folder on mount and preload it
     const randomImagePath = getRandomImagePathFromList(backgroundImageList);
-    if (!randomImagePath) return;
+    if (!randomImagePath) {
+      return;
+    }
     setBackgroundLoaded(false);
     const img = new Image();
     img.src = randomImagePath;
@@ -127,8 +129,8 @@ export default function Battle({
     setEffectivenessResult(`${attackerMonster.name} is hurt by recoil!`);
   }
 
-  const damageAnimtionDelay = isAnimationInstant ? 0: 500;
-  
+  const damageAnimtionDelay = isAnimationInstant ? 0 : 500;
+
   const handleAttack = (
     attacker: number,
     attackIndex: number
@@ -178,14 +180,14 @@ export default function Battle({
 
     if (attacker === 1) {
       setMonster1AttackAnim(true);
-      if(!isAnimationInstant)  {
+      if (!isAnimationInstant) {
         setTimeout(() => setMonster1AttackAnim(false), 400); // duration matches animation
       }
       setIsMonster1Turn(false);
       setMonster2Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
       if (!attackMissed) {
         setIsMonster2Blinking(true);
-        if(!isAnimationInstant)  {
+        if (!isAnimationInstant) {
           setTimeout(() => setIsMonster2Blinking(false), damageAnimtionDelay);
         }
       }
@@ -198,14 +200,14 @@ export default function Battle({
       }
     } else {
       setMonster2AttackAnim(true);
-      if(!isAnimationInstant)  {
+      if (!isAnimationInstant) {
         setTimeout(() => setMonster2AttackAnim(false), 400); // duration matches animation
       }
       setIsMonster1Turn(true);
       setMonster1Hp((prevHp) => Math.max(prevHp - adjustedDamage, 0));
       if (!attackMissed) {
         setIsMonster1Blinking(true);
-        if(!isAnimationInstant) {
+        if (!isAnimationInstant) {
           setTimeout(() => setIsMonster1Blinking(false), damageAnimtionDelay);
         }
       }

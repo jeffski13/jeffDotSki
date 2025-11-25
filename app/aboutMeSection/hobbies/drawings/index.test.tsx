@@ -17,7 +17,7 @@ describe('Drawings Component', () => {
       { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
       { name: 'Drawing 3', thumb: '/thumb3.jpg', full: '/full3.jpg' },
     ];
-    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} />);
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     // Open overlay for Drawing 2
     const thumbImg = screen.getByAltText(/Drawing 2 Drawing/i);
     fireEvent.click(thumbImg);
@@ -42,7 +42,7 @@ describe('Drawings Component', () => {
   });
   
   it('renders full image overlay when hobbieImage is clicked', () => {
-    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     // Find the thumbnail image and click it
     const thumbImg = screen.getByAltText(/Test Drawing/i);
     fireEvent.click(thumbImg);
@@ -50,6 +50,16 @@ describe('Drawings Component', () => {
     const fullImg = screen.getByAltText(/Full drawing/i);
     expect(fullImg).toBeInTheDocument();
     expect(fullImg).toHaveAttribute('src', '/test-full.jpg');
+  });
+
+  it('full image overlay starts with loading', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    // Find the thumbnail image and click it
+    const thumbImg = screen.getByAltText(/Test Drawing/i);
+    fireEvent.click(thumbImg);
+    // The overlay should now be visible with the full image
+    const fullImg = screen.getByAltText(/Full drawing loading/i);
+    expect(fullImg).toBeInTheDocument();
   });
 
   it('renders correct number of drawings from both lists', () => {
