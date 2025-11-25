@@ -59,6 +59,7 @@ export default function Battle({
   const [damageToMonster1Animation, setDamageToMonster1Animation] = useState<string | null>(null);
   const [damageToMonster2Animation, setDamageToMonster2Animation] = useState<string | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<string>('');
+  const [backgroundLoaded, setBackgroundLoaded] = useState<boolean>(false);
   const [monster1Attack1PP, setMonster1Attack1PP] = useState(selectedMonsters[0].attack1.powerPoints);
   const [monster1Attack2PP, setMonster1Attack2PP] = useState(selectedMonsters[0].attack2.powerPoints);
   const [monster2Attack1PP, setMonster2Attack1PP] = useState(selectedMonsters[1].attack1.powerPoints);
@@ -68,9 +69,21 @@ export default function Battle({
   const [showBackConfirm, setShowBackConfirm] = useState(false);
 
   useEffect(() => {
-    // Randomly select an image from the /landscape folder on mount
-    const randomImagePath = getRandomImagePathFromList(backgroundImageList)
-    setBackgroundImage(randomImagePath);
+    // Randomly select an image from the /landscape folder on mount and preload it
+    const randomImagePath = getRandomImagePathFromList(backgroundImageList);
+    if (!randomImagePath) return;
+    setBackgroundLoaded(false);
+    const img = new Image();
+    img.src = randomImagePath;
+    img.onload = () => {
+      setBackgroundImage(randomImagePath);
+      setBackgroundLoaded(true);
+    };
+    img.onerror = () => {
+      // if there's an error loading, still set the path so the div can try
+      setBackgroundImage(randomImagePath);
+      setBackgroundLoaded(true);
+    };
   }, []);
 
   const handleStruggle = (attacker: number) => {
@@ -328,10 +341,12 @@ export default function Battle({
 
   return (
     <div className="Battle">
-      <div className="battle-background"
+      <p className={`battle-background-loading-text ${backgroundLoaded ? 'loaded' : 'loading'}`} >loading...</p>
+      <div className={`battle-background ${backgroundLoaded ? 'loaded' : 'loading'}`}
         style={{
           backgroundImage: `url(${backgroundImage})`,
-        }}></div>
+        }}>
+      </div>
       <div className="battle-container">
         <button
           type="button"
