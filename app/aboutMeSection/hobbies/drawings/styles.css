@@ -78,16 +78,55 @@
     max-Width: 80vw;
     max-Height: 80vh;
     border-Radius: 12;
-    box-Shadow: 0 2px 24px rgba(0,0,0,0.5);
+    box-Shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
     z-Index: 11;
+    transition: opacity 240ms ease-in-out;
+    opacity: 0;
+    /* start hidden until loaded */
+}
+
+.fullImage.loaded {
+    opacity: 1;
+}
+
+.fullImage.loading {
+    opacity: 0;
+}
+
+
+.battle-background-loading-text-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 90%;
+  z-index: 1; /* behind the background image div */
+  color: #fff;
+  font-weight: 600;
+  justify-content: center; /* Horizontally centers content */
+  align-items: center; /* Vertically centers content */
+}
+
+.battle-background-loading-text-container.loaded {
+  display: none;
+}
+
+.battle-background-loading-text-container.loading {
+  display: flex; /* Enables Flexbox layout */
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
