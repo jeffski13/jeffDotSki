@@ -56,11 +56,11 @@
 }
 
 .battle-background-loading-text.loaded {
-  opacity: 0;
+  display: none;
 }
 
 .battle-background-loading-text.loading {
-  opacity: 1;
+  display: block;
 }
 
 .battle-container {
