@@ -94,7 +94,7 @@
 }
 
 
-.battle-background-loading-text-container {
+.full-screen-image-loading-text-container {
   position: absolute;
   left: 0;
   top: 0;
@@ -107,11 +107,11 @@
   align-items: center; /* Vertically centers content */
 }
 
-.battle-background-loading-text-container.loaded {
+.full-screen-image-loading-text-container.loaded {
   display: none;
 }
 
-.battle-background-loading-text-container.loading {
+.full-screen-image-loading-text-container.loading {
   display: flex; /* Enables Flexbox layout */
 }
 

@@ -233,8 +233,8 @@ export function Drawings({
                 </div>
               </div>
             </div>
-            <div className={`battle-background-loading-text-container ${backgroundLoaded ? 'loaded' : 'loading'}`} >
-              <p className="battle-background-loading-text">loading...</p>
+            <div className={`full-screen-image-loading-text-container ${backgroundLoaded ? 'loaded' : 'loading'}`} >
+              <p className="full-screen-image-loading-text">loading...</p>
             </div>
             <img
               id={`full-image-${getOverlayIdx()}`}
