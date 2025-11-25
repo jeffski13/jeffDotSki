@@ -18,6 +18,7 @@ interface ContentPerLanguage {
 interface DrawingsProps {
   drawingsList: DrawingItem[];
   drawingsHalloweenList: DrawingItem[];
+  isTestEnvInstantLoad?: boolean;
 }
 
 export default function DrawingsPage() {
@@ -28,7 +29,8 @@ export default function DrawingsPage() {
 
 export function Drawings({
   drawingsList,
-  drawingsHalloweenList
+  drawingsHalloweenList,
+  isTestEnvInstantLoad = false
 }: DrawingsProps) {
   const es: ContentPerLanguage = {
     title: 'Dibujos',
@@ -71,25 +73,33 @@ export function Drawings({
   };
 
   const loadOverlayImg = (fullScreenImagePath: string) => {
-    setIsFullScreenMode(true);
-    setOverlayImg(null);
-    setBackgroundLoaded(false);
     if (!fullScreenImagePath) {
       return;
     }
+    
+    setIsFullScreenMode(true);
+    
+    if(isTestEnvInstantLoad){
+      onImageLoadedSuccessfully(fullScreenImagePath)
+      return;
+    }
+    
+    setOverlayImg(null);
+    setBackgroundLoaded(false);
     const img = new Image();
     img.src = fullScreenImagePath;
     img.onload = () => {
-      console.log('onload', fullScreenImagePath)
-      setBackgroundLoaded(true);
-      setOverlayImg(fullScreenImagePath);
+      onImageLoadedSuccessfully(fullScreenImagePath)
     };
     img.onerror = () => {
-      console.log('onerror', fullScreenImagePath)
       // if there's an error loading, still set the path so the div can try
-      setBackgroundLoaded(true);
-      setOverlayImg(fullScreenImagePath);
+      onImageLoadedSuccessfully(fullScreenImagePath)
     };
+  }
+  
+  const onImageLoadedSuccessfully = (fullScreenImagePath: string) => {
+    setBackgroundLoaded(true);
+    setOverlayImg(fullScreenImagePath);
   }
 
   const showImageFullNext = () => {
@@ -229,7 +239,7 @@ export function Drawings({
             <img
               id={`full-image-${getOverlayIdx()}`}
               src={overlayImg}
-              alt="Full drawing"
+              alt={`Full drawing${backgroundLoaded ? '' : ' loading...'}`}
               className={`fullImage ${backgroundLoaded ? 'loaded' : 'loading'}`}
               onClick={e => {
                 const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
