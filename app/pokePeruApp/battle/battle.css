@@ -1,5 +1,6 @@
 .Battle {
   min-height: 475px;
+  position: relative; /* make Battle the stacking context for background and loading text */
 }
 
 @media (min-width: 600px) {
@@ -20,7 +21,6 @@
 }
 
 .battle-background {
-  opacity: 0.3;
   position: absolute;
   height: 90%;
   width: 100%;
@@ -28,6 +28,39 @@
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
+  z-index: 2; /* sit above loading text but beneath main UI */
+  transition: opacity 240ms ease-in-out;
+  opacity: 0; /* start hidden until loaded */
+}
+
+.battle-background.loaded {
+  opacity: 0.3;
+}
+
+.battle-background.loading {
+  opacity: 0;
+}
+
+.battle-background-loading-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* behind the background image div */
+  color: #000;
+  font-weight: 600;
+}
+
+.battle-background-loading-text.loaded {
+  display: none;
+}
+
+.battle-background-loading-text.loading {
+  display: block;
 }
 
 .battle-container {
@@ -36,6 +69,7 @@
   height: 100%;
   display: flex;
   justify-content: space-around;
+  z-index: 3; /* ensure UI sits above background and loading text */
 }
 
 .battle-text-with-backdrop {
@@ -177,13 +211,13 @@ button {
     line-height: 1em;
   }
 
-  .attack-button-label{
+  .attack-button-label {
     font-size: small;
     overflow: auto;
     white-space: pre-wrap;
   }
 
-  .attack-button-label-pp{
+  .attack-button-label-pp {
     font-size: small;
   }
 
@@ -207,13 +241,13 @@ button {
     z-index: 2;
     margin: 0 8px 8px 8px;
     padding: 12px;
-    background-color: rgba(255,255,255,0.95);
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 8px 8px 0 0;
-    box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.3);
   }
 
   /* Hide the desktop battle-results area on mobile to avoid duplicate messages */
-  #battle-results-container > .battle-results {
+  #battle-results-container>.battle-results {
     display: none;
   }
 }
