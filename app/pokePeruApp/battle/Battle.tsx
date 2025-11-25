@@ -341,7 +341,9 @@ export default function Battle({
 
   return (
     <div className="Battle">
-      <p className={`battle-background-loading-text ${backgroundLoaded ? 'loaded' : 'loading'}`} >loading...</p>
+      <div className={`battle-background-loading-text-container ${backgroundLoaded ? 'loaded' : 'loading'}`} >
+        <p className="battle-background-loading-text">loading...</p>
+      </div>
       <div className={`battle-background ${backgroundLoaded ? 'loaded' : 'loading'}`}
         style={{
           backgroundImage: `url(${backgroundImage})`,

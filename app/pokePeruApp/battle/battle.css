@@ -41,26 +41,29 @@
   opacity: 0;
 }
 
-.battle-background-loading-text {
+.battle-background-loading-text-container {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 1; /* behind the background image div */
   color: #000;
   font-weight: 600;
+  justify-content: center; /* Horizontally centers content */
+  align-items: center; /* Vertically centers content */
 }
 
-.battle-background-loading-text.loaded {
+.battle-background-loading-text-container.loaded {
   display: none;
 }
 
-.battle-background-loading-text.loading {
-  display: block;
+.battle-background-loading-text-container.loading {
+  display: flex; /* Enables Flexbox layout */
+}
+
+.battle-background-loading-text {
+  
 }
 
 .battle-container {
