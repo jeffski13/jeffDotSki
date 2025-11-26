@@ -1,7 +1,18 @@
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
 import { getAnalytics, logEvent, type Analytics } from 'firebase/analytics';
+import { ENV } from './env';
 
 let analyticsInstance: Analytics | null = null;
+
+export const shouldUseFirebase = (windowRef: any, env: string): boolean => {
+    if(typeof windowRef === 'undefined') {
+        return false;
+    }
+    if(env === ENV.DEV) {
+        return false;
+    }
+    return true;
+}
 
 export function initFirebase(config: Record<string, any>) {
   if (!config) return null;

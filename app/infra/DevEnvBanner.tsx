@@ -1,3 +1,4 @@
+import { ENV } from './env';
 import './styles.css';
 
 interface DevEnvBannerProps {
@@ -5,12 +6,12 @@ interface DevEnvBannerProps {
 }
 
 export default function DevEnvBanner({env = null}:DevEnvBannerProps) {
-    if (env === 'development'){
+    if (env === ENV.DEV){
         return (
             <div className="dev-banner">
                 DEV BUILD
             </div>
-        )
+        );
     }
-    return (<></>)
+    return (<></>);
 }

@@ -10,3 +10,11 @@ if(booleanValue) {
     //true case code
 }
 ```
+
+Put semicolons at the end of arrow function declarations:
+
+``` js
+const newFun = () => {
+
+};
+```

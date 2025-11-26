@@ -7,11 +7,12 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { useEffect } from 'react';
-import { initFirebase, logPageView } from '~/infra/firebaseClient';
+import { initFirebase, logPageView, shouldUseFirebase } from '~/infra/firebaseClient';
 import { Helmet } from "react-helmet";
 import type { Route } from "./+types/root";
 import "./app.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getEnv } from "./infra/env";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -40,8 +41,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    // Initialize Firebase analytics on client only
-    if (typeof window === 'undefined') {
+    
+    if(!shouldUseFirebase(window, getEnv())){
       return;
     }
     try {
