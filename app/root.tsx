@@ -6,10 +6,13 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { useEffect } from 'react';
+import { initFirebase, logPageView, shouldUseFirebase } from '~/infra/firebaseClient';
 import { Helmet } from "react-helmet";
 import type { Route } from "./+types/root";
 import "./app.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getEnv } from "./infra/env";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -25,6 +28,64 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDeaCxA94hsTTPwKvqH6-Knx-80ua-Cw3E",
+    authDomain: "jeffdotski.firebaseapp.com",
+    databaseURL: "https://jeffdotski.firebaseio.com",
+    projectId: "jeffdotski",
+    storageBucket: "jeffdotski.firebasestorage.app",
+    messagingSenderId: "176879653026",
+    appId: "1:176879653026:web:26a06d9fad4c477ce087fb",
+    measurementId: "G-MNYVTDD3GY"
+  };
+
+  useEffect(() => {
+    
+    if(!shouldUseFirebase(window, getEnv())){
+      return;
+    }
+    try {
+      initFirebase(firebaseConfig);
+      
+      // log initial page view
+      logPageView(window.location.pathname + window.location.search);
+
+      // Helpers to detect SPA navigation (pushState/replaceState)
+      const handleLocationChange = () => {
+        logPageView(window.location.pathname + window.location.search);
+      };
+
+      const origPush = history.pushState;
+      const origReplace = history.replaceState;
+
+      history.pushState = function (...args) {
+        // @ts-ignore
+        origPush.apply(this, args);
+        window.dispatchEvent(new Event('locationchange'));
+      };
+
+      history.replaceState = function (...args) {
+        // @ts-ignore
+        origReplace.apply(this, args);
+        window.dispatchEvent(new Event('locationchange'));
+      };
+
+      window.addEventListener('popstate', handleLocationChange);
+      window.addEventListener('locationchange', handleLocationChange as EventListener);
+
+      return () => {
+        history.pushState = origPush;
+        history.replaceState = origReplace;
+        window.removeEventListener('popstate', handleLocationChange);
+        window.removeEventListener('locationchange', handleLocationChange as EventListener);
+      };
+    } catch (e) {
+      // initialization failed; don't block rendering
+      // eslint-disable-next-line no-console
+      console.warn('Firebase init/logging failed', e);
+    }
+  }, []);
   return (
     <html>
       <head>
