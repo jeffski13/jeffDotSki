@@ -41,7 +41,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Initialize Firebase analytics on client only
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
     try {
       initFirebase(firebaseConfig);
       
