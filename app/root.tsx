@@ -33,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     apiKey: "AIzaSyDeaCxA94hsTTPwKvqH6-Knx-80ua-Cw3E",
     authDomain: "jeffdotski.firebaseapp.com",
     databaseURL: "https://jeffdotski.firebaseio.com",
-    projectId: "jeffdotski",
+    projectId: "jeffdotski",  
     storageBucket: "jeffdotski.firebasestorage.app",
     messagingSenderId: "176879653026",
     appId: "1:176879653026:web:26a06d9fad4c477ce087fb",

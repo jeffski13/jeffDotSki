@@ -56,7 +56,7 @@ export default function BattleContainer({ selectedMonsters, gymLeaders, battleRo
           className="info-link-icon clickable-link-icon"
         />
       </a>
-      {showInfoNavigationConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setInfoNavigationConfirm(false)} destination={ROUTES.pokePeru.info}></BackNavigationConfirmModal>)}
+      {showInfoNavigationConfirm && (<BackNavigationConfirmModal destinationText='info page' onCancelNavigation={() => setInfoNavigationConfirm(false)} destination={ROUTES.pokePeru.info}></BackNavigationConfirmModal>)}
     </div>
   );
 }

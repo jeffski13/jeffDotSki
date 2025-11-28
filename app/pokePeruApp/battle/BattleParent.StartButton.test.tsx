@@ -38,8 +38,25 @@ describe('BattleStartScreen Component', () => {
     fireEvent.click(backButton);
 
     // Assert that the confirmation popup appears
-    expect(screen.getByText(/Are you sure you want to return/i)).toBeInTheDocument();
-    expect(screen.getByText(/to the selection screen\?/i)).toBeInTheDocument();
+    expect(screen.getByText(/Are you sure you want to go/i)).toBeInTheDocument();
+    expect(screen.getByText(/selection screen/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Yes/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /No/i })).toBeInTheDocument();
+  });
+  
+  test('shows "Are you sure?" popup with Yes and No buttons when info is clicked', () => {
+    const battleRoute = '/battletest'
+    render(<BattleContainer selectedMonsters={mockSelectedMonsters}
+      gymLeaders={mockTrainers}
+      battleRoute={battleRoute} />);
+
+    // Click the back button (find by alt text of the image or by role)
+    const backButton = screen.getByRole('img', { name: /Information Link/i });
+    fireEvent.click(backButton);
+
+    // Assert that the confirmation popup appears
+    expect(screen.getByText(/Are you sure you want to go/i)).toBeInTheDocument();
+    expect(screen.getByText(/info page/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Yes/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /No/i })).toBeInTheDocument();
   });
