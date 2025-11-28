@@ -476,7 +476,7 @@ export default function Battle({
         <br />
         <Typewriter text={effectivenessResult} isInstantTextRender={isAnimationInstant} />
       </div>
-      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
+      {showBackConfirm && (<BackNavigationConfirmModal destinationText='selection screen' onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
     </div>
   );
 }

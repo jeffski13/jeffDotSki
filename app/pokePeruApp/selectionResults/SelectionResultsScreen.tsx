@@ -138,7 +138,7 @@ export default function SelectionResultsScreen({
           {StartButtonColumn}
         </Row>
       </Container>
-      {showBackConfirm && (<BackNavigationConfirmModal onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
+      {showBackConfirm && (<BackNavigationConfirmModal destinationText='selection screen' onCancelNavigation={() => setShowBackConfirm(false)} destination={battleRoute}></BackNavigationConfirmModal>)}
     </div>
   );
 }
