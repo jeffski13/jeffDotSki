@@ -6,6 +6,7 @@ interface DevEnvBannerProps {
 }
 
 export default function DevEnvBanner({env = null}:DevEnvBannerProps) {
+    return (<></>);
     if (env === ENV.DEV){
         return (
             <div className="dev-banner">

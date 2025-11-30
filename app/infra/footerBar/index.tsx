@@ -17,6 +17,7 @@ interface ContentPerLanguage {
 }
 
 export function FooterBar() {
+  return (<></>)
   const [isGithubImgMouseOver, setIsGithubImgMouseOver] = useState(false);
   const [isInstaMouseOver, setIsInstaMouseOver] = useState(false);
 

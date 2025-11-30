@@ -164,13 +164,10 @@ export default function TeacherPortfolio({ isTestEnv = false, locationProvider }
 
   return (
     <div className="paralax-portfolio">
-
-      <div className="paralax-bgimg paralax-bgimg-1 paralax-bgimg-1-source">
-        <div className="paralax-section-title-container">
-          <span className="paralax-section-title">{content.heroTitle}</span>
-        </div>
-      </div>
-      <div className="paralax-bgimg-container">
+      <div className="portfolio-text-centered-content">
+        <p>This is a printable version of my teacher portfolio.</p>
+        <p>The full (prettier) version can be accessed at jeff.ski</p>
+        <a href="https://jeff.ski/aboutme/teacherPortfolio" >https://jeff.ski/aboutme/teacherPortfolio</a>
       </div>
 
       <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-overview">
@@ -190,7 +187,6 @@ export default function TeacherPortfolio({ isTestEnv = false, locationProvider }
                   <li>{content.skills3}</li>
                 </ul>
                 <p>{content.heroText2prefix}<strong>{content.heroText2highlight}</strong>{content.heroText2suffix}</p>
-                <a href={content.resumeLink} >{content.resumeLinkText}</a>
               </div>
             </Col>
             <Col xs={12} md={4} className="teacher-portfolio-overview-image-container desktop-view" >
@@ -269,11 +265,6 @@ export default function TeacherPortfolio({ isTestEnv = false, locationProvider }
         <a href={content.certificationLink} >{content.certificationLinkText}</a>
       </section>
 
-      <div className="paralax-bgimg paralax-bgimg-2 paralax-bgimg-2-source">
-        <div className="paralax-section-title-container">
-          <span className="paralax-section-title">{content.recentWorkSectionTitle}</span>
-        </div>
-      </div>
 
       <div className="paralax-section-blackBackground">
         <section className="paralax-paragraph paralax-content-section-efficiencyGains">
@@ -328,16 +319,7 @@ export default function TeacherPortfolio({ isTestEnv = false, locationProvider }
               </Col>
             </Row>
           </Container>
-          <div className="pokeperuLink">
-            <a href={content.highQualityToolsLink} >{content.highQualityToolsLinkText}</a>
-          </div>
         </section>
-      </div>
-
-      <div className="paralax-bgimg paralax-bgimg-3 paralax-bgimg-3-source">
-        <div className="paralax-section-title-container">
-          <span className="paralax-section-title">{content.passionSectionTitle}</span>
-        </div>
       </div>
 
       <section className="paralax-paragraph paralax-section-whiteBackground paralax-content-section-qualityWork">
@@ -372,12 +354,6 @@ export default function TeacherPortfolio({ isTestEnv = false, locationProvider }
           </Container>
         </section>
       </section>
-
-      <div className="paralax-bgimg paralax-bgimg-4 paralax-bgimg-4-source">
-        <div className="paralax-section-title-container">
-          <span className="paralax-section-title">{content.endingNote}</span>
-        </div>
-      </div>
 
       <FooterBar />
     </div>

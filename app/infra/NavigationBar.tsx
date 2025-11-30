@@ -54,6 +54,9 @@ export default function NavigationBar() {
     const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
     return (
+        <></>)
+
+    return (
         <>
             <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
                 <Nav.Link href="/">
