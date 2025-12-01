@@ -1,5 +1,5 @@
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import githubLogo from './github-logo.png';
 import githubLogoShadow from './github-logo-shadow.png';
@@ -8,11 +8,13 @@ import instaLogoShadow from './instagram-logo-shadow.png';
 import packageJson from "package.json";
 import ROUTES from '~/consts/ROUTES';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/langSupport';
+import '../mobile-support.css';
 import './styles.css';
 
 interface ContentPerLanguage {
   version: string;
   githubTitle: string;
+  builtBy: string;
   instagramTitle: string;
 }
 
@@ -26,11 +28,13 @@ export function FooterBar() {
   const es: ContentPerLanguage = {
     version: 'Versión',
     githubTitle: '¡Mi sitio web de código abierto!',
+    builtBy: 'Hecho con 🤍 por Jeff Szcinski',
     instagramTitle: 'Instagram',
   }
   const defaultText: ContentPerLanguage = {
     version: 'Version',
     githubTitle: 'My Open Source Website!',
+    builtBy: 'Built with 🤍 by Jeff Szcinski',
     instagramTitle: 'Instagram',
   }
 
@@ -49,7 +53,13 @@ export function FooterBar() {
             {content.version}: {packageJson.version}
           </div>
         </Col>
-        <Col xs={2} sm={6} />
+        <Col xs={2} sm={6} className="footerBarLinkWrapper mobile-view">
+        </Col>
+        <Col xs={2} sm={6} className="footerBarLinkWrapper desktop-view">
+          <div className="footerLinksArea" >
+            {content.builtBy}
+          </div>
+        </Col>
         <Col xs={2} sm={1} >
           <a title={content.instagramTitle}
             href={ROUTES.external.instagram}
