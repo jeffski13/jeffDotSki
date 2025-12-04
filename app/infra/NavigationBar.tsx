@@ -63,17 +63,17 @@ export default function NavigationBar() {
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
                         <NavDropdown title={content.resume} id="navigationbar-resume">
-                            <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} >{content.englishTeacher}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.external.resume.profeIngles} >{content.englishTeacherResume}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} >{content.softwareEngineer}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.resume.ingenieroDeSoftware} >{content.softwareEngineerResume}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} >{content.englishTeacher}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.resume.profeIngles} >{content.englishTeacherResume}</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Nav >
                         <Nav.Link href={ROUTES.pokePeru.battle}>{content.pokePeru}</Nav.Link>
                         <NavDropdown title={content.hobbies} id="navigationbar-resume">
-                            <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio} >{content.teacherPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio} >{content.techPortfolio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio} >{content.teacherPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing} >{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows} >{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
