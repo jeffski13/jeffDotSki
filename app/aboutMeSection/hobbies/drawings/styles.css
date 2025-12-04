@@ -115,6 +115,27 @@
   display: flex; /* Enables Flexbox layout */
 }
 
+.thumbnail-image-loading-text-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 90%;
+  z-index: 1; /* behind the background image div */
+  color: #000;
+  font-weight: 600;
+  justify-content: center; /* Horizontally centers content */
+  align-items: center; /* Vertically centers content */
+}
+
+.thumbnail-image-loading-text-container.loaded {
+  display: none;
+}
+
+.thumbnail-image-loading-text-container.loading {
+  display: flex; /* Enables Flexbox layout */
+}
+
 .noselect {
     -webkit-touch-callout: none;
     /* iOS Safari */

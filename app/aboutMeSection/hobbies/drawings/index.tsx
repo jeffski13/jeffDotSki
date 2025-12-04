@@ -164,10 +164,11 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, isTestEnvInstantLoad, () => {
+                (item, i) => <DrawingThumbail drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
-                })
+                }}  />
               )}
             </Row>
           </ul>
@@ -187,10 +188,11 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsHalloweenList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, isTestEnvInstantLoad, () => {
+                (item, i) => <DrawingThumbail drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
-                })
+                }}  />
               )}
             </Row>
           </ul>
@@ -258,9 +260,17 @@ export function Drawings({
   );
 }
 
+interface DrawingThumbailProps {
+  drawingItem: DrawingItem;
+  index: number;
+  titleLabel: string;
+  isTestEnvInstantLoad: boolean;
+  onImageClicked: Function;
+}
 
 // Fullscreen overlay state and handler will be managed in Drawings component
-const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, isTestEnvInstantLoad: boolean, onImageClicked: Function) => {
+const DrawingThumbail = ({drawingItem, index, titleLabel, isTestEnvInstantLoad, onImageClicked}: DrawingThumbailProps) => {
+  console.log('render')
   const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
   const [thumbnailImg, setThumbnailImg] = useState<string | null>(null);
   const loadImg = (imagePath: string) => {
