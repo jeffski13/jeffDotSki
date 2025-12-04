@@ -76,14 +76,14 @@ export function Drawings({
     if (!fullScreenImagePath) {
       return;
     }
-    
+
     setIsFullScreenMode(true);
-    
-    if(isTestEnvInstantLoad){
+
+    if (isTestEnvInstantLoad) {
       onImageLoadedSuccessfully(fullScreenImagePath)
       return;
     }
-    
+
     setOverlayImg(null);
     setBackgroundLoaded(false);
     const img = new Image();
@@ -96,7 +96,7 @@ export function Drawings({
       onImageLoadedSuccessfully(fullScreenImagePath)
     };
   }
-  
+
   const onImageLoadedSuccessfully = (fullScreenImagePath: string) => {
     setBackgroundLoaded(true);
     setOverlayImg(fullScreenImagePath);
@@ -164,7 +164,7 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                (item, i) => renderDrawings(item, i, content.titleLabel, isTestEnvInstantLoad, () => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
                 })
@@ -187,7 +187,7 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsHalloweenList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                (item, i) => renderDrawings(item, i, content.titleLabel, isTestEnvInstantLoad, () => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
                 })
@@ -260,7 +260,42 @@ export function Drawings({
 
 
 // Fullscreen overlay state and handler will be managed in Drawings component
-const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onImageClicked: Function) => {
+const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, isTestEnvInstantLoad: boolean, onImageClicked: Function) => {
+  const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [thumbnailImg, setThumbnailImg] = useState<string | null>(null);
+  const loadImg = (imagePath: string) => {
+    if (!imagePath) {
+      return;
+    }
+    
+    if (isTestEnvInstantLoad) {
+      onImageLoadedSuccessfully(imagePath)
+      return;
+    }
+    setImageLoaded(false);
+    const img = new Image();
+    img.src = drawingItem.thumb;
+    img.onload = () => {
+      onImageLoadedSuccessfully(imagePath)
+    };
+    img.onerror = () => {
+      // if there's an error loading, still set the path so the div can try
+      onImageLoadedSuccessfully(drawingItem.thumb)
+    };
+  }
+  
+  const onImageLoadedSuccessfully = (imagePath: string) => {
+    setImageLoaded(true);
+    setThumbnailImg(imagePath);
+  }
+  let delayLoadTime = 100*index;
+  if(isTestEnvInstantLoad) {
+    delayLoadTime = 0;
+  }
+  setTimeout(()=> {
+    loadImg(drawingItem.thumb);
+  }, delayLoadTime);
+
   return (
     <Col xs={12} md={6} lg={4} key={index}>
       <li>
@@ -272,11 +307,13 @@ const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onI
         </div >
         <div className="HobbieContentItem" >
           <div className="hobbieImageContainer" >
-            <p className="hobbieImageLoadingLabel">loading...</p>
+            <div className={`thumbnail-image-loading-text-container ${isImageLoaded ? 'loaded' : 'loading'}`} >
+              <p className="hobbieImageLoadingLabel">loading...</p>
+            </div>
             <img
-              className="hobbieImage drawingImage"
-              src={drawingItem.thumb}
-              alt={`${drawingItem.name} Drawing`}
+              src={thumbnailImg}
+              alt={`${drawingItem.name} drawing ${isImageLoaded ? '' : ' loading...'}`}
+              className={`hobbieImage drawingImage ${isImageLoaded ? 'loaded' : 'loading'}`}
               style={{ cursor: 'pointer' }}
               onClick={() => {
                 onImageClicked();
