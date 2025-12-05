@@ -5,6 +5,7 @@ import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
 import '../../../infra/mobile-support.css';
 import './styles.css';
+import { DrawingThumbail } from './DrawingThumbnail';
 
 interface ContentPerLanguage {
   title: string;
@@ -13,7 +14,6 @@ interface ContentPerLanguage {
   spookyDesc: string;
   titleLabel: string;
 }
-
 
 interface DrawingsProps {
   drawingsList: DrawingItem[];
@@ -259,79 +259,3 @@ export function Drawings({
     </div>
   );
 }
-
-interface DrawingThumbailProps {
-  drawingItem: DrawingItem;
-  index: number;
-  titleLabel: string;
-  isTestEnvInstantLoad: boolean;
-  onImageClicked: Function;
-}
-
-// Fullscreen overlay state and handler will be managed in Drawings component
-const DrawingThumbail = ({drawingItem, index, titleLabel, isTestEnvInstantLoad, onImageClicked}: DrawingThumbailProps) => {
-  console.log('render')
-  const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
-  const [thumbnailImg, setThumbnailImg] = useState<string | null>(null);
-  const loadImg = (imagePath: string) => {
-    if (!imagePath) {
-      return;
-    }
-    
-    if (isTestEnvInstantLoad) {
-      onImageLoadedSuccessfully(imagePath)
-      return;
-    }
-    setImageLoaded(false);
-    const img = new Image();
-    img.src = drawingItem.thumb;
-    img.onload = () => {
-      onImageLoadedSuccessfully(imagePath)
-    };
-    img.onerror = () => {
-      // if there's an error loading, still set the path so the div can try
-      onImageLoadedSuccessfully(drawingItem.thumb)
-    };
-  }
-  
-  const onImageLoadedSuccessfully = (imagePath: string) => {
-    setImageLoaded(true);
-    setThumbnailImg(imagePath);
-  }
-  let delayLoadTime = 100*index;
-  if(isTestEnvInstantLoad) {
-    delayLoadTime = 0;
-  }
-  setTimeout(()=> {
-    loadImg(drawingItem.thumb);
-  }, delayLoadTime);
-
-  return (
-    <Col xs={12} md={6} lg={4} key={index}>
-      <li>
-        <div className="hobbieItemInfoContainer">
-          <div className="hobbieItemInfo" >
-            <div className="hobbieItemTitle" >{titleLabel}</div>
-            <div className="hobbieItemText" >{drawingItem.name}</div>
-          </div>
-        </div >
-        <div className="HobbieContentItem" >
-          <div className="hobbieImageContainer" >
-            <div className={`thumbnail-image-loading-text-container ${isImageLoaded ? 'loaded' : 'loading'}`} >
-              <p className="hobbieImageLoadingLabel">loading...</p>
-            </div>
-            <img
-              src={thumbnailImg}
-              alt={`${drawingItem.name} drawing ${isImageLoaded ? '' : ' loading...'}`}
-              className={`hobbieImage drawingImage ${isImageLoaded ? 'loaded' : 'loading'}`}
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                onImageClicked();
-              }}
-            />
-          </div>
-        </div>
-      </li>
-    </Col>
-  );
-};
