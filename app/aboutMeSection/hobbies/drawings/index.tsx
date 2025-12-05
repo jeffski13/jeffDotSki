@@ -5,6 +5,7 @@ import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
 import '../../../infra/mobile-support.css';
 import './styles.css';
+import { DrawingThumbail } from './DrawingThumbnail';
 
 interface ContentPerLanguage {
   title: string;
@@ -13,7 +14,6 @@ interface ContentPerLanguage {
   spookyDesc: string;
   titleLabel: string;
 }
-
 
 interface DrawingsProps {
   drawingsList: DrawingItem[];
@@ -76,14 +76,14 @@ export function Drawings({
     if (!fullScreenImagePath) {
       return;
     }
-    
+
     setIsFullScreenMode(true);
-    
-    if(isTestEnvInstantLoad){
+
+    if (isTestEnvInstantLoad) {
       onImageLoadedSuccessfully(fullScreenImagePath)
       return;
     }
-    
+
     setOverlayImg(null);
     setBackgroundLoaded(false);
     const img = new Image();
@@ -96,7 +96,7 @@ export function Drawings({
       onImageLoadedSuccessfully(fullScreenImagePath)
     };
   }
-  
+
   const onImageLoadedSuccessfully = (fullScreenImagePath: string) => {
     setBackgroundLoaded(true);
     setOverlayImg(fullScreenImagePath);
@@ -164,10 +164,11 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                (item, i) => <DrawingThumbail drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
-                })
+                }}  />
               )}
             </Row>
           </ul>
@@ -187,10 +188,11 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsHalloweenList.map(
-                (item, i) => renderDrawings(item, i, content.titleLabel, () => {
+                (item, i) => <DrawingThumbail drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
-                })
+                }}  />
               )}
             </Row>
           </ul>
@@ -257,34 +259,3 @@ export function Drawings({
     </div>
   );
 }
-
-
-// Fullscreen overlay state and handler will be managed in Drawings component
-const renderDrawings = (drawingItem: DrawingItem, index, titleLabel: string, onImageClicked: Function) => {
-  return (
-    <Col xs={12} md={6} lg={4} key={index}>
-      <li>
-        <div className="hobbieItemInfoContainer">
-          <div className="hobbieItemInfo" >
-            <div className="hobbieItemTitle" >{titleLabel}</div>
-            <div className="hobbieItemText" >{drawingItem.name}</div>
-          </div>
-        </div >
-        <div className="HobbieContentItem" >
-          <div className="hobbieImageContainer" >
-            <p className="hobbieImageLoadingLabel">loading...</p>
-            <img
-              className="hobbieImage drawingImage"
-              src={drawingItem.thumb}
-              alt={`${drawingItem.name} Drawing`}
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                onImageClicked();
-              }}
-            />
-          </div>
-        </div>
-      </li>
-    </Col>
-  );
-};
