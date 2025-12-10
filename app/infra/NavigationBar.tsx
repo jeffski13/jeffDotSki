@@ -6,7 +6,7 @@ import { THEME, type ThemeManager } from './darkTheme';
 import { useEffect } from 'react';
 
 interface NavigationBarProps {
-    getCurrentTheme: () => THEME;
+    theme: THEME;
     toggleTheme: () => void;
     initializeDarkMode: () => void;
 }
@@ -26,7 +26,7 @@ export interface ContentPerLanguage {
     bio: string;
 }
 
-export default function NavigationBar({getCurrentTheme, toggleTheme, initializeDarkMode}: NavigationBarProps) {
+export default function NavigationBar({theme, toggleTheme, initializeDarkMode}: NavigationBarProps) {
     const es: ContentPerLanguage = {
         resume: 'Currículum',
         englishTeacher: 'Profesor de Inglés',
@@ -96,7 +96,7 @@ export default function NavigationBar({getCurrentTheme, toggleTheme, initializeD
                     onClick={() => {
                         toggleTheme();
                     }}
-                >{getCurrentTheme() === THEME.DARK? 'light' : 'dark'}</Button>
+                >{theme === THEME.DARK ? 'light' : 'dark'}</Button>
             </Navbar>
         </>
     );

@@ -21,9 +21,7 @@ const jeffDotSkiPage = <P extends object>(PageContent: React.ComponentType<P>) =
       return (
         <div id="App" >
           <NavigationBar 
-            getCurrentTheme={() => {
-              return themeManagerImpl.getCurrentTheme();
-            }}
+            theme={themeManagerImpl.getCurrentTheme()}
             toggleTheme={function (): void {
               const currentTheme = themeManagerImpl.getCurrentTheme();
               let nextTheme = currentTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
