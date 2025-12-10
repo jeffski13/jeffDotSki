@@ -12,7 +12,10 @@ interface ComponentWithProps { }
  * @returns the page with the common website components.
  */
 const jeffDotSkiPage = <P extends object>(PageContent: React.ComponentType<P>) =>
+
+  
   class JeffSkiPageWithContent extends React.Component<P & ComponentWithProps> {
+    
     render() {
       const { ...props } = this.props;
       return (
