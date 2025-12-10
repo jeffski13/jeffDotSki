@@ -3,6 +3,8 @@ import ROUTES from './consts/ROUTES';
 
 export default [
     index("homePage/route.tsx"),
+    route(ROUTES.tailwindsTest, "tailwindsTest/route.tsx"),
+    
     route(ROUTES.aboutMe.techPortfolio, "aboutMeSection/techPortfolio/route.tsx"),
     route(ROUTES.aboutMe.teacherPortfolio, "aboutMeSection/teacherPortfolio/route.tsx"),
     route(ROUTES.aboutMe.drawing, "aboutMeSection/hobbies/drawings/route.tsx"),

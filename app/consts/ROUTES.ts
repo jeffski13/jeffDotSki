@@ -1,4 +1,5 @@
 const ROUTES = {
+    tailwindsTest: '/tailwindsTest',
     aboutMe: {
       bio: '/aboutme/bio',
       drawing: '/aboutme/hobbies/drawing',

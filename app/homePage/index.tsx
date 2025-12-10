@@ -52,7 +52,7 @@ export default function HomePage() {
         </div>
         <h1 className="homePage_title-container"><span className="homePage_title-websiteName">JEFF</span> <span className="homePage_title-nonwebsitename">SZCIN</span><span className="homePage_title-websiteName">SKI</span></h1>
       </div>
-      <Container fluid className="homePage_aboutJeff">
+      <Container fluid className="homePage_aboutJeff" data-bs-theme="dark">
         <Row>
           <Col xs={12} sm={12} md={5} className="homePage_aboutJeff-image">
             <Image src="https://s3.us-east-2.amazonaws.com/jeff.ski/title/titlePage-info1-md.jpg" roundedCircle fluid />

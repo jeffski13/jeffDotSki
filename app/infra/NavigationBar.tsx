@@ -55,7 +55,8 @@ export default function NavigationBar() {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
+            <Navbar 
+        data-bs-theme="dark" bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
                 <Nav.Link href="/">
                     <Navbar.Brand className="brand">jeff.ski</Navbar.Brand>
                 </Nav.Link>
