@@ -3,7 +3,7 @@ import ROUTES from '../consts/ROUTES';
 import './styles.css';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../langSupport';
 import { getCurrentTheme, setupDarkMode, THEME, updateTheme } from './darkTheme';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface ContentPerLanguage {
     resume: string;
@@ -55,10 +55,9 @@ export default function NavigationBar() {
     };
     const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
-    setupDarkMode();
-    const currentTheme = getCurrentTheme();
-    const [theme, setTheme] = useState(currentTheme)
-
+    useEffect(() => {
+        setupDarkMode();
+    }, []);
 
     return (
         <>
@@ -89,8 +88,8 @@ export default function NavigationBar() {
                 </Navbar.Collapse>
                 <Button id="bd-theme"
                     onClick={() => {
-                        let nextTheme = theme === THEME.DARK? THEME.LIGHT: THEME.DARK;
-                        setTheme(nextTheme);
+                        const currentTheme = getCurrentTheme();
+                        let nextTheme = currentTheme === THEME.DARK? THEME.LIGHT: THEME.DARK;
                         updateTheme(nextTheme);
                     }}
                 >Theme switcher</Button>
