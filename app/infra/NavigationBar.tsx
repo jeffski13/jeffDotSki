@@ -2,8 +2,14 @@ import { Navbar, NavDropdown, Nav, Button } from 'react-bootstrap';
 import ROUTES from '../consts/ROUTES';
 import './styles.css';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../langSupport';
-import { getCurrentTheme, setupDarkMode, THEME, updateTheme } from './darkTheme';
-import { useEffect, useState } from 'react';
+import { THEME, type ThemeManager } from './darkTheme';
+import { useEffect } from 'react';
+
+interface NavigationBarProps {
+    getCurrentTheme: () => THEME;
+    toggleTheme: () => void;
+    initializeDarkMode: () => void;
+}
 
 export interface ContentPerLanguage {
     resume: string;
@@ -20,7 +26,7 @@ export interface ContentPerLanguage {
     bio: string;
 }
 
-export default function NavigationBar() {
+export default function NavigationBar({getCurrentTheme, toggleTheme, initializeDarkMode}: NavigationBarProps) {
     const es: ContentPerLanguage = {
         resume: 'Currículum',
         englishTeacher: 'Profesor de Inglés',
@@ -56,7 +62,7 @@ export default function NavigationBar() {
     const content: ContentPerLanguage = getContentByLanguage(multiLangContent, getBrowserLanguage());
 
     useEffect(() => {
-        setupDarkMode();
+        initializeDarkMode();
     }, []);
 
     return (
@@ -88,11 +94,9 @@ export default function NavigationBar() {
                 </Navbar.Collapse>
                 <Button id="bd-theme"
                     onClick={() => {
-                        const currentTheme = getCurrentTheme();
-                        let nextTheme = currentTheme === THEME.DARK? THEME.LIGHT: THEME.DARK;
-                        updateTheme(nextTheme);
+                        toggleTheme();
                     }}
-                >Theme switcher</Button>
+                >{getCurrentTheme() === THEME.DARK? 'light' : 'dark'}</Button>
             </Navbar>
         </>
     );
