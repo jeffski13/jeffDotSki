@@ -1,4 +1,3 @@
-
 export enum THEME {
     DARK,
     LIGHT
@@ -16,12 +15,6 @@ export interface ThemeStore {
     setLocalStorageTheme: (theme: string) => void;
 }
 
-export interface ThemeManager {
-    themeStore: ThemeStore;
-    getCurrentTheme: () => THEME;
-    updateTheme: (theme: THEME) => void;
-    setupDarkMode: () => void
-}
 
 export const themeStoreImpl: ThemeStore = {
     getLocalStorageTheme: function (): string | null {
@@ -43,41 +36,81 @@ export const themeStoreImpl: ThemeStore = {
     }
 }
 
-export const themeManagerImpl: ThemeManager = {
-    themeStore: themeStoreImpl,
-    getCurrentTheme: function (): THEME {
-        if (getRestoreTheme(this.themeStore) === THEME_STRING_MAP.DARK) {
-            return THEME.DARK;
-        }
-        else {
-            return THEME.LIGHT;
-        }
-    },
-    updateTheme: function (theme: THEME): void {
-        let themeString = '';
-        if (theme === THEME.LIGHT) {
-            themeString = THEME_STRING_MAP.LIGHT;
-        }
-        else {
-            themeString = THEME_STRING_MAP.DARK;
-        }
-        this.themeStore.setLocalStorageTheme(themeString);
-        setTheme(themeString);
-    },
-    setupDarkMode: function (): void {
-        const theme = getRestoreTheme(this.themeStore);
-        setTheme(theme);
 
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            //update when user changes os theme preference
-            console.log('window.matchMedia');
-            const storedTheme = this.themeStore.getLocalStorageTheme();
-            if (storedTheme !== 'light' && storedTheme !== 'dark') {
-                setTheme(getRestoreTheme(this.themeStore));
-            }
-        });
+interface DomThemeSetter {
+    setThemeInDom: (theme: string) => void;
+}
+
+const domThemeSetterImpl: DomThemeSetter = {
+    setThemeInDom: function (theme: string): void {
+        if (theme === 'auto') {
+            document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+        } else {
+            document.documentElement.setAttribute('data-bs-theme', theme)
+        }
     }
 }
+
+export interface ThemeManager {
+    domThemeSetter: DomThemeSetter;
+    themeStore: ThemeStore;
+    getCurrentTheme: () => THEME;
+    updateTheme: (theme: THEME) => void;
+    setupDarkMode: () => void;
+    toggleTheme: () => void;
+
+}
+
+export const getThemeManagerImpl = () => {
+    return getThemeManager(themeStoreImpl, domThemeSetterImpl);
+}
+
+export const getThemeManager = (themeStore: ThemeStore, domThemeSetter: DomThemeSetter): ThemeManager => {
+
+    const themeManagerImpl: ThemeManager = {
+        themeStore,
+        domThemeSetter,
+        getCurrentTheme: function (): THEME {
+            if (getRestoreTheme(this.themeStore) === THEME_STRING_MAP.DARK) {
+                return THEME.DARK;
+            }
+            else {
+                return THEME.LIGHT;
+            }
+        },
+        updateTheme: function (theme: THEME): void {
+            let themeString = '';
+            if (theme === THEME.LIGHT) {
+                themeString = THEME_STRING_MAP.LIGHT;
+            }
+            else {
+                themeString = THEME_STRING_MAP.DARK;
+            }
+            this.themeStore.setLocalStorageTheme(themeString);
+            this.domThemeSetter.setThemeInDom(themeString);
+        },
+        setupDarkMode: function (): void {
+            const theme = getRestoreTheme(this.themeStore);
+            this.domThemeSetter.setThemeInDom(theme);
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                //update when user changes os theme preference
+                const storedTheme = this.themeStore.getLocalStorageTheme();
+                if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                    this.domThemeSetter.setThemeInDom(getRestoreTheme(this.themeStore));
+                }
+            });
+        },
+        toggleTheme: function (): void {
+            const currentTheme = this.getCurrentTheme();
+            let nextTheme = currentTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+            this.updateTheme(nextTheme);
+        }
+    };
+    return themeManagerImpl;
+}
+
+
 
 const getRestoreTheme = (themeStore: ThemeStore): string => {
     const previouslyStoredTheme = themeStore.getLocalStorageTheme();
@@ -94,11 +127,3 @@ const getRestoreTheme = (themeStore: ThemeStore): string => {
         return previouslyStoredTheme;
     }
 };
-
-const setTheme = (theme: string) => {
-    if (theme === 'auto') {
-        document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
-    } else {
-        document.documentElement.setAttribute('data-bs-theme', theme)
-    }
-}

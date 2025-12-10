@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles.css';
 import DevEnvBanner from "./DevEnvBanner";
 import { getEnv } from "./env";
-import { THEME, themeManagerImpl } from "./darkTheme";
+import { THEME, getThemeManagerImpl } from "./darkTheme";
 
 interface ComponentWithProps { }
 
@@ -16,20 +16,13 @@ interface ComponentWithProps { }
 const jeffDotSkiPage = <P extends object>(PageContent: React.ComponentType<P>) =>
 
   class JeffSkiPageWithContent extends React.Component<P & ComponentWithProps> {
+
     render() {
       const { ...props } = this.props;
       return (
         <div id="App" >
-          <NavigationBar 
-            theme={themeManagerImpl.getCurrentTheme()}
-            toggleTheme={function (): void {
-              const currentTheme = themeManagerImpl.getCurrentTheme();
-              let nextTheme = currentTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
-              themeManagerImpl.updateTheme(nextTheme);
-            }} 
-            initializeDarkMode={function (): void {
-              themeManagerImpl.setupDarkMode();
-            }} />
+          <NavigationBar themeManager={getThemeManagerImpl()}
+           />
           <div className="webpagecontent">
             <PageContent {...props} />
           </div>
