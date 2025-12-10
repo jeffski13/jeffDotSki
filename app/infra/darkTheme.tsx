@@ -51,15 +51,20 @@ const domThemeSetterImpl: DomThemeSetter = {
     }
 }
 
+/**
+ * call {@link setupDarkMode} on mount. 
+ * Theme changes can be done through {@link updateTheme} or {@link toggleTheme}
+ * 
+ * @function setupDarkMode
+ */
 export interface ThemeManager {
     domThemeSetter: DomThemeSetter;
     themeStore: ThemeStore;
     themeOSMonitor: ThemeOSMonitor;
+    setupDarkMode: () => void;
     getCurrentTheme: () => THEME;
     updateTheme: (theme: THEME) => void;
-    setupDarkMode: () => void;
     toggleTheme: () => void;
-
 }
 
 export interface ThemeOSMonitor {
