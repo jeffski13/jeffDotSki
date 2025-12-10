@@ -37,7 +37,7 @@ export const themeStoreImpl: ThemeStore = {
 }
 
 
-interface DomThemeSetter {
+export interface DomThemeSetter {
     setThemeInDom: (theme: string) => void;
 }
 
@@ -54,6 +54,7 @@ const domThemeSetterImpl: DomThemeSetter = {
 export interface ThemeManager {
     domThemeSetter: DomThemeSetter;
     themeStore: ThemeStore;
+    themeOSMonitor: ThemeOSMonitor;
     getCurrentTheme: () => THEME;
     updateTheme: (theme: THEME) => void;
     setupDarkMode: () => void;
@@ -61,15 +62,36 @@ export interface ThemeManager {
 
 }
 
-export const getThemeManagerImpl = () => {
-    return getThemeManager(themeStoreImpl, domThemeSetterImpl);
+export interface ThemeOSMonitor {
+    domThemeSetter: DomThemeSetter;
+    themeStore: ThemeStore;
+    setup: () => void
 }
 
-export const getThemeManager = (themeStore: ThemeStore, domThemeSetter: DomThemeSetter): ThemeManager => {
+export const themeOSMonitorImpl: ThemeOSMonitor = {
+    themeStore: themeStoreImpl,
+    domThemeSetter: domThemeSetterImpl,
+    setup: function (): void {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            //update when user changes os theme preference
+            const storedTheme = this.themeStore.getLocalStorageTheme();
+            if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                this.domThemeSetter.setThemeInDom(getRestoreTheme(this.themeStore));
+            }
+        });
+    }
+}
+
+export const getThemeManagerImpl = () => {
+    return getThemeManager(themeStoreImpl, domThemeSetterImpl, themeOSMonitorImpl);
+}
+
+export const getThemeManager = (themeStore: ThemeStore, domThemeSetter: DomThemeSetter, themeOSMonitor: ThemeOSMonitor): ThemeManager => {
 
     const themeManagerImpl: ThemeManager = {
         themeStore,
         domThemeSetter,
+        themeOSMonitor,
         getCurrentTheme: function (): THEME {
             if (getRestoreTheme(this.themeStore) === THEME_STRING_MAP.DARK) {
                 return THEME.DARK;
@@ -92,14 +114,8 @@ export const getThemeManager = (themeStore: ThemeStore, domThemeSetter: DomTheme
         setupDarkMode: function (): void {
             const theme = getRestoreTheme(this.themeStore);
             this.domThemeSetter.setThemeInDom(theme);
+            this.themeOSMonitor.setup();
 
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                //update when user changes os theme preference
-                const storedTheme = this.themeStore.getLocalStorageTheme();
-                if (storedTheme !== 'light' && storedTheme !== 'dark') {
-                    this.domThemeSetter.setThemeInDom(getRestoreTheme(this.themeStore));
-                }
-            });
         },
         toggleTheme: function (): void {
             const currentTheme = this.getCurrentTheme();
@@ -109,8 +125,6 @@ export const getThemeManager = (themeStore: ThemeStore, domThemeSetter: DomTheme
     };
     return themeManagerImpl;
 }
-
-
 
 const getRestoreTheme = (themeStore: ThemeStore): string => {
     const previouslyStoredTheme = themeStore.getLocalStorageTheme();

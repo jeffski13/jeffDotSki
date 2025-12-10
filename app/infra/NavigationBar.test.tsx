@@ -1,51 +1,53 @@
 import { render, screen } from '@testing-library/react';
 import NavigationBar from './NavigationBar';
-import type { THEME, ThemeManager, ThemeStore } from './darkTheme';
+import { getThemeManager, THEME, type DomThemeSetter, type ThemeManager, type ThemeOSMonitor, type ThemeStore } from './darkTheme';
 
-const getThemeStoreMock = (): ThemeStore => {
-
-  const themeStoreMock: ThemeStore = {
-    getLocalStorageTheme: function (): string | null {
-      return themeInLocalStorageMock;
-    },
-    getOSPreferredTheme: function (): string | null {
-      return osPreferredThemeMock;
-    },
-    setLocalStorageTheme: function (theme: string): void {
-      themeInLocalStorageMock = theme;
-    }
-  };
-  
-  let themeInLocalStorageMock: string | null = null;
-  let osPreferredThemeMock: string | null = null;
-  
-  themeStoreMock.setOSPreferredTheme = (theme: string): string | null {
-    osPreferredThemeMock = theme;
-  };
-
-  return themeStoreMock;
+interface ThemeStoreWithManipulations extends ThemeStore{
+  themeInLocalStorageMock: string | null;
+  osPreferredThemeMock: string | null;
 }
 
-const themeManagerMock: ThemeManager = {
-  themeStore: getThemeStoreMock(),
-  getCurrentTheme: function (): THEME {
-    return this.themeStore.getLocalStorageTheme()
+const themeStoreWithManipulations: ThemeStoreWithManipulations = {
+  themeInLocalStorageMock: null,
+  osPreferredThemeMock: null,
+  getLocalStorageTheme: function (): string | null {
+    return this.themeInLocalStorageMock;
   },
-  updateTheme: function (theme: THEME): void {
-    throw new Error('Function not implemented.');
+  getOSPreferredTheme: function (): string | null {
+    return this.osPreferredThemeMock;
   },
-  setupDarkMode: function (): void {
-    throw new Error('Function not implemented.');
+  setLocalStorageTheme: function (theme: string): void {
+    this.themeInLocalStorageMock = theme;
+  }
+}
+
+const domThemeSetterMock: DomThemeSetter = {
+  setThemeInDom: function (theme: string): void {
+  }
+}
+
+const themeOSMonitorMock: ThemeOSMonitor = {
+  domThemeSetter: domThemeSetterMock,
+  themeStore: themeStoreWithManipulations,
+  setup: function (): void {
   }
 }
 
 describe('NavigationBar', () => {
 
   it('doesnt render the dev banner when unknown', () => {
-    render(<NavigationBar themeManager={getThemeStoreMock()} />);
+    render(<NavigationBar themeManager={getThemeManager(themeStoreWithManipulations, domThemeSetterMock, themeOSMonitorMock)} />);
     expect(screen.queryByText(/Resume/)).toBeInTheDocument();
+    //dark theme button present
+    expect(screen.queryByText(/dark/)).toBeInTheDocument();
   });
 
-  
-
+  it('correct theme text on startup', () => {
+    const themeStore = {...themeStoreWithManipulations};
+    themeStore.themeInLocalStorageMock = 'dark';
+      render(<NavigationBar themeManager={getThemeManager(themeStore, domThemeSetterMock, themeOSMonitorMock)} />);
+    expect(screen.queryByText(/Resume/)).toBeInTheDocument();
+    //dark theme button present
+    expect(screen.queryByText(/light/)).toBeInTheDocument();
+  });
 });
