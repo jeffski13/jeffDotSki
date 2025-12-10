@@ -10,6 +10,11 @@ const THEME_STRING_MAP = {
     LIGHT: 'light',
 }
 
+interface ThemeStore {
+    getLocalStorageTheme: () => string;
+    getOSPreferredTheme: () => string;
+}
+
 export const updateTheme = (theme: THEME) => {
     let themeString = '';
     if (theme === THEME.LIGHT) {
@@ -18,7 +23,7 @@ export const updateTheme = (theme: THEME) => {
     else {
         themeString = THEME_STRING_MAP.DARK;
     }
-    setStoredTheme(themeString);
+    setLocalStorageTheme(themeString);
     setTheme(themeString);
 }
 
@@ -31,23 +36,27 @@ export const getCurrentTheme = (): THEME => {
     }
 }
 
-const getLocalStorageTheme = () => {
+const getLocalStorageTheme = (): string | null => {
     return localStorage.getItem(THEME_STORAGE_KEY);
 }
 
-const setStoredTheme = (theme: string) => {
+const setLocalStorageTheme = (theme: string) => {
     localStorage.setItem(THEME_STORAGE_KEY, theme)
 };
 
-const getPreferredTheme = () => {
-    const storedTheme = getLocalStorageTheme();
-    if (storedTheme) {
-        return storedTheme;
+const getPreferredTheme = (): string | null => {
+    if(window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return THEME_STRING_MAP.DARK;
+    }
+    else if(window.matchMedia('(prefers-color-scheme: light)').matches) {
+        return THEME_STRING_MAP.LIGHT;
+    }
+    else {
+        return null;
     }
 }
 
 const setTheme = (theme: string) => {
-    console.log('setTheme: ', theme);
     if (theme === 'auto') {
         document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
     } else {
@@ -70,6 +79,7 @@ const getRestoreTheme = (): string => {
         return previouslyStoredTheme;
     }
 }
+
 export const setupDarkMode = () => {
     const theme = getRestoreTheme();
     setTheme(theme);
