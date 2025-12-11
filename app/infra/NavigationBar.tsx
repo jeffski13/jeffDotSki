@@ -65,7 +65,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
     }, []);
 
     const darkModeButtonText = (theme === THEME.DARK) ? 'light' : 'dark';
-    const darkModeButtonIcon = (theme === THEME.DARK) ? '/images/darkMode/dark-mode-dark.png' : '/images/darkMode/dark-mode-light.png';
+    const darkModeButtonIcon = (theme === THEME.DARK) ? '/images/darkMode/dark-mode-light.png' : '/images/darkMode/dark-mode-dark.png';
 
     return (
         <>
@@ -93,14 +93,16 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <div className="d-grid gap-2">
-                                <Button variant="outline-none"
+                                <Button
+                                    variant="outline-none"
+                                    className="d-flex align-items-center gap-2 darkMode-button"
                                     onClick={() => {
                                         themeManager.toggleTheme();
                                         setTheme(themeManager.getCurrentTheme());
                                     }}
                                 >
-                                    {darkModeButtonText}
-                                    <img className="ms-1 darkMode-icon" src={darkModeButtonIcon} />
+                                    <img className="darkMode-icon" src={darkModeButtonIcon} alt={`${darkModeButtonText} mode`} />
+                                    <span className="darkMode-button-text">{darkModeButtonText}</span>
                                 </Button>
                             </div>
                         </NavDropdown>
