@@ -26,6 +26,7 @@
 }
 
 .dev-banner {
+    color: black;
     background-color: gold;
     width: 10vw;
     display: flex;
