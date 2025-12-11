@@ -1,3 +1,12 @@
+[data-bs-theme="light"] .paralax-section-whiteBackground {
+    color: #666;
+    background-color: white;
+}
+
+[data-bs-theme="light"] .paralax-portfolio {
+    color: #555;
+}
+
 h2 {
     margin-top: 0;
 }
@@ -12,7 +21,6 @@ h2 {
     height: 100%;
     margin: 0;
     font: 400 15px / 1.8 "Lato", sans-serif;
-    color: #555;
 }
 
 .paralax-bgimg {
@@ -103,8 +111,6 @@ would also dim/transparent its children. */
 }
 
 .paralax-section-whiteBackground {
-    color: #666;
-    background-color: white;
     position: relative;
 }
 
