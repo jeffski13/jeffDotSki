@@ -69,7 +69,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
+            <Navbar className="jeffdotski-navbar" bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
                 <Nav.Link href="/">
                     <Navbar.Brand className="brand">jeff.ski</Navbar.Brand>
                 </Nav.Link>
