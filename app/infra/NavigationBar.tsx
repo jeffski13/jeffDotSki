@@ -88,15 +88,22 @@ export default function NavigationBar({themeManager}: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing} >{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows} >{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <div className="d-grid gap-2">
+
+                            <Button variant="outline-none"
+                                onClick={() => {
+                                    themeManager.toggleTheme();
+                                    setTheme(themeManager.getCurrentTheme());
+                                }}
+                            >
+                                {theme === THEME.DARK ? 'light' : 'dark'}
+                                <img className="ms-1 darkMode-icon" src={(theme===THEME.DARK) ? '/images/darkMode/dark-mode-dark.png' : '/images/darkMode/dark-mode-light.png'} />
+                                </Button>
+                            </div>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
-                <Button id="bd-theme"
-                    onClick={() => {
-                        themeManager.toggleTheme();
-                        setTheme(themeManager.getCurrentTheme());
-                    }}
-                >{theme === THEME.DARK ? 'light' : 'dark'}</Button>
             </Navbar>
         </>
     );

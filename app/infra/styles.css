@@ -16,6 +16,10 @@
     width: 100%;
 }
 
+.darkMode-icon {
+    height: 25px;
+}
+
 .brand {
     cursor: pointer;
     margin-left: 10px;
