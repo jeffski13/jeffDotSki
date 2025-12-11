@@ -66,7 +66,14 @@ ul {
     border: 1px solid #bbb;
     padding: 12px;
     resize: vertical;
+}
+
+[data-bs-theme="light"] .copyable-field-textarea {
     background: #f9f9f9;
+}
+
+[data-bs-theme="dark"] .copyable-field-textarea {
+    background: #222;
 }
 
 .copyable-field-button {
