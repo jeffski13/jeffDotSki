@@ -154,7 +154,7 @@ export function Bio() {
             <Col sm={0} md={1}>
             </Col>
             <Col sm={10}  >
-              <Image src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/myhobbies.png' fluid />
+              <Image className="bioHobbies-img-collage" src='https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/img/myhobbies.png' fluid />
             </Col>
           </Row>
           <Row className="show-grid">
