@@ -64,7 +64,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         themeManager.setupDarkMode();
     }, []);
 
-    const darkModeButtonText = (theme === THEME.DARK) ? 'light' : 'dark';
+    const darkModeButtonText = (theme === THEME.DARK) ? 'Light Mode' : 'Dark Mode';
     const darkModeButtonIcon = (theme === THEME.DARK) ? '/images/darkMode/dark-mode-light.png' : '/images/darkMode/dark-mode-dark.png';
 
     return (
