@@ -24,7 +24,7 @@ export interface ContentPerLanguage {
     bio: string;
 }
 
-export default function NavigationBar({themeManager}: NavigationBarProps) {
+export default function NavigationBar({ themeManager }: NavigationBarProps) {
     const es: ContentPerLanguage = {
         resume: 'Currículum',
         englishTeacher: 'Profesor de Inglés',
@@ -64,6 +64,9 @@ export default function NavigationBar({themeManager}: NavigationBarProps) {
         themeManager.setupDarkMode();
     }, []);
 
+    const darkModeButtonText = (theme === THEME.DARK) ? 'light' : 'dark';
+    const darkModeButtonIcon = (theme === THEME.DARK) ? '/images/darkMode/dark-mode-dark.png' : '/images/darkMode/dark-mode-light.png';
+
     return (
         <>
             <Navbar bg="dark" variant="dark" fixed="top" collapseOnSelect expand="sm">
@@ -90,15 +93,14 @@ export default function NavigationBar({themeManager}: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <div className="d-grid gap-2">
-
-                            <Button variant="outline-none"
-                                onClick={() => {
-                                    themeManager.toggleTheme();
-                                    setTheme(themeManager.getCurrentTheme());
-                                }}
-                            >
-                                {theme === THEME.DARK ? 'light' : 'dark'}
-                                <img className="ms-1 darkMode-icon" src={(theme===THEME.DARK) ? '/images/darkMode/dark-mode-dark.png' : '/images/darkMode/dark-mode-light.png'} />
+                                <Button variant="outline-none"
+                                    onClick={() => {
+                                        themeManager.toggleTheme();
+                                        setTheme(themeManager.getCurrentTheme());
+                                    }}
+                                >
+                                    {darkModeButtonText}
+                                    <img className="ms-1 darkMode-icon" src={darkModeButtonIcon} />
                                 </Button>
                             </div>
                         </NavDropdown>
