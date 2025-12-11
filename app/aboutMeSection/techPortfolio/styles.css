@@ -12,6 +12,14 @@
     filter: grayscale(0.0);
 }
 
+[data-bs-theme="dark"] .company-logo-item img {
+    max-width: 160px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
 .paralax-bgimg-1-source {
     background-image: url(/images/aboutMeSection/techPortfolio/paralax/desk.jpg);
 }

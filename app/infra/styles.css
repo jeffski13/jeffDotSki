@@ -1,3 +1,9 @@
+[data-bs-theme="dark"] .jeffdotski-navbar,
+[data-bs-theme="dark"] .jeffdotski-navbar.navbar,
+[data-bs-theme="dark"] .navbar.jeffdotski-navbar {
+    background-color: #121416 !important;
+}
+
 /* react bootsrtap overwrite for selection background of navbar item */
 .navbar-nav>a {
     padding-left: 10px;
@@ -16,12 +22,17 @@
     width: 100%;
 }
 
+.darkMode-icon {
+    height: 20px;
+}
+
 .brand {
     cursor: pointer;
     margin-left: 10px;
 }
 
 .dev-banner {
+    color: black;
     background-color: gold;
     width: 10vw;
     display: flex;
@@ -38,6 +49,6 @@
 @media (min-width: 600px) {
     /* moving the full screen dropdown meny to the left to make the options more readable */
     #App > nav > div > div:nth-child(2) > div > div {
-        left: -20px;
+        left: -82px;
     }
 }

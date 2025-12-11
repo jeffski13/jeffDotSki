@@ -1,5 +1,4 @@
 .homePage {
-    background-color: #bbb;
 }
 
 .homePage_aboutJeff-name {
@@ -56,7 +55,6 @@
 }
 
 .homePage_aboutJeff {
-    background: #EFEFEF;
     padding-bottom: 50px;
 }
 
@@ -87,8 +85,11 @@
 }
 
 .homePage-link {
-    color: #2d4a8e;
     font-size: large;
+}
+
+[data-bs-theme="light"] .homePage-link {
+    color: #2d4a8e;
 }
 
 @media (max-width: 750px) {

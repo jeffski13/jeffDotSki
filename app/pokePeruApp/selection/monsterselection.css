@@ -40,6 +40,10 @@
   font-size: 16px;
 }
 
+[data-bs-theme="dark"] .monster-button {
+  color: #333;
+}
+
 .monster-button:hover {
   transform: scale(1.05);
 }
