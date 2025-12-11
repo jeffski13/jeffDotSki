@@ -1,13 +1,6 @@
 .homePage {
 }
 
-/* Light-mode specific background for the home page. The theme manager sets
-   `data-bs-theme` on the documentElement to "light" or "dark", so scope the
-   rule there to avoid affecting dark mode. */
-[data-bs-theme="light"] .homePage-link {
-    color: #2d4a8e;
-}
-
 .homePage_aboutJeff-name {
     text-align: center;
     padding-top: 50px;
@@ -93,6 +86,10 @@
 
 .homePage-link {
     font-size: large;
+}
+
+[data-bs-theme="light"] .homePage-link {
+    color: #2d4a8e;
 }
 
 @media (max-width: 750px) {
