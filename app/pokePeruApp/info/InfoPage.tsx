@@ -431,16 +431,16 @@ function CopyableField({ blankData }: CopyableFieldProps) {
   };
 
   return (
-    <div style={{ margin: '1.5em 0', textAlign: 'center' }}>
-      <div style={{ position: 'relative', maxWidth: 600, margin: '0 auto' }}>
+    <div className="copyable-field">
+      <div className="copyable-field-inner">
         <textarea
           readOnly
           value={blankData}
-          style={{ width: '100%', minHeight: 220, fontFamily: 'monospace', fontSize: 14, borderRadius: 8, border: '1px solid #bbb', padding: 12, resize: 'vertical', background: '#f9f9f9' }}
+          className="copyable-field-textarea"
         />
         <Button
           onClick={handleCopy}
-          style={{ position: 'absolute', top: 10, right: 10, padding: '0.3em 1em', borderRadius: 6 }}
+          className="copyable-field-button"
         >
           {copied ? 'Copied!' : 'Copy'}
         </Button>
