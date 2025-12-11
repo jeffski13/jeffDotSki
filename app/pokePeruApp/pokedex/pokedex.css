@@ -44,6 +44,11 @@
   margin-right: 15px;
 }
 
+[data-bs-theme="dark"] .monster-details-top-image {
+  border-radius: 10px;
+  background-color: #eee;
+}
+
 .monster-name {
   display: flex;
   align-items: center;
@@ -61,9 +66,12 @@
   margin-top: 10px;
 }
 
+[data-bs-theme="light"] .monster-description {
+  color: #555;
+}
+
 .monster-description {
   font-style: italic;
-  color: #555;
   margin-top: 10px;
 }
 
@@ -111,7 +119,10 @@
 .total-stats {
   margin-top: 10px;
   font-size: 16px;
-  color: #333;
+}
+
+[data-bs-theme="light"] .total-stats {
+  color: #555;
 }
 
 .attacks-section {

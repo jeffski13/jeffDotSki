@@ -7,11 +7,14 @@
   min-height: 85vh;
 }
 
+[data-bs-theme="light"] .total-stats {
+  color: #333;
+}
+
 .results-vs {
   align-items: right;
   justify-content: right;
   text-align: right;
-  color: #333;
 }
 
 @media only screen and (max-width: 770px) {

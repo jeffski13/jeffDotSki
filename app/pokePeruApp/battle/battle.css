@@ -87,6 +87,7 @@
   /* Add some padding inside the container */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   /* Add a subtle shadow for depth */
+  color: black;
 }
 
 .battle-results {

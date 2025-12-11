@@ -16,7 +16,7 @@ export interface ContentPerLanguage {
     softwareEngineer: string;
     softwareEngineerResume: string;
     pokePeru: string;
-    hobbies: string;
+    more: string;
     techPortfolio: string;
     teacherPortfolio: string;
     drawing: string;
@@ -32,7 +32,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         softwareEngineer: 'Ingeniero Informático',
         softwareEngineerResume: 'Ingeniero Informático (Español)',
         pokePeru: 'Poke Perú',
-        hobbies: 'Más Sobre Mí',
+        more: 'Más',
         techPortfolio: 'Portfolio Técnico',
         teacherPortfolio: 'Portfolio de Profe',
         drawing: 'Dibujos',
@@ -46,7 +46,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         softwareEngineer: 'Software Engineering',
         softwareEngineerResume: 'Software Engineering (Spanish)',
         pokePeru: 'Poké Peru',
-        hobbies: 'More About Me',
+        more: 'More',
         techPortfolio: 'Tech Portfolio',
         teacherPortfolio: 'Teacher Portfolio',
         drawing: 'Drawing',
@@ -85,7 +85,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                     </Nav>
                     <Nav >
                         <Nav.Link href={ROUTES.pokePeru.battle}>{content.pokePeru}</Nav.Link>
-                        <NavDropdown title={content.hobbies} id="navigationbar-resume">
+                        <NavDropdown title={content.more} id="navigationbar-resume">
                             <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio} >{content.techPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio} >{content.teacherPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing} >{content.drawing}</NavDropdown.Item>
