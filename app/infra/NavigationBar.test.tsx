@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import NavigationBar from './NavigationBar';
 import { getThemeManager, THEME, type DomThemeSetter, type ThemeManager, type ThemeOSMonitor, type ThemeStore } from './darkTheme';
 
-interface ThemeStoreWithManipulations extends ThemeStore{
+interface ThemeStoreWithManipulations extends ThemeStore {
   themeInLocalStorageMock: string | null;
   osPreferredThemeMock: string | null;
 }
@@ -35,19 +35,41 @@ const themeOSMonitorMock: ThemeOSMonitor = {
 
 describe('NavigationBar', () => {
 
-  it('doesnt render the dev banner when unknown', () => {
+  it('happy path render test', () => {
     render(<NavigationBar themeManager={getThemeManager(themeStoreWithManipulations, domThemeSetterMock, themeOSMonitorMock)} />);
     expect(screen.queryByText(/Resume/)).toBeInTheDocument();
+    const moreButton = screen.getByText(/More/i);
+    fireEvent.click(moreButton);
     //dark theme button present
-    expect(screen.queryByText(/dark/)).toBeInTheDocument();
+    expect(screen.queryByText(/Dark Mode/)).toBeInTheDocument();
   });
 
-  it('correct theme text on startup', () => {
-    const themeStore = {...themeStoreWithManipulations};
+  it('correct theme on startup if user previously saved theme', () => {
+    const themeStore = { ...themeStoreWithManipulations };
     themeStore.themeInLocalStorageMock = 'dark';
-      render(<NavigationBar themeManager={getThemeManager(themeStore, domThemeSetterMock, themeOSMonitorMock)} />);
-    expect(screen.queryByText(/Resume/)).toBeInTheDocument();
+    render(<NavigationBar themeManager={getThemeManager(themeStore, domThemeSetterMock, themeOSMonitorMock)} />);
     //dark theme button present
-    expect(screen.queryByText(/light/)).toBeInTheDocument();
+    const moreButton = screen.getByText(/More/i);
+    fireEvent.click(moreButton);
+    expect(screen.queryByText(/Light Mode/)).toBeInTheDocument();
+  });
+
+  it('correct theme on startup if user has OS preferred theme', () => {
+    const themeStore = { ...themeStoreWithManipulations };
+    themeStore.osPreferredThemeMock = 'dark';
+    render(<NavigationBar themeManager={getThemeManager(themeStore, domThemeSetterMock, themeOSMonitorMock)} />);
+    //dark theme button present
+    const moreButton = screen.getByText(/More/i);
+    fireEvent.click(moreButton);
+    expect(screen.queryByText(/Light Mode/)).toBeInTheDocument();
+  });
+  
+  it('mode switches with dark mode button click', () => {
+    render(<NavigationBar themeManager={getThemeManager(themeStoreWithManipulations, domThemeSetterMock, themeOSMonitorMock)} />);
+    const moreButton = screen.getByText(/More/i);
+    fireEvent.click(moreButton);
+    const darkModeButton = screen.getByText(/Dark Mode/i);
+    fireEvent.click(darkModeButton);
+    expect(screen.queryByText(/Light Mode/)).toBeInTheDocument();
   });
 });
