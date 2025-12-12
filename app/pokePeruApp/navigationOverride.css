@@ -1,4 +1,4 @@
-.battle-back-button {
+.battle-navigation-icon-button {
   top: 100px
 }
 
@@ -34,7 +34,7 @@
 }
 
 @media (min-width: 600px) {
-    .battle-back-button {
+    .battle-navigation-icon-button {
         top: 120px;
     }
 }

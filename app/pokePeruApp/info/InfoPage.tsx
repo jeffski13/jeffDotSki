@@ -215,19 +215,21 @@ export function InfoPage({ locationProvider, battleRoute }: InfoPageProps) {
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
-        <a href={battleRoute} className="back-button">
+        <a href={battleRoute} className="navigation-icon-button">
           <img src="/images/battle-icon.png" alt="Navigate to battle" className="battle-icon clickable-link-icon" />
         </a>
         <Container>
           <Row>
             <Col xs={2} />
-            <Col xs={8} >
-              <h1 className="title">{content.about}</h1>
+            <Col xs={8} className="info-p d-grid gap-2" >
+              <div className="secondary-page-header-text-container gap-2">
+                <h1 className="title">{content.about}</h1>
+                <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon desktop-view" />
+              </div>
             </Col>
             <Col xs={2} />
           </Row>
         </Container>
-        <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon desktop-view" />
       </div>
       <div className="project-info">
         <h2 className="toc-title">Table of Contents</h2>

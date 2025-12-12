@@ -5,6 +5,7 @@ import './gymleaderlist.css';
 import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
+import '../../infra/mobile-support.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 interface GymLeaderListProps {
@@ -21,19 +22,21 @@ export function GymLeaderList({ gymLeaders, monsterList, battleRoute }: GymLeade
   return (
     <div className="PokePeruSecondaryPage">
       <div className="secondary-page-header">
-        <a href={battleRoute} className="back-button">
+        <a href={battleRoute} className="navigation-icon-button">
           <img src="/images/battle-icon.png" alt="Back" className="battle-icon clickable-link-icon" />
         </a>
         <Container>
           <Row>
             <Col xs={2} />
-            <Col xs={8} >
-              <h1 className="title">Gym Leaders</h1>
+            <Col xs={8} className="info-p d-grid gap-2" >
+              <div className="secondary-page-header-text-container gap-2">
+                <h1 className="title">Gym Leaders</h1>
+                <img src="/images/gym-icon.png" alt="Gym Leader Icon" className="secondary-page-icon info-icon desktop-view" />
+              </div>
             </Col>
             <Col xs={2} />
           </Row>
         </Container>
-        <img src="/images/gym-icon.png" alt="Pokedex" className="secondary-page-icon" />
       </div>
       <ul className="gymleader-list">
         {gymLeaders.map((leader) => {
