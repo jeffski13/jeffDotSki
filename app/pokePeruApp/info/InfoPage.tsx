@@ -230,6 +230,18 @@ export function InfoPage({ locationProvider, battleRoute }: InfoPageProps) {
         <img src="/images/info-icon.png" alt="Information Icon" className="secondary-page-icon info-icon desktop-view" />
       </div>
       <div className="project-info">
+        <h2 className="toc-title">Table of Contents</h2>
+         <ul>
+            <li><a href={`#${titleLinks.aboutProjectTitleLink}`} onClick={(e) => { e.preventDefault(); navigateToAnchor(`#${titleLinks.aboutProjectTitleLink}`); }}>{content.aboutProjectTitle}</a></li>
+            <li><a href={`#${titleLinks.pokemonCreationLink}`} onClick={(e) => { e.preventDefault(); navigateToAnchor(`#${titleLinks.pokemonCreationLink}`); }}>{content.pokemonCreation}</a></li>
+            <li><a href={`#${titleLinks.gymLeaderCreationLink}`} onClick={(e) => { e.preventDefault(); navigateToAnchor(`#${titleLinks.gymLeaderCreationLink}`); }}>{content.gymLeaderCreation}</a></li>
+            <li><a href={`#${titleLinks.battleLink}`} onClick={(e) => { e.preventDefault(); navigateToAnchor(`#${titleLinks.battleLink}`); }}>{content.battle}</a></li>
+            <li><a href={`#${titleLinks.diyLink}`} onClick={(e) => { e.preventDefault(); navigateToAnchor(`#${titleLinks.diyLink}`); }}>{content.diy}</a></li>
+            <ul>
+              <li><a href={`#${titleLinks.diyNontechnicalTitleLink}`} onClick={(e) => { e.preventDefault(); navigateToAnchor(`#${titleLinks.diyNontechnicalTitleLink}`); }}>{content.diyNontechnicalTitle}</a></li>
+              <li><a href={`#${titleLinks.diyTechnicalTitleLink}`} onClick={(e) => { e.preventDefault(); navigateToAnchor(`#${titleLinks.diyTechnicalTitleLink}`); }}>{content.diyTechnicalTitle}</a></li>
+            </ul>
+          </ul>
         <h2 id={titleLinks.aboutProjectTitleLink}>{content.aboutProjectTitle}<AnchorLink targetId={titleLinks.aboutProjectTitleLink} /></h2>
         <p>{content.goToExperience} <a href={ROUTES.pokePeru.battle}>{content.goToExperienceLink}</a>!</p>
         <p>{content.projectDesc}</p>

@@ -89,3 +89,27 @@ ul {
         margin-top: 20px;
     }
 }
+
+/* Table of contents for InfoPage */
+.info-toc {
+    margin: 16px 0 24px 0;
+    padding: 12px 16px;
+    border-left: 4px solid #ddd;
+    background: rgba(0,0,0,0.02);
+    max-width: 720px;
+}
+.info-toc ul {
+    margin: 0;
+    padding-left: 1rem;
+}
+.info-toc a {
+    color: #2d4a8e;
+    text-decoration: none;
+}
+.info-toc a:hover {
+    text-decoration: underline;
+}
+.info-toc .toc-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
