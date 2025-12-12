@@ -2,7 +2,7 @@
 #!/bin/bash
 executionScriptDir=$(pwd)
 
-gcm
+git checkout master && git pull
 
 ./deployski.sh
 
