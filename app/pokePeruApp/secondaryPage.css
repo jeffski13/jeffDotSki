@@ -13,23 +13,11 @@
   margin-top: 20px;
 }
 
-.secondary-page-title-container {
+.secondary-page-header-text-container {
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   align-items: center;
-  /* Vertically center the text and icon */
-  justify-content: center;
-  overflow: hidden;
-  white-space: nowrap;
-  gap: 10px;
-  height: 100%;
-}
-
- 
-/* On small screens, display attack buttons side by side */
-@media (max-width: 600px) {
-  .secondary-page-title-container {
-    width: 70%;
-  }
 }
 
 .secondary-page-title {
@@ -39,4 +27,5 @@
 .secondary-page-icon {
   width: 75px;
   height: 75px;
+  margin-right:10px;
 }

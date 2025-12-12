@@ -354,7 +354,7 @@ export default function Battle({
       <div className="battle-container">
         <button
           type="button"
-          className="back-button battle-back-button"
+          className="navigation-icon-button battle-navigation-icon-button"
           onClick={() => setShowBackConfirm(true)}
           style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
         >

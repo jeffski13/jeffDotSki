@@ -192,7 +192,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
       <div className="secondary-page-header">
         <button
           type="button"
-          className="back-button battle-back-button"
+          className="navigation-icon-button battle-navigation-icon-button"
           onClick={() => handleBackClick()}
           style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
         >
@@ -201,13 +201,15 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
         <Container>
           <Row>
             <Col xs={2} />
-            <Col xs={8} >
-              <h1 className="title">Pokedex</h1>
+            <Col xs={8} className="info-p d-grid gap-2" >
+              <div className="secondary-page-header-text-container gap-2">
+                <h1 className="title">Pokedex</h1>
+                <img src="/images/pokedex-icon.png" alt="Pokedex" className="secondary-page-icon info-icon desktop-view" />
+              </div>
             </Col>
             <Col xs={2} />
           </Row>
         </Container>
-        <img src="/images/pokedex-icon.png" alt="Pokedex" className="secondary-page-icon" />
       </div>
       <ul className="monster-list">
         {selectedMonsters.map((monster: Monster) => {

@@ -70,7 +70,7 @@ export default function SelectionResultsScreen({
       <div className="selection-results-types-fades"></div>
       <button
         type="button"
-        className="back-button"
+        className="navigation-icon-button"
         onClick={() => setShowBackConfirm(true)}
         style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
       >
