@@ -22,6 +22,8 @@ export interface ContentPerLanguage {
     drawing: string;
     tvShows: string;
     bio: string;
+    themeDark: string;
+    themeLight: string;
 }
 
 export default function NavigationBar({ themeManager }: NavigationBarProps) {
@@ -38,6 +40,8 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         drawing: 'Dibujos',
         tvShows: 'Series',
         bio: 'Biografía',
+        themeDark: 'Modo Oscuro',
+        themeLight: 'Modo Claro',
     };
     const defaultText: ContentPerLanguage = {
         resume: 'Resume',
@@ -52,6 +56,8 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         drawing: 'Drawing',
         tvShows: 'TV Shows',
         bio: 'Bio',
+        themeDark: 'Dark Mode',
+        themeLight: 'Light Mode',
     };
     const multiLangContent: MultiLangContent = {
         es,
@@ -64,7 +70,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         themeManager.setupDarkMode();
     }, []);
 
-    const darkModeButtonText = (theme === THEME.DARK) ? 'Light Mode' : 'Dark Mode';
+    const darkModeButtonText = (theme === THEME.DARK) ? content.themeLight : content.themeDark;
     const darkModeButtonIcon = (theme === THEME.DARK) ? '/images/darkMode/dark-mode-light.png' : '/images/darkMode/dark-mode-dark.png';
 
     return (
