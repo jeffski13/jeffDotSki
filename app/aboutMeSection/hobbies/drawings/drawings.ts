@@ -7,7 +7,7 @@ export interface DrawingItem {
 export const drawings: DrawingItem[] = [
   {
     "name": "Ivysaur 002",
-    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_2ivysaur.png",
+    "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_2ivysaur2.png",
     "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_2ivysaur.png"
   },
   {
