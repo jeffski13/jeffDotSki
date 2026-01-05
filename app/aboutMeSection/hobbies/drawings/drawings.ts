@@ -8,7 +8,7 @@ export const drawings: DrawingItem[] = [
   {
     "name": "Ivysaur 002",
     "thumb": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/lowres/drawing_2ivysaur.png",
-    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_2ivysaur.PNG"
+    "full": "https://s3.us-east-2.amazonaws.com/jeff.ski/aboutme/hobbies/drawings/drawing_2ivysaur.png"
   },
   {
     "name": "Venasaur 003",
