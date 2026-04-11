@@ -15,7 +15,7 @@ const inputPath = path.join(__dirname, "input", args[0]);
 const outputPath = path.join(
   __dirname,
   "output",
-  args[0].replace(".json", "_bookNames.json")
+  "japaneseBookNameMapping.json"
 );
 
 const raw = fs.readFileSync(inputPath, "utf8");

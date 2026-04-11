@@ -15,7 +15,8 @@
     "startofficial": "react-router-serve ./build/server/index.js",
     "test": "vitest",
     "testCoverage": "vitest --coverage",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "bookFileNameCreation": "cd readingsDataConversionUtility/bookFileNameCreation && node extractBookNames.js kougo.json"
   },
   "dependencies": {
     "@react-router/node": "^7.5.2",
