@@ -1,0 +1,164 @@
+.readingsNihonDe-wrapper {
+  padding: 2rem 1rem 4rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.readingsNihonDe-header {
+  margin-bottom: 1.5rem;
+}
+
+.readingsNihonDe-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.readingsNihonDe-subtitle {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.readingsNihonDe-controls {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.25rem 0.75rem;
+  margin-bottom: 1.5rem;
+  align-items: flex-end;
+}
+
+.readingsNihonDe-control-col {
+  padding: 0.25rem 0.5rem;
+}
+
+.readingsNihonDe-btn-col {
+  display: flex;
+  align-items: flex-end;
+}
+
+.readingsNihonDe-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.readingsNihonDe-select,
+.readingsNihonDe-input {
+  font-size: 1rem;
+}
+
+.readingsNihonDe-btn {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+}
+
+.readingsNihonDe-passage-header {
+  margin-bottom: 1rem;
+}
+
+.readingsNihonDe-passage-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.readingsNihonDe-passage-title-en {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #666;
+}
+
+.readingsNihonDe-translation-legend {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.legend-tag,
+.verse-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.6;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.legend-kanji,
+.verse-tag--kanji {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.legend-kana,
+.verse-tag--kana {
+  background-color: #d1e7dd;
+  color: #0a3622;
+}
+
+.legend-en,
+.verse-tag--en {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+
+.readingsNihonDe-verse-block {
+  border-left: 4px solid #dee2e6;
+  margin-bottom: 1.75rem;
+  padding-left: 0.75rem;
+}
+
+.readingsNihonDe-verse-number {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #888;
+  margin-bottom: 0.35rem;
+}
+
+.readingsNihonDe-verse-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.readingsNihonDe-verse-text {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.readingsNihonDe-japanese {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+}
+
+.readingsNihonDe-kana {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+  color: #2b6a4d;
+}
+
+.readingsNihonDe-english {
+  font-style: italic;
+  color: #5a4000;
+}
+
+@media (max-width: 576px) {
+  .readingsNihonDe-title {
+    font-size: 1.5rem;
+  }
+
+  .readingsNihonDe-controls {
+    gap: 0.5rem;
+  }
+
+  .readingsNihonDe-btn {
+    margin-top: 0.5rem;
+  }
+}

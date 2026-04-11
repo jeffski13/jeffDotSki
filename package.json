@@ -25,6 +25,8 @@
     "bootstrap": "^5.3.5",
     "firebase": "^12.6.0",
     "isbot": "^5.1.17",
+    "kuroshiro": "^1.2.0",
+    "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "ncp": "^2.0.0",
     "path": "^0.12.7",
     "react": "^19.0.0",
