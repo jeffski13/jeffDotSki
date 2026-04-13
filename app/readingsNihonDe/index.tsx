@@ -10,6 +10,10 @@ import MatthewJp from './raw/jp/Matthew.json';
 import MarkJp from './raw/jp/Mark.json';
 import LukeJp from './raw/jp/Luke.json';
 import JohnJp from './raw/jp/John.json';
+import MatthewJpKana from './raw/jpkana/Matthew.json';
+import MarkJpKana from './raw/jpkana/Mark.json';
+import LukeJpKana from './raw/jpkana/Luke.json';
+import JohnJpKana from './raw/jpkana/John.json';
 
 type Book = 'Matthew' | 'Mark' | 'Luke' | 'John';
 
@@ -41,11 +45,18 @@ const JP_DATA: Record<Book, RawBook> = {
   John: JohnJp,
 };
 
+const JP_KANA_DATA: Record<Book, RawBook> = {
+  Matthew: MatthewJpKana,
+  Mark: MarkJpKana,
+  Luke: LukeJpKana,
+  John: JohnJpKana,
+};
+
 interface Verse {
   number: number;
   japanese: string;
   kanjiWithHiraganaKatakana: string;
-  hiraganaKatakanaOnly: string;
+  japaneseKanaOnly: string;
   english: string;
 }
 
@@ -56,6 +67,7 @@ function fetchChapterVerses(
 ): Verse[] {
   const jpChapter = JP_DATA[book].contents.find((c) => c.chapter === chapter);
   const enChapter = EN_DATA[book].contents.find((c) => c.chapter === chapter);
+  const jpKanaChapter = JP_KANA_DATA[book].contents.find((c) => c.chapter === chapter);
 
   if (!jpChapter || !enChapter) return [];
 
@@ -64,13 +76,14 @@ function fetchChapterVerses(
   for (let i = startVerse - 1; i < jpChapter.verses.length; i++) {
     const jpVerse = jpChapter.verses[i];
     const enVerse = enChapter.verses[i];
+    const jpKanaVerse = jpKanaChapter?.verses[i];
     if (!jpVerse || !enVerse) break;
 
     results.push({
       number: jpVerse.verseNumber,
       japanese: jpVerse.text.trim(),
       kanjiWithHiraganaKatakana: jpVerse.text.trim(),
-      hiraganaKatakanaOnly: jpVerse.text.trim(),
+      japaneseKanaOnly: jpKanaVerse?.text.trim() ?? jpVerse.text.trim(),
       english: enVerse.text.trim(),
     });
   }
@@ -244,7 +257,7 @@ export default function ReadingsNihonDe() {
             <div className="readingsNihonDe-verse-row">
               <span className="verse-tag verse-tag--kana">かな</span>
               <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
-                {verse.kanjiWithHiraganaKatakana}
+                {verse.japaneseKanaOnly}
               </span>
             </div>
 
