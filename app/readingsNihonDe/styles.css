@@ -216,6 +216,17 @@
   flex-shrink: 0;
 }
 
+.readingsNihonDe-settings-hint-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.readingsNihonDe-settings-hint-row .readingsNihonDe-settings-hint {
+  margin-bottom: 0;
+}
+
 /* ── Verse blocks ── */
 
 .readingsNihonDe-verse-block {

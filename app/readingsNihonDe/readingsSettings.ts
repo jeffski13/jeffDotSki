@@ -15,8 +15,8 @@ export const DISPLAY_OPTIONS: DisplayOption[] = [
   { key: 'kanjiKana', label: 'Kanji and Kana',  tagText: '両方', tagClass: 'verse-tag--kanjikana' },
 ];
 
-const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
-const DEFAULT_ENABLED: Record<RowKey, boolean> = {
+export const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
+export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
   english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true,
 };
 

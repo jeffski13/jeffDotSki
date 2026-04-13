@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -131,6 +131,11 @@ export default function ReadingsNihonDe() {
   useEffect(() => {
     readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled });
   }, [displayOrder, displayEnabled]);
+
+  const handleResetSettings = () => {
+    setDisplayOrder(DEFAULT_ORDER);
+    setDisplayEnabled(DEFAULT_ENABLED);
+  };
 
   const toggleEnabled = (key: RowKey) =>
     setDisplayEnabled((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -281,9 +286,19 @@ export default function ReadingsNihonDe() {
           {settingsOpen && (
             <Col xs={12} className="readingsNihonDe-settings-row">
               <div className="readingsNihonDe-settings-panel">
-                <p className="readingsNihonDe-settings-hint">
-                  Toggle rows on/off and drag to reorder.
-                </p>
+                <div className="readingsNihonDe-settings-hint-row">
+                  <p className="readingsNihonDe-settings-hint">
+                    Toggle rows on/off and drag to reorder.
+                  </p>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="readingsNihonDe-settings-reset"
+                    onClick={handleResetSettings}
+                  >
+                    Reset
+                  </Button>
+                </div>
                 <ul className="readingsNihonDe-settings-list">
                   {displayOrder.map((key) => {
                     const opt = DISPLAY_OPTIONS.find((o) => o.key === key)!;
