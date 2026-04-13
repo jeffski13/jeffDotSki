@@ -25,6 +25,8 @@ export interface ReadingsDisplaySettings {
   order: RowKey[];
   enabled: Record<RowKey, boolean>;
   splitOnKuten: boolean;
+  lastBook?: string;
+  lastChapter?: string;
 }
 
 export interface ReadingsSettingsStore {

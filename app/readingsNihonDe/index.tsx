@@ -114,8 +114,9 @@ const BOOK_JAPANESE: Record<Book, string> = {
 };
 
 export default function ReadingsNihonDe() {
-  const [book, setBook] = useState<Book>('John');
-  const [chapter, setChapter] = useState<string>('1');
+  const savedSettings = readingsSettingsStoreImpl.getSettings();
+  const [book, setBook] = useState<Book>((savedSettings.lastBook as Book) ?? 'John');
+  const [chapter, setChapter] = useState<string>(savedSettings.lastChapter ?? '1');
   const [startVerse, setStartVerse] = useState<string>('1');
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(false);
@@ -123,15 +124,14 @@ export default function ReadingsNihonDe() {
   const [searched, setSearched] = useState(false);
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const savedSettings = readingsSettingsStoreImpl.getSettings();
   const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
   const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
   const [splitOnKuten, setSplitOnKuten] = useState<boolean>(savedSettings.splitOnKuten ?? DEFAULT_SPLIT_ON_KUTEN);
   const dragSrc = useRef<RowKey | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten });
-  }, [displayOrder, displayEnabled, splitOnKuten]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, lastBook: book, lastChapter: chapter });
+  }, [displayOrder, displayEnabled, splitOnKuten, book, chapter]);
 
   const handleResetSettings = () => {
     setDisplayOrder(DEFAULT_ORDER);
