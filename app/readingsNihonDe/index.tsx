@@ -281,20 +281,22 @@ export default function ReadingsNihonDe() {
               {loading ? <Spinner animation="border" size="sm" /> : '読む / Read'}
             </Button>
           </Col>
-        </Row>
 
-        <Row className="readingsNihonDe-settings-row">
-          <Col xs={12}>
+          <Col xs={12} sm={2} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
             <button
               className="readingsNihonDe-settings-toggle"
               onClick={() => setSettingsOpen((o) => !o)}
               aria-expanded={settingsOpen}
             >
-              <span>Display Settings</span>
+              <span>Settings</span>
               <span className="readingsNihonDe-settings-caret">{settingsOpen ? '▲' : '▼'}</span>
             </button>
+          </Col>
+        </Row>
 
-            {settingsOpen && (
+        {settingsOpen && (
+          <Row className="readingsNihonDe-settings-row">
+            <Col xs={12}>
               <div className="readingsNihonDe-settings-panel">
                 <p className="readingsNihonDe-settings-hint">
                   Toggle rows on/off and drag to reorder.
@@ -326,9 +328,9 @@ export default function ReadingsNihonDe() {
                   })}
                 </ul>
               </div>
-            )}
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        )}
 
         {error && (
           <Row>
