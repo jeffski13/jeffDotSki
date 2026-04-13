@@ -1,23 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import './styles.css';
-
-type RowKey = 'english' | 'japanese' | 'toggle' | 'kanaOnly' | 'kanjiKana';
-
-interface DisplayOption {
-  key: RowKey;
-  label: string;
-  tagText: string;
-  tagClass: string;
-}
-
-const DISPLAY_OPTIONS: DisplayOption[] = [
-  { key: 'english',  label: 'English',           tagText: 'EN',    tagClass: 'verse-tag--en' },
-  { key: 'japanese', label: 'Japanese (Kanji)',   tagText: '漢字',  tagClass: 'verse-tag--kanji' },
-  { key: 'toggle',   label: 'Toggle Kana',       tagText: '調整',  tagClass: 'verse-tag--toggle' },
-  { key: 'kanaOnly', label: 'Kana',          tagText: 'かな',  tagClass: 'verse-tag--kana' },
-  { key: 'kanjiKana',label: 'Both Kanji and Kana',         tagText: '両方', tagClass: 'verse-tag--kanjikana' },
-];
+import { DISPLAY_OPTIONS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -139,13 +123,14 @@ export default function ReadingsNihonDe() {
   const [searched, setSearched] = useState(false);
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [displayOrder, setDisplayOrder] = useState<RowKey[]>(
-    DISPLAY_OPTIONS.map((o) => o.key)
-  );
-  const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>({
-    english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true,
-  });
+  const savedSettings = readingsSettingsStoreImpl.getSettings();
+  const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
+  const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
   const dragSrc = useRef<RowKey | null>(null);
+
+  useEffect(() => {
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled });
+  }, [displayOrder, displayEnabled]);
 
   const toggleEnabled = (key: RowKey) =>
     setDisplayEnabled((prev) => ({ ...prev, [key]: !prev[key] }));
