@@ -21,7 +21,8 @@
         {"source":"/pokeperu/claremore/gymleaders","destination":"/index.html"},
         {"source":"/pokeperu/southCarolina/battle","destination":"/index.html"},
         {"source":"/pokeperu/southCarolina/pokedex","destination":"/index.html"},
-        {"source":"/pokeperu/southCarolina/gymleaders","destination":"/index.html"}
+        {"source":"/pokeperu/southCarolina/gymleaders","destination":"/index.html"},
+        {"source":"/readings/nihonde","destination":"/index.html"}
     ]
   }
 }

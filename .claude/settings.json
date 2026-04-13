@@ -1,0 +1,10 @@
+{
+    "spinnerVerbs": {
+        "mode": "replace",
+        "verbs": [
+            "Thinking",
+            "Processing",
+            "Working"
+        ]
+    }
+}

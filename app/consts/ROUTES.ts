@@ -24,6 +24,7 @@ const ROUTES = {
         }
       }
     },
+    readingsNihonDe: '/readings/nihonde',
     external: {
       instagram: 'https://www.instagram.com/jeffski13/',
       resume: {
