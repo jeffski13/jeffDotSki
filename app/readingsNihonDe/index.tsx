@@ -44,7 +44,8 @@ const JP_DATA: Record<Book, RawBook> = {
 interface Verse {
   number: number;
   japanese: string;
-  hiraganaKatakana: string;
+  kanjiWithHiraganaKatakana: string;
+  hiraganaKatakanaOnly: string;
   english: string;
 }
 
@@ -68,7 +69,8 @@ function fetchChapterVerses(
     results.push({
       number: jpVerse.verseNumber,
       japanese: jpVerse.text.trim(),
-      hiraganaKatakana: jpVerse.text.trim(),
+      kanjiWithHiraganaKatakana: jpVerse.text.trim(),
+      hiraganaKatakanaOnly: jpVerse.text.trim(),
       english: enVerse.text.trim(),
     });
   }
@@ -242,7 +244,7 @@ export default function ReadingsNihonDe() {
             <div className="readingsNihonDe-verse-row">
               <span className="verse-tag verse-tag--kana">かな</span>
               <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
-                {verse.hiraganaKatakana}
+                {verse.kanjiWithHiraganaKatakana}
               </span>
             </div>
 
