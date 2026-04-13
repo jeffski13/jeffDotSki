@@ -14,9 +14,9 @@ interface DisplayOption {
 const DISPLAY_OPTIONS: DisplayOption[] = [
   { key: 'english',  label: 'English',           tagText: 'EN',    tagClass: 'verse-tag--en' },
   { key: 'japanese', label: 'Japanese (Kanji)',   tagText: '漢字',  tagClass: 'verse-tag--kanji' },
-  { key: 'toggle',   label: 'Toggle (両方)',       tagText: '両方',  tagClass: 'verse-tag--toggle' },
-  { key: 'kanaOnly', label: 'Kana Only',          tagText: 'かな',  tagClass: 'verse-tag--kana' },
-  { key: 'kanjiKana',label: 'Kanji+Kana',         tagText: '漢字かな', tagClass: 'verse-tag--kanjikana' },
+  { key: 'toggle',   label: 'Toggle Kana',       tagText: '調整',  tagClass: 'verse-tag--toggle' },
+  { key: 'kanaOnly', label: 'Kana',          tagText: 'かな',  tagClass: 'verse-tag--kana' },
+  { key: 'kanjiKana',label: 'Both Kanji and Kana',         tagText: '両方', tagClass: 'verse-tag--kanjikana' },
 ];
 
 import MatthewEn from './raw/en/Matthew.json';
@@ -381,7 +381,7 @@ export default function ReadingsNihonDe() {
                   onClick={() => toggleVerse(verse.number)}
                   title="Click to toggle kanji+kana reading"
                 >
-                  <span className="verse-tag verse-tag--toggle">両方</span>
+                  <span className="verse-tag verse-tag--toggle">調整</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
                     {toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese}
                   </span>
@@ -397,7 +397,7 @@ export default function ReadingsNihonDe() {
               );
               if (key === 'kanjiKana') return (
                 <div key="kanjiKana" className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--kanjikana">漢字かな</span>
+                  <span className="verse-tag verse-tag--kanjikana">両方</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
                     {verse.japaneseKanjiKana}
                   </span>
