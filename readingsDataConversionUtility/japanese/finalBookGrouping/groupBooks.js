@@ -54,7 +54,7 @@ for (const [bookNum, chapters] of Object.entries(books)) {
     }));
 
   const output = {
-    bookNameJapanese: mapEntry.originalBookName,
+    bookName: mapEntry.originalBookName,
     bookNameEnglish: mapEntry.bookNameEnglish,
     contents,
   };
