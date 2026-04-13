@@ -133,6 +133,12 @@ export default function ReadingsNihonDe() {
     readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, lastBook: book, lastChapter: chapter });
   }, [displayOrder, displayEnabled, splitOnKuten, book, chapter]);
 
+  useEffect(() => {
+    if (savedSettings.lastBook && savedSettings.lastChapter) {
+      handleSearch();
+    }
+  }, []);
+
   const handleResetSettings = () => {
     setDisplayOrder(DEFAULT_ORDER);
     setDisplayEnabled(DEFAULT_ENABLED);
