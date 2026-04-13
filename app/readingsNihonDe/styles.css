@@ -224,15 +224,29 @@
   border-top: 1px solid #dee2e6;
 }
 
-.readingsNihonDe-settings-hint-row {
+.readingsNihonDe-settings-col {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.6rem;
+  gap: 0.4rem;
 }
 
-.readingsNihonDe-settings-hint-row .readingsNihonDe-settings-hint {
-  margin-bottom: 0;
+.readingsNihonDe-settings-reset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid #dc3545;
+  border-radius: 6px;
+  color: #dc3545;
+  padding: 0.45rem 0.55rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.readingsNihonDe-settings-reset:hover {
+  background: #dc3545;
+  color: #fff;
 }
 
 /* ── Verse blocks ── */

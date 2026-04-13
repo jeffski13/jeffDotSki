@@ -143,6 +143,8 @@ export default function ReadingsNihonDe() {
     setDisplayOrder(DEFAULT_ORDER);
     setDisplayEnabled(DEFAULT_ENABLED);
     setSplitOnKuten(DEFAULT_SPLIT_ON_KUTEN);
+    setBook('John');
+    setChapter('1');
   };
 
   const renderJpText = (text: string): React.ReactNode => {
@@ -239,7 +241,7 @@ export default function ReadingsNihonDe() {
         <Row className="readingsNihonDe-controls">
           <Col xs={12} sm={4} md={3} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Book / 書</Form.Label>
+              <Form.Label className="readingsNihonDe-label">Book (書)</Form.Label>
               <Form.Select
                 value={book}
                 onChange={(e) => setBook(e.target.value as Book)}
@@ -254,9 +256,9 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={6} sm={3} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Chapter / 章</Form.Label>
+              <Form.Label className="readingsNihonDe-label">Chapter (章)</Form.Label>
               <Form.Control
                 type="number"
                 min={1}
@@ -268,9 +270,9 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={6} sm={3} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Verse / 節</Form.Label>
+              <Form.Label className="readingsNihonDe-label">Verse (節)</Form.Label>
               <Form.Control
                 type="number"
                 min={1}
@@ -289,11 +291,11 @@ export default function ReadingsNihonDe() {
               disabled={loading}
               className="readingsNihonDe-btn"
             >
-              {loading ? <Spinner animation="border" size="sm" /> : '読む / Read'}
+              {loading ? <Spinner animation="border" size="sm" /> : 'Read (読む)'}
             </Button>
           </Col>
 
-          <Col xs={12} sm={2} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
+          <Col xs={12} sm={2} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <button
               className="readingsNihonDe-settings-toggle"
               onClick={() => setSettingsOpen((o) => !o)}
@@ -302,24 +304,25 @@ export default function ReadingsNihonDe() {
               <span>Settings</span>
               <span className="readingsNihonDe-settings-caret">{settingsOpen ? '▲' : '▼'}</span>
             </button>
+            <button
+              className="readingsNihonDe-settings-reset"
+              onClick={handleResetSettings}
+              title="Reset settings"
+              aria-label="Reset settings"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+              </svg>
+            </button>
           </Col>
 
           {settingsOpen && (
             <Col xs={12} className="readingsNihonDe-settings-row">
               <div className="readingsNihonDe-settings-panel">
-                <div className="readingsNihonDe-settings-hint-row">
-                  <p className="readingsNihonDe-settings-hint">
-                    Toggle rows on/off and drag to reorder.
-                  </p>
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    className="readingsNihonDe-settings-reset"
-                    onClick={handleResetSettings}
-                  >
-                    Reset
-                  </Button>
-                </div>
+                <p className="readingsNihonDe-settings-hint">
+                  Toggle rows on/off and drag to reorder.
+                </p>
                 <ul className="readingsNihonDe-settings-list">
                   {displayOrder.map((key) => {
                     const opt = DISPLAY_OPTIONS.find((o) => o.key === key)!;
