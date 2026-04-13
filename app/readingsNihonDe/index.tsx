@@ -2,13 +2,43 @@ import { useState } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import './styles.css';
 
+import MatthewEn from './raw/en/Matthew.json';
+import MarkEn from './raw/en/Mark.json';
+import LukeEn from './raw/en/Luke.json';
+import JohnEn from './raw/en/John.json';
+import MatthewJp from './raw/jp/Matthew.json';
+import MarkJp from './raw/jp/Mark.json';
+import LukeJp from './raw/jp/Luke.json';
+import JohnJp from './raw/jp/John.json';
+
 type Book = 'Matthew' | 'Mark' | 'Luke' | 'John';
 
-const BOOK_NUMBER: Record<Book, number> = {
-  Matthew: 40,
-  Mark: 41,
-  Luke: 42,
-  John: 43,
+interface RawVerse {
+  verseNumber: number;
+  text: string;
+}
+
+interface RawChapter {
+  chapter: number;
+  verses: RawVerse[];
+}
+
+interface RawBook {
+  contents: RawChapter[];
+}
+
+const EN_DATA: Record<Book, RawBook> = {
+  Matthew: MatthewEn,
+  Mark: MarkEn,
+  Luke: LukeEn,
+  John: JohnEn,
+};
+
+const JP_DATA: Record<Book, RawBook> = {
+  Matthew: MatthewJp,
+  Mark: MarkJp,
+  Luke: LukeJp,
+  John: JohnJp,
 };
 
 interface Verse {
@@ -18,50 +48,27 @@ interface Verse {
   english: string;
 }
 
-interface GetBibleVerse {
-  verse: number;
-  text: string;
-}
-
-interface GetBibleChapter {
-  verses: Record<string, GetBibleVerse>;
-}
-
-async function fetchChapterVerses(
+function fetchChapterVerses(
   book: Book,
   chapter: number,
   startVerse: number
-): Promise<Verse[]> {
-  const bookNum = BOOK_NUMBER[book];
+): Verse[] {
+  const jpChapter = JP_DATA[book].contents.find((c) => c.chapter === chapter);
+  const enChapter = EN_DATA[book].contents.find((c) => c.chapter === chapter);
 
-  const headers = { 'Access-Control-Allow-Origin': '*' };
-
-  const [jaResponse, enResponse] = await Promise.all([
-    fetch(`https://api.getbible.net/v2/kougo/${bookNum}/${chapter}.json`, { headers }),
-    fetch(`https://api.getbible.net/v2/kjv/${bookNum}/${chapter}.json`, { headers }),
-  ]);
-
-  if (!jaResponse.ok || !enResponse.ok) {
-    throw new Error('Failed to fetch Bible passages.');
-  }
-
-  const jaData: GetBibleChapter = await jaResponse.json();
-  const enData: GetBibleChapter = await enResponse.json();
-
-  const jaVerses = Object.values(jaData.verses);
-  const enVerses = Object.values(enData.verses);
+  if (!jpChapter || !enChapter) return [];
 
   const results: Verse[] = [];
 
-  for (let i = startVerse - 1; i < jaVerses.length; i++) {
-    const jaVerse = jaVerses[i];
-    const enVerse = enVerses[i];
-    if (!jaVerse || !enVerse) break;
+  for (let i = startVerse - 1; i < jpChapter.verses.length; i++) {
+    const jpVerse = jpChapter.verses[i];
+    const enVerse = enChapter.verses[i];
+    if (!jpVerse || !enVerse) break;
 
     results.push({
-      number: jaVerse.verse,
-      japanese: jaVerse.text.trim(),
-      kanaOnly: jaVerse.text.trim(),
+      number: jpVerse.verseNumber,
+      japanese: jpVerse.text.trim(),
+      kanaOnly: jpVerse.text.trim(),
       english: enVerse.text.trim(),
     });
   }
@@ -224,6 +231,13 @@ export default function ReadingsNihonDe() {
             <div className="readingsNihonDe-verse-number">{verse.number}</div>
 
             <div className="readingsNihonDe-verse-row">
+              <span className="verse-tag verse-tag--en">EN</span>
+              <span className="readingsNihonDe-verse-text readingsNihonDe-english">
+                {verse.english}
+              </span>
+            </div>
+            
+            <div className="readingsNihonDe-verse-row">
               <span className="verse-tag verse-tag--kanji">漢字</span>
               <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
                 {verse.japanese}
@@ -237,12 +251,6 @@ export default function ReadingsNihonDe() {
               </span>
             </div>
 
-            <div className="readingsNihonDe-verse-row">
-              <span className="verse-tag verse-tag--en">EN</span>
-              <span className="readingsNihonDe-verse-text readingsNihonDe-english">
-                {verse.english}
-              </span>
-            </div>
           </div>
         ))}
 
