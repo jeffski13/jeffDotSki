@@ -259,7 +259,7 @@ export default function ReadingsNihonDe() {
 
           <Col xs={6} sm={3} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">From Verse / 節</Form.Label>
+              <Form.Label className="readingsNihonDe-label">Verse / 節</Form.Label>
               <Form.Control
                 type="number"
                 min={1}
@@ -292,11 +292,9 @@ export default function ReadingsNihonDe() {
               <span className="readingsNihonDe-settings-caret">{settingsOpen ? '▲' : '▼'}</span>
             </button>
           </Col>
-        </Row>
 
-        {settingsOpen && (
-          <Row className="readingsNihonDe-settings-row">
-            <Col xs={12}>
+          {settingsOpen && (
+            <Col xs={12} className="readingsNihonDe-settings-row">
               <div className="readingsNihonDe-settings-panel">
                 <p className="readingsNihonDe-settings-hint">
                   Toggle rows on/off and drag to reorder.
@@ -329,8 +327,8 @@ export default function ReadingsNihonDe() {
                 </ul>
               </div>
             </Col>
-          </Row>
-        )}
+          )}
+        </Row>
 
         {error && (
           <Row>
