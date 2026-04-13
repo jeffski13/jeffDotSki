@@ -1,6 +1,23 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import './styles.css';
+
+type RowKey = 'english' | 'japanese' | 'toggle' | 'kanaOnly' | 'kanjiKana';
+
+interface DisplayOption {
+  key: RowKey;
+  label: string;
+  tagText: string;
+  tagClass: string;
+}
+
+const DISPLAY_OPTIONS: DisplayOption[] = [
+  { key: 'english',  label: 'English',           tagText: 'EN',    tagClass: 'verse-tag--en' },
+  { key: 'japanese', label: 'Japanese (Kanji)',   tagText: '漢字',  tagClass: 'verse-tag--kanji' },
+  { key: 'toggle',   label: 'Toggle (両方)',       tagText: '両方',  tagClass: 'verse-tag--toggle' },
+  { key: 'kanaOnly', label: 'Kana Only',          tagText: 'かな',  tagClass: 'verse-tag--kana' },
+  { key: 'kanjiKana',label: 'Kanji+Kana',         tagText: '漢字かな', tagClass: 'verse-tag--kanjikana' },
+];
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -121,6 +138,33 @@ export default function ReadingsNihonDe() {
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [displayOrder, setDisplayOrder] = useState<RowKey[]>(
+    DISPLAY_OPTIONS.map((o) => o.key)
+  );
+  const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>({
+    english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true,
+  });
+  const dragSrc = useRef<RowKey | null>(null);
+
+  const toggleEnabled = (key: RowKey) =>
+    setDisplayEnabled((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const handleDragStart = (key: RowKey) => { dragSrc.current = key; };
+
+  const handleDrop = (targetKey: RowKey) => {
+    const src = dragSrc.current;
+    if (!src || src === targetKey) return;
+    setDisplayOrder((prev) => {
+      const next = [...prev];
+      const srcIdx = next.indexOf(src);
+      const tgtIdx = next.indexOf(targetKey);
+      next.splice(srcIdx, 1);
+      next.splice(tgtIdx, 0, src);
+      return next;
+    });
+    dragSrc.current = null;
+  };
 
   const toggleVerse = (verseNumber: number) => {
     setToggledVerses((prev) => {
@@ -239,6 +283,53 @@ export default function ReadingsNihonDe() {
           </Col>
         </Row>
 
+        <Row className="readingsNihonDe-settings-row">
+          <Col xs={12}>
+            <button
+              className="readingsNihonDe-settings-toggle"
+              onClick={() => setSettingsOpen((o) => !o)}
+              aria-expanded={settingsOpen}
+            >
+              <span>Display Settings</span>
+              <span className="readingsNihonDe-settings-caret">{settingsOpen ? '▲' : '▼'}</span>
+            </button>
+
+            {settingsOpen && (
+              <div className="readingsNihonDe-settings-panel">
+                <p className="readingsNihonDe-settings-hint">
+                  Toggle rows on/off and drag to reorder.
+                </p>
+                <ul className="readingsNihonDe-settings-list">
+                  {displayOrder.map((key) => {
+                    const opt = DISPLAY_OPTIONS.find((o) => o.key === key)!;
+                    return (
+                      <li
+                        key={key}
+                        className="readingsNihonDe-settings-item"
+                        draggable
+                        onDragStart={() => handleDragStart(key)}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={() => handleDrop(key)}
+                      >
+                        <span className="readingsNihonDe-settings-drag-handle">⠿</span>
+                        <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
+                        <span className="readingsNihonDe-settings-label">{opt.label}</span>
+                        <Form.Check
+                          type="switch"
+                          id={`display-toggle-${key}`}
+                          checked={displayEnabled[key]}
+                          onChange={() => toggleEnabled(key)}
+                          className="readingsNihonDe-settings-switch"
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+          </Col>
+        </Row>
+
         {error && (
           <Row>
             <Col xs={12}>
@@ -265,44 +356,55 @@ export default function ReadingsNihonDe() {
           <div key={verse.number} className="readingsNihonDe-verse-block">
             <div className="readingsNihonDe-verse-number">{verse.number}</div>
 
-            <div className="readingsNihonDe-verse-row">
-              <span className="verse-tag verse-tag--en">EN</span>
-              <span className="readingsNihonDe-verse-text readingsNihonDe-english">
-                {verse.english}
-              </span>
-            </div>
-
-            <div className="readingsNihonDe-verse-row">
-              <span className="verse-tag verse-tag--kanji">漢字</span>
-              <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
-                {verse.japanese}
-              </span>
-            </div>
-
-            <div
-              className="readingsNihonDe-verse-row readingsNihonDe-verse-row--toggle"
-              onClick={() => toggleVerse(verse.number)}
-              title="Click to toggle kanji+kana reading"
-            >
-              <span className="verse-tag verse-tag--toggle">読む</span>
-              <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
-                {toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese}
-              </span>
-            </div>
-
-            <div className="readingsNihonDe-verse-row">
-              <span className="verse-tag verse-tag--kana">かな</span>
-              <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
-                {verse.japaneseKanaOnly}
-              </span>
-            </div>
-
-            <div className="readingsNihonDe-verse-row">
-              <span className="verse-tag verse-tag--kanjikana">漢字かな</span>
-              <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
-                {verse.japaneseKanjiKana}
-              </span>
-            </div>
+            {displayOrder.map((key) => {
+              if (!displayEnabled[key]) return null;
+              if (key === 'english') return (
+                <div key="english" className="readingsNihonDe-verse-row">
+                  <span className="verse-tag verse-tag--en">EN</span>
+                  <span className="readingsNihonDe-verse-text readingsNihonDe-english">
+                    {verse.english}
+                  </span>
+                </div>
+              );
+              if (key === 'japanese') return (
+                <div key="japanese" className="readingsNihonDe-verse-row">
+                  <span className="verse-tag verse-tag--kanji">漢字</span>
+                  <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
+                    {verse.japanese}
+                  </span>
+                </div>
+              );
+              if (key === 'toggle') return (
+                <div
+                  key="toggle"
+                  className="readingsNihonDe-verse-row readingsNihonDe-verse-row--toggle"
+                  onClick={() => toggleVerse(verse.number)}
+                  title="Click to toggle kanji+kana reading"
+                >
+                  <span className="verse-tag verse-tag--toggle">両方</span>
+                  <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
+                    {toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese}
+                  </span>
+                </div>
+              );
+              if (key === 'kanaOnly') return (
+                <div key="kanaOnly" className="readingsNihonDe-verse-row">
+                  <span className="verse-tag verse-tag--kana">かな</span>
+                  <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
+                    {verse.japaneseKanaOnly}
+                  </span>
+                </div>
+              );
+              if (key === 'kanjiKana') return (
+                <div key="kanjiKana" className="readingsNihonDe-verse-row">
+                  <span className="verse-tag verse-tag--kanjikana">漢字かな</span>
+                  <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
+                    {verse.japaneseKanjiKana}
+                  </span>
+                </div>
+              );
+              return null;
+            })}
 
           </div>
         ))}

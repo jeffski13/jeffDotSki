@@ -127,6 +127,99 @@
   background-color: rgba(100, 60, 180, 0.07);
 }
 
+/* ── Settings panel ── */
+
+.readingsNihonDe-settings-row {
+  margin-bottom: 1.25rem;
+}
+
+.readingsNihonDe-settings-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #f0f4ff;
+  border: 1px solid #c7d3f5;
+  border-radius: 6px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2a3a8a;
+  cursor: pointer;
+}
+
+.readingsNihonDe-settings-toggle:hover {
+  background: #e3eaff;
+}
+
+.readingsNihonDe-settings-caret {
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+}
+
+.readingsNihonDe-settings-panel {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 0.75rem 0.9rem 0.5rem;
+}
+
+.readingsNihonDe-settings-hint {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.6rem;
+}
+
+.readingsNihonDe-settings-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.readingsNihonDe-settings-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.5rem;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  cursor: grab;
+  user-select: none;
+}
+
+.readingsNihonDe-settings-item:active {
+  cursor: grabbing;
+}
+
+.readingsNihonDe-settings-item[draggable="true"]:hover {
+  background: #f0f4ff;
+}
+
+.readingsNihonDe-settings-drag-handle {
+  color: #aaa;
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.readingsNihonDe-settings-label {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.readingsNihonDe-settings-switch {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* ── Verse blocks ── */
+
 .readingsNihonDe-verse-block {
   border-left: 4px solid #dee2e6;
   margin-bottom: 1.75rem;
