@@ -90,6 +90,8 @@
   line-height: 1.6;
   min-width: 2rem;
   text-align: center;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .verse-tag--kanji {

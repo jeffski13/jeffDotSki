@@ -344,7 +344,7 @@ export default function ReadingsNihonDe() {
                   <Form.Check
                     type="checkbox"
                     id="split-on-kuten"
-                    label='Split sentences at 。'
+                    label='New lines after Japanese periods'
                     checked={splitOnKuten}
                     onChange={() => setSplitOnKuten((prev) => !prev)}
                   />
