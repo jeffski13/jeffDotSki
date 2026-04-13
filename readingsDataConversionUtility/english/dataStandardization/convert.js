@@ -29,6 +29,7 @@ for (const filename of inputFiles) {
   }));
 
   const output = {
+    bookName: bookName,
     bookNameEnglish: bookName,
     contents,
   };
