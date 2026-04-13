@@ -102,7 +102,7 @@ const BOOK_JAPANESE: Record<Book, string> = {
 
 export default function ReadingsNihonDe() {
   const [book, setBook] = useState<Book>('John');
-  const [chapter, setChapter] = useState<string>('3');
+  const [chapter, setChapter] = useState<string>('1');
   const [startVerse, setStartVerse] = useState<string>('1');
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(false);
