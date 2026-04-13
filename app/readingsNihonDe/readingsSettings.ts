@@ -19,10 +19,12 @@ export const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
 export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
   english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true,
 };
+export const DEFAULT_SPLIT_ON_KUTEN = false;
 
 export interface ReadingsDisplaySettings {
   order: RowKey[];
   enabled: Record<RowKey, boolean>;
+  splitOnKuten: boolean;
 }
 
 export interface ReadingsSettingsStore {
@@ -42,7 +44,7 @@ export const readingsSettingsStoreImpl: ReadingsSettingsStore = {
     } catch {
       // ignore corrupt data
     }
-    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED };
+    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED, splitOnKuten: DEFAULT_SPLIT_ON_KUTEN };
   },
   saveSettings(settings: ReadingsDisplaySettings): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));

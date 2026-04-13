@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -126,15 +126,30 @@ export default function ReadingsNihonDe() {
   const savedSettings = readingsSettingsStoreImpl.getSettings();
   const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
   const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
+  const [splitOnKuten, setSplitOnKuten] = useState<boolean>(savedSettings.splitOnKuten ?? DEFAULT_SPLIT_ON_KUTEN);
   const dragSrc = useRef<RowKey | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled });
-  }, [displayOrder, displayEnabled]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten });
+  }, [displayOrder, displayEnabled, splitOnKuten]);
 
   const handleResetSettings = () => {
     setDisplayOrder(DEFAULT_ORDER);
     setDisplayEnabled(DEFAULT_ENABLED);
+    setSplitOnKuten(DEFAULT_SPLIT_ON_KUTEN);
+  };
+
+  const renderJpText = (text: string): React.ReactNode => {
+    if (!splitOnKuten) return text;
+    return text.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
+      if (i < arr.length - 1) {
+        acc.push(part + '。');
+        acc.push(<br key={i} />);
+      } else if (part) {
+        acc.push(part);
+      }
+      return acc;
+    }, []);
   };
 
   const toggleEnabled = (key: RowKey) =>
@@ -325,6 +340,15 @@ export default function ReadingsNihonDe() {
                     );
                   })}
                 </ul>
+                <div className="readingsNihonDe-settings-extra">
+                  <Form.Check
+                    type="checkbox"
+                    id="split-on-kuten"
+                    label='Split sentences at 。'
+                    checked={splitOnKuten}
+                    onChange={() => setSplitOnKuten((prev) => !prev)}
+                  />
+                </div>
               </div>
             </Col>
           )}
@@ -370,7 +394,7 @@ export default function ReadingsNihonDe() {
                 <div key="japanese" className="readingsNihonDe-verse-row">
                   <span className="verse-tag verse-tag--kanji">漢字</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
-                    {verse.japanese}
+                    {renderJpText(verse.japanese)}
                   </span>
                 </div>
               );
@@ -383,7 +407,7 @@ export default function ReadingsNihonDe() {
                 >
                   <span className="verse-tag verse-tag--toggle">調整</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
-                    {toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese}
+                    {renderJpText(toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese)}
                   </span>
                 </div>
               );
@@ -391,7 +415,7 @@ export default function ReadingsNihonDe() {
                 <div key="kanaOnly" className="readingsNihonDe-verse-row">
                   <span className="verse-tag verse-tag--kana">かな</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
-                    {verse.japaneseKanaOnly}
+                    {renderJpText(verse.japaneseKanaOnly)}
                   </span>
                 </div>
               );
@@ -399,7 +423,7 @@ export default function ReadingsNihonDe() {
                 <div key="kanjiKana" className="readingsNihonDe-verse-row">
                   <span className="verse-tag verse-tag--kanjikana">両方</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
-                    {verse.japaneseKanjiKana}
+                    {renderJpText(verse.japaneseKanjiKana)}
                   </span>
                 </div>
               );

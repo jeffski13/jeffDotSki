@@ -216,6 +216,12 @@
   flex-shrink: 0;
 }
 
+.readingsNihonDe-settings-extra {
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #dee2e6;
+}
+
 .readingsNihonDe-settings-hint-row {
   display: flex;
   align-items: center;
