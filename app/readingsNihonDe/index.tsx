@@ -44,7 +44,7 @@ const JP_DATA: Record<Book, RawBook> = {
 interface Verse {
   number: number;
   japanese: string;
-  kanaOnly: string;
+  hiraganaKatakana: string;
   english: string;
 }
 
@@ -68,7 +68,7 @@ function fetchChapterVerses(
     results.push({
       number: jpVerse.verseNumber,
       japanese: jpVerse.text.trim(),
-      kanaOnly: jpVerse.text.trim(),
+      hiraganaKatakana: jpVerse.text.trim(),
       english: enVerse.text.trim(),
     });
   }
@@ -217,11 +217,6 @@ export default function ReadingsNihonDe() {
                   {' '}({book} {chapterNum}:{verseNum}–{verses[verses.length - 1].number})
                 </span>
               </h2>
-              <div className="readingsNihonDe-translation-legend">
-                <span className="legend-tag legend-kanji">漢字</span> Japanese with Kanji &nbsp;
-                <span className="legend-tag legend-kana">かな</span> Hiragana / Katakana &nbsp;
-                <span className="legend-tag legend-en">EN</span> English (KJV)
-              </div>
             </Col>
           </Row>
         )}
@@ -236,7 +231,7 @@ export default function ReadingsNihonDe() {
                 {verse.english}
               </span>
             </div>
-            
+
             <div className="readingsNihonDe-verse-row">
               <span className="verse-tag verse-tag--kanji">漢字</span>
               <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
@@ -247,7 +242,7 @@ export default function ReadingsNihonDe() {
             <div className="readingsNihonDe-verse-row">
               <span className="verse-tag verse-tag--kana">かな</span>
               <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
-                {verse.kanaOnly}
+                {verse.hiraganaKatakana}
               </span>
             </div>
 
