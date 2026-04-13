@@ -114,19 +114,24 @@
   color: #035766;
 }
 
-.verse-tag--toggle {
-  background-color: #e0d4f7;
-  color: #3d1a78;
-}
 
-.readingsNihonDe-verse-row--toggle {
-  cursor: pointer;
+.readingsNihonDe-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0d4f7;
+  border: none;
   border-radius: 4px;
-  transition: background-color 0.15s ease;
+  color: #3d1a78;
+  padding: 3px 6px;
+  min-width: 2rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  line-height: 1.6;
 }
 
-.readingsNihonDe-verse-row--toggle:hover {
-  background-color: rgba(100, 60, 180, 0.07);
+.readingsNihonDe-toggle-btn:hover {
+  background: #c9b8f0;
 }
 
 /* ── Settings panel ── */

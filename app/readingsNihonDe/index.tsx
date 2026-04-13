@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
@@ -124,6 +124,7 @@ export default function ReadingsNihonDe() {
   const [searched, setSearched] = useState(false);
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [confirmResetOpen, setConfirmResetOpen] = useState(false);
   const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
   const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
   const [splitOnKuten, setSplitOnKuten] = useState<boolean>(savedSettings.splitOnKuten ?? DEFAULT_SPLIT_ON_KUTEN);
@@ -306,7 +307,7 @@ export default function ReadingsNihonDe() {
             </button>
             <button
               className="readingsNihonDe-settings-reset"
-              onClick={handleResetSettings}
+              onClick={() => setConfirmResetOpen(true)}
               title="Reset settings"
               aria-label="Reset settings"
             >
@@ -408,13 +409,18 @@ export default function ReadingsNihonDe() {
                 </div>
               );
               if (key === 'toggle') return (
-                <div
-                  key="toggle"
-                  className="readingsNihonDe-verse-row readingsNihonDe-verse-row--toggle"
-                  onClick={() => toggleVerse(verse.number)}
-                  title="Click to toggle kanji+kana reading"
-                >
-                  <span className="verse-tag verse-tag--toggle">調整</span>
+                <div key="toggle" className="readingsNihonDe-verse-row">
+                  <button
+                    className="readingsNihonDe-toggle-btn"
+                    onClick={() => toggleVerse(verse.number)}
+                    title="Toggle kanji+kana reading"
+                    aria-label="Toggle kanji+kana reading"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                      <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                    </svg>
+                  </button>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
                     {renderJpText(toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese)}
                   </span>
@@ -450,6 +456,17 @@ export default function ReadingsNihonDe() {
           </Row>
         )}
       </Container>
+
+      <Modal show={confirmResetOpen} onHide={() => setConfirmResetOpen(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Reset Settings</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Reset book, chapter, and all display settings to defaults?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setConfirmResetOpen(false)}>No</Button>
+          <Button variant="danger" onClick={() => { handleResetSettings(); setConfirmResetOpen(false); }}>Yes</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
