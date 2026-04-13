@@ -112,6 +112,21 @@
   color: #035766;
 }
 
+.verse-tag--toggle {
+  background-color: #e0d4f7;
+  color: #3d1a78;
+}
+
+.readingsNihonDe-verse-row--toggle {
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+
+.readingsNihonDe-verse-row--toggle:hover {
+  background-color: rgba(100, 60, 180, 0.07);
+}
+
 .readingsNihonDe-verse-block {
   border-left: 4px solid #dee2e6;
   margin-bottom: 1.75rem;

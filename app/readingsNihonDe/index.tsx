@@ -120,6 +120,19 @@ export default function ReadingsNihonDe() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
+  const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
+
+  const toggleVerse = (verseNumber: number) => {
+    setToggledVerses((prev) => {
+      const next = new Set(prev);
+      if (next.has(verseNumber)) {
+        next.delete(verseNumber);
+      } else {
+        next.add(verseNumber);
+      }
+      return next;
+    });
+  };
 
   const handleSearch = async () => {
     const chapterNum = parseInt(chapter, 10);
@@ -263,6 +276,17 @@ export default function ReadingsNihonDe() {
               <span className="verse-tag verse-tag--kanji">漢字</span>
               <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
                 {verse.japanese}
+              </span>
+            </div>
+
+            <div
+              className="readingsNihonDe-verse-row readingsNihonDe-verse-row--toggle"
+              onClick={() => toggleVerse(verse.number)}
+              title="Click to toggle kanji+kana reading"
+            >
+              <span className="verse-tag verse-tag--toggle">読む</span>
+              <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
+                {toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese}
               </span>
             </div>
 
