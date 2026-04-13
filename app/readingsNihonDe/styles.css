@@ -92,22 +92,24 @@
   text-align: center;
 }
 
-.legend-kanji,
 .verse-tag--kanji {
   background-color: #cfe2ff;
   color: #084298;
 }
 
-.legend-kana,
 .verse-tag--kana {
   background-color: #d1e7dd;
   color: #0a3622;
 }
 
-.legend-en,
 .verse-tag--en {
   background-color: #fff3cd;
   color: #664d03;
+}
+
+.verse-tag--kanjikana {
+  background-color: #cdfeff;
+  color: #035766;
 }
 
 .readingsNihonDe-verse-block {
@@ -141,7 +143,10 @@
 
 .readingsNihonDe-kana {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
-  color: #2b6a4d;
+}
+
+.readingsNihonDe-kanjikana {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
 }
 
 .readingsNihonDe-english {
