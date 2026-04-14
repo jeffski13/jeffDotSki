@@ -133,6 +133,7 @@ export default function ReadingsNihonDe() {
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [confirmResetOpen, setConfirmResetOpen] = useState(false);
   const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
@@ -148,6 +149,12 @@ export default function ReadingsNihonDe() {
     if (savedSettings.lastBook && savedSettings.lastChapter) {
       handleSearch();
     }
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 300);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const handleResetSettings = () => {
@@ -472,6 +479,16 @@ export default function ReadingsNihonDe() {
           </Row>
         )}
       </Container>
+
+      {showScrollTop && (
+        <button
+          className="readingsNihonDe-scroll-top"
+          onClick={() => window.scrollTo({ top: 0 })}
+          aria-label="Scroll to top"
+        >
+          ▲
+        </button>
+      )}
 
       <Modal show={confirmResetOpen} onHide={() => setConfirmResetOpen(false)} centered>
         <Modal.Header closeButton>
