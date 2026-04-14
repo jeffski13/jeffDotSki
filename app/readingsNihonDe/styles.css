@@ -334,3 +334,38 @@
     margin-top: 0.5rem;
   }
 }
+
+/* ── Dark mode ── */
+
+[data-bs-theme="dark"] .readingsNihonDe-subtitle {
+  color: #aaa;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-passage-title-en {
+  color: #aaa;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-english {
+  color: #c8a050;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-verse-number {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-controls {
+  background-color: #1e2030;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-panel {
+  background: #1a1d2e;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-item {
+  background: #252840;
+  border-color: #3a3f5c;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-item[draggable="true"]:hover {
+  background: #2e3250;
+}
