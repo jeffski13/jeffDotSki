@@ -346,7 +346,7 @@
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-english {
-  color: #c8a050;
+  color: #e0c070;
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-verse-number {
@@ -354,18 +354,26 @@
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-controls {
-  background-color: #1e2030;
+  background-color: #3a3e58;
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-settings-panel {
-  background: #1a1d2e;
+  background: #383c56;
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-settings-item {
-  background: #252840;
-  border-color: #3a3f5c;
+  background: #42466a;
+  border-color: #565b80;
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-settings-item[draggable="true"]:hover {
-  background: #2e3250;
+  background: #4a4f76;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-label {
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-hint {
+  color: #fff;
 }
