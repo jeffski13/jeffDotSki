@@ -128,6 +128,14 @@
   color: #035766;
 }
 
+.verse-tag--toggle {
+  background-color: #e0d4f7;
+  color: #3d1a78;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .readingsNihonDe-verse-row:has(.readingsNihonDe-toggle-btn-col) {
   align-items: stretch;
