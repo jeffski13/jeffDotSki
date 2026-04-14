@@ -66,6 +66,7 @@
   font-size: 1rem;
   padding: 0.5rem 1rem;
   white-space: nowrap;
+  text-align: center;
 }
 
 .readingsNihonDe-passage-header {
@@ -128,23 +129,40 @@
   color: #035766;
 }
 
+.verse-tag--toggle {
+  background-color: #e0d4f7;
+  color: #3d1a78;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.readingsNihonDe-verse-row:has(.readingsNihonDe-toggle-btn-col) {
+  align-items: stretch;
+}
+
+.readingsNihonDe-toggle-btn-col {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  flex-shrink: 0;
+  cursor: pointer;
+  min-width: 2rem;
+}
 
 .readingsNihonDe-toggle-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   background: #e0d4f7;
-  border: none;
   border-radius: 4px;
   color: #3d1a78;
   padding: 3px 6px;
-  min-width: 2rem;
-  cursor: pointer;
-  flex-shrink: 0;
   line-height: 1.6;
 }
 
-.readingsNihonDe-toggle-btn:hover {
+.readingsNihonDe-toggle-btn-col:hover .readingsNihonDe-toggle-btn {
   background: #c9b8f0;
 }
 
@@ -199,6 +217,11 @@
   gap: 0.35rem;
 }
 
+.readingsNihonDe-settings-item-group {
+  display: flex;
+  flex-direction: column;
+}
+
 .readingsNihonDe-settings-item {
   display: flex;
   align-items: center;
@@ -209,6 +232,15 @@
   border-radius: 5px;
   cursor: grab;
   user-select: none;
+}
+
+.readingsNihonDe-settings-sub {
+  padding: 0.25rem 0.5rem 0.25rem 2.4rem;
+  font-size: 0.8rem;
+  border: 1px solid #dee2e6;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  background: #f8f9fa;
 }
 
 .readingsNihonDe-settings-item:active {
@@ -324,4 +356,93 @@
   .readingsNihonDe-btn {
     margin-top: 0.5rem;
   }
+}
+
+/* ── Scroll to top ── */
+
+.readingsNihonDe-scroll-top {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 6px;
+  background: rgba(240, 244, 255, 0.6);
+  color: #2a3a8a;
+  border: 1px solid rgba(199, 211, 245, 0.7);
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.readingsNihonDe-scroll-top:hover {
+  background: rgba(227, 234, 255, 0.85);
+  border-color: #c7d3f5;
+}
+
+/* ── Dark mode ── */
+
+[data-bs-theme="dark"] .readingsNihonDe-subtitle {
+  color: #aaa;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-passage-title-en {
+  color: #aaa;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-english {
+  color: #e0c070;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-verse-number {
+  color: #bbb;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-controls {
+  background-color: #3a3e58;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-panel {
+  background: #383c56;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-item {
+  background: #42466a;
+  border-color: #565b80;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-sub {
+  background: #383c56;
+  border-color: #565b80;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-item[draggable="true"]:hover {
+  background: #4a4f76;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-label {
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-hint {
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-scroll-top {
+  background: rgba(58, 62, 88, 0.6);
+  color: #c9d4ff;
+  border-color: rgba(86, 91, 128, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-scroll-top:hover {
+  background: rgba(74, 79, 118, 0.85);
+  border-color: #565b80;
 }

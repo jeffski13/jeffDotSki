@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -21,6 +21,15 @@ import LukeJpKanjiKana from './raw/jpkanjikana/Luke.json';
 import JohnJpKanjiKana from './raw/jpkanjikana/John.json';
 
 type Book = 'Matthew' | 'Mark' | 'Luke' | 'John';
+
+function ArrowsIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+      <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+    </svg>
+  );
+}
 
 interface RawVerse {
   verseNumber: number;
@@ -92,11 +101,12 @@ function fetchChapterVerses(
     const jpKanaVerse = jpKanaChapter?.verses[i];
     if (!jpVerse || !enVerse) break;
 
+    const cleanJp = (t: string) => t.trim().replace(/¶/g, '');
     results.push({
       number: jpVerse.verseNumber,
-      japanese: jpVerse.text.trim(),
-      japaneseKanjiKana: jpKanjiKanaChapter?.verses[i]?.text.trim() ?? jpVerse.text.trim(),
-      japaneseKanaOnly: jpKanaVerse?.text.trim() ?? jpVerse.text.trim(),
+      japanese: cleanJp(jpVerse.text),
+      japaneseKanjiKana: cleanJp(jpKanjiKanaChapter?.verses[i]?.text ?? jpVerse.text),
+      japaneseKanaOnly: cleanJp(jpKanaVerse?.text ?? jpVerse.text),
       english: enVerse.text.trim(),
     });
   }
@@ -123,16 +133,18 @@ export default function ReadingsNihonDe() {
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [confirmResetOpen, setConfirmResetOpen] = useState(false);
   const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
   const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
   const [splitOnKuten, setSplitOnKuten] = useState<boolean>(savedSettings.splitOnKuten ?? DEFAULT_SPLIT_ON_KUTEN);
+  const [defaultToggleKanjiKana, setDefaultToggleKanjiKana] = useState<boolean>(savedSettings.defaultToggleKanjiKana ?? DEFAULT_TOGGLE_KANJI_KANA);
   const dragSrc = useRef<RowKey | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, lastBook: book, lastChapter: chapter });
-  }, [displayOrder, displayEnabled, splitOnKuten, book, chapter]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, lastBook: book, lastChapter: chapter });
+  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, book, chapter]);
 
   useEffect(() => {
     if (savedSettings.lastBook && savedSettings.lastChapter) {
@@ -140,10 +152,17 @@ export default function ReadingsNihonDe() {
     }
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 300);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const handleResetSettings = () => {
     setDisplayOrder(DEFAULT_ORDER);
     setDisplayEnabled(DEFAULT_ENABLED);
     setSplitOnKuten(DEFAULT_SPLIT_ON_KUTEN);
+    setDefaultToggleKanjiKana(DEFAULT_TOGGLE_KANJI_KANA);
     setBook('John');
     setChapter('1');
   };
@@ -234,7 +253,7 @@ export default function ReadingsNihonDe() {
         <Row className="readingsNihonDe-header">
           <Col xs={12}>
             <h1 className="readingsNihonDe-title">
-              日本語で聖書 <span className="readingsNihonDe-subtitle">Bible in Japanese</span>
+              日本語で聖書 <span className="readingsNihonDe-subtitle">Japanese and English Translations</span>
             </h1>
           </Col>
         </Row>
@@ -242,7 +261,7 @@ export default function ReadingsNihonDe() {
         <Row className="readingsNihonDe-controls">
           <Col xs={12} sm={4} md={3} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Book (書)</Form.Label>
+              <Form.Label className="readingsNihonDe-label">書 (Book)</Form.Label>
               <Form.Select
                 value={book}
                 onChange={(e) => setBook(e.target.value as Book)}
@@ -257,9 +276,9 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Chapter (章)</Form.Label>
+              <Form.Label className="readingsNihonDe-label">章 (Chapter)</Form.Label>
               <Form.Control
                 type="number"
                 min={1}
@@ -271,9 +290,9 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Verse (節)</Form.Label>
+              <Form.Label className="readingsNihonDe-label">節 (Verse)</Form.Label>
               <Form.Control
                 type="number"
                 min={1}
@@ -285,18 +304,18 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={12} sm={2} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
+          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
             <Button
               variant="primary"
               onClick={handleSearch}
               disabled={loading}
               className="readingsNihonDe-btn"
             >
-              {loading ? <Spinner animation="border" size="sm" /> : 'Read (読む)'}
+              {loading ? <Spinner animation="border" size="sm" /> : '読む (Read)'}
             </Button>
           </Col>
 
-          <Col xs={12} sm={2} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
+          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <button
               className="readingsNihonDe-settings-toggle"
               onClick={() => setSettingsOpen((o) => !o)}
@@ -330,22 +349,42 @@ export default function ReadingsNihonDe() {
                     return (
                       <li
                         key={key}
-                        className="readingsNihonDe-settings-item"
-                        draggable
-                        onDragStart={() => handleDragStart(key)}
-                        onDragOver={(e) => e.preventDefault()}
-                        onDrop={() => handleDrop(key)}
+                        className="readingsNihonDe-settings-item-group"
                       >
-                        <span className="readingsNihonDe-settings-drag-handle">⠿</span>
-                        <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
-                        <span className="readingsNihonDe-settings-label">{opt.label}</span>
-                        <Form.Check
-                          type="switch"
-                          id={`display-toggle-${key}`}
-                          checked={displayEnabled[key]}
-                          onChange={() => toggleEnabled(key)}
-                          className="readingsNihonDe-settings-switch"
-                        />
+                        <div
+                          className="readingsNihonDe-settings-item"
+                          draggable
+                          onDragStart={() => handleDragStart(key)}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={() => handleDrop(key)}
+                        >
+                          <span className="readingsNihonDe-settings-drag-handle">⠿</span>
+                          <span className={`verse-tag ${opt.tagClass}`}>
+                            {key === 'toggle' ? (
+                              <ArrowsIcon size={14} />
+                            ) : opt.tagText}
+                          </span>
+                          <span className="readingsNihonDe-settings-label">{opt.label}</span>
+                          <Form.Check
+                            type="switch"
+                            id={`display-toggle-${key}`}
+                            checked={displayEnabled[key]}
+                            onChange={() => toggleEnabled(key)}
+                            className="readingsNihonDe-settings-switch"
+                          />
+                        </div>
+                        {key === 'toggle' && (
+                          <div className="readingsNihonDe-settings-sub">
+                            <Form.Check
+                              type="checkbox"
+                              id="default-toggle-kanji-kana"
+                              label="Defaults to Kanji and Kana"
+                              checked={defaultToggleKanjiKana}
+                              onChange={() => setDefaultToggleKanjiKana((prev) => !prev)}
+                              disabled={!displayEnabled['toggle']}
+                            />
+                          </div>
+                        )}
                       </li>
                     );
                   })}
@@ -410,19 +449,21 @@ export default function ReadingsNihonDe() {
               );
               if (key === 'toggle') return (
                 <div key="toggle" className="readingsNihonDe-verse-row">
-                  <button
-                    className="readingsNihonDe-toggle-btn"
+                  <div
+                    className="readingsNihonDe-toggle-btn-col"
                     onClick={() => toggleVerse(verse.number)}
                     title="Toggle kanji+kana reading"
                     aria-label="Toggle kanji+kana reading"
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleVerse(verse.number)}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                      <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-                    </svg>
-                  </button>
+                    <span className="readingsNihonDe-toggle-btn">
+                      <ArrowsIcon />
+                    </span>
+                  </div>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
-                    {renderJpText(toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese)}
+                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese))}
                   </span>
                 </div>
               );
@@ -456,6 +497,16 @@ export default function ReadingsNihonDe() {
           </Row>
         )}
       </Container>
+
+      {showScrollTop && (
+        <button
+          className="readingsNihonDe-scroll-top"
+          onClick={() => window.scrollTo({ top: 0 })}
+          aria-label="Scroll to top"
+        >
+          ▲
+        </button>
+      )}
 
       <Modal show={confirmResetOpen} onHide={() => setConfirmResetOpen(false)} centered>
         <Modal.Header closeButton>
