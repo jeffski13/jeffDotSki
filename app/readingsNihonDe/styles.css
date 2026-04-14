@@ -129,22 +129,31 @@
 }
 
 
+.readingsNihonDe-verse-row:has(.readingsNihonDe-toggle-btn-col) {
+  align-items: stretch;
+}
+
+.readingsNihonDe-toggle-btn-col {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  flex-shrink: 0;
+  cursor: pointer;
+  min-width: 2rem;
+}
+
 .readingsNihonDe-toggle-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   background: #e0d4f7;
-  border: none;
   border-radius: 4px;
   color: #3d1a78;
   padding: 3px 6px;
-  min-width: 2rem;
-  cursor: pointer;
-  flex-shrink: 0;
   line-height: 1.6;
 }
 
-.readingsNihonDe-toggle-btn:hover {
+.readingsNihonDe-toggle-btn-col:hover .readingsNihonDe-toggle-btn {
   background: #c9b8f0;
 }
 
