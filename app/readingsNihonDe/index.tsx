@@ -92,11 +92,12 @@ function fetchChapterVerses(
     const jpKanaVerse = jpKanaChapter?.verses[i];
     if (!jpVerse || !enVerse) break;
 
+    const cleanJp = (t: string) => t.trim().replace(/¶/g, '');
     results.push({
       number: jpVerse.verseNumber,
-      japanese: jpVerse.text.trim(),
-      japaneseKanjiKana: jpKanjiKanaChapter?.verses[i]?.text.trim() ?? jpVerse.text.trim(),
-      japaneseKanaOnly: jpKanaVerse?.text.trim() ?? jpVerse.text.trim(),
+      japanese: cleanJp(jpVerse.text),
+      japaneseKanjiKana: cleanJp(jpKanjiKanaChapter?.verses[i]?.text ?? jpVerse.text),
+      japaneseKanaOnly: cleanJp(jpKanaVerse?.text ?? jpVerse.text),
       english: enVerse.text.trim(),
     });
   }
