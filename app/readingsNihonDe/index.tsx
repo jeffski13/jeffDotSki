@@ -267,7 +267,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">章 (Chapter)</Form.Label>
               <Form.Control
@@ -281,7 +281,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">節 (Verse)</Form.Label>
               <Form.Control
@@ -295,7 +295,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={12} sm={2} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
+          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
             <Button
               variant="primary"
               onClick={handleSearch}
@@ -306,7 +306,7 @@ export default function ReadingsNihonDe() {
             </Button>
           </Col>
 
-          <Col xs={12} sm={2} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
+          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <button
               className="readingsNihonDe-settings-toggle"
               onClick={() => setSettingsOpen((o) => !o)}
