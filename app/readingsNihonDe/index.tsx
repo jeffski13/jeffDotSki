@@ -234,7 +234,7 @@ export default function ReadingsNihonDe() {
         <Row className="readingsNihonDe-header">
           <Col xs={12}>
             <h1 className="readingsNihonDe-title">
-              日本語で聖書 <span className="readingsNihonDe-subtitle">Bible in Japanese</span>
+              日本語で聖書 <span className="readingsNihonDe-subtitle">Japanese and English Translations</span>
             </h1>
           </Col>
         </Row>
@@ -242,7 +242,7 @@ export default function ReadingsNihonDe() {
         <Row className="readingsNihonDe-controls">
           <Col xs={12} sm={4} md={3} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Book (書)</Form.Label>
+              <Form.Label className="readingsNihonDe-label">書 (Book)</Form.Label>
               <Form.Select
                 value={book}
                 onChange={(e) => setBook(e.target.value as Book)}
@@ -259,7 +259,7 @@ export default function ReadingsNihonDe() {
 
           <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Chapter (章)</Form.Label>
+              <Form.Label className="readingsNihonDe-label">章 (Chapter)</Form.Label>
               <Form.Control
                 type="number"
                 min={1}
@@ -273,7 +273,7 @@ export default function ReadingsNihonDe() {
 
           <Col xs={5} sm={3} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
-              <Form.Label className="readingsNihonDe-label">Verse (節)</Form.Label>
+              <Form.Label className="readingsNihonDe-label">節 (Verse)</Form.Label>
               <Form.Control
                 type="number"
                 min={1}
@@ -292,7 +292,7 @@ export default function ReadingsNihonDe() {
               disabled={loading}
               className="readingsNihonDe-btn"
             >
-              {loading ? <Spinner animation="border" size="sm" /> : 'Read (読む)'}
+              {loading ? <Spinner animation="border" size="sm" /> : '読む (Read)'}
             </Button>
           </Col>
 
