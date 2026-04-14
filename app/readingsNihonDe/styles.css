@@ -217,6 +217,11 @@
   gap: 0.35rem;
 }
 
+.readingsNihonDe-settings-item-group {
+  display: flex;
+  flex-direction: column;
+}
+
 .readingsNihonDe-settings-item {
   display: flex;
   align-items: center;
@@ -227,6 +232,15 @@
   border-radius: 5px;
   cursor: grab;
   user-select: none;
+}
+
+.readingsNihonDe-settings-sub {
+  padding: 0.25rem 0.5rem 0.25rem 2.4rem;
+  font-size: 0.8rem;
+  border: 1px solid #dee2e6;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  background: #f8f9fa;
 }
 
 .readingsNihonDe-settings-item:active {
@@ -401,6 +415,11 @@
 
 [data-bs-theme="dark"] .readingsNihonDe-settings-item {
   background: #42466a;
+  border-color: #565b80;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-settings-sub {
+  background: #383c56;
   border-color: #565b80;
 }
 

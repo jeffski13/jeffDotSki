@@ -349,26 +349,42 @@ export default function ReadingsNihonDe() {
                     return (
                       <li
                         key={key}
-                        className="readingsNihonDe-settings-item"
-                        draggable
-                        onDragStart={() => handleDragStart(key)}
-                        onDragOver={(e) => e.preventDefault()}
-                        onDrop={() => handleDrop(key)}
+                        className="readingsNihonDe-settings-item-group"
                       >
-                        <span className="readingsNihonDe-settings-drag-handle">⠿</span>
-                        <span className={`verse-tag ${opt.tagClass}`}>
-                          {key === 'toggle' ? (
-                            <ArrowsIcon size={14} />
-                          ) : opt.tagText}
-                        </span>
-                        <span className="readingsNihonDe-settings-label">{opt.label}</span>
-                        <Form.Check
-                          type="switch"
-                          id={`display-toggle-${key}`}
-                          checked={displayEnabled[key]}
-                          onChange={() => toggleEnabled(key)}
-                          className="readingsNihonDe-settings-switch"
-                        />
+                        <div
+                          className="readingsNihonDe-settings-item"
+                          draggable
+                          onDragStart={() => handleDragStart(key)}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={() => handleDrop(key)}
+                        >
+                          <span className="readingsNihonDe-settings-drag-handle">⠿</span>
+                          <span className={`verse-tag ${opt.tagClass}`}>
+                            {key === 'toggle' ? (
+                              <ArrowsIcon size={14} />
+                            ) : opt.tagText}
+                          </span>
+                          <span className="readingsNihonDe-settings-label">{opt.label}</span>
+                          <Form.Check
+                            type="switch"
+                            id={`display-toggle-${key}`}
+                            checked={displayEnabled[key]}
+                            onChange={() => toggleEnabled(key)}
+                            className="readingsNihonDe-settings-switch"
+                          />
+                        </div>
+                        {key === 'toggle' && (
+                          <div className="readingsNihonDe-settings-sub">
+                            <Form.Check
+                              type="checkbox"
+                              id="default-toggle-kanji-kana"
+                              label="Defaults to Kanji and Kana"
+                              checked={defaultToggleKanjiKana}
+                              onChange={() => setDefaultToggleKanjiKana((prev) => !prev)}
+                              disabled={!displayEnabled['toggle']}
+                            />
+                          </div>
+                        )}
                       </li>
                     );
                   })}
@@ -380,13 +396,6 @@ export default function ReadingsNihonDe() {
                     label='New lines after Japanese periods'
                     checked={splitOnKuten}
                     onChange={() => setSplitOnKuten((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="default-toggle-kanji-kana"
-                    label='Toggle row defaults to Kanji and Kana'
-                    checked={defaultToggleKanjiKana}
-                    onChange={() => setDefaultToggleKanjiKana((prev) => !prev)}
                   />
                 </div>
               </div>
