@@ -378,7 +378,7 @@ export default function ReadingsNihonDe() {
                             <Form.Check
                               type="checkbox"
                               id="default-toggle-kanji-kana"
-                              label="Defaults to Kanji and Kana"
+                              label='Defaults to "(Hiragana)" On'
                               checked={defaultToggleKanjiKana}
                               onChange={() => setDefaultToggleKanjiKana((prev) => !prev)}
                               disabled={!displayEnabled['toggle']}

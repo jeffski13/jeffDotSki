@@ -10,7 +10,7 @@ export interface DisplayOption {
 export const DISPLAY_OPTIONS: DisplayOption[] = [
   { key: 'english',   label: 'English',             tagText: 'EN',   tagClass: 'verse-tag--en' },
   { key: 'japanese',  label: 'Kanji',     tagText: '漢字', tagClass: 'verse-tag--kanji' },
-  { key: 'toggle',    label: 'Tap to Toggle Kanji and Kana',          tagText: '調整', tagClass: 'verse-tag--toggle' },
+  { key: 'toggle',    label: 'Tap to Toggle "(Hiragana)"',          tagText: '調整', tagClass: 'verse-tag--toggle' },
   { key: 'kanaOnly',  label: 'Kana',                 tagText: 'かな', tagClass: 'verse-tag--kana' },
   { key: 'kanjiKana', label: 'Kanji and Kana',  tagText: '両方', tagClass: 'verse-tag--kanjikana' },
 ];
