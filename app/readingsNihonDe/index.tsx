@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -139,11 +139,12 @@ export default function ReadingsNihonDe() {
   const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
   const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
   const [splitOnKuten, setSplitOnKuten] = useState<boolean>(savedSettings.splitOnKuten ?? DEFAULT_SPLIT_ON_KUTEN);
+  const [defaultToggleKanjiKana, setDefaultToggleKanjiKana] = useState<boolean>(savedSettings.defaultToggleKanjiKana ?? DEFAULT_TOGGLE_KANJI_KANA);
   const dragSrc = useRef<RowKey | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, lastBook: book, lastChapter: chapter });
-  }, [displayOrder, displayEnabled, splitOnKuten, book, chapter]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, lastBook: book, lastChapter: chapter });
+  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, book, chapter]);
 
   useEffect(() => {
     if (savedSettings.lastBook && savedSettings.lastChapter) {
@@ -161,6 +162,7 @@ export default function ReadingsNihonDe() {
     setDisplayOrder(DEFAULT_ORDER);
     setDisplayEnabled(DEFAULT_ENABLED);
     setSplitOnKuten(DEFAULT_SPLIT_ON_KUTEN);
+    setDefaultToggleKanjiKana(DEFAULT_TOGGLE_KANJI_KANA);
     setBook('John');
     setChapter('1');
   };
@@ -379,6 +381,13 @@ export default function ReadingsNihonDe() {
                     checked={splitOnKuten}
                     onChange={() => setSplitOnKuten((prev) => !prev)}
                   />
+                  <Form.Check
+                    type="checkbox"
+                    id="default-toggle-kanji-kana"
+                    label='Toggle row defaults to Kanji and Kana'
+                    checked={defaultToggleKanjiKana}
+                    onChange={() => setDefaultToggleKanjiKana((prev) => !prev)}
+                  />
                 </div>
               </div>
             </Col>
@@ -445,7 +454,7 @@ export default function ReadingsNihonDe() {
                     </span>
                   </div>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
-                    {renderJpText(toggledVerses.has(verse.number) ? verse.japaneseKanjiKana : verse.japanese)}
+                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese))}
                   </span>
                 </div>
               );
