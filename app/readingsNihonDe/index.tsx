@@ -408,7 +408,7 @@ export default function ReadingsNihonDe() {
                             className="readingsNihonDe-settings-switch"
                           />
                         </div>
-                        {key === 'english' && (
+                        {key === 'english' && displayEnabled['english'] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -416,11 +416,10 @@ export default function ReadingsNihonDe() {
                               label='New lines around dialogue ("...")'
                               checked={splitEnglishDialogue}
                               onChange={() => setSplitEnglishDialogue((prev) => !prev)}
-                              disabled={!displayEnabled['english']}
                             />
                           </div>
                         )}
-                        {key === 'toggle' && (
+                        {key === 'toggle' && displayEnabled['toggle'] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -428,7 +427,6 @@ export default function ReadingsNihonDe() {
                               label="Defaults to Kanji and Kana"
                               checked={defaultToggleKanjiKana}
                               onChange={() => setDefaultToggleKanjiKana((prev) => !prev)}
-                              disabled={!displayEnabled['toggle']}
                             />
                             <Form.Check
                               type="checkbox"
@@ -436,11 +434,10 @@ export default function ReadingsNihonDe() {
                               label="New lines around dialogue (「...」)"
                               checked={splitJpDialogue['toggle']}
                               onChange={() => setSplitJpDialogue((prev) => ({ ...prev, toggle: !prev['toggle'] }))}
-                              disabled={!displayEnabled['toggle']}
                             />
                           </div>
                         )}
-                        {(key === 'japanese' || key === 'kanaOnly' || key === 'kanjiKana') && (
+                        {(key === 'japanese' || key === 'kanaOnly' || key === 'kanjiKana') && displayEnabled[key] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -448,7 +445,6 @@ export default function ReadingsNihonDe() {
                               label="New lines around dialogue (「...」)"
                               checked={splitJpDialogue[key]}
                               onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [key]: !prev[key] }))}
-                              disabled={!displayEnabled[key]}
                             />
                           </div>
                         )}
