@@ -232,6 +232,12 @@
   border-radius: 5px;
   cursor: grab;
   user-select: none;
+  touch-action: none;
+}
+
+.readingsNihonDe-settings-item--drag-over {
+  background: #f0f4ff;
+  border-color: #6c8ebf;
 }
 
 .readingsNihonDe-settings-sub {

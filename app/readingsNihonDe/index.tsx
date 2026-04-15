@@ -146,6 +146,8 @@ export default function ReadingsNihonDe() {
   const [splitEnglishDialogue, setSplitEnglishDialogue] = useState<boolean>(savedSettings.splitEnglishDialogue ?? DEFAULT_SPLIT_ENGLISH_DIALOGUE);
   const [splitJpDialogue, setSplitJpDialogue] = useState<Record<RowKey, boolean>>(savedSettings.splitJpDialogue ?? DEFAULT_SPLIT_JP_DIALOGUE);
   const dragSrc = useRef<RowKey | null>(null);
+  const touchDragSrc = useRef<RowKey | null>(null);
+  const [touchDragOver, setTouchDragOver] = useState<RowKey | null>(null);
 
   useEffect(() => {
     readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, splitEnglishDialogue, splitJpDialogue, lastBook: book, lastChapter: chapter });
@@ -217,20 +219,46 @@ export default function ReadingsNihonDe() {
   const toggleEnabled = (key: RowKey) =>
     setDisplayEnabled((prev) => ({ ...prev, [key]: !prev[key] }));
 
-  const handleDragStart = (key: RowKey) => { dragSrc.current = key; };
-
-  const handleDrop = (targetKey: RowKey) => {
-    const src = dragSrc.current;
-    if (!src || src === targetKey) return;
+  const reorder = (src: RowKey, target: RowKey) => {
+    if (src === target) return;
     setDisplayOrder((prev) => {
       const next = [...prev];
       const srcIdx = next.indexOf(src);
-      const tgtIdx = next.indexOf(targetKey);
+      const tgtIdx = next.indexOf(target);
       next.splice(srcIdx, 1);
       next.splice(tgtIdx, 0, src);
       return next;
     });
+  };
+
+  const handleDragStart = (key: RowKey) => { dragSrc.current = key; };
+
+  const handleDrop = (targetKey: RowKey) => {
+    if (dragSrc.current) reorder(dragSrc.current, targetKey);
     dragSrc.current = null;
+  };
+
+  const handleTouchStart = (key: RowKey) => {
+    touchDragSrc.current = key;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchDragSrc.current) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    const item = el?.closest('[data-drag-key]') as HTMLElement | null;
+    if (item?.dataset.dragKey) {
+      setTouchDragOver(item.dataset.dragKey as RowKey);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    const src = touchDragSrc.current;
+    const target = touchDragOver;
+    touchDragSrc.current = null;
+    setTouchDragOver(null);
+    if (src && target) reorder(src, target);
   };
 
   const toggleVerse = (verseNumber: number) => {
@@ -384,14 +412,18 @@ export default function ReadingsNihonDe() {
                     return (
                       <li
                         key={key}
+                        data-drag-key={key}
                         className="readingsNihonDe-settings-item-group"
                       >
                         <div
-                          className="readingsNihonDe-settings-item"
+                          className={`readingsNihonDe-settings-item${touchDragOver === key ? ' readingsNihonDe-settings-item--drag-over' : ''}`}
                           draggable
                           onDragStart={() => handleDragStart(key)}
                           onDragOver={(e) => e.preventDefault()}
                           onDrop={() => handleDrop(key)}
+                          onTouchStart={() => handleTouchStart(key)}
+                          onTouchMove={handleTouchMove}
+                          onTouchEnd={handleTouchEnd}
                         >
                           <span className="readingsNihonDe-settings-drag-handle">⠿</span>
                           <span className={`verse-tag ${opt.tagClass}`}>
