@@ -10,7 +10,7 @@ export interface DisplayOption {
 export const DISPLAY_OPTIONS: DisplayOption[] = [
   { key: 'english',   label: 'English',             tagText: 'EN',   tagClass: 'verse-tag--en' },
   { key: 'japanese',  label: 'Kanji',     tagText: '漢字', tagClass: 'verse-tag--kanji' },
-  { key: 'toggle',    label: 'Toggle Kanji and Kana',          tagText: '調整', tagClass: 'verse-tag--toggle' },
+  { key: 'toggle',    label: 'Tap Icon to Toggle Kanji and Kana',          tagText: '調整', tagClass: 'verse-tag--toggle' },
   { key: 'kanaOnly',  label: 'Kana',                 tagText: 'かな', tagClass: 'verse-tag--kana' },
   { key: 'kanjiKana', label: 'Kanji and Kana',  tagText: '両方', tagClass: 'verse-tag--kanjikana' },
 ];
@@ -21,12 +21,18 @@ export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
 };
 export const DEFAULT_SPLIT_ON_KUTEN = false;
 export const DEFAULT_TOGGLE_KANJI_KANA = false;
+export const DEFAULT_SPLIT_ENGLISH_DIALOGUE = false;
+export const DEFAULT_SPLIT_JP_DIALOGUE: Record<RowKey, boolean> = {
+  english: false, japanese: false, toggle: false, kanaOnly: false, kanjiKana: false,
+};
 
 export interface ReadingsDisplaySettings {
   order: RowKey[];
   enabled: Record<RowKey, boolean>;
   splitOnKuten: boolean;
   defaultToggleKanjiKana: boolean;
+  splitEnglishDialogue: boolean;
+  splitJpDialogue: Record<RowKey, boolean>;
   lastBook?: string;
   lastChapter?: string;
 }
@@ -48,7 +54,7 @@ export const readingsSettingsStoreImpl: ReadingsSettingsStore = {
     } catch {
       // ignore corrupt data
     }
-    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED, splitOnKuten: DEFAULT_SPLIT_ON_KUTEN, defaultToggleKanjiKana: DEFAULT_TOGGLE_KANJI_KANA };
+    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED, splitOnKuten: DEFAULT_SPLIT_ON_KUTEN, defaultToggleKanjiKana: DEFAULT_TOGGLE_KANJI_KANA, splitEnglishDialogue: DEFAULT_SPLIT_ENGLISH_DIALOGUE, splitJpDialogue: DEFAULT_SPLIT_JP_DIALOGUE };
   },
   saveSettings(settings: ReadingsDisplaySettings): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
