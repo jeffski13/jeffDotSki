@@ -231,7 +231,10 @@ export default function ReadingsNihonDe() {
     });
   };
 
-  const handleDragStart = (key: RowKey) => { dragSrc.current = key; };
+  const handleDragStart = (key: RowKey, e: React.DragEvent) => {
+    dragSrc.current = key;
+    e.dataTransfer.effectAllowed = 'move';
+  };
 
   const handleDrop = (targetKey: RowKey) => {
     if (dragSrc.current) reorder(dragSrc.current, targetKey);
@@ -418,8 +421,8 @@ export default function ReadingsNihonDe() {
                         <div
                           className={`readingsNihonDe-settings-item${touchDragOver === key ? ' readingsNihonDe-settings-item--drag-over' : ''}`}
                           draggable
-                          onDragStart={() => handleDragStart(key)}
-                          onDragOver={(e) => e.preventDefault()}
+                          onDragStart={(e) => handleDragStart(key, e)}
+                          onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }}
                           onDrop={() => handleDrop(key)}
                           onTouchStart={() => handleTouchStart(key)}
                           onTouchMove={handleTouchMove}
