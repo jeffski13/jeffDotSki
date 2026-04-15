@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -143,11 +143,13 @@ export default function ReadingsNihonDe() {
   const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
   const [splitOnKuten, setSplitOnKuten] = useState<boolean>(savedSettings.splitOnKuten ?? DEFAULT_SPLIT_ON_KUTEN);
   const [defaultToggleKanjiKana, setDefaultToggleKanjiKana] = useState<boolean>(savedSettings.defaultToggleKanjiKana ?? DEFAULT_TOGGLE_KANJI_KANA);
+  const [splitEnglishDialogue, setSplitEnglishDialogue] = useState<boolean>(savedSettings.splitEnglishDialogue ?? DEFAULT_SPLIT_ENGLISH_DIALOGUE);
+  const [splitJpDialogue, setSplitJpDialogue] = useState<Record<RowKey, boolean>>(savedSettings.splitJpDialogue ?? DEFAULT_SPLIT_JP_DIALOGUE);
   const dragSrc = useRef<RowKey | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, lastBook: book, lastChapter: chapter });
-  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, book, chapter]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, splitEnglishDialogue, splitJpDialogue, lastBook: book, lastChapter: chapter });
+  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, splitEnglishDialogue, splitJpDialogue, book, chapter]);
 
   useEffect(() => {
     if (savedSettings.lastBook && savedSettings.lastChapter) {
@@ -166,19 +168,48 @@ export default function ReadingsNihonDe() {
     setDisplayEnabled(DEFAULT_ENABLED);
     setSplitOnKuten(DEFAULT_SPLIT_ON_KUTEN);
     setDefaultToggleKanjiKana(DEFAULT_TOGGLE_KANJI_KANA);
+    setSplitEnglishDialogue(DEFAULT_SPLIT_ENGLISH_DIALOGUE);
+    setSplitJpDialogue(DEFAULT_SPLIT_JP_DIALOGUE);
     setBook('John');
     setChapter('1');
   };
 
-  const renderJpText = (text: string): React.ReactNode => {
-    if (!splitOnKuten) return text;
-    return text.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
-      if (i < arr.length - 1) {
-        acc.push(part + '。');
-        acc.push(<br key={i} />);
-      } else if (part) {
-        acc.push(part);
-      }
+  const renderJpText = (text: string, dialogueSplit = false): React.ReactNode => {
+    const applyKuten = (t: string): React.ReactNode[] => {
+      if (!splitOnKuten) return [t];
+      return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
+        if (i < arr.length - 1) {
+          acc.push(part + '。');
+          acc.push(<br key={`k${i}`} />);
+        } else if (part) {
+          acc.push(part);
+        }
+        return acc;
+      }, []);
+    };
+
+    if (!dialogueSplit) return applyKuten(text);
+
+    const parts = text.split(/(「[^」]*」)/);
+    return parts.reduce<React.ReactNode[]>((acc, part, i) => {
+      if (!part) return acc;
+      const isDialogue = /^「[^」]*」$/.test(part);
+      if (isDialogue && i > 0) acc.push(<br key={`d${i}`} />);
+      acc.push(...applyKuten(part));
+      if (isDialogue && i < parts.length - 1) acc.push(<br key={`da${i}`} />);
+      return acc;
+    }, []);
+  };
+
+  const renderEnText = (text: string): React.ReactNode => {
+    if (!splitEnglishDialogue) return text;
+    const parts = text.split(/("[^"]*")/);
+    return parts.reduce<React.ReactNode[]>((acc, part, i) => {
+      if (!part) return acc;
+      const isDialogue = /^"[^"]*"$/.test(part);
+      if (isDialogue && i > 0) acc.push(<br key={`d${i}`} />);
+      acc.push(part);
+      if (isDialogue && i < parts.length - 1) acc.push(<br key={`da${i}`} />);
       return acc;
     }, []);
   };
@@ -377,6 +408,18 @@ export default function ReadingsNihonDe() {
                             className="readingsNihonDe-settings-switch"
                           />
                         </div>
+                        {key === 'english' && (
+                          <div className="readingsNihonDe-settings-sub">
+                            <Form.Check
+                              type="checkbox"
+                              id="split-english-dialogue"
+                              label='New lines around dialogue ("...")'
+                              checked={splitEnglishDialogue}
+                              onChange={() => setSplitEnglishDialogue((prev) => !prev)}
+                              disabled={!displayEnabled['english']}
+                            />
+                          </div>
+                        )}
                         {key === 'toggle' && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
@@ -386,6 +429,26 @@ export default function ReadingsNihonDe() {
                               checked={defaultToggleKanjiKana}
                               onChange={() => setDefaultToggleKanjiKana((prev) => !prev)}
                               disabled={!displayEnabled['toggle']}
+                            />
+                            <Form.Check
+                              type="checkbox"
+                              id="split-jp-dialogue-toggle"
+                              label="New lines around dialogue (「...」)"
+                              checked={splitJpDialogue['toggle']}
+                              onChange={() => setSplitJpDialogue((prev) => ({ ...prev, toggle: !prev['toggle'] }))}
+                              disabled={!displayEnabled['toggle']}
+                            />
+                          </div>
+                        )}
+                        {(key === 'japanese' || key === 'kanaOnly' || key === 'kanjiKana') && (
+                          <div className="readingsNihonDe-settings-sub">
+                            <Form.Check
+                              type="checkbox"
+                              id={`split-jp-dialogue-${key}`}
+                              label="New lines around dialogue (「...」)"
+                              checked={splitJpDialogue[key]}
+                              onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [key]: !prev[key] }))}
+                              disabled={!displayEnabled[key]}
                             />
                           </div>
                         )}
@@ -439,7 +502,7 @@ export default function ReadingsNihonDe() {
                 <div key="english" className="readingsNihonDe-verse-row">
                   <span className="verse-tag verse-tag--en">EN</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-english">
-                    {verse.english}
+                    {renderEnText(verse.english)}
                   </span>
                 </div>
               );
@@ -447,7 +510,7 @@ export default function ReadingsNihonDe() {
                 <div key="japanese" className="readingsNihonDe-verse-row">
                   <span className="verse-tag verse-tag--kanji">漢字</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
-                    {renderJpText(verse.japanese)}
+                    {renderJpText(verse.japanese, splitJpDialogue['japanese'])}
                   </span>
                 </div>
               );
@@ -467,7 +530,7 @@ export default function ReadingsNihonDe() {
                     </span>
                   </div>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
-                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese))}
+                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese), splitJpDialogue['toggle'])}
                   </span>
                 </div>
               );
@@ -475,7 +538,7 @@ export default function ReadingsNihonDe() {
                 <div key="kanaOnly" className="readingsNihonDe-verse-row">
                   <span className="verse-tag verse-tag--kana">かな</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
-                    {renderJpText(verse.japaneseKanaOnly)}
+                    {renderJpText(verse.japaneseKanaOnly, splitJpDialogue['kanaOnly'])}
                   </span>
                 </div>
               );
@@ -483,7 +546,7 @@ export default function ReadingsNihonDe() {
                 <div key="kanjiKana" className="readingsNihonDe-verse-row">
                   <span className="verse-tag verse-tag--kanjikana">両方</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
-                    {renderJpText(verse.japaneseKanjiKana)}
+                    {renderJpText(verse.japaneseKanjiKana, splitJpDialogue['kanjiKana'])}
                   </span>
                 </div>
               );
