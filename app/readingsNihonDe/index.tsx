@@ -132,6 +132,9 @@ export default function ReadingsNihonDe() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
+  const [passageBook, setPassageBook] = useState<Book>(book);
+  const [passageChapter, setPassageChapter] = useState<number>(parseInt(chapter, 10));
+  const [passageStartVerse, setPassageStartVerse] = useState<number>(parseInt(startVerse, 10));
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -228,6 +231,9 @@ export default function ReadingsNihonDe() {
     setError(null);
     setVerses([]);
     setSearched(true);
+    setPassageBook(book);
+    setPassageChapter(chapterNum);
+    setPassageStartVerse(verseNum);
 
     try {
       const results = await fetchChapterVerses(book, chapterNum, verseNum);
@@ -243,8 +249,6 @@ export default function ReadingsNihonDe() {
     }
   };
 
-  const chapterNum = parseInt(chapter, 10);
-  const verseNum = parseInt(startVerse, 10);
   const hasPassage = verses.length > 0;
 
   return (
@@ -415,10 +419,10 @@ export default function ReadingsNihonDe() {
           <Row className="readingsNihonDe-passage-header">
             <Col xs={12}>
               <h2 className="readingsNihonDe-passage-title">
-                {BOOK_JAPANESE[book]} {chapterNum}:{verseNum}–
+                {BOOK_JAPANESE[passageBook]} {passageChapter}:{passageStartVerse}–
                 {verses[verses.length - 1].number}
                 <span className="readingsNihonDe-passage-title-en">
-                  {' '}({book} {chapterNum}:{verseNum}–{verses[verses.length - 1].number})
+                  {' '}({passageBook} {passageChapter}:{passageStartVerse}–{verses[verses.length - 1].number})
                 </span>
               </h2>
             </Col>
