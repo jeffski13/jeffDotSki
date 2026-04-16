@@ -203,6 +203,54 @@ export default function ReadingsNihonDe() {
     }, []);
   };
 
+  const renderFurigana = (text: string, dialogueSplit = false): React.ReactNode => {
+    const applyKutenToPlain = (t: string, keyPrefix: string): React.ReactNode[] => {
+      if (!splitOnKuten) return [t];
+      return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
+        if (i < arr.length - 1) {
+          acc.push(part + '。');
+          acc.push(<br key={`${keyPrefix}-k${i}`} />);
+        } else if (part) {
+          acc.push(part);
+        }
+        return acc;
+      }, []);
+    };
+
+    const parseAndRender = (t: string, keyPrefix: string): React.ReactNode[] => {
+      const nodes: React.ReactNode[] = [];
+      const regex = /([\u4E00-\u9FFF\u3400-\u4DBF\u3005]+)\(([^)]+)\)/g;
+      let lastIndex = 0;
+      let tokenIdx = 0;
+      let match;
+      while ((match = regex.exec(t)) !== null) {
+        if (match.index > lastIndex) {
+          applyKutenToPlain(t.slice(lastIndex, match.index), `${keyPrefix}-p${tokenIdx}`).forEach((n) => nodes.push(n));
+          tokenIdx++;
+        }
+        nodes.push(<ruby key={`${keyPrefix}-ruby${tokenIdx}`}>{match[1]}<rt>{match[2]}</rt></ruby>);
+        tokenIdx++;
+        lastIndex = match.index + match[0].length;
+      }
+      if (lastIndex < t.length) {
+        applyKutenToPlain(t.slice(lastIndex), `${keyPrefix}-p${tokenIdx}`).forEach((n) => nodes.push(n));
+      }
+      return nodes;
+    };
+
+    if (!dialogueSplit) return parseAndRender(text, 'fur');
+
+    const parts = text.split(/(「[^」]*」)/);
+    return parts.reduce<React.ReactNode[]>((acc, part, i) => {
+      if (!part) return acc;
+      const isDialogue = /^「[^」]*」$/.test(part);
+      if (isDialogue && i > 0) acc.push(<br key={`fd${i}`} />);
+      acc.push(...parseAndRender(part, `fur-${i}`));
+      if (isDialogue && i < parts.length - 1) acc.push(<br key={`fda${i}`} />);
+      return acc;
+    }, []);
+  };
+
   const renderEnText = (text: string): React.ReactNode => {
     if (!splitEnglishDialogue) return text;
     const parts = text.split(/("[^"]*")/);
@@ -472,7 +520,7 @@ export default function ReadingsNihonDe() {
                             />
                           </div>
                         )}
-                        {(key === 'japanese' || key === 'kanaOnly' || key === 'kanjiKana') && displayEnabled[key] && (
+                        {(key === 'japanese' || key === 'kanaOnly' || key === 'kanjiKana' || key === 'furigana') && displayEnabled[key] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -578,6 +626,14 @@ export default function ReadingsNihonDe() {
                   <span className="verse-tag verse-tag--kanjikana">両方</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
                     {renderJpText(verse.japaneseKanjiKana, splitJpDialogue['kanjiKana'])}
+                  </span>
+                </div>
+              );
+              if (key === 'furigana') return (
+                <div key="furigana" className="readingsNihonDe-verse-row">
+                  <span className="verse-tag verse-tag--furigana">ルビ</span>
+                  <span className="readingsNihonDe-verse-text readingsNihonDe-furigana">
+                    {renderFurigana(verse.japaneseKanjiKana, splitJpDialogue['furigana'])}
                   </span>
                 </div>
               );

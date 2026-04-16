@@ -129,6 +129,11 @@
   color: #035766;
 }
 
+.verse-tag--furigana {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
 .verse-tag--toggle {
   background-color: #e0d4f7;
   color: #3d1a78;
@@ -343,6 +348,15 @@
 
 .readingsNihonDe-kanjikana {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+}
+
+.readingsNihonDe-furigana {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+  line-height: 2.8;
+}
+
+.readingsNihonDe-furigana ruby rt {
+  font-size: 0.6em;
 }
 
 .readingsNihonDe-english {

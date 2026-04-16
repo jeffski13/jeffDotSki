@@ -1,4 +1,4 @@
-export type RowKey = 'english' | 'japanese' | 'toggle' | 'kanaOnly' | 'kanjiKana';
+export type RowKey = 'english' | 'japanese' | 'toggle' | 'kanaOnly' | 'kanjiKana' | 'furigana';
 
 export interface DisplayOption {
   key: RowKey;
@@ -13,17 +13,18 @@ export const DISPLAY_OPTIONS: DisplayOption[] = [
   { key: 'toggle',    label: 'Tap Icon to Toggle Kanji and Kana',          tagText: '調整', tagClass: 'verse-tag--toggle' },
   { key: 'kanaOnly',  label: 'Kana',                 tagText: 'かな', tagClass: 'verse-tag--kana' },
   { key: 'kanjiKana', label: 'Kanji and Kana',  tagText: '両方', tagClass: 'verse-tag--kanjikana' },
+  { key: 'furigana',  label: 'Furigana',             tagText: 'ルビ', tagClass: 'verse-tag--furigana' },
 ];
 
 export const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
 export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
-  english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true,
+  english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true, furigana: false,
 };
 export const DEFAULT_SPLIT_ON_KUTEN = false;
 export const DEFAULT_TOGGLE_KANJI_KANA = false;
 export const DEFAULT_SPLIT_ENGLISH_DIALOGUE = false;
 export const DEFAULT_SPLIT_JP_DIALOGUE: Record<RowKey, boolean> = {
-  english: false, japanese: false, toggle: false, kanaOnly: false, kanjiKana: false,
+  english: false, japanese: false, toggle: false, kanaOnly: false, kanjiKana: false, furigana: false,
 };
 
 export interface ReadingsDisplaySettings {
