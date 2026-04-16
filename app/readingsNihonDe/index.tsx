@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 
 import MatthewEn from './raw/en/Matthew.json';
 import MarkEn from './raw/en/Mark.json';
@@ -478,7 +478,7 @@ export default function ReadingsNihonDe() {
                         >
                           <span className="readingsNihonDe-settings-drag-handle">⠿</span>
                           <span className={`verse-tag ${opt.tagClass}`}>
-                            {key === 'toggle' ? (
+                            {key === ROWKEYS.TOGGLE ? (
                               <ArrowsIcon size={14} />
                             ) : opt.tagText}
                           </span>
@@ -491,7 +491,7 @@ export default function ReadingsNihonDe() {
                             className="readingsNihonDe-settings-switch"
                           />
                         </div>
-                        {key === 'english' && displayEnabled['english'] && (
+                        {key === ROWKEYS.ENGLISH && displayEnabled[ROWKEYS.ENGLISH] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -502,7 +502,7 @@ export default function ReadingsNihonDe() {
                             />
                           </div>
                         )}
-                        {key === 'toggle' && displayEnabled['toggle'] && (
+                        {key === ROWKEYS.TOGGLE && displayEnabled[ROWKEYS.TOGGLE] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -515,12 +515,12 @@ export default function ReadingsNihonDe() {
                               type="checkbox"
                               id="split-jp-dialogue-toggle"
                               label="New lines around dialogue (「...」)"
-                              checked={splitJpDialogue['toggle']}
-                              onChange={() => setSplitJpDialogue((prev) => ({ ...prev, toggle: !prev['toggle'] }))}
+                              checked={splitJpDialogue[ROWKEYS.TOGGLE]}
+                              onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [ROWKEYS.TOGGLE]: !prev[ROWKEYS.TOGGLE] }))}
                             />
                           </div>
                         )}
-                        {(key === 'japanese' || key === 'kanaOnly' || key === 'kanjiKana' || key === 'furigana') && displayEnabled[key] && (
+                        {(key === ROWKEYS.JAPANESE || key === ROWKEYS.KANA_ONLY || key === ROWKEYS.KANJI_KANA || key === ROWKEYS.FURIGANA) && displayEnabled[key] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -577,24 +577,25 @@ export default function ReadingsNihonDe() {
 
             {displayOrder.map((key) => {
               if (!displayEnabled[key]) return null;
-              if (key === 'english') return (
-                <div key="english" className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--en">EN</span>
+              const opt = DISPLAY_OPTIONS.find((o) => o.key === key)!;
+              if (key === ROWKEYS.ENGLISH) return (
+                <div key={ROWKEYS.ENGLISH} className="readingsNihonDe-verse-row">
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-english">
                     {renderEnText(verse.english)}
                   </span>
                 </div>
               );
-              if (key === 'japanese') return (
-                <div key="japanese" className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--kanji">漢字</span>
+              if (key === ROWKEYS.JAPANESE) return (
+                <div key={ROWKEYS.JAPANESE} className="readingsNihonDe-verse-row">
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
-                    {renderJpText(verse.japanese, splitJpDialogue['japanese'])}
+                    {renderJpText(verse.japanese, splitJpDialogue[ROWKEYS.JAPANESE])}
                   </span>
                 </div>
               );
-              if (key === 'toggle') return (
-                <div key="toggle" className="readingsNihonDe-verse-row">
+              if (key === ROWKEYS.TOGGLE) return (
+                <div key={ROWKEYS.TOGGLE} className="readingsNihonDe-verse-row">
                   <div
                     className="readingsNihonDe-toggle-btn-col"
                     onClick={() => toggleVerse(verse.number)}
@@ -609,31 +610,31 @@ export default function ReadingsNihonDe() {
                     </span>
                   </div>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
-                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese), splitJpDialogue['toggle'])}
+                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese), splitJpDialogue[ROWKEYS.TOGGLE])}
                   </span>
                 </div>
               );
-              if (key === 'kanaOnly') return (
-                <div key="kanaOnly" className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--kana">かな</span>
+              if (key === ROWKEYS.KANA_ONLY) return (
+                <div key={ROWKEYS.KANA_ONLY} className="readingsNihonDe-verse-row">
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
-                    {renderJpText(verse.japaneseKanaOnly, splitJpDialogue['kanaOnly'])}
+                    {renderJpText(verse.japaneseKanaOnly, splitJpDialogue[ROWKEYS.KANA_ONLY])}
                   </span>
                 </div>
               );
-              if (key === 'kanjiKana') return (
-                <div key="kanjiKana" className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--kanjikana">両方</span>
+              if (key === ROWKEYS.KANJI_KANA) return (
+                <div key={ROWKEYS.KANJI_KANA} className="readingsNihonDe-verse-row">
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
-                    {renderJpText(verse.japaneseKanjiKana, splitJpDialogue['kanjiKana'])}
+                    {renderJpText(verse.japaneseKanjiKana, splitJpDialogue[ROWKEYS.KANJI_KANA])}
                   </span>
                 </div>
               );
-              if (key === 'furigana') return (
-                <div key="furigana" className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--furigana">ルビ</span>
+              if (key === ROWKEYS.FURIGANA) return (
+                <div key={ROWKEYS.FURIGANA} className="readingsNihonDe-verse-row">
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-furigana">
-                    {renderFurigana(verse.japaneseKanjiKana, splitJpDialogue['furigana'])}
+                    {renderFurigana(verse.japaneseKanjiKana, splitJpDialogue[ROWKEYS.FURIGANA])}
                   </span>
                 </div>
               );
