@@ -1,10 +1,7 @@
 {
-    "spinnerVerbs": {
-        "mode": "replace",
-        "verbs": [
-            "Thinking",
-            "Processing",
-            "Working"
-        ]
-    }
+  "permissions": {
+    "allow": [
+      "Bash(npx jest:*)"
+    ]
+  }
 }
