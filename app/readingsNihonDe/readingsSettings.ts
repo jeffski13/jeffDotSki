@@ -5,7 +5,7 @@ export const ROWKEYS = {
   KANA_ONLY: 'kanaOnly',
   KANJI_KANA: 'kanjiKana',
   FURIGANA: 'furigana',
-} as const
+};
 
 export type RowKey = typeof ROWKEYS[keyof typeof ROWKEYS];
 

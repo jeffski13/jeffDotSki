@@ -577,9 +577,10 @@ export default function ReadingsNihonDe() {
 
             {displayOrder.map((key) => {
               if (!displayEnabled[key]) return null;
+              const opt = DISPLAY_OPTIONS.find((o) => o.key === key)!;
               if (key === ROWKEYS.ENGLISH) return (
                 <div key={ROWKEYS.ENGLISH} className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--en">EN</span>
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-english">
                     {renderEnText(verse.english)}
                   </span>
@@ -587,7 +588,7 @@ export default function ReadingsNihonDe() {
               );
               if (key === ROWKEYS.JAPANESE) return (
                 <div key={ROWKEYS.JAPANESE} className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--kanji">漢字</span>
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-japanese">
                     {renderJpText(verse.japanese, splitJpDialogue[ROWKEYS.JAPANESE])}
                   </span>
@@ -615,7 +616,7 @@ export default function ReadingsNihonDe() {
               );
               if (key === ROWKEYS.KANA_ONLY) return (
                 <div key={ROWKEYS.KANA_ONLY} className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--kana">かな</span>
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kana">
                     {renderJpText(verse.japaneseKanaOnly, splitJpDialogue[ROWKEYS.KANA_ONLY])}
                   </span>
@@ -623,7 +624,7 @@ export default function ReadingsNihonDe() {
               );
               if (key === ROWKEYS.KANJI_KANA) return (
                 <div key={ROWKEYS.KANJI_KANA} className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--kanjikana">両方</span>
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-kanjikana">
                     {renderJpText(verse.japaneseKanjiKana, splitJpDialogue[ROWKEYS.KANJI_KANA])}
                   </span>
@@ -631,7 +632,7 @@ export default function ReadingsNihonDe() {
               );
               if (key === ROWKEYS.FURIGANA) return (
                 <div key={ROWKEYS.FURIGANA} className="readingsNihonDe-verse-row">
-                  <span className="verse-tag verse-tag--furigana">ルビ</span>
+                  <span className={`verse-tag ${opt.tagClass}`}>{opt.tagText}</span>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-furigana">
                     {renderFurigana(verse.japaneseKanjiKana, splitJpDialogue[ROWKEYS.FURIGANA])}
                   </span>
