@@ -18,7 +18,7 @@ export const DISPLAY_OPTIONS: DisplayOption[] = [
 
 export const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
 export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
-  english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true, furigana: false,
+  english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true, furigana: true,
 };
 export const DEFAULT_SPLIT_ON_KUTEN = false;
 export const DEFAULT_TOGGLE_KANJI_KANA = false;
