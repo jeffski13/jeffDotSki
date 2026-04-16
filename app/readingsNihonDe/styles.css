@@ -251,6 +251,14 @@
   border-color: #6c8ebf;
 }
 
+.readingsNihonDe-settings-item-group--drop-before {
+  border-top: 2px solid #0d6efd;
+}
+
+.readingsNihonDe-settings-item-group--drop-after {
+  border-bottom: 2px solid #0d6efd;
+}
+
 .readingsNihonDe-settings-sub {
   padding: 0.25rem 0.5rem 0.25rem 2.4rem;
   font-size: 0.8rem;
