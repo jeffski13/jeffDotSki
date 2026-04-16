@@ -1,4 +1,20 @@
-export type RowKey = 'english' | 'japanese' | 'toggle' | 'kanaOnly' | 'kanjiKana' | 'furigana';
+export const ROW_KEY_ENGLISH   = 'english'   as const;
+export const ROW_KEY_JAPANESE  = 'japanese'  as const;
+export const ROW_KEY_TOGGLE    = 'toggle'    as const;
+export const ROW_KEY_KANA_ONLY = 'kanaOnly'  as const;
+export const ROW_KEY_KANJI_KANA = 'kanjiKana' as const;
+export const ROW_KEY_FURIGANA  = 'furigana'  as const;
+
+export const ROWKEYS = {
+  ENGLISH: 'english',
+  JAPANESE: 'japanese',
+  TOGGLE: 'toggle',
+  KANA_ONLY: 'kanaOnly',
+  KANJI_KANA: 'kanjiKana',
+  FURIGANA: 'furigana',
+} as const
+
+export type RowKey = typeof ROW_KEY_ENGLISH | typeof ROW_KEY_JAPANESE | typeof ROW_KEY_TOGGLE | typeof ROW_KEY_KANA_ONLY | typeof ROW_KEY_KANJI_KANA | typeof ROW_KEY_FURIGANA;
 
 export interface DisplayOption {
   key: RowKey;
@@ -8,23 +24,23 @@ export interface DisplayOption {
 }
 
 export const DISPLAY_OPTIONS: DisplayOption[] = [
-  { key: 'english',   label: 'English',             tagText: 'EN',   tagClass: 'verse-tag--en' },
-  { key: 'japanese',  label: 'Kanji',     tagText: '漢字', tagClass: 'verse-tag--kanji' },
-  { key: 'toggle',    label: 'Tap Icon to Toggle Kanji and Kana',          tagText: '調整', tagClass: 'verse-tag--toggle' },
-  { key: 'kanaOnly',  label: 'Kana',                 tagText: 'かな', tagClass: 'verse-tag--kana' },
-  { key: 'kanjiKana', label: 'Kanji and Kana',  tagText: '両方', tagClass: 'verse-tag--kanjikana' },
-  { key: 'furigana',  label: 'Furigana',             tagText: 'ルビ', tagClass: 'verse-tag--furigana' },
+  { key: ROW_KEY_ENGLISH,    label: 'English',                        tagText: 'EN',   tagClass: 'verse-tag--en' },
+  { key: ROW_KEY_JAPANESE,   label: 'Kanji',                          tagText: '漢字', tagClass: 'verse-tag--kanji' },
+  { key: ROW_KEY_TOGGLE,     label: 'Tap Icon to Toggle Kanji and Kana', tagText: '調整', tagClass: 'verse-tag--toggle' },
+  { key: ROW_KEY_KANA_ONLY,  label: 'Kana',                           tagText: 'かな', tagClass: 'verse-tag--kana' },
+  { key: ROW_KEY_KANJI_KANA, label: 'Kanji and Kana',                 tagText: '両方', tagClass: 'verse-tag--kanjikana' },
+  { key: ROW_KEY_FURIGANA,   label: 'Furigana',                       tagText: 'ルビ', tagClass: 'verse-tag--furigana' },
 ];
 
 export const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
 export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
-  english: true, japanese: true, toggle: true, kanaOnly: true, kanjiKana: true, furigana: true,
+  [ROW_KEY_ENGLISH]: true, [ROW_KEY_JAPANESE]: true, [ROW_KEY_TOGGLE]: true, [ROW_KEY_KANA_ONLY]: true, [ROW_KEY_KANJI_KANA]: true, [ROW_KEY_FURIGANA]: true,
 };
 export const DEFAULT_SPLIT_ON_KUTEN = false;
 export const DEFAULT_TOGGLE_KANJI_KANA = false;
 export const DEFAULT_SPLIT_ENGLISH_DIALOGUE = false;
 export const DEFAULT_SPLIT_JP_DIALOGUE: Record<RowKey, boolean> = {
-  english: false, japanese: false, toggle: false, kanaOnly: false, kanjiKana: false, furigana: false,
+  [ROW_KEY_ENGLISH]: false, [ROW_KEY_JAPANESE]: false, [ROW_KEY_TOGGLE]: false, [ROW_KEY_KANA_ONLY]: false, [ROW_KEY_KANJI_KANA]: false, [ROW_KEY_FURIGANA]: false,
 };
 
 export interface ReadingsDisplaySettings {

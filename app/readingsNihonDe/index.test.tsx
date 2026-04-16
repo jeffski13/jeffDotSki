@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import ReadingsNihonDe from './index';
+import { ROWKEYS } from './readingsSettings';
 
 describe('ReadingsNihonDe', () => {
   beforeEach(() => {
@@ -7,12 +8,12 @@ describe('ReadingsNihonDe', () => {
   });
 
   it.each([
-    { key: 'toggle',    label: 'toggle language' },
-    { key: 'english',   label: 'English'         },
-    { key: 'japanese',  label: 'Kanji'           },
-    { key: 'kanaOnly',  label: 'Kana'            },
-    { key: 'kanjiKana', label: 'Kanji and Kana'  },
-    { key: 'furigana',  label: 'Furigana'        },
+    { key: ROWKEYS.TOGGLE,    label: 'toggle language' },
+    { key: ROWKEYS.ENGLISH,   label: 'English'         },
+    { key: ROWKEYS.JAPANESE,  label: 'Kanji'           },
+    { key: ROWKEYS.KANA_ONLY, label: 'Kana'            },
+    { key: ROWKEYS.KANJI_KANA, label: 'Kanji and Kana' },
+    { key: ROWKEYS.FURIGANA,  label: 'Furigana'        },
   ])('restores $label to on when handleResetSettings is called with it disabled', ({ key }) => {
     render(<ReadingsNihonDe />);
 
