@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { version } from '../../package.json';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
@@ -364,11 +365,14 @@ export default function ReadingsNihonDe() {
   return (
     <div className="readingsNihonDe-wrapper">
       <Container>
-        <Row className="readingsNihonDe-header">
-          <Col xs={12}>
+        <Row className="readingsNihonDe-header align-items-center">
+          <Col>
             <h1 className="readingsNihonDe-title">
               日本語で聖書 <span className="readingsNihonDe-subtitle">Japanese and English Translations</span>
             </h1>
+          </Col>
+          <Col xs="auto">
+            <span className="readingsNihonDe-version">v{version}</span>
           </Col>
         </Row>
 
