@@ -59,7 +59,15 @@ export const readingsSettingsStoreImpl: ReadingsSettingsStore = {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        return JSON.parse(raw) as ReadingsDisplaySettings;
+        const parsed = JSON.parse(raw) as ReadingsDisplaySettings;
+        const allKeys = DISPLAY_OPTIONS.map((o) => o.key);
+        const missingFromOrder = allKeys.filter((k) => !parsed.order.includes(k));
+        return {
+          ...parsed,
+          order: [...parsed.order, ...missingFromOrder],
+          enabled: { ...DEFAULT_ENABLED, ...parsed.enabled },
+          splitJpDialogue: { ...DEFAULT_SPLIT_JP_DIALOGUE, ...parsed.splitJpDialogue },
+        };
       }
     } catch {
       // ignore corrupt data
