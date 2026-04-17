@@ -6,8 +6,8 @@
 
 @media (max-width: 575px) {
   .readingsNihonDe-wrapper > .container {
-    padding-left: 0.35rem;
-    padding-right: 0.35rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 }
 
