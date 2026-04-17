@@ -3392,67 +3392,235 @@
     {
       "chapter": 20,
       "verses": [
-        { "verseNumber": 1, "text": "Now on the first day of the week, Mary Magdalene went early, while it was still dark, to the tomb, and saw the stone taken away from the tomb." },
-        { "verseNumber": 2, "text": "Therefore she ran and came to Simon Peter and to the other disciple whom Jesus loved, and said to them, \"They have taken away the Lord out of the tomb, and we do not know where they have laid him!\"" },
-        { "verseNumber": 3, "text": "Peter therefore went out with the other disciple, and they went toward the tomb." },
-        { "verseNumber": 4, "text": "They both ran together. The other disciple outran Peter and came to the tomb first." },
-        { "verseNumber": 5, "text": "Stooping and looking in, he saw the linen cloths lying, yet he did not enter in." },
-        { "verseNumber": 6, "text": "Then Simon Peter came, following him, and entered into the tomb. He saw the linen cloths lying," },
-        { "verseNumber": 7, "text": "and the cloth that had been on his head, not lying with the linen cloths, but rolled up in a place by itself." },
-        { "verseNumber": 8, "text": "So then the other disciple who came first to the tomb also entered in, and he saw and believed." },
-        { "verseNumber": 9, "text": "For as yet they did not know the Scripture, that he must rise from the dead." },
-        { "verseNumber": 10, "text": "So the disciples went away again to their own homes." },
-        { "verseNumber": 11, "text": "But Mary was standing outside at the tomb weeping. So, as she wept, she stooped and looked into the tomb," },
-        { "verseNumber": 12, "text": "and she saw two angels in white sitting, one at the head and one at the feet, where the body of Jesus had lain." },
-        { "verseNumber": 13, "text": "They told her, \"Woman, why are you weeping?\" She said to them, \"Because they have taken away my Lord, and I do not know where they have laid him.\"" },
-        { "verseNumber": 14, "text": "When she had said this, she turned around and saw Jesus standing, and did not know that it was Jesus." },
-        { "verseNumber": 15, "text": "Jesus said to her, \"Woman, why are you weeping? Who are you looking for?\" She, supposing him to be the gardener, said to him, \"Sir, if you have carried him away, tell me where you have laid him, and I will take him away.\"" },
-        { "verseNumber": 16, "text": "Jesus said to her, \"Mary.\" She turned and said to him, \"Rabboni!\" which means Teacher." },
-        { "verseNumber": 17, "text": "Jesus said to her, \"Do not cling to me, for I have not yet ascended to my Father; but go to my brothers and tell them, 'I am ascending to my Father and your Father, to my God and your God.'\"" },
-        { "verseNumber": 18, "text": "Mary Magdalene came and told the disciples that she had seen the Lord, and that he had said these things to her." },
-        { "verseNumber": 19, "text": "When therefore it was evening, on that day, the first day of the week, and when the doors were shut where the disciples were assembled, Jesus came and stood in the middle, and said to them, \"Peace be to you.\"" },
-        { "verseNumber": 20, "text": "When he had said this, he showed them his hands and his side. The disciples therefore were glad when they saw the Lord." },
-        { "verseNumber": 21, "text": "Jesus therefore said to them again, \"Peace be to you. As the Father has sent me, even so I send you.\"" },
-        { "verseNumber": 22, "text": "When he had said this, he breathed on them, and said to them, \"Receive the Holy Spirit.\"" },
-        { "verseNumber": 23, "text": "If you forgive anyone's sins, they have been forgiven them. If you retain anyone's sins, they have been retained.\"" },
-        { "verseNumber": 24, "text": "But Thomas, one of the twelve, called Didymus, was not with them when Jesus came." },
-        { "verseNumber": 25, "text": "The other disciples therefore said to him, \"We have seen the Lord!\" But he said to them, \"Unless I see in his hands the print of the nails, and put my finger into the print of the nails, and put my hand into his side, I will not believe.\"" },
-        { "verseNumber": 26, "text": "After eight days again his disciples were inside, and Thomas was with them. Jesus came, the doors being locked, and stood in the middle, and said, \"Peace be to you.\"" },
-        { "verseNumber": 27, "text": "Then he said to Thomas, \"Reach here your finger, and see my hands. Reach here your hand, and put it into my side. Do not be unbelieving, but believing.\"" },
-        { "verseNumber": 28, "text": "Thomas answered him, \"My Lord and my God!\"" },
-        { "verseNumber": 29, "text": "Jesus said to him, \"Because you have seen me, you have believed. Blessed are those who have not seen, and have believed.\"" },
-        { "verseNumber": 30, "text": "Therefore Jesus did many other signs in the presence of his disciples, which are not written in this book;" },
-        { "verseNumber": 31, "text": "but these are written that you may believe that Jesus is the Christ, the Son of God, and that believing you may have life in his name." }
+        {
+          "verseNumber": 1,
+          "text": "And *on the first day of the week, Mary Magdalene cometh in the morning, it being yet dark, to the sepulchre; and she saw the stone taken away from the sepulchre."
+        },
+        {
+          "verseNumber": 2,
+          "text": "She ran, therefore, and cometh to Simon Peter, and to the other disciple whom Jesus loved, and saith to them; They have taken away the Lord out of the sepulchre, and we know not where they have laid him."
+        },
+        {
+          "verseNumber": 3,
+          "text": "Peter, therefore, went out, and that other disciple, and they came to the sepulchre."
+        },
+        {
+          "verseNumber": 4,
+          "text": "And they both ran together, and that other disciple out-ran Peter, and came first to the sepulchre."
+        },
+        {
+          "verseNumber": 5,
+          "text": "And when he stooped down, he saw the linen cloths lying; but yet he went not in."
+        },
+        {
+          "verseNumber": 6,
+          "text": "Then cometh Simon Peter, following him, and went into the sepulchre, and saw the linen cloths lying,"
+        },
+        {
+          "verseNumber": 7,
+          "text": "And the napkin, that had been about his head, not lying with the linen cloths, but apart, wrapt up into one place."
+        },
+        {
+          "verseNumber": 8,
+          "text": "Then that other disciple also went in, who came first to the sepulchre; and he saw, and believed."
+        },
+        {
+          "verseNumber": 9,
+          "text": "For as yet they knew not the Scripture, that he must rise again from the dead."
+        },
+        {
+          "verseNumber": 10,
+          "text": "The disciples therefore went away again to their home."
+        },
+        {
+          "verseNumber": 11,
+          "text": "*But Mary stood without at the sepulchre, weeping. Whilst she was then weeping, she stooped down, and looked into the sepulchre:"
+        },
+        {
+          "verseNumber": 12,
+          "text": "And she saw two Angels in white, sitting, one at the head, and one at the feet, where the body of Jesus had been laid."
+        },
+        {
+          "verseNumber": 13,
+          "text": "They say to her; Woman, why weepest thou? She saith to them; Because they have taken away my Lord, and I know not where they have laid him."
+        },
+        {
+          "verseNumber": 14,
+          "text": "When she had said this, she turned herself back, and saw Jesus standing: and she knew not that it was Jesus."
+        },
+        {
+          "verseNumber": 15,
+          "text": "Jesus saith to her; Woman, why weepest thou? whom seekest thou? She thinking that it was the gardener, saith to him; Sir, if thou hast taken him away, tell me where thou hast laid him: and I will take him away."
+        },
+        {
+          "verseNumber": 16,
+          "text": "Jesus saith to her; Mary. She turning, saith to him; Rabboni, (that is to say, Master)."
+        },
+        {
+          "verseNumber": 17,
+          "text": "Jesus saith to her; Do not touch me, for I have not yet ascended to my Father: but go to my brethren, and say to them; I ascend to my Father and to your Father, to my God and your God."
+        },
+        {
+          "verseNumber": 18,
+          "text": "Mary Magdalene cometh, and telleth the disciples; I have seen the Lord, and these things he said to me."
+        },
+        {
+          "verseNumber": 19,
+          "text": "*Now when it was late that same day, the first of the week, and the doors were shut, where the disciples were gathered together for fear of the Jews: Jesus came and stood in the midst, and said to them; Peace be to you."
+        },
+        {
+          "verseNumber": 20,
+          "text": "And when he had said this, he shewed them his hands, and his side. The disciples, therefore, were glad, when they saw the Lord."
+        },
+        {
+          "verseNumber": 21,
+          "text": "He said therefore to them again; Peace be to you. As the Father hath sent me, I also send you."
+        },
+        {
+          "verseNumber": 22,
+          "text": "When he had said this, he breathed on them, and he said to them: Receive ye the Holy Ghost:"
+        },
+        {
+          "verseNumber": 23,
+          "text": "*Whose sins you shall forgive, they are forgiven them: and whose you shall retain, they are retained."
+        },
+        {
+          "verseNumber": 24,
+          "text": "Now Thomas, one of the twelve, who is called Didymus, was not with them when Jesus came."
+        },
+        {
+          "verseNumber": 25,
+          "text": "The other disciples, therefore, said to him; We have seen the Lord. But he said to them; Unless I shall see in his hands the print of the nails, and put my finger into the place of the nails, and put my hand into his side, I will not believe."
+        },
+        {
+          "verseNumber": 26,
+          "text": "And after eight days, his disciples were again within, and Thomas with them. Jesus cometh, the doors being shut, and stood in the midst, and said; Peace be to you."
+        },
+        {
+          "verseNumber": 27,
+          "text": "Then he saith to Thomas; Put in thy finger hither, and see my hands, and bring hither thy hand, and put it into my side: and be not incredulous, but faithful."
+        },
+        {
+          "verseNumber": 28,
+          "text": "Thomas answered, and said to him; My Lord, and my God."
+        },
+        {
+          "verseNumber": 29,
+          "text": "Jesus saith to him; Because thou hast seen me, Thomas, thou hast believed: blessed are they that have not seen, and have believed."
+        },
+        {
+          "verseNumber": 30,
+          "text": "*Many other signs also did Jesus in the sight of his disciples, which are not written in this book."
+        },
+        {
+          "verseNumber": 31,
+          "text": "But these are written that you may believe, that Jesus is the Christ, the Son of God: and that believing, you may have life in his name."
+        }
       ]
     },
     {
       "chapter": 21,
       "verses": [
-        { "verseNumber": 1, "text": "After these things, Jesus revealed himself again to the disciples at the sea of Tiberias. He revealed himself this way." },
-        { "verseNumber": 2, "text": "Simon Peter, Thomas called Didymus, Nathanael of Cana in Galilee, the sons of Zebedee, and two others of his disciples were together." },
-        { "verseNumber": 3, "text": "Simon Peter said to them, \"I am going fishing.\" They told him, \"We are also coming with you.\" They went out and immediately entered into the boat, and that night they caught nothing." },
-        { "verseNumber": 4, "text": "But when day had already come, Jesus stood on the beach, yet the disciples did not know that it was Jesus." },
-        { "verseNumber": 5, "text": "Jesus therefore said to them, \"Children, have you anything to eat?\" They answered him, \"No.\"" },
-        { "verseNumber": 6, "text": "He said to them, \"Cast the net on the right side of the boat, and you will find some.\" They cast therefore, and now they were not able to draw it in for the multitude of fish." },
-        { "verseNumber": 7, "text": "That disciple therefore whom Jesus loved said to Peter, \"It is the Lord!\" So when Simon Peter heard that it was the Lord, he wrapped his coat around him (for he was naked), and threw himself into the sea." },
-        { "verseNumber": 8, "text": "But the other disciples came in the little boat (for they were not far from the land, but about two hundred cubits away), dragging the net full of fish." },
-        { "verseNumber": 9, "text": "So when they got out on the land, they saw a fire of coals there, and fish laid on it, and bread." },
-        { "verseNumber": 10, "text": "Jesus said to them, \"Bring some of the fish which you have just caught.\"" },
-        { "verseNumber": 11, "text": "Simon Peter went up, and drew the net to land, full of great fish, one hundred fifty-three; and though there were so many, the net was not torn." },
-        { "verseNumber": 12, "text": "Jesus said to them, \"Come and have breakfast.\" None of the disciples dared ask him, \"Who are you?\" knowing that it was the Lord." },
-        { "verseNumber": 13, "text": "Then Jesus came and took the bread, gave it to them, and the fish likewise." },
-        { "verseNumber": 14, "text": "This is now the third time that Jesus was revealed to his disciples after he had risen from the dead." },
-        { "verseNumber": 15, "text": "So when they had eaten their breakfast, Jesus said to Simon Peter, \"Simon, son of Jonah, do you love me more than these?\" He said to him, \"Yes, Lord; you know that I love you.\" He said to him, \"Feed my lambs.\"" },
-        { "verseNumber": 16, "text": "He said to him again a second time, \"Simon, son of Jonah, do you love me?\" He said to him, \"Yes, Lord; you know that I love you.\" He said to him, \"Tend my sheep.\"" },
-        { "verseNumber": 17, "text": "He said to him the third time, \"Simon, son of Jonah, do you love me?\" Peter was grieved because he asked him the third time, \"Do you love me?\" He said to him, \"Lord, you know everything. You know that I love you.\" Jesus said to him, \"Feed my sheep.\"" },
-        { "verseNumber": 18, "text": "Most certainly I tell you, when you were young, you dressed yourself and walked where you wanted to. But when you are old, you will stretch out your hands, and another will dress you, and carry you where you do not want to go.\"" },
-        { "verseNumber": 19, "text": "Now he said this, signifying by what kind of death he would glorify God. When he had said this, he said to him, \"Follow me.\"" },
-        { "verseNumber": 20, "text": "Then Peter, turning around, saw a disciple following. This was the disciple whom Jesus loved, the one who had also leaned on his breast at the supper and asked, \"Lord, who is going to betray you?\"" },
-        { "verseNumber": 21, "text": "Peter seeing him said to Jesus, \"Lord, what about this man?\"" },
-        { "verseNumber": 22, "text": "Jesus said to him, \"If I desire that he stay until I come, what is that to you? You follow me.\"" },
-        { "verseNumber": 23, "text": "This saying therefore went out among the brothers that this disciple would not die. Yet Jesus did not say to him that he would not die, but, \"If I desire that he stay until I come, what is that to you?\"" },
-        { "verseNumber": 24, "text": "This is the disciple who testifies about these things, and wrote these things. We know that his witness is true." },
-        { "verseNumber": 25, "text": "There are also many other things which Jesus did, which if they would all be written, I suppose that even the world itself would not have room for the books that would be written." }
+        {
+          "verseNumber": 1,
+          "text": "After this Jesus manifested himself again to the disciples at the sea of Tiberias. And he manifested himself after this manner:"
+        },
+        {
+          "verseNumber": 2,
+          "text": "There were together Simon Peter, and Thomas, who is called Didymus, and Nathanael, who was of Cana, in Galilee, and the sons of Zebedee, and two others of his disciples."
+        },
+        {
+          "verseNumber": 3,
+          "text": "Simon Peter saith to them; I go a fishing. They say to him; We also come with thee. And they went forth and entered into a ship: and that night they caught nothing."
+        },
+        {
+          "verseNumber": 4,
+          "text": "But when the morning was come, Jesus stood on the shore: yet the disciples knew not that it was Jesus."
+        },
+        {
+          "verseNumber": 5,
+          "text": "Jesus therefore said to them; Children, have you any meat? they answered him; No."
+        },
+        {
+          "verseNumber": 6,
+          "text": "He saith to them; Cast the net on the right side of the ship, and you shall find. They cast, therefore: and now they were not able to draw it for the multitude of fishes."
+        },
+        {
+          "verseNumber": 7,
+          "text": "That disciple, therefore, whom Jesus loved, said to Peter; It is the Lord. Simon Peter, when he heard that it was the Lord, girded his coat about him, (for he was naked) and cast himself into the sea."
+        },
+        {
+          "verseNumber": 8,
+          "text": "But the other disciples came in the ship, (for they were not far from the land, but as it were two hundred cubits) drawing the net with fishes."
+        },
+        {
+          "verseNumber": 9,
+          "text": "As soon, then, as they came to land, they saw hot coals lying, and a fish laid thereon, and bread."
+        },
+        {
+          "verseNumber": 10,
+          "text": "Jesus saith to them; Bring hither of the fishes which you have now caught."
+        },
+        {
+          "verseNumber": 11,
+          "text": "Simon Peter went up, and drew the net to land, full of great fishes, one hundred and fifty-three. And although there were so many, the net was not broken."
+        },
+        {
+          "verseNumber": 12,
+          "text": "Jesus saith to them; Come, and dine. And none of them who were at meat, durst ask him, Who art thou? knowing that it was the Lord."
+        },
+        {
+          "verseNumber": 13,
+          "text": "And Jesus cometh and taketh bread, and giveth them, and fish in like manner."
+        },
+        {
+          "verseNumber": 14,
+          "text": "This is now the third time that Jesus was manifested to his disciples, after he was risen from the dead."
+        },
+        {
+          "verseNumber": 15,
+          "text": "When, therefore, they had dined, Jesus saith to Simon Peter; Simon son of John, lovest thou me more than these? He saith to him; Yea, Lord, thou knowest that I love thee. He saith to him; Feed my lambs."
+        },
+        {
+          "verseNumber": 16,
+          "text": "He saith to him again; Simon, son of John, lovest thou me? He saith to him; Yea, Lord, thou knowest that I love thee. He saith to him; Feed my lambs."
+        },
+        {
+          "verseNumber": 17,
+          "text": "He saith to him the third time; Simon, son of John, lovest thou me? Peter was grieved, because he said to him the third time, Lovest thou me? And he said to him; Lord, thou knowest all things: thou knowest that I love thee. He said to him; Feed my sheep."
+        },
+        {
+          "verseNumber": 18,
+          "text": "Amen, amen, I say to thee: *when thou wast younger thou didst gird thyself, and didst walk where thou wouldst: But when thou shalt be old, thou shalt stretch forth thy hands, and another shall gird thee, and lead thee whither thou wouldst not."
+        },
+        {
+          "verseNumber": 19,
+          "text": "And this he said, signifying by what death he should glorify God. And when he had said this, he saith to him; Follow me."
+        },
+        {
+          "verseNumber": 20,
+          "text": "Peter turning about, saw that disciple whom Jesus loved, following, *who also leaned on his breast at supper, and said; Lord, who is he that shall betray thee?"
+        },
+        {
+          "verseNumber": 21,
+          "text": "Him, therefore, when Peter had seen, he saith to Jesus; Lord, and what shall this man do?"
+        },
+        {
+          "verseNumber": 22,
+          "text": "Jesus saith to him; So I will have him to remain till I come, what is it to thee? follow thou me."
+        },
+        {
+          "verseNumber": 23,
+          "text": "This saying, therefore, went abroad among the brethren, that that disciple should not die. And Jesus did not say to him, He should not die: but, So I will have him to remain till I come, what is it to thee?"
+        },
+        {
+          "verseNumber": 24,
+          "text": "This is that disciple who giveth testimony of these things, and hath written these things: and we know that his testimony is true."
+        },
+        {
+          "verseNumber": 25,
+          "text": "*But there are also many other things which Jesus did, which, if they were written every one, the world itself, I think, would not be able to contain the books that should be written."
+        }
       ]
     }
   ]
