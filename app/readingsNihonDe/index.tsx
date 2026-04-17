@@ -503,11 +503,13 @@ export default function ReadingsNihonDe() {
                           draggable
                           onDragStart={(e) => handleDragStart(key, e)}
                           onDragEnd={handleDragEnd}
-                          onTouchStart={() => handleTouchStart(key)}
-                          onTouchMove={handleTouchMove}
-                          onTouchEnd={handleTouchEnd}
                         >
-                          <span className="readingsNihonDe-settings-drag-handle">⠿</span>
+                          <span
+                            className="readingsNihonDe-settings-drag-handle"
+                            onTouchStart={() => handleTouchStart(key)}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                          >⠿</span>
                           <span className={`verse-tag ${opt.tagClass}`}>
                             {key === ROWKEYS.TOGGLE ? (
                               <ArrowsIcon size={14} />

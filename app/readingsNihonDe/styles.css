@@ -243,7 +243,12 @@
   border-radius: 5px;
   cursor: grab;
   user-select: none;
-  touch-action: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .readingsNihonDe-settings-item {
+    cursor: default;
+  }
 }
 
 .readingsNihonDe-settings-item--drag-over {
@@ -281,6 +286,15 @@
   font-size: 1rem;
   line-height: 1;
   flex-shrink: 0;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .readingsNihonDe-settings-drag-handle {
+    touch-action: none;
+    cursor: grab;
+    padding: 0.25rem 0.4rem;
+    margin: -0.25rem -0.4rem;
+  }
 }
 
 .readingsNihonDe-settings-label {
