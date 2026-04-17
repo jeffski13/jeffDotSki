@@ -714,7 +714,7 @@ export default function ReadingsNihonDe() {
                     onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleFuriganaVerse(verse.number)}
                   >
                     <span className="readingsNihonDe-toggle-btn verse-tag--toggle-furigana">
-                      <ArrowsIcon />
+                      {DISPLAY_OPTIONS.find((o) => o.key === ROWKEYS.TOGGLE_FURIGANA)!.tagText}
                     </span>
                   </div>
                   <span className={`readingsNihonDe-verse-text readingsNihonDe-toggle-furigana-text${toggledFuriganaVerses.has(verse.number) !== defaultToggleFurigana ? '' : ' readingsNihonDe-furigana-rt-hidden'}`}>
