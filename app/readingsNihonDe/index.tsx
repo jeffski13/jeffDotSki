@@ -4,6 +4,8 @@ import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-
 import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 import bookMapping from './japaneseBookNameMapping.json';
+import arrowUp from './U+21B1.svg.png';
+import arrowDown from './U+21B2.svg.png';
 
 type Book = string;
 
@@ -68,6 +70,16 @@ interface RawChapter {
 
 interface RawBook {
   contents: RawChapter[];
+}
+
+function FuriganaToggleIcon() {
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15em', lineHeight: 1 }}>
+      <img src={arrowUp} alt="" style={{ height: '1.2em', width: 'auto' }} />
+      <ruby>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
+      <img src={arrowDown} alt="" style={{ height: '1.2em', width: 'auto' }} />
+    </span>
+  );
 }
 
 function ArrowsIcon({ size = 16 }: { size?: number }) {
@@ -551,7 +563,7 @@ export default function ReadingsNihonDe() {
                             {key === ROWKEYS.TOGGLE ? (
                               <ArrowsIcon size={14} />
                             ) : key === ROWKEYS.TOGGLE_FURIGANA ? (
-                              <><ruby>振<rt>ふ</rt></ruby>り</>
+                              <FuriganaToggleIcon />
                             ) : opt.tagText}
                           </span>
                           <span className="readingsNihonDe-settings-label">{opt.label}</span>
@@ -716,7 +728,7 @@ export default function ReadingsNihonDe() {
                     onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleFuriganaVerse(verse.number)}
                   >
                     <span className="readingsNihonDe-toggle-btn verse-tag--toggle-furigana">
-                      <ruby>振<rt>ふ</rt></ruby>り
+                      <FuriganaToggleIcon />
                     </span>
                   </div>
                   <span className={`readingsNihonDe-verse-text readingsNihonDe-toggle-furigana-text${toggledFuriganaVerses.has(verse.number) !== defaultToggleFurigana ? '' : ' readingsNihonDe-furigana-rt-hidden'}`}>
