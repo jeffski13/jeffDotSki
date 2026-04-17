@@ -71,15 +71,15 @@ interface RawBook {
 }
 
 function FuriganaToggleIcon() {
-  const arrowStyle: React.CSSProperties = { height: '1.2em', width: 'auto', display: 'block' };
-  const strokeProps = { stroke: 'currentColor', strokeWidth: 2.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
+  const arrowStyle: React.CSSProperties = { height: '0.9em', width: 'auto', display: 'block' };
+  const strokeProps = { stroke: 'currentColor', strokeWidth: 5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15em', lineHeight: 1 }}>
       <svg viewBox="0 0 30 80" style={arrowStyle} aria-hidden="true">
         <polyline points="8,75 8,8 25,8" {...strokeProps} />
         <polyline points="15,2 25,8 15,14" {...strokeProps} />
       </svg>
-      <ruby style={{ fontSize: '0.75em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
+      <ruby style={{ fontSize: '0.6em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
       <svg viewBox="0 0 30 80" style={arrowStyle} aria-hidden="true">
         <polyline points="22,5 22,72 5,72" {...strokeProps} />
         <polyline points="15,66 5,72 15,78" {...strokeProps} />
