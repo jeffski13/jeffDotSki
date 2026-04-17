@@ -550,6 +550,8 @@ export default function ReadingsNihonDe() {
                           <span className={`verse-tag ${opt.tagClass}`}>
                             {key === ROWKEYS.TOGGLE ? (
                               <ArrowsIcon size={14} />
+                            ) : key === ROWKEYS.TOGGLE_FURIGANA ? (
+                              <><ruby>振<rt>ふ</rt></ruby>り</>
                             ) : opt.tagText}
                           </span>
                           <span className="readingsNihonDe-settings-label">{opt.label}</span>
@@ -714,7 +716,7 @@ export default function ReadingsNihonDe() {
                     onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleFuriganaVerse(verse.number)}
                   >
                     <span className="readingsNihonDe-toggle-btn verse-tag--toggle-furigana">
-                      {DISPLAY_OPTIONS.find((o) => o.key === ROWKEYS.TOGGLE_FURIGANA)!.tagText}
+                      <ruby>振<rt>ふ</rt></ruby>り
                     </span>
                   </div>
                   <span className={`readingsNihonDe-verse-text readingsNihonDe-toggle-furigana-text${toggledFuriganaVerses.has(verse.number) !== defaultToggleFurigana ? '' : ' readingsNihonDe-furigana-rt-hidden'}`}>

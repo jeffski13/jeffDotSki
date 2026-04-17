@@ -154,6 +154,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 1.8;
+}
+
+.verse-tag--toggle-furigana ruby rt {
+  font-size: 0.55em;
 }
 
 
