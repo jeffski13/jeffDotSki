@@ -408,6 +408,10 @@
   font-size: 0.6em;
 }
 
+.readingsNihonDe-furigana-rt-hidden ruby rt {
+  visibility: hidden;
+}
+
 .readingsNihonDe-english {
   font-style: italic;
   color: #5a4000;
