@@ -713,7 +713,7 @@ export default function ReadingsNihonDe() {
                     tabIndex={0}
                     onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleVerse(verse.number)}
                   >
-                    <span className="readingsNihonDe-toggle-btn">
+                    <span className="verse-tag verse-tag--toggle">
                       <ArrowsIcon />
                     </span>
                   </div>
@@ -733,7 +733,7 @@ export default function ReadingsNihonDe() {
                     tabIndex={0}
                     onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleFuriganaVerse(verse.number)}
                   >
-                    <span className="readingsNihonDe-toggle-btn verse-tag--toggle-furigana">
+                    <span className="verse-tag verse-tag--toggle-furigana">
                       <FuriganaToggleIcon />
                     </span>
                   </div>
