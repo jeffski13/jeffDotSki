@@ -72,17 +72,17 @@ interface RawBook {
 
 function FuriganaToggleIcon() {
   const arrowStyle: React.CSSProperties = { height: '0.9em', width: 'auto', display: 'block' };
-  const strokeProps = { stroke: 'currentColor', strokeWidth: 5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
+  const strokeProps = { stroke: 'currentColor', strokeWidth: 8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15em', lineHeight: 1 }}>
-      <svg viewBox="0 0 42 80" style={arrowStyle} aria-hidden="true">
-        <polyline points="8,75 8,8 37,8" {...strokeProps} />
-        <polyline points="27,2 37,8 27,14" {...strokeProps} />
+      <svg viewBox="0 0 55 80" style={arrowStyle} aria-hidden="true">
+        <polyline points="8,75 8,8 50,8" {...strokeProps} />
+        <polyline points="35,-1 50,8 35,17" {...strokeProps} />
       </svg>
       <ruby style={{ fontSize: '0.95em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
-      <svg viewBox="0 0 42 80" style={arrowStyle} aria-hidden="true">
-        <polyline points="34,5 34,72 5,72" {...strokeProps} />
-        <polyline points="15,66 5,72 15,78" {...strokeProps} />
+      <svg viewBox="0 0 55 80" style={arrowStyle} aria-hidden="true">
+        <polyline points="47,5 47,72 5,72" {...strokeProps} />
+        <polyline points="20,63 5,72 20,81" {...strokeProps} />
       </svg>
     </span>
   );
