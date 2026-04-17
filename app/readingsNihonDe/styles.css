@@ -191,6 +191,20 @@
 }
 
 .readingsNihonDe-toggle-btn-col:has(.verse-tag--toggle-furigana) {
+  min-width: unset;
+}
+
+.readingsNihonDe-toggle-btn.verse-tag--toggle-furigana {
+  background: #fde8f7;
+  color: #7a1a6e;
+  padding: 3px 2px;
+}
+
+.readingsNihonDe-toggle-btn-col:hover .readingsNihonDe-toggle-btn.verse-tag--toggle-furigana {
+  background: #f5c8ed;
+}
+
+.readingsNihonDe-toggle-btn-col:has(.verse-tag--toggle-furigana) {
   padding-top: 0.4rem;
 }
 
