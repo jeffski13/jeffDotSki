@@ -71,6 +71,7 @@ export const readingsSettingsStoreImpl: ReadingsSettingsStore = {
           order: [...parsed.order, ...missingFromOrder],
           enabled: { ...DEFAULT_ENABLED, ...parsed.enabled },
           splitJpDialogue: { ...DEFAULT_SPLIT_JP_DIALOGUE, ...parsed.splitJpDialogue },
+          defaultToggleFurigana: parsed.defaultToggleFurigana ?? DEFAULT_TOGGLE_FURIGANA,
         };
       }
     } catch {
