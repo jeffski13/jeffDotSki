@@ -148,6 +148,14 @@
   justify-content: center;
 }
 
+.verse-tag--toggle-furigana {
+  background-color: #fde8f7;
+  color: #7a1a6e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .readingsNihonDe-verse-row:has(.readingsNihonDe-toggle-btn-col) {
   align-items: stretch;
