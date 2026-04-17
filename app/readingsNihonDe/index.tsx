@@ -108,7 +108,7 @@ function fetchChapterVerses(
       japanese: cleanJp(jpVerse.text),
       japaneseKanjiKana: cleanJp(jpKanjiKanaChapter?.verses[i]?.text ?? jpVerse.text),
       japaneseKanaOnly: cleanJp(jpKanaVerse?.text ?? jpVerse.text),
-      english: enVerse.text.trim(),
+      english: enVerse.text.trim().replace(/\*/g, ''),
     });
   }
 
