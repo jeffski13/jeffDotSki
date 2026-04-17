@@ -103,16 +103,20 @@
 
 .legend-tag,
 .verse-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 1px 6px;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.6;
+  height: calc(0.75rem * 1.6 + 2px);
   min-width: 2rem;
   text-align: center;
   white-space: nowrap;
   flex-shrink: 0;
+  box-sizing: content-box;
 }
 
 .verse-tag--kanji {
@@ -151,10 +155,6 @@
 .verse-tag--toggle-furigana {
   background-color: #fde8f7;
   color: #7a1a6e;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1.8;
 }
 
 .verse-tag--toggle-furigana ruby rt {
