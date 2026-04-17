@@ -72,7 +72,7 @@ describe('ReadingsNihonDe', () => {
   });
 
   it('restores display order to default after handleResetSettings is called with a scrambled order', () => {
-    const scrambledOrder = [ROWKEYS.ENGLISH, ROWKEYS.FURIGANA, ROWKEYS.TOGGLE, ROWKEYS.KANA_ONLY, ROWKEYS.KANJI_KANA, ROWKEYS.JAPANESE];
+    const scrambledOrder = [ROWKEYS.ENGLISH, ROWKEYS.FURIGANA, ROWKEYS.TOGGLE, ROWKEYS.KANA_ONLY, ROWKEYS.KANJI_KANA, ROWKEYS.JAPANESE, ROWKEYS.TOGGLE_FURIGANA];
     localStorage.setItem('readingsNihonDe-displaySettings', JSON.stringify({
       order: scrambledOrder,
       enabled: DEFAULT_ENABLED,

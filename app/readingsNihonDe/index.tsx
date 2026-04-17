@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { version } from '../../package.json';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 import bookMapping from './japaneseBookNameMapping.json';
 
 type Book = string;
@@ -68,6 +68,24 @@ interface RawChapter {
 
 interface RawBook {
   contents: RawChapter[];
+}
+
+function FuriganaToggleIcon() {
+  const arrowStyle: React.CSSProperties = { height: '0.9em', width: 'auto', display: 'block' };
+  const strokeProps = { stroke: 'currentColor', strokeWidth: 8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15em', lineHeight: 1 }}>
+      <svg viewBox="0 0 55 80" style={arrowStyle} aria-hidden="true">
+        <polyline points="8,75 8,8 50,8" {...strokeProps} />
+        <polyline points="35,-1 50,8 35,17" {...strokeProps} />
+      </svg>
+      <ruby style={{ fontSize: '0.95em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
+      <svg viewBox="0 0 55 80" style={arrowStyle} aria-hidden="true">
+        <polyline points="47,5 47,72 5,72" {...strokeProps} />
+        <polyline points="20,63 5,72 20,81" {...strokeProps} />
+      </svg>
+    </span>
+  );
 }
 
 function ArrowsIcon({ size = 16 }: { size?: number }) {
@@ -157,6 +175,8 @@ export default function ReadingsNihonDe() {
   const [displayEnabled, setDisplayEnabled] = useState<Record<RowKey, boolean>>(savedSettings.enabled);
   const [splitOnKuten, setSplitOnKuten] = useState<boolean>(savedSettings.splitOnKuten ?? DEFAULT_SPLIT_ON_KUTEN);
   const [defaultToggleKanjiKana, setDefaultToggleKanjiKana] = useState<boolean>(savedSettings.defaultToggleKanjiKana ?? DEFAULT_TOGGLE_KANJI_KANA);
+  const [defaultToggleFurigana, setDefaultToggleFurigana] = useState<boolean>(savedSettings.defaultToggleFurigana ?? DEFAULT_TOGGLE_FURIGANA);
+  const [toggledFuriganaVerses, setToggledFuriganaVerses] = useState<Set<number>>(new Set());
   const [splitEnglishDialogue, setSplitEnglishDialogue] = useState<boolean>(savedSettings.splitEnglishDialogue ?? DEFAULT_SPLIT_ENGLISH_DIALOGUE);
   const [splitJpDialogue, setSplitJpDialogue] = useState<Record<RowKey, boolean>>(savedSettings.splitJpDialogue ?? DEFAULT_SPLIT_JP_DIALOGUE);
   const dragSrc = useRef<RowKey | null>(null);
@@ -164,8 +184,8 @@ export default function ReadingsNihonDe() {
   const [dragIndicator, setDragIndicator] = useState<{ key: RowKey; position: 'before' | 'after' } | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, splitEnglishDialogue, splitJpDialogue, lastBook: book, lastChapter: chapter });
-  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, splitEnglishDialogue, splitJpDialogue, book, chapter]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, lastBook: book, lastChapter: chapter });
+  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, book, chapter]);
 
   useEffect(() => {
     if (savedSettings.lastBook && savedSettings.lastChapter) {
@@ -184,6 +204,7 @@ export default function ReadingsNihonDe() {
     setDisplayEnabled(DEFAULT_ENABLED);
     setSplitOnKuten(DEFAULT_SPLIT_ON_KUTEN);
     setDefaultToggleKanjiKana(DEFAULT_TOGGLE_KANJI_KANA);
+    setDefaultToggleFurigana(DEFAULT_TOGGLE_FURIGANA);
     setSplitEnglishDialogue(DEFAULT_SPLIT_ENGLISH_DIALOGUE);
     setSplitJpDialogue(DEFAULT_SPLIT_JP_DIALOGUE);
     setBook('John');
@@ -350,6 +371,18 @@ export default function ReadingsNihonDe() {
     touchDragSrc.current = null;
     setDragIndicator(null);
     if (src && indicator) reorder(src, indicator.key, indicator.position);
+  };
+
+  const toggleFuriganaVerse = (verseNumber: number) => {
+    setToggledFuriganaVerses((prev) => {
+      const next = new Set(prev);
+      if (next.has(verseNumber)) {
+        next.delete(verseNumber);
+      } else {
+        next.add(verseNumber);
+      }
+      return next;
+    });
   };
 
   const toggleVerse = (verseNumber: number) => {
@@ -535,6 +568,8 @@ export default function ReadingsNihonDe() {
                           <span className={`verse-tag ${opt.tagClass}`}>
                             {key === ROWKEYS.TOGGLE ? (
                               <ArrowsIcon size={14} />
+                            ) : key === ROWKEYS.TOGGLE_FURIGANA ? (
+                              <FuriganaToggleIcon />
                             ) : opt.tagText}
                           </span>
                           <span className="readingsNihonDe-settings-label">{opt.label}</span>
@@ -572,6 +607,24 @@ export default function ReadingsNihonDe() {
                               label="New lines around dialogue (「...」)"
                               checked={splitJpDialogue[ROWKEYS.TOGGLE]}
                               onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [ROWKEYS.TOGGLE]: !prev[ROWKEYS.TOGGLE] }))}
+                            />
+                          </div>
+                        )}
+                        {key === ROWKEYS.TOGGLE_FURIGANA && displayEnabled[ROWKEYS.TOGGLE_FURIGANA] && (
+                          <div className="readingsNihonDe-settings-sub">
+                            <Form.Check
+                              type="checkbox"
+                              id="default-toggle-furigana"
+                              label="Defaults to Furigana"
+                              checked={defaultToggleFurigana}
+                              onChange={() => setDefaultToggleFurigana((prev) => !prev)}
+                            />
+                            <Form.Check
+                              type="checkbox"
+                              id="split-jp-dialogue-toggle-furigana"
+                              label="New lines around dialogue (「...」)"
+                              checked={splitJpDialogue[ROWKEYS.TOGGLE_FURIGANA]}
+                              onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [ROWKEYS.TOGGLE_FURIGANA]: !prev[ROWKEYS.TOGGLE_FURIGANA] }))}
                             />
                           </div>
                         )}
@@ -660,12 +713,32 @@ export default function ReadingsNihonDe() {
                     tabIndex={0}
                     onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleVerse(verse.number)}
                   >
-                    <span className="readingsNihonDe-toggle-btn">
+                    <span className="verse-tag verse-tag--toggle">
                       <ArrowsIcon />
                     </span>
                   </div>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
                     {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese), splitJpDialogue[ROWKEYS.TOGGLE])}
+                  </span>
+                </div>
+              );
+              if (key === ROWKEYS.TOGGLE_FURIGANA) return (
+                <div key={ROWKEYS.TOGGLE_FURIGANA} className="readingsNihonDe-verse-row">
+                  <div
+                    className="readingsNihonDe-toggle-btn-col"
+                    onClick={() => toggleFuriganaVerse(verse.number)}
+                    title="Toggle kanji / furigana"
+                    aria-label="Toggle kanji / furigana"
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleFuriganaVerse(verse.number)}
+                  >
+                    <span className="verse-tag verse-tag--toggle-furigana">
+                      <FuriganaToggleIcon />
+                    </span>
+                  </div>
+                  <span className={`readingsNihonDe-verse-text readingsNihonDe-toggle-furigana-text${toggledFuriganaVerses.has(verse.number) !== defaultToggleFurigana ? '' : ' readingsNihonDe-furigana-rt-hidden'}`}>
+                    {renderFurigana(verse.japaneseKanjiKana, splitJpDialogue[ROWKEYS.TOGGLE_FURIGANA])}
                   </span>
                 </div>
               );

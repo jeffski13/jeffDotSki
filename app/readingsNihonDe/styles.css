@@ -103,16 +103,20 @@
 
 .legend-tag,
 .verse-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 1px 6px;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.6;
+  height: calc(0.75rem * 1.6 + 2px);
   min-width: 2rem;
   text-align: center;
   white-space: nowrap;
   flex-shrink: 0;
+  box-sizing: content-box;
 }
 
 .verse-tag--kanji {
@@ -148,6 +152,15 @@
   justify-content: center;
 }
 
+.verse-tag--toggle-furigana {
+  background-color: #fde8f7;
+  color: #7a1a6e;
+}
+
+.verse-tag--toggle-furigana ruby rt {
+  font-size: 0.55em;
+}
+
 
 .readingsNihonDe-verse-row:has(.readingsNihonDe-toggle-btn-col) {
   align-items: stretch;
@@ -162,19 +175,17 @@
   min-width: 2rem;
 }
 
-.readingsNihonDe-toggle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e0d4f7;
-  border-radius: 4px;
-  color: #3d1a78;
-  padding: 3px 6px;
-  line-height: 1.6;
+.readingsNihonDe-toggle-btn-col:has(.verse-tag--toggle-furigana) {
+  min-width: unset;
+  padding-top: 0.4rem;
 }
 
-.readingsNihonDe-toggle-btn-col:hover .readingsNihonDe-toggle-btn {
+.readingsNihonDe-toggle-btn-col:hover .verse-tag--toggle {
   background: #c9b8f0;
+}
+
+.readingsNihonDe-toggle-btn-col:hover .verse-tag--toggle-furigana {
+  background: #f5c8ed;
 }
 
 /* ── Settings panel ── */
@@ -385,6 +396,19 @@
 
 .readingsNihonDe-furigana ruby rt {
   font-size: 0.6em;
+}
+
+.readingsNihonDe-toggle-furigana-text {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+  line-height: 2.8;
+}
+
+.readingsNihonDe-toggle-furigana-text ruby rt {
+  font-size: 0.6em;
+}
+
+.readingsNihonDe-furigana-rt-hidden ruby rt {
+  visibility: hidden;
 }
 
 .readingsNihonDe-english {

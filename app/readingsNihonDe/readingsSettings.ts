@@ -2,6 +2,7 @@ export const ROWKEYS = {
   ENGLISH: 'english',
   JAPANESE: 'japanese',
   TOGGLE: 'toggle',
+  TOGGLE_FURIGANA: 'toggleFurigana',
   KANA_ONLY: 'kanaOnly',
   KANJI_KANA: 'kanjiKana',
   FURIGANA: 'furigana',
@@ -17,23 +18,25 @@ export interface DisplayOption {
 }
 
 export const DISPLAY_OPTIONS: DisplayOption[] = [
-  { key: ROWKEYS.ENGLISH,    label: 'English',                           tagText: 'EN',   tagClass: 'verse-tag--en' },
-  { key: ROWKEYS.FURIGANA,   label: 'Furigana',                          tagText: 'ルビ', tagClass: 'verse-tag--furigana' },
-  { key: ROWKEYS.TOGGLE,     label: 'Tap Icon to Toggle Kanji and Kana', tagText: '調整', tagClass: 'verse-tag--toggle' },
-  { key: ROWKEYS.JAPANESE,   label: 'Kanji',                             tagText: '漢字', tagClass: 'verse-tag--kanji' },
-  { key: ROWKEYS.KANA_ONLY,  label: 'Kana',                              tagText: 'かな', tagClass: 'verse-tag--kana' },
-  { key: ROWKEYS.KANJI_KANA, label: 'Kanji and Kana',                    tagText: '両方', tagClass: 'verse-tag--kanjikana' },
+  { key: ROWKEYS.ENGLISH,         label: 'English',                              tagText: 'EN',   tagClass: 'verse-tag--en' },
+  { key: ROWKEYS.FURIGANA,        label: 'Furigana',                             tagText: 'ルビ', tagClass: 'verse-tag--furigana' },
+  { key: ROWKEYS.TOGGLE,          label: 'Tap Icon to Toggle Kanji and Kana',    tagText: '調整', tagClass: 'verse-tag--toggle' },
+  { key: ROWKEYS.TOGGLE_FURIGANA, label: 'Tap Icon to Toggle Kanji and Furigana', tagText: '振調', tagClass: 'verse-tag--toggle-furigana' },
+  { key: ROWKEYS.JAPANESE,        label: 'Kanji',                                tagText: '漢字', tagClass: 'verse-tag--kanji' },
+  { key: ROWKEYS.KANA_ONLY,       label: 'Kana',                                 tagText: 'かな', tagClass: 'verse-tag--kana' },
+  { key: ROWKEYS.KANJI_KANA,      label: 'Kanji and Kana',                       tagText: '両方', tagClass: 'verse-tag--kanjikana' },
 ];
 
 export const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
 export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
-  [ROWKEYS.ENGLISH]: true, [ROWKEYS.JAPANESE]: true, [ROWKEYS.TOGGLE]: true, [ROWKEYS.KANA_ONLY]: true, [ROWKEYS.KANJI_KANA]: true, [ROWKEYS.FURIGANA]: true,
+  [ROWKEYS.ENGLISH]: true, [ROWKEYS.JAPANESE]: true, [ROWKEYS.TOGGLE]: true, [ROWKEYS.TOGGLE_FURIGANA]: true, [ROWKEYS.KANA_ONLY]: true, [ROWKEYS.KANJI_KANA]: true, [ROWKEYS.FURIGANA]: true,
 };
 export const DEFAULT_SPLIT_ON_KUTEN = false;
 export const DEFAULT_TOGGLE_KANJI_KANA = false;
+export const DEFAULT_TOGGLE_FURIGANA = false;
 export const DEFAULT_SPLIT_ENGLISH_DIALOGUE = false;
 export const DEFAULT_SPLIT_JP_DIALOGUE: Record<RowKey, boolean> = {
-  [ROWKEYS.ENGLISH]: false, [ROWKEYS.JAPANESE]: false, [ROWKEYS.TOGGLE]: false, [ROWKEYS.KANA_ONLY]: false, [ROWKEYS.KANJI_KANA]: false, [ROWKEYS.FURIGANA]: false,
+  [ROWKEYS.ENGLISH]: false, [ROWKEYS.JAPANESE]: false, [ROWKEYS.TOGGLE]: false, [ROWKEYS.TOGGLE_FURIGANA]: false, [ROWKEYS.KANA_ONLY]: false, [ROWKEYS.KANJI_KANA]: false, [ROWKEYS.FURIGANA]: false,
 };
 
 export interface ReadingsDisplaySettings {
@@ -41,6 +44,7 @@ export interface ReadingsDisplaySettings {
   enabled: Record<RowKey, boolean>;
   splitOnKuten: boolean;
   defaultToggleKanjiKana: boolean;
+  defaultToggleFurigana: boolean;
   splitEnglishDialogue: boolean;
   splitJpDialogue: Record<RowKey, boolean>;
   lastBook?: string;
@@ -67,12 +71,13 @@ export const readingsSettingsStoreImpl: ReadingsSettingsStore = {
           order: [...parsed.order, ...missingFromOrder],
           enabled: { ...DEFAULT_ENABLED, ...parsed.enabled },
           splitJpDialogue: { ...DEFAULT_SPLIT_JP_DIALOGUE, ...parsed.splitJpDialogue },
+          defaultToggleFurigana: parsed.defaultToggleFurigana ?? DEFAULT_TOGGLE_FURIGANA,
         };
       }
     } catch {
       // ignore corrupt data
     }
-    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED, splitOnKuten: DEFAULT_SPLIT_ON_KUTEN, defaultToggleKanjiKana: DEFAULT_TOGGLE_KANJI_KANA, splitEnglishDialogue: DEFAULT_SPLIT_ENGLISH_DIALOGUE, splitJpDialogue: DEFAULT_SPLIT_JP_DIALOGUE };
+    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED, splitOnKuten: DEFAULT_SPLIT_ON_KUTEN, defaultToggleKanjiKana: DEFAULT_TOGGLE_KANJI_KANA, defaultToggleFurigana: DEFAULT_TOGGLE_FURIGANA, splitEnglishDialogue: DEFAULT_SPLIT_ENGLISH_DIALOGUE, splitJpDialogue: DEFAULT_SPLIT_JP_DIALOGUE };
   },
   saveSettings(settings: ReadingsDisplaySettings): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
