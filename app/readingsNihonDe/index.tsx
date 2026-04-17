@@ -4,8 +4,6 @@ import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-
 import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 import bookMapping from './japaneseBookNameMapping.json';
-import arrowUp from './U+21B1.svg.png';
-import arrowDown from './U+21B2.svg.png';
 
 type Book = string;
 
@@ -73,11 +71,19 @@ interface RawBook {
 }
 
 function FuriganaToggleIcon() {
+  const arrowStyle: React.CSSProperties = { height: '1.2em', width: 'auto', display: 'block' };
+  const strokeProps = { stroke: 'currentColor', strokeWidth: 2.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15em', lineHeight: 1 }}>
-      <img src={arrowUp} alt="" style={{ height: '1.2em', width: 'auto' }} />
-      <ruby>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
-      <img src={arrowDown} alt="" style={{ height: '1.2em', width: 'auto' }} />
+      <svg viewBox="0 0 30 80" style={arrowStyle} aria-hidden="true">
+        <polyline points="8,75 8,8 25,8" {...strokeProps} />
+        <polyline points="15,2 25,8 15,14" {...strokeProps} />
+      </svg>
+      <ruby style={{ fontSize: '0.75em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
+      <svg viewBox="0 0 30 80" style={arrowStyle} aria-hidden="true">
+        <polyline points="22,5 22,72 5,72" {...strokeProps} />
+        <polyline points="15,66 5,72 15,78" {...strokeProps} />
+      </svg>
     </span>
   );
 }
