@@ -395,6 +395,15 @@
   font-size: 0.6em;
 }
 
+.readingsNihonDe-toggle-furigana-text {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+  line-height: 2.8;
+}
+
+.readingsNihonDe-toggle-furigana-text ruby rt {
+  font-size: 0.6em;
+}
+
 .readingsNihonDe-english {
   font-style: italic;
   color: #5a4000;

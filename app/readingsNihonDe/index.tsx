@@ -717,7 +717,7 @@ export default function ReadingsNihonDe() {
                       <ArrowsIcon />
                     </span>
                   </div>
-                  <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
+                  <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-furigana-text">
                     {toggledFuriganaVerses.has(verse.number) !== defaultToggleFurigana
                       ? renderFurigana(verse.japaneseKanjiKana, splitJpDialogue[ROWKEYS.TOGGLE_FURIGANA])
                       : renderJpText(verse.japanese, splitJpDialogue[ROWKEYS.TOGGLE_FURIGANA])}
