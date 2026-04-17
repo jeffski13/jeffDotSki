@@ -185,6 +185,10 @@
   background: #c9b8f0;
 }
 
+.readingsNihonDe-toggle-btn-col:has(.verse-tag--toggle-furigana) {
+  padding-top: 0.4rem;
+}
+
 /* ── Settings panel ── */
 
 .readingsNihonDe-settings-row {
