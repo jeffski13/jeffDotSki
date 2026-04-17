@@ -3,34 +3,58 @@ import { version } from '../../package.json';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import bookMapping from './japaneseBookNameMapping.json';
 
-import MatthewEn from './raw/en/Matthew.json';
-import MarkEn from './raw/en/Mark.json';
-import LukeEn from './raw/en/Luke.json';
-import JohnEn from './raw/en/John.json';
-import MatthewJp from './raw/jp/Matthew.json';
-import MarkJp from './raw/jp/Mark.json';
-import LukeJp from './raw/jp/Luke.json';
-import JohnJp from './raw/jp/John.json';
-import MatthewJpKana from './raw/jpkana/Matthew.json';
-import MarkJpKana from './raw/jpkana/Mark.json';
-import LukeJpKana from './raw/jpkana/Luke.json';
-import JohnJpKana from './raw/jpkana/John.json';
-import MatthewJpKanjiKana from './raw/jpkanjikana/Matthew.json';
-import MarkJpKanjiKana from './raw/jpkanjikana/Mark.json';
-import LukeJpKanjiKana from './raw/jpkanjikana/Luke.json';
-import JohnJpKanjiKana from './raw/jpkanjikana/John.json';
+type Book = string;
 
-type Book = 'Matthew' | 'Mark' | 'Luke' | 'John';
-
-function ArrowsIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
-      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-      <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-    </svg>
-  );
+// JP filename = English book name with spaces removed (e.g. "Song of Solomon" → "SongofSolomon")
+function toJpFilename(englishName: string): Book {
+  return englishName.replace(/\s+/g, '');
 }
+
+const BOOKS: Book[] = bookMapping.map((b) => toJpFilename(b.bookNameEnglish));
+const OT_BOOKS = BOOKS.slice(0, 39);
+const NT_BOOKS = BOOKS.slice(39);
+
+const BOOK_JAPANESE: Record<Book, string> = Object.fromEntries(
+  bookMapping.map((b) => [toJpFilename(b.bookNameEnglish), b.originalBookName])
+);
+
+const BOOK_ENGLISH_DISPLAY: Record<Book, string> = Object.fromEntries(
+  bookMapping.map((b) => [toJpFilename(b.bookNameEnglish), b.bookNameEnglish])
+);
+
+// Douay-Rheims EN filenames that differ from the standard JP filenames
+const EN_FILE_MAP: Record<string, string> = {
+  '1Samuel': '1Kings',
+  '2Samuel': '2Kings',
+  '1Kings': '3Kings',
+  '2Kings': '4Kings',
+  '1Chronicles': '1Paralipomenon',
+  '2Chronicles': '2Paralipomenon',
+  'Ezra': '1Esdras',
+  'Nehemiah': '2Esdras',
+  'Joshua': 'Josue',
+  'Isaiah': 'Isaias',
+  'Jeremiah': 'Jeremias',
+  'Ezekiel': 'Ezechiel',
+  'Hosea': 'Osee',
+  'Obadiah': 'Abdias',
+  'Jonah': 'Jonas',
+  'Micah': 'Micheas',
+  'Habakkuk': 'Habacuc',
+  'Zephaniah': 'Sophonias',
+  'Haggai': 'Aggeus',
+  'Zechariah': 'Zacharias',
+  'Malachi': 'Malachias',
+  'SongofSolomon': 'Canticles',
+  'Revelation': 'Apocalypse',
+};
+
+const JP_MODULES = import.meta.glob('./raw/jp/*.json');
+const EN_MODULES = import.meta.glob('./raw/en/*.json');
+const JP_KANA_MODULES = import.meta.glob('./raw/jpkana/*.json');
+const JP_KANJI_KANA_MODULES = import.meta.glob('./raw/jpkanjikana/*.json');
 
 interface RawVerse {
   verseNumber: number;
@@ -46,33 +70,14 @@ interface RawBook {
   contents: RawChapter[];
 }
 
-const EN_DATA: Record<Book, RawBook> = {
-  Matthew: MatthewEn,
-  Mark: MarkEn,
-  Luke: LukeEn,
-  John: JohnEn,
-};
-
-const JP_DATA: Record<Book, RawBook> = {
-  Matthew: MatthewJp,
-  Mark: MarkJp,
-  Luke: LukeJp,
-  John: JohnJp,
-};
-
-const JP_KANA_DATA: Record<Book, RawBook> = {
-  Matthew: MatthewJpKana,
-  Mark: MarkJpKana,
-  Luke: LukeJpKana,
-  John: JohnJpKana,
-};
-
-const JP_KANJI_KANA_DATA: Record<Book, RawBook> = {
-  Matthew: MatthewJpKanjiKana,
-  Mark: MarkJpKanjiKana,
-  Luke: LukeJpKanjiKana,
-  John: JohnJpKanjiKana,
-};
+function ArrowsIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
+      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+      <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+    </svg>
+  );
+}
 
 interface Verse {
   number: number;
@@ -82,15 +87,32 @@ interface Verse {
   english: string;
 }
 
-function fetchChapterVerses(
+const bookDataCache = new Map<string, RawBook>();
+
+async function loadBookData(modules: Record<string, () => Promise<unknown>>, path: string): Promise<RawBook> {
+  if (bookDataCache.has(path)) return bookDataCache.get(path)!;
+  const mod = await modules[path]() as { default: RawBook };
+  bookDataCache.set(path, mod.default);
+  return mod.default;
+}
+
+async function fetchChapterVerses(
   book: Book,
   chapter: number,
   startVerse: number
-): Verse[] {
-  const jpChapter = JP_DATA[book].contents.find((c) => c.chapter === chapter);
-  const enChapter = EN_DATA[book].contents.find((c) => c.chapter === chapter);
-  const jpKanaChapter = JP_KANA_DATA[book].contents.find((c) => c.chapter === chapter);
-  const jpKanjiKanaChapter = JP_KANJI_KANA_DATA[book].contents.find((c) => c.chapter === chapter);
+): Promise<Verse[]> {
+  const enFile = EN_FILE_MAP[book] ?? book;
+  const [jpData, enData, jpKanaData, jpKanjiKanaData] = await Promise.all([
+    loadBookData(JP_MODULES, `./raw/jp/${book}.json`),
+    loadBookData(EN_MODULES, `./raw/en/${enFile}.json`),
+    loadBookData(JP_KANA_MODULES, `./raw/jpkana/${book}.json`),
+    loadBookData(JP_KANJI_KANA_MODULES, `./raw/jpkanjikana/${book}.json`),
+  ]);
+
+  const jpChapter = jpData.contents.find((c) => c.chapter === chapter);
+  const enChapter = enData.contents.find((c) => c.chapter === chapter);
+  const jpKanaChapter = jpKanaData.contents.find((c) => c.chapter === chapter);
+  const jpKanjiKanaChapter = jpKanjiKanaData.contents.find((c) => c.chapter === chapter);
 
   if (!jpChapter || !enChapter) return [];
 
@@ -114,15 +136,6 @@ function fetchChapterVerses(
 
   return results;
 }
-
-const BOOKS: Book[] = ['Matthew', 'Mark', 'Luke', 'John'];
-
-const BOOK_JAPANESE: Record<Book, string> = {
-  Matthew: 'マタイ',
-  Mark: 'マルコ',
-  Luke: 'ルカ',
-  John: 'ヨハネ',
-};
 
 export default function ReadingsNihonDe() {
   const savedSettings = readingsSettingsStoreImpl.getSettings();
@@ -411,11 +424,20 @@ export default function ReadingsNihonDe() {
                 onChange={(e) => setBook(e.target.value as Book)}
                 className="readingsNihonDe-select"
               >
-                {BOOKS.map((b) => (
-                  <option key={b} value={b}>
-                    {b} ({BOOK_JAPANESE[b]})
-                  </option>
-                ))}
+                <optgroup label="Old Testament">
+                  {OT_BOOKS.map((b) => (
+                    <option key={b} value={b}>
+                      {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="New Testament">
+                  {NT_BOOKS.map((b) => (
+                    <option key={b} value={b}>
+                      {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
+                    </option>
+                  ))}
+                </optgroup>
               </Form.Select>
             </Form.Group>
           </Col>
@@ -597,7 +619,7 @@ export default function ReadingsNihonDe() {
                 {BOOK_JAPANESE[passageBook]} {passageChapter}:{passageStartVerse}–
                 {verses[verses.length - 1].number}
                 <span className="readingsNihonDe-passage-title-en">
-                  {' '}({passageBook} {passageChapter}:{passageStartVerse}–{verses[verses.length - 1].number})
+                  {' '}({BOOK_ENGLISH_DISPLAY[passageBook]} {passageChapter}:{passageStartVerse}–{verses[verses.length - 1].number})
                 </span>
               </h2>
             </Col>

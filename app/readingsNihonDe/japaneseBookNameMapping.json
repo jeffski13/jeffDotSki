@@ -1,0 +1,398 @@
+[
+  {
+    "originalBook": 1,
+    "originalBookName": "創世記",
+    "bookOrderNumber": 1,
+    "bookNameEnglish": "Genesis"
+  },
+  {
+    "originalBook": 2,
+    "originalBookName": "出エジプト記",
+    "bookOrderNumber": 2,
+    "bookNameEnglish": "Exodus"
+  },
+  {
+    "originalBook": 3,
+    "originalBookName": "レビ記",
+    "bookOrderNumber": 3,
+    "bookNameEnglish": "Leviticus"
+  },
+  {
+    "originalBook": 4,
+    "originalBookName": "民数記",
+    "bookOrderNumber": 4,
+    "bookNameEnglish": "Numbers"
+  },
+  {
+    "originalBook": 5,
+    "originalBookName": "申命記",
+    "bookOrderNumber": 5,
+    "bookNameEnglish": "Deuteronomy"
+  },
+  {
+    "originalBook": 6,
+    "originalBookName": "ヨシュア記",
+    "bookOrderNumber": 6,
+    "bookNameEnglish": "Joshua"
+  },
+  {
+    "originalBook": 7,
+    "originalBookName": "士師記",
+    "bookOrderNumber": 7,
+    "bookNameEnglish": "Judges"
+  },
+  {
+    "originalBook": 8,
+    "originalBookName": "ルツ記",
+    "bookOrderNumber": 8,
+    "bookNameEnglish": "Ruth"
+  },
+  {
+    "originalBook": 9,
+    "originalBookName": "サムエル記Ⅰ",
+    "bookOrderNumber": 9,
+    "bookNameEnglish": "1 Samuel"
+  },
+  {
+    "originalBook": 10,
+    "originalBookName": "サムエル記Ⅱ",
+    "bookOrderNumber": 10,
+    "bookNameEnglish": "2 Samuel"
+  },
+  {
+    "originalBook": 11,
+    "originalBookName": "列王記Ⅰ",
+    "bookOrderNumber": 11,
+    "bookNameEnglish": "1 Kings"
+  },
+  {
+    "originalBook": 12,
+    "originalBookName": "列王記Ⅱ",
+    "bookOrderNumber": 12,
+    "bookNameEnglish": "2 Kings"
+  },
+  {
+    "originalBook": 13,
+    "originalBookName": "歴代誌Ⅰ",
+    "bookOrderNumber": 13,
+    "bookNameEnglish": "1 Chronicles"
+  },
+  {
+    "originalBook": 14,
+    "originalBookName": "歴代誌Ⅱ",
+    "bookOrderNumber": 14,
+    "bookNameEnglish": "2 Chronicles"
+  },
+  {
+    "originalBook": 15,
+    "originalBookName": "エズラ記",
+    "bookOrderNumber": 15,
+    "bookNameEnglish": "Ezra"
+  },
+  {
+    "originalBook": 16,
+    "originalBookName": "ネヘミヤ 記",
+    "bookOrderNumber": 16,
+    "bookNameEnglish": "Nehemiah"
+  },
+  {
+    "originalBook": 17,
+    "originalBookName": "エステル 記",
+    "bookOrderNumber": 17,
+    "bookNameEnglish": "Esther"
+  },
+  {
+    "originalBook": 18,
+    "originalBookName": "ヨブ 記",
+    "bookOrderNumber": 18,
+    "bookNameEnglish": "Job"
+  },
+  {
+    "originalBook": 19,
+    "originalBookName": "詩篇",
+    "bookOrderNumber": 19,
+    "bookNameEnglish": "Psalms"
+  },
+  {
+    "originalBook": 20,
+    "originalBookName": "箴言 知恵の泉",
+    "bookOrderNumber": 20,
+    "bookNameEnglish": "Proverbs"
+  },
+  {
+    "originalBook": 21,
+    "originalBookName": "伝道者の書",
+    "bookOrderNumber": 21,
+    "bookNameEnglish": "Ecclesiastes"
+  },
+  {
+    "originalBook": 22,
+    "originalBookName": "雅歌",
+    "bookOrderNumber": 22,
+    "bookNameEnglish": "Song of Solomon"
+  },
+  {
+    "originalBook": 23,
+    "originalBookName": "イザヤ書",
+    "bookOrderNumber": 23,
+    "bookNameEnglish": "Isaiah"
+  },
+  {
+    "originalBook": 24,
+    "originalBookName": "エレミヤ書",
+    "bookOrderNumber": 24,
+    "bookNameEnglish": "Jeremiah"
+  },
+  {
+    "originalBook": 25,
+    "originalBookName": "哀歌",
+    "bookOrderNumber": 25,
+    "bookNameEnglish": "Lamentations"
+  },
+  {
+    "originalBook": 26,
+    "originalBookName": "エゼキエル書",
+    "bookOrderNumber": 26,
+    "bookNameEnglish": "Ezekiel"
+  },
+  {
+    "originalBook": 27,
+    "originalBookName": "ダニエル書",
+    "bookOrderNumber": 27,
+    "bookNameEnglish": "Daniel"
+  },
+  {
+    "originalBook": 28,
+    "originalBookName": "ホセア書",
+    "bookOrderNumber": 28,
+    "bookNameEnglish": "Hosea"
+  },
+  {
+    "originalBook": 29,
+    "originalBookName": "ヨエル書",
+    "bookOrderNumber": 29,
+    "bookNameEnglish": "Joel"
+  },
+  {
+    "originalBook": 30,
+    "originalBookName": "アモス書",
+    "bookOrderNumber": 30,
+    "bookNameEnglish": "Amos"
+  },
+  {
+    "originalBook": 31,
+    "originalBookName": "オバデヤ書",
+    "bookOrderNumber": 31,
+    "bookNameEnglish": "Obadiah"
+  },
+  {
+    "originalBook": 32,
+    "originalBookName": "ヨナ書",
+    "bookOrderNumber": 32,
+    "bookNameEnglish": "Jonah"
+  },
+  {
+    "originalBook": 33,
+    "originalBookName": "ミカ書",
+    "bookOrderNumber": 33,
+    "bookNameEnglish": "Micah"
+  },
+  {
+    "originalBook": 34,
+    "originalBookName": "ナホム書",
+    "bookOrderNumber": 34,
+    "bookNameEnglish": "Nahum"
+  },
+  {
+    "originalBook": 35,
+    "originalBookName": "ハバクク書",
+    "bookOrderNumber": 35,
+    "bookNameEnglish": "Habakkuk"
+  },
+  {
+    "originalBook": 36,
+    "originalBookName": "ゼパニヤ書",
+    "bookOrderNumber": 36,
+    "bookNameEnglish": "Zephaniah"
+  },
+  {
+    "originalBook": 37,
+    "originalBookName": "ハガイ書",
+    "bookOrderNumber": 37,
+    "bookNameEnglish": "Haggai"
+  },
+  {
+    "originalBook": 38,
+    "originalBookName": "ゼカリヤ書",
+    "bookOrderNumber": 38,
+    "bookNameEnglish": "Zechariah"
+  },
+  {
+    "originalBook": 39,
+    "originalBookName": "マラキ書",
+    "bookOrderNumber": 39,
+    "bookNameEnglish": "Malachi"
+  },
+  {
+    "originalBook": 40,
+    "originalBookName": "マタイの福音書",
+    "bookOrderNumber": 40,
+    "bookNameEnglish": "Matthew"
+  },
+  {
+    "originalBook": 41,
+    "originalBookName": "マルコの福音書",
+    "bookOrderNumber": 41,
+    "bookNameEnglish": "Mark"
+  },
+  {
+    "originalBook": 42,
+    "originalBookName": "ルカの福音書",
+    "bookOrderNumber": 42,
+    "bookNameEnglish": "Luke"
+  },
+  {
+    "originalBook": 43,
+    "originalBookName": "ヨハネの福音書",
+    "bookOrderNumber": 43,
+    "bookNameEnglish": "John"
+  },
+  {
+    "originalBook": 44,
+    "originalBookName": "使徒の働き",
+    "bookOrderNumber": 44,
+    "bookNameEnglish": "Acts"
+  },
+  {
+    "originalBook": 45,
+    "originalBookName": "ローマ人への手紙",
+    "bookOrderNumber": 45,
+    "bookNameEnglish": "Romans"
+  },
+  {
+    "originalBook": 46,
+    "originalBookName": "コリント人への手紙Ⅰ",
+    "bookOrderNumber": 46,
+    "bookNameEnglish": "1 Corinthians"
+  },
+  {
+    "originalBook": 47,
+    "originalBookName": "コリント人への手紙Ⅱ",
+    "bookOrderNumber": 47,
+    "bookNameEnglish": "2 Corinthians"
+  },
+  {
+    "originalBook": 48,
+    "originalBookName": "ガラテヤ人への手紙",
+    "bookOrderNumber": 48,
+    "bookNameEnglish": "Galatians"
+  },
+  {
+    "originalBook": 49,
+    "originalBookName": "エペソ人への手紙",
+    "bookOrderNumber": 49,
+    "bookNameEnglish": "Ephesians"
+  },
+  {
+    "originalBook": 50,
+    "originalBookName": "ピリピ人への手紙",
+    "bookOrderNumber": 50,
+    "bookNameEnglish": "Philippians"
+  },
+  {
+    "originalBook": 51,
+    "originalBookName": "コロサイ人への手紙",
+    "bookOrderNumber": 51,
+    "bookNameEnglish": "Colossians"
+  },
+  {
+    "originalBook": 52,
+    "originalBookName": "テサロニケ人への手紙Ⅰ",
+    "bookOrderNumber": 52,
+    "bookNameEnglish": "1 Thessalonians"
+  },
+  {
+    "originalBook": 53,
+    "originalBookName": "テサロニケ人への手紙Ⅱ",
+    "bookOrderNumber": 53,
+    "bookNameEnglish": "2 Thessalonians"
+  },
+  {
+    "originalBook": 54,
+    "originalBookName": "テモテへの手紙Ⅰ",
+    "bookOrderNumber": 54,
+    "bookNameEnglish": "1 Timothy"
+  },
+  {
+    "originalBook": 55,
+    "originalBookName": "テモテへの手紙Ⅱ",
+    "bookOrderNumber": 55,
+    "bookNameEnglish": "2 Timothy"
+  },
+  {
+    "originalBook": 56,
+    "originalBookName": "テトスへの手紙",
+    "bookOrderNumber": 56,
+    "bookNameEnglish": "Titus"
+  },
+  {
+    "originalBook": 57,
+    "originalBookName": "ピレモンへの手紙",
+    "bookOrderNumber": 57,
+    "bookNameEnglish": "Philemon"
+  },
+  {
+    "originalBook": 58,
+    "originalBookName": "へブル人への手紙",
+    "bookOrderNumber": 58,
+    "bookNameEnglish": "Hebrews"
+  },
+  {
+    "originalBook": 59,
+    "originalBookName": "ヤコブの手紙",
+    "bookOrderNumber": 59,
+    "bookNameEnglish": "James"
+  },
+  {
+    "originalBook": 60,
+    "originalBookName": "ペテロの手紙Ⅰ ",
+    "bookOrderNumber": 60,
+    "bookNameEnglish": "1 Peter"
+  },
+  {
+    "originalBook": 61,
+    "originalBookName": "ペテロの手紙Ⅱ",
+    "bookOrderNumber": 61,
+    "bookNameEnglish": "2 Peter"
+  },
+  {
+    "originalBook": 62,
+    "originalBookName": "ヨハネの手紙Ⅰ",
+    "bookOrderNumber": 62,
+    "bookNameEnglish": "1 John"
+  },
+  {
+    "originalBook": 63,
+    "originalBookName": "ヨハネの手紙Ⅱ",
+    "bookOrderNumber": 63,
+    "bookNameEnglish": "2 John"
+  },
+  {
+    "originalBook": 64,
+    "originalBookName": "ヨハネの手紙Ⅲ",
+    "bookOrderNumber": 64,
+    "bookNameEnglish": "3 John"
+  },
+  {
+    "originalBook": 65,
+    "originalBookName": "ユダの手紙",
+    "bookOrderNumber": 65,
+    "bookNameEnglish": "Jude"
+  },
+  {
+    "originalBook": 66,
+    "originalBookName": "ヨハネの黙示録",
+    "bookOrderNumber": 66,
+    "bookNameEnglish": "Revelation"
+  }
+]
