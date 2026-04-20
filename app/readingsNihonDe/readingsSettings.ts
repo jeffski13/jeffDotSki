@@ -33,7 +33,7 @@ export const DEFAULT_ENABLED: Record<RowKey, boolean> = {
 };
 export const DEFAULT_SPLIT_ON_KUTEN = false;
 export const DEFAULT_TOGGLE_KANJI_KANA = false;
-export const DEFAULT_TOGGLE_FURIGANA = false;
+export const DEFAULT_TOGGLE_FURIGANA = true;
 export const DEFAULT_SPLIT_ENGLISH_DIALOGUE = false;
 export const DEFAULT_SPLIT_JP_DIALOGUE: Record<RowKey, boolean> = {
   [ROWKEYS.ENGLISH]: false, [ROWKEYS.JAPANESE]: false, [ROWKEYS.TOGGLE_KANA]: false, [ROWKEYS.TOGGLE_FURIGANA]: false, [ROWKEYS.KANA_ONLY]: false, [ROWKEYS.KANJI_KANA]: false, [ROWKEYS.FURIGANA]: false,
