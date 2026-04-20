@@ -75,10 +75,10 @@ function FuriganaToggleIcon() {
     <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: '0.1em', lineHeight: 1 }}>
       <ruby style={{ fontSize: '0.95em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
       <svg viewBox="0 0 20 18" width="0.7em" height="0.7em" fill="currentColor" aria-hidden="true" style={{ marginBottom: '0.1em' }}>
-        <polygon points="0,1 13,1 13,4 0,4" />
-        <polygon points="11,0 20,2.5 11,5" />
-        <polygon points="7,13 7,16 20,16 20,13" />
-        <polygon points="9,12 0,14.5 9,17" />
+        <polygon points="0,2 12,2 12,5 0,5" />
+        <polygon points="10,-1 20,3.5 10,8" />
+        <polygon points="8,13 8,16 20,16 20,13" />
+        <polygon points="10,10 0,14.5 10,19" />
       </svg>
       <span style={{ fontSize: '0.95em' }}>振</span>
     </span>
