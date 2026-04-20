@@ -151,6 +151,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.6em;
 }
 
 .verse-tag--toggle-furigana {
