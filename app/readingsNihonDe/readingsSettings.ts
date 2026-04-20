@@ -21,10 +21,10 @@ export const DISPLAY_OPTIONS: DisplayOption[] = [
   { key: ROWKEYS.ENGLISH,         label: 'English',                                 tagText: 'EN',   tagClass: 'verse-tag--en' },
   { key: ROWKEYS.TOGGLE_FURIGANA, label: 'Tap Icon to Toggle Kanji and Furigana',   tagText: '', tagClass: 'verse-tag--toggle-furigana' },
   { key: ROWKEYS.FURIGANA,        label: 'Furigana',                                tagText: '振り', tagClass: 'verse-tag--furigana' },
-  { key: ROWKEYS.TOGGLE_KANA,     label: 'Tap Icon to Toggle Kanji and parentheses',tagText: '日(ひ)', tagClass: 'verse-tag--toggle' },
+  { key: ROWKEYS.TOGGLE_KANA,     label: 'Tap Icon to Toggle Kanji and parentheses',tagText: '日±(ひ)', tagClass: 'verse-tag--toggle' },
   { key: ROWKEYS.JAPANESE,        label: 'Kanji Only',                              tagText: '漢字', tagClass: 'verse-tag--kanji' },
   { key: ROWKEYS.KANA_ONLY,       label: 'Kana Only',                               tagText: 'かな', tagClass: 'verse-tag--kana' },
-  { key: ROWKEYS.KANJI_KANA,      label: 'Kanji with hiragana in parentheses',      tagText: '両方', tagClass: 'verse-tag--kanjikana' },
+  { key: ROWKEYS.KANJI_KANA,      label: 'Kanji with hiragana in parentheses',      tagText: '日(ひ)', tagClass: 'verse-tag--kanjikana' },
 ];
 
 export const DEFAULT_ORDER: RowKey[] = DISPLAY_OPTIONS.map((o) => o.key);
