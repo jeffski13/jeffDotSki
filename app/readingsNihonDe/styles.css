@@ -112,6 +112,7 @@
   font-weight: 700;
   line-height: 1.6;
   height: calc(0.75rem * 1.6 + 2px);
+  user-select: none;
   min-width: 2rem;
   text-align: center;
   white-space: nowrap;
