@@ -14,7 +14,7 @@ describe('ReadingsNihonDe', () => {
     { key: ROWKEYS.KANA_ONLY, label: 'Kana'            },
     { key: ROWKEYS.KANJI_KANA, label: 'Kanji and Kana' },
     { key: ROWKEYS.FURIGANA,  label: 'Furigana'        },
-  ])('restores $label to on when handleResetSettings is called with it disabled', ({ key }) => {
+  ])('restores $label to its default when handleResetSettings is called', ({ key }) => {
     render(<ReadingsNihonDe />);
 
     // Open the settings panel
@@ -22,18 +22,20 @@ describe('ReadingsNihonDe', () => {
 
     const langSwitch = document.getElementById(`display-toggle-${key}`) as HTMLInputElement;
     expect(langSwitch).not.toBeNull();
-    expect(langSwitch.checked).toBe(true);
+
+    const defaultValue = DEFAULT_ENABLED[key];
+    expect(langSwitch.checked).toBe(defaultValue);
 
     // Toggle the switch away from its default
     fireEvent.click(langSwitch);
-    expect(langSwitch.checked).toBe(false);
+    expect(langSwitch.checked).toBe(!defaultValue);
 
     // Open the reset confirmation modal and confirm
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
     fireEvent.click(screen.getByText('Yes'));
 
     // Switch should be restored to its default
-    expect(langSwitch.checked).toBe(true);
+    expect(langSwitch.checked).toBe(defaultValue);
   });
 
   it('resets all sub-setting checkboxes to off after handleResetSettings', () => {
@@ -41,9 +43,14 @@ describe('ReadingsNihonDe', () => {
 
     fireEvent.click(screen.getByText('Settings'));
 
-    const checkboxIds = [
-      'split-on-kuten',
-      'split-english-dialogue',
+    // These keys are off by default — enable them so their sub-settings become visible
+    const keysOffByDefault = [ROWKEYS.TOGGLE_KANA, ROWKEYS.JAPANESE, ROWKEYS.KANA_ONLY, ROWKEYS.KANJI_KANA, ROWKEYS.FURIGANA];
+    keysOffByDefault.forEach((key) => {
+      fireEvent.click(document.getElementById(`display-toggle-${key}`) as HTMLInputElement);
+    });
+
+    const alwaysVisibleIds = ['split-on-kuten', 'split-english-dialogue'];
+    const subSettingIds = [
       'default-toggle-kanji-kana',
       `split-jp-dialogue-${ROWKEYS.TOGGLE_KANA}`,
       `split-jp-dialogue-${ROWKEYS.JAPANESE}`,
@@ -53,7 +60,7 @@ describe('ReadingsNihonDe', () => {
     ];
 
     // Turn all checkboxes on
-    checkboxIds.forEach((id) => {
+    [...alwaysVisibleIds, ...subSettingIds].forEach((id) => {
       const checkbox = document.getElementById(id) as HTMLInputElement;
       expect(checkbox).not.toBeNull();
       fireEvent.click(checkbox);
@@ -64,9 +71,18 @@ describe('ReadingsNihonDe', () => {
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
     fireEvent.click(screen.getByText('Yes'));
 
-    // All checkboxes should be off
-    checkboxIds.forEach((id) => {
+    // Always-visible checkboxes should be off
+    alwaysVisibleIds.forEach((id) => {
+      expect((document.getElementById(id) as HTMLInputElement).checked).toBe(false);
+    });
+
+    // Re-enable parent toggles to verify their sub-settings reset to off
+    keysOffByDefault.forEach((key) => {
+      fireEvent.click(document.getElementById(`display-toggle-${key}`) as HTMLInputElement);
+    });
+    subSettingIds.forEach((id) => {
       const checkbox = document.getElementById(id) as HTMLInputElement;
+      expect(checkbox).not.toBeNull();
       expect(checkbox.checked).toBe(false);
     });
   });

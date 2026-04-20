@@ -603,7 +603,7 @@ export default function ReadingsNihonDe() {
                             />
                             <Form.Check
                               type="checkbox"
-                              id="split-jp-dialogue-toggle"
+                              id={`split-jp-dialogue-${ROWKEYS.TOGGLE_KANA}`}
                               label="New lines around dialogue (「...」)"
                               checked={splitJpDialogue[ROWKEYS.TOGGLE_KANA]}
                               onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [ROWKEYS.TOGGLE_KANA]: !prev[ROWKEYS.TOGGLE_KANA] }))}
