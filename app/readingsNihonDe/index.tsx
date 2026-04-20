@@ -71,29 +71,17 @@ interface RawBook {
 }
 
 function FuriganaToggleIcon() {
-  const arrowStyle: React.CSSProperties = { height: '0.9em', width: 'auto', display: 'block' };
-  const strokeProps = { stroke: 'currentColor', strokeWidth: 8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, fill: 'none' };
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.15em', lineHeight: 1 }}>
-      <svg viewBox="0 0 55 80" style={arrowStyle} aria-hidden="true">
-        <polyline points="8,75 8,8 50,8" {...strokeProps} />
-        <polyline points="35,-1 50,8 35,17" {...strokeProps} />
-      </svg>
+    <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: '0.1em', lineHeight: 1 }}>
       <ruby style={{ fontSize: '0.95em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
-      <svg viewBox="0 0 55 80" style={arrowStyle} aria-hidden="true">
-        <polyline points="47,5 47,72 5,72" {...strokeProps} />
-        <polyline points="20,63 5,72 20,81" {...strokeProps} />
+      <svg viewBox="0 0 20 18" width="0.7em" height="0.7em" fill="currentColor" aria-hidden="true" style={{ marginBottom: '0.1em' }}>
+        <polygon points="0,2 12,2 12,5 0,5" />
+        <polygon points="10,-1 20,3.5 10,8" />
+        <polygon points="8,13 8,16 20,16 20,13" />
+        <polygon points="10,10 0,14.5 10,19" />
       </svg>
+      <span style={{ fontSize: '0.95em' }}>振</span>
     </span>
-  );
-}
-
-function ArrowsIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} fill="currentColor" viewBox="0 0 16 16">
-      <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-      <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-    </svg>
   );
 }
 
@@ -566,9 +554,7 @@ export default function ReadingsNihonDe() {
                             onTouchEnd={handleTouchEnd}
                           >⠿</span>
                           <span className={`verse-tag ${opt.tagClass}`}>
-                            {key === ROWKEYS.TOGGLE_KANA ? (
-                              <ArrowsIcon size={14} />
-                            ) : key === ROWKEYS.TOGGLE_FURIGANA ? (
+                            {key === ROWKEYS.TOGGLE_FURIGANA ? (
                               <FuriganaToggleIcon />
                             ) : opt.tagText}
                           </span>
@@ -714,7 +700,7 @@ export default function ReadingsNihonDe() {
                     onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && toggleVerse(verse.number)}
                   >
                     <span className="verse-tag verse-tag--toggle">
-                      <ArrowsIcon />
+                      {opt.tagText}
                     </span>
                   </div>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">

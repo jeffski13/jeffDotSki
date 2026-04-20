@@ -112,6 +112,7 @@
   font-weight: 700;
   line-height: 1.6;
   height: calc(0.75rem * 1.6 + 2px);
+  user-select: none;
   min-width: 2rem;
   text-align: center;
   white-space: nowrap;
@@ -150,6 +151,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.6em;
 }
 
 .verse-tag--toggle-furigana {
@@ -391,7 +393,7 @@
 
 .readingsNihonDe-furigana {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
-  line-height: 2.8;
+  line-height: 1.8;
 }
 
 .readingsNihonDe-furigana ruby rt {
@@ -400,7 +402,7 @@
 
 .readingsNihonDe-toggle-furigana-text {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
-  line-height: 2.8;
+  line-height: 1.8;
 }
 
 .readingsNihonDe-toggle-furigana-text ruby rt {
@@ -414,6 +416,10 @@
 .readingsNihonDe-english {
   font-style: italic;
   color: #5a4000;
+}
+
+.readingsNihonDe-verse-row:has(.readingsNihonDe-english) {
+  margin-bottom: 0.4rem;
 }
 
 @media (max-width: 576px) {
