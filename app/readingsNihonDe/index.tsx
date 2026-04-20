@@ -566,7 +566,7 @@ export default function ReadingsNihonDe() {
                             onTouchEnd={handleTouchEnd}
                           >⠿</span>
                           <span className={`verse-tag ${opt.tagClass}`}>
-                            {key === ROWKEYS.TOGGLE ? (
+                            {key === ROWKEYS.TOGGLE_KANA ? (
                               <ArrowsIcon size={14} />
                             ) : key === ROWKEYS.TOGGLE_FURIGANA ? (
                               <FuriganaToggleIcon />
@@ -592,7 +592,7 @@ export default function ReadingsNihonDe() {
                             />
                           </div>
                         )}
-                        {key === ROWKEYS.TOGGLE && displayEnabled[ROWKEYS.TOGGLE] && (
+                        {key === ROWKEYS.TOGGLE_KANA && displayEnabled[ROWKEYS.TOGGLE_KANA] && (
                           <div className="readingsNihonDe-settings-sub">
                             <Form.Check
                               type="checkbox"
@@ -605,8 +605,8 @@ export default function ReadingsNihonDe() {
                               type="checkbox"
                               id="split-jp-dialogue-toggle"
                               label="New lines around dialogue (「...」)"
-                              checked={splitJpDialogue[ROWKEYS.TOGGLE]}
-                              onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [ROWKEYS.TOGGLE]: !prev[ROWKEYS.TOGGLE] }))}
+                              checked={splitJpDialogue[ROWKEYS.TOGGLE_KANA]}
+                              onChange={() => setSplitJpDialogue((prev) => ({ ...prev, [ROWKEYS.TOGGLE_KANA]: !prev[ROWKEYS.TOGGLE_KANA] }))}
                             />
                           </div>
                         )}
@@ -702,8 +702,8 @@ export default function ReadingsNihonDe() {
                   </span>
                 </div>
               );
-              if (key === ROWKEYS.TOGGLE) return (
-                <div key={ROWKEYS.TOGGLE} className="readingsNihonDe-verse-row">
+              if (key === ROWKEYS.TOGGLE_KANA) return (
+                <div key={ROWKEYS.TOGGLE_KANA} className="readingsNihonDe-verse-row">
                   <div
                     className="readingsNihonDe-toggle-btn-col"
                     onClick={() => toggleVerse(verse.number)}
@@ -718,7 +718,7 @@ export default function ReadingsNihonDe() {
                     </span>
                   </div>
                   <span className="readingsNihonDe-verse-text readingsNihonDe-toggle-text">
-                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese), splitJpDialogue[ROWKEYS.TOGGLE])}
+                    {renderJpText(toggledVerses.has(verse.number) ? (defaultToggleKanjiKana ? verse.japanese : verse.japaneseKanjiKana) : (defaultToggleKanjiKana ? verse.japaneseKanjiKana : verse.japanese), splitJpDialogue[ROWKEYS.TOGGLE_KANA])}
                   </span>
                 </div>
               );

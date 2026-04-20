@@ -8,7 +8,7 @@ describe('ReadingsNihonDe', () => {
   });
 
   it.each([
-    { key: ROWKEYS.TOGGLE,    label: 'toggle language' },
+    { key: ROWKEYS.TOGGLE_KANA,    label: 'toggle language' },
     { key: ROWKEYS.ENGLISH,   label: 'English'         },
     { key: ROWKEYS.JAPANESE,  label: 'Kanji'           },
     { key: ROWKEYS.KANA_ONLY, label: 'Kana'            },
@@ -45,7 +45,7 @@ describe('ReadingsNihonDe', () => {
       'split-on-kuten',
       'split-english-dialogue',
       'default-toggle-kanji-kana',
-      `split-jp-dialogue-${ROWKEYS.TOGGLE}`,
+      `split-jp-dialogue-${ROWKEYS.TOGGLE_KANA}`,
       `split-jp-dialogue-${ROWKEYS.JAPANESE}`,
       `split-jp-dialogue-${ROWKEYS.KANA_ONLY}`,
       `split-jp-dialogue-${ROWKEYS.KANJI_KANA}`,
@@ -72,7 +72,7 @@ describe('ReadingsNihonDe', () => {
   });
 
   it('restores display order to default after handleResetSettings is called with a scrambled order', () => {
-    const scrambledOrder = [ROWKEYS.ENGLISH, ROWKEYS.FURIGANA, ROWKEYS.TOGGLE, ROWKEYS.KANA_ONLY, ROWKEYS.KANJI_KANA, ROWKEYS.JAPANESE, ROWKEYS.TOGGLE_FURIGANA];
+    const scrambledOrder = [ROWKEYS.ENGLISH, ROWKEYS.FURIGANA, ROWKEYS.TOGGLE_KANA, ROWKEYS.KANA_ONLY, ROWKEYS.KANJI_KANA, ROWKEYS.JAPANESE, ROWKEYS.TOGGLE_FURIGANA];
     localStorage.setItem('readingsNihonDe-displaySettings', JSON.stringify({
       order: scrambledOrder,
       enabled: DEFAULT_ENABLED,
