@@ -205,7 +205,7 @@ export default function ReadingsNihonDe() {
       return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
         if (i < arr.length - 1) {
           acc.push(part + '。');
-          acc.push(<br key={`k${i}`} />);
+          if (!part.endsWith('」') && !arr[i + 1].startsWith('〕')) acc.push(<br key={`k${i}`} />);
         } else if (part) {
           acc.push(part);
         }
@@ -219,9 +219,12 @@ export default function ReadingsNihonDe() {
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
       const isDialogue = /^「[^」]*」$/.test(part);
-      if (isDialogue && i > 0) acc.push(<br key={`d${i}`} />);
+      if (isDialogue && acc.length > 0) acc.push(<br key={`d${i}`} />);
       acc.push(...applyKuten(part));
-      if (isDialogue && i < parts.length - 1) acc.push(<br key={`da${i}`} />);
+      if (isDialogue && i < parts.length - 1) {
+        const nextPart = parts[i + 1] ?? '';
+        if (!nextPart.startsWith('。') && !nextPart.startsWith('、')) acc.push(<br key={`da${i}`} />);
+      }
       return acc;
     }, []);
   };
@@ -232,7 +235,7 @@ export default function ReadingsNihonDe() {
       return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
         if (i < arr.length - 1) {
           acc.push(part + '。');
-          acc.push(<br key={`${keyPrefix}-k${i}`} />);
+          if (!part.endsWith('」') && !arr[i + 1].startsWith('〕')) acc.push(<br key={`${keyPrefix}-k${i}`} />);
         } else if (part) {
           acc.push(part);
         }
@@ -267,9 +270,12 @@ export default function ReadingsNihonDe() {
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
       const isDialogue = /^「[^」]*」$/.test(part);
-      if (isDialogue && i > 0) acc.push(<br key={`fd${i}`} />);
+      if (isDialogue && acc.length > 0) acc.push(<br key={`fd${i}`} />);
       acc.push(...parseAndRender(part, `fur-${i}`));
-      if (isDialogue && i < parts.length - 1) acc.push(<br key={`fda${i}`} />);
+      if (isDialogue && i < parts.length - 1) {
+        const nextPart = parts[i + 1] ?? '';
+        if (!nextPart.startsWith('。') && !nextPart.startsWith('、')) acc.push(<br key={`fda${i}`} />);
+      }
       return acc;
     }, []);
   };
@@ -280,9 +286,12 @@ export default function ReadingsNihonDe() {
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
       const isDialogue = /^"[^"]*"$/.test(part);
-      if (isDialogue && i > 0) acc.push(<br key={`d${i}`} />);
+      if (isDialogue && acc.length > 0) acc.push(<br key={`d${i}`} />);
       acc.push(part);
-      if (isDialogue && i < parts.length - 1) acc.push(<br key={`da${i}`} />);
+      if (isDialogue && i < parts.length - 1) {
+        const nextPart = parts[i + 1] ?? '';
+        if (!nextPart.startsWith('.') && !nextPart.startsWith(',')) acc.push(<br key={`da${i}`} />);
+      }
       return acc;
     }, []);
   };
