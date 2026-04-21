@@ -1,0 +1,37 @@
+{
+  "bookName": "Micah",
+  "bookNameEnglish": "Micah",
+  "contents": [
+    {
+      "chapter": 1,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "Yahweh’s word that came to Micah the Morashtite in the days of Jotham, Ahaz, and Hezekiah, kings of Judah, which he saw concerning Samaria and Jerusalem."
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "I said,"
+        },
+        {
+          "verseNumber": 5,
+          "text": "Yahweh says concerning the prophets who lead my people astray; for those who feed their teeth, they proclaim, “Peace!” and whoever doesn’t provide for their mouths, they prepare war against him:"
+        }
+      ]
+    },
+    {
+      "chapter": 6,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "Listen now to what Yahweh says:"
+        }
+      ]
+    }
+  ]
+}

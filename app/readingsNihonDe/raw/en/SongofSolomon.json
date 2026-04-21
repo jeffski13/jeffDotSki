@@ -1,0 +1,51 @@
+{
+  "bookName": "Song of Solomon",
+  "bookNameEnglish": "Song of Solomon",
+  "contents": [
+    {
+      "chapter": 1,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "The Song of songs, which is Solomon’s."
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "By night on my bed,"
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "Behold, you are beautiful, my love."
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "How beautiful are your feet in sandals, prince’s daughter!"
+        }
+      ]
+    },
+    {
+      "chapter": 8,
+      "verses": [
+        {
+          "verseNumber": 1,
+          "text": "Oh that you were like my brother,"
+        }
+      ]
+    }
+  ]
+}
