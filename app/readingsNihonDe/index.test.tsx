@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ReadingsNihonDe from './index';
 import { ROWKEYS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE } from './readingsSettings';
 
@@ -84,6 +84,48 @@ describe('ReadingsNihonDe', () => {
       const checkbox = document.getElementById(id) as HTMLInputElement;
       expect(checkbox).not.toBeNull();
       expect(checkbox.checked).toBe(false);
+    });
+  });
+
+  describe('Read button disabled state', () => {
+    const getReadButton = () => screen.getByRole('button', { name: /読む/ });
+
+    it('is enabled before any search', () => {
+      render(<ReadingsNihonDe />);
+      expect(getReadButton()).not.toBeDisabled();
+    });
+
+    it('is disabled after a successful search when inputs still match the displayed passage', async () => {
+      render(<ReadingsNihonDe />);
+      fireEvent.click(getReadButton());
+      await waitFor(() => expect(getReadButton()).toBeDisabled());
+    });
+
+    it('re-enables when the book is changed after a search', async () => {
+      render(<ReadingsNihonDe />);
+      fireEvent.click(getReadButton());
+      await waitFor(() => expect(getReadButton()).toBeDisabled());
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Matthew' } });
+      expect(getReadButton()).not.toBeDisabled();
+    });
+
+    it('re-enables when the chapter is changed after a search', async () => {
+      render(<ReadingsNihonDe />);
+      fireEvent.click(getReadButton());
+      await waitFor(() => expect(getReadButton()).toBeDisabled());
+
+      fireEvent.change(screen.getByPlaceholderText('e.g. 3'), { target: { value: '2' } });
+      expect(getReadButton()).not.toBeDisabled();
+    });
+
+    it('re-enables when the verse is changed after a search', async () => {
+      render(<ReadingsNihonDe />);
+      fireEvent.click(getReadButton());
+      await waitFor(() => expect(getReadButton()).toBeDisabled());
+
+      fireEvent.change(screen.getByPlaceholderText('e.g. 1'), { target: { value: '5' } });
+      expect(getReadButton()).not.toBeDisabled();
     });
   });
 
