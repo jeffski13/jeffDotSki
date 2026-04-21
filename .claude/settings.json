@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npx jest:*)",
       "Bash(npx tsc *)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(python3)"
     ]
   }
 }
