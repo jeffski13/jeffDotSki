@@ -219,7 +219,7 @@ export default function ReadingsNihonDe() {
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
       const isDialogue = /^「[^」]*」$/.test(part);
-      if (isDialogue && i > 0) acc.push(<br key={`d${i}`} />);
+      if (isDialogue && acc.length > 0) acc.push(<br key={`d${i}`} />);
       acc.push(...applyKuten(part));
       if (isDialogue && i < parts.length - 1) {
         const nextPart = parts[i + 1] ?? '';
@@ -270,7 +270,7 @@ export default function ReadingsNihonDe() {
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
       const isDialogue = /^「[^」]*」$/.test(part);
-      if (isDialogue && i > 0) acc.push(<br key={`fd${i}`} />);
+      if (isDialogue && acc.length > 0) acc.push(<br key={`fd${i}`} />);
       acc.push(...parseAndRender(part, `fur-${i}`));
       if (isDialogue && i < parts.length - 1) {
         const nextPart = parts[i + 1] ?? '';
@@ -286,7 +286,7 @@ export default function ReadingsNihonDe() {
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
       const isDialogue = /^"[^"]*"$/.test(part);
-      if (isDialogue && i > 0) acc.push(<br key={`d${i}`} />);
+      if (isDialogue && acc.length > 0) acc.push(<br key={`d${i}`} />);
       acc.push(part);
       if (isDialogue && i < parts.length - 1) {
         const nextPart = parts[i + 1] ?? '';
