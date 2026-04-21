@@ -111,6 +111,26 @@ describe('readingsSettingsStoreImpl.getSettings', () => {
     expect(settings.defaultToggleFurigana).toBe(DEFAULT_TOGGLE_FURIGANA);
   });
 
+  it('strips unknown/old keys from order so DISPLAY_OPTIONS.find never returns undefined', () => {
+    const settingsWithOldKey = JSON.stringify({
+      order: ['oldLanguage', 'english', 'japanese', 'kanaToggle', 'kanaOnly', 'kanjiKana', 'furigana', 'furiganaToggle'],
+      enabled: { english: true, japanese: true, kanaToggle: false, kanaOnly: false, kanjiKana: false, furigana: false, furiganaToggle: true },
+      splitOnKuten: false,
+      defaultToggleKanjiKana: false,
+      defaultToggleFurigana: true,
+      splitEnglishDialogue: false,
+      splitJpDialogue: { english: false, japanese: false, kanaToggle: false, kanaOnly: false, kanjiKana: false, furigana: false, furiganaToggle: false },
+    });
+    localStorage.setItem(STORAGE_KEY, settingsWithOldKey);
+
+    const settings = readingsSettingsStoreImpl.getSettings();
+
+    expect(settings.order).not.toContain('oldLanguage');
+    settings.order.forEach((key) => {
+      expect(Object.values(ROWKEYS)).toContain(key);
+    });
+  });
+
   it('preserves saved enabled values for existing languages when furiganaToggle is missing', () => {
     localStorage.setItem(STORAGE_KEY, LEGACY_SETTINGS_MISSING_TOGGLE_FURIGANA);
 
