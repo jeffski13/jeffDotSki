@@ -205,7 +205,7 @@ export default function ReadingsNihonDe() {
       return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
         if (i < arr.length - 1) {
           acc.push(part + '。');
-          if (!part.endsWith('」')) acc.push(<br key={`k${i}`} />);
+          if (!part.endsWith('」') && !arr[i + 1].startsWith('〕')) acc.push(<br key={`k${i}`} />);
         } else if (part) {
           acc.push(part);
         }
@@ -235,7 +235,7 @@ export default function ReadingsNihonDe() {
       return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
         if (i < arr.length - 1) {
           acc.push(part + '。');
-          if (!part.endsWith('」')) acc.push(<br key={`${keyPrefix}-k${i}`} />);
+          if (!part.endsWith('」') && !arr[i + 1].startsWith('〕')) acc.push(<br key={`${keyPrefix}-k${i}`} />);
         } else if (part) {
           acc.push(part);
         }
