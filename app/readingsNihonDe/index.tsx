@@ -24,32 +24,7 @@ const BOOK_ENGLISH_DISPLAY: Record<Book, string> = Object.fromEntries(
   bookMapping.map((b) => [toJpFilename(b.bookNameEnglish), b.bookNameEnglish])
 );
 
-// Douay-Rheims EN filenames that differ from the standard JP filenames
-const EN_FILE_MAP: Record<string, string> = {
-  '1Samuel': '1Kings',
-  '2Samuel': '2Kings',
-  '1Kings': '3Kings',
-  '2Kings': '4Kings',
-  '1Chronicles': '1Paralipomenon',
-  '2Chronicles': '2Paralipomenon',
-  'Ezra': '1Esdras',
-  'Nehemiah': '2Esdras',
-  'Joshua': 'Josue',
-  'Isaiah': 'Isaias',
-  'Jeremiah': 'Jeremias',
-  'Ezekiel': 'Ezechiel',
-  'Hosea': 'Osee',
-  'Obadiah': 'Abdias',
-  'Jonah': 'Jonas',
-  'Micah': 'Micheas',
-  'Habakkuk': 'Habacuc',
-  'Zephaniah': 'Sophonias',
-  'Haggai': 'Aggeus',
-  'Zechariah': 'Zacharias',
-  'Malachi': 'Malachias',
-  'SongofSolomon': 'Canticles',
-  'Revelation': 'Apocalypse',
-};
+const EN_FILE_MAP: Record<string, string> = {};
 
 const JP_MODULES = import.meta.glob('./raw/jp/*.json');
 const EN_MODULES = import.meta.glob('./raw/en/*.json');
