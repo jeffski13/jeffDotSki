@@ -147,7 +147,7 @@ export default function ReadingsNihonDe() {
   const savedSettings = readingsSettingsStoreImpl.getSettings();
   const [book, setBook] = useState<Book>((savedSettings.lastBook as Book) ?? 'John');
   const [chapter, setChapter] = useState<string>(savedSettings.lastChapter ?? '1');
-  const [startVerse, setStartVerse] = useState<string>('1');
+  const [startVerse, setStartVerse] = useState<string>(savedSettings.lastStartVerse ?? '1');
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -172,8 +172,8 @@ export default function ReadingsNihonDe() {
   const [dragIndicator, setDragIndicator] = useState<{ key: RowKey; position: 'before' | 'after' } | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, lastBook: book, lastChapter: chapter });
-  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, book, chapter]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, lastBook: book, lastChapter: chapter, lastStartVerse: startVerse });
+  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, book, chapter, startVerse]);
 
   useEffect(() => {
     if (savedSettings.lastBook && savedSettings.lastChapter) {

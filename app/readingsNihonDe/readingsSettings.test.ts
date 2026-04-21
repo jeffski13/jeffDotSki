@@ -144,3 +144,59 @@ describe('readingsSettingsStoreImpl.getSettings', () => {
     expect(settings.enabled[ROWKEYS.FURIGANA]).toBe(true);
   });
 });
+
+describe('readingsSettingsStoreImpl - book, chapter, and verse persistence', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('saves and retrieves lastBook', () => {
+    const settings = readingsSettingsStoreImpl.getSettings();
+    readingsSettingsStoreImpl.saveSettings({ ...settings, lastBook: 'Genesis' });
+
+    expect(readingsSettingsStoreImpl.getSettings().lastBook).toBe('Genesis');
+  });
+
+  it('saves and retrieves lastChapter', () => {
+    const settings = readingsSettingsStoreImpl.getSettings();
+    readingsSettingsStoreImpl.saveSettings({ ...settings, lastChapter: '5' });
+
+    expect(readingsSettingsStoreImpl.getSettings().lastChapter).toBe('5');
+  });
+
+  it('saves and retrieves lastStartVerse', () => {
+    const settings = readingsSettingsStoreImpl.getSettings();
+    readingsSettingsStoreImpl.saveSettings({ ...settings, lastStartVerse: '12' });
+
+    expect(readingsSettingsStoreImpl.getSettings().lastStartVerse).toBe('12');
+  });
+
+  it('saves and retrieves book, chapter, and verse together', () => {
+    const settings = readingsSettingsStoreImpl.getSettings();
+    readingsSettingsStoreImpl.saveSettings({ ...settings, lastBook: 'Revelation', lastChapter: '3', lastStartVerse: '7' });
+
+    const retrieved = readingsSettingsStoreImpl.getSettings();
+    expect(retrieved.lastBook).toBe('Revelation');
+    expect(retrieved.lastChapter).toBe('3');
+    expect(retrieved.lastStartVerse).toBe('7');
+  });
+
+  it('returns undefined for lastBook, lastChapter, and lastStartVerse when nothing is saved', () => {
+    const settings = readingsSettingsStoreImpl.getSettings();
+
+    expect(settings.lastBook).toBeUndefined();
+    expect(settings.lastChapter).toBeUndefined();
+    expect(settings.lastStartVerse).toBeUndefined();
+  });
+
+  it('overwrites previously saved book, chapter, and verse', () => {
+    const settings = readingsSettingsStoreImpl.getSettings();
+    readingsSettingsStoreImpl.saveSettings({ ...settings, lastBook: 'John', lastChapter: '1', lastStartVerse: '1' });
+    readingsSettingsStoreImpl.saveSettings({ ...readingsSettingsStoreImpl.getSettings(), lastBook: 'Mark', lastChapter: '2', lastStartVerse: '3' });
+
+    const retrieved = readingsSettingsStoreImpl.getSettings();
+    expect(retrieved.lastBook).toBe('Mark');
+    expect(retrieved.lastChapter).toBe('2');
+    expect(retrieved.lastStartVerse).toBe('3');
+  });
+});
