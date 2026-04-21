@@ -65,10 +65,11 @@ export const readingsSettingsStoreImpl: ReadingsSettingsStore = {
       if (raw) {
         const parsed = JSON.parse(raw) as ReadingsDisplaySettings;
         const allKeys = DISPLAY_OPTIONS.map((o) => o.key);
-        const missingFromOrder = allKeys.filter((k) => !parsed.order.includes(k));
+        const knownOrder = parsed.order.filter((k) => allKeys.includes(k));
+        const missingFromOrder = allKeys.filter((k) => !knownOrder.includes(k));
         return {
           ...parsed,
-          order: [...parsed.order, ...missingFromOrder],
+          order: [...knownOrder, ...missingFromOrder],
           enabled: { ...DEFAULT_ENABLED, ...parsed.enabled },
           splitJpDialogue: { ...DEFAULT_SPLIT_JP_DIALOGUE, ...parsed.splitJpDialogue },
           defaultToggleFurigana: parsed.defaultToggleFurigana ?? DEFAULT_TOGGLE_FURIGANA,
