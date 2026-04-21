@@ -49,6 +49,7 @@ export interface ReadingsDisplaySettings {
   splitJpDialogue: Record<RowKey, boolean>;
   lastBook?: string;
   lastChapter?: string;
+  lastStartVerse?: string;
 }
 
 export interface ReadingsSettingsStore {
