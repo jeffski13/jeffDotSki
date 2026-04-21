@@ -495,7 +495,7 @@ export default function ReadingsNihonDe() {
             <Button
               variant="primary"
               onClick={handleSearch}
-              disabled={loading}
+              disabled={loading || (hasPassage && book === passageBook && parseInt(chapter, 10) === passageChapter && parseInt(startVerse, 10) === passageStartVerse)}
               className="readingsNihonDe-btn"
             >
               {loading ? <Spinner animation="border" size="sm" /> : '読む (Read)'}
