@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx jest:*)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)"
     ]
   }
 }
