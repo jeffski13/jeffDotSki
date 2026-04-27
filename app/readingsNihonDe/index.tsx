@@ -3,6 +3,7 @@ import { version } from '../../package.json';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { renderJpText as renderJpTextUtil } from './renderJpText';
 import bookMapping from './japaneseBookNameMapping.json';
 
 type Book = string;
@@ -200,35 +201,8 @@ export default function ReadingsNihonDe() {
     setChapter('1');
   };
 
-  const renderJpText = (text: string, dialogueSplit = false): React.ReactNode => {
-    const applyKuten = (t: string): React.ReactNode[] => {
-      if (!splitOnKuten) return [t];
-      return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
-        if (i < arr.length - 1) {
-          acc.push(part + '。');
-          if (!part.endsWith('」') && !arr[i + 1].startsWith('〕')) acc.push(<br key={`k${i}`} />);
-        } else if (part) {
-          acc.push(part);
-        }
-        return acc;
-      }, []);
-    };
-
-    if (!dialogueSplit) return applyKuten(text);
-
-    const parts = text.split(/(「[^」]*」)/);
-    return parts.reduce<React.ReactNode[]>((acc, part, i) => {
-      if (!part) return acc;
-      const isDialogue = /^「[^」]*」$/.test(part);
-      if (isDialogue && acc.length > 0) acc.push(<br key={`d${i}`} />);
-      acc.push(...applyKuten(part));
-      if (isDialogue && i < parts.length - 1) {
-        const nextPart = parts[i + 1] ?? '';
-        if (!nextPart.startsWith('。') && !nextPart.startsWith('、')) acc.push(<br key={`da${i}`} />);
-      }
-      return acc;
-    }, []);
-  };
+  const renderJpText = (text: string, dialogueSplit = false): React.ReactNode =>
+    renderJpTextUtil(text, dialogueSplit, splitOnKuten);
 
   const renderFurigana = (text: string, dialogueSplit = false): React.ReactNode => {
     const applyKutenToPlain = (t: string, keyPrefix: string): React.ReactNode[] => {
@@ -267,10 +241,10 @@ export default function ReadingsNihonDe() {
 
     if (!dialogueSplit) return parseAndRender(text, 'fur');
 
-    const parts = text.split(/(「[^」]*」)/);
+    const parts = text.split(/(「[^」]*」|「[^」]*)/);
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
-      const isDialogue = /^「[^」]*」$/.test(part);
+      const isDialogue = /^「/.test(part);
       if (isDialogue && acc.length > 0) acc.push(<br key={`fd${i}`} />);
       acc.push(...parseAndRender(part, `fur-${i}`));
       if (isDialogue && i < parts.length - 1) {
