@@ -764,12 +764,12 @@ export default function ReadingsNihonDe() {
             >
               <optgroup label="Old Testament">
                 {OT_BOOKS.map((b) => (
-                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
+                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})</option>
                 ))}
               </optgroup>
               <optgroup label="New Testament">
                 {NT_BOOKS.map((b) => (
-                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
+                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})</option>
                 ))}
               </optgroup>
             </Form.Select>
