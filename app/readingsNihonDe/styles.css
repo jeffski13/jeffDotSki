@@ -1,5 +1,5 @@
 .readingsNihonDe-wrapper {
-  padding: 2rem 0 4rem;
+  padding: 2rem 0 5rem;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -436,12 +436,48 @@
   }
 }
 
+/* ── Bottom bar ── */
+
+.readingsNihonDe-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(248, 249, 250, 0.94);
+  border-top: 1px solid #dee2e6;
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1rem;
+}
+
+.readingsNihonDe-bottom-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.readingsNihonDe-bottom-bar-select {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.875rem;
+}
+
+.readingsNihonDe-bottom-bar-input {
+  width: 3.25rem;
+  flex-shrink: 0;
+  font-size: 0.875rem;
+}
+
+.readingsNihonDe-bottom-bar-read-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* ── Scroll to top ── */
 
 .readingsNihonDe-scroll-top {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
   width: 2rem;
   height: 2rem;
   border-radius: 6px;
@@ -455,8 +491,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
+  flex-shrink: 0;
   transition: background 0.15s, border-color 0.15s;
 }
 
@@ -511,6 +546,11 @@
 
 [data-bs-theme="dark"] .readingsNihonDe-settings-hint {
   color: #fff;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-bottom-bar {
+  background: rgba(42, 46, 70, 0.94);
+  border-top-color: #565b80;
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-scroll-top {
