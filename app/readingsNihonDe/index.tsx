@@ -216,10 +216,10 @@ export default function ReadingsNihonDe() {
 
     if (!dialogueSplit) return applyKuten(text);
 
-    const parts = text.split(/(「[^」]*」)/);
+    const parts = text.split(/(「[^」]*」|「[^」]*)/);
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
-      const isDialogue = /^「[^」]*」$/.test(part);
+      const isDialogue = /^「/.test(part);
       if (isDialogue && acc.length > 0) acc.push(<br key={`d${i}`} />);
       acc.push(...applyKuten(part));
       if (isDialogue && i < parts.length - 1) {
@@ -267,10 +267,10 @@ export default function ReadingsNihonDe() {
 
     if (!dialogueSplit) return parseAndRender(text, 'fur');
 
-    const parts = text.split(/(「[^」]*」)/);
+    const parts = text.split(/(「[^」]*」|「[^」]*)/);
     return parts.reduce<React.ReactNode[]>((acc, part, i) => {
       if (!part) return acc;
-      const isDialogue = /^「[^」]*」$/.test(part);
+      const isDialogue = /^「/.test(part);
       if (isDialogue && acc.length > 0) acc.push(<br key={`fd${i}`} />);
       acc.push(...parseAndRender(part, `fur-${i}`));
       if (isDialogue && i < parts.length - 1) {
