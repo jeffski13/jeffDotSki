@@ -167,6 +167,7 @@ export default function ReadingsNihonDe() {
   const [toggledFuriganaVerses, setToggledFuriganaVerses] = useState<Set<number>>(new Set());
   const [splitEnglishDialogue, setSplitEnglishDialogue] = useState<boolean>(savedSettings.splitEnglishDialogue ?? DEFAULT_SPLIT_ENGLISH_DIALOGUE);
   const [splitJpDialogue, setSplitJpDialogue] = useState<Record<RowKey, boolean>>(savedSettings.splitJpDialogue ?? DEFAULT_SPLIT_JP_DIALOGUE);
+  const passageRef = useRef<HTMLDivElement>(null);
   const dragSrc = useRef<RowKey | null>(null);
   const touchDragSrc = useRef<RowKey | null>(null);
   const [dragIndicator, setDragIndicator] = useState<{ key: RowKey; position: 'before' | 'after' } | null>(null);
@@ -652,6 +653,8 @@ export default function ReadingsNihonDe() {
           )}
         </Row>
 
+        <div ref={passageRef} />
+
         {error && (
           <Row>
             <Col xs={12}>
@@ -777,13 +780,61 @@ export default function ReadingsNihonDe() {
       </Container>
 
       {showScrollTop && (
-        <button
-          className="readingsNihonDe-scroll-top"
-          onClick={() => window.scrollTo({ top: 0 })}
-          aria-label="Scroll to top"
-        >
-          ▲
-        </button>
+        <div className="readingsNihonDe-bottom-bar">
+          <div className="readingsNihonDe-bottom-bar-inner">
+            <Form.Select
+              value={book}
+              onChange={(e) => setBook(e.target.value as Book)}
+              className="readingsNihonDe-bottom-bar-select"
+              size="sm"
+            >
+              <optgroup label="Old Testament">
+                {OT_BOOKS.map((b) => (
+                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
+                ))}
+              </optgroup>
+              <optgroup label="New Testament">
+                {NT_BOOKS.map((b) => (
+                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
+                ))}
+              </optgroup>
+            </Form.Select>
+            <Form.Control
+              type="number"
+              min={1}
+              value={chapter}
+              onChange={(e) => setChapter(e.target.value)}
+              className="readingsNihonDe-bottom-bar-input"
+              size="sm"
+              placeholder="Ch."
+            />
+            <Form.Control
+              type="number"
+              min={1}
+              value={startVerse}
+              onChange={(e) => setStartVerse(e.target.value)}
+              className="readingsNihonDe-bottom-bar-input"
+              size="sm"
+              placeholder="Vs."
+            />
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => { handleSearch(); passageRef.current?.scrollIntoView({ behavior: 'smooth' }); }}
+              disabled={loading || (hasPassage && book === passageBook && parseInt(chapter, 10) === passageChapter && parseInt(startVerse, 10) === passageStartVerse)}
+              className="readingsNihonDe-bottom-bar-read-btn"
+            >
+              {loading ? <Spinner animation="border" size="sm" /> : '読む'}
+            </Button>
+            <button
+              className="readingsNihonDe-scroll-top"
+              onClick={() => window.scrollTo({ top: 0 })}
+              aria-label="Scroll to top"
+            >
+              ▲
+            </button>
+          </div>
+        </div>
       )}
 
       <Modal show={confirmResetOpen} onHide={() => setConfirmResetOpen(false)} centered>
