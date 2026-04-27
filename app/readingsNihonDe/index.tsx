@@ -167,6 +167,7 @@ export default function ReadingsNihonDe() {
   const [toggledFuriganaVerses, setToggledFuriganaVerses] = useState<Set<number>>(new Set());
   const [splitEnglishDialogue, setSplitEnglishDialogue] = useState<boolean>(savedSettings.splitEnglishDialogue ?? DEFAULT_SPLIT_ENGLISH_DIALOGUE);
   const [splitJpDialogue, setSplitJpDialogue] = useState<Record<RowKey, boolean>>(savedSettings.splitJpDialogue ?? DEFAULT_SPLIT_JP_DIALOGUE);
+  const passageRef = useRef<HTMLDivElement>(null);
   const dragSrc = useRef<RowKey | null>(null);
   const touchDragSrc = useRef<RowKey | null>(null);
   const [dragIndicator, setDragIndicator] = useState<{ key: RowKey; position: 'before' | 'after' } | null>(null);
@@ -652,6 +653,8 @@ export default function ReadingsNihonDe() {
           )}
         </Row>
 
+        <div ref={passageRef} />
+
         {error && (
           <Row>
             <Col xs={12}>
@@ -817,7 +820,7 @@ export default function ReadingsNihonDe() {
             <Button
               variant="primary"
               size="sm"
-              onClick={handleSearch}
+              onClick={() => { handleSearch(); passageRef.current?.scrollIntoView({ behavior: 'smooth' }); }}
               disabled={loading || (hasPassage && book === passageBook && parseInt(chapter, 10) === passageChapter && parseInt(startVerse, 10) === passageStartVerse)}
               className="readingsNihonDe-bottom-bar-read-btn"
             >
