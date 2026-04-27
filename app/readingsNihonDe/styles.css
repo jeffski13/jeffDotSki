@@ -566,3 +566,8 @@
   background: rgba(74, 79, 118, 0.85);
   border-color: #565b80;
 }
+
+[data-bs-theme="dark"] .readingsNihonDe-select optgroup,
+[data-bs-theme="dark"] .readingsNihonDe-bottom-bar-select optgroup {
+  color: #fff;
+}
