@@ -570,6 +570,8 @@
 .readingsNihonDe-option-group-label {
   color: rgba(0, 0, 0, 0.55) !important;
   font-weight: 600;
+  text-align: left;
+  padding-left: 0;
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-option-group-label {

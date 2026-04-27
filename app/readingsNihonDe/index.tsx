@@ -429,13 +429,13 @@ export default function ReadingsNihonDe() {
                 onChange={(e) => setBook(e.target.value as Book)}
                 className="readingsNihonDe-select"
               >
-                <option disabled className="readingsNihonDe-option-group-label">── Old Testament ──</option>
+                <option disabled className="readingsNihonDe-option-group-label">Old Testament</option>
                 {OT_BOOKS.map((b) => (
                   <option key={b} value={b}>
                     {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
                   </option>
                 ))}
-                <option disabled className="readingsNihonDe-option-group-label">── New Testament ──</option>
+                <option disabled className="readingsNihonDe-option-group-label">New Testament</option>
                 {NT_BOOKS.map((b) => (
                   <option key={b} value={b}>
                     {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
@@ -760,11 +760,11 @@ export default function ReadingsNihonDe() {
               className="readingsNihonDe-bottom-bar-select"
               size="sm"
             >
-              <option disabled className="readingsNihonDe-option-group-label">── Old Testament ──</option>
+              <option disabled className="readingsNihonDe-option-group-label">Old Testament</option>
               {OT_BOOKS.map((b) => (
                 <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
               ))}
-              <option disabled className="readingsNihonDe-option-group-label">── New Testament ──</option>
+              <option disabled className="readingsNihonDe-option-group-label">New Testament</option>
               {NT_BOOKS.map((b) => (
                 <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
               ))}
