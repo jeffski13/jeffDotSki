@@ -94,6 +94,29 @@ interface Verse {
   english: string;
 }
 
+const VERSE_CACHE_PREFIX = 'readingsNihonDe_verses_';
+
+function getVerseCacheKey(book: Book, chapter: number, startVerse: number) {
+  return `${VERSE_CACHE_PREFIX}${book}_${chapter}_${startVerse}`;
+}
+
+function saveVersesToCache(book: Book, chapter: number, startVerse: number, verses: Verse[]) {
+  try {
+    localStorage.setItem(getVerseCacheKey(book, chapter, startVerse), JSON.stringify(verses));
+  } catch {
+    // quota exceeded or unavailable — skip silently
+  }
+}
+
+function loadVersesFromCache(book: Book, chapter: number, startVerse: number): Verse[] | null {
+  try {
+    const raw = localStorage.getItem(getVerseCacheKey(book, chapter, startVerse));
+    return raw ? (JSON.parse(raw) as Verse[]) : null;
+  } catch {
+    return null;
+  }
+}
+
 const bookDataCache = new Map<string, RawBook>();
 
 async function loadBookData(modules: Record<string, () => Promise<unknown>>, path: string): Promise<RawBook> {
@@ -152,6 +175,7 @@ export default function ReadingsNihonDe() {
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fromCache, setFromCache] = useState(false);
   const [searched, setSearched] = useState(false);
   const [passageBook, setPassageBook] = useState<Book>(book);
   const [passageChapter, setPassageChapter] = useState<number>(parseInt(chapter, 10));
@@ -386,6 +410,7 @@ export default function ReadingsNihonDe() {
     setError(null);
     setVerses([]);
     setSearched(true);
+    setFromCache(false);
     setPassageBook(book);
     setPassageChapter(chapterNum);
     setPassageStartVerse(verseNum);
@@ -396,9 +421,16 @@ export default function ReadingsNihonDe() {
         setError('No verses found for the given passage.');
       } else {
         setVerses(results);
+        saveVersesToCache(book, chapterNum, verseNum, results);
       }
     } catch {
-      setError('Could not load the passage. Please check your connection and try again.');
+      const cached = loadVersesFromCache(book, chapterNum, verseNum);
+      if (cached && cached.length > 0) {
+        setVerses(cached);
+        setFromCache(true);
+      } else {
+        setError('Could not load the passage. Please check your connection and try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -633,6 +665,14 @@ export default function ReadingsNihonDe() {
           <Row>
             <Col xs={12}>
               <Alert variant="danger" className="mt-3">{error}</Alert>
+            </Col>
+          </Row>
+        )}
+
+        {fromCache && (
+          <Row>
+            <Col xs={12}>
+              <Alert variant="warning" className="mt-3">Offline — showing cached reading.</Alert>
             </Col>
           </Row>
         )}
