@@ -453,6 +453,7 @@
 .readingsNihonDe-bottom-bar-inner {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   max-width: 960px;
   margin: 0 auto;
@@ -461,6 +462,7 @@
 .readingsNihonDe-bottom-bar-select {
   flex: 1;
   min-width: 0;
+  max-width: 12rem;
   font-size: 0.875rem;
 }
 
