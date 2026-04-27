@@ -429,20 +429,18 @@ export default function ReadingsNihonDe() {
                 onChange={(e) => setBook(e.target.value as Book)}
                 className="readingsNihonDe-select"
               >
-                <optgroup label="Old Testament">
-                  {OT_BOOKS.map((b) => (
-                    <option key={b} value={b}>
-                      {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
-                    </option>
-                  ))}
-                </optgroup>
-                <optgroup label="New Testament">
-                  {NT_BOOKS.map((b) => (
-                    <option key={b} value={b}>
-                      {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
-                    </option>
-                  ))}
-                </optgroup>
+                <option disabled className="readingsNihonDe-option-group-label">── Old Testament ──</option>
+                {OT_BOOKS.map((b) => (
+                  <option key={b} value={b}>
+                    {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
+                  </option>
+                ))}
+                <option disabled className="readingsNihonDe-option-group-label">── New Testament ──</option>
+                {NT_BOOKS.map((b) => (
+                  <option key={b} value={b}>
+                    {BOOK_ENGLISH_DISPLAY[b]} ({BOOK_JAPANESE[b]})
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
           </Col>
@@ -762,16 +760,14 @@ export default function ReadingsNihonDe() {
               className="readingsNihonDe-bottom-bar-select"
               size="sm"
             >
-              <optgroup label="Old Testament">
-                {OT_BOOKS.map((b) => (
-                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
-                ))}
-              </optgroup>
-              <optgroup label="New Testament">
-                {NT_BOOKS.map((b) => (
-                  <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
-                ))}
-              </optgroup>
+              <option disabled className="readingsNihonDe-option-group-label">── Old Testament ──</option>
+              {OT_BOOKS.map((b) => (
+                <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
+              ))}
+              <option disabled className="readingsNihonDe-option-group-label">── New Testament ──</option>
+              {NT_BOOKS.map((b) => (
+                <option key={b} value={b}>{BOOK_ENGLISH_DISPLAY[b]}</option>
+              ))}
             </Form.Select>
             <Form.Control
               type="number"

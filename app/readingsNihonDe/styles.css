@@ -567,7 +567,11 @@
   border-color: #565b80;
 }
 
-[data-bs-theme="dark"] .readingsNihonDe-select optgroup,
-[data-bs-theme="dark"] .readingsNihonDe-bottom-bar-select optgroup {
-  color: #fff;
+.readingsNihonDe-option-group-label {
+  color: rgba(0, 0, 0, 0.55) !important;
+  font-weight: 600;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-option-group-label {
+  color: rgba(255, 255, 255, 0.55) !important;
 }
