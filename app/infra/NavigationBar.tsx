@@ -16,6 +16,7 @@ export interface ContentPerLanguage {
     softwareEngineer: string;
     softwareEngineerResume: string;
     pokePeru: string;
+    multilingualeBible: string;
     more: string;
     techPortfolio: string;
     teacherPortfolio: string;
@@ -34,6 +35,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         softwareEngineer: 'Ingeniero Informático',
         softwareEngineerResume: 'Ingeniero Informático (Español)',
         pokePeru: 'Poke Perú',
+        multilingualeBible: 'Biblia en Japonés',
         more: 'Más',
         techPortfolio: 'Portfolio Técnico',
         teacherPortfolio: 'Portfolio de Profe',
@@ -50,6 +52,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         softwareEngineer: 'Software Engineering',
         softwareEngineerResume: 'Software Engineering (Spanish)',
         pokePeru: 'Poké Peru',
+        multilingualeBible: 'Japanese Bible',
         more: 'More',
         techPortfolio: 'Tech Portfolio',
         teacherPortfolio: 'Teacher Portfolio',
@@ -90,6 +93,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                         </NavDropdown>
                     </Nav>
                     <Nav >
+                        <Nav.Link href={ROUTES.readingsNihonDe}>{content.multilingualeBible}</Nav.Link>
                         <Nav.Link href={ROUTES.pokePeru.battle}>{content.pokePeru}</Nav.Link>
                         <NavDropdown title={content.more} id="navigationbar-resume">
                             <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio} >{content.techPortfolio}</NavDropdown.Item>
