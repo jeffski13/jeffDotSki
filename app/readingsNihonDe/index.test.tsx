@@ -18,7 +18,7 @@ describe('ReadingsNihonDe', () => {
     render(<ReadingsNihonDe />);
 
     // Open the settings panel
-    fireEvent.click(screen.getByText('Settings'));
+    fireEvent.click(screen.getByText('設定 (Settings)'));
 
     const langSwitch = document.getElementById(`display-toggle-${key}`) as HTMLInputElement;
     expect(langSwitch).not.toBeNull();
@@ -32,7 +32,7 @@ describe('ReadingsNihonDe', () => {
 
     // Open the reset confirmation modal and confirm
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
-    fireEvent.click(screen.getByText('Yes'));
+    fireEvent.click(screen.getByText('はい (Yes)'));
 
     // Switch should be restored to its default
     expect(langSwitch.checked).toBe(defaultValue);
@@ -41,7 +41,7 @@ describe('ReadingsNihonDe', () => {
   it('resets all sub-setting checkboxes to off after handleResetSettings', () => {
     render(<ReadingsNihonDe />);
 
-    fireEvent.click(screen.getByText('Settings'));
+    fireEvent.click(screen.getByText('設定 (Settings)'));
 
     // These keys are off by default — enable them so their sub-settings become visible
     const keysOffByDefault = [ROWKEYS.TOGGLE_KANA, ROWKEYS.JAPANESE, ROWKEYS.KANA_ONLY, ROWKEYS.KANJI_KANA, ROWKEYS.FURIGANA];
@@ -69,7 +69,7 @@ describe('ReadingsNihonDe', () => {
 
     // Reset settings and confirm
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
-    fireEvent.click(screen.getByText('Yes'));
+    fireEvent.click(screen.getByText('はい (Yes)'));
 
     // Always-visible checkboxes should be off
     alwaysVisibleIds.forEach((id) => {
@@ -115,7 +115,7 @@ describe('ReadingsNihonDe', () => {
       fireEvent.click(getReadButton());
       await waitFor(() => expect(getReadButton()).toBeDisabled());
 
-      fireEvent.change(screen.getByPlaceholderText('e.g. 3'), { target: { value: '2' } });
+      fireEvent.change(screen.getByPlaceholderText('3'), { target: { value: '2' } });
       expect(getReadButton()).not.toBeDisabled();
     });
 
@@ -124,7 +124,7 @@ describe('ReadingsNihonDe', () => {
       fireEvent.click(getReadButton());
       await waitFor(() => expect(getReadButton()).toBeDisabled());
 
-      fireEvent.change(screen.getByPlaceholderText('e.g. 1'), { target: { value: '5' } });
+      fireEvent.change(screen.getByPlaceholderText('1'), { target: { value: '5' } });
       expect(getReadButton()).not.toBeDisabled();
     });
   });
@@ -141,7 +141,7 @@ describe('ReadingsNihonDe', () => {
     }));
 
     render(<ReadingsNihonDe />);
-    fireEvent.click(screen.getByText('Settings'));
+    fireEvent.click(screen.getByText('設定 (Settings)'));
 
     const getSettingsOrder = () =>
       Array.from(document.querySelectorAll('[data-drag-key]')).map((el) => el.getAttribute('data-drag-key'));
@@ -149,7 +149,7 @@ describe('ReadingsNihonDe', () => {
     expect(getSettingsOrder()).toEqual(scrambledOrder);
 
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
-    fireEvent.click(screen.getByText('Yes'));
+    fireEvent.click(screen.getByText('はい (Yes)'));
 
     expect(getSettingsOrder()).toEqual(DEFAULT_ORDER);
   });

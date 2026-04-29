@@ -418,7 +418,7 @@ export default function ReadingsNihonDe() {
     try {
       const results = await fetchChapterVerses(book, chapterNum, verseNum);
       if (results.length === 0) {
-        setError('No verses found for the given passage.');
+        setError('指定された箇所の節が見つかりません。(No verses found for the given passage.)');
       } else {
         setVerses(results);
         saveVersesToCache(book, chapterNum, verseNum, results);
@@ -482,32 +482,38 @@ export default function ReadingsNihonDe() {
           <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">章 (Chapter)</Form.Label>
-              <Form.Control
-                type="number"
-                min={1}
-                value={chapter}
-                onChange={(e) => setChapter(e.target.value)}
-                className="readingsNihonDe-input"
-                placeholder="e.g. 3"
-              />
+              <div className="readingsNihonDe-input-inline">
+                <span className="readingsNihonDe-input-prefix">章</span>
+                <Form.Control
+                  type="number"
+                  min={1}
+                  value={chapter}
+                  onChange={(e) => setChapter(e.target.value)}
+                  className="readingsNihonDe-input"
+                  placeholder="3"
+                />
+              </div>
             </Form.Group>
           </Col>
 
           <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">節 (Verse)</Form.Label>
-              <Form.Control
-                type="number"
-                min={1}
-                value={startVerse}
-                onChange={(e) => setStartVerse(e.target.value)}
-                className="readingsNihonDe-input"
-                placeholder="e.g. 1"
-              />
+              <div className="readingsNihonDe-input-inline">
+                <span className="readingsNihonDe-input-prefix">節</span>
+                <Form.Control
+                  type="number"
+                  min={1}
+                  value={startVerse}
+                  onChange={(e) => setStartVerse(e.target.value)}
+                  className="readingsNihonDe-input"
+                  placeholder="1"
+                />
+              </div>
             </Form.Group>
           </Col>
 
-          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
+          <Col xs={12} sm={8} md={4} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <Button
               variant="primary"
               onClick={handleSearch}
@@ -516,15 +522,12 @@ export default function ReadingsNihonDe() {
             >
               {loading ? <Spinner animation="border" size="sm" /> : '読む (Read)'}
             </Button>
-          </Col>
-
-          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <button
               className="readingsNihonDe-settings-toggle"
               onClick={() => setSettingsOpen((o) => !o)}
               aria-expanded={settingsOpen}
             >
-              <span>Settings</span>
+              <span>設定 (Settings)</span>
               <span className="readingsNihonDe-settings-caret">{settingsOpen ? '▲' : '▼'}</span>
             </button>
             <button
@@ -787,7 +790,7 @@ export default function ReadingsNihonDe() {
         {searched && !loading && !error && verses.length === 0 && (
           <Row>
             <Col xs={12}>
-              <Alert variant="info" className="mt-3">No verses found.</Alert>
+              <Alert variant="info" className="mt-3">節が見つかりません。(No verses found.)</Alert>
             </Col>
           </Row>
         )}
@@ -853,12 +856,14 @@ export default function ReadingsNihonDe() {
 
       <Modal show={confirmResetOpen} onHide={() => setConfirmResetOpen(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Reset Settings</Modal.Title>
+          <Modal.Title>設定をリセット (Reset Settings)</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Reset book, chapter, and all display settings to defaults?</Modal.Body>
+        <Modal.Body>
+          書・章・全ての表示設定をデフォルトに戻しますか？(Reset book, chapter, and all display settings to defaults?)
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setConfirmResetOpen(false)}>No</Button>
-          <Button variant="danger" onClick={() => { handleResetSettings(); setConfirmResetOpen(false); }}>Yes</Button>
+          <Button variant="secondary" onClick={() => setConfirmResetOpen(false)}>いいえ (No)</Button>
+          <Button variant="danger" onClick={() => { handleResetSettings(); setConfirmResetOpen(false); }}>はい (Yes)</Button>
         </Modal.Footer>
       </Modal>
     </div>
