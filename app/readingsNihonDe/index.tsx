@@ -418,7 +418,7 @@ export default function ReadingsNihonDe() {
     try {
       const results = await fetchChapterVerses(book, chapterNum, verseNum);
       if (results.length === 0) {
-        setError('No verses found for the given passage.');
+        setError('指定された箇所の節が見つかりません。(No verses found for the given passage.)');
       } else {
         setVerses(results);
         saveVersesToCache(book, chapterNum, verseNum, results);
@@ -790,7 +790,7 @@ export default function ReadingsNihonDe() {
         {searched && !loading && !error && verses.length === 0 && (
           <Row>
             <Col xs={12}>
-              <Alert variant="info" className="mt-3">No verses found.</Alert>
+              <Alert variant="info" className="mt-3">節が見つかりません。(No verses found.)</Alert>
             </Col>
           </Row>
         )}
