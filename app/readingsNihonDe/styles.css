@@ -497,6 +497,7 @@
 
 .readingsNihonDe-furigana ruby rt {
   font-size: 0.6em;
+  user-select: none;
 }
 
 .readingsNihonDe-toggle-furigana-text {
@@ -506,6 +507,7 @@
 
 .readingsNihonDe-toggle-furigana-text ruby rt {
   font-size: 0.6em;
+  user-select: none;
 }
 
 .readingsNihonDe-furigana-rt-hidden ruby rt {
