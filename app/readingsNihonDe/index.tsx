@@ -482,32 +482,38 @@ export default function ReadingsNihonDe() {
           <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">章 (Chapter)</Form.Label>
-              <Form.Control
-                type="number"
-                min={1}
-                value={chapter}
-                onChange={(e) => setChapter(e.target.value)}
-                className="readingsNihonDe-input"
-                placeholder="e.g. 3"
-              />
+              <div className="readingsNihonDe-input-inline">
+                <span className="readingsNihonDe-input-prefix">章</span>
+                <Form.Control
+                  type="number"
+                  min={1}
+                  value={chapter}
+                  onChange={(e) => setChapter(e.target.value)}
+                  className="readingsNihonDe-input"
+                  placeholder="3"
+                />
+              </div>
             </Form.Group>
           </Col>
 
           <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">節 (Verse)</Form.Label>
-              <Form.Control
-                type="number"
-                min={1}
-                value={startVerse}
-                onChange={(e) => setStartVerse(e.target.value)}
-                className="readingsNihonDe-input"
-                placeholder="e.g. 1"
-              />
+              <div className="readingsNihonDe-input-inline">
+                <span className="readingsNihonDe-input-prefix">節</span>
+                <Form.Control
+                  type="number"
+                  min={1}
+                  value={startVerse}
+                  onChange={(e) => setStartVerse(e.target.value)}
+                  className="readingsNihonDe-input"
+                  placeholder="1"
+                />
+              </div>
             </Form.Group>
           </Col>
 
-          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col">
+          <Col xs={12} sm={8} md={4} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <Button
               variant="primary"
               onClick={handleSearch}
@@ -516,9 +522,6 @@ export default function ReadingsNihonDe() {
             >
               {loading ? <Spinner animation="border" size="sm" /> : '読む (Read)'}
             </Button>
-          </Col>
-
-          <Col xs={12} sm={4} md={2} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <button
               className="readingsNihonDe-settings-toggle"
               onClick={() => setSettingsOpen((o) => !o)}

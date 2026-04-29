@@ -62,9 +62,27 @@
   font-size: 0.875rem;
 }
 
-.readingsNihonDe-select,
+.readingsNihonDe-select {
+  font-size: 1rem;
+}
+
 .readingsNihonDe-input {
   font-size: 1rem;
+  width: 4.5rem;
+}
+
+.readingsNihonDe-input-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.readingsNihonDe-input-prefix {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .readingsNihonDe-btn {
@@ -73,6 +91,56 @@
   padding: 0.5rem 1rem;
   white-space: nowrap;
   text-align: center;
+}
+
+@media (max-width: 575px) {
+  .readingsNihonDe-controls {
+    padding: 0.5rem 0.5rem;
+    align-items: center;
+  }
+
+  .readingsNihonDe-controls .readingsNihonDe-label {
+    display: none;
+  }
+
+  /* Book col: flex to fill available space (override Bootstrap col-12) */
+  .readingsNihonDe-controls > .readingsNihonDe-control-col:nth-child(1) {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0;
+  }
+
+  /* Chapter and verse cols: shrink to content (override Bootstrap col-5) */
+  .readingsNihonDe-controls > .readingsNihonDe-control-col:nth-child(2),
+  .readingsNihonDe-controls > .readingsNihonDe-control-col:nth-child(3) {
+    flex: 0 0 auto !important;
+    width: auto !important;
+  }
+
+  /* Settings col (now contains read button too) stays full-width on its own row */
+  .readingsNihonDe-controls > .readingsNihonDe-settings-col {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+  }
+
+  .readingsNihonDe-controls .readingsNihonDe-control-col {
+    padding: 0.15rem 0.25rem;
+  }
+
+  .readingsNihonDe-controls .readingsNihonDe-input {
+    width: 3.25rem;
+    font-size: 0.875rem;
+  }
+
+  .readingsNihonDe-controls .readingsNihonDe-select {
+    font-size: 0.875rem;
+  }
+
+  .readingsNihonDe-controls .readingsNihonDe-btn {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.6rem;
+  }
 }
 
 .readingsNihonDe-passage-header {
@@ -333,6 +401,15 @@
   gap: 0.4rem;
 }
 
+.readingsNihonDe-settings-col .readingsNihonDe-btn {
+  width: auto;
+  flex-shrink: 0;
+}
+
+.readingsNihonDe-settings-col .readingsNihonDe-settings-toggle {
+  flex: 1;
+}
+
 .readingsNihonDe-settings-reset {
   display: flex;
   align-items: center;
@@ -553,6 +630,10 @@
 }
 
 [data-bs-theme="dark"] .readingsNihonDe-settings-hint {
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .readingsNihonDe-input-prefix {
   color: #fff;
 }
 
