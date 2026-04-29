@@ -467,9 +467,15 @@
 }
 
 .readingsNihonDe-bottom-bar-input {
-  width: 3rem;
+  width: 3.25rem;
   flex-shrink: 0;
   font-size: 0.875rem;
+}
+
+@media (max-width: 575px) {
+  .readingsNihonDe-bottom-bar-input {
+    width: 2.25rem;
+  }
 }
 
 .readingsNihonDe-bottom-bar-read-btn {
