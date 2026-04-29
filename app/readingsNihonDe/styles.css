@@ -83,6 +83,13 @@
   color: #555;
   white-space: nowrap;
   flex-shrink: 0;
+  display: none;
+}
+
+@media (max-width: 575px) {
+  .readingsNihonDe-input-prefix {
+    display: inline;
+  }
 }
 
 .readingsNihonDe-btn {
@@ -140,6 +147,20 @@
   .readingsNihonDe-controls .readingsNihonDe-btn {
     font-size: 0.875rem;
     padding: 0.375rem 0.6rem;
+  }
+
+  .readingsNihonDe-settings-toggle {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .readingsNihonDe-settings-col .readingsNihonDe-btn {
+    margin-top: 0;
+    min-width: 5.5rem;
+  }
+
+  .readingsNihonDe-settings-col {
+    align-items: stretch;
   }
 }
 
@@ -277,6 +298,7 @@
   font-weight: 600;
   color: #2a3a8a;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .readingsNihonDe-settings-toggle:hover {

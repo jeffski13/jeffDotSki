@@ -527,7 +527,7 @@ export default function ReadingsNihonDe() {
               onClick={() => setSettingsOpen((o) => !o)}
               aria-expanded={settingsOpen}
             >
-              <span>Settings</span>
+              <span>設定 (Settings)</span>
               <span className="readingsNihonDe-settings-caret">{settingsOpen ? '▲' : '▼'}</span>
             </button>
             <button
@@ -856,12 +856,14 @@ export default function ReadingsNihonDe() {
 
       <Modal show={confirmResetOpen} onHide={() => setConfirmResetOpen(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Reset Settings</Modal.Title>
+          <Modal.Title>設定をリセット (Reset Settings)</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Reset book, chapter, and all display settings to defaults?</Modal.Body>
+        <Modal.Body>
+          書・章・全ての表示設定をデフォルトに戻しますか？(Reset book, chapter, and all display settings to defaults?)
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setConfirmResetOpen(false)}>No</Button>
-          <Button variant="danger" onClick={() => { handleResetSettings(); setConfirmResetOpen(false); }}>Yes</Button>
+          <Button variant="secondary" onClick={() => setConfirmResetOpen(false)}>いいえ (No)</Button>
+          <Button variant="danger" onClick={() => { handleResetSettings(); setConfirmResetOpen(false); }}>はい (Yes)</Button>
         </Modal.Footer>
       </Modal>
     </div>
