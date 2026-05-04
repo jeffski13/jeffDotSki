@@ -316,6 +316,18 @@
   padding: 0.75rem 0.9rem 0.5rem;
 }
 
+.readingsNihonDe-settings-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.readingsNihonDe-settings-panel-header .readingsNihonDe-settings-hint {
+  margin-bottom: 0;
+}
+
 .readingsNihonDe-settings-hint {
   font-size: 0.8rem;
   color: #666;
