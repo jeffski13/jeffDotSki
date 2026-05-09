@@ -37,8 +37,12 @@ describe('ReadingsNihonDe', () => {
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
     fireEvent.click(screen.getByText('はい (Yes)'));
 
+    // Reopen the settings panel so the DOM elements are accessible
+    fireEvent.click(screen.getByText('設定 (Settings)'));
+
     // Switch should be restored to its default
-    expect(langSwitch.checked).toBe(defaultValue);
+    const resetSwitch = document.getElementById(`display-toggle-${key}`) as HTMLInputElement;
+    expect(resetSwitch.checked).toBe(defaultValue);
   });
 
   it('resets all sub-setting checkboxes to off after handleResetSettings', () => {
@@ -73,6 +77,9 @@ describe('ReadingsNihonDe', () => {
     // Reset settings and confirm
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
     fireEvent.click(screen.getByText('はい (Yes)'));
+
+    // Reopen the settings panel so the DOM elements are accessible
+    fireEvent.click(screen.getByText('設定 (Settings)'));
 
     // Always-visible checkboxes should be off
     alwaysVisibleIds.forEach((id) => {
@@ -153,6 +160,9 @@ describe('ReadingsNihonDe', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /reset settings/i }));
     fireEvent.click(screen.getByText('はい (Yes)'));
+
+    // Reopen the settings panel so the DOM elements are accessible
+    fireEvent.click(screen.getByText('設定 (Settings)'));
 
     expect(getSettingsOrder()).toEqual(DEFAULT_ORDER);
   });
