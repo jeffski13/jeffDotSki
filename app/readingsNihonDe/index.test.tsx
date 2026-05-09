@@ -1,5 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import ReadingsNihonDe from './index';
+
+const renderComponent = () => render(<MemoryRouter><ReadingsNihonDe /></MemoryRouter>);
 import { ROWKEYS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE } from './readingsSettings';
 
 describe('ReadingsNihonDe', () => {
@@ -15,7 +18,7 @@ describe('ReadingsNihonDe', () => {
     { key: ROWKEYS.KANJI_KANA, label: 'Kanji and Kana' },
     { key: ROWKEYS.FURIGANA,  label: 'Furigana'        },
   ])('restores $label to its default when handleResetSettings is called', ({ key }) => {
-    render(<ReadingsNihonDe />);
+    renderComponent();
 
     // Open the settings panel
     fireEvent.click(screen.getByText('設定 (Settings)'));
@@ -39,7 +42,7 @@ describe('ReadingsNihonDe', () => {
   });
 
   it('resets all sub-setting checkboxes to off after handleResetSettings', () => {
-    render(<ReadingsNihonDe />);
+    renderComponent();
 
     fireEvent.click(screen.getByText('設定 (Settings)'));
 
@@ -91,18 +94,18 @@ describe('ReadingsNihonDe', () => {
     const getReadButton = () => screen.getByRole('button', { name: /読む/ });
 
     it('is enabled before any search', () => {
-      render(<ReadingsNihonDe />);
+      renderComponent();
       expect(getReadButton()).not.toBeDisabled();
     });
 
     it('is disabled after a successful search when inputs still match the displayed passage', async () => {
-      render(<ReadingsNihonDe />);
+      renderComponent();
       fireEvent.click(getReadButton());
       await waitFor(() => expect(getReadButton()).toBeDisabled());
     });
 
     it('re-enables when the book is changed after a search', async () => {
-      render(<ReadingsNihonDe />);
+      renderComponent();
       fireEvent.click(getReadButton());
       await waitFor(() => expect(getReadButton()).toBeDisabled());
 
@@ -111,7 +114,7 @@ describe('ReadingsNihonDe', () => {
     });
 
     it('re-enables when the chapter is changed after a search', async () => {
-      render(<ReadingsNihonDe />);
+      renderComponent();
       fireEvent.click(getReadButton());
       await waitFor(() => expect(getReadButton()).toBeDisabled());
 
@@ -120,7 +123,7 @@ describe('ReadingsNihonDe', () => {
     });
 
     it('re-enables when the verse is changed after a search', async () => {
-      render(<ReadingsNihonDe />);
+      renderComponent();
       fireEvent.click(getReadButton());
       await waitFor(() => expect(getReadButton()).toBeDisabled());
 
@@ -140,7 +143,7 @@ describe('ReadingsNihonDe', () => {
       splitJpDialogue: DEFAULT_SPLIT_JP_DIALOGUE,
     }));
 
-    render(<ReadingsNihonDe />);
+    renderComponent();
     fireEvent.click(screen.getByText('設定 (Settings)'));
 
     const getSettingsOrder = () =>
