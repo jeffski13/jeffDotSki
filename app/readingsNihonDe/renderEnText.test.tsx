@@ -52,3 +52,38 @@ describe('renderEnText – period and dialogue splitting combined', () => {
     expect(html).toContain('<br/>');
   });
 });
+
+const JOHN_1_21_EN = 'And they asked him, "What then? Are you Elijah?" He said, "I am not." "Are you the prophet?" And he answered, "No."';
+
+describe('renderEnText – John 1:21 line breaks', () => {
+  it('puts narrative before opening quote on its own line', () => {
+    const html = render(renderEnText(JOHN_1_21_EN, true, true));
+    expect(html).toContain('And they asked him,<br/>');
+  });
+
+  it('splits within dialogue on sentence boundaries', () => {
+    const html = render(renderEnText(JOHN_1_21_EN, true, true));
+    expect(html).toContain('&quot;What then?<br/>Are you Elijah?&quot;');
+  });
+
+  it('keeps ." together on the same line (no break between . and ")', () => {
+    const html = render(renderEnText(JOHN_1_21_EN, true, true));
+    expect(html).not.toContain('.<br/>&quot;');
+  });
+
+  it('keeps ?" together on the same line (no break between ? and ")', () => {
+    const html = render(renderEnText(JOHN_1_21_EN, true, true));
+    expect(html).not.toContain('?<br/>&quot;');
+  });
+
+  it('puts each dialogue block on its own line', () => {
+    const html = render(renderEnText(JOHN_1_21_EN, true, true));
+    expect(html).toContain('&quot;I am not.&quot;<br/>');
+    expect(html).toContain('&quot;Are you the prophet?&quot;<br/>');
+  });
+
+  it('does not produce a blank line between consecutive dialogue blocks', () => {
+    const html = render(renderEnText(JOHN_1_21_EN, true, true));
+    expect(html).not.toContain('<br/><br/>');
+  });
+});
