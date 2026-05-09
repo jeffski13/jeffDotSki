@@ -211,8 +211,9 @@ export default function ReadingsNihonDe() {
   const [dragIndicator, setDragIndicator] = useState<{ key: RowKey; position: 'before' | 'after' } | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, lastBook: book, lastChapter: chapter, lastStartVerse: startVerse });
-  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, book, chapter, startVerse]);
+    const lastPosition = verses.length > 0 ? { lastBook: book, lastChapter: chapter, lastStartVerse: startVerse } : {};
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, ...lastPosition });
+  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, book, chapter, startVerse, verses]);
 
   useEffect(() => {
     if (urlBook || (savedSettings.lastBook && savedSettings.lastChapter)) {
@@ -237,6 +238,9 @@ export default function ReadingsNihonDe() {
     setSplitJpDialogue(DEFAULT_SPLIT_JP_DIALOGUE);
     setBook('John');
     setChapter('1');
+    setStartVerse('1');
+    setVerses([]);
+    setSearched(false);
     setSearchParams({}, { replace: true });
   };
 
