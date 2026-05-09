@@ -241,6 +241,7 @@ export default function ReadingsNihonDe() {
     setStartVerse('1');
     setVerses([]);
     setSearched(false);
+    setSettingsOpen(false);
     setSearchParams({}, { replace: true });
   };
 
