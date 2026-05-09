@@ -4,6 +4,7 @@ import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-
 import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_ENGLISH_ON_PERIOD, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 import { renderJpText as renderJpTextUtil } from './renderJpText';
+import { renderEnText as renderEnTextUtil } from './renderEnText';
 import bookMapping from './japaneseBookNameMapping.json';
 
 type Book = string;
@@ -281,34 +282,8 @@ export default function ReadingsNihonDe() {
     }, []);
   };
 
-  const renderEnText = (text: string): React.ReactNode => {
-    if (!splitEnglishDialogue && !splitEnglishOnPeriod) return text;
-
-    const applyDialogueSplit = (t: string, keyPrefix: string): React.ReactNode[] => {
-      if (!splitEnglishDialogue) return [t];
-      const parts = t.split(/("[^"]*")/);
-      return parts.reduce<React.ReactNode[]>((acc, part, i) => {
-        if (!part) return acc;
-        const isDialogue = /^"[^"]*"$/.test(part);
-        if (isDialogue && acc.length > 0) acc.push(<br key={`${keyPrefix}d${i}`} />);
-        acc.push(part);
-        if (isDialogue && i < parts.length - 1) {
-          const nextPart = parts[i + 1] ?? '';
-          if (!nextPart.startsWith('.') && !nextPart.startsWith(',')) acc.push(<br key={`${keyPrefix}da${i}`} />);
-        }
-        return acc;
-      }, []);
-    };
-
-    if (!splitEnglishOnPeriod) return applyDialogueSplit(text, '');
-
-    const sentences = text.split(/(?<=[.?!]) /);
-    return sentences.reduce<React.ReactNode[]>((acc, sentence, i) => {
-      if (i > 0) acc.push(<br key={`ps${i}`} />);
-      acc.push(...applyDialogueSplit(sentence, `s${i}-`));
-      return acc;
-    }, []);
-  };
+  const renderEnText = (text: string): React.ReactNode =>
+    renderEnTextUtil(text, splitEnglishDialogue, splitEnglishOnPeriod);
 
   const toggleEnabled = (key: RowKey) =>
     setDisplayEnabled((prev) => ({ ...prev, [key]: !prev[key] }));
