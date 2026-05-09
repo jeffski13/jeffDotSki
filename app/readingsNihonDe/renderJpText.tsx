@@ -6,7 +6,7 @@ export function renderJpText(text: string, dialogueSplit: boolean, splitOnKuten:
     return t.split('。').reduce<React.ReactNode[]>((acc, part, i, arr) => {
       if (i < arr.length - 1) {
         acc.push(part + '。');
-        if (!part.endsWith('」') && !arr[i + 1].startsWith('〕')) acc.push(<br key={`k${i}`} />);
+        if (arr[i + 1] && !part.endsWith('」') && !arr[i + 1].startsWith('〕')) acc.push(<br key={`k${i}`} />);
       } else if (part) {
         acc.push(part);
       }

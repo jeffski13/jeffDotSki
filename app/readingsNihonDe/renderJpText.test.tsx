@@ -27,4 +27,9 @@ describe('renderJpText – John 10:7', () => {
     expect(html).toMatch(/^そこで、イエスはまた言われた、<br\/>/);
     expect(html).toContain('「よくよくあなたがたに言っておく。<br/>わたしは羊の門である。');
   });
+
+  it('does not add a trailing line break after the final 。', () => {
+    const html = renderToStaticMarkup(<>{renderJpText(JOHN_10_7, false, true)}</>);
+    expect(html).not.toMatch(/<br\/>$/);
+  });
 });
