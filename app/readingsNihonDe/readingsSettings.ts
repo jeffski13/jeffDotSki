@@ -35,6 +35,7 @@ export const DEFAULT_SPLIT_ON_KUTEN = false;
 export const DEFAULT_TOGGLE_KANJI_KANA = false;
 export const DEFAULT_TOGGLE_FURIGANA = true;
 export const DEFAULT_SPLIT_ENGLISH_DIALOGUE = false;
+export const DEFAULT_SPLIT_ENGLISH_ON_PERIOD = false;
 export const DEFAULT_SPLIT_JP_DIALOGUE: Record<RowKey, boolean> = {
   [ROWKEYS.ENGLISH]: false, [ROWKEYS.JAPANESE]: false, [ROWKEYS.TOGGLE_KANA]: false, [ROWKEYS.TOGGLE_FURIGANA]: false, [ROWKEYS.KANA_ONLY]: false, [ROWKEYS.KANJI_KANA]: false, [ROWKEYS.FURIGANA]: false,
 };
@@ -46,6 +47,7 @@ export interface ReadingsDisplaySettings {
   defaultToggleKanjiKana: boolean;
   defaultToggleFurigana: boolean;
   splitEnglishDialogue: boolean;
+  splitEnglishOnPeriod: boolean;
   splitJpDialogue: Record<RowKey, boolean>;
   lastBook?: string;
   lastChapter?: string;
@@ -74,12 +76,13 @@ export const readingsSettingsStoreImpl: ReadingsSettingsStore = {
           enabled: { ...DEFAULT_ENABLED, ...parsed.enabled },
           splitJpDialogue: { ...DEFAULT_SPLIT_JP_DIALOGUE, ...parsed.splitJpDialogue },
           defaultToggleFurigana: parsed.defaultToggleFurigana ?? DEFAULT_TOGGLE_FURIGANA,
+          splitEnglishOnPeriod: parsed.splitEnglishOnPeriod ?? DEFAULT_SPLIT_ENGLISH_ON_PERIOD,
         };
       }
     } catch {
       // ignore corrupt data
     }
-    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED, splitOnKuten: DEFAULT_SPLIT_ON_KUTEN, defaultToggleKanjiKana: DEFAULT_TOGGLE_KANJI_KANA, defaultToggleFurigana: DEFAULT_TOGGLE_FURIGANA, splitEnglishDialogue: DEFAULT_SPLIT_ENGLISH_DIALOGUE, splitJpDialogue: DEFAULT_SPLIT_JP_DIALOGUE };
+    return { order: DEFAULT_ORDER, enabled: DEFAULT_ENABLED, splitOnKuten: DEFAULT_SPLIT_ON_KUTEN, defaultToggleKanjiKana: DEFAULT_TOGGLE_KANJI_KANA, defaultToggleFurigana: DEFAULT_TOGGLE_FURIGANA, splitEnglishDialogue: DEFAULT_SPLIT_ENGLISH_DIALOGUE, splitEnglishOnPeriod: DEFAULT_SPLIT_ENGLISH_ON_PERIOD, splitJpDialogue: DEFAULT_SPLIT_JP_DIALOGUE };
   },
   saveSettings(settings: ReadingsDisplaySettings): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
