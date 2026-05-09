@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router';
 import { version } from '../../package.json';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
@@ -169,10 +170,20 @@ async function fetchChapterVerses(
 }
 
 export default function ReadingsNihonDe() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const savedSettings = readingsSettingsStoreImpl.getSettings();
-  const [book, setBook] = useState<Book>((savedSettings.lastBook as Book) ?? 'John');
-  const [chapter, setChapter] = useState<string>(savedSettings.lastChapter ?? '1');
-  const [startVerse, setStartVerse] = useState<string>(savedSettings.lastStartVerse ?? '1');
+
+  const urlBook = searchParams.get('book');
+  const urlChapter = searchParams.get('chapter');
+  const urlVerse = searchParams.get('verse');
+
+  const initialBook = (urlBook && BOOKS.includes(urlBook as Book)) ? urlBook as Book : ((savedSettings.lastBook as Book) ?? 'John');
+  const initialChapter = urlChapter ?? savedSettings.lastChapter ?? '1';
+  const initialVerse = urlVerse ?? savedSettings.lastStartVerse ?? '1';
+
+  const [book, setBook] = useState<Book>(initialBook);
+  const [chapter, setChapter] = useState<string>(initialChapter);
+  const [startVerse, setStartVerse] = useState<string>(initialVerse);
   const [verses, setVerses] = useState<Verse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -204,7 +215,7 @@ export default function ReadingsNihonDe() {
   }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, book, chapter, startVerse]);
 
   useEffect(() => {
-    if (savedSettings.lastBook && savedSettings.lastChapter) {
+    if (urlBook || (savedSettings.lastBook && savedSettings.lastChapter)) {
       handleSearch();
     }
   }, []);
@@ -412,12 +423,14 @@ export default function ReadingsNihonDe() {
       } else {
         setVerses(results);
         saveVersesToCache(book, chapterNum, verseNum, results);
+        setSearchParams({ book, chapter: String(chapterNum), verse: String(verseNum) }, { replace: true });
       }
     } catch {
       const cached = loadVersesFromCache(book, chapterNum, verseNum);
       if (cached && cached.length > 0) {
         setVerses(cached);
         setFromCache(true);
+        setSearchParams({ book, chapter: String(chapterNum), verse: String(verseNum) }, { replace: true });
       } else {
         setError('Could not load the passage. Please check your connection and try again.');
       }
