@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { version } from '../../package.json';
 import { Container, Row, Col, Form, Button, Spinner, Alert, Modal } from 'react-bootstrap';
 import './styles.css';
-import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
+import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_ENGLISH_ON_PERIOD, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 import { renderJpText as renderJpTextUtil } from './renderJpText';
 import bookMapping from './japaneseBookNameMapping.json';
 
@@ -191,6 +191,7 @@ export default function ReadingsNihonDe() {
   const [defaultToggleFurigana, setDefaultToggleFurigana] = useState<boolean>(savedSettings.defaultToggleFurigana ?? DEFAULT_TOGGLE_FURIGANA);
   const [toggledFuriganaVerses, setToggledFuriganaVerses] = useState<Set<number>>(new Set());
   const [splitEnglishDialogue, setSplitEnglishDialogue] = useState<boolean>(savedSettings.splitEnglishDialogue ?? DEFAULT_SPLIT_ENGLISH_DIALOGUE);
+  const [splitEnglishOnPeriod, setSplitEnglishOnPeriod] = useState<boolean>(savedSettings.splitEnglishOnPeriod ?? DEFAULT_SPLIT_ENGLISH_ON_PERIOD);
   const [splitJpDialogue, setSplitJpDialogue] = useState<Record<RowKey, boolean>>(savedSettings.splitJpDialogue ?? DEFAULT_SPLIT_JP_DIALOGUE);
   const passageRef = useRef<HTMLDivElement>(null);
   const dragSrc = useRef<RowKey | null>(null);
@@ -198,8 +199,8 @@ export default function ReadingsNihonDe() {
   const [dragIndicator, setDragIndicator] = useState<{ key: RowKey; position: 'before' | 'after' } | null>(null);
 
   useEffect(() => {
-    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, lastBook: book, lastChapter: chapter, lastStartVerse: startVerse });
-  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitJpDialogue, book, chapter, startVerse]);
+    readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, lastBook: book, lastChapter: chapter, lastStartVerse: startVerse });
+  }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, book, chapter, startVerse]);
 
   useEffect(() => {
     if (savedSettings.lastBook && savedSettings.lastChapter) {
@@ -220,6 +221,7 @@ export default function ReadingsNihonDe() {
     setDefaultToggleKanjiKana(DEFAULT_TOGGLE_KANJI_KANA);
     setDefaultToggleFurigana(DEFAULT_TOGGLE_FURIGANA);
     setSplitEnglishDialogue(DEFAULT_SPLIT_ENGLISH_DIALOGUE);
+    setSplitEnglishOnPeriod(DEFAULT_SPLIT_ENGLISH_ON_PERIOD);
     setSplitJpDialogue(DEFAULT_SPLIT_JP_DIALOGUE);
     setBook('John');
     setChapter('1');
@@ -280,17 +282,30 @@ export default function ReadingsNihonDe() {
   };
 
   const renderEnText = (text: string): React.ReactNode => {
-    if (!splitEnglishDialogue) return text;
-    const parts = text.split(/("[^"]*")/);
-    return parts.reduce<React.ReactNode[]>((acc, part, i) => {
-      if (!part) return acc;
-      const isDialogue = /^"[^"]*"$/.test(part);
-      if (isDialogue && acc.length > 0) acc.push(<br key={`d${i}`} />);
-      acc.push(part);
-      if (isDialogue && i < parts.length - 1) {
-        const nextPart = parts[i + 1] ?? '';
-        if (!nextPart.startsWith('.') && !nextPart.startsWith(',')) acc.push(<br key={`da${i}`} />);
-      }
+    if (!splitEnglishDialogue && !splitEnglishOnPeriod) return text;
+
+    const applyDialogueSplit = (t: string, keyPrefix: string): React.ReactNode[] => {
+      if (!splitEnglishDialogue) return [t];
+      const parts = t.split(/("[^"]*")/);
+      return parts.reduce<React.ReactNode[]>((acc, part, i) => {
+        if (!part) return acc;
+        const isDialogue = /^"[^"]*"$/.test(part);
+        if (isDialogue && acc.length > 0) acc.push(<br key={`${keyPrefix}d${i}`} />);
+        acc.push(part);
+        if (isDialogue && i < parts.length - 1) {
+          const nextPart = parts[i + 1] ?? '';
+          if (!nextPart.startsWith('.') && !nextPart.startsWith(',')) acc.push(<br key={`${keyPrefix}da${i}`} />);
+        }
+        return acc;
+      }, []);
+    };
+
+    if (!splitEnglishOnPeriod) return applyDialogueSplit(text, '');
+
+    const sentences = text.split(/(?<=[.?!]) /);
+    return sentences.reduce<React.ReactNode[]>((acc, sentence, i) => {
+      if (i > 0) acc.push(<br key={`ps${i}`} />);
+      acc.push(...applyDialogueSplit(sentence, `s${i}-`));
       return acc;
     }, []);
   };
@@ -596,6 +611,13 @@ export default function ReadingsNihonDe() {
                               label='New lines around dialogue ("...")'
                               checked={splitEnglishDialogue}
                               onChange={() => setSplitEnglishDialogue((prev) => !prev)}
+                            />
+                            <Form.Check
+                              type="checkbox"
+                              id="split-english-on-period"
+                              label="New lines after sentences"
+                              checked={splitEnglishOnPeriod}
+                              onChange={() => setSplitEnglishOnPeriod((prev) => !prev)}
                             />
                           </div>
                         )}
