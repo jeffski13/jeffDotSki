@@ -237,6 +237,7 @@ export default function ReadingsNihonDe() {
     setSplitJpDialogue(DEFAULT_SPLIT_JP_DIALOGUE);
     setBook('John');
     setChapter('1');
+    setSearchParams({}, { replace: true });
   };
 
   const renderJpText = (text: string, dialogueSplit = false): React.ReactNode =>
