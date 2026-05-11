@@ -9,6 +9,7 @@ export default [
     route(ROUTES.aboutMe.tvShows, "aboutMeSection/hobbies/tvShows/route.tsx"),
     route(ROUTES.aboutMe.bio, "aboutMeSection/bio/route.tsx"),
     route(ROUTES.readingsNihonDe, "readingsNihonDe/route.tsx"),
+    route(ROUTES.practiceNihongo, "practiceNihongo/route.tsx"),
     
     route(ROUTES.pokePeru.battle, "pokePeruApp/routes/pokeperubattle.tsx"),
     route(ROUTES.pokePeru.pokedex, "pokePeruApp/routes/pokeperupokedex.tsx"),
