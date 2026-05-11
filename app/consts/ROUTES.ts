@@ -25,6 +25,7 @@ const ROUTES = {
       }
     },
     readingsNihonDe: '/readingsNihongoToEigo',
+    practiceNihongo: '/practiceNihongo',
     external: {
       instagram: 'https://www.instagram.com/jeffski13/',
       resume: {
