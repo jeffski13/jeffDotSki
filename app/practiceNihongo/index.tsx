@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
-import FooterBar from "~/infra/footerBar";
 import ROUTES from "~/consts/ROUTES";
 
 export default function HomePage() {
