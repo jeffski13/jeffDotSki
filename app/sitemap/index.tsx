@@ -1,10 +1,14 @@
+import { useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import ROUTES from '../consts/ROUTES';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/langSupport';
+import { locationProviderImpl, type PortfolioProps } from '~/aboutMeSection/PortfolioProps';
+import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import './styles.css';
 
 export interface SitemapSection {
   title: string;
+  anchorId: string;
   links: Array<{
     text: string;
     url: string;
@@ -22,6 +26,7 @@ const es: ContentPerLanguage = {
   sections: [
     {
       title: 'Profesor de Inglés',
+      anchorId: 'English-Teacher',
       links: [
         { text: 'Currículum de Profesor de Inglés', url: ROUTES.external.resume.teacherEnglish, external: true },
         { text: 'Portafolio de Profesor de Inglés', url: ROUTES.aboutMe.teacherPortfolio },
@@ -30,6 +35,7 @@ const es: ContentPerLanguage = {
     },
     {
       title: 'Ingeniería de Software',
+      anchorId: 'Software-Engineering',
       links: [
         { text: 'Portafolio de Ingeniería de Software', url: ROUTES.aboutMe.techPortfolio },
         { text: 'Currículum de Ingeniero de Software', url: ROUTES.external.resume.softwareEngineer, external: true },
@@ -37,6 +43,7 @@ const es: ContentPerLanguage = {
     },
     {
       title: 'Estudios de Japonés',
+      anchorId: 'Japanese-Studies',
       links: [
         { text: 'Canción Actual', url: ROUTES.practiceNihongo },
         { text: 'Biblia en Japonés', url: ROUTES.readingsNihonDe },
@@ -44,6 +51,7 @@ const es: ContentPerLanguage = {
     },
     {
       title: 'Sobre Mí',
+      anchorId: 'About-Me',
       links: [
         { text: 'Biografía', url: ROUTES.aboutMe.bio },
         { text: 'Programas de Televisión', url: ROUTES.aboutMe.tvShows },
@@ -59,6 +67,7 @@ const defaultText: ContentPerLanguage = {
   sections: [
     {
       title: 'English Teacher',
+      anchorId: 'English-Teacher',
       links: [
         { text: 'English Teacher Resume', url: ROUTES.external.resume.teacherEnglish, external: true },
         { text: 'English Teacher Portfolio', url: ROUTES.aboutMe.teacherPortfolio },
@@ -67,6 +76,7 @@ const defaultText: ContentPerLanguage = {
     },
     {
       title: 'Software Engineering',
+      anchorId: 'Software-Engineering',
       links: [
         { text: 'Software Engineering Portfolio', url: ROUTES.aboutMe.techPortfolio },
         { text: 'Software Engineer Resume', url: ROUTES.external.resume.softwareEngineer, external: true },
@@ -74,6 +84,7 @@ const defaultText: ContentPerLanguage = {
     },
     {
       title: 'Japanese Studies',
+      anchorId: 'Japanese-Studies',
       links: [
         { text: 'Learning With Songs', url: ROUTES.practiceNihongo },
         { text: 'Bible In Japanese', url: ROUTES.readingsNihonDe },
@@ -81,6 +92,7 @@ const defaultText: ContentPerLanguage = {
     },
     {
       title: 'About Me',
+      anchorId: 'About-Me',
       links: [
         { text: 'Bio', url: ROUTES.aboutMe.bio },
         { text: 'TV Shows', url: ROUTES.aboutMe.tvShows },
@@ -96,8 +108,17 @@ export const multiLangContent: MultiLangContent = {
   default: defaultText
 };
 
-export function Sitemap() {
+export default function SitemapContainer() {
+  return <Sitemap locationProvider={locationProviderImpl} />;
+}
+
+export function Sitemap({ locationProvider }: PortfolioProps) {
   const content = getContentByLanguage(multiLangContent, getBrowserLanguage());
+  const location = locationProvider.useLocation();
+
+  useEffect(() => {
+    navigateToAnchor(location?.hash);
+  }, [location?.hash]);
 
   return (
     <div className="sitemapWrapper">
@@ -113,14 +134,14 @@ export function Sitemap() {
         <Row className="show-grid sitemapContent">
           <Col sm={1} md={2}></Col>
           <Col sm={10} md={8}>
-            
+
             {content.sections.map((section: SitemapSection, index: number) => (
-              <div key={index} className="sitemapSection">
-                <h2 className="sitemapSectionTitle">{section.title}</h2>
+              <div key={index} id={section.anchorId} className="sitemapSection">
+                <h2 className="sitemapSectionTitle">{section.title}<AnchorLink targetId={section.anchorId} /></h2>
                 <ul className="sitemapList">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <a 
+                      <a
                         href={link.url}
                         {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       >

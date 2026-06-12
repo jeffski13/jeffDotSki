@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import JeffSkiPageWithContent from "../infra/JeffSkiPageWithContent"
-import { Sitemap } from ".";
+import SitemapContainer from ".";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -9,7 +9,7 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-const Content = JeffSkiPageWithContent(Sitemap);
+const Content = JeffSkiPageWithContent(SitemapContainer);
 export default function SitemapPage() {
   return <Content />;
 }
