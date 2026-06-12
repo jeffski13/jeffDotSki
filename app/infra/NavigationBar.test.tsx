@@ -37,7 +37,7 @@ describe('NavigationBar', () => {
 
   it('happy path render test', () => {
     render(<NavigationBar themeManager={getThemeManager(themeStoreWithManipulations, domThemeSetterMock, themeOSMonitorMock)} />);
-    expect(screen.queryByText(/Resume/)).toBeInTheDocument();
+    expect(screen.queryByText(/About Me/)).toBeInTheDocument();
     const moreButton = screen.getByText(/More/i);
     fireEvent.click(moreButton);
     //dark theme button present
