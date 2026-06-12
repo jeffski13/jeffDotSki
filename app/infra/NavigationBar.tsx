@@ -22,6 +22,7 @@ export interface ContentPerLanguage {
     softwareEngineerResume: string;
     currentSong: string;
     bibleInJapanese: string;
+    japaneseMusicCovers: string;
     bio: string;
     tvShows: string;
     drawing: string;
@@ -43,8 +44,9 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         pokePeru: 'Pokemon En Perú',
         softwareEngineeringPortfolio: 'Portafolio de Ingeniería de Software',
         softwareEngineerResume: 'Currículum de Ingeniero de Software',
-        currentSong: 'Canción Actual',
+        currentSong: 'Letras para Estudiar',
         bibleInJapanese: 'Biblia en Japonés',
+        japaneseMusicCovers: 'Música Japonesa',
         bio: 'Biografía',
         tvShows: 'Programas de Televisión',
         drawing: 'Dibujos',
@@ -64,8 +66,9 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         pokePeru: 'Pokémon In Peru',
         softwareEngineeringPortfolio: 'Software Engineering Portfolio',
         softwareEngineerResume: 'Software Engineer Resume',
-        currentSong: 'Learning With Songs',
+        currentSong: 'Lyrics For Studying',
         bibleInJapanese: 'Bible In Japanese',
+        japaneseMusicCovers: 'Japanese Music Covers',
         bio: 'Bio',
         tvShows: 'TV Shows',
         drawing: 'Drawings',
@@ -107,8 +110,9 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} target="_blank" rel="noopener noreferrer">{content.softwareEngineerResume}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={content.japaneseStudies} id="navigationbar-japanese-studies">
-                            <NavDropdown.Item href={ROUTES.practiceNihongo}>{content.currentSong}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.currentSong}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={content.aboutMe} id="navigationbar-about-me">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
