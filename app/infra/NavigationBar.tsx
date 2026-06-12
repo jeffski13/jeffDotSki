@@ -33,7 +33,7 @@ export interface ContentPerLanguage {
 
 export default function NavigationBar({ themeManager }: NavigationBarProps) {
     const es: ContentPerLanguage = {
-        teaching: 'Enseñanza',
+        teaching: 'Profesor de Inglés',
         softwareEngineering: 'Ingeniería de Software',
         japaneseStudies: 'Estudios de Japonés',
         aboutMe: 'Sobre Mí',
@@ -54,7 +54,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         themeLight: 'Modo Claro',
     };
     const defaultText: ContentPerLanguage = {
-        teaching: 'Teaching',
+        teaching: 'English Teacher',
         softwareEngineering: 'Software Engineering',
         japaneseStudies: 'Japanese Studies',
         aboutMe: 'About Me',
@@ -64,7 +64,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         pokePeru: 'Pokémon In Peru',
         softwareEngineeringPortfolio: 'Software Engineering Portfolio',
         softwareEngineerResume: 'Software Engineer Resume',
-        currentSong: 'Current Song',
+        currentSong: 'Learning With Songs',
         bibleInJapanese: 'Bible In Japanese',
         bio: 'Bio',
         tvShows: 'TV Shows',
@@ -114,7 +114,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows}>{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing}>{content.drawing}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.aboutMe.tvShows}>{content.travel}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.instagram}>{content.travel}</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Nav>

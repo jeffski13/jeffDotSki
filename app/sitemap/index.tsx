@@ -18,10 +18,10 @@ export interface ContentPerLanguage {
 }
 
 const es: ContentPerLanguage = {
-  pageTitle: 'Mapa del Sitio',
+  pageTitle: 'Todos Los Enlaces',
   sections: [
     {
-      title: 'Enseñanza',
+      title: 'Profesor de Inglés',
       links: [
         { text: 'Currículum de Profesor de Inglés', url: ROUTES.external.resume.teacherEnglish, external: true },
         { text: 'Portafolio de Profesor de Inglés', url: ROUTES.aboutMe.teacherPortfolio },
@@ -36,10 +36,10 @@ const es: ContentPerLanguage = {
       ]
     },
     {
-      title: 'Pasatiempos',
+      title: 'Estudios de Japonés',
       links: [
-        { text: 'Dibujos', url: ROUTES.aboutMe.drawing },
-        { text: 'Viajes', url: ROUTES.aboutMe.tvShows },
+        { text: 'Canción Actual', url: ROUTES.practiceNihongo },
+        { text: 'Biblia en Japonés', url: ROUTES.readingsNihonDe },
       ]
     },
     {
@@ -47,27 +47,22 @@ const es: ContentPerLanguage = {
       links: [
         { text: 'Biografía', url: ROUTES.aboutMe.bio },
         { text: 'Programas de Televisión', url: ROUTES.aboutMe.tvShows },
+        { text: 'Dibujos', url: ROUTES.aboutMe.drawing },
+        { text: 'Viajes', url: ROUTES.aboutMe.tvShows },
       ]
     },
-    {
-      title: 'Japonés',
-      links: [
-        { text: 'Canción Actual', url: ROUTES.practiceNihongo },
-        { text: 'Biblia en Japonés', url: ROUTES.readingsNihonDe },
-      ]
-    }
   ]
 };
 
 const defaultText: ContentPerLanguage = {
-  pageTitle: 'Sitemap',
+  pageTitle: 'All Links',
   sections: [
     {
-      title: 'Teaching',
+      title: 'English Teacher',
       links: [
         { text: 'English Teacher Resume', url: ROUTES.external.resume.teacherEnglish, external: true },
         { text: 'English Teacher Portfolio', url: ROUTES.aboutMe.teacherPortfolio },
-        { text: 'Pokemon In Peru', url: ROUTES.pokePeru.battle },
+        { text: 'Pokémon In Peru', url: ROUTES.pokePeru.battle },
       ]
     },
     {
@@ -78,10 +73,10 @@ const defaultText: ContentPerLanguage = {
       ]
     },
     {
-      title: 'Hobbies',
+      title: 'Japanese Studies',
       links: [
-        { text: 'Drawings', url: ROUTES.aboutMe.drawing },
-        { text: 'Travel', url: ROUTES.aboutMe.tvShows },
+        { text: 'Learning With Songs', url: ROUTES.practiceNihongo },
+        { text: 'Bible In Japanese', url: ROUTES.readingsNihonDe },
       ]
     },
     {
@@ -89,15 +84,10 @@ const defaultText: ContentPerLanguage = {
       links: [
         { text: 'Bio', url: ROUTES.aboutMe.bio },
         { text: 'TV Shows', url: ROUTES.aboutMe.tvShows },
+        { text: 'Drawings', url: ROUTES.aboutMe.drawing },
+        { text: 'Travel', url: ROUTES.aboutMe.tvShows },
       ]
     },
-    {
-      title: 'Japanese',
-      links: [
-        { text: 'Current Song', url: ROUTES.practiceNihongo },
-        { text: 'Bible In Japanese', url: ROUTES.readingsNihonDe },
-      ]
-    }
   ]
 };
 
