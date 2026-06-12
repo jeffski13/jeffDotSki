@@ -45,9 +45,9 @@ const es: ContentPerLanguage = {
       title: 'Estudios de Japonés',
       anchorId: 'Japanese-Studies',
       links: [
-        { text: 'Canción Actual', url: ROUTES.practiceNihongo },
+        { text: 'Música Japonesa Covers', url: ROUTES.japaneseMusicCovers },
         { text: 'Biblia en Japonés', url: ROUTES.readingsNihonDe },
-        { text: 'Música Japonesa', url: ROUTES.japaneseMusic },
+        { text: 'Canción Actual', url: ROUTES.practiceNihongoLyrics },
       ]
     },
     {
@@ -87,9 +87,9 @@ const defaultText: ContentPerLanguage = {
       title: 'Japanese Studies',
       anchorId: 'Japanese-Studies',
       links: [
-        { text: 'Learning With Songs', url: ROUTES.practiceNihongo },
+        { text: 'Japanese Music Covers', url: ROUTES.japaneseMusicCovers },
         { text: 'Bible In Japanese', url: ROUTES.readingsNihonDe },
-        { text: 'Japanese Music', url: ROUTES.japaneseMusic },
+        { text: 'Learning With Songs', url: ROUTES.practiceNihongoLyrics },
       ]
     },
     {

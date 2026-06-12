@@ -25,11 +25,11 @@ const songs: Song[] = [
 
 export default function JapaneseMusicPage() {
   return (
-    <div className="japaneseMusic">
+    <div className="japaneseMusicCovers">
       <Container fluid className="japaneseMusic_content">
         <h1 className="japaneseMusic_title">
           <span className="japaneseMusic_title-jp">日本語の音楽</span>
-          <span className="japaneseMusic_title-en">Japanese Music</span>
+          <span className="japaneseMusic_title-en">Japanese Music Covers</span>
         </h1>
         <p className="japaneseMusic_subtitle">My Covers of Japanese Songs</p>
         <Row className="japaneseMusic_videos">

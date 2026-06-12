@@ -23,7 +23,8 @@
         {"source":"/pokeperu/southCarolina/pokedex","destination":"/index.html"},
         {"source":"/pokeperu/southCarolina/gymleaders","destination":"/index.html"},
         {"source":"/readingsNihongoToEigo","destination":"/index.html"},
-        {"source":"/practiceNihongo","destination":"/index.html"},
+        {"source":"/practiceNihongoLyrics","destination":"/index.html"},
+        {"source":"/japaneseMusicCovers","destination":"/index.html"},
         {"source":"/sitemap","destination":"/index.html"}
     ]
   }

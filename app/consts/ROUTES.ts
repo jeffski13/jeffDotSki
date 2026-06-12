@@ -25,8 +25,8 @@ const ROUTES = {
       }
     },
     readingsNihonDe: '/readingsNihongoToEigo',
-    practiceNihongo: '/practiceNihongo',
-    japaneseMusic: '/japaneseMusic',
+    practiceNihongoLyrics: '/practiceNihongoLyrics',
+    japaneseMusicCovers: '/japaneseMusicCovers',
     sitemap: '/sitemap',
     external: {
       instagram: 'https://www.instagram.com/jeffski13/',
