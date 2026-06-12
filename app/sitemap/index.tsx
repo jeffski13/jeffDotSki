@@ -47,6 +47,7 @@ const es: ContentPerLanguage = {
       links: [
         { text: 'Canción Actual', url: ROUTES.practiceNihongo },
         { text: 'Biblia en Japonés', url: ROUTES.readingsNihonDe },
+        { text: 'Música Japonesa', url: ROUTES.japaneseMusic },
       ]
     },
     {
@@ -88,6 +89,7 @@ const defaultText: ContentPerLanguage = {
       links: [
         { text: 'Learning With Songs', url: ROUTES.practiceNihongo },
         { text: 'Bible In Japanese', url: ROUTES.readingsNihonDe },
+        { text: 'Japanese Music', url: ROUTES.japaneseMusic },
       ]
     },
     {

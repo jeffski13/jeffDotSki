@@ -22,6 +22,7 @@ export interface ContentPerLanguage {
     softwareEngineerResume: string;
     currentSong: string;
     bibleInJapanese: string;
+    japaneseMusic: string;
     bio: string;
     tvShows: string;
     drawing: string;
@@ -45,6 +46,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         softwareEngineerResume: 'Currículum de Ingeniero de Software',
         currentSong: 'Canción Actual',
         bibleInJapanese: 'Biblia en Japonés',
+        japaneseMusic: 'Música Japonesa',
         bio: 'Biografía',
         tvShows: 'Programas de Televisión',
         drawing: 'Dibujos',
@@ -66,6 +68,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         softwareEngineerResume: 'Software Engineer Resume',
         currentSong: 'Learning With Songs',
         bibleInJapanese: 'Bible In Japanese',
+        japaneseMusic: 'Japanese Music',
         bio: 'Bio',
         tvShows: 'TV Shows',
         drawing: 'Drawings',
@@ -109,6 +112,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                         <NavDropdown title={content.japaneseStudies} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.practiceNihongo}>{content.currentSong}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japaneseMusic}>{content.japaneseMusic}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={content.aboutMe} id="navigationbar-about-me">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>

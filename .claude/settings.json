@@ -10,7 +10,8 @@
       "Bash(npm run *)",
       "Bash(grep -E \"\\\\.\\(ts|tsx|js|jsx\\)$\")",
       "Bash(npx vitest *)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "WebFetch(domain:www.youtube.com)"
     ]
   }
 }
