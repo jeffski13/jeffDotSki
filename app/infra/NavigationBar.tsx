@@ -114,15 +114,15 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.currentSong}</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={content.aboutMe} id="navigationbar-about-me">
+                    </Nav>
+                    <Nav className="nav-more">
+                        <NavDropdown title={content.more} id="navigationbar-more">
+                            <NavDropdown.Header>{content.aboutMe}</NavDropdown.Header>
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows}>{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing}>{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.instagram}>{content.travel}</NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
-                    <Nav className="nav-more">
-                        <NavDropdown title={content.more} id="navigationbar-more">
+                            <NavDropdown.Divider />
                             <NavDropdown.Item href={ROUTES.sitemap}>{content.allLinks}</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <div className="more-dropdown-grid">
