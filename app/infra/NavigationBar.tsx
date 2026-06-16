@@ -24,7 +24,7 @@ export interface ContentPerLanguage {
     pokePeru: string;
     softwareEngineeringPortfolio: string;
     softwareEngineerResume: string;
-    currentSong: string;
+    japaneseCurrentSong: string;
     bibleInJapanese: string;
     japaneseMusicCovers: string;
     bio: string;
@@ -36,59 +36,60 @@ export interface ContentPerLanguage {
     themeLight: string;
 }
 
+export const es: ContentPerLanguage = {
+    teaching: 'Profesor de Inglés',
+    teachingShort: 'Profesor',
+    softwareEngineering: 'Ingeniería de Software',
+    softwareEngineeringShort: 'Software',
+    japaneseStudies: 'Estudios de Japonés',
+    japaneseStudiesShort: 'Japonés',
+    aboutMe: 'Sobre Mí',
+    aboutMeShort: 'Sobre',
+    more: 'Más',
+    englishTeacherResume: 'Currículum de Profesor de Inglés',
+    englishTeacherPortfolio: 'Portafolio de Profesor de Inglés',
+    pokePeru: 'Pokemon En Perú',
+    softwareEngineeringPortfolio: 'Portafolio de Ingeniería de Software',
+    softwareEngineerResume: 'Currículum de Ingeniero de Software',
+    japaneseCurrentSong: 'Letras para Estudiar',
+    bibleInJapanese: 'Biblia en Japonés',
+    japaneseMusicCovers: 'Música Japonesa',
+    bio: 'Biografía',
+    tvShows: 'Programas de Televisión',
+    drawing: 'Dibujos',
+    travel: 'Viajes',
+    allLinks: 'Todos los enlaces',
+    themeDark: 'Modo Oscuro',
+    themeLight: 'Modo Claro',
+};
+export const defaultText: ContentPerLanguage = {
+    teaching: 'English Teacher',
+    teachingShort: 'Teaching',
+    softwareEngineering: 'Software Engineering',
+    softwareEngineeringShort: 'Software',
+    japaneseStudies: 'Japanese Studies',
+    japaneseStudiesShort: 'Japanese',
+    aboutMe: 'About Me',
+    aboutMeShort: 'About',
+    more: 'More',
+    englishTeacherResume: 'English Teacher Resume',
+    englishTeacherPortfolio: 'English Teacher Portfolio',
+    pokePeru: 'Pokémon In Peru',
+    softwareEngineeringPortfolio: 'Software Engineering Portfolio',
+    softwareEngineerResume: 'Software Engineer Resume',
+    japaneseCurrentSong: 'Lyrics For Studying',
+    bibleInJapanese: 'Bible In Japanese',
+    japaneseMusicCovers: 'Japanese Music Covers',
+    bio: 'Bio',
+    tvShows: 'TV Shows',
+    drawing: 'Drawings',
+    travel: 'Travel',
+    allLinks: 'All Links',
+    themeDark: 'Dark Mode',
+    themeLight: 'Light Mode',
+};
+
 export default function NavigationBar({ themeManager }: NavigationBarProps) {
-    const es: ContentPerLanguage = {
-        teaching: 'Profesor de Inglés',
-        teachingShort: 'Profesor',
-        softwareEngineering: 'Ingeniería de Software',
-        softwareEngineeringShort: 'Software',
-        japaneseStudies: 'Estudios de Japonés',
-        japaneseStudiesShort: 'Japonés',
-        aboutMe: 'Sobre Mí',
-        aboutMeShort: 'Sobre',
-        more: 'Más',
-        englishTeacherResume: 'Currículum de Profesor de Inglés',
-        englishTeacherPortfolio: 'Portafolio de Profesor de Inglés',
-        pokePeru: 'Pokemon En Perú',
-        softwareEngineeringPortfolio: 'Portafolio de Ingeniería de Software',
-        softwareEngineerResume: 'Currículum de Ingeniero de Software',
-        currentSong: 'Letras para Estudiar',
-        bibleInJapanese: 'Biblia en Japonés',
-        japaneseMusicCovers: 'Música Japonesa',
-        bio: 'Biografía',
-        tvShows: 'Programas de Televisión',
-        drawing: 'Dibujos',
-        travel: 'Viajes',
-        allLinks: 'Todos los enlaces',
-        themeDark: 'Modo Oscuro',
-        themeLight: 'Modo Claro',
-    };
-    const defaultText: ContentPerLanguage = {
-        teaching: 'English Teacher',
-        teachingShort: 'Teaching',
-        softwareEngineering: 'Software Engineering',
-        softwareEngineeringShort: 'Software',
-        japaneseStudies: 'Japanese Studies',
-        japaneseStudiesShort: 'Japanese',
-        aboutMe: 'About Me',
-        aboutMeShort: 'About',
-        more: 'More',
-        englishTeacherResume: 'English Teacher Resume',
-        englishTeacherPortfolio: 'English Teacher Portfolio',
-        pokePeru: 'Pokémon In Peru',
-        softwareEngineeringPortfolio: 'Software Engineering Portfolio',
-        softwareEngineerResume: 'Software Engineer Resume',
-        currentSong: 'Lyrics For Studying',
-        bibleInJapanese: 'Bible In Japanese',
-        japaneseMusicCovers: 'Japanese Music Covers',
-        bio: 'Bio',
-        tvShows: 'TV Shows',
-        drawing: 'Drawings',
-        travel: 'Travel',
-        allLinks: 'All Links',
-        themeDark: 'Dark Mode',
-        themeLight: 'Light Mode',
-    };
     const multiLangContent: MultiLangContent = {
         es,
         default: defaultText
@@ -124,7 +125,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                         <NavDropdown title={<><span className="nav-title-full">{content.japaneseStudies}</span><span className="nav-title-short">{content.japaneseStudiesShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.currentSong}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.japaneseCurrentSong}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
