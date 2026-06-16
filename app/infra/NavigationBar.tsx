@@ -11,8 +11,11 @@ interface NavigationBarProps {
 
 export interface ContentPerLanguage {
     teaching: string;
+    teachingShort: string;
     softwareEngineering: string;
+    softwareEngineeringShort: string;
     japaneseStudies: string;
+    japaneseStudiesShort: string;
     aboutMe: string;
     more: string;
     englishTeacherResume: string;
@@ -35,8 +38,11 @@ export interface ContentPerLanguage {
 export default function NavigationBar({ themeManager }: NavigationBarProps) {
     const es: ContentPerLanguage = {
         teaching: 'Profesor de Inglés',
+        teachingShort: 'Profesor',
         softwareEngineering: 'Ingeniería de Software',
+        softwareEngineeringShort: 'Software',
         japaneseStudies: 'Estudios de Japonés',
+        japaneseStudiesShort: 'Japonés',
         aboutMe: 'Sobre Mí',
         more: 'Más',
         englishTeacherResume: 'Currículum de Profesor de Inglés',
@@ -57,8 +63,11 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
     };
     const defaultText: ContentPerLanguage = {
         teaching: 'English Teacher',
+        teachingShort: 'Teaching',
         softwareEngineering: 'Software Engineering',
+        softwareEngineeringShort: 'Software',
         japaneseStudies: 'Japanese Studies',
+        japaneseStudiesShort: 'Japanese',
         aboutMe: 'About Me',
         more: 'More',
         englishTeacherResume: 'English Teacher Resume',
@@ -100,16 +109,16 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
-                        <NavDropdown title={content.teaching} id="navigationbar-teaching">
+                        <NavDropdown title={<><span className="nav-title-full">{content.teaching}</span><span className="nav-title-short">{content.teachingShort}</span></>} id="navigationbar-teaching">
                             <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} target="_blank" rel="noopener noreferrer">{content.englishTeacherResume}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio}>{content.englishTeacherPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.pokePeru.battle}>{content.pokePeru}</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={content.softwareEngineering} id="navigationbar-software-engineering">
+                        <NavDropdown title={<><span className="nav-title-full">{content.softwareEngineering}</span><span className="nav-title-short">{content.softwareEngineeringShort}</span></>} id="navigationbar-software-engineering">
                             <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio}>{content.softwareEngineeringPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} target="_blank" rel="noopener noreferrer">{content.softwareEngineerResume}</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={content.japaneseStudies} id="navigationbar-japanese-studies">
+                        <NavDropdown title={<><span className="nav-title-full">{content.japaneseStudies}</span><span className="nav-title-short">{content.japaneseStudiesShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.currentSong}</NavDropdown.Item>

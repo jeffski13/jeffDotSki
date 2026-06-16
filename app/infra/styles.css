@@ -22,6 +22,15 @@
     width: 100%;
 }
 
+.nav-title-short {
+    display: none;
+}
+
+@media (min-width: 575px) and (max-width: 675px) {
+    .nav-title-full { display: none; }
+    .nav-title-short { display: inline; }
+}
+
 .nav-more {
     margin-left: auto;
 }
