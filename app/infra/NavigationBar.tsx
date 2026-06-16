@@ -121,14 +121,14 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.external.instagram}>{content.travel}</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Nav>
+                    <Nav className="nav-more">
                         <NavDropdown title={content.more} id="navigationbar-more">
                             <NavDropdown.Item href={ROUTES.sitemap}>{content.allLinks}</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <div className="d-grid gap-2">
+                            <div className="more-dropdown-grid">
                                 <Button
                                     variant="outline-none"
-                                    className="d-flex align-items-center gap-2 darkMode-button"
+                                    className="darkMode-button"
                                     onClick={() => {
                                         themeManager.toggleTheme();
                                         setTheme(themeManager.getCurrentTheme());

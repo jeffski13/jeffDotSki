@@ -22,6 +22,21 @@
     width: 100%;
 }
 
+.nav-more {
+    margin-left: auto;
+}
+
+.more-dropdown-grid {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.darkMode-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .darkMode-icon {
     height: 20px;
 }
