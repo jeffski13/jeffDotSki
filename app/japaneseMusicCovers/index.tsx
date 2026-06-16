@@ -33,8 +33,8 @@ export default function JapaneseMusicPage() {
         </h1>
         <p className="japaneseMusic_subtitle">My Covers of Japanese Songs</p>
         <Row className="japaneseMusic_videos">
-          {songs.map((song) => (
-            <Col key={song.youtubeId} xs={12} md={6} className="japaneseMusic_video-col">
+          {songs.map((song, index) => (
+            <Col key={song.youtubeId} xs={11} className="japaneseMusic_video-col">
               <div className="japaneseMusic_video-card">
                 <div className="japaneseMusic_embed-wrapper">
                   <iframe
@@ -50,6 +50,7 @@ export default function JapaneseMusicPage() {
                   <p className="japaneseMusic_song-artist">Artist: {song.artist}</p>
                 </div>
               </div>
+              {index !== (songs.length - 1) ? <hr />: <></>}
             </Col>
           ))}
         </Row>
