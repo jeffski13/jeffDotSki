@@ -11,9 +11,13 @@ interface NavigationBarProps {
 
 export interface ContentPerLanguage {
     teaching: string;
+    teachingShort: string;
     softwareEngineering: string;
+    softwareEngineeringShort: string;
     japaneseStudies: string;
+    japaneseStudiesShort: string;
     aboutMe: string;
+    aboutMeShort: string;
     more: string;
     englishTeacherResume: string;
     englishTeacherPortfolio: string;
@@ -35,9 +39,13 @@ export interface ContentPerLanguage {
 export default function NavigationBar({ themeManager }: NavigationBarProps) {
     const es: ContentPerLanguage = {
         teaching: 'Profesor de Inglés',
+        teachingShort: 'Profesor',
         softwareEngineering: 'Ingeniería de Software',
+        softwareEngineeringShort: 'Software',
         japaneseStudies: 'Estudios de Japonés',
+        japaneseStudiesShort: 'Japonés',
         aboutMe: 'Sobre Mí',
+        aboutMeShort: 'Sobre',
         more: 'Más',
         englishTeacherResume: 'Currículum de Profesor de Inglés',
         englishTeacherPortfolio: 'Portafolio de Profesor de Inglés',
@@ -57,9 +65,13 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
     };
     const defaultText: ContentPerLanguage = {
         teaching: 'English Teacher',
+        teachingShort: 'Teaching',
         softwareEngineering: 'Software Engineering',
+        softwareEngineeringShort: 'Software',
         japaneseStudies: 'Japanese Studies',
+        japaneseStudiesShort: 'Japanese',
         aboutMe: 'About Me',
+        aboutMeShort: 'About',
         more: 'More',
         englishTeacherResume: 'English Teacher Resume',
         englishTeacherPortfolio: 'English Teacher Portfolio',
@@ -100,35 +112,35 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
-                        <NavDropdown title={content.teaching} id="navigationbar-teaching">
+                        <NavDropdown title={<><span className="nav-title-full">{content.teaching}</span><span className="nav-title-short">{content.teachingShort}</span></>} id="navigationbar-teaching">
                             <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} target="_blank" rel="noopener noreferrer">{content.englishTeacherResume}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio}>{content.englishTeacherPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.pokePeru.battle}>{content.pokePeru}</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={content.softwareEngineering} id="navigationbar-software-engineering">
+                        <NavDropdown title={<><span className="nav-title-full">{content.softwareEngineering}</span><span className="nav-title-short">{content.softwareEngineeringShort}</span></>} id="navigationbar-software-engineering">
                             <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio}>{content.softwareEngineeringPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} target="_blank" rel="noopener noreferrer">{content.softwareEngineerResume}</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={content.japaneseStudies} id="navigationbar-japanese-studies">
+                        <NavDropdown title={<><span className="nav-title-full">{content.japaneseStudies}</span><span className="nav-title-short">{content.japaneseStudiesShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.currentSong}</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={content.aboutMe} id="navigationbar-about-me">
+                        <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows}>{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing}>{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.instagram}>{content.travel}</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Nav>
+                    <Nav className="nav-more">
                         <NavDropdown title={content.more} id="navigationbar-more">
                             <NavDropdown.Item href={ROUTES.sitemap}>{content.allLinks}</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <div className="d-grid gap-2">
+                            <div className="more-dropdown-grid">
                                 <Button
                                     variant="outline-none"
-                                    className="d-flex align-items-center gap-2 darkMode-button"
+                                    className="darkMode-button"
                                     onClick={() => {
                                         themeManager.toggleTheme();
                                         setTheme(themeManager.getCurrentTheme());

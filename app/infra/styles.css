@@ -22,6 +22,30 @@
     width: 100%;
 }
 
+.nav-title-short {
+    display: none;
+}
+
+@media (min-width: 575px) and (max-width: 775px) {
+    .nav-title-full { display: none; }
+    .nav-title-short { display: inline; }
+}
+
+.nav-more {
+    margin-left: auto;
+}
+
+.more-dropdown-grid {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.darkMode-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .darkMode-icon {
     height: 20px;
 }
