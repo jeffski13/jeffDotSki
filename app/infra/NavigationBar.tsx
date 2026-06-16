@@ -17,6 +17,7 @@ export interface ContentPerLanguage {
     japaneseStudies: string;
     japaneseStudiesShort: string;
     aboutMe: string;
+    aboutMeShort: string;
     more: string;
     englishTeacherResume: string;
     englishTeacherPortfolio: string;
@@ -44,6 +45,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         japaneseStudies: 'Estudios de Japonés',
         japaneseStudiesShort: 'Japonés',
         aboutMe: 'Sobre Mí',
+        aboutMeShort: 'Sobre',
         more: 'Más',
         englishTeacherResume: 'Currículum de Profesor de Inglés',
         englishTeacherPortfolio: 'Portafolio de Profesor de Inglés',
@@ -69,6 +71,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
         japaneseStudies: 'Japanese Studies',
         japaneseStudiesShort: 'Japanese',
         aboutMe: 'About Me',
+        aboutMeShort: 'About',
         more: 'More',
         englishTeacherResume: 'English Teacher Resume',
         englishTeacherPortfolio: 'English Teacher Portfolio',
@@ -123,15 +126,15 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.currentSong}</NavDropdown.Item>
                         </NavDropdown>
-                    </Nav>
-                    <Nav className="nav-more">
-                        <NavDropdown title={content.more} id="navigationbar-more">
-                            <NavDropdown.Header>{content.aboutMe}</NavDropdown.Header>
+                        <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.tvShows}>{content.tvShows}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.drawing}>{content.drawing}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.instagram}>{content.travel}</NavDropdown.Item>
-                            <NavDropdown.Divider />
+                        </NavDropdown>
+                    </Nav>
+                    <Nav className="nav-more">
+                        <NavDropdown title={content.more} id="navigationbar-more">
                             <NavDropdown.Item href={ROUTES.sitemap}>{content.allLinks}</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <div className="more-dropdown-grid">
