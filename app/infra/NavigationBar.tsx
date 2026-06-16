@@ -12,83 +12,84 @@ interface NavigationBarProps {
 export interface ContentPerLanguage {
     teaching: string;
     teachingShort: string;
+    teachingResume: string;
+    teachingPortfolio: string;
+    teachingPokePeru: string;
     softwareEngineering: string;
     softwareEngineeringShort: string;
-    japaneseStudies: string;
-    japaneseStudiesShort: string;
-    aboutMe: string;
-    aboutMeShort: string;
-    more: string;
-    englishTeacherResume: string;
-    englishTeacherPortfolio: string;
-    pokePeru: string;
     softwareEngineeringPortfolio: string;
     softwareEngineerResume: string;
-    currentSong: string;
-    bibleInJapanese: string;
+    japanese: string;
+    japaneseShort: string;
+    japaneseCurrentSong: string;
+    japaneseBible: string;
     japaneseMusicCovers: string;
-    bio: string;
-    tvShows: string;
-    drawing: string;
-    travel: string;
+    aboutMe: string;
+    aboutMeShort: string;
+    aboutBio: string;
+    aboutTvShows: string;
+    aboutDrawing: string;
+    aboutTravel: string;
+    more: string;
     allLinks: string;
     themeDark: string;
     themeLight: string;
 }
 
+export const es: ContentPerLanguage = {
+    teaching: 'Profesor de Inglés',
+    teachingShort: 'Profesor',
+    teachingResume: 'Currículum de Profesor de Inglés',
+    teachingPortfolio: 'Portafolio de Profesor de Inglés',
+    teachingPokePeru: 'Pokemon En Perú',
+    softwareEngineering: 'Ingeniería de Software',
+    softwareEngineeringShort: 'Software',
+    softwareEngineeringPortfolio: 'Portafolio de Ingeniería de Software',
+    softwareEngineerResume: 'Currículum de Ingeniero de Software',
+    japanese: 'Estudios de Japonés',
+    japaneseShort: 'Japonés',
+    japaneseCurrentSong: 'Letras para Estudiar',
+    japaneseBible: 'Biblia en Japonés',
+    japaneseMusicCovers: 'Música Japonesa',
+    aboutMe: 'Sobre Mí',
+    aboutMeShort: 'Sobre',
+    aboutBio: 'Biografía',
+    aboutTvShows: 'Programas de Televisión',
+    aboutDrawing: 'Dibujos',
+    aboutTravel: 'Viajes',
+    more: 'Más',
+    allLinks: 'Todos los enlaces',
+    themeDark: 'Modo Oscuro',
+    themeLight: 'Modo Claro',
+};
+export const defaultText: ContentPerLanguage = {
+    teaching: 'English Teacher',
+    teachingShort: 'Teaching',
+    teachingResume: 'English Teacher Resume',
+    teachingPortfolio: 'English Teacher Portfolio',
+    teachingPokePeru: 'Pokémon In Peru',
+    softwareEngineering: 'Software Engineering',
+    softwareEngineeringShort: 'Software',
+    softwareEngineeringPortfolio: 'Software Engineering Portfolio',
+    softwareEngineerResume: 'Software Engineer Resume',
+    japanese: 'Japanese Studies',
+    japaneseShort: 'Japanese',
+    japaneseCurrentSong: 'Lyrics For Studying',
+    japaneseBible: 'Bible In Japanese',
+    japaneseMusicCovers: 'Japanese Music Covers',
+    aboutMe: 'About Me',
+    aboutMeShort: 'About',
+    aboutBio: 'Bio',
+    aboutTvShows: 'TV Shows',
+    aboutDrawing: 'Drawings',
+    aboutTravel: 'Travel',
+    more: 'More',
+    allLinks: 'All Links',
+    themeDark: 'Dark Mode',
+    themeLight: 'Light Mode',
+};
+
 export default function NavigationBar({ themeManager }: NavigationBarProps) {
-    const es: ContentPerLanguage = {
-        teaching: 'Profesor de Inglés',
-        teachingShort: 'Profesor',
-        softwareEngineering: 'Ingeniería de Software',
-        softwareEngineeringShort: 'Software',
-        japaneseStudies: 'Estudios de Japonés',
-        japaneseStudiesShort: 'Japonés',
-        aboutMe: 'Sobre Mí',
-        aboutMeShort: 'Sobre',
-        more: 'Más',
-        englishTeacherResume: 'Currículum de Profesor de Inglés',
-        englishTeacherPortfolio: 'Portafolio de Profesor de Inglés',
-        pokePeru: 'Pokemon En Perú',
-        softwareEngineeringPortfolio: 'Portafolio de Ingeniería de Software',
-        softwareEngineerResume: 'Currículum de Ingeniero de Software',
-        currentSong: 'Letras para Estudiar',
-        bibleInJapanese: 'Biblia en Japonés',
-        japaneseMusicCovers: 'Música Japonesa',
-        bio: 'Biografía',
-        tvShows: 'Programas de Televisión',
-        drawing: 'Dibujos',
-        travel: 'Viajes',
-        allLinks: 'Todos los enlaces',
-        themeDark: 'Modo Oscuro',
-        themeLight: 'Modo Claro',
-    };
-    const defaultText: ContentPerLanguage = {
-        teaching: 'English Teacher',
-        teachingShort: 'Teaching',
-        softwareEngineering: 'Software Engineering',
-        softwareEngineeringShort: 'Software',
-        japaneseStudies: 'Japanese Studies',
-        japaneseStudiesShort: 'Japanese',
-        aboutMe: 'About Me',
-        aboutMeShort: 'About',
-        more: 'More',
-        englishTeacherResume: 'English Teacher Resume',
-        englishTeacherPortfolio: 'English Teacher Portfolio',
-        pokePeru: 'Pokémon In Peru',
-        softwareEngineeringPortfolio: 'Software Engineering Portfolio',
-        softwareEngineerResume: 'Software Engineer Resume',
-        currentSong: 'Lyrics For Studying',
-        bibleInJapanese: 'Bible In Japanese',
-        japaneseMusicCovers: 'Japanese Music Covers',
-        bio: 'Bio',
-        tvShows: 'TV Shows',
-        drawing: 'Drawings',
-        travel: 'Travel',
-        allLinks: 'All Links',
-        themeDark: 'Dark Mode',
-        themeLight: 'Light Mode',
-    };
     const multiLangContent: MultiLangContent = {
         es,
         default: defaultText
@@ -113,24 +114,24 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
                         <NavDropdown title={<><span className="nav-title-full">{content.teaching}</span><span className="nav-title-short">{content.teachingShort}</span></>} id="navigationbar-teaching">
-                            <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} target="_blank" rel="noopener noreferrer">{content.englishTeacherResume}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio}>{content.englishTeacherPortfolio}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.pokePeru.battle}>{content.pokePeru}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} target="_blank" rel="noopener noreferrer">{content.teachingResume}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio}>{content.teachingPortfolio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.pokePeru.battle}>{content.teachingPokePeru}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.softwareEngineering}</span><span className="nav-title-short">{content.softwareEngineeringShort}</span></>} id="navigationbar-software-engineering">
                             <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio}>{content.softwareEngineeringPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} target="_blank" rel="noopener noreferrer">{content.softwareEngineerResume}</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={<><span className="nav-title-full">{content.japaneseStudies}</span><span className="nav-title-short">{content.japaneseStudiesShort}</span></>} id="navigationbar-japanese-studies">
+                        <NavDropdown title={<><span className="nav-title-full">{content.japanese}</span><span className="nav-title-short">{content.japaneseShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.bibleInJapanese}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.currentSong}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.japaneseBible}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.japaneseCurrentSong}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
-                            <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.bio}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.aboutMe.tvShows}>{content.tvShows}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.aboutMe.drawing}>{content.drawing}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.external.instagram}>{content.travel}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.aboutBio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.tvShows}>{content.aboutTvShows}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.aboutMe.drawing}>{content.aboutDrawing}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.instagram}>{content.aboutTravel}</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Nav className="nav-more">

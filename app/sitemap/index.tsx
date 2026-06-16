@@ -5,6 +5,7 @@ import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from 
 import { locationProviderImpl, type PortfolioProps } from '~/aboutMeSection/PortfolioProps';
 import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import './styles.css';
+import {es as esTitles, defaultText as defaultTextTitles} from '../infra/NavigationBar';
 
 export interface SitemapSection {
   title: string;
@@ -25,39 +26,39 @@ const es: ContentPerLanguage = {
   pageTitle: 'Todos Los Enlaces',
   sections: [
     {
-      title: 'Profesor de Inglés',
+      title: esTitles.teaching,
       anchorId: 'English-Teacher',
       links: [
-        { text: 'Currículum de Profesor de Inglés', url: ROUTES.external.resume.teacherEnglish, external: true },
-        { text: 'Portafolio de Profesor de Inglés', url: ROUTES.aboutMe.teacherPortfolio },
-        { text: 'Pokemon En Perú', url: ROUTES.pokePeru.battle },
+        { text: esTitles.teachingResume, url: ROUTES.external.resume.teacherEnglish, external: true },
+        { text: esTitles.teachingPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
+        { text: esTitles.teachingPokePeru, url: ROUTES.pokePeru.battle },
       ]
     },
     {
-      title: 'Ingeniería de Software',
+      title: esTitles.softwareEngineering,
       anchorId: 'Software-Engineering',
       links: [
-        { text: 'Portafolio de Ingeniería de Software', url: ROUTES.aboutMe.techPortfolio },
-        { text: 'Currículum de Ingeniero de Software', url: ROUTES.external.resume.softwareEngineer, external: true },
+        { text: esTitles.softwareEngineeringPortfolio, url: ROUTES.aboutMe.techPortfolio },
+        { text: esTitles.softwareEngineerResume, url: ROUTES.external.resume.softwareEngineer, external: true },
       ]
     },
     {
-      title: 'Estudios de Japonés',
+      title: esTitles.japanese,
       anchorId: 'Japanese-Studies',
       links: [
-        { text: 'Música Japonesa Covers', url: ROUTES.japaneseMusicCovers },
-        { text: 'Biblia en Japonés', url: ROUTES.readingsNihonDe },
-        { text: 'Canción Actual', url: ROUTES.practiceNihongoLyrics },
+        { text: esTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
+        { text: esTitles.japaneseBible, url: ROUTES.readingsNihonDe },
+        { text: esTitles.japaneseCurrentSong, url: ROUTES.practiceNihongoLyrics },
       ]
     },
     {
-      title: 'Sobre Mí',
+      title: esTitles.aboutMe,
       anchorId: 'About-Me',
       links: [
-        { text: 'Biografía', url: ROUTES.aboutMe.bio },
-        { text: 'Programas de Televisión', url: ROUTES.aboutMe.tvShows },
-        { text: 'Dibujos', url: ROUTES.aboutMe.drawing },
-        { text: 'Viajes', url: ROUTES.aboutMe.tvShows },
+        { text: esTitles.aboutBio, url: ROUTES.aboutMe.bio },
+        { text: esTitles.aboutTvShows, url: ROUTES.aboutMe.tvShows },
+        { text: esTitles.aboutDrawing, url: ROUTES.aboutMe.drawing },
+        { text: esTitles.aboutTravel, url: ROUTES.aboutMe.tvShows },
       ]
     },
   ]
@@ -67,39 +68,39 @@ const defaultText: ContentPerLanguage = {
   pageTitle: 'All Links',
   sections: [
     {
-      title: 'English Teacher',
+      title: defaultTextTitles.teaching,
       anchorId: 'English-Teacher',
       links: [
-        { text: 'English Teacher Resume', url: ROUTES.external.resume.teacherEnglish, external: true },
-        { text: 'English Teacher Portfolio', url: ROUTES.aboutMe.teacherPortfolio },
-        { text: 'Pokémon In Peru', url: ROUTES.pokePeru.battle },
+        { text: defaultTextTitles.teachingResume, url: ROUTES.external.resume.teacherEnglish, external: true },
+        { text: defaultTextTitles.teachingPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
+        { text: defaultTextTitles.teachingPokePeru, url: ROUTES.pokePeru.battle },
       ]
     },
     {
-      title: 'Software Engineering',
+      title: defaultTextTitles.softwareEngineering,
       anchorId: 'Software-Engineering',
       links: [
-        { text: 'Software Engineering Portfolio', url: ROUTES.aboutMe.techPortfolio },
-        { text: 'Software Engineer Resume', url: ROUTES.external.resume.softwareEngineer, external: true },
+        { text: defaultTextTitles.softwareEngineeringPortfolio, url: ROUTES.aboutMe.techPortfolio },
+        { text: defaultTextTitles.softwareEngineerResume, url: ROUTES.external.resume.softwareEngineer, external: true },
       ]
     },
     {
-      title: 'Japanese Studies',
+      title: defaultTextTitles.japanese,
       anchorId: 'Japanese-Studies',
       links: [
-        { text: 'Japanese Music Covers', url: ROUTES.japaneseMusicCovers },
-        { text: 'Bible In Japanese', url: ROUTES.readingsNihonDe },
-        { text: 'Learning With Songs', url: ROUTES.practiceNihongoLyrics },
+        { text: defaultTextTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
+        { text: defaultTextTitles.japaneseBible, url: ROUTES.readingsNihonDe },
+        { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.practiceNihongoLyrics },
       ]
     },
     {
-      title: 'About Me',
+      title: defaultTextTitles.aboutMe,
       anchorId: 'About-Me',
       links: [
-        { text: 'Bio', url: ROUTES.aboutMe.bio },
-        { text: 'TV Shows', url: ROUTES.aboutMe.tvShows },
-        { text: 'Drawings', url: ROUTES.aboutMe.drawing },
-        { text: 'Travel', url: ROUTES.aboutMe.tvShows },
+        { text: defaultTextTitles.aboutBio, url: ROUTES.aboutMe.bio },
+        { text: defaultTextTitles.aboutTvShows, url: ROUTES.aboutMe.tvShows },
+        { text: defaultTextTitles.aboutDrawing, url: ROUTES.aboutMe.drawing },
+        { text: defaultTextTitles.aboutTravel, url: ROUTES.aboutMe.tvShows },
       ]
     },
   ]
