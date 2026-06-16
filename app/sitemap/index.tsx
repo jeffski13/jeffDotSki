@@ -29,9 +29,9 @@ const es: ContentPerLanguage = {
       title: esTitles.teaching,
       anchorId: 'English-Teacher',
       links: [
-        { text: esTitles.englishTeacherResume, url: ROUTES.external.resume.teacherEnglish, external: true },
-        { text: esTitles.englishTeacherPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
-        { text: esTitles.pokePeru, url: ROUTES.pokePeru.battle },
+        { text: esTitles.teachingResume, url: ROUTES.external.resume.teacherEnglish, external: true },
+        { text: esTitles.teachingPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
+        { text: esTitles.teachingPokePeru, url: ROUTES.pokePeru.battle },
       ]
     },
     {
@@ -43,11 +43,11 @@ const es: ContentPerLanguage = {
       ]
     },
     {
-      title: esTitles.japaneseStudies,
+      title: esTitles.japanese,
       anchorId: 'Japanese-Studies',
       links: [
         { text: esTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
-        { text: esTitles.bibleInJapanese, url: ROUTES.readingsNihonDe },
+        { text: esTitles.japaneseBible, url: ROUTES.readingsNihonDe },
         { text: esTitles.japaneseCurrentSong, url: ROUTES.practiceNihongoLyrics },
       ]
     },
@@ -55,10 +55,10 @@ const es: ContentPerLanguage = {
       title: esTitles.aboutMe,
       anchorId: 'About-Me',
       links: [
-        { text: esTitles.bio, url: ROUTES.aboutMe.bio },
-        { text: esTitles.tvShows, url: ROUTES.aboutMe.tvShows },
-        { text: esTitles.drawing, url: ROUTES.aboutMe.drawing },
-        { text: esTitles.travel, url: ROUTES.aboutMe.tvShows },
+        { text: esTitles.aboutBio, url: ROUTES.aboutMe.bio },
+        { text: esTitles.aboutTvShows, url: ROUTES.aboutMe.tvShows },
+        { text: esTitles.aboutDrawing, url: ROUTES.aboutMe.drawing },
+        { text: esTitles.aboutTravel, url: ROUTES.aboutMe.tvShows },
       ]
     },
   ]
@@ -71,9 +71,9 @@ const defaultText: ContentPerLanguage = {
       title: defaultTextTitles.teaching,
       anchorId: 'English-Teacher',
       links: [
-        { text: defaultTextTitles.englishTeacherResume, url: ROUTES.external.resume.teacherEnglish, external: true },
-        { text: defaultTextTitles.englishTeacherPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
-        { text: defaultTextTitles.pokePeru, url: ROUTES.pokePeru.battle },
+        { text: defaultTextTitles.teachingResume, url: ROUTES.external.resume.teacherEnglish, external: true },
+        { text: defaultTextTitles.teachingPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
+        { text: defaultTextTitles.teachingPokePeru, url: ROUTES.pokePeru.battle },
       ]
     },
     {
@@ -85,11 +85,11 @@ const defaultText: ContentPerLanguage = {
       ]
     },
     {
-      title: defaultTextTitles.japaneseStudies,
+      title: defaultTextTitles.japanese,
       anchorId: 'Japanese-Studies',
       links: [
         { text: defaultTextTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
-        { text: defaultTextTitles.bibleInJapanese, url: ROUTES.readingsNihonDe },
+        { text: defaultTextTitles.japaneseBible, url: ROUTES.readingsNihonDe },
         { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.practiceNihongoLyrics },
       ]
     },
@@ -97,10 +97,10 @@ const defaultText: ContentPerLanguage = {
       title: defaultTextTitles.aboutMe,
       anchorId: 'About-Me',
       links: [
-        { text: defaultTextTitles.bio, url: ROUTES.aboutMe.bio },
-        { text: defaultTextTitles.tvShows, url: ROUTES.aboutMe.tvShows },
-        { text: defaultTextTitles.drawing, url: ROUTES.aboutMe.drawing },
-        { text: defaultTextTitles.travel, url: ROUTES.aboutMe.tvShows },
+        { text: defaultTextTitles.aboutBio, url: ROUTES.aboutMe.bio },
+        { text: defaultTextTitles.aboutTvShows, url: ROUTES.aboutMe.tvShows },
+        { text: defaultTextTitles.aboutDrawing, url: ROUTES.aboutMe.drawing },
+        { text: defaultTextTitles.aboutTravel, url: ROUTES.aboutMe.tvShows },
       ]
     },
   ]
