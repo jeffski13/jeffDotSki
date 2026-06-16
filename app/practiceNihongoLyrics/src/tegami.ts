@@ -1,4 +1,8 @@
-export const jp = [
+import type { LyricsSong } from "./types";
+
+const tegami: LyricsSong = {
+  title: "手紙 (Tegami)",
+  jp: [
     "拝啓 この手紙読んでいるあなたは",
     "どこで何をしているのだろう",
     "-----------------------------",
@@ -51,9 +55,8 @@ export const jp = [
     "-----------------------------",
     "拝啓 この手紙読んでいるあなたが",
     "幸せなことを願います",
-]
-
-export const romaji = [
+  ],
+  romaji: [
     "Haikei, kono tegami yonde iru anata wa",
     "Doko de nani wo shite iru no darō",
     "-----------------------------",
@@ -105,4 +108,8 @@ export const romaji = [
     "Ima wo ikite yukō",
     "-----------------------------",
     "Haikei, kono tegami yonde iru anata ga",
-    "Shiawase na koto wo negaimasu",]
+    "Shiawase na koto wo negaimasu",
+  ],
+};
+
+export default tegami;

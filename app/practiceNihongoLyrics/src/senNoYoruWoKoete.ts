@@ -1,4 +1,8 @@
-export const jp = [
+import type { LyricsSong } from "./types";
+
+const senNoYoruWoKoete: LyricsSong = {
+  title: "千の夜をこえて (Sen no Yoru wo Koete)",
+  jp: [
     "愛されたい　でも愛そうとしない",
     "その繰り返しのなかを彷徨って",
     "僕が見つけた答えは",
@@ -51,9 +55,8 @@ export const jp = [
     "その思いが適わなくたって",
     "好きな人に好きって伝える",
     "それは　この世界で一番　素敵なことさ",
-];
-
-export const romaji = [
+  ],
+  romaji: [
     "Aisaretai demo aisou to shinai",
     "Sono kurikaeshi no naka wo samayatte",
     "Boku ga mitsuketa kotae wa",
@@ -106,4 +109,7 @@ export const romaji = [
     "Sono omoi ga kanawanakutatte",
     "suki na hito ni suki tte tsutaeru",
     "Sore wa kono sekai de ichiban suteki na koto sa",
-];
+  ],
+};
+
+export default senNoYoruWoKoete;
