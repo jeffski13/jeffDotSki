@@ -1,4 +1,4 @@
-export const jpLines = [
+export const jp = [
     "拝啓 この手紙読んでいるあなたは",
     "どこで何をしているのだろう",
     "-----------------------------",
@@ -53,7 +53,7 @@ export const jpLines = [
     "幸せなことを願います",
 ]
 
-export const romajiLines = [
+export const romaji = [
     "Haikei, kono tegami yonde iru anata wa",
     "Doko de nani wo shite iru no darō",
     "-----------------------------",
