@@ -1,9 +1,11 @@
 .portfolio-image {
     border-radius: 12px;
+    max-width: 100%;
 }
 
 .portfolio-overview-image {
     height: 300px;
+    max-width: 100%;
     object-fit: cover;
 }
 
@@ -23,6 +25,7 @@
 .portfolio-content-image {
     border: 1px solid #ccc;
     border-radius: 5px;
+    max-width: 100%;
 }
 
 @media (max-width: 600px) {

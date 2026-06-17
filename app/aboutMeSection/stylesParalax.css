@@ -119,6 +119,25 @@ would also dim/transparent its children. */
     background-color: white;
 }
 
+@media (min-width: 601px) and (max-width: 1024px) {
+    .paralax-bgimg-1 {
+        min-height: 300px;
+    }
+    .paralax-bgimg-2 {
+        min-height: 300px;
+    }
+    .paralax-bgimg-3 {
+        min-height: 300px;
+    }
+    .paralax-bgimg-4 {
+        min-height: 300px;
+    }
+
+    .paralax-bgimg {
+        background-attachment: scroll;
+    }
+}
+
 /* Small screens: two per row */
 @media (max-width: 600px) {
 
