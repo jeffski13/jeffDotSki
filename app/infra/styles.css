@@ -1,7 +1,7 @@
 [data-bs-theme="dark"] .jeffdotski-navbar,
 [data-bs-theme="dark"] .jeffdotski-navbar.navbar,
 [data-bs-theme="dark"] .navbar.jeffdotski-navbar {
-    background-color: #121416 !important;
+    background-color: #252a2e !important;
 }
 
 /* react bootsrtap overwrite for selection background of navbar item */
