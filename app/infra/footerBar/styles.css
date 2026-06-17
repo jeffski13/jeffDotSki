@@ -8,6 +8,10 @@
   z-index: 10;
 }
 
+[data-bs-theme="dark"] .FooterBar {
+  background-color: #5e5e5e;
+}
+
 .footerBarLinkWrapper {
   color: white;
   line-height: 50px;
