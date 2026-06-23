@@ -1,3 +1,11 @@
 #japanese-lyrics {
     margin-top: 20px;
 }
+
+@media (max-width: 576px) {
+    .lyric-separator {
+        max-width: 50%;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}

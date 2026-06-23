@@ -43,16 +43,19 @@ export default function HomePage() {
             </Form.Select>
           </Col>
         </Row>
-        {pairs.map((line, idx) => (
-          <Row key={idx} className="lyric-pair">
-            <Col xs={6}>
-              <p>{line.jp}</p>
-            </Col>
-            <Col xs={6}>
-              <p>{line.rom}</p>
-            </Col>
-          </Row>
-        ))}
+        {pairs.map((line, idx) => {
+          const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
+          return (
+            <Row key={idx} className="lyric-pair">
+              <Col xs={6}>
+                <p className={isSeparator ? "lyric-separator" : undefined}>{line.jp}</p>
+              </Col>
+              <Col xs={6}>
+                <p className={isSeparator ? "lyric-separator" : undefined}>{line.rom}</p>
+              </Col>
+            </Row>
+          );
+        })}
       </Container>
     </div>
   );
