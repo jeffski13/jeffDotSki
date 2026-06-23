@@ -1,11 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import HomePage from './index';
-import senNoYoruWoKoete from './src/senNoYoruWoKoete';
-import tegami from './src/tegami';
-import stayWithMe from './src/stayWithMe';
-
-const songs = [senNoYoruWoKoete, tegami, stayWithMe];
+import {songs} from './index';
 
 const renderComponent = () => render(<MemoryRouter><HomePage /></MemoryRouter>);
 
