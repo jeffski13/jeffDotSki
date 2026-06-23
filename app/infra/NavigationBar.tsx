@@ -12,8 +12,8 @@ interface NavigationBarProps {
 export interface ContentPerLanguage {
     teaching: string;
     teachingShort: string;
-    teachingResume: string;
     teachingPortfolio: string;
+    teachingResume: string;
     teachingPokePeru: string;
     softwareEngineering: string;
     softwareEngineeringShort: string;
@@ -39,8 +39,8 @@ export interface ContentPerLanguage {
 export const es: ContentPerLanguage = {
     teaching: 'Profesor de Inglés',
     teachingShort: 'Profesor',
-    teachingResume: 'Currículum de Profesor de Inglés',
     teachingPortfolio: 'Portafolio de Profesor de Inglés',
+    teachingResume: 'Currículum de Profesor de Inglés',
     teachingPokePeru: 'Pokemon En Perú',
     softwareEngineering: 'Ingeniería de Software',
     softwareEngineeringShort: 'Software',
@@ -65,8 +65,8 @@ export const es: ContentPerLanguage = {
 export const defaultText: ContentPerLanguage = {
     teaching: 'English Teacher',
     teachingShort: 'Teaching',
-    teachingResume: 'English Teacher Resume',
     teachingPortfolio: 'English Teacher Portfolio',
+    teachingResume: 'English Teacher Resume',
     teachingPokePeru: 'Pokémon In Peru',
     softwareEngineering: 'Software Engineering',
     softwareEngineeringShort: 'Software',
@@ -114,8 +114,8 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
                         <NavDropdown title={<><span className="nav-title-full">{content.teaching}</span><span className="nav-title-short">{content.teachingShort}</span></>} id="navigationbar-teaching">
-                            <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} target="_blank" rel="noopener noreferrer">{content.teachingResume}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio}>{content.teachingPortfolio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} target="_blank" rel="noopener noreferrer">{content.teachingResume}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.pokePeru.battle}>{content.teachingPokePeru}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.softwareEngineering}</span><span className="nav-title-short">{content.softwareEngineeringShort}</span></>} id="navigationbar-software-engineering">
