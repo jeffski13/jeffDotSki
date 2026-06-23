@@ -56,6 +56,11 @@ const tegami: LyricsSong = {
     "口ぐせを言いながら",
     "二人の瞬間を抱いて (Oh)",
     "まだ忘れず 暖めてた",
+    "Stay with me",
+    "真夜中のドアをたたき",
+    "帰らないでと泣いた (Oh)",
+    "あの季節が 今 目の前",
+    "Stay with me",
   ],
   romaji: [
     "To you",

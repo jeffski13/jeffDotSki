@@ -102,7 +102,7 @@ const tegami: LyricsSong = {
     "Ā makenaide nakanaide",
     "Kiete shimai sō na toki wa",
     "Jibun no koe wo shinji arukeba ii no",
-    "Itsunotokidomo kanashimi mo",
+    "Itsu no jidai mo kanashimi mo",
     "Sakete wa torenai keredo",
     "Egao wo misete ima wo ikite yukō",
     "Ima wo ikite yukō",
