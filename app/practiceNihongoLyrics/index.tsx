@@ -4,9 +4,10 @@ import type { LyricsSong } from "./src/types";
 import senNoYoruWoKoete from "./src/senNoYoruWoKoete";
 import tegami from "./src/tegami";
 import stayWithMe from "./src/stayWithMe";
+import eikouNoKakehashi from "./src/eikouNoKakehashi";
 import './styles.css';
 
-const songs: LyricsSong[] = [senNoYoruWoKoete, tegami, stayWithMe];
+const songs: LyricsSong[] = [senNoYoruWoKoete, tegami, stayWithMe, eikouNoKakehashi];
 
 export default function HomePage() {
   const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
