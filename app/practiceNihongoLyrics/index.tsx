@@ -5,9 +5,10 @@ import senNoYoruWoKoete from "./src/senNoYoruWoKoete";
 import tegami from "./src/tegami";
 import stayWithMe from "./src/stayWithMe";
 import eikouNoKakehashi from "./src/eikouNoKakehashi";
+import itsuka from "./src/itsuka";
 import './styles.css';
 
-export const songs: LyricsSong[] = [senNoYoruWoKoete, tegami, stayWithMe, eikouNoKakehashi];
+export const songs: LyricsSong[] = [senNoYoruWoKoete, tegami, stayWithMe, eikouNoKakehashi, itsuka];
 
 export default function HomePage() {
   const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
