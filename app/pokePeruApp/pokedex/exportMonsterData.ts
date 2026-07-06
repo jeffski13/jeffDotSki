@@ -82,6 +82,8 @@ export const getMonsterData = (
             const {
                 id,
                 name,
+                //@ts-ignore
+                trainer,trainerImage,
                 trainerId,
                 type,
                 secondType,
@@ -95,6 +97,8 @@ export const getMonsterData = (
                 id,
                 name,
                 trainerId,
+                //@ts-ignore
+                trainer,trainerImage,
                 type: toElementType(type),
                 secondType: toElementType(secondType),
                 image,

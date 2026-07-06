@@ -9,7 +9,6 @@
     "**/*.test.tsx", 
     "**/*.test.ts", 
     "vite.config.ts", 
-    "app/root.tsx", 
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],

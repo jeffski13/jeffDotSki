@@ -7,9 +7,9 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { useEffect } from 'react';
-import { initFirebase, logPageView, shouldUseFirebase } from '~/infra/firebaseClient';
 // @ts-ignore
 import { Helmet } from "react-helmet";
+import { initFirebase, logPageView, shouldUseFirebase } from '~/infra/firebaseClient';
 import type { Route } from "./+types/root";
 import "./app.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
