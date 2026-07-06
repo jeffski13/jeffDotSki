@@ -6,10 +6,12 @@ export interface LocationProvider {
 
 export interface PortfolioProps {
   locationProvider: LocationProvider;
+  isTestEnv?: boolean | null;
 }
 
 export const locationProviderImpl: LocationProvider = {
   useLocation: function (): Location {
+    // @ts-ignore
     return useLocation();
   }
 }

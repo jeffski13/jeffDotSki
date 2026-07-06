@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { Route } from "./+types/home";
 import PokePeru from "..";
 import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";

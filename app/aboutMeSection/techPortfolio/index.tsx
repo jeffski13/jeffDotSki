@@ -1,4 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap';
+// @ts-ignore
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
 import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';

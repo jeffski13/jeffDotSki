@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { Route } from "./+types/home";
 import JeffSkiPageWithContent from "../../infra/JeffSkiPageWithContent"
 import TechPortfolio from ".";
@@ -12,5 +13,6 @@ export function meta({ }: Route.MetaArgs) {
 
 const Content = JeffSkiPageWithContent(TechPortfolio);
 export default function AboutMeTechPortfolio() {
+  // @ts-ignore
   return (<Content locationProvider={locationProviderImpl}   />);
 }

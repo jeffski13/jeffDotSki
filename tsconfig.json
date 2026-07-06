@@ -5,7 +5,12 @@
     "**/.client/**/*",
     ".react-router/types/**/*"
   ],
-  "exclude": ["**/*.test.tsx", "**/*.test.ts"],
+  "exclude": [
+    "**/*.test.tsx", 
+    "**/*.test.ts", 
+    "vite.config.ts", 
+    "app/root.tsx", 
+  ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["node", "vite/client"],

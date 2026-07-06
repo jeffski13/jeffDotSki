@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 
-const useTypewriter = (text, speed = 100) => {
+const useTypewriter = (text: string | null, speed = 100) => {
   const [displayText, setDisplayText] = useState('');
 
   useEffect(() => {
-    const wordList = text.split(' ');
+    let wordList: string[] = [];
+    if(text !== null) {
+      wordList = text.split(' ');
+    }
     let i = 0;
     const typingInterval = setInterval(() => {
       if (i < (wordList.length)) {
@@ -24,7 +27,7 @@ const useTypewriter = (text, speed = 100) => {
 };
 
 interface TypewriterProps {
-  text: string;
+  text: string | null;
   isInstantTextRender?: boolean;
 }
 

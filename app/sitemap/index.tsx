@@ -30,7 +30,7 @@ const es: ContentPerLanguage = {
       anchorId: 'English-Teacher',
       links: [
         { text: esTitles.teachingResume, url: ROUTES.external.resume.teacherEnglish, external: true },
-        { text: esTitles.teachingPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
+        { text: esTitles.teachingPortfolio, url: ROUTES.teacherPortfolio },
         { text: esTitles.teachingPokePeru, url: ROUTES.pokePeru.battle },
       ]
     },
@@ -38,7 +38,7 @@ const es: ContentPerLanguage = {
       title: esTitles.softwareEngineering,
       anchorId: 'Software-Engineering',
       links: [
-        { text: esTitles.softwareEngineeringPortfolio, url: ROUTES.aboutMe.techPortfolio },
+        { text: esTitles.softwareEngineeringPortfolio, url: ROUTES.techPortfolio },
         { text: esTitles.softwareEngineerResume, url: ROUTES.external.resume.softwareEngineer, external: true },
       ]
     },
@@ -46,10 +46,10 @@ const es: ContentPerLanguage = {
       title: esTitles.japanese,
       anchorId: 'Japanese-Studies',
       links: [
-        { text: esTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
-        { text: esTitles.japaneseBible, url: ROUTES.japaneseReadings },
-        { text: esTitles.japaneseCurrentSong, url: ROUTES.japanesePracticeLyrics },
-        { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.japaneseParenthesesToFurigana },
+        { text: esTitles.japaneseMusicCovers, url: ROUTES.japanese.japaneseMusicCovers },
+        { text: esTitles.japaneseBible, url: ROUTES.japanese.japaneseReadings },
+        { text: esTitles.japaneseCurrentSong, url: ROUTES.japanese.japanesePracticeLyrics },
+        { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.japanese.japaneseParenthesesToFurigana },
       ]
     },
     {
@@ -73,7 +73,7 @@ const defaultText: ContentPerLanguage = {
       anchorId: 'English-Teacher',
       links: [
         { text: defaultTextTitles.teachingResume, url: ROUTES.external.resume.teacherEnglish, external: true },
-        { text: defaultTextTitles.teachingPortfolio, url: ROUTES.aboutMe.teacherPortfolio },
+        { text: defaultTextTitles.teachingPortfolio, url: ROUTES.teacherPortfolio },
         { text: defaultTextTitles.teachingPokePeru, url: ROUTES.pokePeru.battle },
       ]
     },
@@ -81,7 +81,7 @@ const defaultText: ContentPerLanguage = {
       title: defaultTextTitles.softwareEngineering,
       anchorId: 'Software-Engineering',
       links: [
-        { text: defaultTextTitles.softwareEngineeringPortfolio, url: ROUTES.aboutMe.techPortfolio },
+        { text: defaultTextTitles.softwareEngineeringPortfolio, url: ROUTES.techPortfolio },
         { text: defaultTextTitles.softwareEngineerResume, url: ROUTES.external.resume.softwareEngineer, external: true },
       ]
     },
@@ -89,10 +89,10 @@ const defaultText: ContentPerLanguage = {
       title: defaultTextTitles.japanese,
       anchorId: 'Japanese-Studies',
       links: [
-        { text: defaultTextTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
-        { text: defaultTextTitles.japaneseBible, url: ROUTES.japaneseReadings },
-        { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.japanesePracticeLyrics },
-        { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.japaneseParenthesesToFurigana },
+        { text: defaultTextTitles.japaneseMusicCovers, url: ROUTES.japanese.japaneseMusicCovers },
+        { text: defaultTextTitles.japaneseBible, url: ROUTES.japanese.japaneseReadings },
+        { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.japanese.japanesePracticeLyrics },
+        { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.japanese.japaneseParenthesesToFurigana },
       ]
     },
     {

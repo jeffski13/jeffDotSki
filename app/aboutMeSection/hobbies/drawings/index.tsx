@@ -240,7 +240,7 @@ export function Drawings({
             </div>
             <img
               id={`full-image-${getOverlayIdx()}`}
-              src={overlayImg}
+              src={overlayImg ? overlayImg : undefined}
               alt={`Full drawing${backgroundLoaded ? '' : ' loading...'}`}
               className={`fullImage ${backgroundLoaded ? 'loaded' : 'loading'}`}
               onClick={e => {

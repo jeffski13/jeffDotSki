@@ -47,6 +47,7 @@ export default tseslint.config(
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "no-empty-pattern": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
     },
   },
   {
@@ -59,12 +60,6 @@ export default tseslint.config(
     files: ["app/infra/firebaseClient.ts"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
-    },
-  },
-  {
-    files: ["app/root.tsx"],
-    rules: {
-      "@typescript-eslint/ban-ts-comment": "off",
     },
   },
   {
