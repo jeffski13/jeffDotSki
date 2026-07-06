@@ -31,7 +31,7 @@ const ROUTES = {
     drawing: '/aboutme/hobbies/drawing',
     tvShows: '/aboutme/hobbies/tvShows',
   },
-  external: {
+  external: { //for testability, to make sure all above routes are in the firebase file
     instagram: 'https://www.instagram.com/jeffski13/',
     resume: {
       teacherEnglish: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TeacherEnglish_2025_11_17.pdf',
