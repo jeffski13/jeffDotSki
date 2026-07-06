@@ -10,7 +10,7 @@ import './styles.css';
 
 export const songs: LyricsSong[] = [senNoYoruWoKoete, tegami, stayWithMe, eikouNoKakehashi, itsuka];
 
-export default function HomePage() {
+export default function WebPage() {
   const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
 
   const song = useMemo(

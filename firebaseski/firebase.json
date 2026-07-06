@@ -25,6 +25,7 @@
         {"source":"/readingsNihongoToEigo","destination":"/index.html"},
         {"source":"/practiceNihongoLyrics","destination":"/index.html"},
         {"source":"/japaneseMusicCovers","destination":"/index.html"},
+        {"source":"/nihonParenthesesToFurigana","destination":"/index.html"},
         {"source":"/sitemap","destination":"/index.html"}
     ]
   }
