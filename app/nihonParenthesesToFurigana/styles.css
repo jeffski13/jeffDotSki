@@ -91,6 +91,16 @@
   visibility: hidden;
 }
 
+.nihonParenthesesToFurigana_linebreak {
+  display: block;
+  content: '';
+  margin-top: 0.5em;
+}
+
 .nihonParenthesesToFurigana_paragraph {
-  margin-bottom: 1em;
+  margin-bottom: 1.75em;
+}
+
+.nihonParenthesesToFurigana_paragraph:last-child {
+  margin-bottom: 0;
 }

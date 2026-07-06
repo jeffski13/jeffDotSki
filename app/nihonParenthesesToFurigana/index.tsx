@@ -45,7 +45,7 @@ function renderFuriganaParagraph(paragraph: string, keyPrefix: string): React.Re
   return lines.map((line, i) => (
     <Fragment key={`${keyPrefix}-line${i}`}>
       {parseFuriganaLine(line, `${keyPrefix}-line${i}`)}
-      {i < lines.length - 1 && <br />}
+      {i < lines.length - 1 && <br className="nihonParenthesesToFurigana_linebreak" />}
     </Fragment>
   ));
 }
@@ -57,7 +57,7 @@ export default function NihonParenthesesToFuriganaPage() {
 
   const handleConvert = () => {
     const paragraphs = inputText
-      .split(/\n\s*\n/)
+      .split(/\n+/)
       .map((p) => p.trim())
       .filter((p) => p.length > 0);
     setConvertedParagraphs(paragraphs);
