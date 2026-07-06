@@ -7,8 +7,9 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { useEffect } from 'react';
-import { initFirebase, logPageView, shouldUseFirebase } from '~/infra/firebaseClient';
+// @ts-ignore
 import { Helmet } from "react-helmet";
+import { initFirebase, logPageView, shouldUseFirebase } from '~/infra/firebaseClient';
 import type { Route } from "./+types/root";
 import "./app.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -103,14 +104,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
         <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"
+          // @ts-ignore
           crossOrigin="true"></script>
 
         <script
           src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"
+          // @ts-ignore
           crossOrigin="true"></script>
 
         <script
           src="https://cdn.jsdelivr.net/npm/react-bootstrap@2.10.4/dist/react-bootstrap.min.js"
+          // @ts-ignore
           crossOrigin="true"></script>
 
         <script>var Alert = ReactBootstrap.Alert;</script>

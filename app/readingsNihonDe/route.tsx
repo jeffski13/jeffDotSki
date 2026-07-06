@@ -1,5 +1,6 @@
-import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
+// @ts-ignore
 import type { Route } from "./+types/home";
+import JeffSkiPageWithContent from "~/infra/JeffSkiPageWithContent";
 import ReadingsNihonDe from ".";
 
 export function meta({ }: Route.MetaArgs) {

@@ -1,4 +1,4 @@
-export enum THEME {
+export const enum THEME {
     DARK,
     LIGHT
 }
@@ -124,7 +124,7 @@ export const getThemeManager = (themeStore: ThemeStore, domThemeSetter: DomTheme
         },
         toggleTheme: function (): void {
             const currentTheme = this.getCurrentTheme();
-            let nextTheme = currentTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+            const nextTheme = currentTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
             this.updateTheme(nextTheme);
         }
     };

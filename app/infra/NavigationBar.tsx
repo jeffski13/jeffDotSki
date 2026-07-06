@@ -117,12 +117,12 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
                         <NavDropdown title={<><span className="nav-title-full">{content.teaching}</span><span className="nav-title-short">{content.teachingShort}</span></>} id="navigationbar-teaching">
-                            <NavDropdown.Item href={ROUTES.aboutMe.teacherPortfolio}>{content.teachingPortfolio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.teacherPortfolio}>{content.teachingPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.resume.teacherEnglish} target="_blank" rel="noopener noreferrer">{content.teachingResume}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.pokePeru.battle}>{content.teachingPokePeru}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.softwareEngineering}</span><span className="nav-title-short">{content.softwareEngineeringShort}</span></>} id="navigationbar-software-engineering">
-                            <NavDropdown.Item href={ROUTES.aboutMe.techPortfolio}>{content.softwareEngineeringPortfolio}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.techPortfolio}>{content.softwareEngineeringPortfolio}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} target="_blank" rel="noopener noreferrer">{content.softwareEngineerResume}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.japanese}</span><span className="nav-title-short">{content.japaneseShort}</span></>} id="navigationbar-japanese-studies">

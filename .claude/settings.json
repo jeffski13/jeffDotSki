@@ -1,6 +1,11 @@
 {
   "permissions": {
     "allow": [
+      "Bash(npm view *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)",
+      "Bash(npx react-router *)"
     ]
   }
 }

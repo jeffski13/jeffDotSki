@@ -45,8 +45,8 @@ export const calculateAdjustedDamage = (
   const A = isPhysical ? attackerMonster.attack : attackerMonster.specialAttack;
   const D = isPhysical ? defenderMonster.defense : defenderMonster.specialDefense;
 
-  let level = 10;
-  let criticalHitFactor = 1;
+  const level = 10;
+  const criticalHitFactor = 1;
   let adjustedDamage = (((((2 * level * criticalHitFactor) / 5) + 2) * attackBaseDamage * (A / D)) / 50) + 2
 
   // Adjust damage based on type effectiveness

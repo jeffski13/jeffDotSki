@@ -216,12 +216,6 @@ export default function ReadingsNihonDe() {
   }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, book, chapter, startVerse, verses]);
 
   useEffect(() => {
-    if (urlBook || (savedSettings.lastBook && savedSettings.lastChapter)) {
-      handleSearch();
-    }
-  }, []);
-
-  useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 300);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -441,6 +435,12 @@ export default function ReadingsNihonDe() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (urlBook || (savedSettings.lastBook && savedSettings.lastChapter)) {
+      handleSearch();
+    }
+  }, []);
 
   const hasPassage = verses.length > 0;
 

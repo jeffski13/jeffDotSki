@@ -11,7 +11,7 @@ export const getDuplicateIdNames = (monsters: Monster[]) => {
   }
   const dups = Object.entries(idCounts).filter(([id, count]) => count > 1);
   if (dups.length > 0) {
-    let duplicateNames = [];
+    const duplicateNames = [];
     for (let duplicateId = 0; duplicateId < dups.length; duplicateId++) {
       const element = dups[duplicateId]['0'];
       for (const monsterEntry of monsters) {

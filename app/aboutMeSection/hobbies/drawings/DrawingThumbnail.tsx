@@ -8,12 +8,12 @@ interface DrawingThumbailProps {
   index: number;
   titleLabel: string;
   isTestEnvInstantLoad: boolean;
-  onImageClicked: Function;
+  onImageClicked: () => void;
 }
 
 export const DrawingThumbail = ({drawingItem, index, titleLabel, isTestEnvInstantLoad, onImageClicked}: DrawingThumbailProps) => {
   const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
-  const [thumbnailImg, setThumbnailImg] = useState<string | null>(null);
+  const [thumbnailImg, setThumbnailImg] = useState<string | undefined>(undefined);
   const loadImg = (imagePath: string) => {
     if (!imagePath) {
       return;

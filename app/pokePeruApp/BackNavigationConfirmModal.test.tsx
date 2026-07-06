@@ -22,9 +22,9 @@ describe('BackNavigationConfirmModal', () => {
 
     // Mock window.location.href
     const originalLocation = window.location;
-    // @ts-ignore
+    // @ts-unexpected-error
     delete window.location;
-    // @ts-ignore
+    // @ts-unexpected-error
     window.location = { href: '' };
 
     render(

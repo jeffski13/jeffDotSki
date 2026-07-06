@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import PokePeruExtendedUniverse, { PokedexExtendedUniverseContainer, GymLeaderListExtendedUniverseContainer } from './PokePeruExtendedUniverse';
 import { getExtendedUniverseBackgroundImages } from './backgroundImagesExtendedUniverse';
-import { IMAGE_PATH_PREFIX } from '~/pokePeruApp/battle/backgroundImagesList';
+import { IMAGE_PATH_PREFIX } from '../../../pokePeruApp/battle/backgroundImagesList';
 
 describe('PokePeruExtendedUniverse Component', () => {
   it('renders the component', () => {

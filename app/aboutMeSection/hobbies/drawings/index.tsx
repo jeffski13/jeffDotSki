@@ -164,7 +164,7 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsList.map(
-                (item, i) => <DrawingThumbail drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                (item, i) => <DrawingThumbail key={item.full+i} drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
                 onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
@@ -188,7 +188,7 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsHalloweenList.map(
-                (item, i) => <DrawingThumbail drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                (item, i) => <DrawingThumbail key={item.full+i}  drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
                 onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
@@ -240,7 +240,7 @@ export function Drawings({
             </div>
             <img
               id={`full-image-${getOverlayIdx()}`}
-              src={overlayImg}
+              src={overlayImg ? overlayImg : undefined}
               alt={`Full drawing${backgroundLoaded ? '' : ' loading...'}`}
               className={`fullImage ${backgroundLoaded ? 'loaded' : 'loading'}`}
               onClick={e => {

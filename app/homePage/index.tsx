@@ -19,8 +19,8 @@ export interface ContentPerLanguage {
 const es: ContentPerLanguage = {
   whoIs: '¿Quién Es Jeff (Jeffski) Szcinski?',
   roles: [
-    { label: 'Ingeniero de Software', desc: 'Desarrollador web y aplicaciones nativas de Android', link: ROUTES.aboutMe.techPortfolio },
-    { label: 'Innovador en Educación de Inglés', desc: 'Escuela primaria y clases particulares para hispanohablantes', link: ROUTES.aboutMe.teacherPortfolio },
+    { label: 'Ingeniero de Software', desc: 'Desarrollador web y aplicaciones nativas de Android', link: ROUTES.techPortfolio },
+    { label: 'Innovador en Educación de Inglés', desc: 'Escuela primaria y clases particulares para hispanohablantes', link: ROUTES.teacherPortfolio },
     { label: 'Estudiante de Japonés', desc: 'Konnichi wa! Todos los dias estudio con clases, videojuegos, música, etc.', link: `${ROUTES.sitemap}#Japanese-Studies` },
     { label: 'Viajero del Mundo', desc: 'Tokio, Japón • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
     { label: 'Artista y Músico', desc: 'Guitarra, Piano, Cantante Semiprofesional, Dibujar, y Más!', link: `${ROUTES.sitemap}#About-Me` },
@@ -29,8 +29,8 @@ const es: ContentPerLanguage = {
 const defaultText: ContentPerLanguage = {
   whoIs: 'Who Is Jeff (Jeffski) Szcinski?',
   roles: [
-    { label: 'Software Engineer', desc: 'Web Developer and Android Native Applications', link: ROUTES.aboutMe.techPortfolio },
-    { label: 'English Education Innovator', desc: 'Elementry School and Private Lessons for Spanish Speakers', link: ROUTES.aboutMe.teacherPortfolio },
+    { label: 'Software Engineer', desc: 'Web Developer and Android Native Applications', link: ROUTES.techPortfolio },
+    { label: 'English Education Innovator', desc: 'Elementry School and Private Lessons for Spanish Speakers', link: ROUTES.teacherPortfolio },
     { label: 'Japanese Student', desc: 'Konnichi wa! Everyday I study hard with class, video games, music, etc.', link: `${ROUTES.sitemap}#Japanese-Studies` },
     { label: 'World Traveler', desc: 'Tokyo, Japan • Santiago, Chile • Medellín, Colombia • Lima, Perú', link: ROUTES.external.instagram },
     { label: 'Artist and Performer', desc: 'Guitar, Piano, Semi-Professional Singer, Drawing, and More!', link: `${ROUTES.sitemap}#About-Me` },
@@ -63,7 +63,7 @@ export default function HomePage() {
             <div className="homePage_aboutJeff-text-container">
               <h3>{content.whoIs}</h3>
               <ul className="homePage-link-list-container">
-                {content.roles.map((role: Role, i) => (
+                {content.roles.map((role: Role, i: number) => (
                   <li key={i} className="homePage-link-container">
                     <strong><a className="homePage-link" href={role.link}>{role.label}</a>:</strong> {role.desc}
                   </li>
