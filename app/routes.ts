@@ -15,7 +15,7 @@ export default [
     route(ROUTES.japaneseReadings, "readingsNihonDe/route.tsx"),
     route(ROUTES.japanesePracticeLyrics, "practiceNihongoLyrics/route.tsx"),
     route(ROUTES.japaneseMusicCovers, "japaneseMusicCovers/route.tsx"),
-    route(ROUTES.japaneseParenthesesToFurigana, "nihonParenthesesToFurigana/route.tsx"),
+    route(ROUTES.japanese.japaneseParenthesesToFurigana, "nihonParenthesesToFurigana/route.tsx"),
     
     route(ROUTES.pokePeru.battle, "pokePeruApp/routes/pokeperubattle.tsx"),
     route(ROUTES.pokePeru.pokedex, "pokePeruApp/routes/pokeperupokedex.tsx"),

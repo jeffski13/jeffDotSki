@@ -78,6 +78,7 @@ export function Pokedex({ selectedMonsters, battleRoute, storageKey }: PokedexPr
         handleToggleEdit(id);
       }
     }
+    
     window.location.href = battleRoute;
   };
 

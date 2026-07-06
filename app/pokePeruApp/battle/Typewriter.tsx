@@ -4,7 +4,7 @@ const useTypewriter = (text, speed = 100) => {
   const [displayText, setDisplayText] = useState('');
 
   useEffect(() => {
-    let wordList = text.split(' ');
+    const wordList = text.split(' ');
     let i = 0;
     const typingInterval = setInterval(() => {
       if (i < (wordList.length)) {
@@ -23,7 +23,12 @@ const useTypewriter = (text, speed = 100) => {
   return displayText;
 };
 
-export default function Typewriter({text, isInstantTextRender = false}) {
+interface TypewriterProps {
+  text: string;
+  isInstantTextRender?: boolean;
+}
+
+export default function Typewriter({text, isInstantTextRender = false}: TypewriterProps) {
   //testability
   if(isInstantTextRender) {
     return <span>{text}</span>;

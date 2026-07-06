@@ -8,7 +8,7 @@ interface DrawingThumbailProps {
   index: number;
   titleLabel: string;
   isTestEnvInstantLoad: boolean;
-  onImageClicked: Function;
+  onImageClicked: () => void;
 }
 
 export const DrawingThumbail = ({drawingItem, index, titleLabel, isTestEnvInstantLoad, onImageClicked}: DrawingThumbailProps) => {

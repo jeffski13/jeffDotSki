@@ -22,8 +22,8 @@ export function FooterBar() {
   const [isGithubImgMouseOver, setIsGithubImgMouseOver] = useState(false);
   const [isInstaMouseOver, setIsInstaMouseOver] = useState(false);
 
-  let githubLogoImage = isGithubImgMouseOver ? githubLogoShadow : githubLogo;
-  let instaLogoImage = isInstaMouseOver ? instaLogoShadow : instaLogo;
+  const githubLogoImage = isGithubImgMouseOver ? githubLogoShadow : githubLogo;
+  const instaLogoImage = isInstaMouseOver ? instaLogoShadow : instaLogo;
 
   const es: ContentPerLanguage = {
     version: 'Versión',

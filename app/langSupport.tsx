@@ -14,6 +14,6 @@ export const getBrowserLanguage = () => {
   }, []);
 }
 
-export const getContentByLanguage = (multiLangContent: MultiLangContent, lang: String) => {
+export const getContentByLanguage = (multiLangContent: MultiLangContent, lang: string) => {
   return lang === 'es' ? multiLangContent.es : multiLangContent.default;
 }
