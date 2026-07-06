@@ -1,12 +1,7 @@
 const ROUTES = {
   sitemap: '/sitemap',
-  aboutMe: {
-    bio: '/aboutme/bio',
-    drawing: '/aboutme/hobbies/drawing',
-    tvShows: '/aboutme/hobbies/tvShows',
-    techPortfolio: '/aboutme/techPortfolio',
-    teacherPortfolio: '/aboutme/teacherPortfolio',
-  },
+  techPortfolio: '/techPortfolio',
+  teacherPortfolio: '/teacherPortfolio',
   pokePeru: {
     battle: '/pokeperu/battle',
     pokedex: '/pokeperu/pokedex',
@@ -25,10 +20,17 @@ const ROUTES = {
       }
     }
   },
-  japaneseReadings: '/japaneseReadings',
-  japanesePracticeLyrics: '/japanesePracticeLyrics',
-  japaneseMusicCovers: '/japaneseMusicCovers',
-  japneseParenthesesToFurigana: '/japneseParenthesesToFurigana',
+  japanese: {
+    japaneseReadings: '/japaneseReadings',
+    japanesePracticeLyrics: '/japanesePracticeLyrics',
+    japaneseMusicCovers: '/japaneseMusicCovers',
+    japaneseParenthesesToFurigana: '/japaneseParenthesesToFurigana',
+  },
+  aboutMe: {
+    bio: '/aboutme/bio',
+    drawing: '/aboutme/hobbies/drawing',
+    tvShows: '/aboutme/hobbies/tvShows',
+  },
   external: {
     instagram: 'https://www.instagram.com/jeffski13/',
     resume: {

@@ -49,7 +49,7 @@ const es: ContentPerLanguage = {
         { text: esTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
         { text: esTitles.japaneseBible, url: ROUTES.japaneseReadings },
         { text: esTitles.japaneseCurrentSong, url: ROUTES.japanesePracticeLyrics },
-        { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.japneseParenthesesToFurigana },
+        { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.japaneseParenthesesToFurigana },
       ]
     },
     {
@@ -92,7 +92,7 @@ const defaultText: ContentPerLanguage = {
         { text: defaultTextTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
         { text: defaultTextTitles.japaneseBible, url: ROUTES.japaneseReadings },
         { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.japanesePracticeLyrics },
-        { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.japneseParenthesesToFurigana },
+        { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.japaneseParenthesesToFurigana },
       ]
     },
     {

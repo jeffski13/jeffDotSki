@@ -8,11 +8,8 @@
     ],
     "rewrites":[
       {"source":"/sitemap","destination":"/index.html"},
-      {"source":"/aboutme/bio","destination":"/index.html"},
-      {"source":"/aboutme/hobbies/drawing","destination":"/index.html"},
-      {"source":"/aboutme/hobbies/tvShows","destination":"/index.html"},
-      {"source":"/aboutme/techPortfolio","destination":"/index.html"},
-      {"source":"/aboutme/teacherPortfolio","destination":"/index.html"},
+      {"source":"/techPortfolio","destination":"/index.html"},
+      {"source":"/teacherPortfolio","destination":"/index.html"},
       {"source":"/pokeperu/battle","destination":"/index.html"},
       {"source":"/pokeperu/gymleaders","destination":"/index.html"},
       {"source":"/pokeperu/info","destination":"/index.html"},
@@ -26,7 +23,10 @@
       {"source":"/japaneseReadings","destination":"/index.html"},
       {"source":"/japanesePracticeLyrics","destination":"/index.html"},
       {"source":"/japaneseMusicCovers","destination":"/index.html"},
-      {"source":"/japneseParenthesesToFurigana","destination":"/index.html"}
+      {"source":"/japaneseParenthesesToFurigana","destination":"/index.html"},
+      {"source":"/aboutme/bio","destination":"/index.html"},
+      {"source":"/aboutme/hobbies/drawing","destination":"/index.html"},
+      {"source":"/aboutme/hobbies/tvShows","destination":"/index.html"}
     ]
   }
 }
