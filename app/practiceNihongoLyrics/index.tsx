@@ -7,7 +7,7 @@ import './styles.css';
 
 const songs: LyricsSong[] = [senNoYoruWoKoete, tegami];
 
-export default function HomePage() {
+export default function WebPage() {
   const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
 
   const song = useMemo(
