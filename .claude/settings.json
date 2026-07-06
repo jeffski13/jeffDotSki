@@ -1,17 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx jest:*)",
-      "Bash(npx tsc *)",
-      "Bash(python3 -c ' *)",
-      "Bash(python3)",
-      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:d.get\\(k\\) for k in ['scripts','devDependencies','dependencies']}, indent=2\\)\\)\")",
-      "Bash(npm install *)",
-      "Bash(npm run *)",
-      "Bash(grep -E \"\\\\.\\(ts|tsx|js|jsx\\)$\")",
-      "Bash(npx vitest *)",
-      "Bash(node -e ' *)",
-      "WebFetch(domain:www.youtube.com)"
     ]
   }
 }
