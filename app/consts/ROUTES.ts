@@ -27,6 +27,7 @@ const ROUTES = {
     readingsNihonDe: '/readingsNihongoToEigo',
     practiceNihongoLyrics: '/practiceNihongoLyrics',
     japaneseMusicCovers: '/japaneseMusicCovers',
+    nihonParenthesesToFurigana: '/nihonParenthesesToFurigana',
     sitemap: '/sitemap',
     external: {
       instagram: 'https://www.instagram.com/jeffski13/',
