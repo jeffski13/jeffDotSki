@@ -1,43 +1,43 @@
 const ROUTES = {
-    aboutMe: {
-      bio: '/aboutme/bio',
-      drawing: '/aboutme/hobbies/drawing',
-      tvShows: '/aboutme/hobbies/tvShows',
-      techPortfolio: '/aboutme/techPortfolio',
-      teacherPortfolio: '/aboutme/teacherPortfolio',
-    },
-    pokePeru: {
-      battle: '/pokeperu/battle',
-      pokedex: '/pokeperu/pokedex',
-      gymleaders: '/pokeperu/gymleaders',
-      info: '/pokeperu/info',
-      extendedUniverse: {
-        claremore: {
-          battle: '/pokeperu/claremore/battle',
-          dex: '/pokeperu/claremore/pokedex',
-          gym: '/pokeperu/claremore/gymleaders',
-        },
-        southCarolina: {
-          battle: '/pokeperu/southCarolina/battle',
-          dex: '/pokeperu/southCarolina/pokedex',
-          gym: '/pokeperu/southCarolina/gymleaders',
-        }
-      }
-    },
-    readingsNihonDe: '/readingsNihongoToEigo',
-    practiceNihongoLyrics: '/practiceNihongoLyrics',
-    japaneseMusicCovers: '/japaneseMusicCovers',
-    nihonParenthesesToFurigana: '/nihonParenthesesToFurigana',
-    sitemap: '/sitemap',
-    external: {
-      instagram: 'https://www.instagram.com/jeffski13/',
-      resume: {
-        teacherEnglish: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TeacherEnglish_2025_11_17.pdf',
-        profeIngles: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_ProfeIngles_2025_11_17_ES.pdf',
-        softwareEngineer: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume_2025_12_15.pdf',
-        ingenieroDeSoftware: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_CV_2025_12_15_ES.pdf',
+  sitemap: '/sitemap',
+  aboutMe: {
+    bio: '/aboutme/bio',
+    drawing: '/aboutme/hobbies/drawing',
+    tvShows: '/aboutme/hobbies/tvShows',
+    techPortfolio: '/aboutme/techPortfolio',
+    teacherPortfolio: '/aboutme/teacherPortfolio',
+  },
+  pokePeru: {
+    battle: '/pokeperu/battle',
+    pokedex: '/pokeperu/pokedex',
+    gymleaders: '/pokeperu/gymleaders',
+    info: '/pokeperu/info',
+    extendedUniverse: {
+      claremore: {
+        battle: '/pokeperu/claremore/battle',
+        dex: '/pokeperu/claremore/pokedex',
+        gym: '/pokeperu/claremore/gymleaders',
       },
-      certification: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TEFL_Certification.pdf'
+      southCarolina: {
+        battle: '/pokeperu/southCarolina/battle',
+        dex: '/pokeperu/southCarolina/pokedex',
+        gym: '/pokeperu/southCarolina/gymleaders',
+      }
     }
+  },
+  japaneseReadings: '/japaneseReadings',
+  japanesePracticeLyrics: '/japanesePracticeLyrics',
+  japaneseMusicCovers: '/japaneseMusicCovers',
+  japneseParenthesesToFurigana: '/japneseParenthesesToFurigana',
+  external: {
+    instagram: 'https://www.instagram.com/jeffski13/',
+    resume: {
+      teacherEnglish: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TeacherEnglish_2025_11_17.pdf',
+      profeIngles: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_ProfeIngles_2025_11_17_ES.pdf',
+      softwareEngineer: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume_2025_12_15.pdf',
+      ingenieroDeSoftware: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_CV_2025_12_15_ES.pdf',
+    },
+    certification: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TEFL_Certification.pdf'
+  }
 };
 export default ROUTES;

@@ -127,9 +127,9 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.japanese}</span><span className="nav-title-short">{content.japaneseShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.readingsNihonDe}>{content.japaneseBible}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.practiceNihongoLyrics}>{content.japaneseCurrentSong}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.nihonParenthesesToFurigana}>{content.japaneseParenthesesToFurigana}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japaneseReadings}>{content.japaneseBible}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japanesePracticeLyrics}>{content.japaneseCurrentSong}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japneseParenthesesToFurigana}>{content.japaneseParenthesesToFurigana}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.aboutBio}</NavDropdown.Item>

@@ -47,9 +47,9 @@ const es: ContentPerLanguage = {
       anchorId: 'Japanese-Studies',
       links: [
         { text: esTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
-        { text: esTitles.japaneseBible, url: ROUTES.readingsNihonDe },
-        { text: esTitles.japaneseCurrentSong, url: ROUTES.practiceNihongoLyrics },
-        { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.nihonParenthesesToFurigana },
+        { text: esTitles.japaneseBible, url: ROUTES.japaneseReadings },
+        { text: esTitles.japaneseCurrentSong, url: ROUTES.japanesePracticeLyrics },
+        { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.japneseParenthesesToFurigana },
       ]
     },
     {
@@ -90,9 +90,9 @@ const defaultText: ContentPerLanguage = {
       anchorId: 'Japanese-Studies',
       links: [
         { text: defaultTextTitles.japaneseMusicCovers, url: ROUTES.japaneseMusicCovers },
-        { text: defaultTextTitles.japaneseBible, url: ROUTES.readingsNihonDe },
-        { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.practiceNihongoLyrics },
-        { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.nihonParenthesesToFurigana },
+        { text: defaultTextTitles.japaneseBible, url: ROUTES.japaneseReadings },
+        { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.japanesePracticeLyrics },
+        { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.japneseParenthesesToFurigana },
       ]
     },
     {

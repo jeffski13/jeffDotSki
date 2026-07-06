@@ -12,10 +12,10 @@ export default [
     route(ROUTES.aboutMe.tvShows, "aboutMeSection/hobbies/tvShows/route.tsx"),
     route(ROUTES.aboutMe.bio, "aboutMeSection/bio/route.tsx"),
    
-    route(ROUTES.readingsNihonDe, "readingsNihonDe/route.tsx"),
-    route(ROUTES.practiceNihongoLyrics, "practiceNihongoLyrics/route.tsx"),
+    route(ROUTES.japaneseReadings, "readingsNihonDe/route.tsx"),
+    route(ROUTES.japanesePracticeLyrics, "practiceNihongoLyrics/route.tsx"),
     route(ROUTES.japaneseMusicCovers, "japaneseMusicCovers/route.tsx"),
-    route(ROUTES.nihonParenthesesToFurigana, "nihonParenthesesToFurigana/route.tsx"),
+    route(ROUTES.japneseParenthesesToFurigana, "nihonParenthesesToFurigana/route.tsx"),
     
     route(ROUTES.pokePeru.battle, "pokePeruApp/routes/pokeperubattle.tsx"),
     route(ROUTES.pokePeru.pokedex, "pokePeruApp/routes/pokeperupokedex.tsx"),
