@@ -71,7 +71,7 @@ export default function NihonParenthesesToFuriganaPage() {
           <span className="nihonParenthesesToFurigana_title-en">Parentheses to Furigana</span>
         </h1>
         <p className="nihonParenthesesToFurigana_subtitle">
-          Paste Japanese text using the 漢字（かんじ）or 漢字(かんじ) parentheses format below to render it as furigana.
+          Paste Japanese text in the 漢字（かんじ）format below to render it as furigana.
         </p>
 
         <Form.Group className="nihonParenthesesToFurigana_input-group">
