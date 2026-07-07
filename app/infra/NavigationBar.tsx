@@ -1,7 +1,7 @@
 import { Navbar, NavDropdown, Nav, Button } from 'react-bootstrap';
 import ROUTES from '../consts/ROUTES';
 import './styles.css';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from './langSupport/langSupport';
 import { THEME, type ThemeManager } from './darkTheme';
 import { useEffect, useState } from 'react';
 

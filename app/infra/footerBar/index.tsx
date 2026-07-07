@@ -7,7 +7,7 @@ import instaLogo from './instagram-logo.png';
 import instaLogoShadow from './instagram-logo-shadow.png';
 import packageJson from "package.json";
 import ROUTES from '~/consts/ROUTES';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/infra/langSupport/langSupport';
 import '../mobile-support.css';
 import './styles.css';
 
