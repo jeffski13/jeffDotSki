@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Pokedex } from './Pokedex';
 import mockSelectedMonsters from '../mockMonsters';
-import ROUTES from '../../consts/ROUTES';
+import ROUTES from '../../../consts/ROUTES';
 
 describe('Pokedex Component', () => {
 

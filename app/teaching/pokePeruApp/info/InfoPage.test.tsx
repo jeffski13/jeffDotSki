@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { InfoPage } from './InfoPage';
 import { monsters } from '../monsters';
 import { gymLeaders } from '../gymleaders';
-import { locationProviderMock } from '../../aboutMeSection/PortfolioProps';
+import { locationProviderMock } from '../../../infra/portfolio/PortfolioProps';
 
 describe('Pokedex Component', () => {
   it('renders the back link', () => {

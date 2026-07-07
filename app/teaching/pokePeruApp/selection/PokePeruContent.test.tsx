@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { PokePeruContent } from '../index';
 import mockSelectedMonsters, { mockTrainers } from '../mockMonsters';
-import ROUTES from '../../consts/ROUTES';
+import ROUTES from '../../../consts/ROUTES';
 import MonsterSelection from './MonsterSelection';
 
 describe('PokePeruStart Component', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import TeacherPortfolio from './index';
-import { locationProviderMock } from '../PortfolioProps';
+import { locationProviderMock } from '../../infra/portfolio/PortfolioProps';
 
 describe('TechPortfolio Component', () => {
   test('renders main content', () => {

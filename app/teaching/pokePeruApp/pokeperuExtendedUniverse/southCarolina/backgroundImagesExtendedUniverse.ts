@@ -1,4 +1,4 @@
-import backgroundImageList from "~/pokePeruApp/battle/backgroundImagesList";
+import backgroundImageList from "../../battle/backgroundImagesList";
 
 export const backgroundImageListExtendedUniverse: string[] = [
 ];

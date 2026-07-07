@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import {GymLeaderList} from './GymLeaderList';
 import { gymLeaders } from '../gymleaders';
-import ROUTES from '../../consts/ROUTES';
+import ROUTES from '../../../consts/ROUTES';
 
 describe('GymLeaderList', () => {
   it('renders the name of each GymLeader', () => {
