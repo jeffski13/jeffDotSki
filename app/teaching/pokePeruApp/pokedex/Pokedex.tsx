@@ -5,14 +5,14 @@ import { monsters, type Monster } from '../monsters';
 import { ElementType } from '../ElementType';
 import { getMonsterData } from './exportMonsterData';
 import { getDuplicateIdNames, getMissingIdNames } from './monsterDuplicationCheck';
-import ROUTES from '../../consts/ROUTES';
+import ROUTES from '../../../consts/ROUTES';
 import KEYS from '~/consts/KEYS';
 import './pokedex.css';
 import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
 import '../types.css';
-import '../../infra/mobile-support.css';
+import '../../../infra/mobile-support.css';
 
 interface PokedexProps {
   selectedMonsters: Monster[];

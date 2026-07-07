@@ -1,11 +1,11 @@
-import ROUTES from '../../consts/ROUTES';
+import ROUTES from '../../../consts/ROUTES';
 import { gymLeaders, type GymLeader } from '../gymleaders';
 import { monsters, type Monster } from '../monsters';
 import './gymleaderlist.css';
 import '../navigation.css';
 import '../secondaryPage.css';
 import '../infolink.css';
-import '../../infra/mobile-support.css';
+import '../../../infra/mobile-support.css';
 import { Col, Container, Row } from 'react-bootstrap';
 
 interface GymLeaderListProps {

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import ROUTES from '../../consts/ROUTES';
+import ROUTES from '../../../consts/ROUTES';
 import type { Monster } from '../monsters';
 import './monsterselection.css';
 import '../secondaryPage.css';
