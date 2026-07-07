@@ -8,7 +8,7 @@ import '../../infra/mobile-support.css';
 import '../navigation.css';
 import '../secondaryPage.css';
 import './infopage.css';
-import { locationProviderImpl, type PortfolioProps } from '~/aboutMeSection/PortfolioProps';
+import { locationProviderImpl, type PortfolioProps } from '~/infra/portfolio/PortfolioProps';
 import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 
 export default function InfoPageContainer() {

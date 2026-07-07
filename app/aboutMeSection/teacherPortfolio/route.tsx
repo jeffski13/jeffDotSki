@@ -2,7 +2,7 @@
 import type { Route } from "./+types/home";
 import JeffSkiPageWithContent from "../../infra/JeffSkiPageWithContent"
 import TeacherPortfolio from ".";
-import { locationProviderImpl } from "../PortfolioProps";
+import { locationProviderImpl } from "../../infra/portfolio/PortfolioProps";
 
 export function meta({ }: Route.MetaArgs) {
   return [

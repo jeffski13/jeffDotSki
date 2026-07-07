@@ -6,13 +6,13 @@ import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
-import '../stylesParalax.css';
-import '../stylesPortfolio.css';
+import '../../infra/portfolio/stylesParalax.css';
+import '../../infra/portfolio/stylesPortfolio.css';
 import '../../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useEffect } from 'react';
-import type { PortfolioProps } from '../PortfolioProps';
+import type { PortfolioProps } from '../../infra/portfolio/PortfolioProps';
 
 interface ContentPerLanguage {
   heroTitle: string;
