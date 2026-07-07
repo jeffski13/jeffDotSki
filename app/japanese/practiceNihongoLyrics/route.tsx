@@ -1,6 +1,6 @@
 // @ts-ignore
 import type { Route } from "./+types/home";
-import JeffSkiPageWithContent from "../infra/JeffSkiPageWithContent"
+import JeffSkiPageWithContent from "../../infra/JeffSkiPageWithContent"
 import CurrentPage from ".";
 
 export function meta({ }: Route.MetaArgs) {

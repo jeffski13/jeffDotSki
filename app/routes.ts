@@ -22,10 +22,10 @@ export default [
     route(ROUTES.pokePeru.extendedUniverse.southCarolina.dex, "pokePeruApp/pokeperuExtendedUniverse/southCarolina/routes/pokeperuExtendedUniverseDex.tsx"),
     route(ROUTES.pokePeru.extendedUniverse.southCarolina.gym, "pokePeruApp/pokeperuExtendedUniverse/southCarolina/routes/pokeperuExtendedUniverseGym.tsx"),
     
-    route(ROUTES.japanese.japaneseReadings, "readingsNihonDe/route.tsx"),
-    route(ROUTES.japanese.japanesePracticeLyrics, "practiceNihongoLyrics/route.tsx"),
-    route(ROUTES.japanese.japaneseMusicCovers, "japaneseMusicCovers/route.tsx"),
-    route(ROUTES.japanese.japaneseParenthesesToFurigana, "nihonParenthesesToFurigana/route.tsx"),
+    route(ROUTES.japanese.japaneseReadings, "japanese/readingsNihonDe/route.tsx"),
+    route(ROUTES.japanese.japanesePracticeLyrics, "japanese/practiceNihongoLyrics/route.tsx"),
+    route(ROUTES.japanese.japaneseMusicCovers, "japanese/japaneseMusicCovers/route.tsx"),
+    route(ROUTES.japanese.japaneseParenthesesToFurigana, "japanese/nihonParenthesesToFurigana/route.tsx"),
     
     route(ROUTES.aboutMe.drawing, "aboutMeSection/hobbies/drawings/route.tsx"),
     route(ROUTES.aboutMe.tvShows, "aboutMeSection/hobbies/tvShows/route.tsx"),
