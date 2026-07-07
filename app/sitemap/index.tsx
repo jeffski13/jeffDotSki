@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import ROUTES from '../consts/ROUTES';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '~/infra/langSupport/langSupport';
 import { locationProviderImpl, type PortfolioProps } from '~/infra/portfolio/PortfolioProps';
 import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
 import './styles.css';

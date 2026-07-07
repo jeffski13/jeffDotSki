@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { getBrowserLanguage, getContentByLanguage, type MultiLangContent } from '../../../langSupport';
+import { getBrowserLanguage, getContentByLanguage, type MultiLangContent } from '../../../infra/langSupport/langSupport';
 import { v4 as uuidv4 } from 'uuid';
 import ROUTES from '../../../consts/ROUTES';
 import '../../../infra/mobile-support.css';

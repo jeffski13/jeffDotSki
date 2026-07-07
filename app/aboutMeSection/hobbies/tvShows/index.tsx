@@ -1,7 +1,7 @@
 
 import { Container, Row, Col } from 'react-bootstrap';
 import TvShow from './TvShow';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../../langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../../infra/langSupport/langSupport';
 import { tvshows, tvshowsFinished, type TvShowInfo } from './tvshows';
 import '../hobbiesStyles.css';
 

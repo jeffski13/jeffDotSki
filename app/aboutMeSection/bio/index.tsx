@@ -2,7 +2,7 @@ import { Container, Col, Row, Image } from 'react-bootstrap';
 import ROUTES from '../../consts/ROUTES';
 import '../styles.css';
 import './styles.css';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../langSupport';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../infra/langSupport/langSupport';
 
 interface ContentPerLanguage {
   aboutMe: string;

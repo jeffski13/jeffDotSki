@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import ImageGallery from "react-image-gallery";
 import FooterBar from "~/infra/footerBar";
 import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/infra/langSupport/langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
 import '../../infra/portfolio/stylesParalax.css';

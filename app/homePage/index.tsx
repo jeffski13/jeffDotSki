@@ -3,7 +3,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import './styles.css';
 import FooterBar from "~/infra/footerBar";
 import ROUTES from "~/consts/ROUTES";
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/infra/langSupport/langSupport";
 
 export interface Role {
   label: string;
