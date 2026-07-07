@@ -6,7 +6,7 @@ export default [
    
     route(ROUTES.sitemap, "sitemap/route.tsx"),
    
-    route(ROUTES.techPortfolio, "aboutMeSection/techPortfolio/route.tsx"),
+    route(ROUTES.techPortfolio, "techPortfolio/route.tsx"),
     route(ROUTES.teacherPortfolio, "teaching/teacherPortfolio/route.tsx"),
     
     route(ROUTES.pokePeru.battle, "teaching/pokePeruApp/routes/pokeperubattle.tsx"),

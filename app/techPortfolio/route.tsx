@@ -1,8 +1,8 @@
 // @ts-ignore
 import type { Route } from "./+types/home";
-import JeffSkiPageWithContent from "../../infra/JeffSkiPageWithContent"
+import JeffSkiPageWithContent from "../infra/JeffSkiPageWithContent"
 import TechPortfolio from ".";
-import { locationProviderImpl } from "../../infra/portfolio/PortfolioProps";
+import { locationProviderImpl } from "../infra/portfolio/PortfolioProps";
 
 export function meta({ }: Route.MetaArgs) {
   return [

@@ -1,18 +1,18 @@
 import { Col, Container, Row } from 'react-bootstrap';
 // @ts-ignore
 import ImageGallery from "react-image-gallery";
-import FooterBar from "~/infra/footerBar";
-import AnchorLink, { navigateToAnchor } from '~/infra/anchor/AnchorLink';
-import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "~/langSupport";
+import FooterBar from "../infra/footerBar";
+import AnchorLink, { navigateToAnchor } from '../infra/anchor/AnchorLink';
+import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from "../langSupport";
 import ROUTES from '~/consts/ROUTES';
 import './styles.css';
-import '../../infra/portfolio/stylesParalax.css';
-import '../../infra/portfolio/stylesPortfolio.css';
-import '../../infra/mobile-support.css'
+import '../infra/portfolio/stylesParalax.css';
+import '../infra/portfolio/stylesPortfolio.css';
+import '../infra/mobile-support.css'
 
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useEffect } from 'react';
-import type { PortfolioProps } from '../../infra/portfolio/PortfolioProps';
+import type { PortfolioProps } from '../infra/portfolio/PortfolioProps';
 
 interface ContentPerLanguage {
   heroTitle: string;
