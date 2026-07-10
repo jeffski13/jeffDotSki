@@ -1,4 +1,4 @@
-import { useState, useMemo, Fragment } from "react";
+import { useState, useMemo, useEffect, Fragment } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import type { LyricsSong } from "./src/types";
 import senNoYoruWoKoete from "./src/senNoYoruWoKoete";
@@ -10,6 +10,36 @@ import HaikyouNoSofa from "./src/HaikyouNoSofa";
 import './styles.css';
 
 export const songs: LyricsSong[] = [senNoYoruWoKoete, tegami, stayWithMe, eikouNoKakehashi, itsuka, HaikyouNoSofa];
+
+const DISPLAY_SETTINGS_KEY = "practiceNihongoLyrics.displaySettings";
+
+type DisplaySettings = {
+  showJp: boolean;
+  showFurigana: boolean;
+  showRomaji: boolean;
+};
+
+const DEFAULT_DISPLAY_SETTINGS: DisplaySettings = {
+  showJp: false,
+  showFurigana: true,
+  showRomaji: true,
+};
+
+function loadDisplaySettings(): DisplaySettings {
+  if (typeof window === "undefined") return DEFAULT_DISPLAY_SETTINGS;
+  try {
+    const raw = window.localStorage.getItem(DISPLAY_SETTINGS_KEY);
+    if (!raw) return DEFAULT_DISPLAY_SETTINGS;
+    const parsed = JSON.parse(raw);
+    return {
+      showJp: typeof parsed.showJp === "boolean" ? parsed.showJp : DEFAULT_DISPLAY_SETTINGS.showJp,
+      showFurigana: typeof parsed.showFurigana === "boolean" ? parsed.showFurigana : DEFAULT_DISPLAY_SETTINGS.showFurigana,
+      showRomaji: typeof parsed.showRomaji === "boolean" ? parsed.showRomaji : DEFAULT_DISPLAY_SETTINGS.showRomaji,
+    };
+  } catch {
+    return DEFAULT_DISPLAY_SETTINGS;
+  }
+}
 
 const KANJI_FURIGANA_REGEX = /([一-鿿㐀-䶿々]+)[(（]([^)）]+)[)）]/g;
 
@@ -36,9 +66,12 @@ function renderFurigana(line: string, keyPrefix: string): React.ReactNode {
 
 export default function WebPage() {
   const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
-  const [showJp, setShowJp] = useState(true);
-  const [showFurigana, setShowFurigana] = useState(true);
-  const [showRomaji, setShowRomaji] = useState(true);
+  const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
+  const { showJp, showFurigana, showRomaji } = displaySettings;
+
+  useEffect(() => {
+    window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
+  }, [displaySettings]);
 
   const song = useMemo(
     () => songs.find((s) => s.title === selectedTitle) ?? songs[0],
@@ -84,7 +117,7 @@ export default function WebPage() {
               id="show-jp"
               label="Japanese"
               checked={showJp}
-              onChange={(e) => setShowJp(e.target.checked)}
+              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showJp: e.target.checked }))}
             />
           </Col>
           <Col xs="auto">
@@ -94,7 +127,7 @@ export default function WebPage() {
               label="Furigana"
               checked={showFurigana}
               disabled={!hasFurigana}
-              onChange={(e) => setShowFurigana(e.target.checked)}
+              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showFurigana: e.target.checked }))}
             />
           </Col>
           <Col xs="auto">
@@ -103,7 +136,7 @@ export default function WebPage() {
               id="show-romaji"
               label="Romaji"
               checked={showRomaji}
-              onChange={(e) => setShowRomaji(e.target.checked)}
+              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showRomaji: e.target.checked }))}
             />
           </Col>
         </Row>
