@@ -13,6 +13,23 @@
     color: #212529;
 }
 
+@media (min-width: 992px) {
+    #japanese-lyrics .lyric-display-settings {
+        flex-wrap: nowrap;
+    }
+
+    #japanese-lyrics .song-select-col {
+        min-width: 220px;
+        max-width: 320px;
+    }
+}
+
+#japanese-lyrics .lyrics-controls-separator {
+    margin: 0 0 1.5rem;
+    border: 0;
+    border-top: 2px solid #b5b5b5;
+}
+
 @media (max-width: 576px) {
     .lyric-separator {
         max-width: 50%;

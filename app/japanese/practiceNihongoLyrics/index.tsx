@@ -140,8 +140,8 @@ export default function WebPage() {
   return (
     <div id="japanese-lyrics">
       <Container fluid >
-        <Row className="mb-3">
-          <Col xs={12} md={6}>
+        <Row className="mb-3 align-items-center lyric-display-settings">
+          <Col xs={12} md="auto" className="song-select-col mb-2 mb-md-0">
             <Form.Select
               value={selectedTitle}
               onChange={(e) => setSelectedTitle(e.target.value)}
@@ -153,8 +153,6 @@ export default function WebPage() {
               ))}
             </Form.Select>
           </Col>
-        </Row>
-        <Row className="mb-3 lyric-display-settings">
           <Col xs="auto">
             <Form.Check
               type="checkbox"
@@ -183,7 +181,7 @@ export default function WebPage() {
               onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showRomaji: e.target.checked }))}
             />
           </Col>
-          <Col xs="auto" className="ms-auto">
+          <Col xs="auto" className="ms-lg-auto">
             <ButtonGroup aria-label="Text size">
               <Button
                 variant="outline-secondary"
@@ -209,6 +207,7 @@ export default function WebPage() {
             </ButtonGroup>
           </Col>
         </Row>
+        <hr className="lyrics-controls-separator" />
         {pairs.map((line, idx) => {
           const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
           return (
