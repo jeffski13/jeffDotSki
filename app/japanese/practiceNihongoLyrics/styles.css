@@ -37,3 +37,7 @@
         white-space: nowrap;
     }
 }
+
+#japanese-lyrics rt {
+    user-select: none;
+}
