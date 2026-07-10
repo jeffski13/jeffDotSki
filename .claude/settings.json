@@ -12,7 +12,11 @@
       "Bash(find / -maxdepth 6 -iname \"*chromium-cli*\")",
       "Bash(npx --yes chromium-cli --version)",
       "Read(//private/tmp/claude-501/bundled-skills/2.1.205/**)",
-      "Bash(pkill -f \"react-router dev\")"
+      "Bash(pkill -f \"react-router dev\")",
+      "Bash(command -v chromium-cli)",
+      "Read(//opt/homebrew/bin/**)",
+      "Read(//Users/jeffski13/.local/bin/**)",
+      "Bash(curl -s http://localhost:5173/japanese/practiceNihongoLyrics/styles.css)"
     ]
   }
 }

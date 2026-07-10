@@ -2,6 +2,16 @@
     margin-top: 20px;
 }
 
+#japanese-lyrics .form-select {
+    background-color: #dbd6d6;
+    color: #212529;
+}
+
+#japanese-lyrics .form-select option {
+    background-color: #b5b5b5;
+    color: #212529;
+}
+
 @media (max-width: 576px) {
     .lyric-separator {
         max-width: 50%;
