@@ -105,4 +105,56 @@ describe('PracticeNihongoLyrics', () => {
       expect(second.container.textContent).not.toContain(romajiLine);
     });
   });
+
+  describe('text size controls', () => {
+    beforeEach(() => {
+      window.localStorage.clear();
+    });
+
+    it('defaults to 16px', () => {
+      renderComponent();
+      expect(screen.getByText('16px')).toBeInTheDocument();
+    });
+
+    it('increases and decreases the font size, disabling buttons at the limits', () => {
+      renderComponent();
+      const decrease = screen.getByLabelText('Decrease text size');
+      const increase = screen.getByLabelText('Increase text size');
+
+      fireEvent.click(increase);
+      expect(screen.getByText('18px')).toBeInTheDocument();
+
+      fireEvent.click(decrease);
+      fireEvent.click(decrease);
+      expect(screen.getByText('14px')).toBeInTheDocument();
+
+      for (let i = 0; i < 10; i++) fireEvent.click(decrease);
+      expect(screen.getByText('12px')).toBeInTheDocument();
+      expect(decrease).toBeDisabled();
+
+      for (let i = 0; i < 20; i++) fireEvent.click(increase);
+      expect(screen.getByText('32px')).toBeInTheDocument();
+      expect(increase).toBeDisabled();
+    });
+
+    it('applies the font size to the lyric rows', () => {
+      const { container } = renderComponent();
+      fireEvent.click(screen.getByLabelText('Increase text size'));
+
+      const row = container.querySelector('.lyric-pair') as HTMLElement;
+      expect(row.style.fontSize).toBe('18px');
+    });
+
+    it('persists the font size to localStorage and restores it on reload', () => {
+      const first = renderComponent();
+      fireEvent.click(screen.getByLabelText('Increase text size'));
+
+      expect(window.localStorage.getItem('practiceNihongoLyrics.fontSize')).toBe('18');
+
+      first.unmount();
+
+      renderComponent();
+      expect(screen.getByText('18px')).toBeInTheDocument();
+    });
+  });
 });

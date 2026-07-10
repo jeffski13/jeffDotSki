@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, Fragment } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, ButtonGroup } from "react-bootstrap";
 import type { LyricsSong } from "./src/types";
 import senNoYoruWoKoete from "./src/senNoYoruWoKoete";
 import tegami from "./src/tegami";
@@ -41,6 +41,27 @@ function loadDisplaySettings(): DisplaySettings {
   }
 }
 
+const FONT_SIZE_KEY = "practiceNihongoLyrics.fontSize";
+const DEFAULT_FONT_SIZE = 16;
+const MIN_FONT_SIZE = 12;
+const MAX_FONT_SIZE = 32;
+const FONT_SIZE_STEP = 2;
+
+function clampFontSize(size: number): number {
+  return Math.min(MAX_FONT_SIZE, Math.max(MIN_FONT_SIZE, size));
+}
+
+function loadFontSize(): number {
+  if (typeof window === "undefined") return DEFAULT_FONT_SIZE;
+  try {
+    const raw = window.localStorage.getItem(FONT_SIZE_KEY);
+    const parsed = raw === null ? NaN : Number(raw);
+    return Number.isFinite(parsed) ? clampFontSize(parsed) : DEFAULT_FONT_SIZE;
+  } catch {
+    return DEFAULT_FONT_SIZE;
+  }
+}
+
 const KANJI_FURIGANA_REGEX = /([一-鿿㐀-䶿々]+)[(（]([^)）]+)[)）]/g;
 
 function renderFurigana(line: string, keyPrefix: string): React.ReactNode {
@@ -68,10 +89,15 @@ export default function WebPage() {
   const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showJp, showFurigana, showRomaji } = displaySettings;
+  const [fontSize, setFontSize] = useState<number>(loadFontSize);
 
   useEffect(() => {
     window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
   }, [displaySettings]);
+
+  useEffect(() => {
+    window.localStorage.setItem(FONT_SIZE_KEY, String(fontSize));
+  }, [fontSize]);
 
   const song = useMemo(
     () => songs.find((s) => s.title === selectedTitle) ?? songs[0],
@@ -139,11 +165,36 @@ export default function WebPage() {
               onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showRomaji: e.target.checked }))}
             />
           </Col>
+          <Col xs="auto" className="ms-auto">
+            <ButtonGroup aria-label="Text size">
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => setFontSize((size) => clampFontSize(size - FONT_SIZE_STEP))}
+                disabled={fontSize <= MIN_FONT_SIZE}
+                aria-label="Decrease text size"
+              >
+                A-
+              </Button>
+              <Button variant="outline-secondary" size="sm" disabled>
+                {fontSize}px
+              </Button>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => setFontSize((size) => clampFontSize(size + FONT_SIZE_STEP))}
+                disabled={fontSize >= MAX_FONT_SIZE}
+                aria-label="Increase text size"
+              >
+                A+
+              </Button>
+            </ButtonGroup>
+          </Col>
         </Row>
         {pairs.map((line, idx) => {
           const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
           return (
-            <Row key={idx} className="lyric-pair">
+            <Row key={idx} className="lyric-pair" style={{ fontSize: `${fontSize}px` }}>
               {showJp && (
                 <Col xs={12} md={colWidth}>
                   <p className={isSeparator ? "lyric-separator" : undefined}>{line.jp}</p>
