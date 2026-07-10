@@ -21,4 +21,63 @@ describe('PracticeNihongoLyrics', () => {
     const expectedRows = Math.max(song.jp.length, song.romaji.length);
     expect(container.querySelectorAll('.lyric-pair')).toHaveLength(expectedRows);
   });
+
+  describe('display mode checkboxes', () => {
+    const [song] = songs;
+    const jpLine = song.jp[0];
+    const romajiLine = song.romaji[0];
+
+    it('shows all three display modes checked and visible by default', () => {
+      const { container } = renderComponent();
+
+      expect(screen.getByLabelText('Japanese')).toBeChecked();
+      expect(screen.getByLabelText('Furigana')).toBeChecked();
+      expect(screen.getByLabelText('Romaji')).toBeChecked();
+
+      expect(container.textContent).toContain(jpLine);
+      expect(container.textContent).toContain(romajiLine);
+      expect(container.querySelectorAll('ruby').length).toBeGreaterThan(0);
+    });
+
+    it('hides the Japanese column when its checkbox is unchecked, leaving the others', () => {
+      const { container } = renderComponent();
+
+      fireEvent.click(screen.getByLabelText('Japanese'));
+
+      expect(container.textContent).not.toContain(jpLine);
+      expect(container.textContent).toContain(romajiLine);
+      expect(container.querySelectorAll('ruby').length).toBeGreaterThan(0);
+    });
+
+    it('hides the Romaji column when its checkbox is unchecked, leaving the others', () => {
+      const { container } = renderComponent();
+
+      fireEvent.click(screen.getByLabelText('Romaji'));
+
+      expect(container.textContent).toContain(jpLine);
+      expect(container.textContent).not.toContain(romajiLine);
+      expect(container.querySelectorAll('ruby').length).toBeGreaterThan(0);
+    });
+
+    it('hides the Furigana column when its checkbox is unchecked, leaving the others', () => {
+      const { container } = renderComponent();
+
+      fireEvent.click(screen.getByLabelText('Furigana'));
+
+      expect(container.textContent).toContain(jpLine);
+      expect(container.textContent).toContain(romajiLine);
+      expect(container.querySelectorAll('ruby')).toHaveLength(0);
+    });
+
+    it('re-shows a column when its checkbox is checked again', () => {
+      const { container } = renderComponent();
+      const jpCheckbox = screen.getByLabelText('Japanese');
+
+      fireEvent.click(jpCheckbox);
+      expect(container.textContent).not.toContain(jpLine);
+
+      fireEvent.click(jpCheckbox);
+      expect(container.textContent).toContain(jpLine);
+    });
+  });
 });

@@ -36,6 +36,9 @@ function renderFurigana(line: string, keyPrefix: string): React.ReactNode {
 
 export default function WebPage() {
   const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
+  const [showJp, setShowJp] = useState(true);
+  const [showFurigana, setShowFurigana] = useState(true);
+  const [showRomaji, setShowRomaji] = useState(true);
 
   const song = useMemo(
     () => songs.find((s) => s.title === selectedTitle) ?? songs[0],
@@ -52,6 +55,10 @@ export default function WebPage() {
       ),
     [song]
   );
+
+  const visibleColumnCount =
+    (showJp ? 1 : 0) + (hasFurigana && showFurigana ? 1 : 0) + (showRomaji ? 1 : 0);
+  const colWidth = visibleColumnCount > 0 ? Math.floor(12 / visibleColumnCount) : 12;
 
   return (
     <div id="japanese-lyrics">
@@ -70,23 +77,57 @@ export default function WebPage() {
             </Form.Select>
           </Col>
         </Row>
+        <Row className="mb-3 lyric-display-settings">
+          <Col xs="auto">
+            <Form.Check
+              type="checkbox"
+              id="show-jp"
+              label="Japanese"
+              checked={showJp}
+              onChange={(e) => setShowJp(e.target.checked)}
+            />
+          </Col>
+          <Col xs="auto">
+            <Form.Check
+              type="checkbox"
+              id="show-furigana"
+              label="Furigana"
+              checked={showFurigana}
+              disabled={!hasFurigana}
+              onChange={(e) => setShowFurigana(e.target.checked)}
+            />
+          </Col>
+          <Col xs="auto">
+            <Form.Check
+              type="checkbox"
+              id="show-romaji"
+              label="Romaji"
+              checked={showRomaji}
+              onChange={(e) => setShowRomaji(e.target.checked)}
+            />
+          </Col>
+        </Row>
         {pairs.map((line, idx) => {
           const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
           return (
             <Row key={idx} className="lyric-pair">
-              <Col xs={6} md={hasFurigana ? 4 : 6}>
-                <p className={isSeparator ? "lyric-separator" : undefined}>{line.jp}</p>
-              </Col>
-              {hasFurigana && (
-                <Col xs={6} md={4}>
+              {showJp && (
+                <Col xs={12} md={colWidth}>
+                  <p className={isSeparator ? "lyric-separator" : undefined}>{line.jp}</p>
+                </Col>
+              )}
+              {hasFurigana && showFurigana && (
+                <Col xs={12} md={colWidth}>
                   <p className={isSeparator ? "lyric-separator" : undefined}>
                     {renderFurigana(line.furigana, `furigana-${idx}`)}
                   </p>
                 </Col>
               )}
-              <Col xs={6} md={hasFurigana ? 4 : 6}>
-                <p className={isSeparator ? "lyric-separator" : undefined}>{line.rom}</p>
-              </Col>
+              {showRomaji && (
+                <Col xs={12} md={colWidth}>
+                  <p className={isSeparator ? "lyric-separator" : undefined}>{line.rom}</p>
+                </Col>
+              )}
             </Row>
           );
         })}

@@ -6,7 +6,13 @@
       "Bash(npm run *)",
       "Bash(npx tsc *)",
       "Bash(npx react-router *)",
-      "Bash(npx vitest *)"
+      "Bash(npx vitest *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(find / -maxdepth 6 -iname \"*chromium-cli*\")",
+      "Bash(npx --yes chromium-cli --version)",
+      "Read(//private/tmp/claude-501/bundled-skills/2.1.205/**)",
+      "Bash(pkill -f \"react-router dev\")"
     ]
   }
 }
