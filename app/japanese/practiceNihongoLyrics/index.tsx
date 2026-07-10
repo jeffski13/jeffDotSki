@@ -41,6 +41,19 @@ function loadDisplaySettings(): DisplaySettings {
   }
 }
 
+const SELECTED_SONG_KEY = "practiceNihongoLyrics.selectedSongIndex";
+
+function loadSelectedSongIndex(): number {
+  if (typeof window === "undefined") return 0;
+  try {
+    const raw = window.localStorage.getItem(SELECTED_SONG_KEY);
+    const parsed = raw === null ? NaN : Number(raw);
+    return Number.isInteger(parsed) && parsed >= 0 && parsed < songs.length ? parsed : 0;
+  } catch {
+    return 0;
+  }
+}
+
 const FONT_SIZE_KEY = "practiceNihongoLyrics.fontSize";
 const DEFAULT_FONT_SIZE = 16;
 const MIN_FONT_SIZE = 12;
@@ -86,7 +99,7 @@ function renderFurigana(line: string, keyPrefix: string): React.ReactNode {
 }
 
 export default function WebPage() {
-  const [selectedTitle, setSelectedTitle] = useState(songs[0].title);
+  const [selectedTitle, setSelectedTitle] = useState(() => songs[loadSelectedSongIndex()].title);
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showJp, showFurigana, showRomaji } = displaySettings;
   const [fontSize, setFontSize] = useState<number>(loadFontSize);
@@ -94,6 +107,11 @@ export default function WebPage() {
   useEffect(() => {
     window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
   }, [displaySettings]);
+
+  useEffect(() => {
+    const idx = songs.findIndex((s) => s.title === selectedTitle);
+    window.localStorage.setItem(SELECTED_SONG_KEY, String(idx >= 0 ? idx : 0));
+  }, [selectedTitle]);
 
   useEffect(() => {
     window.localStorage.setItem(FONT_SIZE_KEY, String(fontSize));
