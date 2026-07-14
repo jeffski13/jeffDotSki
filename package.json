@@ -37,7 +37,8 @@
     "react-helmet": "^6.1.0",
     "react-image-gallery": "^1.4.0",
     "react-router": "^7.5.2",
-    "uuid": "^13.0.0"
+    "uuid": "^13.0.0",
+    "wanakana": "^5.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

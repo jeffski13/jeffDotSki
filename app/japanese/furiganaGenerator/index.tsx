@@ -1,23 +1,15 @@
 import { useState, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
 import './styles.css';
 
 export default function FuriganaGeneratorPage() {
   const [kanjiText, setKanjiText] = useState('');
   const [romajiText, setRomajiText] = useState('');
-  const [convertedLines, setConvertedLines] = useState<Array<{ kanji: string; romaji: string }> | null>(null);
+  const [convertedLines, setConvertedLines] = useState<FuriganaLine[] | null>(null);
 
   const handleConvert = () => {
-    const kanjiLines = kanjiText.split('\n').map((l) => l.trim());
-    const romajiLines = romajiText.split('\n').map((l) => l.trim());
-    const lineCount = Math.max(kanjiLines.length, romajiLines.length);
-
-    const lines = Array.from({ length: lineCount }, (_, i) => ({
-      kanji: kanjiLines[i] ?? '',
-      romaji: romajiLines[i] ?? '',
-    })).filter((line) => line.kanji.length > 0 || line.romaji.length > 0);
-
-    setConvertedLines(lines);
+    setConvertedLines(buildFuriganaLines(kanjiText, romajiText));
   };
 
   return (
@@ -74,7 +66,7 @@ export default function FuriganaGeneratorPage() {
               <Fragment key={i}>
                 <ruby className="furiganaGenerator_ruby">
                   {line.kanji}
-                  <rt>{line.romaji}</rt>
+                  <rt>{line.hiragana}</rt>
                 </ruby>
                 <br />
               </Fragment>
