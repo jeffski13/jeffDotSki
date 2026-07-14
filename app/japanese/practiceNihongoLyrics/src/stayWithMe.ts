@@ -1,6 +1,6 @@
 import type { LyricsSong } from "./types";
 
-const tegami: LyricsSong = {
+const song: LyricsSong = {
   title: "真夜中のドア (Stay With Me)",
   jp: [
     "To you",
@@ -185,4 +185,4 @@ const tegami: LyricsSong = {
   ],
 };
 
-export default tegami;
+export default song;

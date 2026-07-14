@@ -1,6 +1,6 @@
 import type { LyricsSong } from "./types";
 
-const tegami: LyricsSong = {
+const song: LyricsSong = {
   title: "栄光の架橋 (Eikou No Kakehashi)",
   jp: [
     "誰にも見せない",
@@ -235,4 +235,4 @@ const tegami: LyricsSong = {
   ],
 };
 
-export default tegami;
+export default song;
