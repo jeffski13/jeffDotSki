@@ -26,3 +26,42 @@
   color: #888;
   margin-bottom: 30px;
 }
+
+.furiganaGenerator_input-row {
+  margin-bottom: 16px;
+}
+
+.furiganaGenerator_input-group {
+  margin-bottom: 16px;
+}
+
+.furiganaGenerator_label {
+  font-weight: 600;
+}
+
+.furiganaGenerator_textarea {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.furiganaGenerator_convert-btn {
+  margin-bottom: 30px;
+}
+
+.furiganaGenerator_output {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+  font-size: 1.1rem;
+  line-height: 2.4;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.furiganaGenerator_ruby {
+  margin-right: 0.5em;
+}
+
+.furiganaGenerator_ruby rt {
+  font-size: 0.6em;
+  user-select: none;
+}
