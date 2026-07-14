@@ -24,6 +24,7 @@
       {"source":"/japanesePracticeLyrics","destination":"/index.html"},
       {"source":"/japaneseMusicCovers","destination":"/index.html"},
       {"source":"/japaneseParenthesesToFurigana","destination":"/index.html"},
+      {"source":"/furiganaGenerator","destination":"/index.html"},
       {"source":"/aboutme/bio","destination":"/index.html"},
       {"source":"/aboutme/hobbies/drawing","destination":"/index.html"},
       {"source":"/aboutme/hobbies/tvShows","destination":"/index.html"}

@@ -1,0 +1,28 @@
+.furiganaGenerator_content {
+  padding: 40px 20px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.furiganaGenerator_title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.furiganaGenerator_title-jp {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.furiganaGenerator_title-en {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.furiganaGenerator_subtitle {
+  text-align: center;
+  color: #888;
+  margin-bottom: 30px;
+}

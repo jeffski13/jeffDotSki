@@ -16,7 +16,12 @@
       "Bash(command -v chromium-cli)",
       "Read(//opt/homebrew/bin/**)",
       "Read(//Users/jeffski13/.local/bin/**)",
-      "Bash(curl -s http://localhost:5173/japanese/practiceNihongoLyrics/styles.css)"
+      "Bash(curl -s http://localhost:5173/japanese/practiceNihongoLyrics/styles.css)",
+      "Bash(grep -rl \"kuroshiro\" /Users/jeffszcinski/dev/jeffDotSki --include=\"*.tsx\" --include=\"*.ts\" --include=\"*.js\" -not -path \"*/node_modules/*\")",
+      "Bash(mkdir -p /Users/jeffszcinski/dev/jeffDotSki/app/japanese/furiganaGenerator)"
+    ],
+    "additionalDirectories": [
+      "/Users/jeffszcinski/dev/jeffDotSki/app/japanese"
     ]
   }
 }

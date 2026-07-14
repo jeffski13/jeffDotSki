@@ -25,6 +25,7 @@ const ROUTES = {
     japanesePracticeLyrics: '/japanesePracticeLyrics',
     japaneseMusicCovers: '/japaneseMusicCovers',
     japaneseParenthesesToFurigana: '/japaneseParenthesesToFurigana',
+    furiganaGenerator: '/furiganaGenerator',
   },
   aboutMe: {
     bio: '/aboutme/bio',
