@@ -52,16 +52,7 @@
 .furiganaGenerator_output {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
   font-size: 1.1rem;
-  line-height: 2.4;
+  line-height: 1.8;
   border-top: 1px solid #ddd;
   padding-top: 20px;
-}
-
-.furiganaGenerator_ruby {
-  margin-right: 0.5em;
-}
-
-.furiganaGenerator_ruby rt {
-  font-size: 0.6em;
-  user-select: none;
 }

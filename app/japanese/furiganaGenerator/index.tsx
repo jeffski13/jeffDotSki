@@ -64,10 +64,7 @@ export default function FuriganaGeneratorPage() {
           <div className="furiganaGenerator_output">
             {convertedLines.map((line, i) => (
               <Fragment key={i}>
-                <ruby className="furiganaGenerator_ruby">
-                  {line.kanji}
-                  <rt>{line.hiragana}</rt>
-                </ruby>
+                {line.furigana}
                 <br />
               </Fragment>
             ))}

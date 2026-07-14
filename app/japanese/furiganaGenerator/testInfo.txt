@@ -1,0 +1,128 @@
+input1 
+ああ あなたを追って
+黄昏のBay City
+ああ めぐり逢えたら
+黙って抱きとめて
+-----------------------------
+煙草の香り 冷えきったKiss
+投げただけで あなたは消えた
+素直になれば つづいてた愛
+シーズン・オフの海は笑い
+風が凍るわ
+-----------------------------
+こごえきった カモメみたいよ
+黄昏のBay City
+ああ あなたの好きな
+港が暮れてゆく
+-----------------------------
+若さはたぶん 見えないナイフ
+もつれ合って 心が切れた
+馬鹿ね今頃 愛が痛いの
+あなただけが この傷口
+ふさげる男[ひと]よ
+-----------------------------
+Uh, uh, uh
+(Bay City)
+Uh, uh, uh
+(Bay City)
+-----------------------------
+空が海を 抱くみたいに
+愛し合えた奇跡を
+もう一度だけ, もう一度だけ
+幻でいい
+-----------------------------
+ああ あなたを追って
+黄昏のBay City
+ああ めぐり逢えたら
+黙って抱きとめて
+-----------------------------
+ああ あなたを追って
+黄昏のBay City
+ああ めぐり逢えたら
+黙って抱きとめて
+
+input 2
+Ah, ah anata wo otte
+Tasogare no bay city
+Ah, ah meguri aetara
+Damatte dakitomete
+-----------------------------
+Tabako no kaori, hiekitta kiss
+Nageta dake de anata wa kieta
+Sunao ni nareba tsudzuiteta ai
+Shizun ofu no umi wa warai
+Kaze ga kooru wa
+-----------------------------
+Kogoekitta kamome mitai yo
+Tasogare no bay city
+Ah, ah anata no suki na
+Minato ga kurete yuku (Ooh)
+-----------------------------
+Wakasa wa tabun mienai naifu
+Motsure atte kokoro ga kireta
+Baka ne ima goro ai ga itai no
+Anata dake ga kono kizuguchi
+Fusageru hito yo
+-----------------------------
+Ooh, ooh, ooh
+(Bay City)
+Ooh, ooh, ooh
+(Bay City)
+-----------------------------
+Sora ga umi wo idaku mitai ni
+Aishi aeta kiseki wo (Ooh)
+Mou ichido dake mou ichido dake (Ooh)
+Maboroshi de ii (Oh)
+-----------------------------
+Ah, ah anata wo otte
+Tasogare no bay city
+Ah, ah meguri aetara
+Damatte dakitomete
+-----------------------------
+Ah, ah anata wo otte
+Tasogare no bay city (Bay City)
+Ah, ah meguri aetara
+Damatte dakitomete
+
+output
+あ（h、）あ （h）あなたを追（お）って
+黄昏（たそがれ）のBa（ば）y Ci（き）ty
+あ（h、）あ （h）めぐり逢（あ）えたら
+黙（だま）って抱（だ）きとめて
+-----------------------------
+煙草（たばこ）の香（かお）り 冷（、ひ）えきったKi（き）ss
+投（な）げただけで あなたは消（わき）えた
+素直（すなお）になれば つづ（dず）いてた愛（あい）
+シーズン・オフ（しずんおふ）の海は笑（うみわわら）い
+風（かぜ）が凍（こお）るわ
+-----------------------------
+こごえきった カモメ（かもめ）みたいよ
+黄昏（たそがれ）のBa（ば）y Ci（き）ty
+あ（h、）あ （h）あなたの好（す）きな
+港（みなと）が暮（く）れてゆく（（おおh））
+-----------------------------
+若（わか）さは（わ）たぶん 見（み）え（ない）ないナイフ（ふ）
+もつれ合（あ）って 心（こころ）が切（き）れた
+馬鹿（ばか）ね今頃 愛（いまごろあい）が痛（いた）いの
+あなただけが この傷口（きずぐち）
+ふさげる男[ひと]よ
+-----------------------------
+U（おお）h, u（、おお）h, u（、おお）h
+(Ba（（ば）y Ci（き）ty)（））
+U（おお）h, u（、おお）h, u（、おお）h
+(Ba（（ば）y Ci（き）ty)（））
+-----------------------------
+空（そら）が海（うみ）を 抱（いだ）くみたいに
+愛（あい）し合（あ）えた奇跡（きせき）を（（おおh））
+もう一度（いちど）だけ, もう一度（いちど）だけ（（おおh））
+幻（まぼろし）でいい（（おh））
+-----------------------------
+あ（h、）あ （h）あなたを追（お）って
+黄昏（たそがれ）のBa（ば）y Ci（き）ty
+あ（h、）あ （h）めぐり逢（あ）えたら
+黙（だま）って抱（だ）きとめて
+-----------------------------
+あ（h、）あ （h）あなたを追（お）って
+黄昏（たそがれ）のBa（ばyきty（ば）y Ci（き）ty（））
+あ（h、）あ （h）めぐり逢（あ）えたら
+黙（だま）って抱（だ）きとめて
