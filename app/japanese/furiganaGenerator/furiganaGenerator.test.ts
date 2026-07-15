@@ -43,6 +43,13 @@ describe('romajiToHiragana', () => {
   it('reads "dzu" as づ rather than as an unconvertible "d" plus ず', () => {
     expect(romajiToHiragana('tsudzuiteta')).toBe('つづいてた');
   });
+
+  it('keeps both occurrences of "wa" distinct when one is the topic particle and one starts a word', () => {
+    // "umi wa warai" has two "wa"s back to back: the topic particle (は in the kanji line) and
+    // the first kana of 笑い ("warai"). This step just needs to convert each "wa" to わ - telling
+    // the particle apart from the word is the diffing step's job, checked in buildFuriganaLines.
+    expect(romajiToHiragana('Shizun ofu no umi wa warai')).toBe('しずんおふのうみわわらい');
+  });
 });
 
 describe('buildFurigana', () => {
@@ -122,6 +129,21 @@ describe('buildFuriganaLines', () => {
         kanji: '素直になれば つづいてた愛',
         hiragana: 'すなおになればつづいてたあい',
         furigana: '素直（すなお）になれば つづいてた愛（あい）',
+      },
+    ]);
+  });
+
+  it('pairs the topic particle は with the わ closest to it instead of a わ from a later word', () => {
+    // The hiragana line has two わ in a row: one for the は particle, one starting 笑い
+    // ("warai"). The diff must not let 海's reading swallow the particle's わ, which would then
+    // leave 笑 missing its own わ and start reading わ where the particle は should be.
+    const lines = buildFuriganaLines('シーズン・オフの海は笑い', 'Shizun ofu no umi wa warai');
+
+    expect(lines).toEqual([
+      {
+        kanji: 'シーズン・オフの海は笑い',
+        hiragana: 'しずんおふのうみわわらい',
+        furigana: 'シーズン・オフの海（うみ）は笑（わら）い',
       },
     ]);
   });

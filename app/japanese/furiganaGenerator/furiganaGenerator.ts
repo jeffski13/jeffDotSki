@@ -115,40 +115,50 @@ function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
   }
   const m = kanjiLine.length;
   const n = hiraganaLine.length;
-  const lcsLength: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
 
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      lcsLength[i][j] = charsMatch(comparisonLine[i - 1], hiraganaLine[j - 1])
-        ? lcsLength[i - 1][j - 1] + 1
-        : Math.max(lcsLength[i - 1][j], lcsLength[i][j - 1]);
+  // suffixLcsLength[i][j] holds the LCS length of the remaining suffixes
+  // comparisonLine[i:] and hiraganaLine[j:], built back-to-front so the reconstruction below can
+  // walk forward.
+  const suffixLcsLength: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = n - 1; j >= 0; j--) {
+      suffixLcsLength[i][j] = charsMatch(comparisonLine[i], hiraganaLine[j])
+        ? suffixLcsLength[i + 1][j + 1] + 1
+        : Math.max(suffixLcsLength[i + 1][j], suffixLcsLength[i][j + 1]);
     }
   }
 
+  // Reconstructing front-to-back (rather than the more common back-to-front traceback) matters
+  // when the same kana appears more than once, e.g. は's pronunciation わ colliding with a literal
+  // わ elsewhere on the hiragana line (「海は笑い」 vs "umi wa warai" has one わ for the topic
+  // particle and another as the first kana of 笑 ("warai")). A back-to-front traceback greedily
+  // pairs は with whichever わ sits closest to the end of the line, which can steal the わ another
+  // word's reading needs and misattribute it. Walking forward instead pairs は with the first
+  // available わ, matching the order the words actually appear in.
   const ops: DiffOp[] = [];
-  let i = m;
-  let j = n;
-  while (i > 0 && j > 0) {
-    if (charsMatch(comparisonLine[i - 1], hiraganaLine[j - 1])) {
-      ops.push({ type: 'common', char: kanjiLine[i - 1] });
-      i--;
-      j--;
-    } else if (lcsLength[i - 1][j] >= lcsLength[i][j - 1]) {
-      ops.push({ type: 'kanjiOnly', char: kanjiLine[i - 1] });
-      i--;
+  let i = 0;
+  let j = 0;
+  while (i < m && j < n) {
+    if (charsMatch(comparisonLine[i], hiraganaLine[j]) && suffixLcsLength[i][j] === suffixLcsLength[i + 1][j + 1] + 1) {
+      ops.push({ type: 'common', char: kanjiLine[i] });
+      i++;
+      j++;
+    } else if (suffixLcsLength[i + 1][j] >= suffixLcsLength[i][j + 1]) {
+      ops.push({ type: 'kanjiOnly', char: kanjiLine[i] });
+      i++;
     } else {
-      ops.push({ type: 'hiraganaOnly', char: hiraganaLine[j - 1] });
-      j--;
+      ops.push({ type: 'hiraganaOnly', char: hiraganaLine[j] });
+      j++;
     }
   }
-  while (i > 0) {
-    ops.push({ type: 'kanjiOnly', char: kanjiLine[--i] });
+  while (i < m) {
+    ops.push({ type: 'kanjiOnly', char: kanjiLine[i++] });
   }
-  while (j > 0) {
-    ops.push({ type: 'hiraganaOnly', char: hiraganaLine[--j] });
+  while (j < n) {
+    ops.push({ type: 'hiraganaOnly', char: hiraganaLine[j++] });
   }
 
-  return ops.reverse();
+  return ops;
 }
 
 // 1. Diff the kanji line against its full hiragana reading - matching characters are the
