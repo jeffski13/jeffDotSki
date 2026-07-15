@@ -1,0 +1,39 @@
+import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
+import FuriganaGeneratorPage from './index';
+
+const renderComponent = () => render(<MemoryRouter><FuriganaGeneratorPage /></MemoryRouter>);
+
+const KANJI = '誰にも見せない';
+const ROMAJI = 'dare nimo misenai';
+const EXPECTED_FURIGANA = '誰（だれ）にも見（み）せない';
+
+const generateFurigana = () => {
+  fireEvent.change(screen.getByPlaceholderText('漢字の文章をここに入力してください。'), { target: { value: KANJI } });
+  fireEvent.change(
+    screen.getByPlaceholderText('Enter the romaji reading here, matching each kanji line.'),
+    { target: { value: ROMAJI } },
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+};
+
+describe('FuriganaGeneratorPage', () => {
+  it('renders both the parenthetical and ruby-stylized output side by side', () => {
+    const { container } = renderComponent();
+    generateFurigana();
+
+    const columns = container.querySelectorAll('.furiganaGenerator_output-col');
+    expect(columns).toHaveLength(2);
+    const [parenColumn, rubyColumn] = columns;
+
+    // Left column: plain kanji（かんじ）text, no <ruby> markup.
+    expect(parenColumn.textContent).toContain(EXPECTED_FURIGANA);
+    expect(parenColumn.querySelectorAll('ruby')).toHaveLength(0);
+
+    // Right column: stylized <ruby>/<rt> furigana, no parentheses.
+    const rubyEls = rubyColumn.querySelectorAll('ruby');
+    expect(rubyEls.length).toBeGreaterThan(0);
+    expect(rubyColumn.textContent).not.toContain('（');
+    expect(rubyEls[0].querySelector('rt')?.textContent).toBe('だれ');
+  });
+});
