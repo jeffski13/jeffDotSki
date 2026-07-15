@@ -61,6 +61,10 @@ describe('buildFurigana', () => {
   it('leaves katakana untouched alongside kanji that still gets a reading', () => {
     expect(buildFurigana('見えないナイフ', 'みえないないふ')).toBe('見（み）えないナイフ');
   });
+
+  it('leaves the topic particle は untouched instead of misreading it as part of the next kanji', () => {
+    expect(buildFurigana('あなたは消えた', 'あなたわきえた')).toBe('あなたは消（き）えた');
+  });
 });
 
 describe('buildFuriganaLines', () => {

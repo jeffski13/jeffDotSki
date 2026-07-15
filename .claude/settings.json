@@ -21,7 +21,13 @@
       "Bash(mkdir -p /Users/jeffszcinski/dev/jeffDotSki/app/japanese/furiganaGenerator)",
       "Bash(python3 -c ' *)",
       "Bash(node -e ' *)",
-      "Bash(npm ls *)"
+      "Bash(npm ls *)",
+      "Bash(cat)",
+      "Bash(node /tmp/test_furigana.mjs)",
+      "Bash(npx tsx *)",
+      "Bash(cp /tmp/test_furigana.mjs ./test_furigana.mjs)",
+      "Bash(node test_furigana.mjs)",
+      "Bash(rm test_furigana.mjs)"
     ],
     "additionalDirectories": [
       "/Users/jeffszcinski/dev/jeffDotSki/app/japanese"

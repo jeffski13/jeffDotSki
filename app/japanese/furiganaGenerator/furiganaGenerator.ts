@@ -78,6 +78,20 @@ function katakanaToHiragana(char: string): string {
   return code >= 0x30a1 && code <= 0x30f6 ? String.fromCharCode(code - 0x60) : char;
 }
 
+// The topic particle は is romanized after how it's written ("ha") but romaji is transcribed
+// after how it's pronounced ("wa"), so its romaji-derived kana (わ) never literally matches
+// は itself even though は is already correct, unwrapped hiragana. Letting は also match わ
+// during comparison lets it line up as "common" like any other kana instead of being misread
+// as a kanji needing a furigana reading. へ and を have the same written-vs-pronounced quirk
+// but are left alone here: unlike わ (which only ever comes from は), お and え are also the
+// literal readings of real kana/kanji, so treating them as interchangeable with を/へ is prone
+// to matching the wrong occurrence when both spellings appear in the same line.
+const PARTICLE_PRONUNCIATIONS: Record<string, string> = { は: 'わ' };
+
+function charsMatch(comparisonChar: string, hiraganaChar: string): boolean {
+  return comparisonChar === hiraganaChar || PARTICLE_PRONUNCIATIONS[comparisonChar] === hiraganaChar;
+}
+
 // Katakana in the kanji line (e.g. "ナイフ") won't literally match the hiragana reading
 // derived from romaji (e.g. "ないふ") since they're different code points despite being the
 // same sound. Comparing against a katakana-to-hiragana-normalized copy of the kanji line -
@@ -97,7 +111,7 @@ function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
 
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      lcsLength[i][j] = comparisonLine[i - 1] === hiraganaLine[j - 1]
+      lcsLength[i][j] = charsMatch(comparisonLine[i - 1], hiraganaLine[j - 1])
         ? lcsLength[i - 1][j - 1] + 1
         : Math.max(lcsLength[i - 1][j], lcsLength[i][j - 1]);
     }
@@ -107,7 +121,7 @@ function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
   let i = m;
   let j = n;
   while (i > 0 && j > 0) {
-    if (comparisonLine[i - 1] === hiraganaLine[j - 1]) {
+    if (charsMatch(comparisonLine[i - 1], hiraganaLine[j - 1])) {
       ops.push({ type: 'common', char: kanjiLine[i - 1] });
       i--;
       j--;
