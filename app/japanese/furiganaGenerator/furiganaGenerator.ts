@@ -12,9 +12,18 @@ type DiffOp =
   | { type: 'hiraganaOnly'; char: string };
 
 const ENGLISH_WORD_REGEX = /[A-Za-z]+/g;
+const NOT_HIRAGANA_REGEX = /[^ぁ-ゖ]/g;
 
 function extractEnglishWords(text: string): string[] {
   return text.match(ENGLISH_WORD_REGEX) ?? [];
+}
+
+// wanakana passes through anything it can't map to kana (a lone consonant with no following
+// vowel, punctuation it converts to a full-width equivalent like "、"). Stripping everything
+// outside the hiragana block turns that leftover junk into nothing rather than letting it
+// throw off the character alignment against the kanji line.
+function toHiraganaOnly(romajiPart: string): string {
+  return toHiragana(romajiPart.replace(/-/g, ' ')).replace(NOT_HIRAGANA_REGEX, '');
 }
 
 // English words that appear (case-insensitively) in the kanji line are kept exactly as
@@ -37,7 +46,7 @@ export function romajiToHiragana(romajiLine: string, kanjiLine = ''): string {
   }
 
   if (preservedWordQueues.size === 0) {
-    return toHiragana(romajiLine.replace(/-/g, ' ')).replace(/\s+/g, '');
+    return toHiraganaOnly(romajiLine);
   }
 
   const parts = romajiLine.split(new RegExp(`(${ENGLISH_WORD_REGEX.source})`, 'g'));
@@ -56,19 +65,39 @@ export function romajiToHiragana(romajiLine: string, kanjiLine = ''): string {
       if (sandwichedBetweenPreservedWords) {
         return part;
       }
-      return toHiragana(part.replace(/-/g, ' ')).replace(/\s+/g, '');
+      return toHiraganaOnly(part);
     })
     .join('');
 }
 
+// Katakana and hiragana share the same code point offset (katakana - 0x60 = hiragana) across
+// the range they have in common; ー (the prolonged sound mark) and a few rare extended
+// katakana letters fall outside it and are left as-is.
+function katakanaToHiragana(char: string): string {
+  const code = char.charCodeAt(0);
+  return code >= 0x30a1 && code <= 0x30f6 ? String.fromCharCode(code - 0x60) : char;
+}
+
+// Katakana in the kanji line (e.g. "ナイフ") won't literally match the hiragana reading
+// derived from romaji (e.g. "ないふ") since they're different code points despite being the
+// same sound. Comparing against a katakana-to-hiragana-normalized copy of the kanji line -
+// while still emitting the original character - lets katakana line up as "common" so it
+// passes through unwrapped instead of getting a redundant furigana reading. This only touches
+// katakana code points, so kanji, hiragana, and any preserved English text are left untouched.
 function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
+  // Built by code unit (not code point) so its length always matches kanjiLine.length - the
+  // indexing below relies on kanjiLine[i] and comparisonLine[i] staying in lockstep.
+  let comparisonLine = '';
+  for (let k = 0; k < kanjiLine.length; k++) {
+    comparisonLine += katakanaToHiragana(kanjiLine[k]);
+  }
   const m = kanjiLine.length;
   const n = hiraganaLine.length;
   const lcsLength: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
 
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      lcsLength[i][j] = kanjiLine[i - 1] === hiraganaLine[j - 1]
+      lcsLength[i][j] = comparisonLine[i - 1] === hiraganaLine[j - 1]
         ? lcsLength[i - 1][j - 1] + 1
         : Math.max(lcsLength[i - 1][j], lcsLength[i][j - 1]);
     }
@@ -78,7 +107,7 @@ function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
   let i = m;
   let j = n;
   while (i > 0 && j > 0) {
-    if (kanjiLine[i - 1] === hiraganaLine[j - 1]) {
+    if (comparisonLine[i - 1] === hiraganaLine[j - 1]) {
       ops.push({ type: 'common', char: kanjiLine[i - 1] });
       i--;
       j--;

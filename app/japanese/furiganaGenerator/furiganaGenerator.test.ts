@@ -33,6 +33,12 @@ describe('romajiToHiragana', () => {
   it('keeps a lowercase English word from the kanji line as-is even when romaji is uppercase', () => {
     expect(romajiToHiragana('COFFEE wo nomu', 'coffeeを飲む')).toBe('coffeeをのむ');
   });
+
+  it('drops leftover non-hiragana characters instead of leaving them stray in the reading', () => {
+    // "Ah," has no kanji-line English counterpart, so it goes through kana conversion: the lone
+    // "h" (no following vowel) and the comma (converted to "、") don't map to hiragana at all.
+    expect(romajiToHiragana('Ah, ah anata wo otte')).toBe('あああなたをおって');
+  });
 });
 
 describe('buildFurigana', () => {
@@ -46,6 +52,14 @@ describe('buildFurigana', () => {
 
   it('returns the line unchanged when it is already all kana', () => {
     expect(buildFurigana('にほんご', 'にほんご')).toBe('にほんご');
+  });
+
+  it('leaves katakana untouched instead of wrapping it with its hiragana reading', () => {
+    expect(buildFurigana('ナイフ', 'ないふ')).toBe('ナイフ');
+  });
+
+  it('leaves katakana untouched alongside kanji that still gets a reading', () => {
+    expect(buildFurigana('見えないナイフ', 'みえないないふ')).toBe('見（み）えないナイフ');
   });
 });
 
@@ -73,6 +87,22 @@ describe('buildFuriganaLines', () => {
 
     expect(lines).toEqual([
       { kanji: '黄昏のBay City', hiragana: 'たそがれのBay City', furigana: '黄昏（たそがれ）のBay City' },
+    ]);
+  });
+
+  it('keeps katakana in the output instead of giving it a furigana reading', () => {
+    const lines = buildFuriganaLines('見えないナイフ', 'mienai naifu');
+
+    expect(lines).toEqual([
+      { kanji: '見えないナイフ', hiragana: 'みえないないふ', furigana: '見（み）えないナイフ' },
+    ]);
+  });
+
+  it('discards a furigana reading built from leftover junk instead of showing it verbatim', () => {
+    const lines = buildFuriganaLines('ああ あなたを追って', 'Ah, ah anata wo otte');
+
+    expect(lines).toEqual([
+      { kanji: 'ああ あなたを追って', hiragana: 'あああなたをおって', furigana: 'ああ あなたを追（お）って' },
     ]);
   });
 });
