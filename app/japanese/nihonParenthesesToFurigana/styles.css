@@ -41,60 +41,10 @@
   margin-bottom: 30px;
 }
 
-.nihonParenthesesToFurigana_output-row {
-  display: flex;
-  align-items: stretch;
-  gap: 10px;
-  border-top: 1px solid #ddd;
-  padding-top: 20px;
-}
-
-.nihonParenthesesToFurigana_toggle-btn-col {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-start;
-  flex-shrink: 0;
-  cursor: pointer;
-  padding-top: 0.4rem;
-}
-
-.nihonParenthesesToFurigana_toggle-tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1px 6px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.6;
-  user-select: none;
-  background-color: #fde8f7;
-  color: #7a1a6e;
-}
-
-.nihonParenthesesToFurigana_toggle-btn-col:hover .nihonParenthesesToFurigana_toggle-tag {
-  background: #f5c8ed;
-}
-
 .nihonParenthesesToFurigana_output {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
   font-size: 1.1rem;
   line-height: 1.8;
-}
-
-.nihonParenthesesToFurigana_output ruby rt {
-  font-size: 0.6em;
-  user-select: none;
-}
-
-.nihonParenthesesToFurigana_rt-hidden ruby rt {
-  visibility: hidden;
-}
-
-.nihonParenthesesToFurigana_linebreak {
-  display: block;
-  content: '';
-  margin-top: 0.5em;
 }
 
 .nihonParenthesesToFurigana_paragraph {

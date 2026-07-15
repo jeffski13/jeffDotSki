@@ -1,0 +1,48 @@
+.furiganaRuby_output-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.furiganaRuby_toggle-btn-col {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  flex-shrink: 0;
+  cursor: pointer;
+  padding-top: 0.4rem;
+}
+
+.furiganaRuby_toggle-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.6;
+  user-select: none;
+  background-color: #fde8f7;
+  color: #7a1a6e;
+}
+
+.furiganaRuby_toggle-btn-col:hover .furiganaRuby_toggle-tag {
+  background: #f5c8ed;
+}
+
+.furiganaRuby_output ruby rt {
+  font-size: 0.6em;
+  user-select: none;
+}
+
+.furiganaRuby_rt-hidden ruby rt {
+  visibility: hidden;
+}
+
+.furiganaRuby_linebreak {
+  display: block;
+  margin-top: 0.5em;
+}

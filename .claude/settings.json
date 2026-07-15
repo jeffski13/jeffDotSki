@@ -27,7 +27,12 @@
       "Bash(npx tsx *)",
       "Bash(cp /tmp/test_furigana.mjs ./test_furigana.mjs)",
       "Bash(node test_furigana.mjs)",
-      "Bash(rm test_furigana.mjs)"
+      "Bash(rm test_furigana.mjs)",
+      "Bash(curl -s http://localhost:5173/furiganaGenerator)",
+      "Bash(curl -s http://localhost:5173/japaneseParenthesesToFurigana)",
+      "Bash(npx --no-install playwright --version)",
+      "Bash(python3 -c \"import playwright\")",
+      "Bash(find / -maxdepth 3 -iname \"chromium-cli*\")"
     ],
     "additionalDirectories": [
       "/Users/jeffszcinski/dev/jeffDotSki/app/japanese"

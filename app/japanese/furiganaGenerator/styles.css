@@ -57,6 +57,23 @@
   padding-top: 20px;
 }
 
+.furiganaGenerator_output-col {
+  padding-bottom: 16px;
+}
+
+.furiganaGenerator_output-col:first-child {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .furiganaGenerator_output-col:first-child {
+    border-bottom: none;
+    border-right: 1px solid #eee;
+    margin-bottom: 0;
+  }
+}
+
 .furiganaGenerator_copy-btn {
   display: block;
   margin-bottom: 16px;

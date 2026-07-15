@@ -1,6 +1,7 @@
 import { useState, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
+import { renderFuriganaText } from '../shared/furiganaRuby';
 import './styles.css';
 
 export default function FuriganaGeneratorPage() {
@@ -78,12 +79,19 @@ export default function FuriganaGeneratorPage() {
             >
               {copied ? 'Copied!' : 'Copy'}
             </Button>
-            {convertedLines.map((line, i) => (
-              <Fragment key={i}>
-                {line.furigana}
-                <br />
-              </Fragment>
-            ))}
+            <Row className="furiganaGenerator_output-row">
+              <Col xs={12} md={6} className="furiganaGenerator_output-col">
+                {convertedLines.map((line, i) => (
+                  <Fragment key={i}>
+                    {line.furigana}
+                    <br />
+                  </Fragment>
+                ))}
+              </Col>
+              <Col xs={12} md={6} className="furiganaGenerator_output-col furiganaRuby_output">
+                {renderFuriganaText(convertedLines.map((line) => line.furigana).join('\n'), 'output')}
+              </Col>
+            </Row>
             <Button
               variant="outline-secondary"
               size="sm"
