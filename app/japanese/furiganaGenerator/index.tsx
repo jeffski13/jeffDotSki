@@ -71,35 +71,35 @@ export default function FuriganaGeneratorPage() {
 
         {convertedLines && convertedLines.length > 0 && (
           <div className="furiganaGenerator_output">
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              className="furiganaGenerator_copy-btn"
-              onClick={handleCopy}
-            >
-              {copied ? 'Copied!' : 'Copy'}
-            </Button>
             <Row className="furiganaGenerator_output-row">
               <Col xs={12} md={6} className="furiganaGenerator_output-col">
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  className="furiganaGenerator_copy-btn"
+                  onClick={handleCopy}
+                >
+                  {copied ? 'Copied!' : 'Copy'}
+                </Button>
                 {convertedLines.map((line, i) => (
                   <Fragment key={i}>
                     {line.furigana}
                     <br />
                   </Fragment>
                 ))}
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  className="furiganaGenerator_copy-btn"
+                  onClick={handleCopy}
+                >
+                  {copied ? 'Copied!' : 'Copy'}
+                </Button>
               </Col>
               <Col xs={12} md={6} className="furiganaGenerator_output-col furiganaRuby_output">
                 {renderFuriganaText(convertedLines.map((line) => line.furigana).join('\n'), 'output')}
               </Col>
             </Row>
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              className="furiganaGenerator_copy-btn"
-              onClick={handleCopy}
-            >
-              {copied ? 'Copied!' : 'Copy'}
-            </Button>
           </div>
         )}
       </Container>
