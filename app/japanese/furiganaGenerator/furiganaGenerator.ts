@@ -20,25 +20,39 @@ function extractEnglishWords(text: string): string[] {
 // English words that appear (case-insensitively) in the kanji line are kept exactly as
 // written there rather than being run through the romaji-to-kana converter, which otherwise
 // mangles them character by character (e.g. "Bay" -> "Ba(ば)y").
+//
+// Matches are consumed in the order they appear in the kanji line, so if the same word shows
+// up more than once with different casing (e.g. "Bay BAY"), each romaji occurrence picks up
+// the casing of its corresponding kanji occurrence instead of every match collapsing to one.
 export function romajiToHiragana(romajiLine: string, kanjiLine = ''): string {
-  const preservedWords = new Map<string, string>();
+  const preservedWordQueues = new Map<string, string[]>();
   for (const word of extractEnglishWords(kanjiLine)) {
-    preservedWords.set(word.toLowerCase(), word);
+    const key = word.toLowerCase();
+    const queue = preservedWordQueues.get(key);
+    if (queue) {
+      queue.push(word);
+    } else {
+      preservedWordQueues.set(key, [word]);
+    }
   }
 
-  if (preservedWords.size === 0) {
+  if (preservedWordQueues.size === 0) {
     return toHiragana(romajiLine.replace(/-/g, ' ')).replace(/\s+/g, '');
   }
 
   const parts = romajiLine.split(new RegExp(`(${ENGLISH_WORD_REGEX.source})`, 'g'));
-  const isPreserved = parts.map((part) => /^[A-Za-z]+$/.test(part) && preservedWords.has(part.toLowerCase()));
+  const resolvedWords = parts.map((part) => {
+    if (!/^[A-Za-z]+$/.test(part)) return null;
+    const queue = preservedWordQueues.get(part.toLowerCase());
+    return queue && queue.length > 0 ? queue.shift()! : null;
+  });
 
   return parts
     .map((part, i) => {
-      if (isPreserved[i]) {
-        return preservedWords.get(part.toLowerCase())!;
+      if (resolvedWords[i] !== null) {
+        return resolvedWords[i];
       }
-      const sandwichedBetweenPreservedWords = isPreserved[i - 1] && isPreserved[i + 1];
+      const sandwichedBetweenPreservedWords = resolvedWords[i - 1] != null && resolvedWords[i + 1] != null;
       if (sandwichedBetweenPreservedWords) {
         return part;
       }

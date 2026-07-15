@@ -20,6 +20,19 @@ describe('romajiToHiragana', () => {
   it('still converts normally when the kanji line has no English words', () => {
     expect(romajiToHiragana('kaze ga kooru wa', '風が凍るわ')).toBe('かぜがこおるわ');
   });
+
+  it('gives each occurrence of a repeated word its own casing, in order', () => {
+    expect(romajiToHiragana('bay BAY', 'Bay BAY')).toBe('Bay BAY');
+    expect(romajiToHiragana('BAY bay', 'BAY Bay')).toBe('BAY Bay');
+  });
+
+  it('keeps an all-caps English word from the kanji line as-is', () => {
+    expect(romajiToHiragana('coffee wo nomu', 'COFFEEを飲む')).toBe('COFFEEをのむ');
+  });
+
+  it('keeps a lowercase English word from the kanji line as-is even when romaji is uppercase', () => {
+    expect(romajiToHiragana('COFFEE wo nomu', 'coffeeを飲む')).toBe('coffeeをのむ');
+  });
 });
 
 describe('buildFurigana', () => {
