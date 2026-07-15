@@ -7,9 +7,17 @@ export default function FuriganaGeneratorPage() {
   const [kanjiText, setKanjiText] = useState('');
   const [romajiText, setRomajiText] = useState('');
   const [convertedLines, setConvertedLines] = useState<FuriganaLine[] | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const handleConvert = () => {
     setConvertedLines(buildFuriganaLines(kanjiText, romajiText));
+  };
+
+  const handleCopy = () => {
+    if (!convertedLines) return;
+    navigator.clipboard.writeText(convertedLines.map((line) => line.furigana).join('\n'));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -62,12 +70,28 @@ export default function FuriganaGeneratorPage() {
 
         {convertedLines && convertedLines.length > 0 && (
           <div className="furiganaGenerator_output">
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              className="furiganaGenerator_copy-btn"
+              onClick={handleCopy}
+            >
+              {copied ? 'Copied!' : 'Copy'}
+            </Button>
             {convertedLines.map((line, i) => (
               <Fragment key={i}>
                 {line.furigana}
                 <br />
               </Fragment>
             ))}
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              className="furiganaGenerator_copy-btn"
+              onClick={handleCopy}
+            >
+              {copied ? 'Copied!' : 'Copy'}
+            </Button>
           </div>
         )}
       </Container>

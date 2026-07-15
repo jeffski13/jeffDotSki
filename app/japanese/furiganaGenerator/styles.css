@@ -56,3 +56,13 @@
   border-top: 1px solid #ddd;
   padding-top: 20px;
 }
+
+.furiganaGenerator_copy-btn {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.furiganaGenerator_copy-btn:last-child {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
