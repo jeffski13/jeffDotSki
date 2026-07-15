@@ -11,8 +11,40 @@ type DiffOp =
   | { type: 'kanjiOnly'; char: string }
   | { type: 'hiraganaOnly'; char: string };
 
-export function romajiToHiragana(romajiLine: string): string {
-  return toHiragana(romajiLine.replace(/-/g, ' ')).replace(/\s+/g, '');
+const ENGLISH_WORD_REGEX = /[A-Za-z]+/g;
+
+function extractEnglishWords(text: string): string[] {
+  return text.match(ENGLISH_WORD_REGEX) ?? [];
+}
+
+// English words that appear (case-insensitively) in the kanji line are kept exactly as
+// written there rather than being run through the romaji-to-kana converter, which otherwise
+// mangles them character by character (e.g. "Bay" -> "Ba(ば)y").
+export function romajiToHiragana(romajiLine: string, kanjiLine = ''): string {
+  const preservedWords = new Map<string, string>();
+  for (const word of extractEnglishWords(kanjiLine)) {
+    preservedWords.set(word.toLowerCase(), word);
+  }
+
+  if (preservedWords.size === 0) {
+    return toHiragana(romajiLine.replace(/-/g, ' ')).replace(/\s+/g, '');
+  }
+
+  const parts = romajiLine.split(new RegExp(`(${ENGLISH_WORD_REGEX.source})`, 'g'));
+  const isPreserved = parts.map((part) => /^[A-Za-z]+$/.test(part) && preservedWords.has(part.toLowerCase()));
+
+  return parts
+    .map((part, i) => {
+      if (isPreserved[i]) {
+        return preservedWords.get(part.toLowerCase())!;
+      }
+      const sandwichedBetweenPreservedWords = isPreserved[i - 1] && isPreserved[i + 1];
+      if (sandwichedBetweenPreservedWords) {
+        return part;
+      }
+      return toHiragana(part.replace(/-/g, ' ')).replace(/\s+/g, '');
+    })
+    .join('');
 }
 
 function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
@@ -96,7 +128,7 @@ export function buildFuriganaLines(kanjiText: string, romajiText: string): Furig
 
   return Array.from({ length: lineCount }, (_, i) => {
     const kanji = kanjiLines[i] ?? '';
-    const hiragana = romajiToHiragana(romajiLines[i] ?? '');
+    const hiragana = romajiToHiragana(romajiLines[i] ?? '', kanji);
     return { kanji, hiragana, furigana: buildFurigana(kanji, hiragana) };
   }).filter((line) => line.kanji.length > 0 || line.hiragana.length > 0);
 }

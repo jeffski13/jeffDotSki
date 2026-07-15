@@ -20,7 +20,8 @@
       "Bash(grep -rl \"kuroshiro\" /Users/jeffszcinski/dev/jeffDotSki --include=\"*.tsx\" --include=\"*.ts\" --include=\"*.js\" -not -path \"*/node_modules/*\")",
       "Bash(mkdir -p /Users/jeffszcinski/dev/jeffDotSki/app/japanese/furiganaGenerator)",
       "Bash(python3 -c ' *)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(npm ls *)"
     ],
     "additionalDirectories": [
       "/Users/jeffszcinski/dev/jeffDotSki/app/japanese"

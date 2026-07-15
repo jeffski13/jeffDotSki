@@ -8,6 +8,18 @@ describe('romajiToHiragana', () => {
   it('treats hyphens as word breaks rather than long-vowel marks', () => {
     expect(romajiToHiragana('hito-shirezu')).toBe('ひとしれず');
   });
+
+  it('leaves an English word untouched when it also appears in the kanji line', () => {
+    expect(romajiToHiragana('hiekitta kiss', '冷えきったKiss')).toBe('ひえきったKiss');
+  });
+
+  it('matches English words case-insensitively but keeps the kanji line casing', () => {
+    expect(romajiToHiragana('tasogare no bay city', '黄昏のBay City')).toBe('たそがれのBay City');
+  });
+
+  it('still converts normally when the kanji line has no English words', () => {
+    expect(romajiToHiragana('kaze ga kooru wa', '風が凍るわ')).toBe('かぜがこおるわ');
+  });
 });
 
 describe('buildFurigana', () => {
@@ -40,6 +52,14 @@ describe('buildFuriganaLines', () => {
     expect(lines).toEqual([
       { kanji: '誰にも見せない', hiragana: 'だれにもみせない', furigana: '誰（だれ）にも見（み）せない' },
       { kanji: '泪があった', hiragana: 'なみだがあった', furigana: '泪（なみだ）があった' },
+    ]);
+  });
+
+  it('keeps an English phrase shared by both lines unchanged instead of mangling it letter by letter', () => {
+    const lines = buildFuriganaLines('黄昏のBay City', 'Tasogare no bay city');
+
+    expect(lines).toEqual([
+      { kanji: '黄昏のBay City', hiragana: 'たそがれのBay City', furigana: '黄昏（たそがれ）のBay City' },
     ]);
   });
 });
