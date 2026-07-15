@@ -39,6 +39,10 @@ describe('romajiToHiragana', () => {
     // "h" (no following vowel) and the comma (converted to "、") don't map to hiragana at all.
     expect(romajiToHiragana('Ah, ah anata wo otte')).toBe('あああなたをおって');
   });
+
+  it('reads "dzu" as づ rather than as an unconvertible "d" plus ず', () => {
+    expect(romajiToHiragana('tsudzuiteta')).toBe('つづいてた');
+  });
 });
 
 describe('buildFurigana', () => {
@@ -107,6 +111,18 @@ describe('buildFuriganaLines', () => {
 
     expect(lines).toEqual([
       { kanji: 'ああ あなたを追って', hiragana: 'あああなたをおって', furigana: 'ああ あなたを追（お）って' },
+    ]);
+  });
+
+  it('does not give an existing づ its own furigana reading when the romaji spells it "dzu"', () => {
+    const lines = buildFuriganaLines('素直になれば つづいてた愛', 'Sunao ni nareba tsudzuiteta ai');
+
+    expect(lines).toEqual([
+      {
+        kanji: '素直になれば つづいてた愛',
+        hiragana: 'すなおになればつづいてたあい',
+        furigana: '素直（すなお）になれば つづいてた愛（あい）',
+      },
     ]);
   });
 });

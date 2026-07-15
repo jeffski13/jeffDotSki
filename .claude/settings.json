@@ -32,7 +32,8 @@
       "Bash(curl -s http://localhost:5173/japaneseParenthesesToFurigana)",
       "Bash(npx --no-install playwright --version)",
       "Bash(python3 -c \"import playwright\")",
-      "Bash(find / -maxdepth 3 -iname \"chromium-cli*\")"
+      "Bash(find / -maxdepth 3 -iname \"chromium-cli*\")",
+      "Bash(npx tsx -e ' *)"
     ],
     "additionalDirectories": [
       "/Users/jeffszcinski/dev/jeffDotSki/app/japanese"

@@ -18,12 +18,20 @@ function extractEnglishWords(text: string): string[] {
   return text.match(ENGLISH_WORD_REGEX) ?? [];
 }
 
+// "dzu" is a common (if non-standard) Hepburn spelling of づ, used to distinguish it from ず
+// when romanizing. wanakana only recognizes "du" for づ, so "dzu" falls through as an
+// unconvertible "d" followed by "zu" -> ず, which then fails to line up with the づ already
+// present in the kanji line and gets misread as a kanji needing its own furigana reading.
+function normalizeDzu(romajiPart: string): string {
+  return romajiPart.replace(/dzu/gi, 'du');
+}
+
 // wanakana passes through anything it can't map to kana (a lone consonant with no following
 // vowel, punctuation it converts to a full-width equivalent like "、"). Stripping everything
 // outside the hiragana block turns that leftover junk into nothing rather than letting it
 // throw off the character alignment against the kanji line.
 function toHiraganaOnly(romajiPart: string): string {
-  return toHiragana(romajiPart.replace(/-/g, ' ')).replace(NOT_HIRAGANA_REGEX, '');
+  return toHiragana(normalizeDzu(romajiPart).replace(/-/g, ' ')).replace(NOT_HIRAGANA_REGEX, '');
 }
 
 // English words that appear (case-insensitively) in the kanji line are kept exactly as
