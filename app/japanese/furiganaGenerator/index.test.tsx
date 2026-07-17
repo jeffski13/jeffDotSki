@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import FuriganaGeneratorPage from './index';
+import testInfoKanji from './testInfoKanji.txt?raw';
+import testInfoRomaji from './testInfoRomaji.txt?raw';
 
 const renderComponent = () => render(<MemoryRouter><FuriganaGeneratorPage /></MemoryRouter>);
 
@@ -35,5 +37,16 @@ describe('FuriganaGeneratorPage', () => {
     expect(rubyEls.length).toBeGreaterThan(0);
     expect(rubyColumn.textContent).not.toContain('（');
     expect(rubyEls[0].querySelector('rt')?.textContent).toBe('だれ');
+  });
+
+  it('fills both textareas with the sample files when "Load Sample" is clicked', () => {
+    renderComponent();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Load Sample' }));
+
+    expect(screen.getByPlaceholderText('漢字の文章をここに入力してください。')).toHaveValue(testInfoKanji);
+    expect(screen.getByPlaceholderText('Enter the romaji reading here, matching each kanji line.')).toHaveValue(
+      testInfoRomaji,
+    );
   });
 });

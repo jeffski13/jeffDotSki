@@ -49,6 +49,11 @@
   margin-bottom: 30px;
 }
 
+.furiganaGenerator_sample-btn {
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+
 .furiganaGenerator_output {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
   font-size: 1.1rem;

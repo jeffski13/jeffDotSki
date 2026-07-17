@@ -2,6 +2,8 @@ import { useState, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
 import { renderFuriganaText } from '../shared/furiganaRuby';
+import testInfoKanji from './testInfoKanji.txt?raw';
+import testInfoRomaji from './testInfoRomaji.txt?raw';
 import './styles.css';
 
 export default function FuriganaGeneratorPage() {
@@ -12,6 +14,11 @@ export default function FuriganaGeneratorPage() {
 
   const handleConvert = () => {
     setConvertedLines(buildFuriganaLines(kanjiText, romajiText));
+  };
+
+  const handleLoadSample = () => {
+    setKanjiText(testInfoKanji);
+    setRomajiText(testInfoRomaji);
   };
 
   const handleCopy = () => {
@@ -68,6 +75,12 @@ export default function FuriganaGeneratorPage() {
         >
           Generate Furigana
         </Button>
+
+        {import.meta.env.DEV && (
+          <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
+            Load Sample
+          </Button>
+        )}
 
         {convertedLines && convertedLines.length > 0 && (
           <div className="furiganaGenerator_output">
