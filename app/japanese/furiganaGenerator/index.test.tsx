@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import FuriganaGeneratorPage from './index';
+import { ENV } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
 
@@ -20,6 +21,12 @@ const generateFurigana = () => {
 };
 
 describe('FuriganaGeneratorPage', () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+
+  afterEach(() => {
+    process.env.NODE_ENV = originalNodeEnv;
+  });
+
   it('renders both the parenthetical and ruby-stylized output side by side', () => {
     const { container } = renderComponent();
     generateFurigana();
@@ -40,6 +47,7 @@ describe('FuriganaGeneratorPage', () => {
   });
 
   it('fills both textareas with the sample files when "Load Sample" is clicked', () => {
+    process.env.NODE_ENV = ENV.DEV;
     renderComponent();
 
     fireEvent.click(screen.getByRole('button', { name: 'Load Sample' }));
@@ -48,5 +56,12 @@ describe('FuriganaGeneratorPage', () => {
     expect(screen.getByPlaceholderText('Enter the romaji reading here, matching each kanji line.')).toHaveValue(
       testInfoRomaji,
     );
+  });
+
+  it('hides the "Load Sample" button outside of dev', () => {
+    process.env.NODE_ENV = ENV.PROD;
+    renderComponent();
+
+    expect(screen.queryByRole('button', { name: 'Load Sample' })).not.toBeInTheDocument();
   });
 });
