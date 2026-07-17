@@ -179,6 +179,51 @@ function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
   return ops;
 }
 
+// The forward reconstruction in diffChars always binds an ambiguous common match (a kana that
+// appears more than once in the unconsumed hiragana) to the *earliest* eligible occurrence. That
+// is correct when something further along still needs the hiragana in between (see the は/わ
+// comment above) - but wrong when nothing does. 痛い's reading is いたい: the trailing い is
+// literal okurigana in the kanji line, and it could equally match the hiragana line's first い
+// (part of 痛's own reading) or its second (the okurigana itself). Binding to the first leaves
+// 痛 flushed with no reading at all, and strands the real reading ("たい") as an orphaned block
+// with no kanji in front of it. This walks back over the ops and re-binds any such match - one
+// with a kanji-only run in front that hasn't picked up any hiragana yet - to the *last* matching
+// occurrence in the hiragana run right after it instead, so the kanji run absorbs the reading
+// that's actually its own.
+function reattachOrphanedOkurigana(ops: DiffOp[]): DiffOp[] {
+  const fixed = [...ops];
+  for (let k = 0; k < fixed.length; k++) {
+    if (fixed[k].type !== 'common') continue;
+
+    let precedingKanjiOnly = false;
+    let precedingHiraganaOnly = false;
+    for (let b = k - 1; b >= 0 && fixed[b].type !== 'common'; b--) {
+      if (fixed[b].type === 'kanjiOnly') precedingKanjiOnly = true;
+      // A stray hiraganaOnly space is just a word-boundary marker (see romajiToHiragana(...,
+      // true)), not an actual reading the preceding kanji run has already picked up, so it
+      // shouldn't count as evidence that the run already has a reading.
+      if (fixed[b].type === 'hiraganaOnly' && fixed[b].char !== ' ') precedingHiraganaOnly = true;
+    }
+    if (!precedingKanjiOnly || precedingHiraganaOnly) continue;
+
+    const char = fixed[k].char;
+    let lastMatch = -1;
+    let f = k + 1;
+    while (f < fixed.length && fixed[f].type === 'hiraganaOnly') {
+      if (fixed[f].char === char) lastMatch = f;
+      f++;
+    }
+    if (lastMatch === -1) continue;
+
+    for (let x = k; x < lastMatch; x++) {
+      fixed[x] = { type: 'hiraganaOnly', char: fixed[x].char };
+    }
+    fixed[lastMatch] = { type: 'common', char };
+    k = lastMatch;
+  }
+  return fixed;
+}
+
 // A run of several adjacent kanji with no okurigana between them (e.g. a two-kanji compound)
 // normally shares one combined furigana reading, built from whatever hiragana the diff couldn't
 // otherwise place. But when hiraganaBuffer carries word-boundary spaces (from
@@ -207,7 +252,7 @@ function renderKanjiHiraganaBuffer(kanjiBuffer: string, hiraganaBuffer: string):
 //    hiragana side is their reading - pair them up and wrap the reading in parentheses.
 // 3. The common hiragana from step 1 is interleaved back in as we walk the diff in order.
 export function buildFurigana(kanjiLine: string, hiraganaLine: string): string {
-  const ops = diffChars(kanjiLine, hiraganaLine);
+  const ops = reattachOrphanedOkurigana(diffChars(kanjiLine, hiraganaLine));
 
   let result = '';
   let kanjiBuffer = '';

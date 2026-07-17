@@ -76,6 +76,14 @@ describe('buildFurigana', () => {
   it('leaves the topic particle は untouched instead of misreading it as part of the next kanji', () => {
     expect(buildFurigana('あなたは消えた', 'あなたわきえた')).toBe('あなたは消（き）えた');
   });
+
+  it('gives 痛 its own reading instead of binding its trailing okurigana to the wrong い', () => {
+    // 痛い's reading いたい has an い at both ends: one as part of 痛's own reading ("いた") and
+    // one as the literal okurigana. Binding the okurigana to the first い (the earliest match)
+    // leaves 痛 with no reading at all and strands "たい" as an orphaned block with no kanji in
+    // front of it - this checks the okurigana lands on the trailing い instead.
+    expect(buildFurigana('痛いの', 'いたいの')).toBe('痛（いた）いの');
+  });
 });
 
 describe('buildFuriganaLines', () => {
@@ -144,7 +152,7 @@ describe('buildFuriganaLines', () => {
       {
         kanji: '馬鹿ね今頃 愛が痛いの',
         hiragana: 'ばかねいまごろあいがいたいの',
-        furigana: '馬鹿（ばか）ね今（いま）頃 （ごろ）愛（あい）が痛い（たい）の',
+        furigana: '馬鹿（ばか）ね今（いま）頃 （ごろ）愛（あい）が痛（いた）いの',
       },
     ]);
   });
