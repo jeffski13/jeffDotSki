@@ -113,6 +113,14 @@ describe('buildFuriganaLines', () => {
     ]);
   });
 
+  it('drops a repeated English gloss in the romaji line instead of giving it a garbage furigana reading', () => {
+    const lines = buildFuriganaLines('黄昏のBay City', 'Tasogare no bay city (Bay City)');
+
+    expect(lines).toEqual([
+      { kanji: '黄昏のBay City', hiragana: 'たそがれのBay City', furigana: '黄昏（たそがれ）のBay City' },
+    ]);
+  });
+
   it('keeps katakana in the output instead of giving it a furigana reading', () => {
     const lines = buildFuriganaLines('見えないナイフ', 'mienai naifu');
 

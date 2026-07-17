@@ -50,6 +50,12 @@ function toHiraganaWithSpaces(romajiPart: string): string {
 // Matches are consumed in the order they appear in the kanji line, so if the same word shows
 // up more than once with different casing (e.g. "Bay BAY"), each romaji occurrence picks up
 // the casing of its corresponding kanji occurrence instead of every match collapsing to one.
+//
+// If a preserved word occurs *more* times in the romaji line than in the kanji line (e.g. a
+// romaji gloss like "Tasogare no bay city (Bay City)" repeating the English translation in
+// parentheses), the extra occurrence has no kanji left to pair with once the queue runs dry.
+// Running it through the kana converter would produce a garbage reading with nothing to attach
+// it to, so it's dropped instead of converted.
 export function romajiToHiragana(romajiLine: string, kanjiLine = '', preserveSpaces = false): string {
   const convert = preserveSpaces ? toHiraganaWithSpaces : toHiraganaOnly;
   const preservedWordQueues = new Map<string, string[]>();
@@ -78,6 +84,10 @@ export function romajiToHiragana(romajiLine: string, kanjiLine = '', preserveSpa
     .map((part, i) => {
       if (resolvedWords[i] !== null) {
         return resolvedWords[i];
+      }
+      const isExhaustedPreservedWord = /^[A-Za-z]+$/.test(part) && preservedWordQueues.has(part.toLowerCase());
+      if (isExhaustedPreservedWord) {
+        return '';
       }
       const sandwichedBetweenPreservedWords = resolvedWords[i - 1] != null && resolvedWords[i + 1] != null;
       if (sandwichedBetweenPreservedWords) {
