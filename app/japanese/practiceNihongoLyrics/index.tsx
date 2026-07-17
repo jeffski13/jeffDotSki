@@ -209,30 +209,32 @@ export default function WebPage() {
           </Col>
         </Row>
         <hr className="lyrics-controls-separator" />
-        {pairs.map((line, idx) => {
-          const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
-          return (
-            <Row key={idx} className="lyric-pair" style={{ fontSize: `${fontSize}px` }}>
-              {showJp && (
-                <Col xs={12} md={colWidth}>
-                  <p className={isSeparator ? "lyric-separator" : undefined}>{line.jp}</p>
-                </Col>
-              )}
-              {hasFurigana && showFurigana && (
-                <Col xs={12} md={colWidth}>
-                  <p className={isSeparator ? "lyric-separator" : undefined}>
-                    {renderFurigana(line.furigana, `furigana-${idx}`)}
-                  </p>
-                </Col>
-              )}
-              {showRomaji && (
-                <Col xs={12} md={colWidth}>
-                  <p className={isSeparator ? "lyric-separator" : undefined}>{line.rom}</p>
-                </Col>
-              )}
-            </Row>
-          );
-        })}
+        <div className="lyrics-area">
+          {pairs.map((line, idx) => {
+            const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
+            return (
+              <Row key={idx} className="lyric-pair" style={{ fontSize: `${fontSize}px` }}>
+                {showJp && (
+                  <Col xs={12} md={colWidth}>
+                    <p className={isSeparator ? "lyric-separator" : undefined}>{line.jp}</p>
+                  </Col>
+                )}
+                {hasFurigana && showFurigana && (
+                  <Col xs={12} md={colWidth}>
+                    <p className={isSeparator ? "lyric-separator" : undefined}>
+                      {renderFurigana(line.furigana, `furigana-${idx}`)}
+                    </p>
+                  </Col>
+                )}
+                {showRomaji && (
+                  <Col xs={12} md={colWidth}>
+                    <p className={isSeparator ? "lyric-separator" : undefined}>{line.rom}</p>
+                  </Col>
+                )}
+              </Row>
+            );
+          })}
+        </div>
       </Container>
     </div>
   );

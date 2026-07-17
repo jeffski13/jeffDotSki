@@ -30,6 +30,10 @@
     border-top: 2px solid #b5b5b5;
 }
 
+#japanese-lyrics .lyrics-area {
+    padding: 0.5rem 1.5rem 2rem;
+}
+
 @media (max-width: 576px) {
     .lyric-separator {
         max-width: 50%;
