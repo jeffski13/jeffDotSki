@@ -1,54 +1,7 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import { FuriganaToggleIcon, renderFuriganaText } from '../shared/furiganaRuby';
 import './styles.css';
-
-const KANJI_FURIGANA_REGEX = /([一-鿿㐀-䶿々]+)[(（]([^)）]+)[)）]/g;
-
-function FuriganaToggleIcon() {
-  return (
-    <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: '0.1em', lineHeight: 1 }}>
-      <ruby style={{ fontSize: '0.95em' }}>振<rt style={{ fontSize: '0.55em' }}>ふ</rt></ruby>
-      <svg viewBox="0 0 20 18" width="0.7em" height="0.7em" fill="currentColor" aria-hidden="true" style={{ marginBottom: '0.1em' }}>
-        <polygon points="0,2 12,2 12,5 0,5" />
-        <polygon points="10,-1 20,3.5 10,8" />
-        <polygon points="8,13 8,16 20,16 20,13" />
-        <polygon points="10,10 0,14.5 10,19" />
-      </svg>
-      <span style={{ fontSize: '0.95em' }}>振</span>
-    </span>
-  );
-}
-
-function parseFuriganaLine(line: string, keyPrefix: string): React.ReactNode[] {
-  const nodes: React.ReactNode[] = [];
-  let lastIndex = 0;
-  let tokenIdx = 0;
-  let match: RegExpExecArray | null;
-  KANJI_FURIGANA_REGEX.lastIndex = 0;
-  while ((match = KANJI_FURIGANA_REGEX.exec(line)) !== null) {
-    if (match.index > lastIndex) {
-      nodes.push(<span key={`${keyPrefix}-t${tokenIdx}`}>{line.slice(lastIndex, match.index)}</span>);
-      tokenIdx++;
-    }
-    nodes.push(<ruby key={`${keyPrefix}-r${tokenIdx}`}>{match[1]}<rt>{match[2]}</rt></ruby>);
-    tokenIdx++;
-    lastIndex = match.index + match[0].length;
-  }
-  if (lastIndex < line.length) {
-    nodes.push(<span key={`${keyPrefix}-t${tokenIdx}`}>{line.slice(lastIndex)}</span>);
-  }
-  return nodes;
-}
-
-function renderFuriganaParagraph(paragraph: string, keyPrefix: string): React.ReactNode {
-  const lines = paragraph.split('\n');
-  return lines.map((line, i) => (
-    <Fragment key={`${keyPrefix}-line${i}`}>
-      {parseFuriganaLine(line, `${keyPrefix}-line${i}`)}
-      {i < lines.length - 1 && <br className="nihonParenthesesToFurigana_linebreak" />}
-    </Fragment>
-  ));
-}
 
 export default function NihonParenthesesToFuriganaPage() {
   const [inputText, setInputText] = useState('');
@@ -94,9 +47,9 @@ export default function NihonParenthesesToFuriganaPage() {
         </Button>
 
         {convertedParagraphs && convertedParagraphs.length > 0 && (
-          <div className="nihonParenthesesToFurigana_output-row">
+          <div className="furiganaRuby_output-row">
             <div
-              className="nihonParenthesesToFurigana_toggle-btn-col"
+              className="furiganaRuby_toggle-btn-col"
               onClick={() => setFuriganaVisible((v) => !v)}
               title="Toggle furigana"
               aria-label="Toggle furigana"
@@ -104,14 +57,14 @@ export default function NihonParenthesesToFuriganaPage() {
               tabIndex={0}
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setFuriganaVisible((v) => !v)}
             >
-              <span className="nihonParenthesesToFurigana_toggle-tag">
+              <span className="furiganaRuby_toggle-tag">
                 <FuriganaToggleIcon />
               </span>
             </div>
-            <div className={`nihonParenthesesToFurigana_output${furiganaVisible ? '' : ' nihonParenthesesToFurigana_rt-hidden'}`}>
+            <div className={`nihonParenthesesToFurigana_output furiganaRuby_output${furiganaVisible ? '' : ' furiganaRuby_rt-hidden'}`}>
               {convertedParagraphs.map((paragraph, i) => (
                 <p key={i} className="nihonParenthesesToFurigana_paragraph">
-                  {renderFuriganaParagraph(paragraph, `p${i}`)}
+                  {renderFuriganaText(paragraph, `p${i}`)}
                 </p>
               ))}
             </div>

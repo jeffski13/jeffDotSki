@@ -16,7 +16,35 @@
       "Bash(command -v chromium-cli)",
       "Read(//opt/homebrew/bin/**)",
       "Read(//Users/jeffski13/.local/bin/**)",
-      "Bash(curl -s http://localhost:5173/japanese/practiceNihongoLyrics/styles.css)"
+      "Bash(curl -s http://localhost:5173/japanese/practiceNihongoLyrics/styles.css)",
+      "Bash(grep -rl \"kuroshiro\" /Users/jeffszcinski/dev/jeffDotSki --include=\"*.tsx\" --include=\"*.ts\" --include=\"*.js\" -not -path \"*/node_modules/*\")",
+      "Bash(mkdir -p /Users/jeffszcinski/dev/jeffDotSki/app/japanese/furiganaGenerator)",
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(npm ls *)",
+      "Bash(cat)",
+      "Bash(node /tmp/test_furigana.mjs)",
+      "Bash(npx tsx *)",
+      "Bash(cp /tmp/test_furigana.mjs ./test_furigana.mjs)",
+      "Bash(node test_furigana.mjs)",
+      "Bash(rm test_furigana.mjs)",
+      "Bash(curl -s http://localhost:5173/furiganaGenerator)",
+      "Bash(curl -s http://localhost:5173/japaneseParenthesesToFurigana)",
+      "Bash(npx --no-install playwright --version)",
+      "Bash(python3 -c \"import playwright\")",
+      "Bash(find / -maxdepth 3 -iname \"chromium-cli*\")",
+      "Bash(npx tsx -e ' *)",
+      "Bash(echo \"chromium-cli found: $?\")",
+      "Bash(node -e \"console.log\\(require.resolve\\('playwright'\\)\\)\")",
+      "Bash(timeout 30 bash -c 'until curl -sf http://localhost:3000 >/dev/null 2>&1 || curl -sf http://localhost:5173 >/dev/null 2>&1; do sleep 1; done')",
+      "Read(//private/tmp/**)",
+      "Bash(curl -sf http://localhost:5173/)",
+      "Bash(curl -s http://localhost:5173/japanese/furiganaGenerator -o /tmp/furigana_page.html -w \"%{http_code}\\\\n\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s http://localhost:5173/furiganaGenerator -o /tmp/furigana_page.html -w \"%{http_code}\\\\n\")"
+    ],
+    "additionalDirectories": [
+      "/Users/jeffszcinski/dev/jeffDotSki/app/japanese"
     ]
   }
 }
