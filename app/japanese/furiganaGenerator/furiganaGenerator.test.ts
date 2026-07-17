@@ -133,6 +133,22 @@ describe('buildFuriganaLines', () => {
     ]);
   });
 
+  it('splits adjacent kanji into separate readings when the romaji has a word for each', () => {
+    // "今頃" has no okurigana between 今 and 頃 to anchor a diff match, so without help both
+    // kanji (plus 愛 across the literal lyric-line space) would get lumped into one reading
+    // ("いまごろあい"). The romaji has a separate word for each ("ima", "goro", "ai"), which is
+    // the signal used to give each kanji its own furigana instead.
+    const lines = buildFuriganaLines('馬鹿ね今頃 愛が痛いの', 'Baka ne ima goro ai ga itai no');
+
+    expect(lines).toEqual([
+      {
+        kanji: '馬鹿ね今頃 愛が痛いの',
+        hiragana: 'ばかねいまごろあいがいたいの',
+        furigana: '馬鹿（ばか）ね今（いま）頃 （ごろ）愛（あい）が痛い（たい）の',
+      },
+    ]);
+  });
+
   it('pairs the topic particle は with the わ closest to it instead of a わ from a later word', () => {
     // The hiragana line has two わ in a row: one for the は particle, one starting 笑い
     // ("warai"). The diff must not let 海's reading swallow the particle's わ, which would then

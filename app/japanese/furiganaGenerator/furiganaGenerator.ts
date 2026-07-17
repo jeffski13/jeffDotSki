@@ -13,6 +13,7 @@ type DiffOp =
 
 const ENGLISH_WORD_REGEX = /[A-Za-z]+/g;
 const NOT_HIRAGANA_REGEX = /[^ぁ-ゖ]/g;
+const NOT_HIRAGANA_OR_SPACE_REGEX = /[^ぁ-ゖ ]/g;
 
 function extractEnglishWords(text: string): string[] {
   return text.match(ENGLISH_WORD_REGEX) ?? [];
@@ -34,6 +35,14 @@ function toHiraganaOnly(romajiPart: string): string {
   return toHiragana(normalizeDzu(romajiPart).replace(/-/g, ' ')).replace(NOT_HIRAGANA_REGEX, '');
 }
 
+// Same conversion as toHiraganaOnly, but keeps the spaces between romaji words instead of
+// stripping them. Those spaces mark word boundaries that don't otherwise survive into the
+// hiragana reading, which buildFurigana needs to split a run of several adjacent kanji (e.g.
+// "今頃" or "頃 愛") into one furigana reading per kanji instead of lumping them into one.
+function toHiraganaWithSpaces(romajiPart: string): string {
+  return toHiragana(normalizeDzu(romajiPart).replace(/-/g, ' ')).replace(NOT_HIRAGANA_OR_SPACE_REGEX, '');
+}
+
 // English words that appear (case-insensitively) in the kanji line are kept exactly as
 // written there rather than being run through the romaji-to-kana converter, which otherwise
 // mangles them character by character (e.g. "Bay" -> "Ba(ば)y").
@@ -41,7 +50,8 @@ function toHiraganaOnly(romajiPart: string): string {
 // Matches are consumed in the order they appear in the kanji line, so if the same word shows
 // up more than once with different casing (e.g. "Bay BAY"), each romaji occurrence picks up
 // the casing of its corresponding kanji occurrence instead of every match collapsing to one.
-export function romajiToHiragana(romajiLine: string, kanjiLine = ''): string {
+export function romajiToHiragana(romajiLine: string, kanjiLine = '', preserveSpaces = false): string {
+  const convert = preserveSpaces ? toHiraganaWithSpaces : toHiraganaOnly;
   const preservedWordQueues = new Map<string, string[]>();
   for (const word of extractEnglishWords(kanjiLine)) {
     const key = word.toLowerCase();
@@ -54,7 +64,7 @@ export function romajiToHiragana(romajiLine: string, kanjiLine = ''): string {
   }
 
   if (preservedWordQueues.size === 0) {
-    return toHiraganaOnly(romajiLine);
+    return convert(romajiLine);
   }
 
   const parts = romajiLine.split(new RegExp(`(${ENGLISH_WORD_REGEX.source})`, 'g'));
@@ -73,7 +83,7 @@ export function romajiToHiragana(romajiLine: string, kanjiLine = ''): string {
       if (sandwichedBetweenPreservedWords) {
         return part;
       }
-      return toHiraganaOnly(part);
+      return convert(part);
     })
     .join('');
 }
@@ -96,7 +106,15 @@ function katakanaToHiragana(char: string): string {
 // to matching the wrong occurrence when both spellings appear in the same line.
 const PARTICLE_PRONUNCIATIONS: Record<string, string> = { は: 'わ' };
 
+// A space in the kanji line is a literal, meaningful character (a phrase break in the source
+// lyrics), while a space in the hiragana line is just a word-boundary marker introduced by
+// romajiToHiragana(..., true) for splitting adjacent kanji runs (see buildFurigana). The two
+// are unrelated, and the kanji line only ever has a handful of spaces against the hiragana
+// line's many - letting them match as "common" risks anchoring the single kanji-side space to
+// the wrong one of several hiragana-side candidates. Spaces are left to always fall through as
+// kanjiOnly/hiraganaOnly instead.
 function charsMatch(comparisonChar: string, hiraganaChar: string): boolean {
+  if (comparisonChar === ' ' || hiraganaChar === ' ') return false;
   return comparisonChar === hiraganaChar || PARTICLE_PRONUNCIATIONS[comparisonChar] === hiraganaChar;
 }
 
@@ -161,6 +179,28 @@ function diffChars(kanjiLine: string, hiraganaLine: string): DiffOp[] {
   return ops;
 }
 
+// A run of several adjacent kanji with no okurigana between them (e.g. a two-kanji compound)
+// normally shares one combined furigana reading, built from whatever hiragana the diff couldn't
+// otherwise place. But when hiraganaBuffer carries word-boundary spaces (from
+// romajiToHiragana(..., true)) and the number of hiragana words lines up exactly with the number
+// of kanji characters in the run, each kanji almost certainly has its own one-word reading rather
+// than one shared reading, so give each its own furigana instead of lumping them together. A
+// space literally present in the kanji line (a phrase break in the source lyrics, not a
+// word-boundary marker) rides along with whichever kanji character precedes it either way.
+function renderKanjiHiraganaBuffer(kanjiBuffer: string, hiraganaBuffer: string): string {
+  const words = hiraganaBuffer.split(/\s+/).filter(Boolean);
+  const kanjiCharCount = [...kanjiBuffer].filter((char) => char !== ' ').length;
+
+  if (kanjiCharCount <= 1 || words.length !== kanjiCharCount) {
+    const reading = words.join('');
+    return kanjiBuffer + (reading ? `（${reading}）` : '');
+  }
+
+  const leadingSpaces = kanjiBuffer.match(/^ +/)?.[0] ?? '';
+  const segments = kanjiBuffer.slice(leadingSpaces.length).match(/[^ ] */g) ?? [];
+  return leadingSpaces + segments.map((segment, i) => `${segment}（${words[i]}）`).join('');
+}
+
 // 1. Diff the kanji line against its full hiragana reading - matching characters are the
 //    hiragana already present in the kanji line (kept as-is, "in common").
 // 2. Whatever's left on the kanji side are the kanji characters; whatever's left on the
@@ -175,7 +215,7 @@ export function buildFurigana(kanjiLine: string, hiraganaLine: string): string {
 
   const flush = () => {
     if (kanjiBuffer || hiraganaBuffer) {
-      result += kanjiBuffer + (hiraganaBuffer ? `（${hiraganaBuffer}）` : '');
+      result += renderKanjiHiraganaBuffer(kanjiBuffer, hiraganaBuffer);
       kanjiBuffer = '';
       hiraganaBuffer = '';
     }
@@ -203,7 +243,12 @@ export function buildFuriganaLines(kanjiText: string, romajiText: string): Furig
 
   return Array.from({ length: lineCount }, (_, i) => {
     const kanji = kanjiLines[i] ?? '';
-    const hiragana = romajiToHiragana(romajiLines[i] ?? '', kanji);
-    return { kanji, hiragana, furigana: buildFurigana(kanji, hiragana) };
+    const romaji = romajiLines[i] ?? '';
+    const hiragana = romajiToHiragana(romaji, kanji);
+    // The word-boundary spaces this preserves (on top of whatever romajiToHiragana(romaji, kanji)
+    // already keeps, like a shared English phrase) are only needed for splitting adjacent kanji
+    // runs in buildFurigana - the reported hiragana reading above keeps its established shape.
+    const segmentedHiragana = romajiToHiragana(romaji, kanji, true);
+    return { kanji, hiragana, furigana: buildFurigana(kanji, segmentedHiragana) };
   }).filter((line) => line.kanji.length > 0 || line.hiragana.length > 0);
 }

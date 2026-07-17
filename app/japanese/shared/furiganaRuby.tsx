@@ -1,7 +1,10 @@
 import { Fragment, type ReactNode } from 'react';
 import './furiganaRuby.css';
 
-const KANJI_FURIGANA_REGEX = /([一-鿿㐀-䶿々]+)[(（]([^)）]+)[)）]/g;
+// The kanji group and its trailing space (if any, from a literal phrase-break space that landed
+// between adjacent kanji and their shared furigana - see buildFurigana) are captured separately
+// so the space can be rendered outside the <ruby> element instead of swallowed into it.
+const KANJI_FURIGANA_REGEX = /([一-鿿㐀-䶿々]+)( *)[(（]([^)）]+)[)）]/g;
 
 export function FuriganaToggleIcon() {
   return (
@@ -29,8 +32,12 @@ function parseFuriganaLine(line: string, keyPrefix: string): ReactNode[] {
       nodes.push(<span key={`${keyPrefix}-t${tokenIdx}`}>{line.slice(lastIndex, match.index)}</span>);
       tokenIdx++;
     }
-    nodes.push(<ruby key={`${keyPrefix}-r${tokenIdx}`}>{match[1]}<rt>{match[2]}</rt></ruby>);
+    nodes.push(<ruby key={`${keyPrefix}-r${tokenIdx}`}>{match[1]}<rt>{match[3]}</rt></ruby>);
     tokenIdx++;
+    if (match[2]) {
+      nodes.push(<span key={`${keyPrefix}-t${tokenIdx}`}>{match[2]}</span>);
+      tokenIdx++;
+    }
     lastIndex = match.index + match[0].length;
   }
   if (lastIndex < line.length) {
