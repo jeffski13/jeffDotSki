@@ -18,12 +18,14 @@ type DisplaySettings = {
   showJp: boolean;
   showFurigana: boolean;
   showRomaji: boolean;
+  lineByLine: boolean;
 };
 
 const DEFAULT_DISPLAY_SETTINGS: DisplaySettings = {
   showJp: false,
   showFurigana: true,
   showRomaji: true,
+  lineByLine: false,
 };
 
 function loadDisplaySettings(): DisplaySettings {
@@ -36,6 +38,7 @@ function loadDisplaySettings(): DisplaySettings {
       showJp: typeof parsed.showJp === "boolean" ? parsed.showJp : DEFAULT_DISPLAY_SETTINGS.showJp,
       showFurigana: typeof parsed.showFurigana === "boolean" ? parsed.showFurigana : DEFAULT_DISPLAY_SETTINGS.showFurigana,
       showRomaji: typeof parsed.showRomaji === "boolean" ? parsed.showRomaji : DEFAULT_DISPLAY_SETTINGS.showRomaji,
+      lineByLine: typeof parsed.lineByLine === "boolean" ? parsed.lineByLine : DEFAULT_DISPLAY_SETTINGS.lineByLine,
     };
   } catch {
     return DEFAULT_DISPLAY_SETTINGS;
@@ -102,7 +105,7 @@ function renderFurigana(line: string, keyPrefix: string): React.ReactNode {
 export default function WebPage() {
   const [selectedTitle, setSelectedTitle] = useState(() => songs[loadSelectedSongIndex()].title);
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
-  const { showJp, showFurigana, showRomaji } = displaySettings;
+  const { showJp, showFurigana, showRomaji, lineByLine } = displaySettings;
   const [fontSize, setFontSize] = useState<number>(loadFontSize);
 
   useEffect(() => {
@@ -134,9 +137,22 @@ export default function WebPage() {
     [song]
   );
 
-  const visibleColumnCount =
-    (showJp ? 1 : 0) + (hasFurigana && showFurigana ? 1 : 0) + (showRomaji ? 1 : 0);
-  const colWidth = visibleColumnCount > 0 ? Math.floor(12 / visibleColumnCount) : 12;
+  type Pair = (typeof pairs)[number];
+  const enabledChannels = useMemo(() => {
+    const channels: { key: string; render: (line: Pair, idx: number) => React.ReactNode }[] = [];
+    if (hasFurigana && showFurigana) {
+      channels.push({ key: "furigana", render: (line, idx) => renderFurigana(line.furigana, `furigana-${idx}`) });
+    }
+    if (showJp) {
+      channels.push({ key: "jp", render: (line) => line.jp });
+    }
+    if (showRomaji) {
+      channels.push({ key: "romaji", render: (line) => line.rom });
+    }
+    return channels;
+  }, [hasFurigana, showFurigana, showJp, showRomaji]);
+
+  const colWidth = enabledChannels.length > 0 ? Math.floor(12 / enabledChannels.length) : 12;
 
   return (
     <div id="japanese-lyrics">
@@ -182,6 +198,15 @@ export default function WebPage() {
               onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showRomaji: e.target.checked }))}
             />
           </Col>
+          <Col xs="auto">
+            <Form.Check
+              type="checkbox"
+              id="line-by-line"
+              label="Line by line"
+              checked={lineByLine}
+              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, lineByLine: e.target.checked }))}
+            />
+          </Col>
           <Col xs="auto" className="ms-lg-auto">
             <ButtonGroup aria-label="Text size">
               <Button
@@ -209,31 +234,36 @@ export default function WebPage() {
           </Col>
         </Row>
         <hr className="lyrics-controls-separator" />
-        <div className="lyrics-area">
-          {pairs.map((line, idx) => {
-            const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
-            return (
-              <Row key={idx} className="lyric-pair" style={{ fontSize: `${fontSize}px` }}>
-                {showJp && (
-                  <Col xs={12} md={colWidth}>
-                    <p className={isSeparator ? "lyric-separator" : undefined}>{line.jp}</p>
-                  </Col>
-                )}
-                {hasFurigana && showFurigana && (
-                  <Col xs={12} md={colWidth}>
-                    <p className={isSeparator ? "lyric-separator" : undefined}>
-                      {renderFurigana(line.furigana, `furigana-${idx}`)}
+        <div className="lyrics-area" style={{ fontSize: `${fontSize}px` }}>
+          {lineByLine ? (
+            pairs.map((line, idx) => {
+              const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
+              return (
+                <div key={idx} className="lyric-pair lyric-line-group">
+                  {enabledChannels.map((channel) => (
+                    <p key={channel.key} className={`lyric-line ${isSeparator ? "lyric-separator" : ""}`.trim()}>
+                      {channel.render(line, idx)}
                     </p>
-                  </Col>
-                )}
-                {showRomaji && (
-                  <Col xs={12} md={colWidth}>
-                    <p className={isSeparator ? "lyric-separator" : undefined}>{line.rom}</p>
-                  </Col>
-                )}
-              </Row>
-            );
-          })}
+                  ))}
+                </div>
+              );
+            })
+          ) : (
+            <Row className="lyrics-columns">
+              {enabledChannels.map((channel) => (
+                <Col key={channel.key} xs={12} md={colWidth} className="lyrics-column">
+                  {pairs.map((line, idx) => {
+                    const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
+                    return (
+                      <p key={idx} className={`lyric-line ${isSeparator ? "lyric-separator" : ""}`.trim()}>
+                        {channel.render(line, idx)}
+                      </p>
+                    );
+                  })}
+                </Col>
+              ))}
+            </Row>
+          )}
         </div>
       </Container>
     </div>
