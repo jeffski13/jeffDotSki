@@ -34,6 +34,14 @@
     padding: 0.5rem 1.5rem 2rem;
 }
 
+#japanese-lyrics .lyric-line-group {
+    margin-bottom: 1rem;
+}
+
+#japanese-lyrics .lyrics-column .lyric-line {
+    min-height: 1.6em;
+}
+
 @media (max-width: 576px) {
     .lyric-separator {
         max-width: 50%;
