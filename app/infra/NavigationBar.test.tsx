@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { fireEvent, render, screen } from '@testing-library/react';
 import NavigationBar from './NavigationBar';
 import { getThemeManager, THEME, type DomThemeSetter, type ThemeManager, type ThemeOSMonitor, type ThemeStore } from './darkTheme';

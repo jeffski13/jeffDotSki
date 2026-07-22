@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { render } from '@testing-library/react';
 import PokePeruExtendedUniverse, {PokedexExtendedUniverseContainer, GymLeaderListExtendedUniverseContainer} from './PokePeruExtendedUniverse';
 import { getExtendedUniverseBackgroundImages } from './backgroundImagesExtendedUniverse';

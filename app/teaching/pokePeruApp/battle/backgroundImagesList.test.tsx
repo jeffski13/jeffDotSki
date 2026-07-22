@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import backgroundImageList, { getRandomImagePathFromList, IMAGE_PATH_PREFIX } from "./backgroundImagesList";
 
 describe('backgroundImagesList', () => {

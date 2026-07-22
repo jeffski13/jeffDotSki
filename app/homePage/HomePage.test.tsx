@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { render, screen } from '@testing-library/react';
 import HomePage, { multiLangContent, type Role } from './index';
 

@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { getMonsterData } from './exportMonsterData';
 import { monsters } from '../monsters';
 import { ElementType } from '../ElementType';

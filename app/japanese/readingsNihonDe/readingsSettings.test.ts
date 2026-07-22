@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { readingsSettingsStoreImpl, ROWKEYS, DEFAULT_ENABLED, DEFAULT_SPLIT_JP_DIALOGUE, DEFAULT_TOGGLE_FURIGANA } from './readingsSettings';
 
 const STORAGE_KEY = 'readingsNihonDe-displaySettings';

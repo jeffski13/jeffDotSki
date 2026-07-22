@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent } from '@testing-library/react';
 import BattleContainer from './BattleParent';
 import mockSelectedMonsters, { mockTrainers } from '../mockMonsters';

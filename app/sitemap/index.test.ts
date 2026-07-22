@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { es as navEs, defaultText as navDefaultText } from '../infra/NavigationBar';
 import { multiLangContent } from './index';
 import type { ContentPerLanguage, SitemapSection } from './index';

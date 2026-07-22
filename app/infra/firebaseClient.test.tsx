@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { ENV } from './env';
 import { shouldUseFirebase } from './firebaseClient';
 
