@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import Battle from './Battle';
 import { ElementType } from '../ElementType';

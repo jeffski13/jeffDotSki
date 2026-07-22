@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import ReadingsNihonDe from './index';

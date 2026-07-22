@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import ROUTES from './ROUTES';
 import fs from 'fs';
 import path from 'path';

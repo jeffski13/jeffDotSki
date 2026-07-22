@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { getContentByLanguage } from './langSupport';
 import type { MultiLangContent } from './langSupport';
 

@@ -1,3 +1,5 @@
+/// <reference types="vitest/globals" />
+/// <reference types="@testing-library/jest-dom" />
 import { renderToStaticMarkup } from 'react-dom/server';
 import { renderEnText } from './renderEnText';
 
