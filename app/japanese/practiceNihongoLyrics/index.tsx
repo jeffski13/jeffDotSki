@@ -8,9 +8,10 @@ import eikouNoKakehashi from "./src/eikouNoKakehashi";
 import itsuka from "./src/itsuka";
 import HaikyouNoSofa from "./src/HaikyouNoSofa";
 import bayCity from "./src/bayCity";
+import land from "./src/land";
 import './styles.css';
 
-export const songs: LyricsSong[] = [bayCity, eikouNoKakehashi, HaikyouNoSofa, itsuka, senNoYoruWoKoete, stayWithMe, tegami];
+export const songs: LyricsSong[] = [bayCity, eikouNoKakehashi, HaikyouNoSofa, itsuka, land, senNoYoruWoKoete, stayWithMe, tegami];
 
 const DISPLAY_SETTINGS_KEY = "practiceNihongoLyrics.displaySettings";
 
