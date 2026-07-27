@@ -26,7 +26,7 @@ describe('buildFuriganaLinesFromKanji', () => {
     expect(fetchMock).toHaveBeenCalledWith(FURIGANA_TRANSFORMATION_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ kanji: ['誰にも見せない'] }),
+      body: JSON.stringify(['誰にも見せない']),
     });
     expect(lines).toEqual(mockedLines);
   });
@@ -38,7 +38,7 @@ describe('buildFuriganaLinesFromKanji', () => {
 
     expect(fetchMock).toHaveBeenCalledWith(
       FURIGANA_TRANSFORMATION_URL,
-      expect.objectContaining({ body: JSON.stringify({ kanji: ['誰にも見せない', '今日は良い天気です'] }) }),
+      expect.objectContaining({ body: JSON.stringify(['誰にも見せない', '今日は良い天気です']) }),
     );
   });
 

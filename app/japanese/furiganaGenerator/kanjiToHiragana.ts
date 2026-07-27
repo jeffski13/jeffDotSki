@@ -12,7 +12,7 @@ export async function buildFuriganaLinesFromKanji(kanjiText: string): Promise<Fu
   const response = await fetch(FURIGANA_TRANSFORMATION_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ kanji: kanjiLines }),
+    body: JSON.stringify(kanjiLines),
   });
 
   if (!response.ok) {
