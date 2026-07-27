@@ -73,6 +73,15 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  server: {
+    proxy: {
+      // proxy same-origin so the browser never sends a CORS preflight to the local furigana service
+      '/furiganaTransformation': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',

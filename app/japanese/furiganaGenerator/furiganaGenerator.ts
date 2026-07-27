@@ -291,6 +291,15 @@ export function buildFurigana(kanjiLine: string, hiraganaLine: string): string {
   return result;
 }
 
+// Matches the same 漢字（かんじ）groups as furiganaRuby's rendering regex, but collapses each
+// one down to just its reading, dropping the kanji and parentheses so a furigana-annotated
+// line reduces to its plain hiragana reading.
+const KANJI_FURIGANA_GROUP_REGEX = /[一-鿿㐀-䶿々]+ *[(（]([^)）]+)[)）]/g;
+
+export function furiganaToHiragana(furiganaLine: string): string {
+  return furiganaLine.replace(KANJI_FURIGANA_GROUP_REGEX, '$1');
+}
+
 export function buildFuriganaLines(kanjiText: string, romajiText: string): FuriganaLine[] {
   const kanjiLines = kanjiText.split('\n').map((l) => l.trim());
   const romajiLines = romajiText.split('\n').map((l) => l.trim());

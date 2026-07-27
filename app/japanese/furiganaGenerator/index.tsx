@@ -1,10 +1,12 @@
 import { useState, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
+import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 import { renderFuriganaText } from '../shared/furiganaRuby';
 import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
+import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import './styles.css';
 
 export default function FuriganaGeneratorPage() {
@@ -12,14 +14,35 @@ export default function FuriganaGeneratorPage() {
   const [romajiText, setRomajiText] = useState('');
   const [convertedLines, setConvertedLines] = useState<FuriganaLine[] | null>(null);
   const [copied, setCopied] = useState(false);
+  const [isConverting, setIsConverting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleConvert = () => {
+  const handleConvert = async () => {
+    setErrorMessage(null);
+    // No romaji reading supplied - derive the hiragana reading straight from the kanji instead
+    // and feed it through the same furigana pipeline as if it had come from the Romaji box.
+    if (romajiText.trim().length === 0) {
+      setIsConverting(true);
+      try {
+        setConvertedLines(await buildFuriganaLinesFromKanji(kanjiText));
+      } catch {
+        setErrorMessage('Something went wrong generating furigana. Please try again.');
+      } finally {
+        setIsConverting(false);
+      }
+      return;
+    }
     setConvertedLines(buildFuriganaLines(kanjiText, romajiText));
   };
 
   const handleLoadSample = () => {
     setKanjiText(testInfoKanji);
     setRomajiText(testInfoRomaji);
+  };
+
+  const handleLoadKanjiOnlySample = () => {
+    setKanjiText(testInfoKanjiOnly);
+    setRomajiText('');
   };
 
   const handleCopy = () => {
@@ -37,7 +60,8 @@ export default function FuriganaGeneratorPage() {
           <span className="furiganaGenerator_title-en">Furigana Generator</span>
         </h1>
         <p className="furiganaGenerator_subtitle">
-          Enter Japanese text and its romaji reading (line by line) to generate furigana.
+          Enter Japanese text and its romaji reading (line by line) to generate furigana. Leave
+          Romaji blank to have the reading generated from the kanji automatically.
         </p>
 
         <Row className="furiganaGenerator_input-row">
@@ -63,7 +87,7 @@ export default function FuriganaGeneratorPage() {
                 rows={8}
                 value={romajiText}
                 onChange={(e) => setRomajiText(e.target.value)}
-                placeholder="Enter the romaji reading here, matching each kanji line."
+                placeholder="Enter the romaji reading here, matching each kanji line. Leave blank to auto-generate from the kanji."
               />
             </Form.Group>
           </Col>
@@ -72,14 +96,30 @@ export default function FuriganaGeneratorPage() {
         <Button
           className="furiganaGenerator_convert-btn"
           onClick={handleConvert}
-          disabled={kanjiText.trim().length === 0 && romajiText.trim().length === 0}
+          disabled={isConverting || (kanjiText.trim().length === 0 && romajiText.trim().length === 0)}
         >
-          Generate Furigana
+          {isConverting ? 'Converting…' : 'Generate Furigana'}
         </Button>
+
+        {errorMessage && (
+          <p className="furiganaGenerator_error" role="alert">
+            {errorMessage}
+          </p>
+        )}
 
         {getEnv() === ENV.DEV && (
           <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
             Load Sample
+          </Button>
+        )}
+
+        {getEnv() === ENV.DEV && (
+          <Button
+            variant="outline-secondary"
+            className="furiganaGenerator_sample-btn"
+            onClick={handleLoadKanjiOnlySample}
+          >
+            Load Kanji-Only Sample
           </Button>
         )}
 
