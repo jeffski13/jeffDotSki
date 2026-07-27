@@ -17,9 +17,8 @@ beforeEach(() => {
 });
 
 describe('buildFuriganaLinesFromKanji', () => {
-  it('posts the trimmed kanji text to the local furigana service', async () => {
-    const mockedLines = [{ kanji: '誰にも見せない', hiragana: 'だれにもみせない', furigana: '誰（だれ）にも見（み）せない' }];
-    fetchMock.mockResolvedValue(jsonResponse(mockedLines));
+  it('posts the trimmed kanji text to the local furigana service and converts the furigana strings it returns', async () => {
+    fetchMock.mockResolvedValue(jsonResponse(['誰（だれ）にも見（み）せない']));
 
     const lines = await buildFuriganaLinesFromKanji('  誰にも見せない  ');
 
@@ -28,7 +27,9 @@ describe('buildFuriganaLinesFromKanji', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(['誰にも見せない']),
     });
-    expect(lines).toEqual(mockedLines);
+    expect(lines).toEqual([
+      { kanji: '誰にも見せない', hiragana: 'だれにもみせない', furigana: '誰（だれ）にも見（み）せない' },
+    ]);
   });
 
   it('joins multiple non-blank lines, trimming whitespace and dropping blank lines', async () => {

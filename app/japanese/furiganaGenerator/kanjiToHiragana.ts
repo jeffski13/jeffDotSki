@@ -1,4 +1,4 @@
-import type { FuriganaLine } from './furiganaGenerator';
+import { furiganaToHiragana, type FuriganaLine } from './furiganaGenerator';
 import { FURIGANA_TRANSFORMATION_URL } from './apiRoutes';
 
 export async function buildFuriganaLinesFromKanji(kanjiText: string): Promise<FuriganaLine[]> {
@@ -19,5 +19,11 @@ export async function buildFuriganaLinesFromKanji(kanjiText: string): Promise<Fu
     throw new Error(`Furigana service request failed: ${response.status} ${response.statusText}`);
   }
 
-  return response.json() as Promise<FuriganaLine[]>;
+  // The service returns one already-built furigana line (e.g. "誰（だれ）にも見（み）せない")
+  // per kanji line sent, in the same order - not a FuriganaLine object.
+  const furiganaLines: string[] = await response.json();
+  return kanjiLines.map((kanji, i) => {
+    const furigana = furiganaLines[i] ?? '';
+    return { kanji, hiragana: furiganaToHiragana(furigana), furigana };
+  });
 }
