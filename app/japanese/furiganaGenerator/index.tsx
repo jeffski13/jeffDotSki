@@ -15,14 +15,18 @@ export default function FuriganaGeneratorPage() {
   const [convertedLines, setConvertedLines] = useState<FuriganaLine[] | null>(null);
   const [copied, setCopied] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleConvert = async () => {
+    setErrorMessage(null);
     // No romaji reading supplied - derive the hiragana reading straight from the kanji instead
     // and feed it through the same furigana pipeline as if it had come from the Romaji box.
     if (romajiText.trim().length === 0) {
       setIsConverting(true);
       try {
         setConvertedLines(await buildFuriganaLinesFromKanji(kanjiText));
+      } catch {
+        setErrorMessage('Something went wrong generating furigana. Please try again.');
       } finally {
         setIsConverting(false);
       }
@@ -96,6 +100,12 @@ export default function FuriganaGeneratorPage() {
         >
           {isConverting ? 'Converting…' : 'Generate Furigana'}
         </Button>
+
+        {errorMessage && (
+          <p className="furiganaGenerator_error" role="alert">
+            {errorMessage}
+          </p>
+        )}
 
         {getEnv() === ENV.DEV && (
           <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>

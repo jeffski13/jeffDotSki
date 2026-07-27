@@ -54,6 +54,12 @@
   margin-bottom: 30px;
 }
 
+.furiganaGenerator_error {
+  color: #d32f2f;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
 .furiganaGenerator_output {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
   font-size: 1.1rem;

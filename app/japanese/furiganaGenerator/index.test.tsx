@@ -104,4 +104,34 @@ describe('FuriganaGeneratorPage', () => {
     });
     expect(screen.getByRole('button', { name: 'Generate Furigana' })).toBeInTheDocument();
   });
+
+  it('shows an error message when the furigana service request fails', async () => {
+    vi.mocked(buildFuriganaLinesFromKanji).mockRejectedValue(new Error('Furigana service request failed: 500 Error'));
+
+    renderComponent();
+    fireEvent.change(screen.getByPlaceholderText('漢字の文章をここに入力してください。'), { target: { value: KANJI } });
+    fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Something went wrong generating furigana. Please try again.',
+    );
+    expect(screen.getByRole('button', { name: 'Generate Furigana' })).toBeInTheDocument();
+  });
+
+  it('clears a previous error message on the next successful conversion', async () => {
+    vi.mocked(buildFuriganaLinesFromKanji).mockRejectedValueOnce(new Error('boom'));
+
+    renderComponent();
+    fireEvent.change(screen.getByPlaceholderText('漢字の文章をここに入力してください。'), { target: { value: KANJI } });
+    fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+
+    const mockedLines = [{ kanji: KANJI, hiragana: 'だれにもみせない', furigana: EXPECTED_FURIGANA }];
+    vi.mocked(buildFuriganaLinesFromKanji).mockResolvedValueOnce(mockedLines);
+    fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+  });
 });
