@@ -6,6 +6,7 @@ import FuriganaGeneratorPage from './index';
 import { ENV } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
+import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 
 vi.mock('./kanjiToHiragana', () => ({
@@ -66,6 +67,24 @@ describe('FuriganaGeneratorPage', () => {
     renderComponent();
 
     expect(screen.queryByRole('button', { name: 'Load Sample' })).not.toBeInTheDocument();
+  });
+
+  it('fills the kanji textarea and clears romaji when "Load Kanji-Only Sample" is clicked', () => {
+    process.env.NODE_ENV = ENV.DEV;
+    renderComponent();
+
+    fireEvent.change(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER), { target: { value: ROMAJI } });
+    fireEvent.click(screen.getByRole('button', { name: 'Load Kanji-Only Sample' }));
+
+    expect(screen.getByPlaceholderText('漢字の文章をここに入力してください。')).toHaveValue(testInfoKanjiOnly);
+    expect(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER)).toHaveValue('');
+  });
+
+  it('hides the "Load Kanji-Only Sample" button outside of dev', () => {
+    process.env.NODE_ENV = ENV.PROD;
+    renderComponent();
+
+    expect(screen.queryByRole('button', { name: 'Load Kanji-Only Sample' })).not.toBeInTheDocument();
   });
 
   it('derives the hiragana reading from the kanji when Romaji is left blank', async () => {

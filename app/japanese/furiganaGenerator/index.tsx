@@ -6,6 +6,7 @@ import { renderFuriganaText } from '../shared/furiganaRuby';
 import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
+import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import './styles.css';
 
 export default function FuriganaGeneratorPage() {
@@ -33,6 +34,11 @@ export default function FuriganaGeneratorPage() {
   const handleLoadSample = () => {
     setKanjiText(testInfoKanji);
     setRomajiText(testInfoRomaji);
+  };
+
+  const handleLoadKanjiOnlySample = () => {
+    setKanjiText(testInfoKanjiOnly);
+    setRomajiText('');
   };
 
   const handleCopy = () => {
@@ -94,6 +100,16 @@ export default function FuriganaGeneratorPage() {
         {getEnv() === ENV.DEV && (
           <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
             Load Sample
+          </Button>
+        )}
+
+        {getEnv() === ENV.DEV && (
+          <Button
+            variant="outline-secondary"
+            className="furiganaGenerator_sample-btn"
+            onClick={handleLoadKanjiOnlySample}
+          >
+            Load Kanji-Only Sample
           </Button>
         )}
 
