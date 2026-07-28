@@ -8,9 +8,14 @@ import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
+import { downloadLyricsSongFile } from './exportLyricsSong';
 
 vi.mock('./kanjiToHiragana', () => ({
   buildFuriganaLinesFromKanji: vi.fn(),
+}));
+
+vi.mock('./exportLyricsSong', () => ({
+  downloadLyricsSongFile: vi.fn(),
 }));
 
 const renderComponent = () => render(<MemoryRouter><FuriganaGeneratorPage /></MemoryRouter>);
@@ -132,6 +137,23 @@ describe('FuriganaGeneratorPage', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+  });
+
+  it('exports a LyricsSong .ts file with the title, kanji, romaji, and converted lines when "Export .ts" is clicked', () => {
+    renderComponent();
+    fireEvent.change(screen.getByPlaceholderText('Song title, used for the exported file'), {
+      target: { value: '涙 (Namida)' },
+    });
+    generateFurigana();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Export .ts' }));
+
+    expect(downloadLyricsSongFile).toHaveBeenCalledWith({
+      title: '涙 (Namida)',
+      kanjiText: KANJI,
+      romajiText: ROMAJI,
+      convertedLines: [{ kanji: KANJI, hiragana: 'だれにもみせない', furigana: EXPECTED_FURIGANA }],
     });
   });
 });
