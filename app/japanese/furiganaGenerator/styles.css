@@ -98,3 +98,8 @@
   margin-top: 16px;
   margin-bottom: 0;
 }
+
+.furiganaGenerator_export-btn {
+  display: block;
+  margin-bottom: 16px;
+}

@@ -2,6 +2,7 @@ import { useState, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
+import { downloadLyricsSongFile } from './exportLyricsSong';
 import { renderFuriganaText } from '../shared/furiganaRuby';
 import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
@@ -10,6 +11,7 @@ import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import './styles.css';
 
 export default function FuriganaGeneratorPage() {
+  const [title, setTitle] = useState('');
   const [kanjiText, setKanjiText] = useState('');
   const [romajiText, setRomajiText] = useState('');
   const [convertedLines, setConvertedLines] = useState<FuriganaLine[] | null>(null);
@@ -52,6 +54,11 @@ export default function FuriganaGeneratorPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleExport = () => {
+    if (!convertedLines || convertedLines.length === 0) return;
+    downloadLyricsSongFile({ title, kanjiText, romajiText, convertedLines });
+  };
+
   return (
     <div className="furiganaGenerator">
       <Container fluid className="furiganaGenerator_content">
@@ -63,6 +70,17 @@ export default function FuriganaGeneratorPage() {
           Enter Japanese text and its romaji reading (line by line) to generate furigana. Leave
           Romaji blank to have the reading generated from the kanji automatically.
         </p>
+
+        <Form.Group className="furiganaGenerator_input-group">
+          <Form.Label className="furiganaGenerator_label">Title</Form.Label>
+          <Form.Control
+            type="text"
+            className="furiganaGenerator_title-input"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Song title, used for the exported file"
+          />
+        </Form.Group>
 
         <Row className="furiganaGenerator_input-row">
           <Col xs={12} md={6}>
@@ -148,6 +166,14 @@ export default function FuriganaGeneratorPage() {
                   onClick={handleCopy}
                 >
                   {copied ? 'Copied!' : 'Copy'}
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  className="furiganaGenerator_export-btn"
+                  onClick={handleExport}
+                >
+                  Export .ts
                 </Button>
               </Col>
               <Col xs={12} md={6} className="furiganaGenerator_output-col furiganaRuby_output">
