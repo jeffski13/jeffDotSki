@@ -41,6 +41,11 @@
   margin-bottom: 30px;
 }
 
+.nihonParenthesesToFurigana_sample-btn {
+  margin-left: 12px;
+  margin-bottom: 30px;
+}
+
 .nihonParenthesesToFurigana_output {
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
   font-size: 1.1rem;

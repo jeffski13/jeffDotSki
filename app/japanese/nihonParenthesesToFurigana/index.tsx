@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { FuriganaToggleIcon, renderFuriganaText } from '../shared/furiganaRuby';
+import { ENV, getEnv } from '../../infra/env';
+import testInfoParentheses from './testInfoParentheses.txt?raw';
 import './styles.css';
 
 export default function NihonParenthesesToFuriganaPage() {
@@ -15,6 +17,10 @@ export default function NihonParenthesesToFuriganaPage() {
       .map((p) => p.trim())
       .filter((p) => p.length > 0);
     setConvertedParagraphs(paragraphs);
+  };
+
+  const handleLoadSample = () => {
+    setInputText(testInfoParentheses);
   };
 
   useEffect(() => {
@@ -52,6 +58,16 @@ export default function NihonParenthesesToFuriganaPage() {
         >
           Convert to Furigana
         </Button>
+
+        {getEnv() === ENV.DEV && (
+          <Button
+            variant="outline-secondary"
+            className="nihonParenthesesToFurigana_sample-btn"
+            onClick={handleLoadSample}
+          >
+            Load Sample
+          </Button>
+        )}
 
         {convertedParagraphs && convertedParagraphs.length > 0 && (
           <div className="furiganaRuby_output-row" ref={resultsRef}>
