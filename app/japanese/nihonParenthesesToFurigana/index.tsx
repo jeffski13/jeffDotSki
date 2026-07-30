@@ -47,7 +47,7 @@ export default function NihonParenthesesToFuriganaPage() {
             rows={12}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="漢字（かんじ）の 文章（ぶんしょう）をここに入力（にゅうりょく）してください。"
+            placeholder="Ex：今日（きょう）は良（よ）かったです。"
           />
         </Form.Group>
 
