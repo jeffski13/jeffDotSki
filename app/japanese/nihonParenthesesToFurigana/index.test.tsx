@@ -2,13 +2,11 @@
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import NihonParenthesesToFuriganaPage from './index';
+import NihonParenthesesToFuriganaPage, {PLACEHOLDER} from './index';
 import { ENV } from '../../infra/env';
 import testInfoParentheses from './testInfoParentheses.txt?raw';
 
 const renderComponent = () => render(<MemoryRouter><NihonParenthesesToFuriganaPage /></MemoryRouter>);
-
-const PLACEHOLDER = '漢字（かんじ）の 文章（ぶんしょう）をここに入力（にゅうりょく）してください。';
 
 // jsdom does not implement scrollIntoView, which the results section calls on conversion.
 beforeAll(() => {
