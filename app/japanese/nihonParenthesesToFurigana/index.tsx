@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { FuriganaToggleIcon, renderFuriganaText } from '../shared/furiganaRuby';
 import './styles.css';
@@ -7,6 +7,7 @@ export default function NihonParenthesesToFuriganaPage() {
   const [inputText, setInputText] = useState('');
   const [convertedParagraphs, setConvertedParagraphs] = useState<string[] | null>(null);
   const [furiganaVisible, setFuriganaVisible] = useState(true);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const handleConvert = () => {
     const paragraphs = inputText
@@ -15,6 +16,12 @@ export default function NihonParenthesesToFuriganaPage() {
       .filter((p) => p.length > 0);
     setConvertedParagraphs(paragraphs);
   };
+
+  useEffect(() => {
+    if (convertedParagraphs && convertedParagraphs.length > 0) {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [convertedParagraphs]);
 
   return (
     <div className="nihonParenthesesToFurigana">
@@ -47,7 +54,7 @@ export default function NihonParenthesesToFuriganaPage() {
         </Button>
 
         {convertedParagraphs && convertedParagraphs.length > 0 && (
-          <div className="furiganaRuby_output-row">
+          <div className="furiganaRuby_output-row" ref={resultsRef}>
             <div
               className="furiganaRuby_toggle-btn-col"
               onClick={() => setFuriganaVisible((v) => !v)}
