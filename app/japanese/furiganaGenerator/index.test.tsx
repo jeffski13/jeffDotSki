@@ -142,11 +142,11 @@ describe('FuriganaGeneratorPage', () => {
 
   it('exports a LyricsSong .ts file with the title, kanji, romaji, and converted lines when "Export .ts" is clicked', () => {
     renderComponent();
+    generateFurigana();
+    
     fireEvent.change(screen.getByPlaceholderText('Song title, used for the exported file'), {
       target: { value: '涙 (Namida)' },
     });
-    generateFurigana();
-
     fireEvent.click(screen.getByRole('button', { name: 'Export .ts' }));
 
     expect(downloadLyricsSongFile).toHaveBeenCalledWith({
