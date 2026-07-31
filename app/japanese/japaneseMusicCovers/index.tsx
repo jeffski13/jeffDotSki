@@ -6,6 +6,7 @@ interface Song {
   titleEn: string;
   artist: string;
   youtubeId: string;
+  dateAdded: string;
 }
 
 const songs: Song[] = [
@@ -14,14 +15,27 @@ const songs: Song[] = [
     titleEn: 'Eikō no Kakehashi',
     artist: 'ゆず (Yuzu)',
     youtubeId: 'o5LMGsN_SUw',
+    dateAdded: '2026-03-12',
   },
   {
     titleJp: 'リーズン',
     titleEn: 'Reason',
     artist: 'ゆず (Yuzu)',
     youtubeId: 'eG-HhsOa7wA',
+    dateAdded: '2026-06-12',
+  },
+  {
+    titleJp: '廃墟のソファ',
+    titleEn: 'Haikyo no Sofa',
+    artist: 'Akeboshi (あけぼし)',
+    youtubeId: 't8WFmpqLIPQ',
+    dateAdded: '2026-07-30',
   },
 ];
+
+const sortedSongs = [...songs].sort(
+  (a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+);
 
 export default function JapaneseMusicPage() {
   return (
@@ -33,7 +47,7 @@ export default function JapaneseMusicPage() {
         </h1>
         <p className="japaneseMusic_subtitle">My Covers of Japanese Songs</p>
         <Row className="japaneseMusic_videos">
-          {songs.map((song, index) => (
+          {sortedSongs.map((song, index) => (
             <Col key={song.youtubeId} xs={11} className="japaneseMusic_video-col">
               <div className="japaneseMusic_video-card">
                 <div className="japaneseMusic_embed-wrapper">
@@ -50,7 +64,7 @@ export default function JapaneseMusicPage() {
                   <p className="japaneseMusic_song-artist">Artist: {song.artist}</p>
                 </div>
               </div>
-              {index !== (songs.length - 1) ? <hr />: <></>}
+              {index !== (sortedSongs.length - 1) ? <hr />: <></>}
             </Col>
           ))}
         </Row>
