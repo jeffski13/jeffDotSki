@@ -5,12 +5,14 @@ import { ENV, getEnv } from '../../infra/env';
 import testInfoParentheses from './testInfoParentheses.txt?raw';
 import './styles.css';
 
+export const PLACEHOLDER = 'Ex：今日（きょう）は良（よ）かったです。';
+
 export default function NihonParenthesesToFuriganaPage() {
   const [inputText, setInputText] = useState('');
   const [convertedParagraphs, setConvertedParagraphs] = useState<string[] | null>(null);
   const [furiganaVisible, setFuriganaVisible] = useState(true);
   const resultsRef = useRef<HTMLDivElement>(null);
-
+  
   const handleConvert = () => {
     const paragraphs = inputText
       .split(/\n+/)
@@ -47,7 +49,7 @@ export default function NihonParenthesesToFuriganaPage() {
             rows={12}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="漢字（かんじ）の 文章（ぶんしょう）をここに入力（にゅうりょく）してください。"
+            placeholder={PLACEHOLDER}
           />
         </Form.Group>
 
