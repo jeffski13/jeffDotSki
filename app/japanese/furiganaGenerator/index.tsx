@@ -18,11 +18,11 @@ export default function FuriganaGeneratorPage() {
   const [copied, setCopied] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const resultsRef = useRef<HTMLDivElement>(null);
+  const convertButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (convertedLines && convertedLines.length > 0) {
-      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      convertButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [convertedLines]);
 
@@ -108,6 +108,7 @@ export default function FuriganaGeneratorPage() {
         </Row>
 
         <Button
+          ref={convertButtonRef}
           className="furiganaGenerator_convert-btn"
           onClick={handleConvert}
           disabled={isConverting || (kanjiText.trim().length === 0 && romajiText.trim().length === 0)}
@@ -138,8 +139,8 @@ export default function FuriganaGeneratorPage() {
         )}
 
         {convertedLines && convertedLines.length > 0 && (
-          <div className="furiganaGenerator_output" ref={resultsRef}>
-            <Row className="furiganaGenerator_output-row">
+          <div className="furiganaGenerator_output">
+            <Row id="furiganaGenerator_output" className="furiganaGenerator_output-row">
               <Col xs={12} md={6} className="furiganaGenerator_output-col">
                 <Button
                   variant="outline-secondary"
