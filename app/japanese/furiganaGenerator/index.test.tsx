@@ -20,6 +20,11 @@ vi.mock('./exportLyricsSong', () => ({
 
 const renderComponent = () => render(<MemoryRouter><FuriganaGeneratorPage /></MemoryRouter>);
 
+// jsdom does not implement scrollIntoView, which the results section calls on conversion.
+beforeAll(() => {
+  window.HTMLElement.prototype.scrollIntoView = vi.fn();
+});
+
 const KANJI = '誰にも見せない';
 const ROMAJI = 'dare nimo misenai';
 const EXPECTED_FURIGANA = '誰（だれ）にも見（み）せない';
