@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
@@ -18,6 +18,13 @@ export default function FuriganaGeneratorPage() {
   const [copied, setCopied] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (convertedLines && convertedLines.length > 0) {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [convertedLines]);
 
   const handleConvert = async () => {
     setErrorMessage(null);
@@ -131,7 +138,7 @@ export default function FuriganaGeneratorPage() {
         )}
 
         {convertedLines && convertedLines.length > 0 && (
-          <div className="furiganaGenerator_output">
+          <div className="furiganaGenerator_output" ref={resultsRef}>
             <Row className="furiganaGenerator_output-row">
               <Col xs={12} md={6} className="furiganaGenerator_output-col">
                 <Button
