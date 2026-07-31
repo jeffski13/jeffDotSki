@@ -2,7 +2,7 @@
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import FuriganaGeneratorPage from './index';
+import FuriganaGeneratorPage, { KANJI_PLACEHOLDER, ROMAJI_PLACEHOLDER } from './index';
 import { ENV } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
@@ -28,10 +28,9 @@ beforeAll(() => {
 const KANJI = '誰にも見せない';
 const ROMAJI = 'dare nimo misenai';
 const EXPECTED_FURIGANA = '誰（だれ）にも見（み）せない';
-const ROMAJI_PLACEHOLDER = 'Enter the romaji reading here, matching each kanji line. Leave blank to auto-generate from the kanji.';
 
 const generateFurigana = () => {
-  fireEvent.change(screen.getByPlaceholderText('漢字の文章をここに入力してください。'), { target: { value: KANJI } });
+  fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
   fireEvent.change(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER), { target: { value: ROMAJI } });
   fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
 };
@@ -68,7 +67,7 @@ describe('FuriganaGeneratorPage', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Load Sample' }));
 
-    expect(screen.getByPlaceholderText('漢字の文章をここに入力してください。')).toHaveValue(testInfoKanji);
+    expect(screen.getByPlaceholderText(KANJI_PLACEHOLDER)).toHaveValue(testInfoKanji);
     expect(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER)).toHaveValue(testInfoRomaji);
   });
 
@@ -86,7 +85,7 @@ describe('FuriganaGeneratorPage', () => {
     fireEvent.change(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER), { target: { value: ROMAJI } });
     fireEvent.click(screen.getByRole('button', { name: 'Load Kanji-Only Sample' }));
 
-    expect(screen.getByPlaceholderText('漢字の文章をここに入力してください。')).toHaveValue(testInfoKanjiOnly);
+    expect(screen.getByPlaceholderText(KANJI_PLACEHOLDER)).toHaveValue(testInfoKanjiOnly);
     expect(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER)).toHaveValue('');
   });
 
@@ -102,7 +101,7 @@ describe('FuriganaGeneratorPage', () => {
     vi.mocked(buildFuriganaLinesFromKanji).mockResolvedValue(mockedLines);
 
     const { container } = renderComponent();
-    fireEvent.change(screen.getByPlaceholderText('漢字の文章をここに入力してください。'), { target: { value: KANJI } });
+    fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
     fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
 
     expect(screen.getByRole('button', { name: 'Converting…' })).toBeDisabled();
@@ -119,7 +118,7 @@ describe('FuriganaGeneratorPage', () => {
     vi.mocked(buildFuriganaLinesFromKanji).mockRejectedValue(new Error('Furigana service request failed: 500 Error'));
 
     renderComponent();
-    fireEvent.change(screen.getByPlaceholderText('漢字の文章をここに入力してください。'), { target: { value: KANJI } });
+    fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
     fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
@@ -132,7 +131,7 @@ describe('FuriganaGeneratorPage', () => {
     vi.mocked(buildFuriganaLinesFromKanji).mockRejectedValueOnce(new Error('boom'));
 
     renderComponent();
-    fireEvent.change(screen.getByPlaceholderText('漢字の文章をここに入力してください。'), { target: { value: KANJI } });
+    fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
     fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
     expect(await screen.findByRole('alert')).toBeInTheDocument();
 

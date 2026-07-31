@@ -35,11 +35,10 @@ export default function NihonParenthesesToFuriganaPage() {
     <div className="nihonParenthesesToFurigana">
       <Container fluid className="nihonParenthesesToFurigana_content">
         <h1 className="nihonParenthesesToFurigana_title">
-          <span className="nihonParenthesesToFurigana_title-jp">括弧からふりがな</span>
           <span className="nihonParenthesesToFurigana_title-en">Parentheses to Furigana</span>
         </h1>
         <p className="nihonParenthesesToFurigana_subtitle">
-          Paste Japanese text in the 漢字（かんじ）format below to render it as furigana.
+          漢字（かんじ） → <ruby>漢字<rt>かんじ</rt></ruby>
         </p>
 
         <Form.Group className="nihonParenthesesToFurigana_input-group">
