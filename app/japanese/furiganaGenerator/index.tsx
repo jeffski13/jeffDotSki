@@ -10,6 +10,9 @@ import testInfoRomaji from './testInfoRomaji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import './styles.css';
 
+export const KANJI_PLACEHOLDER = "Ex：今日（きょう）は良（よ）かったです。";
+export const ROMAJI_PLACEHOLDER = "Ex: Kyou wa yokatta desu.";
+
 export default function FuriganaGeneratorPage() {
   const [title, setTitle] = useState('');
   const [kanjiText, setKanjiText] = useState('');
@@ -70,12 +73,13 @@ export default function FuriganaGeneratorPage() {
     <div className="furiganaGenerator">
       <Container fluid className="furiganaGenerator_content">
         <h1 className="furiganaGenerator_title">
-          <span className="furiganaGenerator_title-jp">ふりがなジェネレーター</span>
           <span className="furiganaGenerator_title-en">Furigana Generator</span>
         </h1>
         <p className="furiganaGenerator_subtitle">
-          Enter Japanese text and its romaji reading (line by line) to generate furigana. Leave
-          Romaji blank to have the reading generated from the kanji automatically.
+          Enter Japanese text and its romaji reading (line by line) to generate furigana.
+        </p>
+        <p className="furiganaGenerator_subtitle">
+          Leave Romaji blank to have the reading generated from the kanji automatically.
         </p>
 
         <Row className="furiganaGenerator_input-row">
@@ -88,7 +92,7 @@ export default function FuriganaGeneratorPage() {
                 rows={8}
                 value={kanjiText}
                 onChange={(e) => setKanjiText(e.target.value)}
-                placeholder="漢字の文章をここに入力してください。"
+                placeholder={KANJI_PLACEHOLDER}
               />
             </Form.Group>
           </Col>
@@ -101,7 +105,7 @@ export default function FuriganaGeneratorPage() {
                 rows={8}
                 value={romajiText}
                 onChange={(e) => setRomajiText(e.target.value)}
-                placeholder="Enter the romaji reading here, matching each kanji line. Leave blank to auto-generate from the kanji."
+                placeholder={ROMAJI_PLACEHOLDER}
               />
             </Form.Group>
           </Col>
