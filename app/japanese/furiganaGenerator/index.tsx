@@ -71,17 +71,6 @@ export default function FuriganaGeneratorPage() {
           Romaji blank to have the reading generated from the kanji automatically.
         </p>
 
-        <Form.Group className="furiganaGenerator_input-group">
-          <Form.Label className="furiganaGenerator_label">Title</Form.Label>
-          <Form.Control
-            type="text"
-            className="furiganaGenerator_title-input"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Song title, used for the exported file"
-          />
-        </Form.Group>
-
         <Row className="furiganaGenerator_input-row">
           <Col xs={12} md={6}>
             <Form.Group className="furiganaGenerator_input-group">
@@ -167,6 +156,16 @@ export default function FuriganaGeneratorPage() {
                 >
                   {copied ? 'Copied!' : 'Copy'}
                 </Button>
+                <Form.Group className="furiganaGenerator_input-group">
+                  <Form.Label className="furiganaGenerator_label">Title</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="furiganaGenerator_title-input"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Song title, used for the exported file"
+                  />
+                </Form.Group>
                 <Button
                   variant="outline-secondary"
                   size="sm"
