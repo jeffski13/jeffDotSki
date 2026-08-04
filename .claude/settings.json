@@ -36,7 +36,7 @@
       "Bash(npx tsx -e ' *)",
       "Bash(echo \"chromium-cli found: $?\")",
       "Bash(node -e \"console.log\\(require.resolve\\('playwright'\\)\\)\")",
-      "Bash(timeout 30 bash -c 'until curl -sf http://localhost:3000 >/dev/null 2>&1 || curl -sf http://localhost:5173 >/dev/null 2>&1; do sleep 1; done')",
+      "Bash(timeout 30 bash -c 'until curl -sf http://localhost:8080 >/dev/null 2>&1 || curl -sf http://localhost:5173 >/dev/null 2>&1; do sleep 1; done')",
       "Read(//private/tmp/**)",
       "Bash(curl -sf http://localhost:5173/)",
       "Bash(curl -s http://localhost:5173/japanese/furiganaGenerator -o /tmp/furigana_page.html -w \"%{http_code}\\\\n\")",
