@@ -52,17 +52,22 @@ export default lyrics;
     );
   });
 
-  it('drops lines where both the kanji and romaji sides are blank, keeping romaji aligned with convertedLines', () => {
+  it('keeps a blank line between kanji/romaji so the exported romaji stays aligned with convertedLines', () => {
     const content = buildLyricsSongFileContent({
       title: '涙',
       kanjiText: '誰にも見せない\n\n泪があった',
       romajiText: 'dare nimo misenai\n\nnamida ga atta',
-      convertedLines,
+      convertedLines: [
+        { kanji: '誰にも見せない', hiragana: 'だれにもみせない', furigana: '誰（だれ）にも見（み）せない' },
+        { kanji: '', hiragana: '', furigana: '' },
+        { kanji: '泪があった', hiragana: 'なみだがあった', furigana: '泪（なみだ）があった' },
+      ],
     });
 
     expect(content).toContain(
       `  romaji: [
     "dare nimo misenai",
+    "",
     "namida ga atta",
   ],`,
     );

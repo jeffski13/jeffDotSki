@@ -15,17 +15,15 @@ function formatStringArray(lines: string[]): string {
   return `[\n${lines.map((line) => `    "${escapeForTsString(line)}",`).join('\n')}\n  ]`;
 }
 
-// Mirrors the line-up/filter logic buildFuriganaLines uses internally (pairing kanji and romaji
-// lines by index and dropping lines where both sides are blank) so the exported romaji array
-// stays aligned with jp/furigana, which are derived from convertedLines.
+// Mirrors the line-up logic buildFuriganaLines uses internally (pairing kanji and romaji lines
+// by index) so the exported romaji array stays aligned with jp/furigana, which are derived from
+// convertedLines.
 function alignedRomajiLines(kanjiText: string, romajiText: string): string[] {
   const kanjiLines = kanjiText.split('\n').map((line) => line.trim());
   const romajiLines = romajiText.split('\n').map((line) => line.trim());
   const lineCount = Math.max(kanjiLines.length, romajiLines.length);
 
-  return Array.from({ length: lineCount }, (_, i) => romajiLines[i] ?? '').filter(
-    (_, i) => (kanjiLines[i] ?? '').length > 0 || (romajiLines[i] ?? '').length > 0,
-  );
+  return Array.from({ length: lineCount }, (_, i) => romajiLines[i] ?? '');
 }
 
 export function buildLyricsSongFileContent({ title, kanjiText, romajiText, convertedLines }: LyricsSongExportInput): string {
