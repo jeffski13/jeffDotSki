@@ -314,5 +314,5 @@ export function buildFuriganaLines(kanjiText: string, romajiText: string): Furig
     // runs in buildFurigana - the reported hiragana reading above keeps its established shape.
     const segmentedHiragana = romajiToHiragana(romaji, kanji, true);
     return { kanji, hiragana, furigana: buildFurigana(kanji, segmentedHiragana) };
-  }).filter((line) => line.kanji.length > 0 || line.hiragana.length > 0);
+  });
 }

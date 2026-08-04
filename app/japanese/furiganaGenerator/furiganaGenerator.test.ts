@@ -98,11 +98,12 @@ describe('buildFuriganaLines', () => {
     ]);
   });
 
-  it('drops empty lines when both kanji and romaji are blank', () => {
+  it('keeps blank lines so paragraph breaks in the input are reflected in the output', () => {
     const lines = buildFuriganaLines('誰にも見せない\n\n泪があった', 'dare nimo misenai\n\nnamida ga atta');
 
     expect(lines).toEqual([
       { kanji: '誰にも見せない', hiragana: 'だれにもみせない', furigana: '誰（だれ）にも見（み）せない' },
+      { kanji: '', hiragana: '', furigana: '' },
       { kanji: '泪があった', hiragana: 'なみだがあった', furigana: '泪（なみだ）があった' },
     ]);
   });
