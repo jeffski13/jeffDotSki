@@ -1,6 +1,6 @@
 export const ENV = {
     DEV: 'development',
-    PROD: 'prod',
+    PROD: 'production',
 }
 
 export const getEnv = (): string => {
