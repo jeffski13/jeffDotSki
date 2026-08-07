@@ -43,9 +43,9 @@ export default function JapaneseMusicPage() {
       <Container fluid className="japaneseMusic_content">
         <h1 className="japaneseMusic_title">
           <span className="japaneseMusic_title-jp">日本語の音楽</span>
-          <span className="japaneseMusic_title-en">Japanese Music Covers</span>
+          <span className="japaneseMusic_title-en">Japanese Piano Covers</span>
         </h1>
-        <p className="japaneseMusic_subtitle">My Covers of Japanese Songs</p>
+        <p className="japaneseMusic_subtitle"></p>
         <Row className="japaneseMusic_videos">
           {sortedSongs.map((song, index) => (
             <Col key={song.youtubeId} xs={11} className="japaneseMusic_video-col">
