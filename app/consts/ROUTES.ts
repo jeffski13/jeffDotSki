@@ -21,7 +21,7 @@ const ROUTES = {
     }
   },
   japanese: {
-    japaneseReadings: '/japaneseReadings',
+    japaneseBible: '/japaneseReadings',
     japanesePracticeLyrics: '/japanesePracticeLyrics',
     japaneseMusicCovers: '/japaneseMusicCovers',
     japaneseParenthesesToFurigana: '/japaneseParenthesesToFurigana',
