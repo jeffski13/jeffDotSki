@@ -24,7 +24,7 @@
 .japaneseMusic_divider {
   opacity: 1;
   border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid #222;
   margin: 40px 0;
 }
 
@@ -223,4 +223,13 @@
     flex-direction: column;
     gap: 6px;
   }
+}
+
+[data-bs-theme="light"] .japaneseMusic_title-en,
+[data-bs-theme="light"] .japaneseMusic_song-title-en,
+[data-bs-theme="light"] .japaneseMusic_song-artist,
+[data-bs-theme="light"] .japaneseMusic_channels-label,
+[data-bs-theme="light"] .japaneseMusic_card-title-en,
+[data-bs-theme="light"] .japaneseMusic_card-artist {
+  color: #000;
 }
