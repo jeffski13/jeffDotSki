@@ -85,8 +85,7 @@ export default function JapaneseMusicPage() {
     <div className="japaneseMusicCovers">
       <Container fluid className="japaneseMusic_content">
         <h1 className="japaneseMusic_title">
-          <span className="japaneseMusic_title-jp">日本語の音楽</span>
-          <span className="japaneseMusic_title-en">Japanese Piano Covers</span>
+          <span className="japaneseMusic_title">日本語 Japanese Piano Covers</span>
         </h1>
 
         <h2 className="japaneseMusic_channels-label">Videos</h2>
