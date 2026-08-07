@@ -91,9 +91,9 @@ export default function JapaneseMusicPage() {
       />
       <Container fluid className="japaneseMusic_content">
         <div id="videosTopSection">
-        <h1 className="japaneseMusic_title">
-          <span className="japaneseMusic_title">日本語 Japanese Piano Covers</span>
-        </h1>
+          <h1 className="japaneseMusic_title">
+            <span className="japaneseMusic_title">日本語 Japanese Piano Covers</span>
+          </h1>
           <h2 className="japaneseMusic_channels-label">Videos</h2>
           <div className="japaneseMusic_grid">
             {sortedSongs.map((song, index) => {

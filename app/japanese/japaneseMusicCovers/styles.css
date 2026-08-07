@@ -1,6 +1,6 @@
 .japaneseMusic_bg-image {
   position: fixed;
-  left: 0;
+  left: -40px;
   bottom: 0;
   width: 900px;
   max-width: 70vw;
@@ -8,25 +8,24 @@
   pointer-events: none;
   user-select: none;
   z-index: 0;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 [data-bs-theme="dark"] .japaneseMusic_bg-image {
   filter: invert(1);
 }
 
-#videosTopSection {
-  background-color: rgb(33, 37, 41);
-  position: relative;
-  z-index: 1;
-}
-
 .japaneseMusic_content {
   position: relative;
   z-index: 1;
-  margin: 40px 24px 60px;
-  max-width: 1600px;
-  margin: 0 auto;
+  width: 100%;
+}
+
+#videosTopSection {
+  width: 100%;
+  background-color: rgb(33, 37, 41);
+  position: relative;
+  z-index: 1;
 }
 
 .japaneseMusic_title {
@@ -96,6 +95,7 @@
   gap: 12px;
   margin-top: 16px;
   padding: 0 4px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 1);
 }
 
 .japaneseMusic_now-playing-info {
