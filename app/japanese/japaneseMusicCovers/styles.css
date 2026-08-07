@@ -24,8 +24,9 @@
 /* Now Playing "TV screen" */
 
 .japaneseMusic_screen {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 48px auto 0;
+  margin-top: 100px;
 }
 
 .japaneseMusic_screen-frame {
@@ -71,14 +72,14 @@
 }
 
 .japaneseMusic_song-title-en {
-  font-size: 1rem;
-  color: #888;
+  font-size: 1.5rem;
+  color: #eee;
   margin-bottom: 4px;
 }
 
 .japaneseMusic_song-artist {
-  font-size: 0.9rem;
-  color: #aaa;
+  font-size: 1.2rem;
+  color: #ddd;
 }
 
 /* Channel grid */
@@ -88,7 +89,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #888;
+  color: #eee;
   margin-bottom: 16px;
 }
 
@@ -187,13 +188,13 @@
 
 .japaneseMusic_card-title-en {
   font-size: 0.9rem;
-  color: #888;
+  color: #eee;
   margin-bottom: 2px;
 }
 
 .japaneseMusic_card-artist {
   font-size: 0.85rem;
-  color: #aaa;
+  color: #ddd;
 }
 
 @media (max-width: 900px) {

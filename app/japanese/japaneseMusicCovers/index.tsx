@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import './styles.css';
 
@@ -28,7 +28,7 @@ const songs: Song[] = [
   {
     titleJp: '廃墟のソファ',
     titleEn: 'Haikyo no Sofa',
-    artist: 'Akeboshi (あけぼし)',
+    artist: 'あけぼし (Akeboshi)',
     youtubeId: 't8WFmpqLIPQ',
     dateAdded: '2026-07-30',
   },
@@ -42,11 +42,12 @@ export default function JapaneseMusicPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(false);
   const activeSong = sortedSongs[activeIndex];
+  const screenRef = useRef<HTMLDivElement>(null);
 
   const selectChannel = (index: number) => {
-    if (index === activeIndex) return;
     setActiveIndex(index);
     setAutoplay(true);
+    screenRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -57,7 +58,7 @@ export default function JapaneseMusicPage() {
           <span className="japaneseMusic_title-en">Japanese Piano Covers</span>
         </h1>
 
-        <h2 className="japaneseMusic_channels-label">Channels</h2>
+        <h2 className="japaneseMusic_channels-label">Videos</h2>
         <div className="japaneseMusic_grid">
           {sortedSongs.map((song, index) => (
             <button
@@ -74,20 +75,19 @@ export default function JapaneseMusicPage() {
                   loading="lazy"
                 />
                 <span className="japaneseMusic_play-icon" aria-hidden="true">▶</span>
-                {index === activeIndex && (
+                {autoplay && index === activeIndex && (
                   <span className="japaneseMusic_playing-badge">Now Playing</span>
                 )}
               </div>
               <div className="japaneseMusic_card-info">
-                <p className="japaneseMusic_card-title-jp">{song.titleJp}</p>
-                <p className="japaneseMusic_card-title-en">{song.titleEn}</p>
+                <p className="japaneseMusic_card-title-jp">{song.titleJp}<span className="japaneseMusic_card-title-en">({song.titleEn})</span></p>
                 <p className="japaneseMusic_card-artist">{song.artist}</p>
               </div>
             </button>
           ))}
         </div>
-
-        <div className="japaneseMusic_screen">
+          <hr /> 
+        <div className="japaneseMusic_screen" ref={screenRef}>
           <div className="japaneseMusic_screen-frame">
             <div className="japaneseMusic_embed-wrapper">
               <iframe
@@ -101,8 +101,7 @@ export default function JapaneseMusicPage() {
           </div>
           <div className="japaneseMusic_now-playing">
             <div className="japaneseMusic_now-playing-info">
-              <p className="japaneseMusic_song-title-jp">{activeSong.titleJp}</p>
-              <p className="japaneseMusic_song-title-en">{activeSong.titleEn}</p>
+              <p className="japaneseMusic_song-title-jp">{activeSong.titleJp} <span className="japaneseMusic_song-title-en">({activeSong.titleEn})</span></p>
               <p className="japaneseMusic_song-artist">Artist: {activeSong.artist}</p>
             </div>
           </div>
