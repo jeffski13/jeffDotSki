@@ -18,3 +18,7 @@ const newFun = () => {
 
 };
 ```
+
+Do not run dev servers (playwright) in order to verify results. For visuals/UI, I will do the check myself.
+
+For non-visual changes, create unit tests to assure functionality and correct implementation.

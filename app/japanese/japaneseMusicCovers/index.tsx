@@ -83,57 +83,64 @@ export default function JapaneseMusicPage() {
 
   return (
     <div className="japaneseMusicCovers">
+      <img
+        src="/images/japanese/musicNoteBackground.png"
+        alt=""
+        aria-hidden="true"
+        className="japaneseMusic_bg-image"
+      />
       <Container fluid className="japaneseMusic_content">
+        <div id="videosTopSection">
         <h1 className="japaneseMusic_title">
           <span className="japaneseMusic_title">日本語 Japanese Piano Covers</span>
         </h1>
+          <h2 className="japaneseMusic_channels-label">Videos</h2>
+          <div className="japaneseMusic_grid">
+            {sortedSongs.map((song, index) => {
+              const isInlinePlaying = isMobile && autoplay && index === activeIndex;
 
-        <h2 className="japaneseMusic_channels-label">Videos</h2>
-        <div className="japaneseMusic_grid">
-          {sortedSongs.map((song, index) => {
-            const isInlinePlaying = isMobile && autoplay && index === activeIndex;
+              if (isInlinePlaying) {
+                return (
+                  <div key={song.youtubeId} className="japaneseMusic_card is-active">
+                    <div className="japaneseMusic_thumb-wrapper">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${song.youtubeId}?autoplay=1&rel=0`}
+                        title={song.titleEn}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                    <CardInfo song={song} />
+                  </div>
+                );
+              }
 
-            if (isInlinePlaying) {
               return (
-                <div key={song.youtubeId} className="japaneseMusic_card is-active">
+                <button
+                  key={song.youtubeId}
+                  type="button"
+                  className={`japaneseMusic_card${autoplay && index === activeIndex ? ' is-active' : ''}`}
+                  onClick={() => selectChannel(index)}
+                  aria-pressed={autoplay && index === activeIndex}
+                >
                   <div className="japaneseMusic_thumb-wrapper">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${song.youtubeId}?autoplay=1&rel=0`}
-                      title={song.titleEn}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
+                    <img
+                      src={`https://img.youtube.com/vi/${song.youtubeId}/mqdefault.jpg`}
+                      alt={song.titleEn}
+                      loading="lazy"
                     />
+                    <span className="japaneseMusic_play-icon" aria-hidden="true">▶</span>
+                    {autoplay && index === activeIndex && (
+                      <span className="japaneseMusic_playing-badge">Now Playing</span>
+                    )}
                   </div>
                   <CardInfo song={song} />
-                </div>
+                </button>
               );
-            }
-
-            return (
-              <button
-                key={song.youtubeId}
-                type="button"
-                className={`japaneseMusic_card${autoplay && index === activeIndex ? ' is-active' : ''}`}
-                onClick={() => selectChannel(index)}
-                aria-pressed={autoplay && index === activeIndex}
-              >
-                <div className="japaneseMusic_thumb-wrapper">
-                  <img
-                    src={`https://img.youtube.com/vi/${song.youtubeId}/mqdefault.jpg`}
-                    alt={song.titleEn}
-                    loading="lazy"
-                  />
-                  <span className="japaneseMusic_play-icon" aria-hidden="true">▶</span>
-                  {autoplay && index === activeIndex && (
-                    <span className="japaneseMusic_playing-badge">Now Playing</span>
-                  )}
-                </div>
-                <CardInfo song={song} />
-              </button>
-            );
-          })}
+            })}
+          </div>
+          <hr className="japaneseMusic_divider desktop-view" />
         </div>
-        <hr className="japaneseMusic_divider desktop-view" />
         <div className="japaneseMusic_screen desktop-view" ref={screenRef}>
           <div className="japaneseMusic_screen-frame">
             <div className="japaneseMusic_embed-wrapper">
