@@ -1,4 +1,5 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import { Container } from "react-bootstrap";
 import './styles.css';
 
 interface Song {
@@ -38,6 +39,16 @@ const sortedSongs = [...songs].sort(
 );
 
 export default function JapaneseMusicPage() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [autoplay, setAutoplay] = useState(false);
+  const activeSong = sortedSongs[activeIndex];
+
+  const selectChannel = (index: number) => {
+    if (index === activeIndex) return;
+    setActiveIndex(index);
+    setAutoplay(true);
+  };
+
   return (
     <div className="japaneseMusicCovers">
       <Container fluid className="japaneseMusic_content">
@@ -45,29 +56,57 @@ export default function JapaneseMusicPage() {
           <span className="japaneseMusic_title-jp">日本語の音楽</span>
           <span className="japaneseMusic_title-en">Japanese Piano Covers</span>
         </h1>
-        <p className="japaneseMusic_subtitle"></p>
-        <Row className="japaneseMusic_videos">
+
+        <h2 className="japaneseMusic_channels-label">Channels</h2>
+        <div className="japaneseMusic_grid">
           {sortedSongs.map((song, index) => (
-            <Col key={song.youtubeId} xs={11} className="japaneseMusic_video-col">
-              <div className="japaneseMusic_video-card">
-                <div className="japaneseMusic_embed-wrapper">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${song.youtubeId}`}
-                    title={song.titleEn}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="japaneseMusic_song-info">
-                  <p className="japaneseMusic_song-title-jp">{song.titleJp}</p>
-                  <p className="japaneseMusic_song-title-en">{song.titleEn}</p>
-                  <p className="japaneseMusic_song-artist">Artist: {song.artist}</p>
-                </div>
+            <button
+              key={song.youtubeId}
+              type="button"
+              className={`japaneseMusic_card${index === activeIndex ? ' is-active' : ''}`}
+              onClick={() => selectChannel(index)}
+              aria-pressed={index === activeIndex}
+            >
+              <div className="japaneseMusic_thumb-wrapper">
+                <img
+                  src={`https://img.youtube.com/vi/${song.youtubeId}/mqdefault.jpg`}
+                  alt={song.titleEn}
+                  loading="lazy"
+                />
+                <span className="japaneseMusic_play-icon" aria-hidden="true">▶</span>
+                {index === activeIndex && (
+                  <span className="japaneseMusic_playing-badge">Now Playing</span>
+                )}
               </div>
-              {index !== (sortedSongs.length - 1) ? <hr />: <></>}
-            </Col>
+              <div className="japaneseMusic_card-info">
+                <p className="japaneseMusic_card-title-jp">{song.titleJp}</p>
+                <p className="japaneseMusic_card-title-en">{song.titleEn}</p>
+                <p className="japaneseMusic_card-artist">{song.artist}</p>
+              </div>
+            </button>
           ))}
-        </Row>
+        </div>
+
+        <div className="japaneseMusic_screen">
+          <div className="japaneseMusic_screen-frame">
+            <div className="japaneseMusic_embed-wrapper">
+              <iframe
+                key={activeSong.youtubeId}
+                src={`https://www.youtube.com/embed/${activeSong.youtubeId}?${autoplay ? 'autoplay=1&' : ''}rel=0`}
+                title={activeSong.titleEn}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+          <div className="japaneseMusic_now-playing">
+            <div className="japaneseMusic_now-playing-info">
+              <p className="japaneseMusic_song-title-jp">{activeSong.titleJp}</p>
+              <p className="japaneseMusic_song-title-en">{activeSong.titleEn}</p>
+              <p className="japaneseMusic_song-artist">Artist: {activeSong.artist}</p>
+            </div>
+          </div>
+        </div>
       </Container>
     </div>
   );
