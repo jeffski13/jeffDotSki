@@ -47,7 +47,7 @@ const es: ContentPerLanguage = {
       anchorId: 'Japanese-Studies',
       links: [
         { text: esTitles.japaneseMusicCovers, url: ROUTES.japanese.japaneseMusicCovers },
-        { text: esTitles.japaneseBible, url: ROUTES.japanese.japaneseReadings },
+        { text: esTitles.japaneseBible, url: ROUTES.japanese.japaneseBible },
         { text: esTitles.japaneseCurrentSong, url: ROUTES.japanese.japanesePracticeLyrics },
         { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.japanese.japaneseParenthesesToFurigana },
         { text: esTitles.furiganaGenerator, url: ROUTES.japanese.furiganaGenerator },
@@ -91,7 +91,7 @@ const defaultText: ContentPerLanguage = {
       anchorId: 'Japanese-Studies',
       links: [
         { text: defaultTextTitles.japaneseMusicCovers, url: ROUTES.japanese.japaneseMusicCovers },
-        { text: defaultTextTitles.japaneseBible, url: ROUTES.japanese.japaneseReadings },
+        { text: defaultTextTitles.japaneseBible, url: ROUTES.japanese.japaneseBible },
         { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.japanese.japanesePracticeLyrics },
         { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.japanese.japaneseParenthesesToFurigana },
         { text: defaultTextTitles.furiganaGenerator, url: ROUTES.japanese.furiganaGenerator },

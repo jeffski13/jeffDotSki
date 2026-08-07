@@ -22,7 +22,7 @@ export default [
     route(ROUTES.pokePeru.extendedUniverse.southCarolina.dex, "teaching/pokePeruApp/pokeperuExtendedUniverse/southCarolina/routes/pokeperuExtendedUniverseDex.tsx"),
     route(ROUTES.pokePeru.extendedUniverse.southCarolina.gym, "teaching/pokePeruApp/pokeperuExtendedUniverse/southCarolina/routes/pokeperuExtendedUniverseGym.tsx"),
     
-    route(ROUTES.japanese.japaneseReadings, "japanese/readingsNihonDe/route.tsx"),
+    route(ROUTES.japanese.japaneseBible, "japanese/readingsNihonDe/route.tsx"),
     route(ROUTES.japanese.japanesePracticeLyrics, "japanese/practiceNihongoLyrics/route.tsx"),
     route(ROUTES.japanese.japaneseMusicCovers, "japanese/japaneseMusicCovers/route.tsx"),
     route(ROUTES.japanese.japaneseParenthesesToFurigana, "japanese/nihonParenthesesToFurigana/route.tsx"),

@@ -78,11 +78,11 @@ export const defaultText: ContentPerLanguage = {
     softwareEngineerResume: 'Software Engineer Resume',
     japanese: 'Japanese Studies',
     japaneseShort: 'Japanese',
+    furiganaGenerator: 'Furigana Generator',
     japaneseCurrentSong: 'Lyrics For Studying',
     japaneseBible: 'Bible In Japanese',
-    japaneseMusicCovers: 'Japanese Music Covers',
+    japaneseMusicCovers: 'My Piano Covers',
     japaneseParenthesesToFurigana: 'Parenthese To Furigana Transformation',
-    furiganaGenerator: 'Furigana Generator',
     aboutMe: 'About Me',
     aboutMeShort: 'About',
     aboutBio: 'Bio',
@@ -129,11 +129,11 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.external.resume.softwareEngineer} target="_blank" rel="noopener noreferrer">{content.softwareEngineerResume}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.japanese}</span><span className="nav-title-short">{content.japaneseShort}</span></>} id="navigationbar-japanese-studies">
-                            <NavDropdown.Item href={ROUTES.japanese.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.japanese.japaneseReadings}>{content.japaneseBible}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.japanese.japanesePracticeLyrics}>{content.japaneseCurrentSong}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.japanese.japaneseParenthesesToFurigana}>{content.japaneseParenthesesToFurigana}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.furiganaGenerator}>{content.furiganaGenerator}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japanese.japanesePracticeLyrics}>{content.japaneseCurrentSong}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japanese.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japanese.japaneseBible}>{content.japaneseBible}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japanese.japaneseParenthesesToFurigana}>{content.japaneseParenthesesToFurigana}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.aboutBio}</NavDropdown.Item>
