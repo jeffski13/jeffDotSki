@@ -1,5 +1,24 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { useEffect, useRef, useState } from "react";
+import { Container } from "react-bootstrap";
+import '../../infra/mobile-support.css';
 import './styles.css';
+
+const MOBILE_QUERY = '(max-width: 600px)';
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia(MOBILE_QUERY);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
+
+  return isMobile;
+}
 
 interface Song {
   titleJp: string;
@@ -9,7 +28,7 @@ interface Song {
   dateAdded: string;
 }
 
-const songs: Song[] = [
+const songList: Song[] = [
   {
     titleJp: '栄光の架橋',
     titleEn: 'Eikō no Kakehashi',
@@ -27,47 +46,120 @@ const songs: Song[] = [
   {
     titleJp: '廃墟のソファ',
     titleEn: 'Haikyo no Sofa',
-    artist: 'Akeboshi (あけぼし)',
+    artist: 'あけぼし (Akeboshi)',
     youtubeId: 't8WFmpqLIPQ',
     dateAdded: '2026-07-30',
   },
 ];
 
-const sortedSongs = [...songs].sort(
+const songListSorted = [...songList].sort(
   (a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
 );
 
+const FIXED_NAVBAR_OFFSET = 60;
+
+const CardInfo = ({ song }: { song: Song }) => (
+  <div className="japaneseMusic_card-info">
+    <p className="japaneseMusic_card-title-jp">{song.titleJp}<span className="japaneseMusic_card-title-en">({song.titleEn})</span></p>
+    <p className="japaneseMusic_card-artist">{song.artist}</p>
+  </div>
+);
+
 export default function JapaneseMusicPage() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [autoplay, setAutoplay] = useState(false);
+  const activeSong = songListSorted[activeIndex];
+  const screenRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+
+  const selectChannel = (index: number) => {
+    setActiveIndex(index);
+    setAutoplay(true);
+    if (!isMobile && screenRef.current) {
+      const top = screenRef.current.getBoundingClientRect().top + window.scrollY - FIXED_NAVBAR_OFFSET;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="japaneseMusicCovers">
+      <img
+        src="/images/japanese/musicNoteBackground.png"
+        alt=""
+        aria-hidden="true"
+        className="japaneseMusic_bg-image"
+      />
       <Container fluid className="japaneseMusic_content">
-        <h1 className="japaneseMusic_title">
-          <span className="japaneseMusic_title-jp">日本語の音楽</span>
-          <span className="japaneseMusic_title-en">Japanese Music Covers</span>
-        </h1>
-        <p className="japaneseMusic_subtitle">My Covers of Japanese Songs</p>
-        <Row className="japaneseMusic_videos">
-          {sortedSongs.map((song, index) => (
-            <Col key={song.youtubeId} xs={11} className="japaneseMusic_video-col">
-              <div className="japaneseMusic_video-card">
-                <div className="japaneseMusic_embed-wrapper">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${song.youtubeId}`}
-                    title={song.titleEn}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="japaneseMusic_song-info">
-                  <p className="japaneseMusic_song-title-jp">{song.titleJp}</p>
-                  <p className="japaneseMusic_song-title-en">{song.titleEn}</p>
-                  <p className="japaneseMusic_song-artist">Artist: {song.artist}</p>
-                </div>
-              </div>
-              {index !== (sortedSongs.length - 1) ? <hr />: <></>}
-            </Col>
-          ))}
-        </Row>
+        <div id="videosTopSection">
+          <h1 className="japaneseMusic_title">
+            <span className="japaneseMusic_title">日本語 Japanese Piano Covers</span>
+          </h1>
+          <h2 className="japaneseMusic_channels-label">Videos</h2>
+          <div className="japaneseMusic_grid">
+            {songListSorted.map((song, index) => {
+              const isInlinePlaying = isMobile && autoplay && index === activeIndex;
+
+              if (isInlinePlaying) {
+                return (
+                  <div key={song.youtubeId} className="japaneseMusic_card is-active">
+                    <div className="japaneseMusic_thumb-wrapper">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${song.youtubeId}?autoplay=1&rel=0`}
+                        title={song.titleEn}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                    <CardInfo song={song} />
+                  </div>
+                );
+              }
+
+              return (
+                <button
+                  key={song.youtubeId}
+                  type="button"
+                  className={`japaneseMusic_card${autoplay && index === activeIndex ? ' is-active' : ''}`}
+                  onClick={() => selectChannel(index)}
+                  aria-pressed={autoplay && index === activeIndex}
+                >
+                  <div className="japaneseMusic_thumb-wrapper">
+                    <img
+                      src={`https://img.youtube.com/vi/${song.youtubeId}/mqdefault.jpg`}
+                      alt={song.titleEn}
+                      loading="lazy"
+                    />
+                    <span className="japaneseMusic_play-icon" aria-hidden="true">▶</span>
+                    {autoplay && index === activeIndex && (
+                      <span className="japaneseMusic_playing-badge">Now Playing</span>
+                    )}
+                  </div>
+                  <CardInfo song={song} />
+                </button>
+              );
+            })}
+          </div>
+          <hr className="japaneseMusic_divider desktop-view" />
+        </div>
+        <div className="japaneseMusic_screen desktop-view" ref={screenRef}>
+          <div className="japaneseMusic_screen-frame">
+            <div className="japaneseMusic_embed-wrapper">
+              <iframe
+                key={activeSong.youtubeId}
+                src={`https://www.youtube.com/embed/${activeSong.youtubeId}?${autoplay && !isMobile ? 'autoplay=1&' : ''}rel=0`}
+                title={activeSong.titleEn}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+          <div className="japaneseMusic_now-playing">
+            <div className="japaneseMusic_now-playing-info">
+              <p className="japaneseMusic_song-title-jp">{activeSong.titleJp} <span className="japaneseMusic_song-title-en">({activeSong.titleEn})</span></p>
+              <p className="japaneseMusic_song-artist">Artist: {activeSong.artist}</p>
+            </div>
+          </div>
+        </div>
       </Container>
     </div>
   );
