@@ -56,6 +56,8 @@ const sortedSongs = [...songs].sort(
   (a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
 );
 
+const FIXED_NAVBAR_OFFSET = 60;
+
 const CardInfo = ({ song }: { song: Song }) => (
   <div className="japaneseMusic_card-info">
     <p className="japaneseMusic_card-title-jp">{song.titleJp}<span className="japaneseMusic_card-title-en">({song.titleEn})</span></p>
@@ -73,8 +75,9 @@ export default function JapaneseMusicPage() {
   const selectChannel = (index: number) => {
     setActiveIndex(index);
     setAutoplay(true);
-    if (!isMobile) {
-      screenRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!isMobile && screenRef.current) {
+      const top = screenRef.current.getBoundingClientRect().top + window.scrollY - FIXED_NAVBAR_OFFSET;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
@@ -111,9 +114,9 @@ export default function JapaneseMusicPage() {
               <button
                 key={song.youtubeId}
                 type="button"
-                className={`japaneseMusic_card${index === activeIndex ? ' is-active' : ''}`}
+                className={`japaneseMusic_card${autoplay && index === activeIndex ? ' is-active' : ''}`}
                 onClick={() => selectChannel(index)}
-                aria-pressed={index === activeIndex}
+                aria-pressed={autoplay && index === activeIndex}
               >
                 <div className="japaneseMusic_thumb-wrapper">
                   <img
