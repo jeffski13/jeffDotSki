@@ -86,7 +86,7 @@ export default function JapaneseMusicPage() {
             </button>
           ))}
         </div>
-          <hr /> 
+          <hr className="japaneseMusic_divider" />
         <div className="japaneseMusic_screen" ref={screenRef}>
           <div className="japaneseMusic_screen-frame">
             <div className="japaneseMusic_embed-wrapper">

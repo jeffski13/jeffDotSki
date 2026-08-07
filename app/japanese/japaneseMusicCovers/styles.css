@@ -21,6 +21,17 @@
   color: #e1e1e1;
 }
 
+.japaneseMusic_divider {
+  opacity: 1;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  margin: 40px 0;
+}
+
+[data-bs-theme="dark"] .japaneseMusic_divider {
+  border-top-color: #fff;
+}
+
 /* Now Playing "TV screen" */
 
 .japaneseMusic_screen {
