@@ -28,7 +28,7 @@ interface Song {
   dateAdded: string;
 }
 
-const songs: Song[] = [
+const songList: Song[] = [
   {
     titleJp: '栄光の架橋',
     titleEn: 'Eikō no Kakehashi',
@@ -52,7 +52,7 @@ const songs: Song[] = [
   },
 ];
 
-const sortedSongs = [...songs].sort(
+const songListSorted = [...songList].sort(
   (a, b) => new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
 );
 
@@ -68,7 +68,7 @@ const CardInfo = ({ song }: { song: Song }) => (
 export default function JapaneseMusicPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(false);
-  const activeSong = sortedSongs[activeIndex];
+  const activeSong = songListSorted[activeIndex];
   const screenRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
@@ -96,7 +96,7 @@ export default function JapaneseMusicPage() {
           </h1>
           <h2 className="japaneseMusic_channels-label">Videos</h2>
           <div className="japaneseMusic_grid">
-            {sortedSongs.map((song, index) => {
+            {songListSorted.map((song, index) => {
               const isInlinePlaying = isMobile && autoplay && index === activeIndex;
 
               if (isInlinePlaying) {

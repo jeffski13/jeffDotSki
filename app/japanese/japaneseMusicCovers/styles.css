@@ -140,6 +140,14 @@
   text-shadow: 0 1px 3px rgba(0, 0, 0, 1);
 }
 
+@media (min-width: 601px) {
+  [data-bs-theme="light"] .japaneseMusic_screen {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    padding: 6px 8px;
+  }
+}
+
 .japaneseMusic_now-playing-info {
   min-width: 0;
 }
@@ -292,6 +300,13 @@
   .japaneseMusic_now-playing {
     flex-direction: column;
     gap: 6px;
+  }
+
+  [data-bs-theme="light"] .japaneseMusic_card-info {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    padding: 6px 8px;
+    margin-top: 6px;
   }
 }
 
