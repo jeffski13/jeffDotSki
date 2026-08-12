@@ -62,6 +62,6 @@
     line-height: 1.5;
 }
 
-[data-bs-theme="dark"] #japanese-lyrics .text-size-control .btn-outline-secondary .lyrics-disclaimer {
+[data-bs-theme="dark"] #japanese-lyrics .text-size-control .btn-outline-secondary {
     color: #e9ecef;
 }
