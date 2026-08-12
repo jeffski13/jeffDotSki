@@ -1,6 +1,16 @@
 /// <reference types="vitest/globals" />
 import { buildLyricsSongFileContent } from './exportLyricsSong';
 import type { FuriganaLine } from './furiganaGenerator';
+import type { LyricsSong } from '../practiceNihongoLyrics/src/types';
+
+// Record<keyof LyricsSong, true> forces this list to fail to compile if LyricsSong ever
+// gains/loses a property, so the "every property is exported" test below can't go stale.
+const lyricsSongKeys: Record<keyof LyricsSong, true> = {
+  title: true,
+  jp: true,
+  romaji: true,
+  furigana: true,
+};
 
 const convertedLines: FuriganaLine[] = [
   { kanji: '誰にも見せない', hiragana: 'だれにもみせない', furigana: '誰（だれ）にも見（み）せない' },
@@ -8,7 +18,7 @@ const convertedLines: FuriganaLine[] = [
 ];
 
 describe('buildLyricsSongFileContent', () => {
-  it('builds a LyricsSong module without romaji when romajiText is blank', () => {
+  it('builds a LyricsSong module with an empty romaji array when romajiText is blank', () => {
     const content = buildLyricsSongFileContent({
       title: '涙 (Namida)',
       kanjiText: '誰にも見せない\n泪があった',
@@ -29,11 +39,25 @@ const lyrics: LyricsSong = {
     "誰（だれ）にも見（み）せない",
     "泪（なみだ）があった",
   ],
+  romaji: [],
 };
 
 export default lyrics;
 `,
     );
+  });
+
+  it('includes every LyricsSong property in the exported object, even when romajiText is blank', () => {
+    const content = buildLyricsSongFileContent({
+      title: '涙 (Namida)',
+      kanjiText: '誰にも見せない\n泪があった',
+      romajiText: '',
+      convertedLines,
+    });
+
+    for (const key of Object.keys(lyricsSongKeys)) {
+      expect(content).toMatch(new RegExp(`^  ${key}: `, 'm'));
+    }
   });
 
   it('includes a romaji array, aligned with jp/furigana, when romajiText is present', () => {
