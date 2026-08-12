@@ -3,7 +3,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import HomePage from './index';
-import {songs} from './index';
+import {songs, MAX_FONT_SIZE} from './index';
 
 const renderComponent = () => render(<MemoryRouter><HomePage /></MemoryRouter>);
 
@@ -174,7 +174,7 @@ describe('PracticeNihongoLyrics', () => {
       expect(decrease).toBeDisabled();
 
       for (let i = 0; i < 20; i++) fireEvent.click(increase);
-      expect(screen.getByText('32px')).toBeInTheDocument();
+      expect(screen.getByText(`${MAX_FONT_SIZE}px`)).toBeInTheDocument();
       expect(increase).toBeDisabled();
     });
 

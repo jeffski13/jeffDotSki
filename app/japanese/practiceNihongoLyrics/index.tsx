@@ -64,7 +64,7 @@ function loadSelectedSongIndex(): number {
 const FONT_SIZE_KEY = "practiceNihongoLyrics.fontSize";
 const DEFAULT_FONT_SIZE = 16;
 const MIN_FONT_SIZE = 12;
-const MAX_FONT_SIZE = 48;
+export const MAX_FONT_SIZE = 48;
 const FONT_SIZE_STEP = 2;
 
 function clampFontSize(size: number): number {
