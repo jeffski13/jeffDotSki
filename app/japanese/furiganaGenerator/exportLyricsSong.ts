@@ -36,9 +36,8 @@ export function buildLyricsSongFileContent({ title, kanjiText, romajiText, conve
     `  furigana: ${formatStringArray(furigana)},`,
   ];
 
-  if (romajiText.trim().length > 0) {
-    fields.push(`  romaji: ${formatStringArray(alignedRomajiLines(kanjiText, romajiText))},`);
-  }
+  const romajiLines = romajiText.trim().length > 0 ? alignedRomajiLines(kanjiText, romajiText) : [];
+  fields.push(`  romaji: ${romajiLines.length > 0 ? formatStringArray(romajiLines) : '[]'},`);
 
   return `import type { LyricsSong } from "./types";\n\nconst lyrics: LyricsSong = {\n${fields.join('\n')}\n};\n\nexport default lyrics;\n`;
 }
