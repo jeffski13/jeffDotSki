@@ -53,3 +53,11 @@
 #japanese-lyrics rt {
     user-select: none;
 }
+
+[data-bs-theme="light"] #japanese-lyrics .text-size-control .btn-outline-secondary {
+    color: #343a40;
+}
+
+[data-bs-theme="dark"] #japanese-lyrics .text-size-control .btn-outline-secondary {
+    color: #e9ecef;
+}
