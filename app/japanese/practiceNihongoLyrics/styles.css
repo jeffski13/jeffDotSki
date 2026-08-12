@@ -60,11 +60,6 @@
     border-top: 2px solid #b5b5b5;
     font-size: 0.85rem;
     line-height: 1.5;
-    color: #6c757d;
-}
-
-[data-bs-theme="light"] #japanese-lyrics .text-size-control .btn-outline-secondary {
-    color: #343a40;
 }
 
 [data-bs-theme="dark"] #japanese-lyrics .text-size-control .btn-outline-secondary .lyrics-disclaimer {
