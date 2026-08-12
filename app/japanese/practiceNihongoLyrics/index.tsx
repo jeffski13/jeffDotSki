@@ -268,6 +268,16 @@ export default function WebPage() {
             </Row>
           )}
         </div>
+        <footer className="lyrics-disclaimer">
+          <p className="mb-0">
+            <strong>Disclaimer:</strong> The song lyrics, translations, and transliterations on this
+            page are reproduced solely for academic and educational purposes — specifically, to aid
+            in the study of Japanese language reading and comprehension. All rights to the original
+            lyrics remain the property of their respective songwriters, publishers, and copyright
+            holders. No copyright infringement is intended, and this content is not authorized for
+            commercial use or redistribution.
+          </p>
+        </footer>
       </Container>
     </div>
   );
