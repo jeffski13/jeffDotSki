@@ -42,6 +42,14 @@
     min-height: 1.6em;
 }
 
+#japanese-lyrics .lyric-line {
+    color: #333;
+}
+
+[data-bs-theme="dark"] #japanese-lyrics .lyric-line {
+    color: #e9ecef;
+}
+
 @media (max-width: 576px) {
     .lyric-separator {
         max-width: 50%;
