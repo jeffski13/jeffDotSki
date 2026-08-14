@@ -1,9 +1,14 @@
 #japanese-lyrics {
-    margin-top: 20px;
+    padding-top: 20px;
+    background-color: #eee;
+}
+
+[data-bs-theme="dark"] #japanese-lyrics {
+    background-color: #1a1e21;
 }
 
 #japanese-lyrics .form-select {
-    background-color: #dbd6d6;
+    background-color: #c2bdbd;
     color: #212529;
     --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
@@ -11,6 +16,14 @@
 #japanese-lyrics .form-select option {
     background-color: #b5b5b5;
     color: #212529;
+}
+
+[data-bs-theme="light"] #japanese-lyrics .form-check-input {
+    border-color: #6c757d;
+}
+
+[data-bs-theme="dark"] #japanese-lyrics .form-check-input {
+    border-color: #b6b7b8;
 }
 
 @media (min-width: 992px) {
@@ -24,10 +37,15 @@
     }
 }
 
-#japanese-lyrics .lyrics-controls-separator {
+.lyrics-controls-separator {
     margin: 0 0 1.5rem;
     border: 0;
-    border-top: 2px solid #b5b5b5;
+    border-top: 2px solid #777;
+    opacity: 1;
+}
+
+[data-bs-theme="dark"] .lyrics-controls-separator {
+    border-top-color: #dbdee0;
 }
 
 #japanese-lyrics .lyrics-area {
@@ -40,6 +58,14 @@
 
 #japanese-lyrics .lyrics-column .lyric-line {
     min-height: 1.6em;
+}
+
+#japanese-lyrics .lyric-line {
+    color: #333;
+}
+
+[data-bs-theme="dark"] #japanese-lyrics .lyric-line {
+    color: #dbdee0;
 }
 
 @media (max-width: 576px) {
@@ -60,6 +86,15 @@
     border-top: 2px solid #b5b5b5;
     font-size: 0.85rem;
     line-height: 1.5;
+}
+
+[data-bs-theme="light"] #japanese-lyrics .text-size-control .btn-outline-secondary:not(:disabled) {
+    color: #495057;
+}
+
+[data-bs-theme="light"] #japanese-lyrics .text-size-control .btn-outline-secondary:disabled {
+    color: #6c757d;
+    opacity: 1;
 }
 
 [data-bs-theme="dark"] #japanese-lyrics .text-size-control .btn-outline-secondary {
