@@ -1,5 +1,10 @@
 #japanese-lyrics {
-    margin-top: 20px;
+    padding-top: 20px;
+    background-color: #eee;
+}
+
+[data-bs-theme="dark"] #japanese-lyrics {
+    background-color: #212529;
 }
 
 #japanese-lyrics .form-select {
