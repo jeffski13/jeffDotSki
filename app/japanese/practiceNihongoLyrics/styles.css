@@ -4,7 +4,7 @@
 }
 
 [data-bs-theme="dark"] #japanese-lyrics {
-    background-color: #212529;
+    background-color: #1a1e21;
 }
 
 #japanese-lyrics .form-select {
@@ -16,6 +16,14 @@
 #japanese-lyrics .form-select option {
     background-color: #b5b5b5;
     color: #212529;
+}
+
+[data-bs-theme="light"] #japanese-lyrics .form-check-input {
+    border-color: #6c757d;
+}
+
+[data-bs-theme="dark"] #japanese-lyrics .form-check-input {
+    border-color: #b6b7b8;
 }
 
 @media (min-width: 992px) {
@@ -52,7 +60,7 @@
 }
 
 [data-bs-theme="dark"] #japanese-lyrics .lyric-line {
-    color: #e9ecef;
+    color: #dbdee0;
 }
 
 @media (max-width: 576px) {
