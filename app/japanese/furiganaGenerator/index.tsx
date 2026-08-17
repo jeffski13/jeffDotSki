@@ -153,6 +153,15 @@ export default function FuriganaGeneratorPage() {
 
         <hr className="japanese-controls-separator" />
 
+        <Button
+          ref={convertButtonRef}
+          className="furiganaGenerator_convert-btn"
+          onClick={handleConvert}
+          disabled={isConverting || (kanjiText.trim().length === 0 && romajiText.trim().length === 0)}
+        >
+          {isConverting ? 'Converting…' : 'Generate Furigana'}
+        </Button>
+
         <Row className="mb-3 japanese-display-controls">
           <Col xs="auto">
             <Form.Check
@@ -177,15 +186,6 @@ export default function FuriganaGeneratorPage() {
             />
           </Col>
         </Row>
-
-        <Button
-          ref={convertButtonRef}
-          className="furiganaGenerator_convert-btn"
-          onClick={handleConvert}
-          disabled={isConverting || (kanjiText.trim().length === 0 && romajiText.trim().length === 0)}
-        >
-          {isConverting ? 'Converting…' : 'Generate Furigana'}
-        </Button>
 
         {errorMessage && (
           <p className="furiganaGenerator_error" role="alert">
@@ -232,32 +232,6 @@ export default function FuriganaGeneratorPage() {
                       <br />
                     </Fragment>
                   ))}
-                  <Button
-                    variant="outline-secondary"
-                    size="sm"
-                    className="furiganaGenerator_copy-btn"
-                    onClick={handleCopy}
-                  >
-                    {copied ? 'Copied!' : 'Copy'}
-                  </Button>
-                  <Form.Group className="furiganaGenerator_input-group">
-                    <Form.Label className="furiganaGenerator_label">Title</Form.Label>
-                    <Form.Control
-                      type="text"
-                      className="furiganaGenerator_title-input"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      placeholder="Song title, used for the exported file"
-                    />
-                  </Form.Group>
-                  <Button
-                    variant="outline-secondary"
-                    size="sm"
-                    className="furiganaGenerator_export-btn"
-                    onClick={handleExport}
-                  >
-                    Export .ts
-                  </Button>
                 </Col>
               )}
               {showFuriganaResults && (
@@ -270,6 +244,32 @@ export default function FuriganaGeneratorPage() {
                 </Col>
               )}
             </Row>
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              className="furiganaGenerator_copy-btn"
+              onClick={handleCopy}
+            >
+              {copied ? 'Copied!' : 'Copy'}
+            </Button>
+            <Form.Group className="furiganaGenerator_input-group">
+              <Form.Label className="furiganaGenerator_label">Title</Form.Label>
+              <Form.Control
+                type="text"
+                className="furiganaGenerator_title-input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Song title, used for the exported file"
+              />
+            </Form.Group>
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              className="furiganaGenerator_export-btn"
+              onClick={handleExport}
+            >
+              Export .ts
+            </Button>
           </div>
         )}
       </Container>

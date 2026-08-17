@@ -69,19 +69,19 @@
   padding-bottom: 16px;
 }
 
-.furiganaGenerator_output-col:first-child {
+.furiganaGenerator_output-col:first-child:not(:last-child) {
   border-bottom: 1px solid #eee;
   margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {
-  .furiganaGenerator_output-col:first-child {
+  .furiganaGenerator_output-col:first-child:not(:last-child) {
     border-bottom: none;
     border-right: 1px solid #eee;
     margin-bottom: 0;
   }
 
-  .furiganaGenerator_output-col:last-child {
+  .furiganaGenerator_output-col:last-child:not(:first-child) {
     padding-top: 47px;
   }
 }
