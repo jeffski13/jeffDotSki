@@ -8,10 +8,44 @@ import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
+import '../displayControls.css';
 import './styles.css';
 
 export const KANJI_PLACEHOLDER = "Ex：今日（きょう）は良（よ）かったです。";
 export const ROMAJI_PLACEHOLDER = "Ex: Kyou wa yokatta desu.";
+
+const DISPLAY_SETTINGS_KEY = 'furiganaGenerator.displaySettings';
+
+type DisplaySettings = {
+  showKanjiParentheses: boolean;
+  showFuriganaResults: boolean;
+};
+
+const DEFAULT_DISPLAY_SETTINGS: DisplaySettings = {
+  showKanjiParentheses: true,
+  showFuriganaResults: true,
+};
+
+function loadDisplaySettings(): DisplaySettings {
+  if (typeof window === 'undefined') return DEFAULT_DISPLAY_SETTINGS;
+  try {
+    const raw = window.localStorage.getItem(DISPLAY_SETTINGS_KEY);
+    if (!raw) return DEFAULT_DISPLAY_SETTINGS;
+    const parsed = JSON.parse(raw);
+    return {
+      showKanjiParentheses:
+        typeof parsed.showKanjiParentheses === 'boolean'
+          ? parsed.showKanjiParentheses
+          : DEFAULT_DISPLAY_SETTINGS.showKanjiParentheses,
+      showFuriganaResults:
+        typeof parsed.showFuriganaResults === 'boolean'
+          ? parsed.showFuriganaResults
+          : DEFAULT_DISPLAY_SETTINGS.showFuriganaResults,
+    };
+  } catch {
+    return DEFAULT_DISPLAY_SETTINGS;
+  }
+}
 
 export default function FuriganaGeneratorPage() {
   const [title, setTitle] = useState('');
@@ -21,6 +55,8 @@ export default function FuriganaGeneratorPage() {
   const [copied, setCopied] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
+  const { showKanjiParentheses, showFuriganaResults } = displaySettings;
   const convertButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -28,6 +64,10 @@ export default function FuriganaGeneratorPage() {
       convertButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [convertedLines]);
+
+  useEffect(() => {
+    window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
+  }, [displaySettings]);
 
   const handleConvert = async () => {
     setErrorMessage(null);
@@ -111,6 +151,33 @@ export default function FuriganaGeneratorPage() {
           </Col>
         </Row>
 
+        <hr className="japanese-controls-separator" />
+
+        <Row className="mb-3 japanese-display-controls">
+          <Col xs="auto">
+            <Form.Check
+              type="checkbox"
+              id="show-kanji-parentheses"
+              label="Kanji with parentheses"
+              checked={showKanjiParentheses}
+              onChange={(e) =>
+                setDisplaySettings((prev) => ({ ...prev, showKanjiParentheses: e.target.checked }))
+              }
+            />
+          </Col>
+          <Col xs="auto">
+            <Form.Check
+              type="checkbox"
+              id="show-furigana-results"
+              label="Furigana results"
+              checked={showFuriganaResults}
+              onChange={(e) =>
+                setDisplaySettings((prev) => ({ ...prev, showFuriganaResults: e.target.checked }))
+              }
+            />
+          </Col>
+        </Row>
+
         <Button
           ref={convertButtonRef}
           className="furiganaGenerator_convert-btn"
@@ -145,51 +212,63 @@ export default function FuriganaGeneratorPage() {
         {convertedLines && convertedLines.length > 0 && (
           <div className="furiganaGenerator_output">
             <Row id="furiganaGenerator_output" className="furiganaGenerator_output-row">
-              <Col xs={12} md={6} className="furiganaGenerator_output-col">
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  className="furiganaGenerator_copy-btn"
-                  onClick={handleCopy}
+              {showKanjiParentheses && (
+                <Col
+                  xs={12}
+                  md={showFuriganaResults ? 6 : 12}
+                  className="furiganaGenerator_output-col"
                 >
-                  {copied ? 'Copied!' : 'Copy'}
-                </Button>
-                {convertedLines.map((line, i) => (
-                  <Fragment key={i}>
-                    {line.furigana}
-                    <br />
-                  </Fragment>
-                ))}
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  className="furiganaGenerator_copy-btn"
-                  onClick={handleCopy}
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    className="furiganaGenerator_copy-btn"
+                    onClick={handleCopy}
+                  >
+                    {copied ? 'Copied!' : 'Copy'}
+                  </Button>
+                  {convertedLines.map((line, i) => (
+                    <Fragment key={i}>
+                      {line.furigana}
+                      <br />
+                    </Fragment>
+                  ))}
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    className="furiganaGenerator_copy-btn"
+                    onClick={handleCopy}
+                  >
+                    {copied ? 'Copied!' : 'Copy'}
+                  </Button>
+                  <Form.Group className="furiganaGenerator_input-group">
+                    <Form.Label className="furiganaGenerator_label">Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      className="furiganaGenerator_title-input"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      placeholder="Song title, used for the exported file"
+                    />
+                  </Form.Group>
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    className="furiganaGenerator_export-btn"
+                    onClick={handleExport}
+                  >
+                    Export .ts
+                  </Button>
+                </Col>
+              )}
+              {showFuriganaResults && (
+                <Col
+                  xs={12}
+                  md={showKanjiParentheses ? 6 : 12}
+                  className="furiganaGenerator_output-col furiganaRuby_output"
                 >
-                  {copied ? 'Copied!' : 'Copy'}
-                </Button>
-                <Form.Group className="furiganaGenerator_input-group">
-                  <Form.Label className="furiganaGenerator_label">Title</Form.Label>
-                  <Form.Control
-                    type="text"
-                    className="furiganaGenerator_title-input"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Song title, used for the exported file"
-                  />
-                </Form.Group>
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  className="furiganaGenerator_export-btn"
-                  onClick={handleExport}
-                >
-                  Export .ts
-                </Button>
-              </Col>
-              <Col xs={12} md={6} className="furiganaGenerator_output-col furiganaRuby_output">
-                {renderFuriganaText(convertedLines.map((line) => line.furigana).join('\n'), 'output')}
-              </Col>
+                  {renderFuriganaText(convertedLines.map((line) => line.furigana).join('\n'), 'output')}
+                </Col>
+              )}
             </Row>
           </div>
         )}

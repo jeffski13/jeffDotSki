@@ -12,6 +12,7 @@ import land from "./src/land";
 import nagareboshiKirari from "./src/nagareboshiKirari";
 import departure from "./src/departure";
 import naminoriJohnny from "./src/naminoriJohnny";
+import '../displayControls.css';
 import './styles.css';
 
 export const songs: LyricsSong[] = [
@@ -173,7 +174,7 @@ export default function WebPage() {
   return (
     <div id="japanese-lyrics">
       <Container fluid >
-        <Row className="mb-3 align-items-center lyric-display-settings">
+        <Row className="mb-3 align-items-center lyric-display-settings japanese-display-controls">
           <Col xs={12} md="auto" className="song-select-col mb-2 mb-md-0">
             <Form.Select
               value={selectedTitle}
@@ -249,7 +250,7 @@ export default function WebPage() {
             </ButtonGroup>
           </Col>
         </Row>
-        <hr className="lyrics-controls-separator" />
+        <hr className="japanese-controls-separator" />
         <div className="lyrics-area" style={{ fontSize: `${fontSize}px` }}>
           {lineByLine ? (
             pairs.map((line, idx) => {
