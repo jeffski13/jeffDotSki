@@ -151,8 +151,6 @@ export default function FuriganaGeneratorPage() {
           </Col>
         </Row>
 
-        <hr className="japanese-controls-separator" />
-
         <Button
           ref={convertButtonRef}
           className="furiganaGenerator_convert-btn"
@@ -161,6 +159,25 @@ export default function FuriganaGeneratorPage() {
         >
           {isConverting ? 'Converting…' : 'Generate Furigana'}
         </Button>
+
+        {getEnv() === ENV.DEV && (
+          <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
+            Load Sample
+          </Button>
+        )}
+
+        {getEnv() === ENV.DEV && (
+          <Button
+            variant="outline-secondary"
+            className="furiganaGenerator_sample-btn"
+            onClick={handleLoadKanjiOnlySample}
+          >
+            Load Kanji-Only Sample
+          </Button>
+        )}
+
+        <hr className="japanese-controls-separator" />
+
 
         <Row className="mb-3 japanese-display-controls">
           <Col xs="auto">
@@ -191,22 +208,6 @@ export default function FuriganaGeneratorPage() {
           <p className="furiganaGenerator_error" role="alert">
             {errorMessage}
           </p>
-        )}
-
-        {getEnv() === ENV.DEV && (
-          <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
-            Load Sample
-          </Button>
-        )}
-
-        {getEnv() === ENV.DEV && (
-          <Button
-            variant="outline-secondary"
-            className="furiganaGenerator_sample-btn"
-            onClick={handleLoadKanjiOnlySample}
-          >
-            Load Kanji-Only Sample
-          </Button>
         )}
 
         {convertedLines && convertedLines.length > 0 && (
