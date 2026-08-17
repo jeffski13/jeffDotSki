@@ -11,9 +11,22 @@ import bayCity from "./src/bayCity";
 import land from "./src/land";
 import nagareboshiKirari from "./src/nagareboshiKirari";
 import departure from "./src/departure";
+import naminoriJohnny from "./src/naminoriJohnny";
 import './styles.css';
 
-export const songs: LyricsSong[] = [bayCity, departure, eikouNoKakehashi, HaikyouNoSofa, itsuka, land, nagareboshiKirari, senNoYoruWoKoete, stayWithMe, tegami];
+export const songs: LyricsSong[] = [
+  bayCity, 
+  departure, 
+  eikouNoKakehashi, 
+  HaikyouNoSofa, 
+  itsuka, 
+  land, 
+  nagareboshiKirari, 
+  naminoriJohnny, 
+  senNoYoruWoKoete, 
+  stayWithMe, 
+  tegami
+];
 
 const DISPLAY_SETTINGS_KEY = "practiceNihongoLyrics.displaySettings";
 
