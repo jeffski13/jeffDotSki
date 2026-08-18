@@ -1,3 +1,11 @@
+.furiganaGenerator {
+  background-color: #eee;
+}
+
+[data-bs-theme="dark"] .furiganaGenerator {
+  background-color: #1a1e21;
+}
+
 .furiganaGenerator_content {
   padding: 40px 20px 60px;
   max-width: 1100px;
