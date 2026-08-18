@@ -9,6 +9,7 @@ import testInfoRomaji from './testInfoRomaji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 import { downloadLyricsSongFile } from './exportLyricsSong';
+import { applyChorusSeparators } from './chorusSeparators';
 
 vi.mock('./kanjiToHiragana', () => ({
   buildFuriganaLinesFromKanji: vi.fn(),
@@ -16,6 +17,10 @@ vi.mock('./kanjiToHiragana', () => ({
 
 vi.mock('./exportLyricsSong', () => ({
   downloadLyricsSongFile: vi.fn(),
+}));
+
+vi.mock('./chorusSeparators', () => ({
+  applyChorusSeparators: vi.fn(),
 }));
 
 const renderComponent = () => render(<MemoryRouter><FuriganaGeneratorPage /></MemoryRouter>);
@@ -158,6 +163,77 @@ describe('FuriganaGeneratorPage', () => {
       kanjiText: KANJI,
       romajiText: ROMAJI,
       convertedLines: [{ kanji: KANJI, hiragana: 'だれにもみせない', furigana: EXPECTED_FURIGANA }],
+    });
+  });
+
+  describe('Chorus Separators checkbox', () => {
+    beforeEach(() => {
+      vi.mocked(applyChorusSeparators).mockReset();
+    });
+
+    it('is unchecked by default and does not call the chorus separator service', async () => {
+      const mockedLines = [{ kanji: KANJI, hiragana: 'だれにもみせない', furigana: EXPECTED_FURIGANA }];
+      vi.mocked(buildFuriganaLinesFromKanji).mockResolvedValue(mockedLines);
+
+      renderComponent();
+      expect(screen.getByLabelText('Chorus Separators')).not.toBeChecked();
+
+      fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
+      fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+
+      await waitFor(() => {
+        expect(buildFuriganaLinesFromKanji).toHaveBeenCalledWith(KANJI);
+      });
+      expect(applyChorusSeparators).not.toHaveBeenCalled();
+    });
+
+    it('sends the kanji text to /chorusSeparators first, then feeds its result to buildFuriganaLinesFromKanji', async () => {
+      const TRANSFORMED_KANJI = '【サビ】\n誰にも見せない';
+      vi.mocked(applyChorusSeparators).mockResolvedValue(TRANSFORMED_KANJI);
+      const mockedLines = [{ kanji: KANJI, hiragana: 'だれにもみせない', furigana: EXPECTED_FURIGANA }];
+      vi.mocked(buildFuriganaLinesFromKanji).mockResolvedValue(mockedLines);
+
+      renderComponent();
+      fireEvent.click(screen.getByLabelText('Chorus Separators'));
+      fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
+      fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+
+      await waitFor(() => {
+        expect(buildFuriganaLinesFromKanji).toHaveBeenCalledWith(TRANSFORMED_KANJI);
+      });
+      expect(applyChorusSeparators).toHaveBeenCalledWith(KANJI);
+    });
+
+    it('feeds the chorus-separated text into the romaji conversion path when romaji is supplied', async () => {
+      const TRANSFORMED_KANJI = 'だれにもみせない';
+      vi.mocked(applyChorusSeparators).mockResolvedValue(TRANSFORMED_KANJI);
+
+      const { container } = renderComponent();
+      fireEvent.click(screen.getByLabelText('Chorus Separators'));
+      fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
+      fireEvent.change(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER), { target: { value: ROMAJI } });
+      fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+
+      await waitFor(() => {
+        const parenColumn = container.querySelector('.furiganaGenerator_output-col');
+        expect(parenColumn?.textContent).toContain(TRANSFORMED_KANJI);
+      });
+      expect(applyChorusSeparators).toHaveBeenCalledWith(KANJI);
+      // Already-hiragana chorus-separated text needs no furigana annotation, unlike the raw kanji.
+      expect(container.querySelector('.furiganaGenerator_output-col')?.textContent).not.toContain('（');
+    });
+
+    it('shows an error message when the chorus separator service request fails', async () => {
+      vi.mocked(applyChorusSeparators).mockRejectedValue(new Error('Chorus separator service request failed: 500 Error'));
+
+      renderComponent();
+      fireEvent.click(screen.getByLabelText('Chorus Separators'));
+      fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
+      fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+
+      expect(await screen.findByRole('alert')).toHaveTextContent(
+        'Something went wrong generating furigana. Please try again.',
+      );
     });
   });
 

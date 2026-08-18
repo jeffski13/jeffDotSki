@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, Fragment } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
+import { applyChorusSeparators } from './chorusSeparators';
 import { downloadLyricsSongFile } from './exportLyricsSong';
 import { renderFuriganaText } from '../shared/furiganaRuby';
 import { ENV, getEnv } from '../../infra/env';
@@ -55,6 +56,7 @@ export default function FuriganaGeneratorPage() {
   const [copied, setCopied] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [useChorusSeparators, setUseChorusSeparators] = useState(false);
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showKanjiParentheses, showFuriganaResults } = displaySettings;
   const convertButtonRef = useRef<HTMLButtonElement>(null);
@@ -71,20 +73,21 @@ export default function FuriganaGeneratorPage() {
 
   const handleConvert = async () => {
     setErrorMessage(null);
-    // No romaji reading supplied - derive the hiragana reading straight from the kanji instead
-    // and feed it through the same furigana pipeline as if it had come from the Romaji box.
-    if (romajiText.trim().length === 0) {
-      setIsConverting(true);
-      try {
-        setConvertedLines(await buildFuriganaLinesFromKanji(kanjiText));
-      } catch {
-        setErrorMessage('Something went wrong generating furigana. Please try again.');
-      } finally {
-        setIsConverting(false);
+    setIsConverting(true);
+    try {
+      const effectiveKanjiText = useChorusSeparators ? await applyChorusSeparators(kanjiText) : kanjiText;
+      // No romaji reading supplied - derive the hiragana reading straight from the kanji instead
+      // and feed it through the same furigana pipeline as if it had come from the Romaji box.
+      if (romajiText.trim().length === 0) {
+        setConvertedLines(await buildFuriganaLinesFromKanji(effectiveKanjiText));
+      } else {
+        setConvertedLines(buildFuriganaLines(effectiveKanjiText, romajiText));
       }
-      return;
+    } catch {
+      setErrorMessage('Something went wrong generating furigana. Please try again.');
+    } finally {
+      setIsConverting(false);
     }
-    setConvertedLines(buildFuriganaLines(kanjiText, romajiText));
   };
 
   const handleLoadSample = () => {
@@ -150,6 +153,15 @@ export default function FuriganaGeneratorPage() {
             </Form.Group>
           </Col>
         </Row>
+
+        <Form.Check
+          type="checkbox"
+          id="use-chorus-separators"
+          className="furiganaGenerator_chorus-separators-check"
+          label="Chorus Separators"
+          checked={useChorusSeparators}
+          onChange={(e) => setUseChorusSeparators(e.target.checked)}
+        />
 
         <Button
           ref={convertButtonRef}
