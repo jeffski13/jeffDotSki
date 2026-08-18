@@ -9,3 +9,10 @@ export const getFuriganaTransformationUrl = (env: string): string =>
     : '/furiganaTransformation';
 
 export const FURIGANA_TRANSFORMATION_URL = getFuriganaTransformationUrl(getEnv());
+
+export const getChorusSeparatorsUrl = (env: string): string =>
+  env === ENV.PROD
+    ? 'https://jeffdotskifuriganaserver-176879653026.us-east1.run.app/chorusSeparators'
+    : '/chorusSeparators';
+
+export const CHORUS_SEPARATORS_URL = getChorusSeparatorsUrl(getEnv());
