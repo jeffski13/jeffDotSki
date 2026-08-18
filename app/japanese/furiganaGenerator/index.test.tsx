@@ -147,7 +147,7 @@ describe('FuriganaGeneratorPage', () => {
   it('exports a LyricsSong .ts file with the title, kanji, romaji, and converted lines when "Export .ts" is clicked', () => {
     renderComponent();
     generateFurigana();
-    
+
     fireEvent.change(screen.getByPlaceholderText('Song title, used for the exported file'), {
       target: { value: '涙 (Namida)' },
     });
@@ -158,6 +158,60 @@ describe('FuriganaGeneratorPage', () => {
       kanjiText: KANJI,
       romajiText: ROMAJI,
       convertedLines: [{ kanji: KANJI, hiragana: 'だれにもみせない', furigana: EXPECTED_FURIGANA }],
+    });
+  });
+
+  describe('display mode checkboxes', () => {
+    beforeEach(() => {
+      window.localStorage.clear();
+    });
+
+    it('defaults to both checkboxes checked, showing both output columns', () => {
+      const { container } = renderComponent();
+      generateFurigana();
+
+      expect(screen.getByLabelText('Kanji with parentheses')).toBeChecked();
+      expect(screen.getByLabelText('Furigana results')).toBeChecked();
+      expect(container.querySelectorAll('.furiganaGenerator_output-col')).toHaveLength(2);
+    });
+
+    it('hides the parenthetical column when its checkbox is unchecked, leaving the ruby column', () => {
+      const { container } = renderComponent();
+      generateFurigana();
+
+      fireEvent.click(screen.getByLabelText('Kanji with parentheses'));
+
+      const columns = container.querySelectorAll('.furiganaGenerator_output-col');
+      expect(columns).toHaveLength(1);
+      expect(columns[0].querySelectorAll('ruby').length).toBeGreaterThan(0);
+    });
+
+    it('hides the ruby column when its checkbox is unchecked, leaving the parenthetical column', () => {
+      const { container } = renderComponent();
+      generateFurigana();
+
+      fireEvent.click(screen.getByLabelText('Furigana results'));
+
+      const columns = container.querySelectorAll('.furiganaGenerator_output-col');
+      expect(columns).toHaveLength(1);
+      expect(columns[0].textContent).toContain(EXPECTED_FURIGANA);
+      expect(columns[0].querySelectorAll('ruby')).toHaveLength(0);
+    });
+
+    it('persists display settings to localStorage and restores them on reload', () => {
+      const first = renderComponent();
+      generateFurigana();
+
+      fireEvent.click(screen.getByLabelText('Kanji with parentheses'));
+
+      const saved = JSON.parse(window.localStorage.getItem('furiganaGenerator.displaySettings')!);
+      expect(saved).toEqual({ showKanjiParentheses: false, showFuriganaResults: true });
+
+      first.unmount();
+
+      const second = renderComponent();
+      expect(screen.getByLabelText('Kanji with parentheses')).not.toBeChecked();
+      expect(screen.getByLabelText('Furigana results')).toBeChecked();
     });
   });
 });

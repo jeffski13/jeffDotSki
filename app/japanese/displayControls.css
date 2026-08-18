@@ -1,0 +1,18 @@
+.japanese-controls-separator {
+    margin: 0 0 1.5rem;
+    border: 0;
+    border-top: 2px solid #777;
+    opacity: 1;
+}
+
+[data-bs-theme="dark"] .japanese-controls-separator {
+    border-top-color: #dbdee0;
+}
+
+[data-bs-theme="light"] .japanese-display-controls .form-check-input {
+    border-color: #6c757d;
+}
+
+[data-bs-theme="dark"] .japanese-display-controls .form-check-input {
+    border-color: #b6b7b8;
+}
