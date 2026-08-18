@@ -59,6 +59,13 @@
   margin-bottom: 30px;
 }
 
+.furiganaGenerator_chorus-separators-check {
+  display: inline-block;
+  margin-left: 16px;
+  margin-bottom: 30px;
+  vertical-align: middle;
+}
+
 .furiganaGenerator_error {
   color: #d32f2f;
   margin-top: -20px;

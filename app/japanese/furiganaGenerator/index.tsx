@@ -154,15 +154,6 @@ export default function FuriganaGeneratorPage() {
           </Col>
         </Row>
 
-        <Form.Check
-          type="checkbox"
-          id="use-chorus-separators"
-          className="furiganaGenerator_chorus-separators-check"
-          label="Chorus Separators"
-          checked={useChorusSeparators}
-          onChange={(e) => setUseChorusSeparators(e.target.checked)}
-        />
-
         <Button
           ref={convertButtonRef}
           className="furiganaGenerator_convert-btn"
@@ -171,6 +162,15 @@ export default function FuriganaGeneratorPage() {
         >
           {isConverting ? 'Converting…' : 'Generate Furigana'}
         </Button>
+
+        <Form.Check
+          type="checkbox"
+          id="use-chorus-separators"
+          className="furiganaGenerator_chorus-separators-check"
+          label="Chorus Separators"
+          checked={useChorusSeparators}
+          onChange={(e) => setUseChorusSeparators(e.target.checked)}
+        />
 
         {getEnv() === ENV.DEV && (
           <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
