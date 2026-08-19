@@ -290,4 +290,103 @@ describe('FuriganaGeneratorPage', () => {
       expect(screen.getByLabelText('Furigana results')).toBeChecked();
     });
   });
+
+  describe('Edit mode line reordering', () => {
+    beforeEach(() => {
+      window.localStorage.clear();
+    });
+
+    const LINE_1 = { kanji: 'どうやっていますか', hiragana: 'どうやっていますか', furigana: 'どうやっていますか' };
+    const LINE_2 = { kanji: 'これはいいです', hiragana: 'これはいいです', furigana: 'これはいいです' };
+
+    const generateTwoLines = async () => {
+      vi.mocked(buildFuriganaLinesFromKanji).mockResolvedValue([LINE_1, LINE_2]);
+      fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), {
+        target: { value: `${LINE_1.kanji}\n${LINE_2.kanji}` },
+      });
+      fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+      await screen.findByText(LINE_1.furigana);
+    };
+
+    it('does not show the edit toggle before any results have been generated', () => {
+      renderComponent();
+      expect(screen.queryByRole('button', { name: 'Edit line order' })).not.toBeInTheDocument();
+    });
+
+    it('switches from the two-column output to a draggable line list when the edit icon is clicked, and back when done', async () => {
+      const { container } = renderComponent();
+      await generateTwoLines();
+
+      expect(container.querySelectorAll('.furiganaGenerator_output-col')).toHaveLength(2);
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-content')).toHaveLength(0);
+
+      fireEvent.click(screen.getByRole('button', { name: 'Edit line order' }));
+
+      expect(container.querySelectorAll('.furiganaGenerator_output-col')).toHaveLength(0);
+      const rows = container.querySelectorAll('.furiganaGenerator_edit-row-content');
+      expect(rows).toHaveLength(2);
+      expect(rows[0].textContent).toContain(LINE_1.furigana);
+      expect(rows[1].textContent).toContain(LINE_2.furigana);
+
+      fireEvent.click(screen.getByRole('button', { name: 'Done editing line order' }));
+
+      expect(container.querySelectorAll('.furiganaGenerator_output-col')).toHaveLength(2);
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-content')).toHaveLength(0);
+    });
+
+    it('reorders the lines when a row is dragged past another, and the new order sticks after leaving edit mode', async () => {
+      const { container } = renderComponent();
+      await generateTwoLines();
+      fireEvent.click(screen.getByRole('button', { name: 'Edit line order' }));
+
+      const rowContents = () => container.querySelectorAll('.furiganaGenerator_edit-row-content');
+      const dropTargets = () => container.querySelectorAll('.furiganaGenerator_edit-row');
+
+      fireEvent.dragStart(rowContents()[0], { dataTransfer: {} });
+      fireEvent.dragOver(dropTargets()[1], { dataTransfer: {} });
+      fireEvent.drop(dropTargets()[1], { dataTransfer: {} });
+
+      expect(rowContents()[0].textContent).toContain(LINE_2.furigana);
+      expect(rowContents()[1].textContent).toContain(LINE_1.furigana);
+
+      fireEvent.click(screen.getByRole('button', { name: 'Done editing line order' }));
+
+      const parenColumn = container.querySelector('.furiganaGenerator_output-col')!;
+      const idxLine2 = parenColumn.textContent!.indexOf(LINE_2.furigana);
+      const idxLine1 = parenColumn.textContent!.indexOf(LINE_1.furigana);
+      expect(idxLine2).toBeGreaterThanOrEqual(0);
+      expect(idxLine2).toBeLessThan(idxLine1);
+    });
+
+    it('exports the reordered lines', async () => {
+      renderComponent();
+      await generateTwoLines();
+      fireEvent.click(screen.getByRole('button', { name: 'Edit line order' }));
+
+      const rowContents = () => document.querySelectorAll('.furiganaGenerator_edit-row-content');
+      const dropTargets = () => document.querySelectorAll('.furiganaGenerator_edit-row');
+      fireEvent.dragStart(rowContents()[0], { dataTransfer: {} });
+      fireEvent.dragOver(dropTargets()[1], { dataTransfer: {} });
+      fireEvent.drop(dropTargets()[1], { dataTransfer: {} });
+      fireEvent.click(screen.getByRole('button', { name: 'Done editing line order' }));
+
+      fireEvent.click(screen.getByRole('button', { name: 'Export .ts' }));
+
+      expect(downloadLyricsSongFile).toHaveBeenCalledWith(
+        expect.objectContaining({ convertedLines: [LINE_2, LINE_1] }),
+      );
+    });
+
+    it('leaves edit mode when a new conversion is generated', async () => {
+      const { container } = renderComponent();
+      await generateTwoLines();
+      fireEvent.click(screen.getByRole('button', { name: 'Edit line order' }));
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-content')).toHaveLength(2);
+
+      await generateTwoLines();
+
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-content')).toHaveLength(0);
+      expect(container.querySelectorAll('.furiganaGenerator_output-col')).toHaveLength(2);
+    });
+  });
 });
