@@ -49,6 +49,26 @@ describe('applyChorusSeparators', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('keeps every original line when the service inserts extra section-marker lines', async () => {
+    // Real-world response shape: the service inserts "-----" markers between sections,
+    // so it returns more entries than the number of non-blank lines that were sent.
+    fetchMock.mockResolvedValue(
+      jsonResponse(['-----', '誰にも見せない', '今日は良い天気です', '-----']),
+    );
+
+    const text = await applyChorusSeparators('誰にも見せない\n今日は良い天気です');
+
+    expect(text).toBe('-----\n誰にも見せない\n今日は良い天気です\n-----');
+  });
+
+  it('reinserts original blank lines around a matched line even when markers surround it', async () => {
+    fetchMock.mockResolvedValue(jsonResponse(['-----', '誰にも見せない', '-----', '今日は良い天気です']));
+
+    const text = await applyChorusSeparators('\n誰にも見せない\n\n今日は良い天気です');
+
+    expect(text).toBe('-----\n\n誰にも見せない\n-----\n\n今日は良い天気です');
+  });
+
   it('throws when the service responds with a non-ok status', async () => {
     fetchMock.mockResolvedValue(jsonResponse(null, false, 500));
 

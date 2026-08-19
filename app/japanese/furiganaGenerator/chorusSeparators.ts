@@ -16,17 +16,32 @@ export async function applyChorusSeparators(kanjiText: string): Promise<string> 
     throw new Error(`Chorus separator service request failed: ${response.status} ${response.statusText}`);
   }
 
-  // Mirrors buildFuriganaLinesFromKanji: the service returns one transformed line per
-  // non-blank line sent, in the same order. Blank lines are reinserted here rather than
-  // sent to the service so line breaks in the input are preserved in the output.
+  // The service echoes each non-blank line sent back in order, but may also insert extra
+  // section-marker lines (e.g. "-----") between them at chorus/verse boundaries - the
+  // response is NOT guaranteed to be one-to-one with the lines sent. Walk it and only
+  // reinsert an original blank line when a response line matches the next expected
+  // original line; any other response line is a marker and is passed straight through
+  // without consuming a slot, so it can't push later real lines out of the array.
   const separatedLines: string[] = await response.json();
+  const outputLines: string[] = [];
+  let kanjiIndex = 0;
   let nonBlankIndex = 0;
-  return kanjiLines
-    .map((kanji) => {
-      if (kanji.length === 0) return '';
-      const separated = separatedLines[nonBlankIndex] ?? kanji;
+
+  for (const line of separatedLines) {
+    if (line === nonBlankLines[nonBlankIndex]) {
+      while (kanjiLines[kanjiIndex]?.length === 0) {
+        outputLines.push('');
+        kanjiIndex++;
+      }
+      kanjiIndex++;
       nonBlankIndex++;
-      return separated;
-    })
-    .join('\n');
+    }
+    outputLines.push(line);
+  }
+  while (kanjiIndex < kanjiLines.length) {
+    outputLines.push('');
+    kanjiIndex++;
+  }
+
+  return outputLines.join('\n');
 }
