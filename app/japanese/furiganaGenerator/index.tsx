@@ -16,6 +16,7 @@ export const KANJI_PLACEHOLDER = "Ex：今日（きょう）は良（よ）か�
 export const ROMAJI_PLACEHOLDER = "Ex: Kyou wa yokatta desu.";
 
 const DISPLAY_SETTINGS_KEY = 'furiganaGenerator.displaySettings';
+const USE_CHORUS_SEPARATORS_KEY = 'furiganaGenerator.useChorusSeparators';
 
 type DisplaySettings = {
   showKanjiParentheses: boolean;
@@ -26,6 +27,11 @@ const DEFAULT_DISPLAY_SETTINGS: DisplaySettings = {
   showKanjiParentheses: true,
   showFuriganaResults: true,
 };
+
+function loadUseChorusSeparators(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.localStorage.getItem(USE_CHORUS_SEPARATORS_KEY) === 'true';
+}
 
 function loadDisplaySettings(): DisplaySettings {
   if (typeof window === 'undefined') return DEFAULT_DISPLAY_SETTINGS;
@@ -56,7 +62,7 @@ export default function FuriganaGeneratorPage() {
   const [copied, setCopied] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [useChorusSeparators, setUseChorusSeparators] = useState(false);
+  const [useChorusSeparators, setUseChorusSeparators] = useState(loadUseChorusSeparators);
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showKanjiParentheses, showFuriganaResults } = displaySettings;
   const convertButtonRef = useRef<HTMLButtonElement>(null);
@@ -76,6 +82,10 @@ export default function FuriganaGeneratorPage() {
   useEffect(() => {
     window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
   }, [displaySettings]);
+
+  useEffect(() => {
+    window.localStorage.setItem(USE_CHORUS_SEPARATORS_KEY, String(useChorusSeparators));
+  }, [useChorusSeparators]);
 
   const reorderLines = (srcIndex: number, targetIndex: number, position: 'before' | 'after') => {
     if (srcIndex === targetIndex) return;
