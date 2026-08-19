@@ -177,16 +177,26 @@
   flex: 1;
 }
 
-.furiganaGenerator_edit-duplicate-btn {
+.furiganaGenerator_edit-row-action {
   flex-shrink: 0;
-  margin-left: auto;
   opacity: 0;
   pointer-events: none;
 }
 
-.furiganaGenerator_edit-row-content:hover .furiganaGenerator_edit-duplicate-btn,
-.furiganaGenerator_edit-row-content:focus-within .furiganaGenerator_edit-duplicate-btn,
-.furiganaGenerator_edit-row--active .furiganaGenerator_edit-duplicate-btn {
+.furiganaGenerator_edit-duplicate-btn {
+  margin-left: auto;
+}
+
+.furiganaGenerator_edit-delete-btn:hover,
+.furiganaGenerator_edit-delete-btn:focus {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.furiganaGenerator_edit-row-content:hover .furiganaGenerator_edit-row-action,
+.furiganaGenerator_edit-row-content:focus-within .furiganaGenerator_edit-row-action,
+.furiganaGenerator_edit-row--active .furiganaGenerator_edit-row-action {
   opacity: 1;
   pointer-events: auto;
 }
