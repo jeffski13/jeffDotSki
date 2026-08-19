@@ -119,6 +119,11 @@
   min-width: 38px;
 }
 
+.furiganaGenerator_edit-toggle-check {
+  display: block;
+  margin: 0 auto;
+}
+
 .furiganaGenerator_edit-list {
   list-style: none;
   padding: 0;
