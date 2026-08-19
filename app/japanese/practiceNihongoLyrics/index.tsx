@@ -12,6 +12,7 @@ import land from "./src/land";
 import nagareboshiKirari from "./src/nagareboshiKirari";
 import departure from "./src/departure";
 import naminoriJohnny from "./src/naminoriJohnny";
+import reason from "./src/reason";
 import '../displayControls.css';
 import './styles.css';
 
@@ -24,6 +25,7 @@ export const songs: LyricsSong[] = [
   land, 
   nagareboshiKirari, 
   naminoriJohnny, 
+  reason,
   senNoYoruWoKoete, 
   stayWithMe, 
   tegami
