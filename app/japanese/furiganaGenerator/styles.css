@@ -176,3 +176,21 @@
 .furiganaGenerator_edit-row-ruby {
   flex: 1;
 }
+
+.furiganaGenerator_edit-duplicate-btn {
+  flex-shrink: 0;
+  margin-left: auto;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.furiganaGenerator_edit-row-content:hover .furiganaGenerator_edit-duplicate-btn,
+.furiganaGenerator_edit-row-content:focus-within .furiganaGenerator_edit-duplicate-btn,
+.furiganaGenerator_edit-row--active .furiganaGenerator_edit-duplicate-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.furiganaGenerator_edit-row--active .furiganaGenerator_edit-row-content {
+  border-color: #0d6efd;
+}

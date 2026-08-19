@@ -70,7 +70,12 @@ export default function FuriganaGeneratorPage() {
   const dragSrc = useRef<number | null>(null);
   const touchDragSrc = useRef<number | null>(null);
   const [dragIndicator, setDragIndicator] = useState<{ index: number; position: 'before' | 'after' } | null>(null);
+  const [activeRowIndex, setActiveRowIndex] = useState<number | null>(null);
   const shouldScrollToResults = useRef(false);
+
+  useEffect(() => {
+    if (!isEditMode) setActiveRowIndex(null);
+  }, [isEditMode]);
 
   useEffect(() => {
     if (shouldScrollToResults.current && convertedLines && convertedLines.length > 0) {
@@ -99,6 +104,21 @@ export default function FuriganaGeneratorPage() {
       next.splice(Math.max(0, Math.min(next.length, insertAt)), 0, moved);
       return next;
     });
+    setActiveRowIndex(null);
+  };
+
+  const duplicateLine = (index: number) => {
+    setConvertedLines((prev) => {
+      if (!prev) return prev;
+      const next = [...prev];
+      next.splice(index + 1, 0, { ...prev[index] });
+      return next;
+    });
+    setActiveRowIndex(null);
+  };
+
+  const handleRowTap = (index: number) => {
+    setActiveRowIndex((prev) => (prev === index ? null : index));
   };
 
   const handleDragStart = (index: number, e: React.DragEvent) => {
@@ -349,7 +369,7 @@ export default function FuriganaGeneratorPage() {
                     data-drag-index={i}
                     className={`furiganaGenerator_edit-row${
                       dragIndicator?.index === i ? ` furiganaGenerator_edit-row--drop-${dragIndicator.position}` : ''
-                    }`}
+                    }${activeRowIndex === i ? ' furiganaGenerator_edit-row--active' : ''}`}
                     onDragOver={(e) => handleDragOver(i, e)}
                     onDrop={(e) => handleDrop(i, e)}
                   >
@@ -358,6 +378,7 @@ export default function FuriganaGeneratorPage() {
                       draggable
                       onDragStart={(e) => handleDragStart(i, e)}
                       onDragEnd={handleDragEnd}
+                      onClick={() => handleRowTap(i)}
                     >
                       <span
                         className="furiganaGenerator_edit-drag-handle"
@@ -376,6 +397,19 @@ export default function FuriganaGeneratorPage() {
                           {renderFuriganaText(line.furigana, `edit-${i}`)}
                         </span>
                       )}
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        className="furiganaGenerator_edit-duplicate-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          duplicateLine(i);
+                        }}
+                        aria-label="Duplicate line"
+                        title="Duplicate line"
+                      >
+                        ⧉
+                      </Button>
                     </div>
                   </li>
                 ))}
