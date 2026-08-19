@@ -114,3 +114,60 @@
   display: block;
   margin-bottom: 16px;
 }
+
+.furiganaGenerator_edit-toggle-btn {
+  min-width: 38px;
+}
+
+.furiganaGenerator_edit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.furiganaGenerator_edit-row {
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+}
+
+.furiganaGenerator_edit-row--drop-before {
+  border-top-color: #0d6efd;
+}
+
+.furiganaGenerator_edit-row--drop-after {
+  border-bottom-color: #0d6efd;
+}
+
+.furiganaGenerator_edit-row-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  cursor: grab;
+}
+
+[data-bs-theme="dark"] .furiganaGenerator_edit-row-content {
+  background: #2b3035;
+  border-color: #495057;
+}
+
+.furiganaGenerator_edit-drag-handle {
+  color: #aaa;
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  touch-action: none;
+}
+
+.furiganaGenerator_edit-row-kanji {
+  flex: 1;
+  white-space: pre-wrap;
+}
+
+.furiganaGenerator_edit-row-ruby {
+  flex: 1;
+}

@@ -60,6 +60,10 @@ export default function FuriganaGeneratorPage() {
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showKanjiParentheses, showFuriganaResults } = displaySettings;
   const convertButtonRef = useRef<HTMLButtonElement>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const dragSrc = useRef<number | null>(null);
+  const touchDragSrc = useRef<number | null>(null);
+  const [dragIndicator, setDragIndicator] = useState<{ index: number; position: 'before' | 'after' } | null>(null);
 
   useEffect(() => {
     if (convertedLines && convertedLines.length > 0) {
@@ -71,9 +75,79 @@ export default function FuriganaGeneratorPage() {
     window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
   }, [displaySettings]);
 
+  const reorderLines = (srcIndex: number, targetIndex: number, position: 'before' | 'after') => {
+    if (srcIndex === targetIndex) return;
+    setConvertedLines((prev) => {
+      if (!prev) return prev;
+      const next = [...prev];
+      const [moved] = next.splice(srcIndex, 1);
+      let insertAt = targetIndex;
+      if (srcIndex < targetIndex) insertAt -= 1;
+      if (position === 'after') insertAt += 1;
+      next.splice(Math.max(0, Math.min(next.length, insertAt)), 0, moved);
+      return next;
+    });
+  };
+
+  const handleDragStart = (index: number, e: React.DragEvent) => {
+    dragSrc.current = index;
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (index: number, e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (dragSrc.current === null || dragSrc.current === index) {
+      setDragIndicator(null);
+      return;
+    }
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const position = e.clientY < rect.top + rect.height / 2 ? 'before' : 'after';
+    setDragIndicator((prev) => (prev?.index === index && prev?.position === position ? prev : { index, position }));
+  };
+
+  const handleDragEnd = () => {
+    dragSrc.current = null;
+    setDragIndicator(null);
+  };
+
+  const handleDrop = (targetIndex: number, e: React.DragEvent) => {
+    e.preventDefault();
+    if (dragSrc.current !== null) reorderLines(dragSrc.current, targetIndex, dragIndicator?.position ?? 'before');
+    dragSrc.current = null;
+    setDragIndicator(null);
+  };
+
+  const handleTouchStart = (index: number) => {
+    touchDragSrc.current = index;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchDragSrc.current === null) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    const item = el?.closest('[data-drag-index]') as HTMLElement | null;
+    if (item?.dataset.dragIndex) {
+      const index = Number(item.dataset.dragIndex);
+      const rect = item.getBoundingClientRect();
+      const position = touch.clientY < rect.top + rect.height / 2 ? 'before' : 'after';
+      setDragIndicator((prev) => (prev?.index === index && prev?.position === position ? prev : { index, position }));
+    }
+  };
+
+  const handleTouchEnd = () => {
+    const src = touchDragSrc.current;
+    const indicator = dragIndicator;
+    touchDragSrc.current = null;
+    setDragIndicator(null);
+    if (src !== null && indicator) reorderLines(src, indicator.index, indicator.position);
+  };
+
   const handleConvert = async () => {
     setErrorMessage(null);
     setIsConverting(true);
+    setIsEditMode(false);
     try {
       const effectiveKanjiText = useChorusSeparators ? await applyChorusSeparators(kanjiText) : kanjiText;
       // No romaji reading supplied - derive the hiragana reading straight from the kanji instead
@@ -214,6 +288,21 @@ export default function FuriganaGeneratorPage() {
               }
             />
           </Col>
+          {convertedLines && convertedLines.length > 0 && (
+            <Col xs="auto">
+              <Button
+                variant={isEditMode ? 'primary' : 'outline-secondary'}
+                size="sm"
+                className="furiganaGenerator_edit-toggle-btn"
+                onClick={() => setIsEditMode((prev) => !prev)}
+                aria-pressed={isEditMode}
+                aria-label={isEditMode ? 'Done editing line order' : 'Edit line order'}
+                title={isEditMode ? 'Done editing line order' : 'Edit line order'}
+              >
+                {isEditMode ? '✔' : '✎'}
+              </Button>
+            </Col>
+          )}
         </Row>
 
         {errorMessage && (
@@ -224,39 +313,80 @@ export default function FuriganaGeneratorPage() {
 
         {convertedLines && convertedLines.length > 0 && (
           <div className="furiganaGenerator_output">
-            <Row id="furiganaGenerator_output" className="furiganaGenerator_output-row">
-              {showKanjiParentheses && (
-                <Col
-                  xs={12}
-                  md={showFuriganaResults ? 6 : 12}
-                  className="furiganaGenerator_output-col"
-                >
-                  <Button
-                    variant="outline-secondary"
-                    size="sm"
-                    className="furiganaGenerator_copy-btn"
-                    onClick={handleCopy}
+            {isEditMode ? (
+              <ul className="furiganaGenerator_edit-list">
+                {convertedLines.map((line, i) => (
+                  <li
+                    key={i}
+                    data-drag-index={i}
+                    className={`furiganaGenerator_edit-row${
+                      dragIndicator?.index === i ? ` furiganaGenerator_edit-row--drop-${dragIndicator.position}` : ''
+                    }`}
+                    onDragOver={(e) => handleDragOver(i, e)}
+                    onDrop={(e) => handleDrop(i, e)}
                   >
-                    {copied ? 'Copied!' : 'Copy'}
-                  </Button>
-                  {convertedLines.map((line, i) => (
-                    <Fragment key={i}>
-                      {line.furigana}
-                      <br />
-                    </Fragment>
-                  ))}
-                </Col>
-              )}
-              {showFuriganaResults && (
-                <Col
-                  xs={12}
-                  md={showKanjiParentheses ? 6 : 12}
-                  className="furiganaGenerator_output-col furiganaRuby_output"
-                >
-                  {renderFuriganaText(convertedLines.map((line) => line.furigana).join('\n'), 'output')}
-                </Col>
-              )}
-            </Row>
+                    <div
+                      className="furiganaGenerator_edit-row-content"
+                      draggable
+                      onDragStart={(e) => handleDragStart(i, e)}
+                      onDragEnd={handleDragEnd}
+                    >
+                      <span
+                        className="furiganaGenerator_edit-drag-handle"
+                        onTouchStart={() => handleTouchStart(i)}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                        aria-hidden="true"
+                      >
+                        ⠿
+                      </span>
+                      {showKanjiParentheses && (
+                        <span className="furiganaGenerator_edit-row-kanji">{line.furigana}</span>
+                      )}
+                      {showFuriganaResults && (
+                        <span className="furiganaGenerator_edit-row-ruby furiganaRuby_output">
+                          {renderFuriganaText(line.furigana, `edit-${i}`)}
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Row id="furiganaGenerator_output" className="furiganaGenerator_output-row">
+                {showKanjiParentheses && (
+                  <Col
+                    xs={12}
+                    md={showFuriganaResults ? 6 : 12}
+                    className="furiganaGenerator_output-col"
+                  >
+                    <Button
+                      variant="outline-secondary"
+                      size="sm"
+                      className="furiganaGenerator_copy-btn"
+                      onClick={handleCopy}
+                    >
+                      {copied ? 'Copied!' : 'Copy'}
+                    </Button>
+                    {convertedLines.map((line, i) => (
+                      <Fragment key={i}>
+                        {line.furigana}
+                        <br />
+                      </Fragment>
+                    ))}
+                  </Col>
+                )}
+                {showFuriganaResults && (
+                  <Col
+                    xs={12}
+                    md={showKanjiParentheses ? 6 : 12}
+                    className="furiganaGenerator_output-col furiganaRuby_output"
+                  >
+                    {renderFuriganaText(convertedLines.map((line) => line.furigana).join('\n'), 'output')}
+                  </Col>
+                )}
+              </Row>
+            )}
             <Button
               variant="outline-secondary"
               size="sm"
