@@ -117,6 +117,16 @@ export default function FuriganaGeneratorPage() {
     setActiveRowIndex(null);
   };
 
+  const deleteLine = (index: number) => {
+    setConvertedLines((prev) => {
+      if (!prev) return prev;
+      const next = [...prev];
+      next.splice(index, 1);
+      return next;
+    });
+    setActiveRowIndex(null);
+  };
+
   const handleRowTap = (index: number) => {
     setActiveRowIndex((prev) => (prev === index ? null : index));
   };
@@ -400,7 +410,7 @@ export default function FuriganaGeneratorPage() {
                       <Button
                         variant="outline-secondary"
                         size="sm"
-                        className="furiganaGenerator_edit-duplicate-btn"
+                        className="furiganaGenerator_edit-row-action furiganaGenerator_edit-duplicate-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           duplicateLine(i);
@@ -409,6 +419,24 @@ export default function FuriganaGeneratorPage() {
                         title="Duplicate line"
                       >
                         ⧉
+                      </Button>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        className="furiganaGenerator_edit-row-action furiganaGenerator_edit-delete-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteLine(i);
+                        }}
+                        aria-label="Delete line"
+                        title="Delete line"
+                      >
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                          <path
+                            fill="currentColor"
+                            d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10Zm-7 10h2V8h-2Zm4 0h2V8h-2ZM7 6v13Z"
+                          />
+                        </svg>
                       </Button>
                     </div>
                   </li>
