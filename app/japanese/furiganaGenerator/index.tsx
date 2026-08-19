@@ -64,11 +64,13 @@ export default function FuriganaGeneratorPage() {
   const dragSrc = useRef<number | null>(null);
   const touchDragSrc = useRef<number | null>(null);
   const [dragIndicator, setDragIndicator] = useState<{ index: number; position: 'before' | 'after' } | null>(null);
+  const shouldScrollToResults = useRef(false);
 
   useEffect(() => {
-    if (convertedLines && convertedLines.length > 0) {
+    if (shouldScrollToResults.current && convertedLines && convertedLines.length > 0) {
       convertButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    shouldScrollToResults.current = false;
   }, [convertedLines]);
 
   useEffect(() => {
@@ -148,6 +150,7 @@ export default function FuriganaGeneratorPage() {
     setErrorMessage(null);
     setIsConverting(true);
     setIsEditMode(false);
+    shouldScrollToResults.current = true;
     try {
       const effectiveKanjiText = useChorusSeparators ? await applyChorusSeparators(kanjiText) : kanjiText;
       // No romaji reading supplied - derive the hiragana reading straight from the kanji instead
