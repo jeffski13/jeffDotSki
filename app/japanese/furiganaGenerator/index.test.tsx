@@ -169,6 +169,7 @@ describe('FuriganaGeneratorPage', () => {
   describe('Chorus Separators checkbox', () => {
     beforeEach(() => {
       vi.mocked(applyChorusSeparators).mockReset();
+      window.localStorage.clear();
     });
 
     it('is unchecked by default and does not call the chorus separator service', async () => {
@@ -221,6 +222,18 @@ describe('FuriganaGeneratorPage', () => {
       expect(applyChorusSeparators).toHaveBeenCalledWith(KANJI);
       // Already-hiragana chorus-separated text needs no furigana annotation, unlike the raw kanji.
       expect(container.querySelector('.furiganaGenerator_output-col')?.textContent).not.toContain('（');
+    });
+
+    it('persists the checkbox state to localStorage and restores it on reload', () => {
+      const first = renderComponent();
+      fireEvent.click(screen.getByLabelText('Chorus Separators'));
+
+      expect(window.localStorage.getItem('furiganaGenerator.useChorusSeparators')).toBe('true');
+
+      first.unmount();
+
+      const second = renderComponent();
+      expect(screen.getByLabelText('Chorus Separators')).toBeChecked();
     });
 
     it('shows an error message when the chorus separator service request fails', async () => {
