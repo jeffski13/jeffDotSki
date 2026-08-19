@@ -312,7 +312,11 @@ export default function FuriganaGeneratorPage() {
                 aria-label={isEditMode ? 'Done editing line order' : 'Edit line order'}
                 title={isEditMode ? 'Done editing line order' : 'Edit line order'}
               >
-                {isEditMode ? '✔' : '✎'}
+                {isEditMode ? (
+                  <span className="furiganaGenerator_edit-toggle-check">{'✔︎'}</span>
+                ) : (
+                  '✎'
+                )}
               </Button>
             </Col>
           )}
