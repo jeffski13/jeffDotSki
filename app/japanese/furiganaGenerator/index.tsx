@@ -313,7 +313,18 @@ export default function FuriganaGeneratorPage() {
                 title={isEditMode ? 'Done editing line order' : 'Edit line order'}
               >
                 {isEditMode ? (
-                  <span className="furiganaGenerator_edit-toggle-check">{'✔︎'}</span>
+                  <svg
+                    className="furiganaGenerator_edit-toggle-check"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M9.55 18 3.85 12.3l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4Z"
+                    />
+                  </svg>
                 ) : (
                   '✎'
                 )}

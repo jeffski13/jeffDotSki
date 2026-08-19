@@ -120,7 +120,8 @@
 }
 
 .furiganaGenerator_edit-toggle-check {
-  color: #fff;
+  display: block;
+  margin: 0 auto;
 }
 
 .furiganaGenerator_edit-list {
