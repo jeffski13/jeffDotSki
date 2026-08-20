@@ -191,7 +191,7 @@ export default function WebPage() {
             <Form.Check
               type="checkbox"
               id="show-romaji"
-              label="Romaji"
+              label="Romaji "
               checked={showRomaji}
               onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showRomaji: e.target.checked }))}
             />

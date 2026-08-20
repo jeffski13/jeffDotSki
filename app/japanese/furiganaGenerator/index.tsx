@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Collapse } from 'react-bootstrap';
 import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 import { applyChorusSeparators } from './chorusSeparators';
@@ -75,6 +75,7 @@ export default function FuriganaGeneratorPage() {
   const [dragIndicator, setDragIndicator] = useState<{ index: number; position: 'before' | 'after' } | null>(null);
   const [activeRowIndex, setActiveRowIndex] = useState<number | null>(null);
   const shouldScrollToResults = useRef(false);
+  const [showRomaji, setShowRomaji] = useState(false);
 
   useEffect(() => {
     if (!isEditMode) setActiveRowIndex(null);
@@ -246,7 +247,7 @@ export default function FuriganaGeneratorPage() {
         </p>
 
         <Row className="furiganaGenerator_input-row">
-          <Col xs={12} md={6}>
+          <Col xs={12}>
             <Form.Group className="furiganaGenerator_input-group">
               <Form.Label className="furiganaGenerator_label">Kanji</Form.Label>
               <Form.Control
@@ -259,54 +260,71 @@ export default function FuriganaGeneratorPage() {
               />
             </Form.Group>
           </Col>
-          <Col xs={12} md={6}>
+          <Col xs={12}>
             <Form.Group className="furiganaGenerator_input-group">
-              <Form.Label className="furiganaGenerator_label">Romaji</Form.Label>
-              <Form.Control
-                as="textarea"
-                className="furiganaGenerator_textarea"
-                rows={8}
-                value={romajiText}
-                onChange={(e) => setRomajiText(e.target.value)}
-                placeholder={ROMAJI_PLACEHOLDER}
-              />
+              <button
+                type="button"
+                className="furiganaGenerator_label furiganaGenerator_romaji-toggle"
+                onClick={() => setShowRomaji((prev) => !prev)}
+                aria-expanded={showRomaji}
+                aria-controls="furiganaGenerator_romaji-collapse"
+              >
+                Romaji (optional)
+                <span className="furiganaGenerator_romaji-toggle-caret" aria-hidden="true">
+                  {showRomaji ? '▲' : '▼'}
+                </span>
+              </button>
+              <Collapse in={showRomaji}>
+                <div id="furiganaGenerator_romaji-collapse">
+                  <Form.Control
+                    as="textarea"
+                    className="furiganaGenerator_textarea"
+                    rows={8}
+                    value={romajiText}
+                    onChange={(e) => setRomajiText(e.target.value)}
+                    placeholder={ROMAJI_PLACEHOLDER}
+                  />
+                </div>
+              </Collapse>
             </Form.Group>
           </Col>
         </Row>
 
-        <Button
-          ref={convertButtonRef}
-          className="furiganaGenerator_convert-btn"
-          onClick={handleConvert}
-          disabled={isConverting || (kanjiText.trim().length === 0 && romajiText.trim().length === 0)}
-        >
-          {isConverting ? 'Converting…' : 'Generate Furigana'}
-        </Button>
-
-        <Form.Check
-          type="checkbox"
-          id="use-chorus-separators"
-          className="furiganaGenerator_chorus-separators-check"
-          label="Chorus Separators"
-          checked={useChorusSeparators}
-          onChange={(e) => setUseChorusSeparators(e.target.checked)}
-        />
-
-        {getEnv() === ENV.DEV && (
-          <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
-            Load Sample
-          </Button>
-        )}
-
-        {getEnv() === ENV.DEV && (
+        <div className="furiganaGenerator_controls">
           <Button
-            variant="outline-secondary"
-            className="furiganaGenerator_sample-btn"
-            onClick={handleLoadKanjiOnlySample}
+            ref={convertButtonRef}
+            className="furiganaGenerator_convert-btn"
+            onClick={handleConvert}
+            disabled={isConverting || (kanjiText.trim().length === 0 && romajiText.trim().length === 0)}
           >
-            Load Kanji-Only Sample
+            {isConverting ? 'Converting…' : 'Generate Furigana'}
           </Button>
-        )}
+
+          <Form.Check
+            type="checkbox"
+            id="use-chorus-separators"
+            className="furiganaGenerator_chorus-separators-check"
+            label="Chorus Separators"
+            checked={useChorusSeparators}
+            onChange={(e) => setUseChorusSeparators(e.target.checked)}
+          />
+
+          {getEnv() === ENV.DEV && (
+            <Button variant="outline-secondary" className="furiganaGenerator_sample-btn" onClick={handleLoadSample}>
+              Load Sample
+            </Button>
+          )}
+
+          {getEnv() === ENV.DEV && (
+            <Button
+              variant="outline-secondary"
+              className="furiganaGenerator_sample-btn"
+              onClick={handleLoadKanjiOnlySample}
+            >
+              Load Kanji-Only Sample
+            </Button>
+          )}
+        </div>
 
         <hr className="japanese-controls-separator" />
 
