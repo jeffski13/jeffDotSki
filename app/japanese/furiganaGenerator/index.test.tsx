@@ -304,6 +304,87 @@ describe('FuriganaGeneratorPage', () => {
     });
   });
 
+  describe('text size controls', () => {
+    beforeEach(() => {
+      window.localStorage.clear();
+    });
+
+    it('does not show the text size control before any results have been generated', () => {
+      renderComponent();
+      expect(screen.queryByLabelText('Increase text size')).not.toBeInTheDocument();
+    });
+
+    it('defaults to 16px once results are generated', () => {
+      renderComponent();
+      generateFurigana();
+
+      expect(screen.getByText('16px')).toBeInTheDocument();
+    });
+
+    it('increases and decreases the font size, disabling buttons at the limits', () => {
+      renderComponent();
+      generateFurigana();
+      const decrease = screen.getByLabelText('Decrease text size');
+      const increase = screen.getByLabelText('Increase text size');
+
+      fireEvent.click(increase);
+      expect(screen.getByText('18px')).toBeInTheDocument();
+
+      fireEvent.click(decrease);
+      fireEvent.click(decrease);
+      expect(screen.getByText('14px')).toBeInTheDocument();
+
+      for (let i = 0; i < 10; i++) fireEvent.click(decrease);
+      expect(screen.getByText('12px')).toBeInTheDocument();
+      expect(decrease).toBeDisabled();
+
+      for (let i = 0; i < 20; i++) fireEvent.click(increase);
+      expect(screen.getByText('48px')).toBeInTheDocument();
+      expect(increase).toBeDisabled();
+    });
+
+    it('applies the font size to the results output', () => {
+      const { container } = renderComponent();
+      generateFurigana();
+      fireEvent.click(screen.getByLabelText('Increase text size'));
+
+      const output = container.querySelector('#furiganaGenerator_output') as HTMLElement;
+      expect(output.style.fontSize).toBe('18px');
+    });
+
+    it('persists the font size to localStorage and restores it on reload', () => {
+      const first = renderComponent();
+      generateFurigana();
+      fireEvent.click(screen.getByLabelText('Increase text size'));
+
+      expect(window.localStorage.getItem('furiganaGenerator.fontSize')).toBe('18');
+
+      first.unmount();
+
+      renderComponent();
+      generateFurigana();
+      expect(screen.getByText('18px')).toBeInTheDocument();
+    });
+
+    it('hides the text size control while in edit mode', async () => {
+      vi.mocked(buildFuriganaLinesFromKanji).mockResolvedValue([
+        { kanji: KANJI, hiragana: 'だれにもみせない', furigana: EXPECTED_FURIGANA },
+      ]);
+      renderComponent();
+      fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), { target: { value: KANJI } });
+      fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+      await screen.findByText(EXPECTED_FURIGANA);
+
+      expect(screen.getByLabelText('Increase text size')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Edit line order' }));
+      expect(screen.queryByLabelText('Increase text size')).not.toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Done editing line order' }));
+      expect(screen.getByLabelText('Increase text size')).toBeInTheDocument();
+    });
+  });
+
   describe('Edit mode line reordering', () => {
     beforeEach(() => {
       window.localStorage.clear();

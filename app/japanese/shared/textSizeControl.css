@@ -1,0 +1,12 @@
+[data-bs-theme="light"] .text-size-control .btn-outline-secondary:not(:disabled) {
+    color: #495057;
+}
+
+[data-bs-theme="light"] .text-size-control .btn-outline-secondary:disabled {
+    color: #6c757d;
+    opacity: 1;
+}
+
+[data-bs-theme="dark"] .text-size-control .btn-outline-secondary {
+    color: #e9ecef;
+}

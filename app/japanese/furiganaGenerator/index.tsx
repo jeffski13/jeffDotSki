@@ -5,6 +5,7 @@ import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 import { applyChorusSeparators } from './chorusSeparators';
 import { downloadLyricsSongFile } from './exportLyricsSong';
 import { renderFuriganaText } from '../shared/furiganaRuby';
+import { useTextSize, TextSizeControl } from '../shared/textSizeControl';
 import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoRomaji from './testInfoRomaji.txt?raw';
@@ -17,6 +18,7 @@ export const ROMAJI_PLACEHOLDER = "Ex: Kyou wa yokatta desu.";
 
 const DISPLAY_SETTINGS_KEY = 'furiganaGenerator.displaySettings';
 const USE_CHORUS_SEPARATORS_KEY = 'furiganaGenerator.useChorusSeparators';
+const FONT_SIZE_KEY = 'furiganaGenerator.fontSize';
 
 type DisplaySettings = {
   showKanjiParentheses: boolean;
@@ -65,6 +67,7 @@ export default function FuriganaGeneratorPage() {
   const [useChorusSeparators, setUseChorusSeparators] = useState(loadUseChorusSeparators);
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showKanjiParentheses, showFuriganaResults } = displaySettings;
+  const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
   const convertButtonRef = useRef<HTMLButtonElement>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const dragSrc = useRef<number | null>(null);
@@ -361,6 +364,11 @@ export default function FuriganaGeneratorPage() {
               </Button>
             </Col>
           )}
+          {convertedLines && convertedLines.length > 0 && !isEditMode && (
+            <Col xs="auto" className="ms-auto">
+              <TextSizeControl fontSize={fontSize} onChange={setFontSize} />
+            </Col>
+          )}
         </Row>
 
         {errorMessage && (
@@ -443,7 +451,7 @@ export default function FuriganaGeneratorPage() {
                 ))}
               </ul>
             ) : (
-              <Row id="furiganaGenerator_output" className="furiganaGenerator_output-row">
+              <Row id="furiganaGenerator_output" className="furiganaGenerator_output-row" style={{ fontSize: `${fontSize}px` }}>
                 {showKanjiParentheses && (
                   <Col
                     xs={12}
