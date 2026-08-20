@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, Fragment } from "react";
-import { Container, Row, Col, Form, Button, ButtonGroup } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import type { LyricsSong } from "./src/types";
+import { useTextSize, TextSizeControl, DEFAULT_MAX_FONT_SIZE } from "../shared/textSizeControl";
 import senNoYoruWoKoete from "./src/senNoYoruWoKoete";
 import tegami from "./src/tegami";
 import stayWithMe from "./src/stayWithMe";
@@ -78,25 +79,7 @@ function loadSelectedSongIndex(): number {
 }
 
 const FONT_SIZE_KEY = "practiceNihongoLyrics.fontSize";
-const DEFAULT_FONT_SIZE = 16;
-const MIN_FONT_SIZE = 12;
-export const MAX_FONT_SIZE = 48;
-const FONT_SIZE_STEP = 2;
-
-function clampFontSize(size: number): number {
-  return Math.min(MAX_FONT_SIZE, Math.max(MIN_FONT_SIZE, size));
-}
-
-function loadFontSize(): number {
-  if (typeof window === "undefined") return DEFAULT_FONT_SIZE;
-  try {
-    const raw = window.localStorage.getItem(FONT_SIZE_KEY);
-    const parsed = raw === null ? NaN : Number(raw);
-    return Number.isFinite(parsed) ? clampFontSize(parsed) : DEFAULT_FONT_SIZE;
-  } catch {
-    return DEFAULT_FONT_SIZE;
-  }
-}
+export const MAX_FONT_SIZE = DEFAULT_MAX_FONT_SIZE;
 
 const KANJI_FURIGANA_REGEX = /([一-鿿㐀-䶿々]+)[(（]([^)）]+)[)）]/g;
 
@@ -125,7 +108,7 @@ export default function WebPage() {
   const [selectedTitle, setSelectedTitle] = useState(() => songs[loadSelectedSongIndex()].title);
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showJp, showFurigana, showRomaji, lineByLine } = displaySettings;
-  const [fontSize, setFontSize] = useState<number>(loadFontSize);
+  const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
 
   useEffect(() => {
     window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
@@ -135,10 +118,6 @@ export default function WebPage() {
     const idx = songs.findIndex((s) => s.title === selectedTitle);
     window.localStorage.setItem(SELECTED_SONG_KEY, String(idx >= 0 ? idx : 0));
   }, [selectedTitle]);
-
-  useEffect(() => {
-    window.localStorage.setItem(FONT_SIZE_KEY, String(fontSize));
-  }, [fontSize]);
 
   const song = useMemo(
     () => songs.find((s) => s.title === selectedTitle) ?? songs[0],
@@ -227,29 +206,7 @@ export default function WebPage() {
             />
           </Col>
           <Col xs="auto" className="ms-lg-auto">
-            <ButtonGroup aria-label="Text size" className="text-size-control">
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                onClick={() => setFontSize((size) => clampFontSize(size - FONT_SIZE_STEP))}
-                disabled={fontSize <= MIN_FONT_SIZE}
-                aria-label="Decrease text size"
-              >
-                A-
-              </Button>
-              <Button variant="outline-secondary" size="sm" disabled>
-                {fontSize}px
-              </Button>
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                onClick={() => setFontSize((size) => clampFontSize(size + FONT_SIZE_STEP))}
-                disabled={fontSize >= MAX_FONT_SIZE}
-                aria-label="Increase text size"
-              >
-                A+
-              </Button>
-            </ButtonGroup>
+            <TextSizeControl fontSize={fontSize} onChange={setFontSize} />
           </Col>
         </Row>
         <hr className="japanese-controls-separator" />
