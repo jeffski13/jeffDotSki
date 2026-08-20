@@ -385,6 +385,20 @@ describe('FuriganaGeneratorPage', () => {
     });
   });
 
+  describe('Romaji collapsible field', () => {
+    it('is collapsed by default and expands when the label is clicked', () => {
+      renderComponent();
+
+      const toggle = screen.getByRole('button', { name: /Romaji/ });
+      expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+      fireEvent.click(toggle);
+
+      expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      expect(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER)).toBeInTheDocument();
+    });
+  });
+
   describe('Edit mode line reordering', () => {
     beforeEach(() => {
       window.localStorage.clear();
