@@ -143,15 +143,19 @@
   margin-bottom: 16px;
 }
 
-.furiganaGenerator_furigana-check {
+.furiganaGenerator_display-check {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.4em;
 }
 
-.furiganaGenerator_furigana-check .form-check-input {
+.furiganaGenerator_display-check .form-check-input {
   float: none;
   margin-top: 0;
+}
+
+.furiganaGenerator_display-check .form-check-label {
+  line-height: 1;
 }
 
 .furiganaGenerator_display-controls--fixed {
