@@ -375,8 +375,8 @@ export default function FuriganaGeneratorPage() {
         <Row
           ref={displayControlsRef}
           id="results-display-controls"
-          className={`mb-3 japanese-display-controls${
-            isControlsFixed ? ' furiganaGenerator_display-controls--fixed' : ''
+          className={`japanese-display-controls${
+            isControlsFixed ? ' furiganaGenerator_display-controls--fixed' : ' mb-3'
           }`}
         >
           <Col xs="auto">
