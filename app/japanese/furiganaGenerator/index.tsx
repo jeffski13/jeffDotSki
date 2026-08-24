@@ -102,9 +102,17 @@ export default function FuriganaGeneratorPage() {
 
   const hasResults = !!convertedLines && convertedLines.length > 0;
   const fixedThresholdRef = useRef(0);
+  const isControlsFixedRef = useRef(false);
+
+  useEffect(() => {
+    isControlsFixedRef.current = isControlsFixed;
+  }, [isControlsFixed]);
 
   useEffect(() => {
     const updateThreshold = () => {
+      // While fixed, the button renders inside the bottom bar, not its normal
+      // in-flow spot — measuring it then would corrupt the threshold, so skip.
+      if (isControlsFixedRef.current) return;
       const button = editModeButtonRef.current;
       if (!button) return;
       fixedThresholdRef.current = button.getBoundingClientRect().bottom + window.scrollY;
