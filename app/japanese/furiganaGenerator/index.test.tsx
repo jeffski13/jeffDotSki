@@ -259,8 +259,8 @@ describe('FuriganaGeneratorPage', () => {
       const { container } = renderComponent();
       generateFurigana();
 
-      expect(screen.getByLabelText('Kanji with parentheses')).toBeChecked();
-      expect(screen.getByLabelText('Furigana results')).toBeChecked();
+      expect(screen.getByLabelText('Kanji 振(ふ)')).toBeChecked();
+      expect(screen.getByLabelText('Furigana 振ふ')).toBeChecked();
       expect(container.querySelectorAll('.furiganaGenerator_output-col')).toHaveLength(2);
     });
 
@@ -268,7 +268,7 @@ describe('FuriganaGeneratorPage', () => {
       const { container } = renderComponent();
       generateFurigana();
 
-      fireEvent.click(screen.getByLabelText('Kanji with parentheses'));
+      fireEvent.click(screen.getByLabelText('Kanji 振(ふ)'));
 
       const columns = container.querySelectorAll('.furiganaGenerator_output-col');
       expect(columns).toHaveLength(1);
@@ -279,7 +279,7 @@ describe('FuriganaGeneratorPage', () => {
       const { container } = renderComponent();
       generateFurigana();
 
-      fireEvent.click(screen.getByLabelText('Furigana results'));
+      fireEvent.click(screen.getByLabelText('Furigana 振ふ'));
 
       const columns = container.querySelectorAll('.furiganaGenerator_output-col');
       expect(columns).toHaveLength(1);
@@ -291,7 +291,7 @@ describe('FuriganaGeneratorPage', () => {
       const first = renderComponent();
       generateFurigana();
 
-      fireEvent.click(screen.getByLabelText('Kanji with parentheses'));
+      fireEvent.click(screen.getByLabelText('Kanji 振(ふ)'));
 
       const saved = JSON.parse(window.localStorage.getItem('furiganaGenerator.displaySettings')!);
       expect(saved).toEqual({ showKanjiParentheses: false, showFuriganaResults: true });
@@ -299,8 +299,8 @@ describe('FuriganaGeneratorPage', () => {
       first.unmount();
 
       const second = renderComponent();
-      expect(screen.getByLabelText('Kanji with parentheses')).not.toBeChecked();
-      expect(screen.getByLabelText('Furigana results')).toBeChecked();
+      expect(screen.getByLabelText('Kanji 振(ふ)')).not.toBeChecked();
+      expect(screen.getByLabelText('Furigana 振ふ')).toBeChecked();
     });
   });
 
