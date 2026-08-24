@@ -143,6 +143,23 @@
   margin-bottom: 16px;
 }
 
+.furiganaGenerator_display-controls--fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  margin: 0;
+  padding: 12px 20px;
+  background-color: #eee;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+[data-bs-theme="dark"] .furiganaGenerator_display-controls--fixed {
+  background-color: #1a1e21;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.4);
+}
+
 .furiganaGenerator_edit-toggle-btn {
   min-width: 38px;
 }

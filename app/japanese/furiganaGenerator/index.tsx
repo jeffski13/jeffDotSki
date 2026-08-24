@@ -69,6 +69,10 @@ export default function FuriganaGeneratorPage() {
   const { showKanjiParentheses, showFuriganaResults } = displaySettings;
   const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
   const convertButtonRef = useRef<HTMLButtonElement>(null);
+  const editModeButtonRef = useRef<HTMLButtonElement>(null);
+  const displayControlsRef = useRef<HTMLDivElement>(null);
+  const [isControlsFixed, setIsControlsFixed] = useState(false);
+  const [controlsHeight, setControlsHeight] = useState(0);
   const [isEditMode, setIsEditMode] = useState(false);
   const dragSrc = useRef<number | null>(null);
   const touchDragSrc = useRef<number | null>(null);
@@ -95,6 +99,45 @@ export default function FuriganaGeneratorPage() {
   useEffect(() => {
     window.localStorage.setItem(USE_CHORUS_SEPARATORS_KEY, String(useChorusSeparators));
   }, [useChorusSeparators]);
+
+  const hasResults = !!convertedLines && convertedLines.length > 0;
+  const fixedThresholdRef = useRef(0);
+
+  useEffect(() => {
+    const updateThreshold = () => {
+      const button = editModeButtonRef.current;
+      if (!button) return;
+      fixedThresholdRef.current = button.getBoundingClientRect().bottom + window.scrollY;
+    };
+
+    const handleScroll = () => {
+      setIsControlsFixed(hasResults && window.scrollY > fixedThresholdRef.current);
+    };
+
+    if (!hasResults) {
+      handleScroll();
+      return;
+    }
+
+    updateThreshold();
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateThreshold);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateThreshold);
+    };
+  }, [hasResults, isEditMode]);
+
+  useEffect(() => {
+    const node = displayControlsRef.current;
+    if (!node || typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(([entry]) => {
+      setControlsHeight(entry.contentRect.height);
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   const reorderLines = (srcIndex: number, targetIndex: number, position: 'before' | 'after') => {
     if (srcIndex === targetIndex) return;
@@ -329,7 +372,13 @@ export default function FuriganaGeneratorPage() {
         <hr className="japanese-controls-separator" />
 
 
-        <Row className="mb-3 japanese-display-controls">
+        <Row
+          ref={displayControlsRef}
+          id="results-display-controls"
+          className={`mb-3 japanese-display-controls${
+            isControlsFixed ? ' furiganaGenerator_display-controls--fixed' : ''
+          }`}
+        >
           <Col xs="auto">
             <Form.Check
               type="checkbox"
@@ -352,9 +401,11 @@ export default function FuriganaGeneratorPage() {
               }
             />
           </Col>
-          {convertedLines && convertedLines.length > 0 && (
+          {hasResults && (
             <Col xs="auto">
               <Button
+                ref={editModeButtonRef}
+                id="results-edit-mode-button"
                 variant={isEditMode ? 'primary' : 'outline-secondary'}
                 size="sm"
                 className="furiganaGenerator_edit-toggle-btn"
@@ -382,12 +433,13 @@ export default function FuriganaGeneratorPage() {
               </Button>
             </Col>
           )}
-          {convertedLines && convertedLines.length > 0 && !isEditMode && (
+          {hasResults && !isEditMode && (
             <Col xs="auto" className="ms-auto">
               <TextSizeControl fontSize={fontSize} onChange={setFontSize} />
             </Col>
           )}
         </Row>
+        {isControlsFixed && <div style={{ height: controlsHeight }} aria-hidden="true" />}
 
         {errorMessage && (
           <p className="furiganaGenerator_error" role="alert">
