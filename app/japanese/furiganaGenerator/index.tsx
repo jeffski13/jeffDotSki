@@ -391,7 +391,7 @@ export default function FuriganaGeneratorPage() {
             <Form.Check
               type="checkbox"
               id="show-kanji-parentheses"
-              label="Kanji with parentheses"
+              label="Kanji 振(ふ)"
               checked={showKanjiParentheses}
               onChange={(e) =>
                 setDisplaySettings((prev) => ({ ...prev, showKanjiParentheses: e.target.checked }))
@@ -402,7 +402,12 @@ export default function FuriganaGeneratorPage() {
             <Form.Check
               type="checkbox"
               id="show-furigana-results"
-              label="Furigana results"
+              className="furiganaGenerator_furigana-check"
+              label={
+                <>
+                  Furigana <ruby>振<rt>ふ</rt></ruby>
+                </>
+              }
               checked={showFuriganaResults}
               onChange={(e) =>
                 setDisplaySettings((prev) => ({ ...prev, showFuriganaResults: e.target.checked }))
