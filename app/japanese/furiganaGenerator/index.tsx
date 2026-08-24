@@ -291,10 +291,7 @@ export default function FuriganaGeneratorPage() {
           <span className="furiganaGenerator_title-en">Furigana Generator</span>
         </h1>
         <p className="furiganaGenerator_subtitle">
-          Enter Japanese text and its romaji reading (line by line) to generate furigana.
-        </p>
-        <p className="furiganaGenerator_subtitle">
-          Leave Romaji blank to have the reading generated from the kanji automatically.
+          Enter Japanese Text
         </p>
 
         <Row className="furiganaGenerator_input-row">
