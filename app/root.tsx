@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 // @ts-ignore
 import { Helmet } from "react-helmet";
 import { initFirebase, logPageView, shouldUseFirebase } from '~/infra/firebaseClient';
+import { useBackgroundScrollRestore } from '~/infra/backgroundScrollRestore';
 import type { Route } from "./+types/root";
 import "./app.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -87,6 +88,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       console.warn('Firebase init/logging failed', e);
     }
   }, []);
+
+  useBackgroundScrollRestore();
+
   return (
     <html>
       <head>
