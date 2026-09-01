@@ -497,4 +497,77 @@ describe('FuriganaGeneratorPage', () => {
       expect(container.querySelectorAll('.furiganaGenerator_output-col')).toHaveLength(2);
     });
   });
+
+  describe('Edit mode line text editing', () => {
+    beforeEach(() => {
+      window.localStorage.clear();
+    });
+
+    const LINE_1 = { kanji: 'どうやっていますか', hiragana: 'どうやっていますか', furigana: 'どうやっていますか' };
+    const LINE_2 = { kanji: 'これはいいです', hiragana: 'これはいいです', furigana: 'これはいいです' };
+
+    const generateTwoLines = async () => {
+      vi.mocked(buildFuriganaLinesFromKanji).mockResolvedValue([LINE_1, LINE_2]);
+      fireEvent.change(screen.getByPlaceholderText(KANJI_PLACEHOLDER), {
+        target: { value: `${LINE_1.kanji}\n${LINE_2.kanji}` },
+      });
+      fireEvent.click(screen.getByRole('button', { name: 'Generate Furigana' }));
+      await screen.findByText(LINE_1.furigana);
+      fireEvent.click(screen.getByRole('button', { name: 'Edit line order' }));
+    };
+
+    it('replaces the row with an editable, parentheses-form text field when the edit-line button is clicked', async () => {
+      const { container } = renderComponent();
+      await generateTwoLines();
+
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-line-input')).toHaveLength(0);
+
+      fireEvent.click(screen.getAllByRole('button', { name: 'Edit line' })[0]);
+
+      const input = container.querySelector('.furiganaGenerator_edit-row-line-input') as HTMLInputElement;
+      expect(input).toBeInTheDocument();
+      expect(input.value).toBe(LINE_1.furigana);
+    });
+
+    it('commits the edited text back into the line on save, keeping kanji/furigana in sync', async () => {
+      const { container } = renderComponent();
+      await generateTwoLines();
+
+      fireEvent.click(screen.getAllByRole('button', { name: 'Edit line' })[0]);
+      const input = container.querySelector('.furiganaGenerator_edit-row-line-input') as HTMLInputElement;
+      fireEvent.change(input, { target: { value: '今日（きょう）はどうやっていますか' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Save line' }));
+
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-line-input')).toHaveLength(0);
+      const rows = container.querySelectorAll('.furiganaGenerator_edit-row-content');
+      expect(rows[0].textContent).toContain('今日（きょう）はどうやっていますか');
+
+      fireEvent.click(screen.getByRole('button', { name: 'Done editing line order' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Export .ts' }));
+
+      expect(downloadLyricsSongFile).toHaveBeenCalledWith(
+        expect.objectContaining({
+          convertedLines: [
+            { kanji: '今日はどうやっていますか', hiragana: 'きょうはどうやっていますか', furigana: '今日（きょう）はどうやっていますか' },
+            LINE_2,
+          ],
+        }),
+      );
+    });
+
+    it('commits the pending edit when Enter is pressed', async () => {
+      const { container } = renderComponent();
+      await generateTwoLines();
+
+      fireEvent.click(screen.getAllByRole('button', { name: 'Edit line' })[0]);
+      const input = container.querySelector('.furiganaGenerator_edit-row-line-input') as HTMLInputElement;
+      fireEvent.change(input, { target: { value: 'これでいいですか' } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-line-input')).toHaveLength(0);
+      expect(container.querySelectorAll('.furiganaGenerator_edit-row-content')[0].textContent).toContain(
+        'これでいいですか',
+      );
+    });
+  });
 });
