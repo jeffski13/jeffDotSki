@@ -156,7 +156,7 @@ export default function WebPage() {
     <div id="japanese-lyrics">
       <Container fluid >
         <Row className="mb-3 align-items-center lyric-display-settings japanese-display-controls">
-          <Col xs={12} md="auto" className="song-select-col mb-2 mb-md-0">
+          <Col xs="auto" className="song-select-col">
             <Form.Select
               value={selectedTitle}
               onChange={(e) => setSelectedTitle(e.target.value)}
@@ -168,44 +168,40 @@ export default function WebPage() {
               ))}
             </Form.Select>
           </Col>
-          <Col xs="auto">
-            <Form.Check
-              type="checkbox"
-              id="show-jp"
-              label="Japanese"
-              checked={showJp}
-              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showJp: e.target.checked }))}
-            />
+          <Col xs="auto" className="checkbox-group-col">
+            <div className="checkbox-group">
+              <Form.Check
+                type="checkbox"
+                id="show-jp"
+                label="Japanese"
+                checked={showJp}
+                onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showJp: e.target.checked }))}
+              />
+              <Form.Check
+                type="checkbox"
+                id="show-furigana"
+                label="Furigana"
+                checked={showFurigana}
+                disabled={!hasFurigana}
+                onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showFurigana: e.target.checked }))}
+              />
+              <Form.Check
+                type="checkbox"
+                id="show-romaji"
+                label="Romaji "
+                checked={showRomaji}
+                onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showRomaji: e.target.checked }))}
+              />
+              <Form.Check
+                type="checkbox"
+                id="line-by-line"
+                label="Line by line"
+                checked={lineByLine}
+                onChange={(e) => setDisplaySettings((prev) => ({ ...prev, lineByLine: e.target.checked }))}
+              />
+            </div>
           </Col>
-          <Col xs="auto">
-            <Form.Check
-              type="checkbox"
-              id="show-furigana"
-              label="Furigana"
-              checked={showFurigana}
-              disabled={!hasFurigana}
-              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showFurigana: e.target.checked }))}
-            />
-          </Col>
-          <Col xs="auto">
-            <Form.Check
-              type="checkbox"
-              id="show-romaji"
-              label="Romaji "
-              checked={showRomaji}
-              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, showRomaji: e.target.checked }))}
-            />
-          </Col>
-          <Col xs="auto">
-            <Form.Check
-              type="checkbox"
-              id="line-by-line"
-              label="Line by line"
-              checked={lineByLine}
-              onChange={(e) => setDisplaySettings((prev) => ({ ...prev, lineByLine: e.target.checked }))}
-            />
-          </Col>
-          <Col xs="auto" className="ms-lg-auto">
+          <Col xs="auto" className="text-size-col">
             <TextSizeControl fontSize={fontSize} onChange={setFontSize} />
           </Col>
         </Row>
