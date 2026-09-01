@@ -36,7 +36,8 @@ firebase deploy
 cd $executionScriptDir
 
 echo "commiting firebase cache files."
+npmVersion=$(node -p "require('./package.json').version")
 git add ./firebaseski/.firebase/hosting.cHVibGlj.cache
-git commit -m "firebase cache for release."
+git commit -m "firebase cache for release. v$npmVersion"
 
 git push --tags origin master
