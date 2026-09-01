@@ -21,11 +21,11 @@ const ROUTES = {
     }
   },
   japanese: {
-    japaneseBible: '/japaneseReadings',
-    japanesePracticeLyrics: '/japanesePracticeLyrics',
-    japaneseMusicCovers: '/japaneseMusicCovers',
-    japaneseParenthesesToFurigana: '/japaneseParenthesesToFurigana',
-    furiganaGenerator: '/furiganaGenerator',
+    japaneseBible: '/japanese/readings',
+    japanesePracticeLyrics: '/japanese/practiceLyrics',
+    japaneseMusicCovers: '/japanese/pianoCovers',
+    japaneseParenthesesToFurigana: '/japanese/parenthesesToFurigana',
+    furiganaGenerator: '/japanese/furiganaGenerator',
   },
   aboutMe: {
     bio: '/aboutme/bio',
