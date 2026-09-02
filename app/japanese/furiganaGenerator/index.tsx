@@ -81,6 +81,7 @@ export default function FuriganaGeneratorPage() {
   const [editingLineText, setEditingLineText] = useState('');
   const shouldScrollToResults = useRef(false);
   const [showRomaji, setShowRomaji] = useState(false);
+  const hasRomajiContent = romajiText.trim().length > 0;
 
   useEffect(() => {
     if (!isEditMode) {
@@ -347,15 +348,18 @@ export default function FuriganaGeneratorPage() {
                 type="button"
                 className="furiganaGenerator_label furiganaGenerator_romaji-toggle"
                 onClick={() => setShowRomaji((prev) => !prev)}
-                aria-expanded={showRomaji}
+                disabled={hasRomajiContent}
+                aria-expanded={showRomaji || hasRomajiContent}
                 aria-controls="furiganaGenerator_romaji-collapse"
               >
                 Romaji (optional)
-                <span className="furiganaGenerator_romaji-toggle-caret" aria-hidden="true">
-                  {showRomaji ? '▲' : '▼'}
-                </span>
+                {!hasRomajiContent && (
+                  <span className="furiganaGenerator_romaji-toggle-caret" aria-hidden="true">
+                    {showRomaji ? '▲' : '▼'}
+                  </span>
+                )}
               </button>
-              <Collapse in={showRomaji}>
+              <Collapse in={showRomaji || hasRomajiContent}>
                 <div id="furiganaGenerator_romaji-collapse">
                   <Form.Control
                     as="textarea"
