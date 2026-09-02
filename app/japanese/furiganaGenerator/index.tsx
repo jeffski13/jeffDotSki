@@ -552,7 +552,7 @@ export default function FuriganaGeneratorPage() {
                         </>
                       )}
                       <Button
-                        variant="secondary"
+                        variant="outline-secondary"
                         size="sm"
                         className="furiganaGenerator_edit-row-action furiganaGenerator_edit-line-btn"
                         onClick={(e) => {
