@@ -47,6 +47,11 @@
   margin: 0 auto;
 }
 
+.furiganaGenerator_title-group .furiganaGenerator_label {
+  max-width: none;
+  margin: 0;
+}
+
 .furiganaGenerator_romaji-toggle {
   display: flex;
   align-items: center;

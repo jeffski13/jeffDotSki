@@ -655,7 +655,7 @@ export default function FuriganaGeneratorPage() {
             >
               {copied ? 'Copied!' : 'Copy'}
             </Button>
-            <Form.Group className="furiganaGenerator_input-group">
+            <Form.Group className="furiganaGenerator_input-group furiganaGenerator_title-group">
               <Form.Label className="furiganaGenerator_label">Title</Form.Label>
               <Form.Control
                 type="text"
