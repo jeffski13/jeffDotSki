@@ -205,7 +205,7 @@ export default function WebPage() {
             <TextSizeControl fontSize={fontSize} onChange={setFontSize} />
           </Col>
         </Row>
-        <hr className="japanese-controls-separator" />
+        <hr className="japanese-controls-divider" />
         <div className="lyrics-area" style={{ fontSize: `${fontSize}px` }}>
           {lineByLine ? (
             pairs.map((line, idx) => {
