@@ -397,6 +397,30 @@ describe('FuriganaGeneratorPage', () => {
       expect(toggle).toHaveAttribute('aria-expanded', 'true');
       expect(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER)).toBeInTheDocument();
     });
+
+    it('stays expanded and disables the toggle once the field has text, re-enabling collapse once cleared', async () => {
+      const { container } = renderComponent();
+      const collapseEl = () => container.querySelector('#furiganaGenerator_romaji-collapse')!;
+      const toggle = screen.getByRole('button', { name: /Romaji/ });
+
+      expect(collapseEl()).not.toHaveClass('show');
+
+      fireEvent.change(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER), { target: { value: ROMAJI } });
+
+      expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      expect(toggle).toBeDisabled();
+      await waitFor(() => expect(collapseEl()).toHaveClass('show'));
+
+      // Clicking a disabled toggle button is a no-op - the field must stay expanded.
+      fireEvent.click(toggle);
+      expect(collapseEl()).toHaveClass('show');
+
+      fireEvent.change(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER), { target: { value: '' } });
+
+      expect(toggle).not.toBeDisabled();
+      expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      expect(collapseEl()).not.toHaveClass('show');
+    });
   });
 
   describe('Edit mode line reordering', () => {

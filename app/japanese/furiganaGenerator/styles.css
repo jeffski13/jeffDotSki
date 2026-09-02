@@ -61,6 +61,10 @@
   color: inherit;
 }
 
+.furiganaGenerator_romaji-toggle:disabled {
+  cursor: default;
+}
+
 .furiganaGenerator_romaji-toggle-caret {
   font-size: 0.7rem;
 }
