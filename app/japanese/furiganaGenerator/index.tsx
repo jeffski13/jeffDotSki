@@ -8,7 +8,6 @@ import { renderFuriganaText } from '../shared/furiganaRuby';
 import { useTextSize, TextSizeControl } from '../shared/textSizeControl';
 import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
-import testInfoRomaji from './testInfoRomaji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import '../displayControls.css';
 import './styles.css';
@@ -298,7 +297,7 @@ export default function FuriganaGeneratorPage() {
 
   const handleLoadSample = () => {
     setKanjiText(testInfoKanji);
-    setRomajiText(testInfoRomaji);
+    setRomajiText('');
   };
 
   const handleLoadKanjiOnlySample = () => {

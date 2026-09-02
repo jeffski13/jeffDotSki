@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router';
 import FuriganaGeneratorPage, { KANJI_PLACEHOLDER, ROMAJI_PLACEHOLDER } from './index';
 import { ENV } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
-import testInfoRomaji from './testInfoRomaji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 import { downloadLyricsSongFile } from './exportLyricsSong';
@@ -66,14 +65,15 @@ describe('FuriganaGeneratorPage', () => {
     expect(rubyEls[0].querySelector('rt')?.textContent).toBe('だれ');
   });
 
-  it('fills both textareas with the sample files when "Load Sample" is clicked', () => {
+  it('fills the kanji textarea and clears romaji when "Load Sample" is clicked', () => {
     process.env.NODE_ENV = ENV.DEV;
     renderComponent();
 
+    fireEvent.change(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER), { target: { value: ROMAJI } });
     fireEvent.click(screen.getByRole('button', { name: 'Load Sample' }));
 
     expect(screen.getByPlaceholderText(KANJI_PLACEHOLDER)).toHaveValue(testInfoKanji);
-    expect(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER)).toHaveValue(testInfoRomaji);
+    expect(screen.getByPlaceholderText(ROMAJI_PLACEHOLDER)).toHaveValue('');
   });
 
   it('hides the "Load Sample" button outside of dev', () => {
