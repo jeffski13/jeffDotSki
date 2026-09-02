@@ -411,7 +411,7 @@ export default function FuriganaGeneratorPage() {
           )}
         </div>
 
-        <hr className="japanese-controls-separator" />
+        <hr className="japanese-controls-divider" />
 
 
         <Row
@@ -659,6 +659,9 @@ export default function FuriganaGeneratorPage() {
             >
               {copied ? 'Copied!' : 'Copy'}
             </Button>
+
+            <hr className="japanese-controls-divider" />
+
             <Form.Group className="furiganaGenerator_input-group furiganaGenerator_title-group">
               <Form.Label className="furiganaGenerator_label">Title</Form.Label>
               <Form.Control
