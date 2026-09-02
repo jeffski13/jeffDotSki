@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { Container, Row, Col, Form, Button, Collapse } from 'react-bootstrap';
-import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
+import { buildFuriganaLines, furiganaToHiragana, furiganaToKanji, type FuriganaLine } from './furiganaGenerator';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 import { applyChorusSeparators } from './chorusSeparators';
 import { downloadLyricsSongFile } from './exportLyricsSong';
@@ -8,7 +8,6 @@ import { renderFuriganaText } from '../shared/furiganaRuby';
 import { useTextSize, TextSizeControl } from '../shared/textSizeControl';
 import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
-import testInfoRomaji from './testInfoRomaji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
 import '../displayControls.css';
 import './styles.css';
@@ -78,11 +77,16 @@ export default function FuriganaGeneratorPage() {
   const touchDragSrc = useRef<number | null>(null);
   const [dragIndicator, setDragIndicator] = useState<{ index: number; position: 'before' | 'after' } | null>(null);
   const [activeRowIndex, setActiveRowIndex] = useState<number | null>(null);
+  const [editingLineIndex, setEditingLineIndex] = useState<number | null>(null);
+  const [editingLineText, setEditingLineText] = useState('');
   const shouldScrollToResults = useRef(false);
   const [showRomaji, setShowRomaji] = useState(false);
 
   useEffect(() => {
-    if (!isEditMode) setActiveRowIndex(null);
+    if (!isEditMode) {
+      setActiveRowIndex(null);
+      setEditingLineIndex(null);
+    }
   }, [isEditMode]);
 
   useEffect(() => {
@@ -160,6 +164,7 @@ export default function FuriganaGeneratorPage() {
       return next;
     });
     setActiveRowIndex(null);
+    setEditingLineIndex(null);
   };
 
   const duplicateLine = (index: number) => {
@@ -170,6 +175,7 @@ export default function FuriganaGeneratorPage() {
       return next;
     });
     setActiveRowIndex(null);
+    setEditingLineIndex(null);
   };
 
   const deleteLine = (index: number) => {
@@ -180,10 +186,37 @@ export default function FuriganaGeneratorPage() {
       return next;
     });
     setActiveRowIndex(null);
+    setEditingLineIndex(null);
   };
 
   const handleRowTap = (index: number) => {
     setActiveRowIndex((prev) => (prev === index ? null : index));
+  };
+
+  // Commits a hand-edited line's parentheses-form text back into the line's kanji/hiragana/
+  // furigana fields, keeping all three in sync (see furiganaToKanji/furiganaToHiragana) rather
+  // than leaving kanji/hiragana stale against a furigana field the user just rewrote.
+  const commitLineEdit = (index: number, text: string) => {
+    setConvertedLines((prev) => {
+      if (!prev) return prev;
+      const next = [...prev];
+      next[index] = { kanji: furiganaToKanji(text), hiragana: furiganaToHiragana(text), furigana: text };
+      return next;
+    });
+  };
+
+  const startEditingLine = (index: number) => {
+    if (editingLineIndex !== null && editingLineIndex !== index) {
+      commitLineEdit(editingLineIndex, editingLineText);
+    }
+    setEditingLineIndex(index);
+    setEditingLineText(convertedLines?.[index]?.furigana ?? '');
+  };
+
+  const finishEditingLine = () => {
+    if (editingLineIndex === null) return;
+    commitLineEdit(editingLineIndex, editingLineText);
+    setEditingLineIndex(null);
   };
 
   const handleDragStart = (index: number, e: React.DragEvent) => {
@@ -264,7 +297,7 @@ export default function FuriganaGeneratorPage() {
 
   const handleLoadSample = () => {
     setKanjiText(testInfoKanji);
-    setRomajiText(testInfoRomaji);
+    setRomajiText('');
   };
 
   const handleLoadKanjiOnlySample = () => {
@@ -420,7 +453,10 @@ export default function FuriganaGeneratorPage() {
                 variant={isEditMode ? 'primary' : 'outline-secondary'}
                 size="sm"
                 className="furiganaGenerator_edit-toggle-btn"
-                onClick={() => setIsEditMode((prev) => !prev)}
+                onClick={() => {
+                  if (editingLineIndex !== null) commitLineEdit(editingLineIndex, editingLineText);
+                  setIsEditMode((prev) => !prev);
+                }}
                 aria-pressed={isEditMode}
                 aria-label={isEditMode ? 'Done editing line order' : 'Edit line order'}
                 title={isEditMode ? 'Done editing line order' : 'Edit line order'}
@@ -468,13 +504,13 @@ export default function FuriganaGeneratorPage() {
                     data-drag-index={i}
                     className={`furiganaGenerator_edit-row${
                       dragIndicator?.index === i ? ` furiganaGenerator_edit-row--drop-${dragIndicator.position}` : ''
-                    }${activeRowIndex === i ? ' furiganaGenerator_edit-row--active' : ''}`}
+                    }${activeRowIndex === i || editingLineIndex === i ? ' furiganaGenerator_edit-row--active' : ''}`}
                     onDragOver={(e) => handleDragOver(i, e)}
                     onDrop={(e) => handleDrop(i, e)}
                   >
                     <div
                       className="furiganaGenerator_edit-row-content"
-                      draggable
+                      draggable={editingLineIndex !== i}
                       onDragStart={(e) => handleDragStart(i, e)}
                       onDragEnd={handleDragEnd}
                       onClick={() => handleRowTap(i)}
@@ -488,14 +524,59 @@ export default function FuriganaGeneratorPage() {
                       >
                         ⠿
                       </span>
-                      {showKanjiParentheses && (
-                        <span className="furiganaGenerator_edit-row-kanji">{line.furigana}</span>
+                      {editingLineIndex === i ? (
+                        <Form.Control
+                          type="text"
+                          autoFocus
+                          className="furiganaGenerator_edit-row-line-input"
+                          value={editingLineText}
+                          onChange={(e) => setEditingLineText(e.target.value)}
+                          onClick={(e) => e.stopPropagation()}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              finishEditingLine();
+                            }
+                          }}
+                        />
+                      ) : (
+                        <>
+                          {showKanjiParentheses && (
+                            <span className="furiganaGenerator_edit-row-kanji">{line.furigana}</span>
+                          )}
+                          {showFuriganaResults && (
+                            <span className="furiganaGenerator_edit-row-ruby furiganaRuby_output">
+                              {renderFuriganaText(line.furigana, `edit-${i}`)}
+                            </span>
+                          )}
+                        </>
                       )}
-                      {showFuriganaResults && (
-                        <span className="furiganaGenerator_edit-row-ruby furiganaRuby_output">
-                          {renderFuriganaText(line.furigana, `edit-${i}`)}
-                        </span>
-                      )}
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        className="furiganaGenerator_edit-row-action furiganaGenerator_edit-line-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (editingLineIndex === i) {
+                            finishEditingLine();
+                          } else {
+                            startEditingLine(i);
+                          }
+                        }}
+                        aria-label={editingLineIndex === i ? 'Save line' : 'Edit line'}
+                        title={editingLineIndex === i ? 'Save line' : 'Edit line'}
+                      >
+                        {editingLineIndex === i ? (
+                          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                            <path
+                              fill="currentColor"
+                              d="M9.55 18 3.85 12.3l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4Z"
+                            />
+                          </svg>
+                        ) : (
+                          '✎'
+                        )}
+                      </Button>
                       <Button
                         variant="outline-secondary"
                         size="sm"

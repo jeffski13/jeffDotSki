@@ -233,6 +233,11 @@
   white-space: pre-wrap;
 }
 
+.furiganaGenerator_edit-row-line-input {
+  flex: 1;
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+}
+
 .furiganaGenerator_edit-row-ruby {
   flex: 1;
 }
@@ -245,6 +250,13 @@
 
 .furiganaGenerator_edit-duplicate-btn {
   margin-left: auto;
+}
+
+.furiganaGenerator_edit-duplicate-btn:hover,
+.furiganaGenerator_edit-duplicate-btn:focus {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
 
 .furiganaGenerator_edit-delete-btn:hover,
