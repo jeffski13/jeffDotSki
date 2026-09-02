@@ -44,7 +44,7 @@
   font-weight: 600;
   display: block;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 8px;
 }
 
 .furiganaGenerator_title-group .furiganaGenerator_label {
@@ -68,6 +68,10 @@
 
 .furiganaGenerator_romaji-toggle:disabled {
   cursor: default;
+}
+
+.furiganaGenerator_romaji-toggle:not(:disabled):hover {
+  opacity: 0.7;
 }
 
 .furiganaGenerator_romaji-toggle-caret {
