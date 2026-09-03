@@ -489,7 +489,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={4} md={1} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={2} md={1} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">章 (Chapter)</Form.Label>
               <div className="readingsNihonDe-input-inline">
@@ -506,7 +506,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={4} md={1} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={2} md={1} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">節 (Verse)</Form.Label>
               <div className="readingsNihonDe-input-inline">
@@ -523,7 +523,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={12} sm={8} md={6} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
+          <Col xs={12} sm={12} md={6} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <Button
               variant="primary"
               onClick={handleSearch}
