@@ -168,4 +168,36 @@ describe('ReadingsNihonDe', () => {
 
     expect(getSettingsOrder()).toEqual(DEFAULT_ORDER);
   });
+
+  describe('Text size control', () => {
+    const getReadButton = () => screen.getByRole('button', { name: /読む/ });
+
+    it('sits between the Read button and the Settings toggle', () => {
+      renderComponent();
+
+      const settingsCol = getReadButton().closest('.readingsNihonDe-settings-col') as HTMLElement;
+      expect(settingsCol).not.toBeNull();
+
+      const children = Array.from(settingsCol.children);
+      const readIdx = children.indexOf(getReadButton());
+      const settingsToggleIdx = children.indexOf(screen.getByText('設定 (Settings)').closest('button')!);
+      const textSizeControlIdx = children.findIndex((el) => el.classList.contains('text-size-control'));
+
+      expect(textSizeControlIdx).toBeGreaterThan(readIdx);
+      expect(textSizeControlIdx).toBeLessThan(settingsToggleIdx);
+    });
+
+    it('increases verse text font size when A+ is clicked', async () => {
+      renderComponent();
+      fireEvent.click(getReadButton());
+      await waitFor(() => expect(document.querySelector('.readingsNihonDe-verse-block')).not.toBeNull());
+
+      const verseBlock = document.querySelector('.readingsNihonDe-verse-block') as HTMLElement;
+      const initialFontSize = verseBlock.style.fontSize;
+
+      fireEvent.click(screen.getByRole('button', { name: /increase text size/i }));
+
+      expect(verseBlock.style.fontSize).not.toBe(initialFontSize);
+    });
+  });
 });

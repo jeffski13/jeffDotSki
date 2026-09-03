@@ -162,6 +162,22 @@
   .readingsNihonDe-settings-col {
     align-items: stretch;
   }
+
+  .readingsNihonDe-settings-col .text-size-control .btn {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.72rem;
+  }
+
+  .readingsNihonDe-settings-col .readingsNihonDe-settings-toggle {
+    min-width: 0;
+    padding: 0.25rem 0.4rem;
+  }
+
+  .readingsNihonDe-settings-col .readingsNihonDe-settings-toggle span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .readingsNihonDe-passage-header {
@@ -486,7 +502,7 @@
 }
 
 .readingsNihonDe-verse-text {
-  font-size: 1rem;
+  font-size: 1em;
   line-height: 1.6;
 }
 

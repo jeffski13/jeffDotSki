@@ -6,7 +6,10 @@ import './styles.css';
 import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN, DEFAULT_TOGGLE_KANJI_KANA, DEFAULT_TOGGLE_FURIGANA, DEFAULT_SPLIT_ENGLISH_DIALOGUE, DEFAULT_SPLIT_ENGLISH_ON_PERIOD, DEFAULT_SPLIT_JP_DIALOGUE, ROWKEYS, readingsSettingsStoreImpl, type RowKey } from './readingsSettings';
 import { renderJpText as renderJpTextUtil } from './renderJpText';
 import { renderEnText as renderEnTextUtil } from './renderEnText';
+import { useTextSize, TextSizeControl } from '../shared/textSizeControl';
 import bookMapping from './japaneseBookNameMapping.json';
+
+const FONT_SIZE_KEY = 'readingsNihonDe.fontSize';
 
 type Book = string;
 
@@ -205,6 +208,7 @@ export default function ReadingsNihonDe() {
   const [splitEnglishDialogue, setSplitEnglishDialogue] = useState<boolean>(savedSettings.splitEnglishDialogue ?? DEFAULT_SPLIT_ENGLISH_DIALOGUE);
   const [splitEnglishOnPeriod, setSplitEnglishOnPeriod] = useState<boolean>(savedSettings.splitEnglishOnPeriod ?? DEFAULT_SPLIT_ENGLISH_ON_PERIOD);
   const [splitJpDialogue, setSplitJpDialogue] = useState<Record<RowKey, boolean>>(savedSettings.splitJpDialogue ?? DEFAULT_SPLIT_JP_DIALOGUE);
+  const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
   const passageRef = useRef<HTMLDivElement>(null);
   const dragSrc = useRef<RowKey | null>(null);
   const touchDragSrc = useRef<RowKey | null>(null);
@@ -459,7 +463,7 @@ export default function ReadingsNihonDe() {
         </Row>
 
         <Row className="readingsNihonDe-controls">
-          <Col xs={12} sm={4} md={3} className="readingsNihonDe-control-col">
+          <Col xs={12} sm={4} md={4} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">書 (Book)</Form.Label>
               <Form.Select
@@ -485,7 +489,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={4} md={1} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">章 (Chapter)</Form.Label>
               <div className="readingsNihonDe-input-inline">
@@ -502,7 +506,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={5} sm={4} md={2} className="readingsNihonDe-control-col">
+          <Col xs={5} sm={4} md={1} className="readingsNihonDe-control-col">
             <Form.Group>
               <Form.Label className="readingsNihonDe-label">節 (Verse)</Form.Label>
               <div className="readingsNihonDe-input-inline">
@@ -519,7 +523,7 @@ export default function ReadingsNihonDe() {
             </Form.Group>
           </Col>
 
-          <Col xs={12} sm={8} md={4} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
+          <Col xs={12} sm={8} md={6} className="readingsNihonDe-control-col readingsNihonDe-btn-col readingsNihonDe-settings-col">
             <Button
               variant="primary"
               onClick={handleSearch}
@@ -528,6 +532,7 @@ export default function ReadingsNihonDe() {
             >
               {loading ? <Spinner animation="border" size="sm" /> : '読む (Read)'}
             </Button>
+            <TextSizeControl fontSize={fontSize} onChange={setFontSize} />
             <button
               className="readingsNihonDe-settings-toggle"
               onClick={() => setSettingsOpen((o) => !o)}
@@ -710,7 +715,7 @@ export default function ReadingsNihonDe() {
         )}
 
         {verses.map((verse) => (
-          <div key={verse.number} className="readingsNihonDe-verse-block">
+          <div key={verse.number} className="readingsNihonDe-verse-block" style={{ fontSize: `${fontSize}px` }}>
             <div className="readingsNihonDe-verse-number">{verse.number}</div>
 
             {displayOrder.map((key) => {
