@@ -86,7 +86,7 @@
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .readingsNihonDe-input-prefix {
     display: inline;
   }
@@ -100,7 +100,7 @@
   text-align: center;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .readingsNihonDe-controls {
     padding: 0.5rem 0.5rem;
     align-items: center;
