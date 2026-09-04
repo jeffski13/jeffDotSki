@@ -212,6 +212,7 @@ export function Drawings({
               <div className="fullImageDirectionClose noselect">
                 <button
                   aria-label="Close full screen image"
+                  className="fullImageCloseButton"
                   onClick={() => doNotShowImageFull()}
                 >
                   &#10005;

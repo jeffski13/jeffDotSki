@@ -74,6 +74,47 @@
     justify-content: flex-end;
 }
 
+.fullImageCloseButton {
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    animation: fullImageCloseSlideIn 300ms ease-out, fullImageCloseSpin 400ms ease-out;
+}
+
+@keyframes fullImageCloseSlideIn {
+    from {
+        translate: -5vw 0;
+        opacity: 0;
+    }
+    to {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+@keyframes fullImageCloseSpin {
+    from {
+        rotate: 0deg;
+    }
+    to {
+        rotate: 90deg;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fullImageCloseButton {
+        animation: none;
+    }
+}
+
 .fullImage {
     max-Width: 80vw;
     max-Height: 80vh;
