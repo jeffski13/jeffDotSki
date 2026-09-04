@@ -179,12 +179,16 @@
 
 .drawingImageContainer {
     padding: 4px;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .drawingImage {
     box-sizing: border-box;
     width: 290px;
-    height: 290px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
     object-fit: contain;
     background-color: #000;
 }
