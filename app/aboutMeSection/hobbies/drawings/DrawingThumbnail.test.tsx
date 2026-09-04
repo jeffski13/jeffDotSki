@@ -10,7 +10,7 @@ describe('Drawings Component', () => {
     ];
     let wasClicked = false;
     render(<DrawingThumbail drawingItem={drawingsList[0]} index={0}
-      isTestEnvInstantLoad={true} titleLabel="Mock Label"
+      isTestEnvInstantLoad={true}
       onImageClicked={() => {
         wasClicked = true;
       }}
@@ -27,7 +27,7 @@ describe('Drawings Component', () => {
       { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
     ];
     render(<DrawingThumbail drawingItem={drawingsList[0]} index={0}
-      isTestEnvInstantLoad={false} titleLabel="Mock Label"
+      isTestEnvInstantLoad={false}
       onImageClicked={() => {
       }}
     />);

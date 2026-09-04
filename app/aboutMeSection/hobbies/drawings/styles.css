@@ -74,6 +74,47 @@
     justify-content: flex-end;
 }
 
+.fullImageCloseButton {
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    animation: fullImageCloseSlideIn 500ms ease-out, fullImageCloseSpin 500ms ease-out;
+}
+
+@keyframes fullImageCloseSlideIn {
+    from {
+        translate: -5vw 0;
+        opacity: 0;
+    }
+    to {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+@keyframes fullImageCloseSpin {
+    from {
+        rotate: 0deg;
+    }
+    to {
+        rotate: 180deg;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fullImageCloseButton {
+        animation: none;
+    }
+}
+
 .fullImage {
     max-Width: 80vw;
     max-Height: 80vh;
@@ -134,6 +175,22 @@
 
 .thumbnail-image-loading-text-container.loading {
   display: flex; /* Enables Flexbox layout */
+}
+
+.drawingImageContainer {
+    padding: 4px;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.drawingImage {
+    box-sizing: border-box;
+    width: 290px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: contain;
+    background-color: #000;
 }
 
 .noselect {
