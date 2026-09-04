@@ -48,7 +48,7 @@
 }
 
 [data-bs-theme="dark"] #videosTopSection {
-  background-color: rgb(33, 37, 41);
+  background-color: rgb(33, 37, 41, 0.91);
 }
 
 @media (max-width: 600px) {
@@ -172,12 +172,20 @@
 /* Channel grid */
 
 .japaneseMusic_channels-label {
+  display: inline-block;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #eee;
   margin-bottom: 16px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+[data-bs-theme="light"] .japaneseMusic_channels-label {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .japaneseMusic_grid {
