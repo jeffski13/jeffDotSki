@@ -7,6 +7,7 @@ import { DISPLAY_OPTIONS, DEFAULT_ORDER, DEFAULT_ENABLED, DEFAULT_SPLIT_ON_KUTEN
 import { renderJpText as renderJpTextUtil } from './renderJpText';
 import { renderEnText as renderEnTextUtil } from './renderEnText';
 import { useTextSize, TextSizeControl } from '../shared/textSizeControl';
+import { useShowScrollTop, ScrollTopButton } from '../shared/scrollTopButton';
 import bookMapping from './japaneseBookNameMapping.json';
 
 const FONT_SIZE_KEY = 'readingsNihonDe.fontSize';
@@ -196,7 +197,7 @@ export default function ReadingsNihonDe() {
   const [passageChapter, setPassageChapter] = useState<number>(parseInt(chapter, 10));
   const [passageStartVerse, setPassageStartVerse] = useState<number>(parseInt(startVerse, 10));
   const [toggledVerses, setToggledVerses] = useState<Set<number>>(new Set());
-  const [showScrollTop, setShowScrollTop] = useState(false);
+  const showScrollTop = useShowScrollTop();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [confirmResetOpen, setConfirmResetOpen] = useState(false);
   const [displayOrder, setDisplayOrder] = useState<RowKey[]>(savedSettings.order);
@@ -218,12 +219,6 @@ export default function ReadingsNihonDe() {
     const lastPosition = verses.length > 0 ? { lastBook: book, lastChapter: chapter, lastStartVerse: startVerse } : {};
     readingsSettingsStoreImpl.saveSettings({ order: displayOrder, enabled: displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, ...lastPosition });
   }, [displayOrder, displayEnabled, splitOnKuten, defaultToggleKanjiKana, defaultToggleFurigana, splitEnglishDialogue, splitEnglishOnPeriod, splitJpDialogue, book, chapter, startVerse, verses]);
-
-  useEffect(() => {
-    const onScroll = () => setShowScrollTop(window.scrollY > 300);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   const handleResetSettings = () => {
     setDisplayOrder(DEFAULT_ORDER);
@@ -863,13 +858,7 @@ export default function ReadingsNihonDe() {
             >
               {loading ? <Spinner animation="border" size="sm" /> : '読む'}
             </Button>
-            <button
-              className="readingsNihonDe-scroll-top"
-              onClick={() => window.scrollTo({ top: 0 })}
-              aria-label="Scroll to top"
-            >
-              ▲
-            </button>
+            <ScrollTopButton onClick={() => window.scrollTo({ top: 0 })} />
           </div>
         </div>
       )}
