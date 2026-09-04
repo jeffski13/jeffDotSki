@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, Fragment } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import type { LyricsSong } from "./src/types";
 import { useTextSize, TextSizeControl, DEFAULT_MAX_FONT_SIZE } from "../shared/textSizeControl";
+import { useShowScrollTop, ScrollTopButton } from "../shared/scrollTopButton";
 import senNoYoruWoKoete from "./src/senNoYoruWoKoete";
 import tegami from "./src/tegami";
 import stayWithMe from "./src/stayWithMe";
@@ -109,6 +110,7 @@ export default function WebPage() {
   const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
   const { showJp, showFurigana, showRomaji, lineByLine } = displaySettings;
   const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
+  const showScrollTop = useShowScrollTop();
 
   useEffect(() => {
     window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
@@ -248,6 +250,8 @@ export default function WebPage() {
           </p>
         </footer>
       </Container>
+
+      {showScrollTop && <ScrollTopButton floating />}
     </div>
   );
 }
