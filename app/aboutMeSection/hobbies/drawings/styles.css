@@ -136,6 +136,14 @@
   display: flex; /* Enables Flexbox layout */
 }
 
+.drawingImage {
+    box-sizing: border-box;
+    width: 290px;
+    height: 290px;
+    object-fit: contain;
+    background-color: #000;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     /* iOS Safari */
