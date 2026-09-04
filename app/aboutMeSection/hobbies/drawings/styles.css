@@ -136,6 +136,10 @@
   display: flex; /* Enables Flexbox layout */
 }
 
+.drawingImageContainer {
+    padding: 4px;
+}
+
 .drawingImage {
     box-sizing: border-box;
     width: 290px;

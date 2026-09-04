@@ -52,7 +52,7 @@ export const DrawingThumbail = ({drawingItem, index, titleLabel, isTestEnvInstan
           </div>
         </div >
         <div className="HobbieContentItem" >
-          <div className="hobbieImageContainer" >
+          <div className="hobbieImageContainer drawingImageContainer" >
             <div className={`thumbnail-image-loading-text-container ${isImageLoaded ? 'loaded' : 'loading'}`} >
               <p className="hobbieImageLoadingLabel">loading...</p>
             </div>
