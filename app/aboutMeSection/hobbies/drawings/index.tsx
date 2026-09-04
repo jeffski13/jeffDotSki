@@ -12,7 +12,6 @@ interface ContentPerLanguage {
   intro: string;
   spooky: string;
   spookyDesc: string;
-  titleLabel: string;
 }
 
 interface DrawingsProps {
@@ -37,14 +36,12 @@ export function Drawings({
     intro: 'Empecé a dibujar como pasatiempo durante la pandemia. ¡Con el tiempo encontré mi estilo! ¡Que disfrutas!',
     spooky: 'Dibujos Espeluznantes:',
     spookyDesc: 'A mi familia le gusta el estilo de El Mundo Loco De Jack, así que creé estos:',
-    titleLabel: 'Título:',
   }
   const defaultText: ContentPerLanguage = {
     title: 'Drawings',
     intro: 'I started drawing as a hobby during the pandemic. Over the years I feel I have found my style. Enjoy!',
     spooky: 'Spooky Drawings:',
     spookyDesc: 'My family likes the spooky nightmare before christmas style, so I created these:',
-    titleLabel: 'Title:',
   }
 
   const multiLangContent: MultiLangContent = {
@@ -164,7 +161,7 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsList.map(
-                (item, i) => <DrawingThumbail key={item.full+i} drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                (item, i) => <DrawingThumbail key={item.full+i} drawingItem={item} index={i} isTestEnvInstantLoad={isTestEnvInstantLoad} 
                 onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list
@@ -188,7 +185,7 @@ export function Drawings({
           <ul className="hobbiesContentList" >
             <Row>
               {drawingsHalloweenList.map(
-                (item, i) => <DrawingThumbail key={item.full+i}  drawingItem={item} index={i} titleLabel={content.titleLabel} isTestEnvInstantLoad={isTestEnvInstantLoad} 
+                (item, i) => <DrawingThumbail key={item.full+i}  drawingItem={item} index={i} isTestEnvInstantLoad={isTestEnvInstantLoad} 
                 onImageClicked={() => {
                   loadOverlayImg(item.full);
                   // Optionally set overlayIndex if you want to track which list

@@ -6,12 +6,11 @@ import './styles.css';
 interface DrawingThumbailProps {
   drawingItem: DrawingItem;
   index: number;
-  titleLabel: string;
   isTestEnvInstantLoad: boolean;
   onImageClicked: () => void;
 }
 
-export const DrawingThumbail = ({drawingItem, index, titleLabel, isTestEnvInstantLoad, onImageClicked}: DrawingThumbailProps) => {
+export const DrawingThumbail = ({drawingItem, index, isTestEnvInstantLoad, onImageClicked}: DrawingThumbailProps) => {
   const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
   const [thumbnailImg, setThumbnailImg] = useState<string | undefined>(undefined);
   const loadImg = (imagePath: string) => {
@@ -47,7 +46,6 @@ export const DrawingThumbail = ({drawingItem, index, titleLabel, isTestEnvInstan
       <li>
         <div className="hobbieItemInfoContainer">
           <div className="hobbieItemInfo" >
-            <div className="hobbieItemTitle" >{titleLabel}</div>
             <div className="hobbieItemText" >{drawingItem.name}</div>
           </div>
         </div >
