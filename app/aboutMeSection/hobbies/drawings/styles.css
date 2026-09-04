@@ -86,7 +86,7 @@
     color: #fff;
     font-size: 24px;
     cursor: pointer;
-    animation: fullImageCloseSlideIn 300ms ease-out, fullImageCloseSpin 400ms ease-out;
+    animation: fullImageCloseSlideIn 500ms ease-out, fullImageCloseSpin 500ms ease-out;
 }
 
 @keyframes fullImageCloseSlideIn {
@@ -105,7 +105,7 @@
         rotate: 0deg;
     }
     to {
-        rotate: 90deg;
+        rotate: 180deg;
     }
 }
 
