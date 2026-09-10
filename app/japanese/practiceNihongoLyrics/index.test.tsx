@@ -29,7 +29,7 @@ describe('PracticeNihongoLyrics', () => {
   });
 
   describe('display mode checkboxes', () => {
-    const [song] = songs;
+    const song = songs.find((s) => s.title === 'Bay City (Bay City)')!;
     const jpLine = song.jp[0];
     const romajiLine = song.romaji[0];
 
@@ -39,6 +39,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('defaults to Furigana and Romaji checked, with Japanese unchecked', () => {
       const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       expect(screen.getByLabelText('Japanese')).not.toBeChecked();
       expect(screen.getByLabelText('Furigana')).toBeChecked();
@@ -51,6 +52,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('shows the Japanese column once its checkbox is checked', () => {
       const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       fireEvent.click(screen.getByLabelText('Japanese'));
 
@@ -61,6 +63,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('hides the Romaji column when its checkbox is unchecked, leaving the others', () => {
       const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       fireEvent.click(screen.getByLabelText('Japanese'));
       fireEvent.click(screen.getByLabelText('Romaji'));
@@ -72,6 +75,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('hides the Furigana column when its checkbox is unchecked, leaving the others', () => {
       const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       fireEvent.click(screen.getByLabelText('Japanese'));
       fireEvent.click(screen.getByLabelText('Furigana'));
@@ -83,6 +87,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('re-hides a column when its checkbox is unchecked again', () => {
       const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
       const jpCheckbox = screen.getByLabelText('Japanese');
 
       fireEvent.click(jpCheckbox);
@@ -94,6 +99,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('persists display settings to localStorage and restores them on reload', () => {
       const first = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       fireEvent.click(screen.getByLabelText('Japanese'));
       fireEvent.click(screen.getByLabelText('Romaji'));
@@ -113,7 +119,7 @@ describe('PracticeNihongoLyrics', () => {
   });
 
   describe('line by line mode', () => {
-    const [song] = songs;
+    const song = songs.find((s) => s.title === 'Bay City (Bay City)')!;
     const jpLine = song.jp[0];
     const romajiLine = song.romaji[0];
 
@@ -123,6 +129,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('defaults to unchecked, showing language options grouped into columns', () => {
       const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       expect(screen.getByLabelText('Line by line')).not.toBeChecked();
       expect(container.querySelectorAll('.lyrics-column').length).toBeGreaterThan(0);
@@ -131,6 +138,7 @@ describe('PracticeNihongoLyrics', () => {
 
     it('interleaves furigana, kanji, and romaji per line when checked', () => {
       const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       fireEvent.click(screen.getByLabelText('Japanese'));
       fireEvent.click(screen.getByLabelText('Line by line'));
