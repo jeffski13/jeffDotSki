@@ -96,7 +96,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["app/readingsNihonDe/index.tsx"],
+    files: ["app/bible/index.tsx"],
     rules: {
       "react-hooks/set-state-in-effect": "off",
     },
