@@ -1,7 +1,7 @@
 /// <reference types="vitest/globals" />
 import { buildLyricsSongFileContent } from './exportLyricsSong';
 import type { FuriganaLine } from './furiganaGenerator';
-import type { LyricsSong } from '../practiceNihongoLyrics/src/types';
+import type { LyricsSong } from '../lyrics/src/types';
 
 // Record<keyof LyricsSong, true> forces this list to fail to compile if LyricsSong ever
 // gains/loses a property, so the "every property is exported" test below can't go stale.

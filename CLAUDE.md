@@ -4,7 +4,7 @@
 
 Use the `[data-bs-theme="dark"]` / `[data-bs-theme="light"]` attribute selectors for theme-specific CSS, not `@media (prefers-color-scheme: ...)`. The `data-bs-theme` attribute is set on `<html>` by `app/infra/darkTheme.tsx` (from system preference or an explicit user toggle), so attribute selectors correctly follow the in-app toggle while a media query would not.
 
-Example (see `app/japanese/japaneseMusicCovers/styles.css` for more):
+Example (see `app/japanese/pianoCovers/styles.css` for more):
 
 ```css
 [data-bs-theme="dark"] .my-component {
