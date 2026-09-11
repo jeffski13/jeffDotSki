@@ -1,0 +1,63 @@
+.qrLink-wrapper {
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+}
+
+.qrLink-content {
+  max-width: 480px;
+  text-align: center;
+}
+
+.qrLink-title {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.qrLink-subtitle {
+  margin-bottom: 1.5rem;
+}
+
+.qrLink-qr-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+}
+
+.qrLink-qr-code {
+  width: 100%;
+  height: auto;
+  max-width: 320px;
+}
+
+.qrLink-form {
+  text-align: left;
+}
+
+.qrLink-form-group {
+  margin-bottom: 1rem;
+}
+
+.qrLink-update-btn {
+  width: 100%;
+}
+
+[data-bs-theme="dark"] .qrLink-title,
+[data-bs-theme="dark"] .qrLink-subtitle {
+  color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .qrLink-qr-wrapper {
+  background-color: #ffffff;
+}
+
+[data-bs-theme="light"] .qrLink-title,
+[data-bs-theme="light"] .qrLink-subtitle {
+  color: #343a40;
+}
+
+[data-bs-theme="light"] .qrLink-qr-wrapper {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+}
