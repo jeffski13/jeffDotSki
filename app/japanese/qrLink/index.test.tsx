@@ -1,9 +1,11 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import QrLinkPage from './index';
+import QrLinkPage, { getRedirectPageUrl } from './index';
+import { ENV } from '../../infra/env';
 import { updateLyricsUrl, LyricsQrUpdateForbiddenError } from '../shared/lyricsQrApi';
 import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
+import { fetchDevLanIp } from '../shared/devLanIp';
 
 vi.mock('../shared/lyricsQrApi', async () => {
   const actual = await vi.importActual<typeof import('../shared/lyricsQrApi')>('../shared/lyricsQrApi');
@@ -13,10 +15,16 @@ vi.mock('../shared/lyricsQrApi', async () => {
   };
 });
 
+vi.mock('../shared/devLanIp', () => ({
+  fetchDevLanIp: vi.fn(),
+}));
+
 const mockedUpdateLyricsUrl = vi.mocked(updateLyricsUrl);
+const mockedFetchDevLanIp = vi.mocked(fetchDevLanIp);
 
 beforeEach(() => {
   mockedUpdateLyricsUrl.mockReset();
+  mockedFetchDevLanIp.mockReset();
   localStorage.clear();
 });
 
@@ -99,5 +107,56 @@ describe('QrLinkPage', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Update' }));
 
     expect(await screen.findByText('Lyrics link updated.')).toBeInTheDocument();
+  });
+
+  describe('getRedirectPageUrl', () => {
+    it('builds the redirect URL from the current location by default', () => {
+      expect(getRedirectPageUrl()).toBe(`${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/japanese/qrRedirect`);
+    });
+
+    it('swaps in the given LAN IP while keeping the protocol and port', () => {
+      expect(getRedirectPageUrl('10.250.19.21')).toBe(`${window.location.protocol}//10.250.19.21${window.location.port ? `:${window.location.port}` : ''}/japanese/qrRedirect`);
+    });
+  });
+
+  describe('dev LAN IP lookup', () => {
+    const originalNodeEnv = process.env.NODE_ENV;
+
+    afterEach(() => {
+      process.env.NODE_ENV = originalNodeEnv;
+    });
+
+    it('looks up the LAN IP in dev so the QR code works from a phone on the same network', async () => {
+      process.env.NODE_ENV = ENV.DEV;
+      mockedFetchDevLanIp.mockResolvedValue('10.250.19.21');
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(mockedFetchDevLanIp).toHaveBeenCalled();
+      });
+    });
+
+    it('does not look up the LAN IP outside of dev', async () => {
+      process.env.NODE_ENV = ENV.PROD;
+
+      render(<QrLinkPage />);
+
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockedFetchDevLanIp).not.toHaveBeenCalled();
+    });
+
+    it('keeps the current URL if the LAN IP lookup fails', async () => {
+      process.env.NODE_ENV = ENV.DEV;
+      mockedFetchDevLanIp.mockRejectedValue(new Error('lookup failed'));
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(mockedFetchDevLanIp).toHaveBeenCalled();
+      });
+      // no error surfaced to the user — the localhost-based QR code still renders
+      expect(document.querySelector('.qrLink-qr-code')).toBeInTheDocument();
+    });
   });
 });

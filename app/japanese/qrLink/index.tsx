@@ -1,24 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { QRCodeSVG } from 'qrcode.react';
 import ROUTES from '../../consts/ROUTES';
+import { ENV, getEnv } from '../../infra/env';
 import { updateLyricsUrl, LyricsQrUpdateForbiddenError } from '../shared/lyricsQrApi';
 import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
+import { fetchDevLanIp } from '../shared/devLanIp';
 import './styles.css';
 
 export const QR_CODE_SIZE = 320;
 
-export function getRedirectPageUrl(): string {
-  return `${window.location.origin}${ROUTES.japanese.qrRedirect}`;
+// In dev, swap "localhost" for the machine's current LAN IP (fetched from the
+// vite dev server, since it changes with every network) so a phone on the
+// same network can actually reach this page when it scans the QR code.
+export function getRedirectPageUrl(lanIpOverride?: string): string {
+  const { protocol, hostname, port } = window.location;
+  const host = lanIpOverride ?? hostname;
+  const origin = `${protocol}//${host}${port ? `:${port}` : ''}`;
+  return `${origin}${ROUTES.japanese.qrRedirect}`;
 }
 
 export default function QrLinkPage() {
-  const [redirectUrl] = useState(() => (typeof window !== 'undefined' ? getRedirectPageUrl() : ''));
+  const [redirectUrl, setRedirectUrl] = useState(() => (typeof window !== 'undefined' ? getRedirectPageUrl() : ''));
   const [updateKeyInput, setUpdateKeyInput] = useState('');
   const [urlInput, setUrlInput] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (getEnv() !== ENV.DEV) return;
+
+    fetchDevLanIp()
+      .then((lanIp) => {
+        if (lanIp) setRedirectUrl(getRedirectPageUrl(lanIp));
+      })
+      .catch(() => {
+        // keep the localhost-based URL as a fallback
+      });
+  }, []);
 
   const handleUpdate = async () => {
     setSaving(true);
@@ -63,16 +83,6 @@ export default function QrLinkPage() {
             handleUpdate();
           }}
         >
-          <Form.Group className="qrLink-form-group" controlId="qrLinkUpdateKey">
-            <Form.Label>Update Key</Form.Label>
-            <Form.Control
-              type="text"
-              value={updateKeyInput}
-              onChange={(e) => setUpdateKeyInput(e.target.value)}
-              placeholder="Leave blank to reuse the saved key"
-            />
-          </Form.Group>
-
           <Form.Group className="qrLink-form-group" controlId="qrLinkUrl">
             <Form.Label>URL</Form.Label>
             <Form.Control
@@ -81,6 +91,16 @@ export default function QrLinkPage() {
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
               placeholder="https://..."
+            />
+          </Form.Group>
+
+          <Form.Group className="qrLink-form-group" controlId="qrLinkUpdateKey">
+            <Form.Label>Update Key</Form.Label>
+            <Form.Control
+              type="text"
+              value={updateKeyInput}
+              onChange={(e) => setUpdateKeyInput(e.target.value)}
+              placeholder="Leave blank to reuse the saved key"
             />
           </Form.Group>
 

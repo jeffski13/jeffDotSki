@@ -1,7 +1,24 @@
+import os from "node:os";
 import { reactRouter } from "@react-router/dev/vite";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from "vite-plugin-pwa";
+import { getLanIpAddress } from "./getLanIpAddress";
+
+// Dev-only middleware: lets the client ask this machine for its current LAN
+// IP, so a QR code can point phones on the same network at this dev server
+// instead of "localhost" (which only resolves to the phone itself).
+function devLanIpPlugin(): Plugin {
+  return {
+    name: "dev-lan-ip",
+    configureServer(server) {
+      server.middlewares.use("/api/devLanIp", (_req, res) => {
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({ ip: getLanIpAddress(os.networkInterfaces()) }));
+      });
+    },
+  };
+}
 
 export default defineConfig({
   plugins: [
@@ -72,6 +89,7 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+    devLanIpPlugin(),
   ],
   server: {
     proxy: {
