@@ -27,6 +27,8 @@ export default [
     route(ROUTES.japanese.japaneseMusicCovers, "japanese/pianoCovers/route.tsx"),
     route(ROUTES.japanese.japaneseParenthesesToFurigana, "japanese/parenthesesToFurigana/route.tsx"),
     route(ROUTES.japanese.furiganaGenerator, "japanese/furiganaGenerator/route.tsx"),
+    route(ROUTES.japanese.qrLink, "japanese/qrLink/route.tsx"),
+    route(ROUTES.japanese.qrRedirect, "japanese/qrRedirect/route.tsx"),
 
     route(ROUTES.aboutMe.drawing, "aboutMeSection/hobbies/drawings/route.tsx"),
     route(ROUTES.aboutMe.tvShows, "aboutMeSection/hobbies/tvShows/route.tsx"),
