@@ -3,7 +3,12 @@ import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { QRCodeSVG } from 'qrcode.react';
 import ROUTES from '../../consts/ROUTES';
 import { ENV, getEnv } from '../../infra/env';
-import { updateLyricsUrl, LyricsQrUpdateForbiddenError } from '../shared/lyricsQrApi';
+import {
+  updateLyricsUrl,
+  fetchLyricsQrInfo,
+  LyricsQrUpdateForbiddenError,
+  type LyricsQrInfo,
+} from '../shared/lyricsQrApi';
 import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
 import { fetchDevLanIp } from '../shared/devLanIp';
 import './styles.css';
@@ -27,6 +32,24 @@ export default function QrLinkPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [info, setInfo] = useState<LyricsQrInfo | null>(null);
+  const [infoError, setInfoError] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchLyricsQrInfo()
+      .then((result) => {
+        if (!cancelled) setInfo(result);
+      })
+      .catch(() => {
+        if (!cancelled) setInfoError(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (getEnv() !== ENV.DEV) return;
@@ -116,6 +139,21 @@ export default function QrLinkPage() {
             {saving ? 'Updating…' : 'Update'}
           </Button>
         </Form>
+
+        <dl className="qrLink-info">
+          <div className="qrLink-info-row">
+            <dt>URL</dt>
+            <dd data-testid="qrLink-info-url">
+              {infoError ? 'Unavailable' : info ? (info.url ?? 'Not set') : 'Loading…'}
+            </dd>
+          </div>
+          <div className="qrLink-info-row">
+            <dt>Version</dt>
+            <dd data-testid="qrLink-info-version">
+              {infoError ? 'Unavailable' : info ? info.version : 'Loading…'}
+            </dd>
+          </div>
+        </dl>
       </Container>
     </div>
   );

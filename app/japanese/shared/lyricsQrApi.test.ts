@@ -4,6 +4,7 @@ import {
   getLyricsQRUrl,
   LYRICS_QR_URL,
   fetchLyricsRedirectUrl,
+  fetchLyricsQrInfo,
   updateLyricsUrl,
   LyricsQrUpdateForbiddenError,
 } from './lyricsQrApi';
@@ -52,6 +53,29 @@ describe('fetchLyricsRedirectUrl', () => {
     fetchMock.mockResolvedValue(jsonResponse(null, false, 500));
 
     await expect(fetchLyricsRedirectUrl()).rejects.toThrow('Lyrics QR service request failed: 500 Error');
+  });
+});
+
+describe('fetchLyricsQrInfo', () => {
+  it('returns the url and version from the JSON response', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ url: 'https://example.com/lyrics', version: '1.2.3' }));
+
+    const info = await fetchLyricsQrInfo();
+
+    expect(fetchMock).toHaveBeenCalledWith(LYRICS_QR_URL);
+    expect(info).toEqual({ url: 'https://example.com/lyrics', version: '1.2.3' });
+  });
+
+  it('returns a null url when none has been set', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ url: null, version: '1.2.3' }));
+
+    expect(await fetchLyricsQrInfo()).toEqual({ url: null, version: '1.2.3' });
+  });
+
+  it('throws when the service responds with a non-ok status', async () => {
+    fetchMock.mockResolvedValue(jsonResponse(null, false, 500));
+
+    await expect(fetchLyricsQrInfo()).rejects.toThrow('Lyrics QR service request failed: 500 Error');
   });
 });
 

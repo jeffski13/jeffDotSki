@@ -43,6 +43,40 @@
   width: 100%;
 }
 
+
+.qrLink-info {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.qrLink-info-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.qrLink-info-row dt {
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.qrLink-info-row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+[data-bs-theme="dark"] .qrLink-info {
+  color: #adb5bd;
+  border-top: 1px solid #495057;
+}
+
+[data-bs-theme="light"] .qrLink-info {
+  color: #6c757d;
+  border-top: 1px solid #dee2e6;
+}
+
 [data-bs-theme="dark"] .qrLink-title,
 [data-bs-theme="dark"] .qrLink-subtitle {
   color: #e9ecef;
