@@ -3,7 +3,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import QrLinkPage, { getRedirectPageUrl } from './index';
 import { ENV } from '../../infra/env';
-import { updateLyricsUrl, LyricsQrUpdateForbiddenError } from '../shared/lyricsQrApi';
+import { updateLyricsUrl, fetchLyricsQrInfo, LyricsQrUpdateForbiddenError } from '../shared/lyricsQrApi';
 import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
 import { fetchDevLanIp } from '../shared/devLanIp';
 
@@ -12,6 +12,7 @@ vi.mock('../shared/lyricsQrApi', async () => {
   return {
     ...actual,
     updateLyricsUrl: vi.fn(),
+    fetchLyricsQrInfo: vi.fn(),
   };
 });
 
@@ -21,10 +22,13 @@ vi.mock('../shared/devLanIp', () => ({
 
 const mockedUpdateLyricsUrl = vi.mocked(updateLyricsUrl);
 const mockedFetchDevLanIp = vi.mocked(fetchDevLanIp);
+const mockedFetchLyricsQrInfo = vi.mocked(fetchLyricsQrInfo);
 
 beforeEach(() => {
   mockedUpdateLyricsUrl.mockReset();
   mockedFetchDevLanIp.mockReset();
+  mockedFetchLyricsQrInfo.mockReset();
+  mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '0.0.0' });
   localStorage.clear();
 });
 
@@ -107,6 +111,85 @@ describe('QrLinkPage', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Update' }));
 
     expect(await screen.findByText('Lyrics link updated.')).toBeInTheDocument();
+  });
+
+  describe('URL and Version info', () => {
+    it('fetches and shows the current URL and version when the page loads', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/lyrics', version: '1.2.3' });
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('https://example.com/lyrics');
+      });
+      expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('1.2.3');
+      expect(mockedFetchLyricsQrInfo).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows "Not set" when no URL has been set yet', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '1.2.3' });
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('Not set');
+      });
+      expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('1.2.3');
+    });
+
+    it('refreshes the URL and version after a successful update', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/old', version: '1.0.0' });
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/new', version: '1.0.1' });
+      mockedUpdateLyricsUrl.mockResolvedValue(undefined);
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('https://example.com/old');
+      });
+
+      fireEvent.change(screen.getByLabelText('URL'), { target: { value: 'https://example.com/new' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Update' }));
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('https://example.com/new');
+      });
+      expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('1.0.1');
+      expect(mockedFetchLyricsQrInfo).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not refresh the URL and version when the update fails', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/old', version: '1.0.0' });
+      mockedUpdateLyricsUrl.mockRejectedValue(new Error('network down'));
+
+      render(<QrLinkPage />);
+
+      fireEvent.change(screen.getByLabelText('URL'), { target: { value: 'https://example.com/new' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Update' }));
+
+      expect(await screen.findByText('Could not update the lyrics link. Please try again.')).toBeInTheDocument();
+      expect(mockedFetchLyricsQrInfo).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows a loading state before the info arrives', () => {
+      mockedFetchLyricsQrInfo.mockReturnValue(new Promise(() => {}));
+
+      render(<QrLinkPage />);
+
+      expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('Loading…');
+      expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('Loading…');
+    });
+
+    it('shows "Unavailable" when the info request fails', async () => {
+      mockedFetchLyricsQrInfo.mockRejectedValue(new Error('network down'));
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('Unavailable');
+      });
+      expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('Unavailable');
+    });
   });
 
   describe('getRedirectPageUrl', () => {

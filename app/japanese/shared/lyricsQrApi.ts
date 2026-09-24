@@ -25,6 +25,22 @@ export async function fetchLyricsRedirectUrl(): Promise<string> {
   return data.url;
 }
 
+export interface LyricsQrInfo {
+  url: string | null;
+  version: string;
+}
+
+export async function fetchLyricsQrInfo(): Promise<LyricsQrInfo> {
+  const response = await fetch(LYRICS_QR_URL);
+
+  if (!response.ok) {
+    throw new Error(`Lyrics QR service request failed: ${response.status} ${response.statusText}`);
+  }
+
+  const data: LyricsQrInfo = await response.json();
+  return { url: data.url ?? null, version: data.version };
+}
+
 export class LyricsQrUpdateForbiddenError extends Error {}
 
 export async function updateLyricsUrl(updateKey: string, url: string): Promise<void> {
