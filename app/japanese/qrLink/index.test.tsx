@@ -137,6 +137,40 @@ describe('QrLinkPage', () => {
       expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('1.2.3');
     });
 
+    it('refreshes the URL and version after a successful update', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/old', version: '1.0.0' });
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/new', version: '1.0.1' });
+      mockedUpdateLyricsUrl.mockResolvedValue(undefined);
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('https://example.com/old');
+      });
+
+      fireEvent.change(screen.getByLabelText('URL'), { target: { value: 'https://example.com/new' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Update' }));
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-info-url')).toHaveTextContent('https://example.com/new');
+      });
+      expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('1.0.1');
+      expect(mockedFetchLyricsQrInfo).toHaveBeenCalledTimes(2);
+    });
+
+    it('does not refresh the URL and version when the update fails', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/old', version: '1.0.0' });
+      mockedUpdateLyricsUrl.mockRejectedValue(new Error('network down'));
+
+      render(<QrLinkPage />);
+
+      fireEvent.change(screen.getByLabelText('URL'), { target: { value: 'https://example.com/new' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Update' }));
+
+      expect(await screen.findByText('Could not update the lyrics link. Please try again.')).toBeInTheDocument();
+      expect(mockedFetchLyricsQrInfo).toHaveBeenCalledTimes(1);
+    });
+
     it('shows a loading state before the info arrives', () => {
       mockedFetchLyricsQrInfo.mockReturnValue(new Promise(() => {}));
 

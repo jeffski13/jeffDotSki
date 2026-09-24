@@ -35,16 +35,20 @@ export default function QrLinkPage() {
   const [info, setInfo] = useState<LyricsQrInfo | null>(null);
   const [infoError, setInfoError] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
-
+  const loadInfo = (isCancelled: () => boolean = () => false) =>
     fetchLyricsQrInfo()
       .then((result) => {
-        if (!cancelled) setInfo(result);
+        if (isCancelled()) return;
+        setInfo(result);
+        setInfoError(false);
       })
       .catch(() => {
-        if (!cancelled) setInfoError(true);
+        if (!isCancelled()) setInfoError(true);
       });
+
+  useEffect(() => {
+    let cancelled = false;
+    loadInfo(() => cancelled);
 
     return () => {
       cancelled = true;
@@ -76,6 +80,7 @@ export default function QrLinkPage() {
     try {
       await updateLyricsUrl(updateKey, urlInput);
       setSuccess(true);
+      loadInfo();
     } catch (err) {
       if (err instanceof LyricsQrUpdateForbiddenError) {
         setError('Update key is not valid.');
