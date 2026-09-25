@@ -126,6 +126,17 @@ describe('QrLinkPage', () => {
       expect(mockedFetchLyricsQrInfo).toHaveBeenCalledTimes(1);
     });
 
+    it('renders the current URL as a link that opens in a new tab', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/lyrics', version: '1.2.3' });
+
+      render(<QrLinkPage />);
+
+      const link = await screen.findByRole('link', { name: 'https://example.com/lyrics' });
+      expect(link).toHaveAttribute('href', 'https://example.com/lyrics');
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+
     it('shows "Not set" when no URL has been set yet', async () => {
       mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '1.2.3' });
 
@@ -191,6 +202,7 @@ describe('QrLinkPage', () => {
       expect(screen.getByTestId('qrLink-info-version')).toHaveTextContent('Unavailable');
     });
   });
+
 
   describe('getRedirectPageUrl', () => {
     it('builds the redirect URL from the current location by default', () => {

@@ -149,7 +149,17 @@ export default function QrLinkPage() {
           <div className="qrLink-info-row">
             <dt>URL</dt>
             <dd data-testid="qrLink-info-url">
-              {infoError ? 'Unavailable' : info ? (info.url ?? 'Not set') : 'Loading…'}
+              {infoError ? (
+                'Unavailable'
+              ) : !info ? (
+                'Loading…'
+              ) : !info.url ? (
+                'Not set'
+              ) : (
+                <a href={info.url} target="_blank" rel="noopener noreferrer">
+                  {info.url}
+                </a>
+              ) }
             </dd>
           </div>
           <div className="qrLink-info-row">
