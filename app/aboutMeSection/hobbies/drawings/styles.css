@@ -63,6 +63,11 @@
     display: flex;
     align-items: center;
     gap: 8;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
 }
 
 .fullImageDirectionLabelLeft {
@@ -83,9 +88,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 24px;
     cursor: pointer;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
     animation: fullImageCloseSlideIn 500ms ease-out, fullImageCloseSpin 500ms ease-out;
 }
 
@@ -110,7 +117,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .fullImageCloseButton {
+    .fullImageCloseButton,
+    .fullImageDirectionLabel {
+        transition: none;
         animation: none;
     }
 }
@@ -168,9 +177,6 @@
 .fullImageFrameClose .fullImageCloseButton {
     width: 100%;
     height: 100%;
-    border-radius: 8px;
-    color: rgba(255, 255, 255, 0.7);
-    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
 }
 
 .fullImageArrowLeft {
@@ -206,14 +212,18 @@
     }
 }
 
-.fullImageArrow:hover,
-.fullImageFrameClose .fullImageCloseButton:hover {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.08);
+/* Only on devices that really hover, so a tap on touch screens doesn't leave the highlight stuck on */
+@media (hover: hover) {
+    .fullImageArrow:hover,
+    .fullImageCloseButton:hover,
+    .fullImageDirectionLabel:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.08);
+    }
 }
 
 .fullImageArrow:focus-visible,
-.fullImageFrameClose .fullImageCloseButton:focus-visible {
+.fullImageCloseButton:focus-visible {
     color: #fff;
     outline: 2px solid rgba(255, 255, 255, 0.8);
     outline-offset: -4px;
@@ -230,8 +240,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .fullImageArrow,
-    .fullImageFrameClose .fullImageCloseButton {
+    .fullImageArrow {
         transition: none;
         animation: none;
     }
