@@ -236,10 +236,10 @@ export function Drawings({
             aria-label="Navigate or close full screen image"
           >
             <div className='fullImageNavigation'>
-              <div className="fullImageDirectionClose noselect d-md-none">
+              <div className="fullImageDirectionClose noselect d-sm-none">
                 {closeButton}
               </div>
-              <div className="mobile-view fullImageDirectionLabelContainer">
+              <div className="fullImageDirectionLabelContainer d-sm-none">
                 <div className="fullImageDirectionLabelContent">
                   <div className="fullImageDirectionLabel fullImageDirectionLabelLeft noselect"
                     onClick={() => { showImageFullPrevious() }}
@@ -260,13 +260,13 @@ export function Drawings({
               </Spinner>
             </div>
             <div className="fullImageFrame">
-              {/* On md+ the close button sits above the left arrow */}
-              <div className="fullImageFrameClose noselect d-none d-md-flex">
+              {/* On sm+ the close button sits above the left arrow */}
+              <div className="fullImageFrameClose noselect d-none d-sm-flex">
                 {closeButton}
               </div>
               <button
                 aria-label="Previous drawing"
-                className="fullImageArrow fullImageArrowLeft d-none d-md-flex"
+                className="fullImageArrow fullImageArrowLeft d-none d-sm-flex"
                 onClick={() => showImageFullPrevious()}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" /></svg>
@@ -288,7 +288,7 @@ export function Drawings({
               />
               <button
                 aria-label="Next drawing"
-                className="fullImageArrow fullImageArrowRight d-none d-md-flex"
+                className="fullImageArrow fullImageArrowRight d-none d-sm-flex"
                 onClick={() => showImageFullNext()}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8" /></svg>

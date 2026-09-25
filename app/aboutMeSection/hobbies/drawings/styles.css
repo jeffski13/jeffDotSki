@@ -127,7 +127,7 @@
 
 /* Fixed size regardless of the drawing's aspect ratio, so the arrows don't move between drawings */
 .fullImageFrame {
-    /* space left above and below the arrows; the md+ close button lives in the top one */
+    /* space left above and below the arrows; the sm+ close button lives in the top one */
     --fullImageArrowInset: 56px;
     --fullImageSideColumnWidth: min(64px, 9vw);
     position: relative;

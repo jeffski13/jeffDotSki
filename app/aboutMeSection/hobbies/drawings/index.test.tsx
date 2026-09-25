@@ -65,8 +65,8 @@ describe('Drawings Component', () => {
   it('side arrow buttons are hidden on small screens', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));
-    expect(screen.getByLabelText('Previous drawing')).toHaveClass('d-none', 'd-md-flex');
-    expect(screen.getByLabelText('Next drawing')).toHaveClass('d-none', 'd-md-flex');
+    expect(screen.getByLabelText('Previous drawing')).toHaveClass('d-none', 'd-sm-flex');
+    expect(screen.getByLabelText('Next drawing')).toHaveClass('d-none', 'd-sm-flex');
   });
 
   it('shows side arrow buttons as soon as the overlay opens, while the full image is loading', () => {
@@ -100,17 +100,25 @@ describe('Drawings Component', () => {
     expect(screen.getByAltText(/Full drawing/i)).toBeInTheDocument();
   });
 
-  it('shows the close button above the left arrow on md+ and in the top bar on smaller screens', () => {
+  it('shows the close button above the left arrow on sm+ and in the top bar on smaller screens', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));
     const closeButtons = screen.getAllByLabelText('Close full screen image');
     expect(closeButtons).toHaveLength(2);
 
-    const [smallScreenClose, mdScreenClose] = closeButtons;
-    expect(smallScreenClose.parentElement).toHaveClass('fullImageDirectionClose', 'd-md-none');
-    expect(mdScreenClose.parentElement).toHaveClass('fullImageFrameClose', 'd-none', 'd-md-flex');
-    // The md+ close button shares the frame with the arrows
-    expect(mdScreenClose.closest('.fullImageFrame')).toContainElement(screen.getByLabelText('Previous drawing'));
+    const [xsScreenClose, smScreenClose] = closeButtons;
+    expect(xsScreenClose.parentElement).toHaveClass('fullImageDirectionClose', 'd-sm-none');
+    expect(smScreenClose.parentElement).toHaveClass('fullImageFrameClose', 'd-none', 'd-sm-flex');
+    // The sm+ close button shares the frame with the arrows
+    expect(smScreenClose.closest('.fullImageFrame')).toContainElement(screen.getByLabelText('Previous drawing'));
+  });
+
+  it('shows the tap left/right labels only on xs screens, where the side arrows are hidden', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const tapLabels = screen.getByText(/Tap Left/i).closest('.fullImageDirectionLabelContainer');
+    expect(tapLabels).toHaveClass('d-sm-none');
+    expect(tapLabels).not.toHaveClass('mobile-view');
   });
 
   it.each([0, 1])('closes full image overlay from close button %i', (buttonIndex) => {
