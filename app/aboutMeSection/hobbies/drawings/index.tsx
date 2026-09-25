@@ -235,11 +235,11 @@ export function Drawings({
             }}
             aria-label="Navigate or close full screen image"
           >
-            <div className='fullImageNavigation'>
-              <div className="fullImageDirectionClose noselect d-sm-none">
+            <div className="fullImageNavigation d-sm-none">
+              <div className="fullImageDirectionClose noselect">
                 {closeButton}
               </div>
-              <div className="fullImageDirectionLabelContainer d-sm-none">
+              <div className="fullImageDirectionLabelContainer">
                 <div className="fullImageDirectionLabelContent">
                   <div className="fullImageDirectionLabel fullImageDirectionLabelLeft noselect"
                     onClick={() => { showImageFullPrevious() }}

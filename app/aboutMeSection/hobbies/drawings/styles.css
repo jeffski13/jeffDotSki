@@ -1,4 +1,6 @@
 .fullImageArea {
+    /* shared by the image frame and the xs top bar, which ends at the frame's top edge */
+    --fullImageFrameSize: min(80vw, 80vh);
     position: fixed;
     top: 0;
     left: 0;
@@ -14,19 +16,26 @@
     flex-direction: column;
 }
 
+/* xs only: runs from the top of the screen to the top edge of the image frame */
 .fullImageNavigation {
     width: 90vw;
+    height: calc((100vh - var(--fullImageFrameSize)) / 2);
     display: flex;
     justify-content: space-between;
     position: absolute;
-    top: 85px;
+    top: 0;
     left: 0;
     z-index: 11;
 }
 
+/*
+ * Content sits below the site's fixed navbar, which covers the top of the overlay.
+ * The 48px close button and the 30px tall label text are both centered 104px from the top.
+ */
 .fullImageDirectionClose {
-    width: 10%;
-    padding-left: 10px;
+    margin-left: 10px;
+    margin-top: 80px;
+    align-self: flex-start;
 }
 
 .fullImageDirectionLabelContainer {
@@ -37,14 +46,15 @@
 
 .fullImageDirectionLabelContent {
     display: flex;
+    height: 100%;
 }
 
 .fullImageDirectionClose {
     background: rgba(0, 0, 0, 0);
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,10 +71,11 @@
     font-size: 20px;
     font-weight: 600;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8;
-    padding-top: 4px;
+    padding-top: 89px;
     padding-bottom: 4px;
+    line-height: 30px;
     border-radius: 8px;
     cursor: pointer;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
@@ -141,8 +152,8 @@
     --fullImageSideColumnWidth: min(64px, 9vw);
     position: relative;
     display: flex;
-    width: min(80vw, 80vh);
-    height: min(80vw, 80vh);
+    width: var(--fullImageFrameSize);
+    height: var(--fullImageFrameSize);
     z-index: 11;
 }
 
@@ -174,6 +185,7 @@
 }
 
 /* Fill the slot above the left arrow so the hover area matches the arrows */
+.fullImageDirectionClose .fullImageCloseButton,
 .fullImageFrameClose .fullImageCloseButton {
     width: 100%;
     height: 100%;

@@ -107,7 +107,8 @@ describe('Drawings Component', () => {
     expect(closeButtons).toHaveLength(2);
 
     const [xsScreenClose, smScreenClose] = closeButtons;
-    expect(xsScreenClose.parentElement).toHaveClass('fullImageDirectionClose', 'd-sm-none');
+    expect(xsScreenClose.parentElement).toHaveClass('fullImageDirectionClose');
+    expect(xsScreenClose.closest('.fullImageNavigation')).toHaveClass('d-sm-none');
     expect(smScreenClose.parentElement).toHaveClass('fullImageFrameClose', 'd-none', 'd-sm-flex');
     // The sm+ close button shares the frame with the arrows
     expect(smScreenClose.closest('.fullImageFrame')).toContainElement(screen.getByLabelText('Previous drawing'));
@@ -116,9 +117,25 @@ describe('Drawings Component', () => {
   it('shows the tap left/right labels only on xs screens, where the side arrows are hidden', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));
-    const tapLabels = screen.getByText(/Tap Left/i).closest('.fullImageDirectionLabelContainer');
-    expect(tapLabels).toHaveClass('d-sm-none');
-    expect(tapLabels).not.toHaveClass('mobile-view');
+    const topBar = screen.getByText(/Tap Left/i).closest('.fullImageNavigation');
+    expect(topBar).toHaveClass('d-sm-none');
+    expect(topBar).toContainElement(screen.getByText(/Tap Right/i));
+    expect(topBar?.querySelector('.mobile-view')).toBeNull();
+  });
+
+  it('switches full screen image with the tap left/right areas', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+
+    fireEvent.click(screen.getByText(/Tap Right/i));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+
+    fireEvent.click(screen.getByText(/Tap Left/i));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full1.jpg');
   });
 
   it.each([0, 1])('closes full image overlay from close button %i', (buttonIndex) => {
