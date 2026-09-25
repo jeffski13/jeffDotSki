@@ -161,6 +161,16 @@ export function Drawings({
     };
   }, [isFullScreenMode]);
 
+  const closeButton = (
+    <button
+      aria-label="Close full screen image"
+      className="fullImageCloseButton"
+      onClick={() => doNotShowImageFull()}
+    >
+      &#10005;
+    </button>
+  );
+
   return (
     <div className="aboutmeWrapper">
       <div className="hobbiesSection" >
@@ -226,14 +236,8 @@ export function Drawings({
             aria-label="Navigate or close full screen image"
           >
             <div className='fullImageNavigation'>
-              <div className="fullImageDirectionClose noselect">
-                <button
-                  aria-label="Close full screen image"
-                  className="fullImageCloseButton"
-                  onClick={() => doNotShowImageFull()}
-                >
-                  &#10005;
-                </button>
+              <div className="fullImageDirectionClose noselect d-md-none">
+                {closeButton}
               </div>
               <div className="mobile-view fullImageDirectionLabelContainer">
                 <div className="fullImageDirectionLabelContent">
@@ -256,6 +260,10 @@ export function Drawings({
               </Spinner>
             </div>
             <div className="fullImageFrame">
+              {/* On md+ the close button sits above the left arrow */}
+              <div className="fullImageFrameClose noselect d-none d-md-flex">
+                {closeButton}
+              </div>
               <button
                 aria-label="Previous drawing"
                 className="fullImageArrow fullImageArrowLeft d-none d-md-flex"

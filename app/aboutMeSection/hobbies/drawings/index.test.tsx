@@ -100,6 +100,26 @@ describe('Drawings Component', () => {
     expect(screen.getByAltText(/Full drawing/i)).toBeInTheDocument();
   });
 
+  it('shows the close button above the left arrow on md+ and in the top bar on smaller screens', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const closeButtons = screen.getAllByLabelText('Close full screen image');
+    expect(closeButtons).toHaveLength(2);
+
+    const [smallScreenClose, mdScreenClose] = closeButtons;
+    expect(smallScreenClose.parentElement).toHaveClass('fullImageDirectionClose', 'd-md-none');
+    expect(mdScreenClose.parentElement).toHaveClass('fullImageFrameClose', 'd-none', 'd-md-flex');
+    // The md+ close button shares the frame with the arrows
+    expect(mdScreenClose.closest('.fullImageFrame')).toContainElement(screen.getByLabelText('Previous drawing'));
+  });
+
+  it.each([0, 1])('closes full image overlay from close button %i', (buttonIndex) => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    fireEvent.click(screen.getAllByLabelText('Close full screen image')[buttonIndex]);
+    expect(screen.queryByAltText(/Full drawing/i)).not.toBeInTheDocument();
+  });
+
   it('closes full image overlay when escape key is pressed', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));
