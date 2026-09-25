@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, Fragment } from "react";
+import { useState, useMemo, useEffect, useRef, Fragment } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import type { LyricsSong } from "./src/types";
 import { useTextSize, TextSizeControl, DEFAULT_MAX_FONT_SIZE } from "../shared/textSizeControl";
@@ -16,6 +16,7 @@ import departure from "./src/departure";
 import naminoriJohnny from "./src/naminoriJohnny";
 import reason from "./src/reason";
 import aitai from "./src/aitai";
+import { charFromPoint, selectWordAt } from "./wordSelect";
 import '../displayControls.css';
 import './styles.css';
 
@@ -113,6 +114,22 @@ export default function WebPage() {
   const { showJp, showFurigana, showRomaji, lineByLine } = displaySettings;
   const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
   const showScrollTop = useShowScrollTop();
+  const lastAutoSelection = useRef<string | null>(null);
+
+  // Tapping a kanji highlights the word around it (kanji run + trailing hiragana)
+  // so it can be looked up/copied without fiddly manual selection.
+  const handleLyricsClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const line = (e.target as HTMLElement).closest?.(".lyric-line");
+    if (!line) return;
+    const selection = window.getSelection();
+    // Don't clobber a selection the user just made by dragging.
+    if (selection && !selection.isCollapsed && selection.toString() !== lastAutoSelection.current) return;
+    const hit = charFromPoint(document, e.clientX, e.clientY);
+    if (!hit || !line.contains(hit.node)) return;
+    if (selectWordAt(line, hit.node, hit.offset)) {
+      lastAutoSelection.current = window.getSelection()?.toString() ?? null;
+    }
+  };
 
   useEffect(() => {
     window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
@@ -210,7 +227,7 @@ export default function WebPage() {
           </Col>
         </Row>
         <hr className="japanese-controls-divider" />
-        <div className="lyrics-area" style={{ fontSize: `${fontSize}px` }}>
+        <div className="lyrics-area" style={{ fontSize: `${fontSize}px` }} onClick={handleLyricsClick}>
           {lineByLine ? (
             pairs.map((line, idx) => {
               const isSeparator = line.jp.startsWith("---") || line.rom.startsWith("---");
