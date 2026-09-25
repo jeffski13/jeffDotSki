@@ -43,6 +43,46 @@ describe('Drawings Component', () => {
     expect(fullImg).toHaveAttribute('src', '/full1.jpg');
   });
   
+  it('switches full screen image with the side arrow buttons', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+
+    fireEvent.click(screen.getByLabelText('Next drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+
+    fireEvent.click(screen.getByLabelText('Previous drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full1.jpg');
+
+    // Previous wraps around to the last drawing
+    fireEvent.click(screen.getByLabelText('Previous drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+  });
+
+  it('side arrow buttons are hidden on small screens', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByLabelText('Previous drawing')).toHaveClass('d-none', 'd-md-flex');
+    expect(screen.getByLabelText('Next drawing')).toHaveClass('d-none', 'd-md-flex');
+  });
+
+  it('does not show side arrow buttons while the full image is loading', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.queryByLabelText('Previous drawing')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Next drawing')).not.toBeInTheDocument();
+  });
+
+  it('clicking a side arrow does not close the overlay', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    fireEvent.click(screen.getByLabelText('Next drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toBeInTheDocument();
+  });
+
   it('closes full image overlay when escape key is pressed', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));
