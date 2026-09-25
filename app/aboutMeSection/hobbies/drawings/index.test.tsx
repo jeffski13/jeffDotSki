@@ -138,6 +138,53 @@ describe('Drawings Component', () => {
     expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full1.jpg');
   });
 
+  it('keeps the same tap left/right labels mounted when switching drawings, so the intro animation only plays once', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+    const tapLeft = screen.getByText(/Tap Left/i);
+    const tapRight = screen.getByText(/Tap Right/i);
+
+    fireEvent.click(tapRight);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+    expect(screen.getByText(/Tap Left/i)).toBe(tapLeft);
+    expect(screen.getByText(/Tap Right/i)).toBe(tapRight);
+  });
+
+  it('switches full screen image with the xs side tap areas beside the image', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+      { name: 'Drawing 3', thumb: '/thumb3.jpg', full: '/full3.jpg' },
+    ];
+    const { container } = render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 2 Drawing/i));
+    const leftArea = container.querySelector('.fullImageSideTapAreaLeft')!;
+    const rightArea = container.querySelector('.fullImageSideTapAreaRight')!;
+
+    fireEvent.click(rightArea);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full3.jpg');
+
+    fireEvent.click(leftArea);
+    fireEvent.click(leftArea);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full1.jpg');
+  });
+
+  it('xs side tap areas are hidden on sm+ and from screen readers', () => {
+    const { container } = render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const sideAreas = container.querySelectorAll('.fullImageSideTapArea');
+    expect(sideAreas).toHaveLength(2);
+    sideAreas.forEach(area => {
+      expect(area).toHaveClass('d-sm-none');
+      expect(area).toHaveAttribute('aria-hidden', 'true');
+      expect(area.closest('.fullImageFrame')).not.toBeNull();
+    });
+  });
+
   it.each([0, 1])('closes full image overlay from close button %i', (buttonIndex) => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));

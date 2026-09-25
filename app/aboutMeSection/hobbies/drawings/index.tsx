@@ -260,6 +260,17 @@ export function Drawings({
               </Spinner>
             </div>
             <div className="fullImageFrame">
+              {/* On xs the space beside the image acts like Tap Left / Tap Right */}
+              <div
+                aria-hidden="true"
+                className="fullImageSideTapArea fullImageSideTapAreaLeft d-sm-none"
+                onClick={() => showImageFullPrevious()}
+              />
+              <div
+                aria-hidden="true"
+                className="fullImageSideTapArea fullImageSideTapAreaRight d-sm-none"
+                onClick={() => showImageFullNext()}
+              />
               {/* On sm+ the close button sits above the left arrow */}
               <div className="fullImageFrameClose noselect d-none d-sm-flex">
                 {closeButton}

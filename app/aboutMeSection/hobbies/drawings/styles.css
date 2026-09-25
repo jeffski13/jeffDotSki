@@ -83,11 +83,13 @@
 
 .fullImageDirectionLabelLeft {
     padding-left: 20px;
+    animation: fullImageSlideInFromLeft 500ms ease-out;
 }
 
 .fullImageDirectionLabelRight {
     padding-right: 20px;
     justify-content: flex-end;
+    animation: fullImageSlideInFromRight 500ms ease-out;
 }
 
 .fullImageCloseButton {
@@ -193,16 +195,16 @@
 
 .fullImageArrowLeft {
     right: 100%;
-    animation: fullImageArrowSlideInLeft 500ms ease-out;
+    animation: fullImageSlideInFromLeft 500ms ease-out;
 }
 
 .fullImageArrowRight {
     left: 100%;
-    animation: fullImageArrowSlideInRight 500ms ease-out;
+    animation: fullImageSlideInFromRight 500ms ease-out;
 }
 
-/* Same timing as the close button, sliding in from each side */
-@keyframes fullImageArrowSlideInLeft {
+/* Same timing as the close button, sliding in from each side; used by the arrows and tap labels */
+@keyframes fullImageSlideInFromLeft {
     from {
         translate: -5vw 0;
         opacity: 0;
@@ -213,7 +215,7 @@
     }
 }
 
-@keyframes fullImageArrowSlideInRight {
+@keyframes fullImageSlideInFromRight {
     from {
         translate: 5vw 0;
         opacity: 0;
@@ -224,11 +226,31 @@
     }
 }
 
+/* xs only: fills the space between the image and the screen edge on each side */
+.fullImageSideTapArea {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: calc((100vw - var(--fullImageFrameSize)) / 2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 150ms ease-in-out;
+}
+
+.fullImageSideTapAreaLeft {
+    right: 100%;
+}
+
+.fullImageSideTapAreaRight {
+    left: 100%;
+}
+
 /* Only on devices that really hover, so a tap on touch screens doesn't leave the highlight stuck on */
 @media (hover: hover) {
     .fullImageArrow:hover,
     .fullImageCloseButton:hover,
-    .fullImageDirectionLabel:hover {
+    .fullImageDirectionLabel:hover,
+    .fullImageSideTapArea:hover {
         color: #fff;
         background-color: rgba(255, 255, 255, 0.08);
     }
@@ -252,7 +274,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .fullImageArrow {
+    .fullImageArrow,
+    .fullImageSideTapArea {
         transition: none;
         animation: none;
     }
