@@ -16,9 +16,9 @@
     flex-direction: column;
 }
 
-/* xs only: runs from the top of the screen to the top edge of the image frame */
+/* xs only: spans the screen width, from the top of the screen to the top edge of the image frame */
 .fullImageNavigation {
-    width: 90vw;
+    width: 100%;
     height: calc((100vh - var(--fullImageFrameSize)) / 2);
     display: flex;
     justify-content: space-between;
@@ -38,10 +38,11 @@
     align-self: flex-start;
 }
 
+/* Fills the rest of the bar so Tap Right reaches the right edge of the screen */
 .fullImageDirectionLabelContainer {
-    width: 90%;
+    flex: 1;
+    min-width: 0;
     padding-left: 10px;
-    padding-right: 10px;
 }
 
 .fullImageDirectionLabelContent {
@@ -86,9 +87,11 @@
     animation: fullImageSlideInFromLeft 500ms ease-out;
 }
 
+/* Text inset toward the middle; the clickable area still reaches the screen edge */
 .fullImageDirectionLabelRight {
-    padding-right: 20px;
+    padding-right: 48px;
     justify-content: flex-end;
+    white-space: nowrap;
     animation: fullImageSlideInFromRight 500ms ease-out;
 }
 
