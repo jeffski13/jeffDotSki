@@ -116,23 +116,25 @@
 }
 
 .fullImage {
-    max-Width: 80vw;
-    max-Height: 80vh;
-    border-Radius: 12;
-    box-Shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
-    z-Index: 11;
+    /* fill the fixed frame and letterbox, so every drawing takes the same space */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     transition: opacity 240ms ease-in-out;
     opacity: 0;
     /* start hidden until loaded */
 }
 
+/* Fixed size regardless of the drawing's aspect ratio, so the arrows don't move between drawings */
 .fullImageFrame {
     position: relative;
     display: flex;
+    width: min(80vw, 80vh);
+    height: min(80vw, 80vh);
     z-index: 11;
 }
 
-/* Arrows sit just outside the image and match its height */
+/* Arrows sit just outside the frame and match its height */
 .fullImageArrow {
     position: absolute;
     top: 0;
