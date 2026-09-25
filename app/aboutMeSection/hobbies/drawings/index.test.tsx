@@ -83,6 +83,20 @@ describe('Drawings Component', () => {
     expect(fullImg).toBeInTheDocument();
   });
 
+  it('shows a loading spinner while the full image is loading', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const spinner = screen.getByRole('status');
+    expect(spinner).toHaveTextContent('Loading...');
+    expect(spinner.parentElement).toHaveClass('loading');
+  });
+
+  it('hides the loading spinner once the full image is loaded', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByRole('status', { hidden: true }).parentElement).toHaveClass('loaded');
+  });
+
   it('renders correct number of drawings from both lists', () => {
     const drawingsList = [
       { name: 'NormalDrawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },

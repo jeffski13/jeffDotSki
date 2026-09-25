@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../../infra/langSupport/langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
@@ -251,7 +251,9 @@ export function Drawings({
               </div>
             </div>
             <div className={`full-screen-image-loading-text-container ${backgroundLoaded ? 'loaded' : 'loading'}`} >
-              <p className="full-screen-image-loading-text">loading...</p>
+              <Spinner animation="border" role="status" className="full-screen-image-loading-spinner">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
             </div>
             <img
               id={`full-image-${getOverlayIdx()}`}

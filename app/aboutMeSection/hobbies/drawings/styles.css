@@ -148,6 +148,19 @@
   align-items: center; /* Vertically centers content */
 }
 
+.full-screen-image-loading-spinner {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-width: 0.3rem;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .full-screen-image-loading-spinner {
+    animation-duration: 1.5s;
+  }
+}
+
 .full-screen-image-loading-text-container.loaded {
   display: none;
 }
