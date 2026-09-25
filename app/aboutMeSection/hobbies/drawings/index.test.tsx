@@ -43,6 +43,25 @@ describe('Drawings Component', () => {
     expect(fullImg).toHaveAttribute('src', '/full1.jpg');
   });
   
+  it('closes full image overlay when escape key is pressed', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByAltText(/Full drawing/i)).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(screen.queryByAltText(/Full drawing/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/Close full screen image/i)).not.toBeInTheDocument();
+  });
+
+  it('closes full image overlay when escape key is pressed while loading', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByAltText(/Full drawing loading/i)).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(screen.queryByAltText(/Full drawing/i)).not.toBeInTheDocument();
+  });
+
   it('renders full image overlay when hobbieImage is clicked', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     // Find the thumbnail image and click it

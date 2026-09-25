@@ -144,6 +144,23 @@ export function Drawings({
     };
   }, [overlayImg]);
 
+  // Escape closes the overlay, even while the image is still loading
+  useEffect(() => {
+    if (!isFullScreenMode) {
+      return;
+    }
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        doNotShowImageFull();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [isFullScreenMode]);
+
   return (
     <div className="aboutmeWrapper">
       <div className="hobbiesSection" >
