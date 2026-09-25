@@ -167,7 +167,7 @@ export function Drawings({
       className="fullImageCloseButton"
       onClick={() => doNotShowImageFull()}
     >
-      &#10005;
+      <span className="fullImageCloseIcon" aria-hidden="true">&#10005;</span>
     </button>
   );
 

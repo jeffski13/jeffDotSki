@@ -29,20 +29,19 @@
 }
 
 /*
- * Content sits below the site's fixed navbar, which covers the top of the overlay.
- * The 48px close button and the 30px tall label text are both centered 104px from the top.
+ * Full height column in the top left corner, up to Tap Left, all of it clickable.
+ * Content sits below the site's fixed navbar, which covers the top of the overlay:
+ * the 24px close icon and the 30px tall label text are both centered 104px from the top.
  */
 .fullImageDirectionClose {
-    margin-left: 10px;
-    margin-top: 80px;
-    align-self: flex-start;
+    width: 68px;
+    flex-shrink: 0;
 }
 
 /* Fills the rest of the bar so Tap Right reaches the right edge of the screen */
 .fullImageDirectionLabelContainer {
     flex: 1;
     min-width: 0;
-    padding-left: 10px;
 }
 
 .fullImageDirectionLabelContent {
@@ -53,9 +52,6 @@
 .fullImageDirectionClose {
     background: rgba(0, 0, 0, 0);
     border: none;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,6 +105,12 @@
     font-size: 24px;
     cursor: pointer;
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+}
+
+/* Animate the icon, not the button, so it spins in place however large the clickable area is */
+.fullImageCloseIcon {
+    display: block;
+    line-height: 1;
     animation: fullImageCloseSlideIn 500ms ease-out, fullImageCloseSpin 500ms ease-out;
 }
 
@@ -134,6 +136,7 @@
 
 @media (prefers-reduced-motion: reduce) {
     .fullImageCloseButton,
+    .fullImageCloseIcon,
     .fullImageDirectionLabel {
         transition: none;
         animation: none;
@@ -189,11 +192,17 @@
     justify-content: center;
 }
 
-/* Fill the slot above the left arrow so the hover area matches the arrows */
+/* Fill the whole close area (xs top-left column, sm+ slot above the left arrow) so all of it is clickable */
 .fullImageDirectionClose .fullImageCloseButton,
 .fullImageFrameClose .fullImageCloseButton {
     width: 100%;
     height: 100%;
+}
+
+/* 92px + half of the 24px icon = centered 104px from the top, level with the tap labels */
+.fullImageDirectionClose .fullImageCloseButton {
+    align-items: flex-start;
+    padding-top: 92px;
 }
 
 .fullImageArrowLeft {

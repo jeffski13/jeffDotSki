@@ -185,6 +185,24 @@ describe('Drawings Component', () => {
     });
   });
 
+  it('xs close button is the top-left column of the top bar, next to the tap labels', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const xsCloseArea = screen.getAllByLabelText('Close full screen image')[0].parentElement!;
+    expect(xsCloseArea).toHaveClass('fullImageDirectionClose');
+    expect(xsCloseArea.nextElementSibling).toHaveClass('fullImageDirectionLabelContainer');
+  });
+
+  it('close buttons keep their accessible name, with the icon hidden from screen readers', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    screen.getAllByRole('button', { name: 'Close full screen image' }).forEach(button => {
+      const icon = button.querySelector('.fullImageCloseIcon');
+      expect(icon).toHaveTextContent('✕');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+    });
+  });
+
   it.each([0, 1])('closes full image overlay from close button %i', (buttonIndex) => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));
