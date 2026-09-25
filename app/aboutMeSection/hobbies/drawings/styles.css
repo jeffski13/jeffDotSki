@@ -153,10 +153,35 @@
 
 .fullImageArrowLeft {
     right: 100%;
+    animation: fullImageArrowSlideInLeft 500ms ease-out;
 }
 
 .fullImageArrowRight {
     left: 100%;
+    animation: fullImageArrowSlideInRight 500ms ease-out;
+}
+
+/* Same timing as the close button, sliding in from each side */
+@keyframes fullImageArrowSlideInLeft {
+    from {
+        translate: -5vw 0;
+        opacity: 0;
+    }
+    to {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+@keyframes fullImageArrowSlideInRight {
+    from {
+        translate: 5vw 0;
+        opacity: 0;
+    }
+    to {
+        translate: 0 0;
+        opacity: 1;
+    }
 }
 
 .fullImageArrow:hover {
@@ -183,6 +208,7 @@
 @media (prefers-reduced-motion: reduce) {
     .fullImageArrow {
         transition: none;
+        animation: none;
     }
 }
 

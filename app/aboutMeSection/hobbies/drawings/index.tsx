@@ -256,15 +256,13 @@ export function Drawings({
               </Spinner>
             </div>
             <div className="fullImageFrame">
-              {backgroundLoaded && (
-                <button
-                  aria-label="Previous drawing"
-                  className="fullImageArrow fullImageArrowLeft d-none d-md-flex"
-                  onClick={() => showImageFullPrevious()}
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" /></svg>
-                </button>
-              )}
+              <button
+                aria-label="Previous drawing"
+                className="fullImageArrow fullImageArrowLeft d-none d-md-flex"
+                onClick={() => showImageFullPrevious()}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" /></svg>
+              </button>
               <img
                 id={`full-image-${getOverlayIdx()}`}
                 src={overlayImg ? overlayImg : undefined}
@@ -280,15 +278,13 @@ export function Drawings({
                   }
                 }}
               />
-              {backgroundLoaded && (
-                <button
-                  aria-label="Next drawing"
-                  className="fullImageArrow fullImageArrowRight d-none d-md-flex"
-                  onClick={() => showImageFullNext()}
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8" /></svg>
-                </button>
-              )}
+              <button
+                aria-label="Next drawing"
+                className="fullImageArrow fullImageArrowRight d-none d-md-flex"
+                onClick={() => showImageFullNext()}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8" /></svg>
+              </button>
             </div>
           </div>
         )}

@@ -69,11 +69,28 @@ describe('Drawings Component', () => {
     expect(screen.getByLabelText('Next drawing')).toHaveClass('d-none', 'd-md-flex');
   });
 
-  it('does not show side arrow buttons while the full image is loading', () => {
+  it('shows side arrow buttons as soon as the overlay opens, while the full image is loading', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
     fireEvent.click(screen.getByAltText(/Test Drawing/i));
-    expect(screen.queryByLabelText('Previous drawing')).not.toBeInTheDocument();
-    expect(screen.queryByLabelText('Next drawing')).not.toBeInTheDocument();
+    expect(screen.getByAltText(/Full drawing loading/i)).toBeInTheDocument();
+    expect(screen.getByLabelText('Previous drawing')).toBeInTheDocument();
+    expect(screen.getByLabelText('Next drawing')).toBeInTheDocument();
+  });
+
+  it('keeps the same side arrow buttons mounted when switching drawings, so the intro animation only plays once', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+    const prevButton = screen.getByLabelText('Previous drawing');
+    const nextButton = screen.getByLabelText('Next drawing');
+
+    fireEvent.click(nextButton);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+    expect(screen.getByLabelText('Previous drawing')).toBe(prevButton);
+    expect(screen.getByLabelText('Next drawing')).toBe(nextButton);
   });
 
   it('clicking a side arrow does not close the overlay', () => {
