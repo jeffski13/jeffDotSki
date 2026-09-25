@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { getContentByLanguage, getBrowserLanguage, type MultiLangContent } from '../../../infra/langSupport/langSupport';
 import { drawings, drawingsHalloween, type DrawingItem } from './drawings';
 import '../hobbiesStyles.css';
@@ -144,6 +144,33 @@ export function Drawings({
     };
   }, [overlayImg]);
 
+  // Escape closes the overlay, even while the image is still loading
+  useEffect(() => {
+    if (!isFullScreenMode) {
+      return;
+    }
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        doNotShowImageFull();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [isFullScreenMode]);
+
+  const closeButton = (
+    <button
+      aria-label="Close full screen image"
+      className="fullImageCloseButton"
+      onClick={() => doNotShowImageFull()}
+    >
+      <span className="fullImageCloseIcon" aria-hidden="true">&#10005;</span>
+    </button>
+  );
+
   return (
     <div className="aboutmeWrapper">
       <div className="hobbiesSection" >
@@ -208,17 +235,11 @@ export function Drawings({
             }}
             aria-label="Navigate or close full screen image"
           >
-            <div className='fullImageNavigation'>
+            <div className="fullImageNavigation d-sm-none">
               <div className="fullImageDirectionClose noselect">
-                <button
-                  aria-label="Close full screen image"
-                  className="fullImageCloseButton"
-                  onClick={() => doNotShowImageFull()}
-                >
-                  &#10005;
-                </button>
+                {closeButton}
               </div>
-              <div className="mobile-view fullImageDirectionLabelContainer">
+              <div className="fullImageDirectionLabelContainer">
                 <div className="fullImageDirectionLabelContent">
                   <div className="fullImageDirectionLabel fullImageDirectionLabelLeft noselect"
                     onClick={() => { showImageFullPrevious() }}
@@ -234,23 +255,56 @@ export function Drawings({
               </div>
             </div>
             <div className={`full-screen-image-loading-text-container ${backgroundLoaded ? 'loaded' : 'loading'}`} >
-              <p className="full-screen-image-loading-text">loading...</p>
+              <Spinner animation="border" role="status" className="full-screen-image-loading-spinner">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
             </div>
-            <img
-              id={`full-image-${getOverlayIdx()}`}
-              src={overlayImg ? overlayImg : undefined}
-              alt={`Full drawing${backgroundLoaded ? '' : ' loading...'}`}
-              className={`fullImage ${backgroundLoaded ? 'loaded' : 'loading'}`}
-              onClick={e => {
-                const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
-                const x = (e as React.MouseEvent).clientX - rect.left;
-                if (x < rect.width / 2) {
-                  showImageFullPrevious();
-                } else {
-                  showImageFullNext();
-                }
-              }}
-            />
+            <div className="fullImageFrame">
+              {/* On xs the space beside the image acts like Tap Left / Tap Right */}
+              <div
+                aria-hidden="true"
+                className="fullImageSideTapArea fullImageSideTapAreaLeft d-sm-none"
+                onClick={() => showImageFullPrevious()}
+              />
+              <div
+                aria-hidden="true"
+                className="fullImageSideTapArea fullImageSideTapAreaRight d-sm-none"
+                onClick={() => showImageFullNext()}
+              />
+              {/* On sm+ the close button sits above the left arrow */}
+              <div className="fullImageFrameClose noselect d-none d-sm-flex">
+                {closeButton}
+              </div>
+              <button
+                aria-label="Previous drawing"
+                className="fullImageArrow fullImageArrowLeft d-none d-sm-flex"
+                onClick={() => showImageFullPrevious()}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8" /></svg>
+              </button>
+              <img
+                id={`full-image-${getOverlayIdx()}`}
+                src={overlayImg ? overlayImg : undefined}
+                alt={`Full drawing${backgroundLoaded ? '' : ' loading...'}`}
+                className={`fullImage ${backgroundLoaded ? 'loaded' : 'loading'}`}
+                onClick={e => {
+                  const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+                  const x = (e as React.MouseEvent).clientX - rect.left;
+                  if (x < rect.width / 2) {
+                    showImageFullPrevious();
+                  } else {
+                    showImageFullNext();
+                  }
+                }}
+              />
+              <button
+                aria-label="Next drawing"
+                className="fullImageArrow fullImageArrowRight d-none d-sm-flex"
+                onClick={() => showImageFullNext()}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8" /></svg>
+              </button>
+            </div>
           </div>
         )}
       </div>

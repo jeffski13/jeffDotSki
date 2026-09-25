@@ -1,4 +1,6 @@
 .fullImageArea {
+    /* shared by the image frame and the xs top bar, which ends at the frame's top edge */
+    --fullImageFrameSize: min(80vw, 80vh);
     position: fixed;
     top: 0;
     left: 0;
@@ -14,37 +16,42 @@
     flex-direction: column;
 }
 
+/* xs only: spans the screen width, from the top of the screen to the top edge of the image frame */
 .fullImageNavigation {
-    width: 90vw;
+    width: 100%;
+    height: calc((100vh - var(--fullImageFrameSize)) / 2);
     display: flex;
     justify-content: space-between;
     position: absolute;
-    top: 85px;
+    top: 0;
     left: 0;
     z-index: 11;
 }
 
+/*
+ * Full height column in the top left corner, up to Tap Left, all of it clickable.
+ * Content sits below the site's fixed navbar, which covers the top of the overlay:
+ * the 24px close icon and the 30px tall label text are both centered 104px from the top.
+ */
 .fullImageDirectionClose {
-    width: 10%;
-    padding-left: 10px;
+    width: 68px;
+    flex-shrink: 0;
 }
 
+/* Fills the rest of the bar so Tap Right reaches the right edge of the screen */
 .fullImageDirectionLabelContainer {
-    width: 90%;
-    padding-left: 10px;
-    padding-right: 10px;
+    flex: 1;
+    min-width: 0;
 }
 
 .fullImageDirectionLabelContent {
     display: flex;
+    height: 100%;
 }
 
 .fullImageDirectionClose {
     background: rgba(0, 0, 0, 0);
     border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,17 +68,27 @@
     font-size: 20px;
     font-weight: 600;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8;
+    padding-top: 89px;
+    padding-bottom: 4px;
+    line-height: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
 }
 
 .fullImageDirectionLabelLeft {
     padding-left: 20px;
+    animation: fullImageSlideInFromLeft 500ms ease-out;
 }
 
+/* Text inset toward the middle; the clickable area still reaches the screen edge */
 .fullImageDirectionLabelRight {
-    padding-right: 20px;
+    padding-right: 48px;
     justify-content: flex-end;
+    white-space: nowrap;
+    animation: fullImageSlideInFromRight 500ms ease-out;
 }
 
 .fullImageCloseButton {
@@ -83,9 +100,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 24px;
     cursor: pointer;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+}
+
+/* Animate the icon, not the button, so it spins in place however large the clickable area is */
+.fullImageCloseIcon {
+    display: block;
+    line-height: 1;
     animation: fullImageCloseSlideIn 500ms ease-out, fullImageCloseSpin 500ms ease-out;
 }
 
@@ -110,20 +135,162 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .fullImageCloseButton {
+    .fullImageCloseButton,
+    .fullImageCloseIcon,
+    .fullImageDirectionLabel {
+        transition: none;
         animation: none;
     }
 }
 
 .fullImage {
-    max-Width: 80vw;
-    max-Height: 80vh;
-    border-Radius: 12;
-    box-Shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
-    z-Index: 11;
+    /* fill the fixed frame and letterbox, so every drawing takes the same space */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     transition: opacity 240ms ease-in-out;
     opacity: 0;
     /* start hidden until loaded */
+}
+
+/* Fixed size regardless of the drawing's aspect ratio, so the arrows don't move between drawings */
+.fullImageFrame {
+    /* space left above and below the arrows; the sm+ close button lives in the top one */
+    --fullImageArrowInset: 56px;
+    --fullImageSideColumnWidth: min(64px, 9vw);
+    position: relative;
+    display: flex;
+    width: var(--fullImageFrameSize);
+    height: var(--fullImageFrameSize);
+    z-index: 11;
+}
+
+/* Arrows sit just outside the frame, inset from its top and bottom */
+.fullImageArrow {
+    position: absolute;
+    top: var(--fullImageArrowInset);
+    bottom: var(--fullImageArrowInset);
+    width: var(--fullImageSideColumnWidth);
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: color 150ms ease-in-out, background-color 150ms ease-in-out;
+}
+
+.fullImageFrameClose {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: var(--fullImageSideColumnWidth);
+    height: var(--fullImageArrowInset);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fill the whole close area (xs top-left column, sm+ slot above the left arrow) so all of it is clickable */
+.fullImageDirectionClose .fullImageCloseButton,
+.fullImageFrameClose .fullImageCloseButton {
+    width: 100%;
+    height: 100%;
+}
+
+/* 92px + half of the 24px icon = centered 104px from the top, level with the tap labels */
+.fullImageDirectionClose .fullImageCloseButton {
+    align-items: flex-start;
+    padding-top: 92px;
+}
+
+.fullImageArrowLeft {
+    right: 100%;
+    animation: fullImageSlideInFromLeft 500ms ease-out;
+}
+
+.fullImageArrowRight {
+    left: 100%;
+    animation: fullImageSlideInFromRight 500ms ease-out;
+}
+
+/* Same timing as the close button, sliding in from each side; used by the arrows and tap labels */
+@keyframes fullImageSlideInFromLeft {
+    from {
+        translate: -5vw 0;
+        opacity: 0;
+    }
+    to {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+@keyframes fullImageSlideInFromRight {
+    from {
+        translate: 5vw 0;
+        opacity: 0;
+    }
+    to {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
+/* xs only: fills the space between the image and the screen edge on each side */
+.fullImageSideTapArea {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: calc((100vw - var(--fullImageFrameSize)) / 2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 150ms ease-in-out;
+}
+
+.fullImageSideTapAreaLeft {
+    right: 100%;
+}
+
+.fullImageSideTapAreaRight {
+    left: 100%;
+}
+
+/* Only on devices that really hover, so a tap on touch screens doesn't leave the highlight stuck on */
+@media (hover: hover) {
+    .fullImageArrow:hover,
+    .fullImageCloseButton:hover,
+    .fullImageDirectionLabel:hover,
+    .fullImageSideTapArea:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+}
+
+.fullImageArrow:focus-visible,
+.fullImageCloseButton:focus-visible {
+    color: #fff;
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: -4px;
+}
+
+.fullImageArrow svg {
+    width: 36px;
+    height: 36px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fullImageArrow,
+    .fullImageSideTapArea {
+        transition: none;
+        animation: none;
+    }
 }
 
 .fullImage.loaded {
@@ -146,6 +313,19 @@
   font-weight: 600;
   justify-content: center; /* Horizontally centers content */
   align-items: center; /* Vertically centers content */
+}
+
+.full-screen-image-loading-spinner {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-width: 0.3rem;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .full-screen-image-loading-spinner {
+    animation-duration: 1.5s;
+  }
 }
 
 .full-screen-image-loading-text-container.loaded {

@@ -43,6 +43,192 @@ describe('Drawings Component', () => {
     expect(fullImg).toHaveAttribute('src', '/full1.jpg');
   });
   
+  it('switches full screen image with the side arrow buttons', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+
+    fireEvent.click(screen.getByLabelText('Next drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+
+    fireEvent.click(screen.getByLabelText('Previous drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full1.jpg');
+
+    // Previous wraps around to the last drawing
+    fireEvent.click(screen.getByLabelText('Previous drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+  });
+
+  it('side arrow buttons are hidden on small screens', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByLabelText('Previous drawing')).toHaveClass('d-none', 'd-sm-flex');
+    expect(screen.getByLabelText('Next drawing')).toHaveClass('d-none', 'd-sm-flex');
+  });
+
+  it('shows side arrow buttons as soon as the overlay opens, while the full image is loading', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByAltText(/Full drawing loading/i)).toBeInTheDocument();
+    expect(screen.getByLabelText('Previous drawing')).toBeInTheDocument();
+    expect(screen.getByLabelText('Next drawing')).toBeInTheDocument();
+  });
+
+  it('keeps the same side arrow buttons mounted when switching drawings, so the intro animation only plays once', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+    const prevButton = screen.getByLabelText('Previous drawing');
+    const nextButton = screen.getByLabelText('Next drawing');
+
+    fireEvent.click(nextButton);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+    expect(screen.getByLabelText('Previous drawing')).toBe(prevButton);
+    expect(screen.getByLabelText('Next drawing')).toBe(nextButton);
+  });
+
+  it('clicking a side arrow does not close the overlay', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    fireEvent.click(screen.getByLabelText('Next drawing'));
+    expect(screen.getByAltText(/Full drawing/i)).toBeInTheDocument();
+  });
+
+  it('shows the close button above the left arrow on sm+ and in the top bar on smaller screens', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const closeButtons = screen.getAllByLabelText('Close full screen image');
+    expect(closeButtons).toHaveLength(2);
+
+    const [xsScreenClose, smScreenClose] = closeButtons;
+    expect(xsScreenClose.parentElement).toHaveClass('fullImageDirectionClose');
+    expect(xsScreenClose.closest('.fullImageNavigation')).toHaveClass('d-sm-none');
+    expect(smScreenClose.parentElement).toHaveClass('fullImageFrameClose', 'd-none', 'd-sm-flex');
+    // The sm+ close button shares the frame with the arrows
+    expect(smScreenClose.closest('.fullImageFrame')).toContainElement(screen.getByLabelText('Previous drawing'));
+  });
+
+  it('shows the tap left/right labels only on xs screens, where the side arrows are hidden', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const topBar = screen.getByText(/Tap Left/i).closest('.fullImageNavigation');
+    expect(topBar).toHaveClass('d-sm-none');
+    expect(topBar).toContainElement(screen.getByText(/Tap Right/i));
+    expect(topBar?.querySelector('.mobile-view')).toBeNull();
+  });
+
+  it('switches full screen image with the tap left/right areas', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+
+    fireEvent.click(screen.getByText(/Tap Right/i));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+
+    fireEvent.click(screen.getByText(/Tap Left/i));
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full1.jpg');
+  });
+
+  it('keeps the same tap left/right labels mounted when switching drawings, so the intro animation only plays once', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+    ];
+    render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 1 Drawing/i));
+    const tapLeft = screen.getByText(/Tap Left/i);
+    const tapRight = screen.getByText(/Tap Right/i);
+
+    fireEvent.click(tapRight);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full2.jpg');
+    expect(screen.getByText(/Tap Left/i)).toBe(tapLeft);
+    expect(screen.getByText(/Tap Right/i)).toBe(tapRight);
+  });
+
+  it('switches full screen image with the xs side tap areas beside the image', () => {
+    const drawingsList = [
+      { name: 'Drawing 1', thumb: '/thumb1.jpg', full: '/full1.jpg' },
+      { name: 'Drawing 2', thumb: '/thumb2.jpg', full: '/full2.jpg' },
+      { name: 'Drawing 3', thumb: '/thumb3.jpg', full: '/full3.jpg' },
+    ];
+    const { container } = render(<Drawings drawingsList={drawingsList} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Drawing 2 Drawing/i));
+    const leftArea = container.querySelector('.fullImageSideTapAreaLeft')!;
+    const rightArea = container.querySelector('.fullImageSideTapAreaRight')!;
+
+    fireEvent.click(rightArea);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full3.jpg');
+
+    fireEvent.click(leftArea);
+    fireEvent.click(leftArea);
+    expect(screen.getByAltText(/Full drawing/i)).toHaveAttribute('src', '/full1.jpg');
+  });
+
+  it('xs side tap areas are hidden on sm+ and from screen readers', () => {
+    const { container } = render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const sideAreas = container.querySelectorAll('.fullImageSideTapArea');
+    expect(sideAreas).toHaveLength(2);
+    sideAreas.forEach(area => {
+      expect(area).toHaveClass('d-sm-none');
+      expect(area).toHaveAttribute('aria-hidden', 'true');
+      expect(area.closest('.fullImageFrame')).not.toBeNull();
+    });
+  });
+
+  it('xs close button is the top-left column of the top bar, next to the tap labels', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const xsCloseArea = screen.getAllByLabelText('Close full screen image')[0].parentElement!;
+    expect(xsCloseArea).toHaveClass('fullImageDirectionClose');
+    expect(xsCloseArea.nextElementSibling).toHaveClass('fullImageDirectionLabelContainer');
+  });
+
+  it('close buttons keep their accessible name, with the icon hidden from screen readers', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    screen.getAllByRole('button', { name: 'Close full screen image' }).forEach(button => {
+      const icon = button.querySelector('.fullImageCloseIcon');
+      expect(icon).toHaveTextContent('✕');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+    });
+  });
+
+  it.each([0, 1])('closes full image overlay from close button %i', (buttonIndex) => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    fireEvent.click(screen.getAllByLabelText('Close full screen image')[buttonIndex]);
+    expect(screen.queryByAltText(/Full drawing/i)).not.toBeInTheDocument();
+  });
+
+  it('closes full image overlay when escape key is pressed', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByAltText(/Full drawing/i)).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(screen.queryByAltText(/Full drawing/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/Close full screen image/i)).not.toBeInTheDocument();
+  });
+
+  it('closes full image overlay when escape key is pressed while loading', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByAltText(/Full drawing loading/i)).toBeInTheDocument();
+
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(screen.queryByAltText(/Full drawing/i)).not.toBeInTheDocument();
+  });
+
   it('renders full image overlay when hobbieImage is clicked', () => {
     render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
     // Find the thumbnail image and click it
@@ -62,6 +248,20 @@ describe('Drawings Component', () => {
     // The overlay should now be visible with the full image
     const fullImg = screen.getByAltText(/Full drawing loading/i);
     expect(fullImg).toBeInTheDocument();
+  });
+
+  it('shows a loading spinner while the full image is loading', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    const spinner = screen.getByRole('status');
+    expect(spinner).toHaveTextContent('Loading...');
+    expect(spinner.parentElement).toHaveClass('loading');
+  });
+
+  it('hides the loading spinner once the full image is loaded', () => {
+    render(<Drawings drawingsList={mockDrawings} drawingsHalloweenList={[]} isTestEnvInstantLoad={true} />);
+    fireEvent.click(screen.getByAltText(/Test Drawing/i));
+    expect(screen.getByRole('status', { hidden: true }).parentElement).toHaveClass('loaded');
   });
 
   it('renders correct number of drawings from both lists', () => {
