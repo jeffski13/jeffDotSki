@@ -114,19 +114,22 @@ export function charFromPoint(doc: Document, x: number, y: number): { node: Node
     const range = anyDoc.caretRangeFromPoint(x, y);
     caret = range ? { node: range.startContainer, offset: range.startOffset } : null;
   }
-  if (!caret || caret.node.nodeType !== Node.TEXT_NODE) return caret;
+  if (!caret || caret.node.nodeType !== Node.TEXT_NODE) return null;
 
-  // The caret snaps to the nearest character boundary, so tapping the right
-  // half of a character yields the offset *after* it. Check whether the point
-  // actually falls inside the preceding character.
-  if (caret.offset > 0) {
+  // The caret snaps to the nearest character boundary, even when the point is
+  // in empty space past the end of a line. Only accept a character whose box
+  // actually contains the point: the one after the caret, or (when tapping the
+  // right half of a character) the one before it.
+  const { node, offset } = caret;
+  const containsPoint = (charIdx: number): boolean => {
+    if (charIdx < 0 || charIdx >= (node as Text).data.length) return false;
     const range = doc.createRange();
-    range.setStart(caret.node, caret.offset - 1);
-    range.setEnd(caret.node, caret.offset);
+    range.setStart(node, charIdx);
+    range.setEnd(node, charIdx + 1);
     const rect = range.getBoundingClientRect?.();
-    if (rect && x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-      return { node: caret.node, offset: caret.offset - 1 };
-    }
-  }
-  return caret;
+    return !!rect && x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+  };
+  if (containsPoint(offset)) return { node, offset };
+  if (containsPoint(offset - 1)) return { node, offset: offset - 1 };
+  return null;
 }

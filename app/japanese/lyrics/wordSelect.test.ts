@@ -1,5 +1,5 @@
 /// <reference types="vitest/globals" />
-import { findWordBounds, selectWordAt } from './wordSelect';
+import { charFromPoint, findWordBounds, selectWordAt } from './wordSelect';
 
 const LINE = '明日を探して来たんだろう';
 const wordAt = (text: string, ch: string, occurrence = 0) => {
@@ -102,5 +102,56 @@ describe('selectWordAt', () => {
     document.body.appendChild(p);
 
     expect(selectWordAt(p, p.querySelector('rt')!.firstChild!, 0)).toBe(false);
+  });
+});
+
+describe('charFromPoint', () => {
+  // Lay out '明日を' as three 10x10 boxes starting at x=0; the line ends at x=30.
+  const CHAR_WIDTH = 10;
+  let text: Text;
+  let caretOffset: number;
+  let originalRect: typeof Range.prototype.getBoundingClientRect;
+
+  beforeEach(() => {
+    const p = document.createElement('p');
+    p.textContent = '明日を';
+    document.body.appendChild(p);
+    text = p.firstChild as Text;
+    (document as any).caretRangeFromPoint = () => {
+      const r = document.createRange();
+      r.setStart(text, caretOffset);
+      return r;
+    };
+    originalRect = Range.prototype.getBoundingClientRect;
+    Range.prototype.getBoundingClientRect = function (this: Range) {
+      const left = this.startOffset * CHAR_WIDTH;
+      return { left, right: left + CHAR_WIDTH, top: 0, bottom: 10 } as DOMRect;
+    };
+  });
+
+  afterEach(() => {
+    delete (document as any).caretRangeFromPoint;
+    Range.prototype.getBoundingClientRect = originalRect;
+    document.body.innerHTML = '';
+  });
+
+  it('returns the character when tapping its left half', () => {
+    caretOffset = 1;
+    expect(charFromPoint(document, 12, 5)).toEqual({ node: text, offset: 1 });
+  });
+
+  it('returns the character when tapping its right half', () => {
+    caretOffset = 2;
+    expect(charFromPoint(document, 18, 5)).toEqual({ node: text, offset: 1 });
+  });
+
+  it('returns null when tapping empty space to the right of the line', () => {
+    caretOffset = 3;
+    expect(charFromPoint(document, 80, 5)).toBeNull();
+  });
+
+  it('returns null when tapping below the line', () => {
+    caretOffset = 1;
+    expect(charFromPoint(document, 12, 40)).toBeNull();
   });
 });
