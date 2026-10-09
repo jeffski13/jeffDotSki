@@ -27,6 +27,7 @@ export interface ContentPerLanguage {
     japaneseParenthesesToFurigana: string;
     furiganaGenerator: string;
     qrLink: string;
+    wordsToLearn: string;
     aboutMe: string;
     aboutMeShort: string;
     aboutBio: string;
@@ -57,6 +58,7 @@ export const es: ContentPerLanguage = {
     japaneseParenthesesToFurigana: 'Transformación de Parenthese a Furigana',
     furiganaGenerator: 'Generador de Furigana',
     qrLink: 'Código QR de Letras',
+    wordsToLearn: 'Palabras para Aprender',
     aboutMe: 'Sobre Mí',
     aboutMeShort: 'Sobre',
     aboutBio: 'Biografía',
@@ -86,6 +88,7 @@ export const defaultText: ContentPerLanguage = {
     japaneseMusicCovers: 'My Piano Covers',
     japaneseParenthesesToFurigana: 'Parenthese To Furigana Transformation',
     qrLink: 'Lyrics QR Code',
+    wordsToLearn: 'Words To Learn',
     aboutMe: 'About Me',
     aboutMeShort: 'About',
     aboutBio: 'Bio',
@@ -138,6 +141,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.japanese.japaneseBible}>{content.japaneseBible}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.japaneseParenthesesToFurigana}>{content.japaneseParenthesesToFurigana}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.qrLink}>{content.qrLink}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japanese.wordsToLearn}>{content.wordsToLearn}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.aboutBio}</NavDropdown.Item>

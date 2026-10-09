@@ -28,6 +28,7 @@ const ROUTES = {
     furiganaGenerator: '/japanese/furiganaGenerator',
     qrLink: '/japanese/qrLink',
     qrRedirect: '/japanese/qrRedirect',
+    wordsToLearn: '/japanese/wordsToLearn',
   },
   aboutMe: {
     bio: '/aboutme/bio',
