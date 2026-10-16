@@ -223,34 +223,94 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
   });
 
-  it('long-pressing a Learning word sends it to the bottom of Want to Learn', async () => {
+  const longPress = (text: string) => {
+    vi.useFakeTimers();
+    fireEvent.pointerDown(screen.getByText(text), { button: 0, clientX: 0, clientY: 0 });
+    act(() => {
+      vi.advanceTimersByTime(LONG_PRESS_MS);
+    });
+    vi.useRealTimers();
+  };
+
+  const menu = () => screen.getByRole('dialog');
+
+  it('long-pressing a word opens a menu with Edit, Change List and Delete', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
 
-    vi.useFakeTimers();
-    fireEvent.pointerDown(screen.getByText('katsudou'), { button: 0, clientX: 0, clientY: 0 });
-    act(() => {
-      vi.advanceTimersByTime(LONG_PRESS_MS);
-    });
+    longPress('katsudou');
 
-    expect(romajiIn('Learning')).toEqual(['shouhin']);
-    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'katsudou']);
+    expect(within(menu()).getByText('katsudou - activity')).toBeInTheDocument();
+    expect(within(menu()).getByRole('button', { name: 'Edit' })).toBeInTheDocument();
+    expect(within(menu()).getByRole('button', { name: 'Change List' })).toBeInTheDocument();
+    expect(within(menu()).getByRole('button', { name: 'Delete' })).toBeInTheDocument();
+    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
   });
 
-  it('long-pressing a Want to Learn word sends it to the bottom of Learning', async () => {
-    const { api } = createFakeApi();
+  it('edits a word from the menu and syncs the change', async () => {
+    const { api, server } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Want to Learn')).toHaveLength(2));
 
-    vi.useFakeTimers();
-    fireEvent.pointerDown(screen.getByText('kaisoku'), { button: 0, clientX: 0, clientY: 0 });
-    act(() => {
-      vi.advanceTimersByTime(LONG_PRESS_MS);
-    });
+    longPress('kaisoku');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Edit' }));
+    expect(within(menu()).getByLabelText('Romaji')).toHaveValue('kaisoku');
+    fireEvent.change(within(menu()).getByLabelText('Romaji'), { target: { value: 'kaisoku densha' } });
+    fireEvent.change(within(menu()).getByLabelText('English'), { target: { value: 'rapid train' } });
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Save' }));
 
-    expect(romajiIn('Want to Learn')).toEqual(['Akiraka ni']);
-    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin', 'kaisoku']);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(romajiIn('Want to Learn')).toEqual(['kaisoku densha', 'Akiraka ni']);
+    expect(screen.getByText('rapid train')).toBeInTheDocument();
+    await waitFor(() => expect(server.words.find((w) => w.id === 'w1')?.english).toBe('rapid train'), { timeout: SYNC_DEBOUNCE_MS + 1000 });
+  });
+
+  it('does not save an edit with an empty field, and cancel leaves the word unchanged', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    longPress('shouhin');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Edit' }));
+    fireEvent.change(within(menu()).getByLabelText('English'), { target: { value: '  ' } });
+    expect(within(menu()).getByRole('button', { name: 'Save' })).toBeDisabled();
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Cancel' }));
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByText('stuff')).toBeInTheDocument();
+  });
+
+  it('Change List moves a Learning word to the bottom of Want to Learn and back', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    longPress('katsudou');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Change List' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(romajiIn('Learning')).toEqual(['shouhin']);
+    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'katsudou']);
+
+    longPress('kaisoku');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Change List' }));
+    expect(romajiIn('Learning')).toEqual(['shouhin', 'kaisoku']);
+  });
+
+  it('Delete in the menu asks for confirmation before deleting', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    vi.mocked(window.confirm).mockReturnValueOnce(false);
+    longPress('katsudou');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Delete' }));
+    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
+    expect(menu()).toBeInTheDocument();
+
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Delete' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(romajiIn('Learning')).toEqual(['shouhin']);
   });
 
   it('keeps working offline and uploads the queued changes when back online', async () => {

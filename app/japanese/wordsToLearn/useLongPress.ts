@@ -35,7 +35,11 @@ export function useLongPress(onLongPress: () => void, delay = LONG_PRESS_MS) {
     onPointerUp: cancel,
     onPointerLeave: cancel,
     onPointerCancel: cancel,
-    // keep the mobile long-press context menu from opening over the word
-    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
+    // right-click on desktop (and Android's own long-press event) acts as a long press
+    onContextMenu: (e: React.MouseEvent) => {
+      e.preventDefault();
+      cancel();
+      onLongPress();
+    },
   };
 }

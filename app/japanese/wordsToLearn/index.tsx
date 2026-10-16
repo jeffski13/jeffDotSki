@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Container, Form, Button, Alert, InputGroup } from 'react-bootstrap';
+import { Container, Form, Button, Alert, InputGroup, Modal, ListGroup } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import {
   addWord,
   deleteWord,
+  editWord,
   moveToBottomOfList,
   nextSortMode,
   reorderWord,
@@ -144,6 +145,61 @@ function AddWordForm({ list, onAdd }: AddWordFormProps) {
   );
 }
 
+interface WordMenuProps {
+  word: Word;
+  onClose: () => void;
+  onEdit: (romaji: string, english: string) => void;
+  onChangeList: () => void;
+  onDelete: () => void;
+}
+
+function WordMenu({ word, onClose, onEdit, onChangeList, onDelete }: WordMenuProps) {
+  const [editing, setEditing] = useState(false);
+  const [romaji, setRomaji] = useState(word.romaji);
+  const [english, setEnglish] = useState(word.english);
+  const canSave = romaji.trim().length > 0 && english.trim().length > 0;
+  const otherList = LIST_TITLES[OTHER_LIST[word.list]];
+
+  return (
+    <Modal show centered size="sm" onHide={onClose} className="wordsToLearn-menu" aria-labelledby="wordsToLearn-menu-title">
+      <Modal.Header closeButton>
+        <Modal.Title id="wordsToLearn-menu-title" className="wordsToLearn-menu-title">
+          {word.romaji} - {word.english}
+        </Modal.Title>
+      </Modal.Header>
+      {editing ? (
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (canSave) onEdit(romaji, english);
+          }}
+        >
+          <Modal.Body>
+            <Form.Group className="mb-2" controlId="wordsToLearn-edit-romaji">
+              <Form.Label>Romaji</Form.Label>
+              <Form.Control autoFocus value={romaji} onChange={(e) => setRomaji(e.target.value)} />
+            </Form.Group>
+            <Form.Group controlId="wordsToLearn-edit-english">
+              <Form.Label>English</Form.Label>
+              <Form.Control value={english} onChange={(e) => setEnglish(e.target.value)} />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={onClose}>Cancel</Button>
+            <Button type="submit" variant="primary" disabled={!canSave}>Save</Button>
+          </Modal.Footer>
+        </Form>
+      ) : (
+        <ListGroup variant="flush">
+          <ListGroup.Item action onClick={() => setEditing(true)}>Edit</ListGroup.Item>
+          <ListGroup.Item action onClick={onChangeList} title={`Move to ${otherList}`}>Change List</ListGroup.Item>
+          <ListGroup.Item action onClick={onDelete} className="text-danger">Delete</ListGroup.Item>
+        </ListGroup>
+      )}
+    </Modal>
+  );
+}
+
 interface WordSectionProps {
   list: WordList;
   words: Word[];
@@ -160,16 +216,23 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   // reordering against a filtered or alphabetized view would be confusing
   const canReorder = sortMode === 'custom' && query.trim().length === 0;
 
+  const [menuWordId, setMenuWordId] = useState<string | null>(null);
+  const menuWord = shown.find((w) => w.id === menuWordId);
+  const closeMenu = () => setMenuWordId(null);
+
   const handleLongPress = (word: Word) => {
-    const target = OTHER_LIST[list];
-    change((all) => moveToBottomOfList(all, word.id, target, Date.now()));
+    setMenuWordId(word.id);
     navigator.vibrate?.(30);
   };
+
+  const switchList = (word: Word) => change((all) => moveToBottomOfList(all, word.id, OTHER_LIST[list], Date.now()));
 
   const handleDelete = (word: Word) => {
     if (window.confirm(`Delete "${word.romaji} - ${word.english}"?`)) {
       change((all) => deleteWord(all, word.id, Date.now()));
+      return true;
     }
+    return false;
   };
 
   return (
@@ -204,13 +267,32 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
                 isFirst={index === 0}
                 isLast={index === shown.length - 1}
                 onMove={(direction) => change((all) => reorderWord(all, word.id, direction, Date.now()))}
-                onSwitchList={() => change((all) => moveToBottomOfList(all, word.id, OTHER_LIST[list], Date.now()))}
+                onSwitchList={() => switchList(word)}
                 onLearned={() => handleLongPress(word)}
                 onDelete={() => handleDelete(word)}
               />
             ))}
           </ul>
         </>
+      )}
+
+      {menuWord && (
+        <WordMenu
+          key={menuWord.id}
+          word={menuWord}
+          onClose={closeMenu}
+          onEdit={(romaji, english) => {
+            change((all) => editWord(all, menuWord.id, romaji, english, Date.now()));
+            closeMenu();
+          }}
+          onChangeList={() => {
+            switchList(menuWord);
+            closeMenu();
+          }}
+          onDelete={() => {
+            if (handleDelete(menuWord)) closeMenu();
+          }}
+        />
       )}
     </section>
   );
@@ -252,7 +334,7 @@ export default function WordsToLearnPage({ api, store = wordsToLearnStoreImpl }:
     <div className="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
         <h1 className="wordsToLearn-title">Words To Learn</h1>
-        <p className="wordsToLearn-hint">Long-press a word to send it to the bottom of the other list.</p>
+        <p className="wordsToLearn-hint">Long-press a word to edit it, change its list or delete it.</p>
 
         <div className="wordsToLearn-search-row">
           <Form.Control

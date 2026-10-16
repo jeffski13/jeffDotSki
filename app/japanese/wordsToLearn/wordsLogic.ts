@@ -99,6 +99,15 @@ export function moveToBottomOfList(words: Word[], id: string, list: WordList, no
   return [{ ...word, list, order: bottomOrder(words, list, id), lastModified: now }];
 }
 
+export function editWord(words: Word[], id: string, romaji: string, english: string, now: number): Word[] {
+  const word = words.find((w) => w.id === id);
+  const nextRomaji = romaji.trim();
+  const nextEnglish = english.trim();
+  if (!word || !nextRomaji || !nextEnglish) return [];
+  if (word.romaji === nextRomaji && word.english === nextEnglish) return [];
+  return [{ ...word, romaji: nextRomaji, english: nextEnglish, lastModified: now }];
+}
+
 export function deleteWord(words: Word[], id: string, now: number): Word[] {
   const word = words.find((w) => w.id === id);
   if (!word) return [];

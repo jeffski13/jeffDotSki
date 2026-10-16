@@ -5,6 +5,7 @@ import {
   applySyncResponse,
   deleteWord,
   dirtyWords,
+  editWord,
   matchesQuery,
   mergeWords,
   moveToBottomOfList,
@@ -136,6 +137,21 @@ describe('addWord', () => {
   it('starts at order 0 in an empty list, ignoring deleted words', () => {
     const [added] = addWord([word({ order: 7, deleted: true })], 'learning', 'a', 'b', 1, 'new');
     expect(added.order).toBe(0);
+  });
+});
+
+describe('editWord', () => {
+  it('updates the trimmed text and lastModified, keeping list and order', () => {
+    const words = [word({ id: 'x', list: 'wantToLearn', order: 3 })];
+    expect(editWord(words, 'x', ' tanki ', ' short term ', 500)).toEqual([
+      word({ id: 'x', list: 'wantToLearn', order: 3, romaji: 'tanki', english: 'short term', lastModified: 500 }),
+    ]);
+  });
+
+  it('changes nothing for blank text, unchanged text or an unknown id', () => {
+    expect(editWord([word()], 'a', '  ', 'b', 1)).toEqual([]);
+    expect(editWord([word()], 'a', 'katsudou', 'activity', 1)).toEqual([]);
+    expect(editWord([word()], 'nope', 'x', 'y', 1)).toEqual([]);
   });
 });
 
