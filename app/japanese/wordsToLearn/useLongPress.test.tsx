@@ -60,4 +60,24 @@ describe('useLongPress', () => {
     vi.advanceTimersByTime(LONG_PRESS_MS * 2);
     expect(onLongPress).not.toHaveBeenCalled();
   });
+
+  it('fires on right-click and blocks the browser context menu', () => {
+    const onLongPress = vi.fn();
+    render(<Target onLongPress={onLongPress} />);
+
+    const notPrevented = fireEvent.contextMenu(screen.getByTestId('target'));
+    expect(notPrevented).toBe(false);
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+  });
+
+  it('fires only once when a held press also triggers a context menu event', () => {
+    const onLongPress = vi.fn();
+    render(<Target onLongPress={onLongPress} />);
+
+    fireEvent.pointerDown(screen.getByTestId('target'), { button: 0, clientX: 0, clientY: 0 });
+    vi.advanceTimersByTime(LONG_PRESS_MS / 2);
+    fireEvent.contextMenu(screen.getByTestId('target'));
+    vi.advanceTimersByTime(LONG_PRESS_MS * 2);
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+  });
 });

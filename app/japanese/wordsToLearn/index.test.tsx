@@ -248,6 +248,17 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
   });
 
+  it('right-clicking a word opens the same menu', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.contextMenu(screen.getByText('shouhin'));
+
+    expect(within(menu()).getByText('shouhin - stuff')).toBeInTheDocument();
+    expect(within(menu()).getByRole('button', { name: 'Edit' })).toBeInTheDocument();
+  });
+
   it('edits a word from the menu and syncs the change', async () => {
     const { api, server } = createFakeApi();
     render(<WordsToLearnPage api={api} />);

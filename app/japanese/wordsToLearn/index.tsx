@@ -334,7 +334,7 @@ export default function WordsToLearnPage({ api, store = wordsToLearnStoreImpl }:
     <div className="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
         <h1 className="wordsToLearn-title">Words To Learn</h1>
-        <p className="wordsToLearn-hint">Long-press a word to edit it, change its list or delete it.</p>
+        <p className="wordsToLearn-hint">Long-press or right-click a word to edit it, change its list or delete it.</p>
 
         <div className="wordsToLearn-search-row">
           <Form.Control
