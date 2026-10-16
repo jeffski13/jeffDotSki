@@ -102,7 +102,7 @@
 .wordsToLearn-actions {
   display: flex;
   flex-shrink: 0;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
 .wordsToLearn-empty {
@@ -125,7 +125,7 @@
 }
 
 [data-bs-theme="dark"] .wordsToLearn-row {
-  border-bottom: 1px solid #495057;
+  border-bottom: 1px solid #868e96;
 }
 
 [data-bs-theme="light"] .wordsToLearn-title,
@@ -143,5 +143,12 @@
 }
 
 [data-bs-theme="light"] .wordsToLearn-row {
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #868e96;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-wrapper .form-control,
+[data-bs-theme="light"] .wordsToLearn-wrapper .form-control,
+[data-bs-theme="dark"] .wordsToLearn-wrapper .form-select,
+[data-bs-theme="light"] .wordsToLearn-wrapper .form-select {
+  border-color: #868e96;
 }
