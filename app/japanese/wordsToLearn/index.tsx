@@ -39,28 +39,42 @@ const COLUMN_LABELS: Record<SortColumn, string> = {
 interface ColumnHeadersProps {
   list: WordList;
   sortMode: SortMode;
+  canReorder: boolean;
   onSortChange: (mode: SortMode) => void;
 }
 
-function ColumnHeaders({ list, sortMode, onSortChange }: ColumnHeadersProps) {
+function ColumnHeaders({ list, sortMode, canReorder, onSortChange }: ColumnHeadersProps) {
   return (
     <div className="wordsToLearn-columns">
-      {(Object.keys(COLUMN_LABELS) as SortColumn[]).map((column) => {
-        const direction = sortDirection(sortMode, column);
-        return (
-          <button
-            key={column}
-            type="button"
-            className={`wordsToLearn-column wordsToLearn-column-${column}${direction ? ' wordsToLearn-column-active' : ''}`}
-            aria-label={`Sort ${LIST_TITLES[list]} by ${COLUMN_LABELS[column]}`}
-            aria-pressed={direction !== null}
-            onClick={() => onSortChange(nextSortMode(sortMode, column))}
-          >
-            {COLUMN_LABELS[column]}
-            {direction && <span aria-hidden="true"> {direction === 'asc' ? '▲' : '▼'}</span>}
-          </button>
-        );
-      })}
+      <div className="wordsToLearn-columns-text">
+        {(Object.keys(COLUMN_LABELS) as SortColumn[]).map((column) => {
+          const direction = sortDirection(sortMode, column);
+          return (
+            <button
+              key={column}
+              type="button"
+              className={`wordsToLearn-column wordsToLearn-column-${column}${direction ? ' wordsToLearn-column-active' : ''}`}
+              aria-label={`Sort ${LIST_TITLES[list]} by ${COLUMN_LABELS[column]}`}
+              aria-pressed={direction !== null}
+              onClick={() => onSortChange(nextSortMode(sortMode, column))}
+            >
+              {COLUMN_LABELS[column]}
+              {direction && <span aria-hidden="true"> {direction === 'asc' ? '▲' : '▼'}</span>}
+            </button>
+          );
+        })}
+      </div>
+      {/* invisible copy of a row's buttons so the header columns line up with the word columns */}
+      <div className="wordsToLearn-actions wordsToLearn-columns-spacer" aria-hidden="true">
+        {canReorder && (
+          <>
+            <Button size="sm" tabIndex={-1}>↑</Button>
+            <Button size="sm" tabIndex={-1}>↓</Button>
+          </>
+        )}
+        <Button size="sm" tabIndex={-1}>→</Button>
+        <Button size="sm" tabIndex={-1}>✕</Button>
+      </div>
     </div>
   );
 }
@@ -167,13 +181,15 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, onNot
         </h2>
       </div>
 
-      <AddWordForm list={list} onAdd={(romaji, english) => change((all) => addWord(all, list, romaji, english, Date.now(), uuidv4()))} />
+      {list === 'learning' && (
+        <AddWordForm list={list} onAdd={(romaji, english) => change((all) => addWord(all, list, romaji, english, Date.now(), uuidv4()))} />
+      )}
 
       {shown.length === 0 ? (
         <p className="wordsToLearn-empty">{query.trim() ? 'No matching words.' : 'No words yet.'}</p>
       ) : (
         <>
-          <ColumnHeaders list={list} sortMode={sortMode} onSortChange={onSortChange} />
+          <ColumnHeaders list={list} sortMode={sortMode} canReorder={canReorder} onSortChange={onSortChange} />
           <ul className="wordsToLearn-list">
             {shown.map((word, index) => (
               <WordRow

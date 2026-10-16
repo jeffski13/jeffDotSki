@@ -99,6 +99,15 @@ describe('WordsToLearnPage', () => {
     expect(await screen.findByText(/Couldn’t reach the server/)).toBeInTheDocument();
   });
 
+  it('only has an add form in the Learning list', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    expect(within(section('Learning')).getByRole('button', { name: 'Add to Learning' })).toBeInTheDocument();
+    expect(within(section('Want to Learn')).queryByRole('button', { name: 'Add to Want to Learn' })).not.toBeInTheDocument();
+  });
+
   it('filters both lists with the search bar', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
@@ -215,10 +224,11 @@ describe('WordsToLearnPage', () => {
     goOffline();
     expect(screen.getByText(/Offline — changes are saved on this device/)).toBeInTheDocument();
 
-    addTo('Want to Learn', 'kyoudai', 'siblings');
+    addTo('Learning', 'kyoudai', 'siblings');
     fireEvent.click(screen.getByRole('button', { name: 'Move to Want to Learn: shouhin' }));
     fireEvent.click(screen.getByRole('button', { name: 'Delete katsudou' }));
-    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'kyoudai', 'shouhin']);
+    expect(romajiIn('Learning')).toEqual(['kyoudai']);
+    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'shouhin']);
 
     // the changes survive a reload while still offline
     expect(wordsToLearnStoreImpl.loadWords().dirtyIds).toHaveLength(3);

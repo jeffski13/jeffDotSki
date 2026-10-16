@@ -56,8 +56,23 @@
 
 .wordsToLearn-columns {
   display: flex;
-  column-gap: 1rem;
+  align-items: center;
+  gap: 0.5rem;
   padding-bottom: 0.25rem;
+}
+
+/* same flex layout as .wordsToLearn-row > .wordsToLearn-text so headers align with the words */
+.wordsToLearn-columns-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  column-gap: 1rem;
+}
+
+.wordsToLearn-columns-spacer {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
 }
 
 .wordsToLearn-column {
