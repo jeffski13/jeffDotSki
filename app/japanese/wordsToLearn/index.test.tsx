@@ -70,7 +70,8 @@ const goOffline = () => {
   });
 };
 
-const addTo = (name: 'Learning' | 'Want to Learn', romaji: string, english: string) => {
+const addTo = (name: 'Learning', romaji: string, english: string) => {
+  fireEvent.click(screen.getByRole('button', { name: 'New word' }));
   const region = section(name);
   fireEvent.change(within(region).getByLabelText(`${name} romaji`), { target: { value: romaji } });
   fireEvent.change(within(region).getByLabelText(`${name} english`), { target: { value: english } });
@@ -99,13 +100,35 @@ describe('WordsToLearnPage', () => {
     expect(await screen.findByText(/Couldn’t reach the server/)).toBeInTheDocument();
   });
 
-  it('only has an add form in the Learning list', async () => {
+  it('shows the new word form only after the plus button is clicked, and hides it after adding', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    const plus = screen.getByRole('button', { name: 'New word' });
+
+    expect(screen.queryByRole('button', { name: 'Add to Learning' })).not.toBeInTheDocument();
+    fireEvent.click(plus);
+    expect(plus).toHaveAttribute('aria-expanded', 'true');
+    expect(within(section('Learning')).getByRole('button', { name: 'Add to Learning' })).toBeInTheDocument();
+    expect(within(section('Want to Learn')).queryByRole('button', { name: 'Add to Want to Learn' })).not.toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Learning romaji'), { target: { value: 'tanki' } });
+    fireEvent.change(screen.getByLabelText('Learning english'), { target: { value: 'short term' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add to Learning' }));
+
+    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin', 'tanki']);
+    expect(screen.queryByRole('button', { name: 'Add to Learning' })).not.toBeInTheDocument();
+    expect(plus).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('hides the new word form when the plus button is clicked again', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
 
-    expect(within(section('Learning')).getByRole('button', { name: 'Add to Learning' })).toBeInTheDocument();
-    expect(within(section('Want to Learn')).queryByRole('button', { name: 'Add to Want to Learn' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'New word' }));
+    fireEvent.click(screen.getByRole('button', { name: 'New word' }));
+    expect(screen.queryByRole('button', { name: 'Add to Learning' })).not.toBeInTheDocument();
   });
 
   it('filters both lists with the search bar', async () => {
@@ -200,7 +223,7 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
   });
 
-  it('long-pressing a word sends it to the bottom of Want to Learn', async () => {
+  it('long-pressing a Learning word sends it to the bottom of Want to Learn', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
@@ -213,7 +236,21 @@ describe('WordsToLearnPage', () => {
 
     expect(romajiIn('Learning')).toEqual(['shouhin']);
     expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'katsudou']);
-    expect(screen.getByText('Moved "katsudou" to the bottom of Want to Learn.')).toBeInTheDocument();
+  });
+
+  it('long-pressing a Want to Learn word sends it to the bottom of Learning', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Want to Learn')).toHaveLength(2));
+
+    vi.useFakeTimers();
+    fireEvent.pointerDown(screen.getByText('kaisoku'), { button: 0, clientX: 0, clientY: 0 });
+    act(() => {
+      vi.advanceTimersByTime(LONG_PRESS_MS);
+    });
+
+    expect(romajiIn('Want to Learn')).toEqual(['Akiraka ni']);
+    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin', 'kaisoku']);
   });
 
   it('keeps working offline and uploads the queued changes when back online', async () => {

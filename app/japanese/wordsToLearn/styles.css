@@ -17,8 +17,16 @@
   margin-bottom: 1rem;
 }
 
-.wordsToLearn-search {
+.wordsToLearn-search-row {
+  display: flex;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.wordsToLearn-new {
+  flex-shrink: 0;
+  min-width: 2.5rem;
+  font-weight: 600;
 }
 
 .wordsToLearn-sync {
@@ -47,11 +55,6 @@
 .wordsToLearn-section-title {
   font-size: 1.25rem;
   margin: 0;
-}
-
-.wordsToLearn-count {
-  font-size: 0.875rem;
-  font-weight: 400;
 }
 
 .wordsToLearn-columns {
@@ -92,7 +95,7 @@
 }
 
 .wordsToLearn-add {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .wordsToLearn-list {
@@ -151,7 +154,6 @@
 
 [data-bs-theme="dark"] .wordsToLearn-hint,
 [data-bs-theme="dark"] .wordsToLearn-sync,
-[data-bs-theme="dark"] .wordsToLearn-count,
 [data-bs-theme="dark"] .wordsToLearn-english,
 [data-bs-theme="dark"] .wordsToLearn-empty {
   color: #adb5bd;
@@ -169,7 +171,6 @@
 
 [data-bs-theme="light"] .wordsToLearn-hint,
 [data-bs-theme="light"] .wordsToLearn-sync,
-[data-bs-theme="light"] .wordsToLearn-count,
 [data-bs-theme="light"] .wordsToLearn-english,
 [data-bs-theme="light"] .wordsToLearn-empty {
   color: #6c757d;

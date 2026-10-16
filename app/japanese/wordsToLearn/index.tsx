@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Container, Form, Button, Alert, InputGroup } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -18,8 +18,6 @@ import { useWordsToLearn, type SyncStatus, type WordsToLearnApi } from './useWor
 import { wordsToLearnStoreImpl, type SortSettings, type WordsToLearnStore } from './wordsToLearnStore';
 import { useLongPress } from './useLongPress';
 import './styles.css';
-
-export const NOTICE_MS = 3000;
 
 const LIST_TITLES: Record<WordList, string> = {
   learning: 'Learning',
@@ -138,7 +136,7 @@ function AddWordForm({ list, onAdd }: AddWordFormProps) {
       }}
     >
       <InputGroup size="sm">
-        <Form.Control aria-label={`${LIST_TITLES[list]} romaji`} placeholder="Romaji" value={romaji} onChange={(e) => setRomaji(e.target.value)} />
+        <Form.Control autoFocus aria-label={`${LIST_TITLES[list]} romaji`} placeholder="Romaji" value={romaji} onChange={(e) => setRomaji(e.target.value)} />
         <Form.Control aria-label={`${LIST_TITLES[list]} english`} placeholder="English" value={english} onChange={(e) => setEnglish(e.target.value)} />
         <Button type="submit" variant="primary" disabled={!canAdd} aria-label={`Add to ${LIST_TITLES[list]}`}>Add</Button>
       </InputGroup>
@@ -153,18 +151,19 @@ interface WordSectionProps {
   sortMode: SortMode;
   onSortChange: (mode: SortMode) => void;
   change: (changeFn: (words: Word[]) => Word[]) => void;
-  onNotice: (message: string) => void;
+  showAddForm: boolean;
+  onAdded: () => void;
 }
 
-function WordSection({ list, words, query, sortMode, onSortChange, change, onNotice }: WordSectionProps) {
+function WordSection({ list, words, query, sortMode, onSortChange, change, showAddForm, onAdded }: WordSectionProps) {
   const shown = visibleWords(words, list, sortMode, query);
   // reordering against a filtered or alphabetized view would be confusing
   const canReorder = sortMode === 'custom' && query.trim().length === 0;
 
-  const handleLearned = (word: Word) => {
-    change((all) => moveToBottomOfList(all, word.id, 'wantToLearn', Date.now()));
+  const handleLongPress = (word: Word) => {
+    const target = OTHER_LIST[list];
+    change((all) => moveToBottomOfList(all, word.id, target, Date.now()));
     navigator.vibrate?.(30);
-    onNotice(`Moved "${word.romaji}" to the bottom of Want to Learn.`);
   };
 
   const handleDelete = (word: Word) => {
@@ -175,15 +174,21 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, onNot
 
   return (
     <section className="wordsToLearn-section" aria-labelledby={`wordsToLearn-${list}-title`}>
+      {showAddForm && (
+        <AddWordForm
+          list={list}
+          onAdd={(romaji, english) => {
+            change((all) => addWord(all, list, romaji, english, Date.now(), uuidv4()));
+            onAdded();
+          }}
+        />
+      )}
+
       <div className="wordsToLearn-section-header">
         <h2 id={`wordsToLearn-${list}-title`} className="wordsToLearn-section-title">
-          {LIST_TITLES[list]} <span className="wordsToLearn-count">({shown.length})</span>
+          {LIST_TITLES[list]}
         </h2>
       </div>
-
-      {list === 'learning' && (
-        <AddWordForm list={list} onAdd={(romaji, english) => change((all) => addWord(all, list, romaji, english, Date.now(), uuidv4()))} />
-      )}
 
       {shown.length === 0 ? (
         <p className="wordsToLearn-empty">{query.trim() ? 'No matching words.' : 'No words yet.'}</p>
@@ -200,7 +205,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, onNot
                 isLast={index === shown.length - 1}
                 onMove={(direction) => change((all) => reorderWord(all, word.id, direction, Date.now()))}
                 onSwitchList={() => change((all) => moveToBottomOfList(all, word.id, OTHER_LIST[list], Date.now()))}
-                onLearned={() => handleLearned(word)}
+                onLearned={() => handleLongPress(word)}
                 onDelete={() => handleDelete(word)}
               />
             ))}
@@ -235,18 +240,7 @@ export default function WordsToLearnPage({ api, store = wordsToLearnStoreImpl }:
   const { words, pendingCount, status, change } = useWordsToLearn(api, store);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<SortSettings>(() => store.loadSort());
-  const [notice, setNotice] = useState<string | null>(null);
-  const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => () => {
-    if (noticeTimer.current) clearTimeout(noticeTimer.current);
-  }, []);
-
-  const showNotice = (message: string) => {
-    if (noticeTimer.current) clearTimeout(noticeTimer.current);
-    setNotice(message);
-    noticeTimer.current = setTimeout(() => setNotice(null), NOTICE_MS);
-  };
+  const [adding, setAdding] = useState(false);
 
   const handleSortChange = (list: WordList, mode: SortMode) => {
     const next = { ...sort, [list]: mode };
@@ -258,19 +252,29 @@ export default function WordsToLearnPage({ api, store = wordsToLearnStoreImpl }:
     <div className="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
         <h1 className="wordsToLearn-title">Words To Learn</h1>
-        <p className="wordsToLearn-hint">Long-press a word once you’ve learned it to send it to the bottom of Want to Learn.</p>
+        <p className="wordsToLearn-hint">Long-press a word to send it to the bottom of the other list.</p>
 
-        <Form.Control
-          type="search"
-          className="wordsToLearn-search"
-          aria-label="Search words"
-          placeholder="Search romaji or English…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        <div className="wordsToLearn-search-row">
+          <Form.Control
+            type="search"
+            className="wordsToLearn-search"
+            aria-label="Search words"
+            placeholder="Search romaji or English…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <Button
+            variant="primary"
+            className="wordsToLearn-new"
+            aria-label="New word"
+            aria-expanded={adding}
+            onClick={() => setAdding((open) => !open)}
+          >
+            +
+          </Button>
+        </div>
 
         <SyncStatusLine status={status} pendingCount={pendingCount} />
-        {notice && <Alert variant="success" className="wordsToLearn-status">{notice}</Alert>}
 
         {(['learning', 'wantToLearn'] as WordList[]).map((list) => (
           <WordSection
@@ -281,7 +285,8 @@ export default function WordsToLearnPage({ api, store = wordsToLearnStoreImpl }:
             sortMode={sort[list]}
             onSortChange={(mode) => handleSortChange(list, mode)}
             change={change}
-            onNotice={showNotice}
+            showAddForm={adding && list === 'learning'}
+            onAdded={() => setAdding(false)}
           />
         ))}
       </Container>
