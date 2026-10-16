@@ -54,8 +54,26 @@
   font-weight: 400;
 }
 
-.wordsToLearn-sort {
-  width: auto;
+.wordsToLearn-columns {
+  display: flex;
+  column-gap: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.wordsToLearn-column {
+  flex: 1 1 10rem;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wordsToLearn-column:hover,
+.wordsToLearn-column-active {
+  text-decoration: underline;
 }
 
 .wordsToLearn-add {
@@ -147,8 +165,30 @@
 }
 
 [data-bs-theme="dark"] .wordsToLearn-wrapper .form-control,
-[data-bs-theme="light"] .wordsToLearn-wrapper .form-control,
-[data-bs-theme="dark"] .wordsToLearn-wrapper .form-select,
-[data-bs-theme="light"] .wordsToLearn-wrapper .form-select {
+[data-bs-theme="light"] .wordsToLearn-wrapper .form-control {
   border-color: #868e96;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-column {
+  color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-column-active {
+  color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-columns {
+  border-bottom: 2px solid #868e96;
+}
+
+[data-bs-theme="light"] .wordsToLearn-column {
+  color: #6c757d;
+}
+
+[data-bs-theme="light"] .wordsToLearn-column-active {
+  color: #343a40;
+}
+
+[data-bs-theme="light"] .wordsToLearn-columns {
+  border-bottom: 2px solid #868e96;
 }

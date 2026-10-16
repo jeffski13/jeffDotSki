@@ -111,19 +111,39 @@ describe('WordsToLearnPage', () => {
     expect(within(section('Want to Learn')).getByText('No matching words.')).toBeInTheDocument();
   });
 
-  it('sorts each list independently and remembers the choice', async () => {
+  it('sorts each list independently by clicking column headers and remembers the choice', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Want to Learn')).toHaveLength(2));
+    const wantJapanese = screen.getByRole('button', { name: 'Sort Want to Learn by 日本語' });
 
-    fireEvent.change(screen.getByLabelText('Want to Learn sort order'), { target: { value: 'romaji' } });
-
+    fireEvent.click(wantJapanese);
     expect(romajiIn('Want to Learn')).toEqual(['Akiraka ni', 'kaisoku']);
+    expect(wantJapanese).toHaveAttribute('aria-pressed', 'true');
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
     expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'romaji' });
 
-    fireEvent.change(screen.getByLabelText('Learning sort order'), { target: { value: 'english' } });
+    fireEvent.click(wantJapanese);
+    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni']);
+    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'romajiDesc' });
+
+    fireEvent.click(wantJapanese);
+    expect(wantJapanese).toHaveAttribute('aria-pressed', 'false');
+    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'custom' });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Sort Learning by English' }));
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
+    fireEvent.click(screen.getByRole('button', { name: 'Sort Learning by English' }));
+    expect(romajiIn('Learning')).toEqual(['shouhin', 'katsudou']);
+  });
+
+  it('hides reorder buttons while a column sort is active', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Sort Learning by English' }));
+    expect(screen.queryByRole('button', { name: 'Move shouhin up' })).not.toBeInTheDocument();
   });
 
   it('only shows reorder buttons in custom order without a search', async () => {

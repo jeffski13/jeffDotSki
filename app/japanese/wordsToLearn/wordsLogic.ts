@@ -12,7 +12,21 @@ export interface Word {
   deleted: boolean;
 }
 
-export type SortMode = 'custom' | 'romaji' | 'english';
+export type SortColumn = 'romaji' | 'english';
+export type SortMode = 'custom' | SortColumn | `${SortColumn}Desc`;
+
+// Clicking a column header sorts ascending, then descending, then back to custom order.
+export function nextSortMode(current: SortMode, column: SortColumn): SortMode {
+  if (current === column) return `${column}Desc`;
+  if (current === `${column}Desc`) return 'custom';
+  return column;
+}
+
+export function sortDirection(mode: SortMode, column: SortColumn): 'asc' | 'desc' | null {
+  if (mode === column) return 'asc';
+  if (mode === `${column}Desc`) return 'desc';
+  return null;
+}
 
 // dirtyIds are words changed on this device that the server hasn't confirmed yet.
 export interface LocalWordsState {
@@ -46,14 +60,14 @@ const compareCustom = (a: Word, b: Word) =>
 
 export function sortWords(words: Word[], mode: SortMode): Word[] {
   const sorted = [...words];
-  if (mode === 'romaji') {
-    sorted.sort((a, b) => compareText(a.romaji, b.romaji) || compareCustom(a, b));
-  } else if (mode === 'english') {
-    sorted.sort((a, b) => compareText(a.english, b.english) || compareCustom(a, b));
-  } else {
-    sorted.sort(compareCustom);
+  for (const column of ['romaji', 'english'] as const) {
+    const direction = sortDirection(mode, column);
+    if (direction) {
+      const sign = direction === 'asc' ? 1 : -1;
+      return sorted.sort((a, b) => sign * compareText(a[column], b[column]) || compareCustom(a, b));
+    }
   }
-  return sorted;
+  return sorted.sort(compareCustom);
 }
 
 export function matchesQuery(word: Word, query: string): boolean {

@@ -8,8 +8,10 @@ import {
   matchesQuery,
   mergeWords,
   moveToBottomOfList,
+  nextSortMode,
   reorderWord,
   shouldReplace,
+  sortDirection,
   sortWords,
   visibleWords,
   type LocalWordsState,
@@ -63,6 +65,16 @@ describe('sortWords', () => {
     expect(ids(sortWords(words, 'english'))).toEqual(['3', '2', '1']);
   });
 
+  it('sorts in reverse for the descending modes', () => {
+    expect(ids(sortWords(words, 'romajiDesc'))).toEqual(['1', '3', '2']);
+    expect(ids(sortWords(words, 'englishDesc'))).toEqual(['1', '2', '3']);
+  });
+
+  it('keeps custom order for ties when sorting descending', () => {
+    const tied = [word({ id: 'b', romaji: 'same', order: 1 }), word({ id: 'a', romaji: 'same', order: 0 }), word({ id: 'z', romaji: 'zzz', order: 2 })];
+    expect(ids(sortWords(tied, 'romajiDesc'))).toEqual(['z', 'a', 'b']);
+  });
+
   it('breaks custom-order ties deterministically', () => {
     const tied = [word({ id: 'b', order: 0, lastModified: 5 }), word({ id: 'a', order: 0, lastModified: 5 }), word({ id: 'c', order: 0, lastModified: 1 })];
     expect(ids(sortWords(tied, 'custom'))).toEqual(['c', 'a', 'b']);
@@ -72,6 +84,26 @@ describe('sortWords', () => {
     const copy = [...words];
     sortWords(words, 'english');
     expect(words).toEqual(copy);
+  });
+});
+
+describe('nextSortMode / sortDirection', () => {
+  it('cycles a column through ascending, descending, then custom', () => {
+    expect(nextSortMode('custom', 'romaji')).toBe('romaji');
+    expect(nextSortMode('romaji', 'romaji')).toBe('romajiDesc');
+    expect(nextSortMode('romajiDesc', 'romaji')).toBe('custom');
+  });
+
+  it('starts ascending when switching from another column', () => {
+    expect(nextSortMode('romajiDesc', 'english')).toBe('english');
+    expect(nextSortMode('english', 'romaji')).toBe('romaji');
+  });
+
+  it('reports the direction only for the active column', () => {
+    expect(sortDirection('romaji', 'romaji')).toBe('asc');
+    expect(sortDirection('romajiDesc', 'romaji')).toBe('desc');
+    expect(sortDirection('romaji', 'english')).toBeNull();
+    expect(sortDirection('custom', 'english')).toBeNull();
   });
 });
 

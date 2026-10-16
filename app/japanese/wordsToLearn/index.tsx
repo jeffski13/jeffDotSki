@@ -5,8 +5,11 @@ import {
   addWord,
   deleteWord,
   moveToBottomOfList,
+  nextSortMode,
   reorderWord,
+  sortDirection,
   visibleWords,
+  type SortColumn,
   type SortMode,
   type Word,
   type WordList,
@@ -28,11 +31,39 @@ const OTHER_LIST: Record<WordList, WordList> = {
   wantToLearn: 'learning',
 };
 
-const SORT_LABELS: Record<SortMode, string> = {
-  custom: 'Custom order',
-  romaji: 'Japanese (A–Z)',
-  english: 'English (A–Z)',
+const COLUMN_LABELS: Record<SortColumn, string> = {
+  romaji: '日本語',
+  english: 'English',
 };
+
+interface ColumnHeadersProps {
+  list: WordList;
+  sortMode: SortMode;
+  onSortChange: (mode: SortMode) => void;
+}
+
+function ColumnHeaders({ list, sortMode, onSortChange }: ColumnHeadersProps) {
+  return (
+    <div className="wordsToLearn-columns">
+      {(Object.keys(COLUMN_LABELS) as SortColumn[]).map((column) => {
+        const direction = sortDirection(sortMode, column);
+        return (
+          <button
+            key={column}
+            type="button"
+            className={`wordsToLearn-column wordsToLearn-column-${column}${direction ? ' wordsToLearn-column-active' : ''}`}
+            aria-label={`Sort ${LIST_TITLES[list]} by ${COLUMN_LABELS[column]}`}
+            aria-pressed={direction !== null}
+            onClick={() => onSortChange(nextSortMode(sortMode, column))}
+          >
+            {COLUMN_LABELS[column]}
+            {direction && <span aria-hidden="true"> {direction === 'asc' ? '▲' : '▼'}</span>}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 interface WordRowProps {
   word: Word;
@@ -134,17 +165,6 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, onNot
         <h2 id={`wordsToLearn-${list}-title`} className="wordsToLearn-section-title">
           {LIST_TITLES[list]} <span className="wordsToLearn-count">({shown.length})</span>
         </h2>
-        <Form.Select
-          size="sm"
-          className="wordsToLearn-sort"
-          aria-label={`${LIST_TITLES[list]} sort order`}
-          value={sortMode}
-          onChange={(e) => onSortChange(e.target.value as SortMode)}
-        >
-          {(Object.keys(SORT_LABELS) as SortMode[]).map((mode) => (
-            <option key={mode} value={mode}>{SORT_LABELS[mode]}</option>
-          ))}
-        </Form.Select>
       </div>
 
       <AddWordForm list={list} onAdd={(romaji, english) => change((all) => addWord(all, list, romaji, english, Date.now(), uuidv4()))} />
@@ -152,21 +172,24 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, onNot
       {shown.length === 0 ? (
         <p className="wordsToLearn-empty">{query.trim() ? 'No matching words.' : 'No words yet.'}</p>
       ) : (
-        <ul className="wordsToLearn-list">
-          {shown.map((word, index) => (
-            <WordRow
-              key={word.id}
-              word={word}
-              canReorder={canReorder}
-              isFirst={index === 0}
-              isLast={index === shown.length - 1}
-              onMove={(direction) => change((all) => reorderWord(all, word.id, direction, Date.now()))}
-              onSwitchList={() => change((all) => moveToBottomOfList(all, word.id, OTHER_LIST[list], Date.now()))}
-              onLearned={() => handleLearned(word)}
-              onDelete={() => handleDelete(word)}
-            />
-          ))}
-        </ul>
+        <>
+          <ColumnHeaders list={list} sortMode={sortMode} onSortChange={onSortChange} />
+          <ul className="wordsToLearn-list">
+            {shown.map((word, index) => (
+              <WordRow
+                key={word.id}
+                word={word}
+                canReorder={canReorder}
+                isFirst={index === 0}
+                isLast={index === shown.length - 1}
+                onMove={(direction) => change((all) => reorderWord(all, word.id, direction, Date.now()))}
+                onSwitchList={() => change((all) => moveToBottomOfList(all, word.id, OTHER_LIST[list], Date.now()))}
+                onLearned={() => handleLearned(word)}
+                onDelete={() => handleDelete(word)}
+              />
+            ))}
+          </ul>
+        </>
       )}
     </section>
   );
