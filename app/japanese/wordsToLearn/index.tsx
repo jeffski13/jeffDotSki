@@ -63,7 +63,7 @@ function WordRow({ word, canReorder, isFirst, isLast, onMove, onSwitchList, onLe
           </>
         )}
         <Button size="sm" variant="outline-primary" aria-label={`${switchLabel}: ${word.romaji}`} title={switchLabel} onClick={onSwitchList}>
-          {word.list === 'learning' ? '→ Want' : '→ Learning'}
+          →
         </Button>
         <Button size="sm" variant="outline-danger" aria-label={`Delete ${word.romaji}`} onClick={onDelete}>✕</Button>
       </div>
