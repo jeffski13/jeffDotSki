@@ -71,7 +71,7 @@ function ColumnHeaders({ list, sortMode, canReorder, onSortChange }: ColumnHeade
             <Button size="sm" tabIndex={-1}>↓</Button>
           </>
         )}
-        <Button size="sm" tabIndex={-1}>→</Button>
+        <Button size="sm" tabIndex={-1}><ChangeListIcon /></Button>
         <Button size="sm" tabIndex={-1}>✕</Button>
       </div>
     </div>
@@ -107,7 +107,7 @@ function WordRow({ word, canReorder, isFirst, isLast, onMove, onSwitchList, onLe
           </>
         )}
         <Button size="sm" variant="outline-primary" aria-label={`${switchLabel}: ${word.romaji}`} title={switchLabel} onClick={onSwitchList}>
-          →
+          <ChangeListIcon />
         </Button>
         <Button size="sm" variant="outline-danger" aria-label={`Delete ${word.romaji}`} onClick={onDelete}>✕</Button>
       </div>
@@ -119,6 +119,17 @@ interface AddWordFormProps {
   list: WordList;
   query: string;
   onAdd: (romaji: string, english: string) => void;
+}
+
+function ChangeListIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      {/* right arrow (top, center y=4) */}
+      <path d="M1 3h11V1l3 3-3 3V5H1z"/>
+      {/* left arrow (bottom, center y=12) */}
+      <path d="M15 11H4V9l-3 3 3 3V13h11z"/>
+    </svg>
+  );
 }
 
 function CopyIcon() {
