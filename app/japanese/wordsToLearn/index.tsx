@@ -1,4 +1,4 @@
-import { useCallback, useState, type CSSProperties } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Container, Form, Button, Alert, InputGroup, Modal, ListGroup } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -254,7 +254,16 @@ function WordMenu({ word, startEditing, onClose, onEdit, onChangeList, onMoveToT
   const otherList = LIST_TITLES[OTHER_LIST[word.list]];
 
   return (
-    <Modal show centered size="sm" onHide={onClose} className="wordsToLearn-menu" aria-labelledby="wordsToLearn-menu-title">
+    <Modal
+      show
+      centered
+      size="sm"
+      onHide={onClose}
+      // returning focus to the word row must not scroll the page to wherever the row now is
+      restoreFocusOptions={{ preventScroll: true }}
+      className="wordsToLearn-menu"
+      aria-labelledby="wordsToLearn-menu-title"
+    >
       <Modal.Header closeButton>
         <Modal.Title id="wordsToLearn-menu-title" className="wordsToLearn-menu-title">
           {word.romaji} - {word.english}
@@ -317,6 +326,20 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   const [menu, setMenu] = useState<{ wordId: string; editing: boolean } | null>(null);
   const menuWord = shown.find((w) => w.id === menu?.wordId);
   const closeMenu = () => setMenu(null);
+
+  // Moving a word to the top/bottom relocates its row; without this the browser's scroll
+  // anchoring follows the moved row, so the page jumps instead of staying where it was.
+  const keepScrollY = useRef<number | null>(null);
+  useLayoutEffect(() => {
+    if (keepScrollY.current === null) return;
+    // 'instant' overrides Bootstrap's smooth scroll-behavior so the page never visibly moves
+    window.scrollTo({ top: keepScrollY.current, behavior: 'instant' });
+    keepScrollY.current = null;
+  }, [words]);
+  const changeKeepingScroll = (changeFn: (words: Word[]) => Word[]) => {
+    keepScrollY.current = window.scrollY;
+    change(changeFn);
+  };
 
   const handleLongPress = (word: Word) => {
     setMenu({ wordId: word.id, editing: false });
@@ -400,11 +423,11 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
           }}
           {...(sortMode === 'custom' && {
             onMoveToTop: () => {
-              change((all) => moveWordToTop(all, menuWord.id, Date.now()));
+              changeKeepingScroll((all) => moveWordToTop(all, menuWord.id, Date.now()));
               closeMenu();
             },
             onMoveToBottom: () => {
-              change((all) => moveWordToBottom(all, menuWord.id, Date.now()));
+              changeKeepingScroll((all) => moveWordToBottom(all, menuWord.id, Date.now()));
               closeMenu();
             },
           })}

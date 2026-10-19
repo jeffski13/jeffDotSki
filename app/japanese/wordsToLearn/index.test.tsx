@@ -429,6 +429,30 @@ describe('WordsToLearnPage', () => {
     );
   });
 
+  it('keeps the scroll position when moving a word to the top or bottom', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 420 });
+    try {
+      longPress('shouhin');
+      fireEvent.click(within(menu()).getByRole('button', { name: 'Move to top of list' }));
+      expect(romajiIn('Learning')).toEqual(['shouhin', 'katsudou']);
+      expect(scrollTo).toHaveBeenLastCalledWith({ top: 420, behavior: 'instant' });
+
+      Object.defineProperty(window, 'scrollY', { configurable: true, value: 150 });
+      longPress('shouhin');
+      fireEvent.click(within(menu()).getByRole('button', { name: 'Move to bottom of list' }));
+      expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
+      expect(scrollTo).toHaveBeenLastCalledWith({ top: 150, behavior: 'instant' });
+    } finally {
+      scrollTo.mockRestore();
+      Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
+    }
+  });
+
   it('moves to the top of the whole list even while searching', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
