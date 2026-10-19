@@ -16,6 +16,7 @@ import {
   type SortColumn,
   type SortMode,
   type Word,
+  WORD_LISTS,
   type WordList,
 } from './wordsLogic';
 import { useWordsToLearn, type SyncStatus, type WordsToLearnApi } from './useWordsToLearn';
@@ -28,11 +29,14 @@ import './styles.css';
 const LIST_TITLES: Record<WordList, string> = {
   learning: 'Learning',
   wantToLearn: 'Want to Learn',
+  culture: 'Culture',
 };
 
+// target of Change List; Culture words go back to Want to Learn
 const OTHER_LIST: Record<WordList, WordList> = {
   learning: 'wantToLearn',
   wantToLearn: 'learning',
+  culture: 'wantToLearn',
 };
 
 const COLUMN_LABELS: Record<SortColumn, string> = {
@@ -101,7 +105,7 @@ interface WordRowProps {
 
 function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragStart, onMove, onEdit, onSwitchList, onLearned, onDelete }: WordRowProps) {
   const longPress = useLongPress(onLearned);
-  const switchLabel = word.list === 'learning' ? 'Move to Want to Learn' : 'Move to Learning';
+  const switchLabel = `Move to ${LIST_TITLES[OTHER_LIST[word.list]]}`;
 
   // arrow keys on the focused handle move the word without dragging
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -240,13 +244,15 @@ interface WordMenuProps {
   onClose: () => void;
   onEdit: (romaji: string, english: string) => void;
   onChangeList: () => void;
+  // undefined for words already in Culture
+  onAddToCulture?: () => void;
   // undefined while a column sort is active, since the custom order isn't visible then
   onMoveToTop?: () => void;
   onMoveToBottom?: () => void;
   onDelete: () => void;
 }
 
-function WordMenu({ word, startEditing, onClose, onEdit, onChangeList, onMoveToTop, onMoveToBottom, onDelete }: WordMenuProps) {
+function WordMenu({ word, startEditing, onClose, onEdit, onChangeList, onAddToCulture, onMoveToTop, onMoveToBottom, onDelete }: WordMenuProps) {
   const [editing, setEditing] = useState(startEditing);
   const [romaji, setRomaji] = useState(word.romaji);
   const [english, setEnglish] = useState(word.english);
@@ -295,6 +301,7 @@ function WordMenu({ word, startEditing, onClose, onEdit, onChangeList, onMoveToT
         <ListGroup variant="flush">
           <ListGroup.Item action onClick={() => setEditing(true)}>Edit</ListGroup.Item>
           <ListGroup.Item action onClick={onChangeList} title={`Move to ${otherList}`}>Change List</ListGroup.Item>
+          {onAddToCulture && <ListGroup.Item action onClick={onAddToCulture}>Add to {LIST_TITLES.culture}</ListGroup.Item>}
           {onMoveToTop && <ListGroup.Item action onClick={onMoveToTop}>Move to top of list</ListGroup.Item>}
           {onMoveToBottom && <ListGroup.Item action onClick={onMoveToBottom}>Move to bottom of list</ListGroup.Item>}
           <ListGroup.Item action onClick={onDelete} className="text-danger">Delete</ListGroup.Item>
@@ -346,12 +353,13 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
     navigator.vibrate?.(30);
   };
 
-  // moving to Want to Learn puts the word at the top; moving to Learning puts it at the bottom
-  const switchList = (word: Word) => {
-    const target = OTHER_LIST[list];
-    const moveFn = target === 'wantToLearn' ? moveToTopOfList : moveToBottomOfList;
+  // moving to Want to Learn or Culture puts the word at the top; moving to Learning, or out of
+  // Culture, puts it at the bottom
+  const moveToList = (word: Word, target: WordList) => {
+    const moveFn = target === 'learning' || list === 'culture' ? moveToBottomOfList : moveToTopOfList;
     change((all) => moveFn(all, word.id, target, Date.now()));
   };
+  const switchList = (word: Word) => moveToList(word, OTHER_LIST[list]);
 
   const handleDelete = (word: Word) => {
     if (window.confirm(`Delete "${word.romaji} - ${word.english}"?`)) {
@@ -421,6 +429,12 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
             switchList(menuWord);
             closeMenu();
           }}
+          {...(list !== 'culture' && {
+            onAddToCulture: () => {
+              moveToList(menuWord, 'culture');
+              closeMenu();
+            },
+          })}
           {...(sortMode === 'custom' && {
             onMoveToTop: () => {
               changeKeepingScroll((all) => moveWordToTop(all, menuWord.id, Date.now()));
@@ -493,7 +507,7 @@ export default function WordsToLearnPage({
     <div className="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
         <h1 className="wordsToLearn-title">Words To Learn</h1>
-        <p className="wordsToLearn-hint">Long-press or right-click a word to edit it, change its list or delete it.</p>
+        <p className="wordsToLearn-hint">Long-press or right-click a word to edit it, change its list, add it to Culture or delete it.</p>
 
         <div className="wordsToLearn-search-row">
           <Form.Control
@@ -517,7 +531,7 @@ export default function WordsToLearnPage({
 
         <SyncStatusLine status={status} pendingCount={pendingCount} />
 
-        {(['learning', 'wantToLearn'] as WordList[]).map((list) => (
+        {WORD_LISTS.map((list) => (
           <WordSection
             key={list}
             list={list}

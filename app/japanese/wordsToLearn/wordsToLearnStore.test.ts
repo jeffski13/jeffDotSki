@@ -26,7 +26,12 @@ describe('wordsToLearnStoreImpl', () => {
 
   it('round-trips the sort settings, defaulting to custom order', () => {
     expect(wordsToLearnStoreImpl.loadSort()).toEqual(DEFAULT_SORT);
-    wordsToLearnStoreImpl.saveSort({ learning: 'english', wantToLearn: 'romaji' });
-    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'english', wantToLearn: 'romaji' });
+    wordsToLearnStoreImpl.saveSort({ learning: 'english', wantToLearn: 'romaji', culture: 'englishDesc' });
+    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'english', wantToLearn: 'romaji', culture: 'englishDesc' });
+  });
+
+  it('defaults Culture to custom order for sort settings saved before it existed', () => {
+    localStorage.setItem('wordsToLearn.sort', JSON.stringify({ learning: 'english', wantToLearn: 'romaji' }));
+    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'english', wantToLearn: 'romaji', culture: 'custom' });
   });
 });

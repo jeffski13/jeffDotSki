@@ -30,6 +30,7 @@ const SERVER_WORDS: Word[] = [
   word({ id: 'l2', romaji: 'shouhin', english: 'stuff', order: 1 }),
   word({ id: 'w1', romaji: 'kaisoku', english: 'rapid', list: 'wantToLearn', order: 0 }),
   word({ id: 'w2', romaji: 'Akiraka ni', english: 'obviously', list: 'wantToLearn', order: 1 }),
+  word({ id: 'c1', romaji: 'omiyage', english: 'souvenir gift', list: 'culture', order: 0 }),
 ];
 
 // In-memory fake of the server that merges like the real one.
@@ -59,10 +60,12 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-const section = (name: 'Learning' | 'Want to Learn') =>
+type ListName = 'Learning' | 'Want to Learn' | 'Culture';
+
+const section = (name: ListName) =>
   screen.getByRole('region', { name: new RegExp(`^${name}`) });
 
-const romajiIn = (name: 'Learning' | 'Want to Learn') =>
+const romajiIn = (name: ListName) =>
   Array.from(section(name).querySelectorAll('.wordsToLearn-romaji')).map((el) => el.textContent);
 
 const goOffline = () => {
@@ -81,12 +84,13 @@ const addTo = (name: 'Learning', romaji: string, english: string) => {
 };
 
 describe('WordsToLearnPage', () => {
-  it('loads words from the server into the two separate lists', async () => {
+  it('loads words from the server into the three separate lists', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
 
     await waitFor(() => expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']));
     expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni']);
+    expect(romajiIn('Culture')).toEqual(['omiyage']);
     expect(screen.getByTestId('wordsToLearn-sync')).toHaveTextContent('All changes synced');
   });
 
@@ -163,6 +167,23 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Learning')).toEqual(['shouhin']);
     expect(romajiIn('Want to Learn')).toEqual([]);
     expect(within(section('Want to Learn')).getByText('No matching words.')).toBeInTheDocument();
+    expect(romajiIn('Culture')).toEqual([]);
+  });
+
+  it('searches the Culture list too', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Culture')).toHaveLength(1));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'souvenir' } });
+
+    expect(romajiIn('Culture')).toEqual(['omiyage']);
+    expect(romajiIn('Learning')).toEqual([]);
+    expect(romajiIn('Want to Learn')).toEqual([]);
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'katsu' } });
+    expect(romajiIn('Culture')).toEqual([]);
+    expect(within(section('Culture')).getByText('No matching words.')).toBeInTheDocument();
   });
 
   it('sorts each list independently by clicking column headers and remembers the choice', async () => {
@@ -175,15 +196,15 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Want to Learn')).toEqual(['Akiraka ni', 'kaisoku']);
     expect(wantJapanese).toHaveAttribute('aria-pressed', 'true');
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
-    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'romaji' });
+    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'romaji', culture: 'custom' });
 
     fireEvent.click(wantJapanese);
     expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni']);
-    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'romajiDesc' });
+    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'romajiDesc', culture: 'custom' });
 
     fireEvent.click(wantJapanese);
     expect(wantJapanese).toHaveAttribute('aria-pressed', 'false');
-    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'custom' });
+    expect(wordsToLearnStoreImpl.loadSort()).toEqual({ learning: 'custom', wantToLearn: 'custom', culture: 'custom' });
 
     fireEvent.click(screen.getByRole('button', { name: 'Sort Learning by English' }));
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
@@ -403,6 +424,50 @@ describe('WordsToLearnPage', () => {
     longPress('kaisoku');
     fireEvent.click(within(menu()).getByRole('button', { name: 'Change List' }));
     expect(romajiIn('Learning')).toEqual(['shouhin', 'kaisoku']);
+  });
+
+  it('Add to Culture moves a word to the top of Culture and syncs the change', async () => {
+    const { api, server } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    longPress('shouhin');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Add to Culture' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(romajiIn('Learning')).toEqual(['katsudou']);
+    expect(romajiIn('Culture')).toEqual(['shouhin', 'omiyage']);
+
+    longPress('kaisoku');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Add to Culture' }));
+    expect(romajiIn('Want to Learn')).toEqual(['Akiraka ni']);
+    expect(romajiIn('Culture')).toEqual(['kaisoku', 'shouhin', 'omiyage']);
+
+    await waitFor(() => expect(server.words.find((w) => w.id === 'l2')?.list).toBe('culture'), { timeout: SYNC_DEBOUNCE_MS + 1000 });
+    expect(server.words.find((w) => w.id === 'w1')?.list).toBe('culture');
+  });
+
+  it('hides Add to Culture for Culture words, and Change List moves them to the bottom of Want to Learn', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Culture')).toHaveLength(1));
+
+    longPress('omiyage');
+    expect(within(menu()).queryByRole('button', { name: 'Add to Culture' })).not.toBeInTheDocument();
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Change List' }));
+
+    expect(romajiIn('Culture')).toEqual([]);
+    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'omiyage']);
+  });
+
+  it('the change list button on a Culture word moves it to the bottom of Want to Learn', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Culture')).toHaveLength(1));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Move to Want to Learn: omiyage' }));
+
+    expect(romajiIn('Culture')).toEqual([]);
+    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'omiyage']);
   });
 
   it('moves a word to the top or bottom of its list from the menu and syncs the change', async () => {

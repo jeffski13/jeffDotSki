@@ -1,14 +1,11 @@
-import type { LocalWordsState, SortMode } from './wordsLogic';
+import type { LocalWordsState, SortMode, WordList } from './wordsLogic';
 
 const WORDS_STORAGE_KEY = 'wordsToLearn.words';
 const SORT_STORAGE_KEY = 'wordsToLearn.sort';
 
-export interface SortSettings {
-  learning: SortMode;
-  wantToLearn: SortMode;
-}
+export type SortSettings = Record<WordList, SortMode>;
 
-export const DEFAULT_SORT: SortSettings = { learning: 'custom', wantToLearn: 'custom' };
+export const DEFAULT_SORT: SortSettings = { learning: 'custom', wantToLearn: 'custom', culture: 'custom' };
 
 const EMPTY_STATE: LocalWordsState = { words: [], dirtyIds: [] };
 

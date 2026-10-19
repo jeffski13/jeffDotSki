@@ -1,4 +1,5 @@
-export type WordList = 'learning' | 'wantToLearn';
+export const WORD_LISTS = ['learning', 'wantToLearn', 'culture'] as const;
+export type WordList = (typeof WORD_LISTS)[number];
 
 // Mirrors the Word type in jeffDotSkiFuriganaServer/src/wordsToLearn/wordsToLearnMerge.ts.
 // Deletions are kept as tombstones (deleted: true) so they sync to other devices.
