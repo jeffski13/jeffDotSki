@@ -121,6 +121,26 @@ describe('WordsToLearnPage', () => {
     expect(plus).toHaveAttribute('aria-expanded', 'false');
   });
 
+  it('copies the search text into the romaji or english input', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    fireEvent.click(screen.getByRole('button', { name: 'New word' }));
+
+    expect(screen.getByRole('button', { name: 'Copy search into romaji' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Copy search into english' })).toBeDisabled();
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: '  tanki ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Copy search into romaji' }));
+    expect(screen.getByLabelText('Learning romaji')).toHaveValue('tanki');
+    expect(screen.getByLabelText('Learning english')).toHaveValue('');
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'short term' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Copy search into english' }));
+    expect(screen.getByLabelText('Learning english')).toHaveValue('short term');
+    expect(screen.getByLabelText('Learning romaji')).toHaveValue('tanki');
+  });
+
   it('hides the new word form when the plus button is clicked again', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);

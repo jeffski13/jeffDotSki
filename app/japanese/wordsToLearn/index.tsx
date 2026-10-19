@@ -117,10 +117,36 @@ function WordRow({ word, canReorder, isFirst, isLast, onMove, onSwitchList, onLe
 
 interface AddWordFormProps {
   list: WordList;
+  query: string;
   onAdd: (romaji: string, english: string) => void;
 }
 
-function AddWordForm({ list, onAdd }: AddWordFormProps) {
+function CopyIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path fillRule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z" />
+    </svg>
+  );
+}
+
+function CopySearchButton({ field, query, onCopy }: { field: string; query: string; onCopy: (text: string) => void }) {
+  const text = query.trim();
+  return (
+    <Button
+      variant="outline-secondary"
+      className="wordsToLearn-copy"
+      aria-label={`Copy search into ${field}`}
+      title={`Copy search into ${field}`}
+      disabled={!text}
+      onClick={() => onCopy(text)}
+    >
+      <CopyIcon />
+      <span aria-hidden="true">→</span>
+    </Button>
+  );
+}
+
+function AddWordForm({ list, query, onAdd }: AddWordFormProps) {
   const [romaji, setRomaji] = useState('');
   const [english, setEnglish] = useState('');
   const canAdd = romaji.trim().length > 0 && english.trim().length > 0;
@@ -137,7 +163,9 @@ function AddWordForm({ list, onAdd }: AddWordFormProps) {
       }}
     >
       <InputGroup size="sm">
+        <CopySearchButton field="romaji" query={query} onCopy={setRomaji} />
         <Form.Control autoFocus aria-label={`${LIST_TITLES[list]} romaji`} placeholder="Romaji" value={romaji} onChange={(e) => setRomaji(e.target.value)} />
+        <CopySearchButton field="english" query={query} onCopy={setEnglish} />
         <Form.Control aria-label={`${LIST_TITLES[list]} english`} placeholder="English" value={english} onChange={(e) => setEnglish(e.target.value)} />
         <Button type="submit" variant="primary" disabled={!canAdd} aria-label={`Add to ${LIST_TITLES[list]}`}>Add</Button>
       </InputGroup>
@@ -240,6 +268,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
       {showAddForm && (
         <AddWordForm
           list={list}
+          query={query}
           onAdd={(romaji, english) => {
             change((all) => addWord(all, list, romaji, english, Date.now(), uuidv4()));
             onAdded();

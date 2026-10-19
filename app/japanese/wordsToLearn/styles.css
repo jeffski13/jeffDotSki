@@ -23,6 +23,12 @@
   margin-bottom: 0.5rem;
 }
 
+.wordsToLearn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
 .wordsToLearn-new {
   flex-shrink: 0;
   min-width: 2.5rem;
