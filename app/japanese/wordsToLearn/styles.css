@@ -147,6 +147,25 @@
   gap: 0.5rem;
 }
 
+/* extra small screens: the long-press / right-click menu covers these actions */
+@media (max-width: 575.98px) {
+  .wordsToLearn-actions {
+    display: none;
+  }
+
+  /* keep romaji and english side by side as two equal columns instead of wrapping */
+  .wordsToLearn-text {
+    flex-wrap: nowrap;
+  }
+
+  .wordsToLearn-romaji,
+  .wordsToLearn-english,
+  .wordsToLearn-column {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
 .wordsToLearn-empty {
   font-size: 0.875rem;
   font-style: italic;
