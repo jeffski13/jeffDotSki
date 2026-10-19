@@ -10,7 +10,7 @@ import {
   mergeWords,
   moveToBottomOfList,
   nextSortMode,
-  reorderWord,
+  moveWordTo,
   shouldReplace,
   sortDirection,
   sortWords,
@@ -185,7 +185,7 @@ describe('deleteWord', () => {
   });
 });
 
-describe('reorderWord', () => {
+describe('moveWordTo', () => {
   const words = [
     word({ id: 'a', order: 0 }),
     word({ id: 'b', order: 1 }),
@@ -194,22 +194,31 @@ describe('reorderWord', () => {
   ];
 
   it('swaps a word with its neighbour and returns only the changed words', () => {
-    const changed = reorderWord(words, 'c', -1, 500);
+    const changed = moveWordTo(words, 'c', 1, 500);
     expect(changed).toEqual([
       word({ id: 'c', order: 1, lastModified: 500 }),
       word({ id: 'b', order: 2, lastModified: 500 }),
     ]);
   });
 
-  it('does nothing at the edges of the list', () => {
-    expect(reorderWord(words, 'a', -1, 500)).toEqual([]);
-    expect(reorderWord(words, 'c', 1, 500)).toEqual([]);
-    expect(reorderWord(words, 'w', 1, 500)).toEqual([]);
+  it('moves a word several places at once', () => {
+    const learningAfter = (id: string, toIndex: number) =>
+      ids(visibleWords(mergeWords(words, moveWordTo(words, id, toIndex, 500)), 'learning', 'custom', ''));
+    expect(learningAfter('a', 2)).toEqual(['b', 'c', 'a']);
+    expect(learningAfter('c', 0)).toEqual(['c', 'a', 'b']);
+  });
+
+  it('does nothing for the same position, out-of-range targets or unknown ids', () => {
+    expect(moveWordTo(words, 'b', 1, 500)).toEqual([]);
+    expect(moveWordTo(words, 'a', -1, 500)).toEqual([]);
+    expect(moveWordTo(words, 'c', 3, 500)).toEqual([]);
+    expect(moveWordTo(words, 'w', 1, 500)).toEqual([]);
+    expect(moveWordTo(words, 'nope', 0, 500)).toEqual([]);
   });
 
   it('renumbers tied orders so the word still moves', () => {
     const tied = [word({ id: 'x', order: 0, lastModified: 1 }), word({ id: 'y', order: 0, lastModified: 2 })];
-    const changed = reorderWord(tied, 'y', -1, 500);
+    const changed = moveWordTo(tied, 'y', 0, 500);
     const result = sortWords(mergeWords(tied, changed), 'custom');
     expect(ids(result)).toEqual(['y', 'x']);
   });

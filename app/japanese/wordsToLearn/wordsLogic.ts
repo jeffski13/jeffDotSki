@@ -114,17 +114,17 @@ export function deleteWord(words: Word[], id: string, now: number): Word[] {
   return [{ ...word, deleted: true, lastModified: now }];
 }
 
-// Moves a word one step up (-1) or down (1) in its list's custom order. Renumbers the
-// list so words with tied orders (e.g. added on two devices at once) still move.
-export function reorderWord(words: Word[], id: string, direction: -1 | 1, now: number): Word[] {
+// Moves a word to position toIndex in its list's custom order. Renumbers the list so
+// words with tied orders (e.g. added on two devices at once) still move.
+export function moveWordTo(words: Word[], id: string, toIndex: number, now: number): Word[] {
   const word = words.find((w) => w.id === id);
   if (!word) return [];
   const ordered = sortWords(wordsInList(words, word.list), 'custom');
   const index = ordered.findIndex((w) => w.id === id);
-  const target = index + direction;
-  if (index < 0 || target < 0 || target >= ordered.length) return [];
+  if (index < 0 || toIndex < 0 || toIndex >= ordered.length || toIndex === index) return [];
 
-  [ordered[index], ordered[target]] = [ordered[target], ordered[index]];
+  ordered.splice(index, 1);
+  ordered.splice(toIndex, 0, word);
   return ordered
     .map((w, order) => (w.order === order ? null : { ...w, order, lastModified: now }))
     .filter((w): w is Word => w !== null);

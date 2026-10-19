@@ -189,23 +189,77 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Learning')).toEqual(['shouhin', 'katsudou']);
   });
 
-  it('hides reorder buttons while a column sort is active', async () => {
+  it('hides drag handles while a column sort is active', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
 
     fireEvent.click(screen.getByRole('button', { name: 'Sort Learning by English' }));
-    expect(screen.queryByRole('button', { name: 'Move shouhin up' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Reorder shouhin' })).not.toBeInTheDocument();
   });
 
-  it('only shows reorder buttons in custom order without a search', async () => {
+  it('only shows drag handles in custom order without a search', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
 
-    expect(screen.getByRole('button', { name: 'Move shouhin up' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reorder shouhin' })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'shou' } });
-    expect(screen.queryByRole('button', { name: 'Move shouhin up' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Reorder shouhin' })).not.toBeInTheDocument();
+  });
+
+  it('reorders a word by dragging its handle', async () => {
+    const { api } = createFakeApi([
+      ...SERVER_WORDS,
+      word({ id: 'l3', romaji: 'futsuka yoi', english: 'hangover', order: 2 }),
+    ]);
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin', 'futsuka yoi']));
+
+    // jsdom has no layout, so give each row a 40px-tall box in list order
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      const rows = Array.from(this.parentElement?.children ?? []);
+      const top = rows.indexOf(this) * 40;
+      return { top, bottom: top + 40, height: 40, left: 0, right: 0, width: 0, x: 0, y: top, toJSON: () => ({}) };
+    });
+
+    const handle = screen.getByRole('button', { name: 'Reorder katsudou' });
+    fireEvent.pointerDown(handle, { button: 0, clientY: 20 });
+    fireEvent.pointerMove(window, { clientY: 70 });
+    expect(screen.getByTestId('word-l1')).toHaveClass('wordsToLearn-row-dragging');
+    expect(screen.getByTestId('word-l1')).toHaveStyle({ transform: 'translateY(50px)' });
+    expect(screen.getByTestId('word-l2')).toHaveStyle({ transform: 'translateY(-40px)' });
+
+    fireEvent.pointerMove(window, { clientY: 110 });
+    fireEvent.pointerUp(window, { clientY: 110 });
+    expect(romajiIn('Learning')).toEqual(['shouhin', 'futsuka yoi', 'katsudou']);
+    expect(screen.getByTestId('word-l1')).not.toHaveClass('wordsToLearn-row-dragging');
+  });
+
+  it('does not reorder when a drag is cancelled', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      const top = Array.from(this.parentElement?.children ?? []).indexOf(this) * 40;
+      return { top, bottom: top + 40, height: 40, left: 0, right: 0, width: 0, x: 0, y: top, toJSON: () => ({}) };
+    });
+
+    fireEvent.pointerDown(screen.getByRole('button', { name: 'Reorder katsudou' }), { button: 0, clientY: 20 });
+    fireEvent.pointerMove(window, { clientY: 70 });
+    fireEvent.pointerCancel(window, { clientY: 70 });
+    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
+  });
+
+  it('moves a word with the arrow keys on its handle', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Reorder katsudou' }), { key: 'ArrowUp' });
+    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Reorder katsudou' }), { key: 'ArrowDown' });
+    expect(romajiIn('Learning')).toEqual(['shouhin', 'katsudou']);
   });
 
   it('adds, reorders, moves and deletes words, then syncs the changes to the server', async () => {
@@ -216,7 +270,7 @@ describe('WordsToLearnPage', () => {
     addTo('Learning', 'futsuka yoi', 'hangover');
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin', 'futsuka yoi']);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Move futsuka yoi up' }));
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Reorder futsuka yoi' }), { key: 'ArrowUp' });
     expect(romajiIn('Learning')).toEqual(['katsudou', 'futsuka yoi', 'shouhin']);
 
     fireEvent.click(screen.getByRole('button', { name: 'Move to Learning: kaisoku' }));

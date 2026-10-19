@@ -214,3 +214,51 @@
 [data-bs-theme="light"] .wordsToLearn-columns {
   border-bottom: 2px solid #868e96;
 }
+
+.wordsToLearn-drag-handle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.15rem;
+  border: none;
+  background: none;
+  color: inherit;
+  opacity: 0.6;
+  cursor: grab;
+  /* the handle is the touch drag target — don't let the page scroll or show callouts */
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+
+.wordsToLearn-row-draggable .wordsToLearn-text {
+  cursor: grab;
+}
+
+.wordsToLearn-list-dragging,
+.wordsToLearn-list-dragging * {
+  cursor: grabbing !important;
+}
+
+.wordsToLearn-list-dragging .wordsToLearn-row {
+  transition: transform 150ms ease;
+}
+
+.wordsToLearn-list-dragging .wordsToLearn-row-dragging {
+  position: relative;
+  z-index: 1;
+  transition: none;
+  background-color: var(--bs-body-bg);
+}
+
+[data-bs-theme="dark"] .wordsToLearn-row-dragging {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+[data-bs-theme="light"] .wordsToLearn-row-dragging {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.wordsToLearn-columns-spacer.wordsToLearn-drag-handle {
+  padding-top: 0;
+  padding-bottom: 0;
+}

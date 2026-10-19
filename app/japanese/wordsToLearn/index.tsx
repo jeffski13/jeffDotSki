@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { Container, Form, Button, Alert, InputGroup, Modal, ListGroup } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -6,8 +6,8 @@ import {
   deleteWord,
   editWord,
   moveToBottomOfList,
+  moveWordTo,
   nextSortMode,
-  reorderWord,
   sortDirection,
   visibleWords,
   type SortColumn,
@@ -18,6 +18,7 @@ import {
 import { useWordsToLearn, type SyncStatus, type WordsToLearnApi } from './useWordsToLearn';
 import { wordsToLearnStoreImpl, type SortSettings, type WordsToLearnStore } from './wordsToLearnStore';
 import { useLongPress } from './useLongPress';
+import { DRAG_HANDLE_ATTR, DRAG_ID_ATTR, useDragReorder } from './useDragReorder';
 import './styles.css';
 
 const LIST_TITLES: Record<WordList, string> = {
@@ -45,6 +46,12 @@ interface ColumnHeadersProps {
 function ColumnHeaders({ list, sortMode, canReorder, onSortChange }: ColumnHeadersProps) {
   return (
     <div className="wordsToLearn-columns">
+      {/* invisible copy of a row's drag handle so the header columns line up with the word columns */}
+      {canReorder && (
+        <span className="wordsToLearn-drag-handle wordsToLearn-columns-spacer" aria-hidden="true">
+          <GripIcon />
+        </span>
+      )}
       <div className="wordsToLearn-columns-text">
         {(Object.keys(COLUMN_LABELS) as SortColumn[]).map((column) => {
           const direction = sortDirection(sortMode, column);
@@ -65,12 +72,6 @@ function ColumnHeaders({ list, sortMode, canReorder, onSortChange }: ColumnHeade
       </div>
       {/* invisible copy of a row's buttons so the header columns line up with the word columns */}
       <div className="wordsToLearn-actions wordsToLearn-columns-spacer" aria-hidden="true">
-        {canReorder && (
-          <>
-            <Button size="sm" tabIndex={-1}>↑</Button>
-            <Button size="sm" tabIndex={-1}>↓</Button>
-          </>
-        )}
         <Button size="sm" tabIndex={-1}><ChangeListIcon /></Button>
         <Button size="sm" tabIndex={-1}>✕</Button>
       </div>
@@ -83,29 +84,51 @@ interface WordRowProps {
   canReorder: boolean;
   isFirst: boolean;
   isLast: boolean;
+  isDragging: boolean;
+  style: CSSProperties | undefined;
+  onDragStart: (e: React.PointerEvent) => void;
   onMove: (direction: -1 | 1) => void;
   onSwitchList: () => void;
   onLearned: () => void;
   onDelete: () => void;
 }
 
-function WordRow({ word, canReorder, isFirst, isLast, onMove, onSwitchList, onLearned, onDelete }: WordRowProps) {
+function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragStart, onMove, onSwitchList, onLearned, onDelete }: WordRowProps) {
   const longPress = useLongPress(onLearned);
   const switchLabel = word.list === 'learning' ? 'Move to Want to Learn' : 'Move to Learning';
 
+  // arrow keys on the focused handle move the word without dragging
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    const direction = e.key === 'ArrowUp' ? -1 : e.key === 'ArrowDown' ? 1 : 0;
+    if (!direction) return;
+    e.preventDefault();
+    if ((direction === -1 && !isFirst) || (direction === 1 && !isLast)) onMove(direction);
+  };
+
   return (
-    <li className="wordsToLearn-row" data-testid={`word-${word.id}`}>
+    <li
+      className={`wordsToLearn-row${canReorder ? ' wordsToLearn-row-draggable' : ''}${isDragging ? ' wordsToLearn-row-dragging' : ''}`}
+      data-testid={`word-${word.id}`}
+      style={style}
+      {...(canReorder && { [DRAG_ID_ATTR]: word.id, onPointerDown: onDragStart })}
+    >
+      {canReorder && (
+        <button
+          type="button"
+          className="wordsToLearn-drag-handle"
+          {...{ [DRAG_HANDLE_ATTR]: '' }}
+          aria-label={`Reorder ${word.romaji}`}
+          title="Drag to reorder (or use the arrow keys)"
+          onKeyDown={handleKeyDown}
+        >
+          <GripIcon />
+        </button>
+      )}
       <div className="wordsToLearn-text" {...longPress}>
         <span className="wordsToLearn-romaji">{word.romaji}</span>
         <span className="wordsToLearn-english">{word.english}</span>
       </div>
       <div className="wordsToLearn-actions">
-        {canReorder && (
-          <>
-            <Button size="sm" variant="outline-secondary" aria-label={`Move ${word.romaji} up`} disabled={isFirst} onClick={() => onMove(-1)}>↑</Button>
-            <Button size="sm" variant="outline-secondary" aria-label={`Move ${word.romaji} down`} disabled={isLast} onClick={() => onMove(1)}>↓</Button>
-          </>
-        )}
         <Button size="sm" variant="outline-primary" aria-label={`${switchLabel}: ${word.romaji}`} title={switchLabel} onClick={onSwitchList}>
           <ChangeListIcon />
         </Button>
@@ -119,6 +142,14 @@ interface AddWordFormProps {
   list: WordList;
   query: string;
   onAdd: (romaji: string, english: string) => void;
+}
+
+function GripIcon() {
+  return (
+    <svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true">
+      {[3, 8, 13].flatMap((cy) => [3, 9].map((cx) => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="1.5" />))}
+    </svg>
+  );
 }
 
 function ChangeListIcon() {
@@ -254,6 +285,8 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   const shown = visibleWords(words, list, sortMode, query);
   // reordering against a filtered or alphabetized view would be confusing
   const canReorder = sortMode === 'custom' && query.trim().length === 0;
+  const moveTo = (id: string, toIndex: number) => change((all) => moveWordTo(all, id, toIndex, Date.now()));
+  const { listRef, draggingId, onPointerDown, rowStyle } = useDragReorder<HTMLUListElement>(shown.map((w) => w.id), moveTo);
 
   const [menuWordId, setMenuWordId] = useState<string | null>(null);
   const menuWord = shown.find((w) => w.id === menuWordId);
@@ -298,7 +331,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
       ) : (
         <>
           <ColumnHeaders list={list} sortMode={sortMode} canReorder={canReorder} onSortChange={onSortChange} />
-          <ul className="wordsToLearn-list">
+          <ul className={`wordsToLearn-list${draggingId ? ' wordsToLearn-list-dragging' : ''}`} ref={listRef}>
             {shown.map((word, index) => (
               <WordRow
                 key={word.id}
@@ -306,7 +339,10 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
                 canReorder={canReorder}
                 isFirst={index === 0}
                 isLast={index === shown.length - 1}
-                onMove={(direction) => change((all) => reorderWord(all, word.id, direction, Date.now()))}
+                isDragging={draggingId === word.id}
+                style={rowStyle(word.id, index)}
+                onDragStart={(e) => onPointerDown(e, word.id)}
+                onMove={(direction) => moveTo(word.id, index + direction)}
                 onSwitchList={() => switchList(word)}
                 onLearned={() => handleLongPress(word)}
                 onDelete={() => handleDelete(word)}
