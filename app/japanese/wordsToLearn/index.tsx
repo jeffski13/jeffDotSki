@@ -7,6 +7,8 @@ import {
   editWord,
   moveToBottomOfList,
   moveWordTo,
+  moveWordToBottom,
+  moveWordToTop,
   nextSortMode,
   sortDirection,
   visibleWords,
@@ -72,6 +74,7 @@ function ColumnHeaders({ list, sortMode, canReorder, onSortChange }: ColumnHeade
       </div>
       {/* invisible copy of a row's buttons so the header columns line up with the word columns */}
       <div className="wordsToLearn-actions wordsToLearn-columns-spacer" aria-hidden="true">
+        <Button size="sm" tabIndex={-1}><EditIcon /></Button>
         <Button size="sm" tabIndex={-1}><ChangeListIcon /></Button>
         <Button size="sm" tabIndex={-1}>✕</Button>
       </div>
@@ -88,12 +91,13 @@ interface WordRowProps {
   style: CSSProperties | undefined;
   onDragStart: (e: React.PointerEvent) => void;
   onMove: (direction: -1 | 1) => void;
+  onEdit: () => void;
   onSwitchList: () => void;
   onLearned: () => void;
   onDelete: () => void;
 }
 
-function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragStart, onMove, onSwitchList, onLearned, onDelete }: WordRowProps) {
+function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragStart, onMove, onEdit, onSwitchList, onLearned, onDelete }: WordRowProps) {
   const longPress = useLongPress(onLearned);
   const switchLabel = word.list === 'learning' ? 'Move to Want to Learn' : 'Move to Learning';
 
@@ -129,6 +133,9 @@ function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragS
         <span className="wordsToLearn-english">{word.english}</span>
       </div>
       <div className="wordsToLearn-actions">
+        <Button size="sm" variant="outline-secondary" aria-label={`Edit ${word.romaji}`} title="Edit" onClick={onEdit}>
+          <EditIcon />
+        </Button>
         <Button size="sm" variant="outline-primary" aria-label={`${switchLabel}: ${word.romaji}`} title={switchLabel} onClick={onSwitchList}>
           <ChangeListIcon />
         </Button>
@@ -161,6 +168,14 @@ function ChangeListIcon() {
       {/* up arrow (right): shaft bends from center rightward, then up */}
       <path d="M8.7 9.8H9.5Q11.5 9.8 11.5 7.8V4.5" fill="none" stroke="currentColor" strokeWidth="2"/>
       <path d="M8 5h7l-3.5-4.5z"/>
+    </svg>
+  );
+}
+
+function EditIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
     </svg>
   );
 }
@@ -219,14 +234,18 @@ function AddWordForm({ list, query, onAdd }: AddWordFormProps) {
 
 interface WordMenuProps {
   word: Word;
+  startEditing: boolean;
   onClose: () => void;
   onEdit: (romaji: string, english: string) => void;
   onChangeList: () => void;
+  // undefined while a column sort is active, since the custom order isn't visible then
+  onMoveToTop?: () => void;
+  onMoveToBottom?: () => void;
   onDelete: () => void;
 }
 
-function WordMenu({ word, onClose, onEdit, onChangeList, onDelete }: WordMenuProps) {
-  const [editing, setEditing] = useState(false);
+function WordMenu({ word, startEditing, onClose, onEdit, onChangeList, onMoveToTop, onMoveToBottom, onDelete }: WordMenuProps) {
+  const [editing, setEditing] = useState(startEditing);
   const [romaji, setRomaji] = useState(word.romaji);
   const [english, setEnglish] = useState(word.english);
   const canSave = romaji.trim().length > 0 && english.trim().length > 0;
@@ -265,6 +284,8 @@ function WordMenu({ word, onClose, onEdit, onChangeList, onDelete }: WordMenuPro
         <ListGroup variant="flush">
           <ListGroup.Item action onClick={() => setEditing(true)}>Edit</ListGroup.Item>
           <ListGroup.Item action onClick={onChangeList} title={`Move to ${otherList}`}>Change List</ListGroup.Item>
+          {onMoveToTop && <ListGroup.Item action onClick={onMoveToTop}>Move to top of list</ListGroup.Item>}
+          {onMoveToBottom && <ListGroup.Item action onClick={onMoveToBottom}>Move to bottom of list</ListGroup.Item>}
           <ListGroup.Item action onClick={onDelete} className="text-danger">Delete</ListGroup.Item>
         </ListGroup>
       )}
@@ -290,12 +311,13 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   const moveTo = (id: string, toIndex: number) => change((all) => moveWordTo(all, id, toIndex, Date.now()));
   const { listRef, draggingId, onPointerDown, rowStyle } = useDragReorder<HTMLUListElement>(shown.map((w) => w.id), moveTo);
 
-  const [menuWordId, setMenuWordId] = useState<string | null>(null);
-  const menuWord = shown.find((w) => w.id === menuWordId);
-  const closeMenu = () => setMenuWordId(null);
+  // the edit button opens the same menu, but straight into its edit form
+  const [menu, setMenu] = useState<{ wordId: string; editing: boolean } | null>(null);
+  const menuWord = shown.find((w) => w.id === menu?.wordId);
+  const closeMenu = () => setMenu(null);
 
   const handleLongPress = (word: Word) => {
-    setMenuWordId(word.id);
+    setMenu({ wordId: word.id, editing: false });
     navigator.vibrate?.(30);
   };
 
@@ -345,6 +367,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
                 style={rowStyle(word.id, index)}
                 onDragStart={(e) => onPointerDown(e, word.id)}
                 onMove={(direction) => moveTo(word.id, index + direction)}
+                onEdit={() => setMenu({ wordId: word.id, editing: true })}
                 onSwitchList={() => switchList(word)}
                 onLearned={() => handleLongPress(word)}
                 onDelete={() => handleDelete(word)}
@@ -358,6 +381,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
         <WordMenu
           key={menuWord.id}
           word={menuWord}
+          startEditing={menu?.editing ?? false}
           onClose={closeMenu}
           onEdit={(romaji, english) => {
             change((all) => editWord(all, menuWord.id, romaji, english, Date.now()));
@@ -367,6 +391,16 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
             switchList(menuWord);
             closeMenu();
           }}
+          {...(sortMode === 'custom' && {
+            onMoveToTop: () => {
+              change((all) => moveWordToTop(all, menuWord.id, Date.now()));
+              closeMenu();
+            },
+            onMoveToBottom: () => {
+              change((all) => moveWordToBottom(all, menuWord.id, Date.now()));
+              closeMenu();
+            },
+          })}
           onDelete={() => {
             if (handleDelete(menuWord)) closeMenu();
           }}

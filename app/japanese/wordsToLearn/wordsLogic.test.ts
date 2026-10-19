@@ -11,6 +11,8 @@ import {
   moveToBottomOfList,
   nextSortMode,
   moveWordTo,
+  moveWordToBottom,
+  moveWordToTop,
   shouldReplace,
   sortDirection,
   sortWords,
@@ -221,6 +223,30 @@ describe('moveWordTo', () => {
     const changed = moveWordTo(tied, 'y', 0, 500);
     const result = sortWords(mergeWords(tied, changed), 'custom');
     expect(ids(result)).toEqual(['y', 'x']);
+  });
+});
+
+describe('moveWordToTop / moveWordToBottom', () => {
+  const words = [
+    word({ id: 'a', order: 0 }),
+    word({ id: 'b', order: 1 }),
+    word({ id: 'c', order: 2 }),
+    word({ id: 'gone', order: 3, deleted: true }),
+    word({ id: 'w', list: 'wantToLearn', order: 0 }),
+  ];
+  const learningAfter = (changed: Word[]) => ids(visibleWords(mergeWords(words, changed), 'learning', 'custom', ''));
+
+  it('moves a word to the top or bottom of its own list', () => {
+    expect(learningAfter(moveWordToTop(words, 'c', 500))).toEqual(['c', 'a', 'b']);
+    expect(learningAfter(moveWordToBottom(words, 'a', 500))).toEqual(['b', 'c', 'a']);
+  });
+
+  it('does nothing when already there or for unknown ids', () => {
+    expect(moveWordToTop(words, 'a', 500)).toEqual([]);
+    expect(moveWordToBottom(words, 'c', 500)).toEqual([]);
+    expect(moveWordToBottom(words, 'w', 500)).toEqual([]);
+    expect(moveWordToTop(words, 'nope', 500)).toEqual([]);
+    expect(moveWordToBottom(words, 'nope', 500)).toEqual([]);
   });
 });
 

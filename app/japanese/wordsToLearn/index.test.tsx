@@ -351,6 +351,27 @@ describe('WordsToLearnPage', () => {
     await waitFor(() => expect(server.words.find((w) => w.id === 'w1')?.english).toBe('rapid train'), { timeout: SYNC_DEBOUNCE_MS + 1000 });
   });
 
+  it('the edit button on a row opens the edit form directly and saves the change', async () => {
+    const { api, server } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Edit shouhin' }));
+    expect(within(menu()).queryByRole('button', { name: 'Change List' })).not.toBeInTheDocument();
+    expect(within(menu()).getByLabelText('Romaji')).toHaveValue('shouhin');
+    expect(within(menu()).getByLabelText('English')).toHaveValue('stuff');
+    fireEvent.change(within(menu()).getByLabelText('English'), { target: { value: 'goods' } });
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Save' }));
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByText('goods')).toBeInTheDocument();
+    await waitFor(() => expect(server.words.find((w) => w.id === 'l2')?.english).toBe('goods'), { timeout: SYNC_DEBOUNCE_MS + 1000 });
+
+    // long-pressing afterwards still opens the full menu, not the edit form
+    longPress('katsudou');
+    expect(within(menu()).getByRole('button', { name: 'Edit' })).toBeInTheDocument();
+  });
+
   it('does not save an edit with an empty field, and cancel leaves the word unchanged', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
@@ -380,6 +401,54 @@ describe('WordsToLearnPage', () => {
     longPress('kaisoku');
     fireEvent.click(within(menu()).getByRole('button', { name: 'Change List' }));
     expect(romajiIn('Learning')).toEqual(['shouhin', 'kaisoku']);
+  });
+
+  it('moves a word to the top or bottom of its list from the menu and syncs the change', async () => {
+    const { api, server } = createFakeApi([
+      ...SERVER_WORDS,
+      word({ id: 'l3', romaji: 'jitensha', english: 'bicycle', order: 2 }),
+    ]);
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(3));
+
+    longPress('jitensha');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Move to top of list' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(romajiIn('Learning')).toEqual(['jitensha', 'katsudou', 'shouhin']);
+
+    longPress('katsudou');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Move to bottom of list' }));
+    expect(romajiIn('Learning')).toEqual(['jitensha', 'shouhin', 'katsudou']);
+    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni']);
+
+    await waitFor(
+      () => expect(server.words.filter((w) => w.list === 'learning').sort((a, b) => a.order - b.order).map((w) => w.id)).toEqual(['l3', 'l2', 'l1']),
+      { timeout: SYNC_DEBOUNCE_MS + 1000 },
+    );
+  });
+
+  it('moves to the top of the whole list even while searching', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'shouhin' } });
+    longPress('shouhin');
+    fireEvent.click(within(menu()).getByRole('button', { name: 'Move to top of list' }));
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: '' } });
+    expect(romajiIn('Learning')).toEqual(['shouhin', 'katsudou']);
+  });
+
+  it('hides the move to top/bottom options while a column sort is active', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Sort Learning by English' }));
+    longPress('shouhin');
+    expect(within(menu()).getByRole('button', { name: 'Change List' })).toBeInTheDocument();
+    expect(within(menu()).queryByRole('button', { name: 'Move to top of list' })).not.toBeInTheDocument();
+    expect(within(menu()).queryByRole('button', { name: 'Move to bottom of list' })).not.toBeInTheDocument();
   });
 
   it('Delete in the menu asks for confirmation before deleting', async () => {

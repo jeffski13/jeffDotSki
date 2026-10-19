@@ -130,6 +130,16 @@ export function moveWordTo(words: Word[], id: string, toIndex: number, now: numb
     .filter((w): w is Word => w !== null);
 }
 
+export function moveWordToTop(words: Word[], id: string, now: number): Word[] {
+  return moveWordTo(words, id, 0, now);
+}
+
+export function moveWordToBottom(words: Word[], id: string, now: number): Word[] {
+  const word = words.find((w) => w.id === id);
+  if (!word) return [];
+  return moveWordTo(words, id, wordsInList(words, word.list).length - 1, now);
+}
+
 export function applyLocalChanges(state: LocalWordsState, changed: Word[]): LocalWordsState {
   if (changed.length === 0) return state;
   const byId = new Map(state.words.map((w) => [w.id, w]));
