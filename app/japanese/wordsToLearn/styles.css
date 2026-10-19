@@ -12,6 +12,51 @@
   margin-bottom: 0.25rem;
 }
 
+.wordsToLearn-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.wordsToLearn-statusIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.wordsToLearn-statusIcon-error {
+  color: #dc3545;
+}
+
+.wordsToLearn-statusIcon-warning {
+  color: #ffc107;
+}
+
+.wordsToLearn-statusIcon-syncing svg {
+  animation: wordsToLearn-spin 1s linear infinite;
+}
+
+@keyframes wordsToLearn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordsToLearn-statusIcon-syncing svg {
+    animation: none;
+  }
+}
+
+[data-bs-theme="dark"] .wordsToLearn-statusIcon-syncing {
+  color: #adb5bd;
+}
+
+[data-bs-theme="light"] .wordsToLearn-statusIcon-syncing {
+  color: #6c757d;
+}
+
 .wordsToLearn-hint {
   font-size: 0.875rem;
   margin-bottom: 1rem;

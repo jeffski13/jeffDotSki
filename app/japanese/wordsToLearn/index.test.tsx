@@ -104,6 +104,24 @@ describe('WordsToLearnPage', () => {
 
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin']);
     expect(await screen.findByText(/Couldn’t reach the server/)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /Sync warning/ })).toHaveClass('wordsToLearn-statusIcon-warning');
+    expect(screen.queryByRole('img', { name: /Sync error/ })).not.toBeInTheDocument();
+  });
+
+  it('shows a syncing icon while a sync is in flight and hides it once synced', async () => {
+    const { api } = createFakeApi();
+    let release: () => void = () => {};
+    const fetchWords = api.fetchWords;
+    api.fetchWords = vi.fn(() => new Promise<Word[]>((resolve) => {
+      release = () => void fetchWords().then(resolve);
+    }));
+    render(<WordsToLearnPage api={api} />);
+
+    expect(await screen.findByRole('img', { name: 'Syncing' })).toBeInTheDocument();
+    act(() => release());
+
+    await waitFor(() => expect(screen.getByTestId('wordsToLearn-sync')).toHaveTextContent('All changes synced'));
+    expect(screen.queryByRole('img', { name: 'Syncing' })).not.toBeInTheDocument();
   });
 
   it('shows the new word form only after the plus button is clicked, and hides it after adding', async () => {
@@ -693,6 +711,7 @@ describe('WordsToLearnPage update key', () => {
     clickSync();
 
     expect(await screen.findByText(/Update key is not valid/)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /Sync error/ })).toHaveClass('wordsToLearn-statusIcon-error');
     expect(lyricsQrUpdateKeyStoreImpl.getUpdateKey()).toBe('wrong-key');
     expect(wordsToLearnStoreImpl.loadWords().dirtyIds).toHaveLength(1);
     expect(server.words.some((w) => w.romaji === 'kyoudai')).toBe(false);
@@ -703,5 +722,6 @@ describe('WordsToLearnPage update key', () => {
     await waitFor(() => expect(wordsToLearnStoreImpl.loadWords().dirtyIds).toEqual([]));
     expect(server.words.some((w) => w.romaji === 'kyoudai')).toBe(true);
     expect(screen.queryByText(/Update key is not valid/)).not.toBeInTheDocument();
+    expect(screen.queryByRole('img', { name: /Sync error/ })).not.toBeInTheDocument();
   });
 });

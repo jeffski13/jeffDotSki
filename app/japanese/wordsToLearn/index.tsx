@@ -454,6 +454,37 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   );
 }
 
+// Bootstrap Icons: exclamation-octagon-fill, exclamation-triangle-fill, arrow-repeat
+const SYNC_STATUS_ICONS: Partial<Record<SyncStatus, { label: string; className: string; path: string }>> = {
+  forbidden: {
+    label: 'Sync error: update key is not valid',
+    className: 'wordsToLearn-statusIcon-error',
+    path: 'M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2',
+  },
+  error: {
+    label: 'Sync warning: couldn’t reach the server',
+    className: 'wordsToLearn-statusIcon-warning',
+    path: 'M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2',
+  },
+  syncing: {
+    label: 'Syncing',
+    className: 'wordsToLearn-statusIcon-syncing',
+    path: 'M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z',
+  },
+};
+
+function SyncStatusIcon({ status }: { status: SyncStatus }) {
+  const icon = SYNC_STATUS_ICONS[status];
+  if (!icon) return null;
+  return (
+    <span className={`wordsToLearn-statusIcon ${icon.className}`} role="img" aria-label={icon.label} title={icon.label}>
+      <svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path fillRule="evenodd" d={icon.path} />
+      </svg>
+    </span>
+  );
+}
+
 function SyncStatusLine({ status, pendingCount }: { status: SyncStatus; pendingCount: number }) {
   if (status === 'offline') {
     return <Alert variant="warning" className="wordsToLearn-status">Offline — changes are saved on this device and will sync when you’re back online.</Alert>;
@@ -506,7 +537,10 @@ export default function WordsToLearnPage({
   return (
     <div className="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
-        <h1 className="wordsToLearn-title">Words To Learn</h1>
+        <div className="wordsToLearn-title-row">
+          <h1 className="wordsToLearn-title">Words To Learn</h1>
+          <SyncStatusIcon status={status} />
+        </div>
         <p className="wordsToLearn-hint">Long-press or right-click a word to edit it, change its list, add it to Culture or delete it.</p>
 
         <div className="wordsToLearn-search-row">
