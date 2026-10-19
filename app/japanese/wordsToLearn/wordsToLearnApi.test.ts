@@ -1,6 +1,6 @@
 /// <reference types="vitest/globals" />
 import { ENV } from '../../infra/env';
-import { fetchWords, getWordsToLearnUrl, pushWords, WORDS_TO_LEARN_URL } from './wordsToLearnApi';
+import { fetchWords, getWordsToLearnUrl, pushWords, WORDS_TO_LEARN_URL, WordsToLearnForbiddenError } from './wordsToLearnApi';
 import type { Word } from './wordsLogic';
 
 const fetchMock = vi.fn();
@@ -48,20 +48,26 @@ describe('fetchWords', () => {
 });
 
 describe('pushWords', () => {
-  it('posts the changed words and returns the merged list', async () => {
+  it('posts the update key and changed words, and returns the merged list', async () => {
     fetchMock.mockResolvedValue(jsonResponse({ words }));
 
-    expect(await pushWords(words)).toEqual(words);
+    expect(await pushWords(words, 'my-key')).toEqual(words);
     expect(fetchMock).toHaveBeenCalledWith(WORDS_TO_LEARN_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ words }),
+      body: JSON.stringify({ updateKey: 'my-key', words }),
     });
+  });
+
+  it('throws WordsToLearnForbiddenError when the update key is rejected', async () => {
+    fetchMock.mockResolvedValue(jsonResponse(null, false, 403));
+
+    await expect(pushWords(words, 'wrong-key')).rejects.toBeInstanceOf(WordsToLearnForbiddenError);
   });
 
   it('throws on a non-ok status', async () => {
     fetchMock.mockResolvedValue(jsonResponse(null, false, 400));
 
-    await expect(pushWords(words)).rejects.toThrow('Words to learn request failed: 400 Error');
+    await expect(pushWords(words, 'my-key')).rejects.toThrow('Words to learn request failed: 400 Error');
   });
 });

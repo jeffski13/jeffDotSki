@@ -27,13 +27,20 @@ export async function fetchWords(): Promise<Word[]> {
   return readWords(await fetch(WORDS_TO_LEARN_URL));
 }
 
+export class WordsToLearnForbiddenError extends Error {}
+
 // Sends locally changed words; the server merges them and returns the full list.
-export async function pushWords(words: Word[]): Promise<Word[]> {
-  return readWords(
-    await fetch(WORDS_TO_LEARN_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ words }),
-    }),
-  );
+// The update key is the same one used by the lyrics QR service.
+export async function pushWords(words: Word[], updateKey: string): Promise<Word[]> {
+  const response = await fetch(WORDS_TO_LEARN_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ updateKey, words }),
+  });
+
+  if (response.status === 403) {
+    throw new WordsToLearnForbiddenError('Update key is not valid.');
+  }
+
+  return readWords(response);
 }

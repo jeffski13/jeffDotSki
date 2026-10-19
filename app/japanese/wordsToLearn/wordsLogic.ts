@@ -87,6 +87,11 @@ function bottomOrder(words: Word[], list: WordList, excludeId?: string): number 
   return orders.length > 0 ? Math.max(...orders) + 1 : 0;
 }
 
+function topOrder(words: Word[], list: WordList, excludeId?: string): number {
+  const orders = wordsInList(words, list).filter((w) => w.id !== excludeId).map((w) => w.order);
+  return orders.length > 0 ? Math.min(...orders) - 1 : 0;
+}
+
 // The functions below return only the words they changed, ready for applyLocalChanges.
 
 export function addWord(words: Word[], list: WordList, romaji: string, english: string, now: number, id: string): Word[] {
@@ -97,6 +102,12 @@ export function moveToBottomOfList(words: Word[], id: string, list: WordList, no
   const word = words.find((w) => w.id === id);
   if (!word) return [];
   return [{ ...word, list, order: bottomOrder(words, list, id), lastModified: now }];
+}
+
+export function moveToTopOfList(words: Word[], id: string, list: WordList, now: number): Word[] {
+  const word = words.find((w) => w.id === id);
+  if (!word) return [];
+  return [{ ...word, list, order: topOrder(words, list, id), lastModified: now }];
 }
 
 export function editWord(words: Word[], id: string, romaji: string, english: string, now: number): Word[] {

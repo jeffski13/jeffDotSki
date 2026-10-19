@@ -6,6 +6,8 @@ import { LONG_PRESS_MS } from './useLongPress';
 import { SYNC_DEBOUNCE_MS, type WordsToLearnApi } from './useWordsToLearn';
 import { mergeWords, type Word } from './wordsLogic';
 import { wordsToLearnStoreImpl } from './wordsToLearnStore';
+import { WordsToLearnForbiddenError } from './wordsToLearnApi';
+import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
 
 // jsdom has no PointerEvent, so without this button/clientX are dropped from the events
 if (!window.PointerEvent) {
@@ -387,7 +389,7 @@ describe('WordsToLearnPage', () => {
     expect(screen.getByText('stuff')).toBeInTheDocument();
   });
 
-  it('Change List moves a Learning word to the bottom of Want to Learn and back', async () => {
+  it('Change List moves a Learning word to the top of Want to Learn and back to the bottom of Learning', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
     await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
@@ -396,7 +398,7 @@ describe('WordsToLearnPage', () => {
     fireEvent.click(within(menu()).getByRole('button', { name: 'Change List' }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(romajiIn('Learning')).toEqual(['shouhin']);
-    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'katsudou']);
+    expect(romajiIn('Want to Learn')).toEqual(['katsudou', 'kaisoku', 'Akiraka ni']);
 
     longPress('kaisoku');
     fireEvent.click(within(menu()).getByRole('button', { name: 'Change List' }));
@@ -479,7 +481,7 @@ describe('WordsToLearnPage', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Move to Want to Learn: shouhin' }));
     fireEvent.click(screen.getByRole('button', { name: 'Delete katsudou' }));
     expect(romajiIn('Learning')).toEqual(['kyoudai']);
-    expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni', 'shouhin']);
+    expect(romajiIn('Want to Learn')).toEqual(['shouhin', 'kaisoku', 'Akiraka ni']);
 
     // the changes survive a reload while still offline
     expect(wordsToLearnStoreImpl.loadWords().dirtyIds).toHaveLength(3);
@@ -513,5 +515,104 @@ describe('WordsToLearnPage', () => {
     });
 
     await waitFor(() => expect(romajiIn('Learning').filter((r) => r === 'tanki')).toHaveLength(2));
+  });
+});
+
+describe('WordsToLearnPage update key', () => {
+  const VALID_KEY = 'valid-key';
+
+  // Like createFakeApi, but rejects pushes made with the wrong key the way the server does.
+  const createKeyedApi = () => {
+    const { api, server } = createFakeApi();
+    const merge = api.pushWords;
+    api.pushWords = vi.fn(async (incoming: Word[], updateKey: string) => {
+      if (updateKey !== VALID_KEY) throw new WordsToLearnForbiddenError('Update key is not valid.');
+      return merge(incoming, updateKey);
+    });
+    return { api, server };
+  };
+
+  // queue a change while offline so the push happens only when Sync is clicked
+  const queueChangeThenReconnect = async () => {
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    goOffline();
+    addTo('Learning', 'kyoudai', 'siblings');
+    online = true;
+  };
+
+  const updateKeyInput = () => screen.getByLabelText('Update Key');
+  const clickSync = () => fireEvent.click(screen.getByRole('button', { name: 'Sync' }));
+
+  it('renders the update key input at the bottom of the page', async () => {
+    const { api } = createKeyedApi();
+    const { container } = render(<WordsToLearnPage api={api} />);
+
+    const form = container.querySelector('.wordsToLearn-updateKey');
+    expect(form).toContainElement(updateKeyInput());
+    expect(form?.parentElement?.lastElementChild).toBe(form);
+  });
+
+  it('does not save a typed key until it is used to send changes, then saves and sends it', async () => {
+    const { api, server } = createKeyedApi();
+    render(<WordsToLearnPage api={api} />);
+    await queueChangeThenReconnect();
+
+    fireEvent.change(updateKeyInput(), { target: { value: VALID_KEY } });
+    expect(lyricsQrUpdateKeyStoreImpl.getUpdateKey()).toBe('');
+
+    clickSync();
+
+    await waitFor(() => expect(api.pushWords).toHaveBeenCalledTimes(1));
+    expect(vi.mocked(api.pushWords).mock.calls[0][1]).toBe(VALID_KEY);
+    expect(lyricsQrUpdateKeyStoreImpl.getUpdateKey()).toBe(VALID_KEY);
+    await waitFor(() => expect(server.words.some((w) => w.romaji === 'kyoudai')).toBe(true));
+  });
+
+  it('reuses the saved key when the input is left blank', async () => {
+    lyricsQrUpdateKeyStoreImpl.setUpdateKey(VALID_KEY);
+    const { api } = createKeyedApi();
+    render(<WordsToLearnPage api={api} />);
+    await queueChangeThenReconnect();
+
+    clickSync();
+
+    await waitFor(() => expect(api.pushWords).toHaveBeenCalledTimes(1));
+    expect(vi.mocked(api.pushWords).mock.calls[0][1]).toBe(VALID_KEY);
+    expect(lyricsQrUpdateKeyStoreImpl.getUpdateKey()).toBe(VALID_KEY);
+  });
+
+  it('does not overwrite the saved key with a whitespace-only input', async () => {
+    lyricsQrUpdateKeyStoreImpl.setUpdateKey(VALID_KEY);
+    const { api } = createKeyedApi();
+    render(<WordsToLearnPage api={api} />);
+    await queueChangeThenReconnect();
+
+    fireEvent.change(updateKeyInput(), { target: { value: '   ' } });
+    clickSync();
+
+    await waitFor(() => expect(api.pushWords).toHaveBeenCalledTimes(1));
+    expect(vi.mocked(api.pushWords).mock.calls[0][1]).toBe(VALID_KEY);
+    expect(lyricsQrUpdateKeyStoreImpl.getUpdateKey()).toBe(VALID_KEY);
+  });
+
+  it('keeps changes queued when the key is rejected, and sends them once a valid key is entered', async () => {
+    const { api, server } = createKeyedApi();
+    render(<WordsToLearnPage api={api} />);
+    await queueChangeThenReconnect();
+
+    fireEvent.change(updateKeyInput(), { target: { value: 'wrong-key' } });
+    clickSync();
+
+    expect(await screen.findByText(/Update key is not valid/)).toBeInTheDocument();
+    expect(lyricsQrUpdateKeyStoreImpl.getUpdateKey()).toBe('wrong-key');
+    expect(wordsToLearnStoreImpl.loadWords().dirtyIds).toHaveLength(1);
+    expect(server.words.some((w) => w.romaji === 'kyoudai')).toBe(false);
+
+    fireEvent.change(updateKeyInput(), { target: { value: VALID_KEY } });
+    clickSync();
+
+    await waitFor(() => expect(wordsToLearnStoreImpl.loadWords().dirtyIds).toEqual([]));
+    expect(server.words.some((w) => w.romaji === 'kyoudai')).toBe(true);
+    expect(screen.queryByText(/Update key is not valid/)).not.toBeInTheDocument();
   });
 });

@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from 'react';
+import { useCallback, useState, type CSSProperties } from 'react';
 import { Container, Form, Button, Alert, InputGroup, Modal, ListGroup } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -6,6 +6,7 @@ import {
   deleteWord,
   editWord,
   moveToBottomOfList,
+  moveToTopOfList,
   moveWordTo,
   moveWordToBottom,
   moveWordToTop,
@@ -19,6 +20,7 @@ import {
 } from './wordsLogic';
 import { useWordsToLearn, type SyncStatus, type WordsToLearnApi } from './useWordsToLearn';
 import { wordsToLearnStoreImpl, type SortSettings, type WordsToLearnStore } from './wordsToLearnStore';
+import { lyricsQrUpdateKeyStoreImpl, type LyricsQrUpdateKeyStore } from '../shared/lyricsQrUpdateKeyStore';
 import { useLongPress } from './useLongPress';
 import { DRAG_HANDLE_ATTR, DRAG_ID_ATTR, useDragReorder } from './useDragReorder';
 import './styles.css';
@@ -321,7 +323,12 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
     navigator.vibrate?.(30);
   };
 
-  const switchList = (word: Word) => change((all) => moveToBottomOfList(all, word.id, OTHER_LIST[list], Date.now()));
+  // moving to Want to Learn puts the word at the top; moving to Learning puts it at the bottom
+  const switchList = (word: Word) => {
+    const target = OTHER_LIST[list];
+    const moveFn = target === 'wantToLearn' ? moveToTopOfList : moveToBottomOfList;
+    change((all) => moveFn(all, word.id, target, Date.now()));
+  };
 
   const handleDelete = (word: Word) => {
     if (window.confirm(`Delete "${word.romaji} - ${word.english}"?`)) {
@@ -414,6 +421,9 @@ function SyncStatusLine({ status, pendingCount }: { status: SyncStatus; pendingC
   if (status === 'offline') {
     return <Alert variant="warning" className="wordsToLearn-status">Offline — changes are saved on this device and will sync when you’re back online.</Alert>;
   }
+  if (status === 'forbidden') {
+    return <Alert variant="danger" className="wordsToLearn-status">Update key is not valid — changes are saved on this device and will sync once a valid key is entered below.</Alert>;
+  }
   if (status === 'error') {
     return <Alert variant="warning" className="wordsToLearn-status">Couldn’t reach the server — changes are saved on this device and will sync later.</Alert>;
   }
@@ -428,10 +438,24 @@ function SyncStatusLine({ status, pendingCount }: { status: SyncStatus; pendingC
 interface WordsToLearnPageProps {
   api?: WordsToLearnApi;
   store?: WordsToLearnStore;
+  updateKeyStore?: LyricsQrUpdateKeyStore;
 }
 
-export default function WordsToLearnPage({ api, store = wordsToLearnStoreImpl }: WordsToLearnPageProps) {
-  const { words, pendingCount, status, change } = useWordsToLearn(api, store);
+export default function WordsToLearnPage({
+  api,
+  store = wordsToLearnStoreImpl,
+  updateKeyStore = lyricsQrUpdateKeyStoreImpl,
+}: WordsToLearnPageProps) {
+  const [updateKeyInput, setUpdateKeyInput] = useState('');
+  // Same rule as the lyrics QR page: a typed key is only saved when it's actually used
+  // to send changes, and a blank input falls back to the previously saved key.
+  const getUpdateKey = useCallback(() => {
+    if (updateKeyInput.trim().length > 0) {
+      updateKeyStore.setUpdateKey(updateKeyInput);
+    }
+    return updateKeyStore.getUpdateKey();
+  }, [updateKeyInput, updateKeyStore]);
+  const { words, pendingCount, status, change, sync } = useWordsToLearn(api, store, getUpdateKey);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<SortSettings>(() => store.loadSort());
   const [adding, setAdding] = useState(false);
@@ -483,6 +507,29 @@ export default function WordsToLearnPage({ api, store = wordsToLearnStoreImpl }:
             onAdded={() => setAdding(false)}
           />
         ))}
+
+        <Form
+          className="wordsToLearn-updateKey"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void sync();
+          }}
+        >
+          <Form.Group controlId="wordsToLearnUpdateKey">
+            <Form.Label>Update Key</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type="text"
+                value={updateKeyInput}
+                onChange={(e) => setUpdateKeyInput(e.target.value)}
+                placeholder="Leave blank to reuse the saved key"
+              />
+              <Button type="submit" variant="outline-secondary" disabled={status === 'syncing'}>
+                Sync
+              </Button>
+            </InputGroup>
+          </Form.Group>
+        </Form>
       </Container>
     </div>
   );

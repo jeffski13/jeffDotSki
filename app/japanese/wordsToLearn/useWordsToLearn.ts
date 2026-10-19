@@ -1,30 +1,43 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { applyLocalChanges, applySyncResponse, dirtyWords, type LocalWordsState, type Word } from './wordsLogic';
-import { fetchWords, pushWords } from './wordsToLearnApi';
+import { fetchWords, pushWords, WordsToLearnForbiddenError } from './wordsToLearnApi';
+import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
 import { wordsToLearnStoreImpl, type WordsToLearnStore } from './wordsToLearnStore';
 
-export type SyncStatus = 'idle' | 'syncing' | 'synced' | 'offline' | 'error';
+export type SyncStatus = 'idle' | 'syncing' | 'synced' | 'offline' | 'error' | 'forbidden';
 
 export const SYNC_DEBOUNCE_MS = 800;
 
 export interface WordsToLearnApi {
   fetchWords: () => Promise<Word[]>;
-  pushWords: (words: Word[]) => Promise<Word[]>;
+  pushWords: (words: Word[], updateKey: string) => Promise<Word[]>;
 }
 
 const defaultApi: WordsToLearnApi = { fetchWords, pushWords };
 
+const defaultGetUpdateKey = () => lyricsQrUpdateKeyStoreImpl.getUpdateKey();
+
 const isOnline = () => typeof navigator === 'undefined' || navigator.onLine !== false;
 
 // Local-first: every change is applied to localStorage immediately, then pushed to the
-// server when online. Changes made offline stay queued (dirtyIds) until the next sync.
-export function useWordsToLearn(api: WordsToLearnApi = defaultApi, store: WordsToLearnStore = wordsToLearnStoreImpl) {
+// server when online. Changes made offline (or rejected for a bad update key) stay queued
+// (dirtyIds) until the next sync. getUpdateKey is only called when there is something to push.
+export function useWordsToLearn(
+  api: WordsToLearnApi = defaultApi,
+  store: WordsToLearnStore = wordsToLearnStoreImpl,
+  getUpdateKey: () => string = defaultGetUpdateKey,
+) {
   const [state, setState] = useState<LocalWordsState>(() => store.loadWords());
   const [status, setStatus] = useState<SyncStatus>('idle');
   const stateRef = useRef(state);
   const syncing = useRef(false);
   const resyncRequested = useRef(false);
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // kept in a ref so a new function each render doesn't recreate sync and re-run the effect
+  const getUpdateKeyRef = useRef(getUpdateKey);
+  useEffect(() => {
+    getUpdateKeyRef.current = getUpdateKey;
+  }, [getUpdateKey]);
 
   const commit = useCallback((next: LocalWordsState) => {
     stateRef.current = next;
@@ -48,12 +61,18 @@ export function useWordsToLearn(api: WordsToLearnApi = defaultApi, store: WordsT
       do {
         resyncRequested.current = false;
         const pending = dirtyWords(stateRef.current);
-        const serverWords = pending.length > 0 ? await api.pushWords(pending) : await api.fetchWords();
+        const serverWords = pending.length > 0
+          ? await api.pushWords(pending, getUpdateKeyRef.current())
+          : await api.fetchWords();
         commit(applySyncResponse(stateRef.current, serverWords));
       } while (resyncRequested.current);
       setStatus('synced');
-    } catch {
-      setStatus(isOnline() ? 'error' : 'offline');
+    } catch (err) {
+      if (err instanceof WordsToLearnForbiddenError) {
+        setStatus('forbidden');
+      } else {
+        setStatus(isOnline() ? 'error' : 'offline');
+      }
     } finally {
       syncing.current = false;
     }

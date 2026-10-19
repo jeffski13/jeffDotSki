@@ -9,6 +9,7 @@ import {
   matchesQuery,
   mergeWords,
   moveToBottomOfList,
+  moveToTopOfList,
   nextSortMode,
   moveWordTo,
   moveWordToBottom,
@@ -177,6 +178,27 @@ describe('moveToBottomOfList', () => {
 
   it('returns nothing for an unknown id', () => {
     expect(moveToBottomOfList([word()], 'nope', 'learning', 1)).toEqual([]);
+  });
+});
+
+describe('moveToTopOfList', () => {
+  it('moves a Learning word to the top of Want to Learn', () => {
+    const words = [
+      word({ id: 'l' }),
+      word({ id: 'w1', list: 'wantToLearn', order: 0 }),
+      word({ id: 'w2', list: 'wantToLearn', order: 1 }),
+    ];
+    const changed = moveToTopOfList(words, 'l', 'wantToLearn', 500);
+    expect(changed).toEqual([word({ id: 'l', list: 'wantToLearn', order: -1, lastModified: 500 })]);
+    expect(ids(visibleWords(applyLocalChanges({ words, dirtyIds: [] }, changed).words, 'wantToLearn', 'custom', ''))).toEqual(['l', 'w1', 'w2']);
+  });
+
+  it('uses order 0 when the target list is empty', () => {
+    expect(moveToTopOfList([word({ id: 'l' })], 'l', 'wantToLearn', 500)[0].order).toBe(0);
+  });
+
+  it('returns nothing for an unknown id', () => {
+    expect(moveToTopOfList([word()], 'nope', 'wantToLearn', 1)).toEqual([]);
   });
 });
 
