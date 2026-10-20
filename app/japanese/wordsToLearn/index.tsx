@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import { Container, Form, Button, Alert, InputGroup, Modal, ListGroup } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -211,9 +211,25 @@ function CopySearchButton({ field, query, onCopy }: { field: string; query: stri
   );
 }
 
+function ClearFieldButton({ field, value, onClear }: { field: string; value: string; onClear: () => void }) {
+  return (
+    <Button
+      variant="outline-secondary"
+      className="wordsToLearn-clear"
+      aria-label={`Clear ${field}`}
+      title={`Clear ${field}`}
+      disabled={!value}
+      onClick={onClear}
+    >
+      ✕
+    </Button>
+  );
+}
+
 function AddWordForm({ list, query, onAdd }: AddWordFormProps) {
-  const [romaji, setRomaji] = useState('');
-  const [english, setEnglish] = useState('');
+  // the form mounts each time + is pressed, so both fields start out with the current search
+  const [romaji, setRomaji] = useState(() => query.trim());
+  const [english, setEnglish] = useState(() => query.trim());
   const canAdd = romaji.trim().length > 0 && english.trim().length > 0;
 
   return (
@@ -230,8 +246,10 @@ function AddWordForm({ list, query, onAdd }: AddWordFormProps) {
       <InputGroup size="sm">
         <CopySearchButton field="romaji" query={query} onCopy={setRomaji} />
         <Form.Control autoFocus aria-label={`${LIST_TITLES[list]} romaji`} placeholder="Romaji" value={romaji} onChange={(e) => setRomaji(e.target.value)} />
+        <ClearFieldButton field="romaji" value={romaji} onClear={() => setRomaji('')} />
         <CopySearchButton field="english" query={query} onCopy={setEnglish} />
         <Form.Control aria-label={`${LIST_TITLES[list]} english`} placeholder="English" value={english} onChange={(e) => setEnglish(e.target.value)} />
+        <ClearFieldButton field="english" value={english} onClear={() => setEnglish('')} />
         <Button type="submit" variant="primary" disabled={!canAdd} aria-label={`Add to ${LIST_TITLES[list]}`}>Add</Button>
       </InputGroup>
     </Form>
@@ -454,7 +472,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   );
 }
 
-// Bootstrap Icons: exclamation-octagon-fill, exclamation-triangle-fill, arrow-repeat
+// Bootstrap Icons: exclamation-octagon-fill, exclamation-triangle-fill, arrow-repeat, check-circle-fill
 const SYNC_STATUS_ICONS: Partial<Record<SyncStatus, { label: string; className: string; path: string }>> = {
   forbidden: {
     label: 'Sync error: update key is not valid',
@@ -471,10 +489,16 @@ const SYNC_STATUS_ICONS: Partial<Record<SyncStatus, { label: string; className: 
     className: 'wordsToLearn-statusIcon-syncing',
     path: 'M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z',
   },
+  synced: {
+    label: 'All changes synced',
+    className: 'wordsToLearn-statusIcon-success',
+    path: 'M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z',
+  },
 };
 
-function SyncStatusIcon({ status }: { status: SyncStatus }) {
-  const icon = SYNC_STATUS_ICONS[status];
+function SyncStatusIcon({ status, pendingCount }: { status: SyncStatus; pendingCount: number }) {
+  // 'synced' with changes still queued shows "N changes waiting to sync", not success
+  const icon = status === 'synced' && pendingCount > 0 ? undefined : SYNC_STATUS_ICONS[status];
   if (!icon) return null;
   return (
     <span className={`wordsToLearn-statusIcon ${icon.className}`} role="img" aria-label={icon.label} title={icon.label}>
@@ -482,6 +506,58 @@ function SyncStatusIcon({ status }: { status: SyncStatus }) {
         <path fillRule="evenodd" d={icon.path} />
       </svg>
     </span>
+  );
+}
+
+export const SYNC_TOAST_MS = 3000;
+
+function syncToastText(status: SyncStatus, pendingCount: number): string {
+  if (status === 'offline') return 'Offline — changes saved on this device';
+  if (status === 'forbidden') return 'Update key is not valid';
+  if (status === 'error') return 'Couldn’t reach the server';
+  if (status === 'syncing') return 'Syncing…';
+  if (pendingCount > 0) return `${pendingCount} change${pendingCount === 1 ? '' : 's'} waiting to sync`;
+  return status === 'synced' ? 'All changes synced' : '';
+}
+
+// true while the element is on screen; assumes visible where IntersectionObserver is unavailable
+function useIsOnScreen(ref: RefObject<HTMLElement | null>) {
+  const [onScreen, setOnScreen] = useState(true);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref]);
+  return onScreen;
+}
+
+// Briefly shows sync status changes at the top of the screen while the in-page status is scrolled out of view.
+function SyncStatusToast({ status, pendingCount, statusOnScreen }: { status: SyncStatus; pendingCount: number; statusOnScreen: boolean }) {
+  const text = syncToastText(status, pendingCount);
+  const [shown, setShown] = useState(false);
+  const lastText = useRef(text);
+
+  useEffect(() => {
+    if (text === lastText.current) return;
+    lastText.current = text;
+    if (statusOnScreen || !text) return;
+    setShown(true);
+    const timer = setTimeout(() => setShown(false), SYNC_TOAST_MS);
+    return () => clearTimeout(timer);
+  }, [text, statusOnScreen]);
+
+  useEffect(() => {
+    if (statusOnScreen) setShown(false);
+  }, [statusOnScreen]);
+
+  if (!shown || statusOnScreen || !text) return null;
+  return (
+    <div className="wordsToLearn-toast" role="status" data-testid="wordsToLearn-toast" onClick={() => setShown(false)}>
+      <SyncStatusIcon status={status} pendingCount={pendingCount} />
+      <span>{text}</span>
+    </div>
   );
 }
 
@@ -527,6 +603,8 @@ export default function WordsToLearnPage({
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<SortSettings>(() => store.loadSort());
   const [adding, setAdding] = useState(false);
+  const statusRef = useRef<HTMLDivElement>(null);
+  const statusOnScreen = useIsOnScreen(statusRef);
 
   const handleSortChange = (list: WordList, mode: SortMode) => {
     const next = { ...sort, [list]: mode };
@@ -537,33 +615,32 @@ export default function WordsToLearnPage({
   return (
     <div className="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
-        <div className="wordsToLearn-title-row">
-          <h1 className="wordsToLearn-title">Words To Learn</h1>
-          <SyncStatusIcon status={status} />
-        </div>
-        <p className="wordsToLearn-hint">Long-press or right-click a word to edit it, change its list, add it to Culture or delete it.</p>
+        <SyncStatusToast status={status} pendingCount={pendingCount} statusOnScreen={statusOnScreen} />
 
-        <div className="wordsToLearn-search-row">
-          <Form.Control
-            type="search"
-            className="wordsToLearn-search"
-            aria-label="Search words"
-            placeholder="Search romaji or English…"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <Button
-            variant="primary"
-            className="wordsToLearn-new"
-            aria-label="New word"
-            aria-expanded={adding}
-            onClick={() => setAdding((open) => !open)}
-          >
-            +
-          </Button>
-        </div>
+        <div ref={statusRef}>
+          <div className="wordsToLearn-search-row">
+            <Form.Control
+              type="search"
+              className="wordsToLearn-search"
+              aria-label="Search words"
+              placeholder="Search romaji or English…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <Button
+              variant="primary"
+              className="wordsToLearn-new"
+              aria-label="New word"
+              aria-expanded={adding}
+              onClick={() => setAdding((open) => !open)}
+            >
+              +
+            </Button>
+            <SyncStatusIcon status={status} pendingCount={pendingCount} />
+          </div>
 
-        <SyncStatusLine status={status} pendingCount={pendingCount} />
+          <SyncStatusLine status={status} pendingCount={pendingCount} />
+        </div>
 
         {WORD_LISTS.map((list) => (
           <WordSection
@@ -575,7 +652,10 @@ export default function WordsToLearnPage({
             onSortChange={(mode) => handleSortChange(list, mode)}
             change={change}
             showAddForm={adding && list === 'learning'}
-            onAdded={() => setAdding(false)}
+            onAdded={() => {
+              setAdding(false);
+              setQuery('');
+            }}
           />
         ))}
 

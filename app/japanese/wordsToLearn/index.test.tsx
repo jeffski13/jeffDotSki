@@ -1,7 +1,7 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent, waitFor, within, act } from '@testing-library/react';
-import WordsToLearnPage from './index';
+import WordsToLearnPage, { SYNC_TOAST_MS } from './index';
 import { LONG_PRESS_MS } from './useLongPress';
 import { SYNC_DEBOUNCE_MS, type WordsToLearnApi } from './useWordsToLearn';
 import { mergeWords, type Word } from './wordsLogic';
@@ -92,6 +92,7 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Want to Learn')).toEqual(['kaisoku', 'Akiraka ni']);
     expect(romajiIn('Culture')).toEqual(['omiyage']);
     expect(screen.getByTestId('wordsToLearn-sync')).toHaveTextContent('All changes synced');
+    expect(screen.getByRole('img', { name: 'All changes synced' })).toHaveClass('wordsToLearn-statusIcon-success');
   });
 
   it('shows locally cached words immediately and when the server is unreachable', async () => {
@@ -106,6 +107,7 @@ describe('WordsToLearnPage', () => {
     expect(await screen.findByText(/Couldn’t reach the server/)).toBeInTheDocument();
     expect(screen.getByRole('img', { name: /Sync warning/ })).toHaveClass('wordsToLearn-statusIcon-warning');
     expect(screen.queryByRole('img', { name: /Sync error/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole('img', { name: 'All changes synced' })).not.toBeInTheDocument();
   });
 
   it('shows a syncing icon while a sync is in flight and hides it once synced', async () => {
@@ -122,6 +124,7 @@ describe('WordsToLearnPage', () => {
 
     await waitFor(() => expect(screen.getByTestId('wordsToLearn-sync')).toHaveTextContent('All changes synced'));
     expect(screen.queryByRole('img', { name: 'Syncing' })).not.toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'All changes synced' })).toBeInTheDocument();
   });
 
   it('shows the new word form only after the plus button is clicked, and hides it after adding', async () => {
@@ -163,6 +166,50 @@ describe('WordsToLearnPage', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Copy search into english' }));
     expect(screen.getByLabelText('Learning english')).toHaveValue('short term');
     expect(screen.getByLabelText('Learning romaji')).toHaveValue('tanki');
+  });
+
+  it('fills both inputs with the search text when the plus button is clicked', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: ' tanki  ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'New word' }));
+
+    expect(screen.getByLabelText('Learning romaji')).toHaveValue('tanki');
+    expect(screen.getByLabelText('Learning english')).toHaveValue('tanki');
+  });
+
+  it('clears each input with its X button', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    fireEvent.click(screen.getByRole('button', { name: 'New word' }));
+
+    expect(screen.getByRole('button', { name: 'Clear romaji' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Clear english' })).toBeDisabled();
+
+    fireEvent.change(screen.getByLabelText('Learning romaji'), { target: { value: 'tanki' } });
+    fireEvent.change(screen.getByLabelText('Learning english'), { target: { value: 'short term' } });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear romaji' }));
+    expect(screen.getByLabelText('Learning romaji')).toHaveValue('');
+    expect(screen.getByLabelText('Learning english')).toHaveValue('short term');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear english' }));
+    expect(screen.getByLabelText('Learning english')).toHaveValue('');
+  });
+
+  it('clears the search box after a new word is added', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'tanki' } });
+    addTo('Learning', 'tanki', 'short term');
+
+    expect(screen.getByLabelText('Search words')).toHaveValue('');
+    expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin', 'tanki']);
   });
 
   it('hides the new word form when the plus button is clicked again', async () => {
@@ -310,6 +357,9 @@ describe('WordsToLearnPage', () => {
 
     addTo('Learning', 'futsuka yoi', 'hangover');
     expect(romajiIn('Learning')).toEqual(['katsudou', 'shouhin', 'futsuka yoi']);
+    // queued but not yet pushed: no success icon while changes are waiting
+    expect(screen.getByTestId('wordsToLearn-sync')).toHaveTextContent('1 change waiting to sync');
+    expect(screen.queryByRole('img', { name: 'All changes synced' })).not.toBeInTheDocument();
 
     fireEvent.keyDown(screen.getByRole('button', { name: 'Reorder futsuka yoi' }), { key: 'ArrowUp' });
     expect(romajiIn('Learning')).toEqual(['katsudou', 'futsuka yoi', 'shouhin']);
@@ -322,6 +372,7 @@ describe('WordsToLearnPage', () => {
 
     await waitFor(() => expect(api.pushWords).toHaveBeenCalled(), { timeout: SYNC_DEBOUNCE_MS + 1000 });
     await waitFor(() => expect(screen.getByTestId('wordsToLearn-sync')).toHaveTextContent('All changes synced'));
+    expect(screen.getByRole('img', { name: 'All changes synced' })).toBeInTheDocument();
     expect(server.words.find((w) => w.id === 'l1')?.deleted).toBe(true);
     expect(server.words.find((w) => w.id === 'w1')?.list).toBe('learning');
     expect(server.words.some((w) => w.romaji === 'futsuka yoi')).toBe(true);
@@ -712,6 +763,7 @@ describe('WordsToLearnPage update key', () => {
 
     expect(await screen.findByText(/Update key is not valid/)).toBeInTheDocument();
     expect(screen.getByRole('img', { name: /Sync error/ })).toHaveClass('wordsToLearn-statusIcon-error');
+    expect(screen.queryByRole('img', { name: 'All changes synced' })).not.toBeInTheDocument();
     expect(lyricsQrUpdateKeyStoreImpl.getUpdateKey()).toBe('wrong-key');
     expect(wordsToLearnStoreImpl.loadWords().dirtyIds).toHaveLength(1);
     expect(server.words.some((w) => w.romaji === 'kyoudai')).toBe(false);
@@ -723,5 +775,81 @@ describe('WordsToLearnPage update key', () => {
     expect(server.words.some((w) => w.romaji === 'kyoudai')).toBe(true);
     expect(screen.queryByText(/Update key is not valid/)).not.toBeInTheDocument();
     expect(screen.queryByRole('img', { name: /Sync error/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'All changes synced' })).toBeInTheDocument();
+  });
+});
+
+describe('WordsToLearnPage sync status toast', () => {
+  let setOnScreen: (onScreen: boolean) => void = () => {};
+
+  beforeEach(() => {
+    class FakeIntersectionObserver {
+      constructor(callback: IntersectionObserverCallback) {
+        setOnScreen = (onScreen) => act(() => {
+          callback([{ isIntersecting: onScreen } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
+        });
+      }
+      observe() {}
+      disconnect() {}
+    }
+    vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  const toast = () => screen.queryByTestId('wordsToLearn-toast');
+
+  const loadPage = async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(screen.getByTestId('wordsToLearn-sync')).toHaveTextContent('All changes synced'));
+  };
+
+  it('does not show a toast for status changes while the status is on screen', async () => {
+    await loadPage();
+    goOffline();
+    expect(toast()).not.toBeInTheDocument();
+  });
+
+  it('shows a toast when the status changes while scrolled out of view', async () => {
+    await loadPage();
+    setOnScreen(false);
+    expect(toast()).not.toBeInTheDocument();
+
+    goOffline();
+    expect(toast()).toHaveTextContent('Offline');
+  });
+
+  it('hides the toast after a few seconds', async () => {
+    await loadPage();
+    setOnScreen(false);
+    vi.useFakeTimers();
+    goOffline();
+    expect(toast()).toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(SYNC_TOAST_MS);
+    });
+    expect(toast()).not.toBeInTheDocument();
+  });
+
+  it('hides the toast when the status scrolls back into view', async () => {
+    await loadPage();
+    setOnScreen(false);
+    goOffline();
+    expect(toast()).toBeInTheDocument();
+    setOnScreen(true);
+    expect(toast()).not.toBeInTheDocument();
+  });
+
+  it('shows queued changes and hides when tapped', async () => {
+    await loadPage();
+    setOnScreen(false);
+    addTo('Learning', 'kyoudai', 'siblings');
+    expect(toast()).toHaveTextContent('1 change waiting to sync');
+    fireEvent.click(toast()!);
+    expect(toast()).not.toBeInTheDocument();
   });
 });

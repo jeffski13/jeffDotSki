@@ -7,22 +7,10 @@
   max-width: 720px;
 }
 
-.wordsToLearn-title {
-  font-size: 1.75rem;
-  margin-bottom: 0.25rem;
-}
-
-.wordsToLearn-title-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
 .wordsToLearn-statusIcon {
   display: inline-flex;
   flex-shrink: 0;
-  margin-top: 0.25rem;
+  align-self: center;
 }
 
 .wordsToLearn-statusIcon-error {
@@ -31,6 +19,10 @@
 
 .wordsToLearn-statusIcon-warning {
   color: #ffc107;
+}
+
+.wordsToLearn-statusIcon-success {
+  color: #198754;
 }
 
 .wordsToLearn-statusIcon-syncing svg {
@@ -55,11 +47,6 @@
 
 [data-bs-theme="light"] .wordsToLearn-statusIcon-syncing {
   color: #6c757d;
-}
-
-.wordsToLearn-hint {
-  font-size: 0.875rem;
-  margin-bottom: 1rem;
 }
 
 .wordsToLearn-search-row {
@@ -89,6 +76,53 @@
 .wordsToLearn-status {
   padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
+}
+
+.wordsToLearn-toast {
+  position: fixed;
+  top: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1080;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  animation: wordsToLearn-toast-in 0.2s ease-out;
+}
+
+.wordsToLearn-toast .wordsToLearn-statusIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes wordsToLearn-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -0.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordsToLearn-toast {
+    animation: none;
+  }
+}
+
+[data-bs-theme="dark"] .wordsToLearn-toast {
+  background: #343a40;
+  color: #e9ecef;
+}
+
+[data-bs-theme="light"] .wordsToLearn-toast {
+  background: #fff;
+  color: #343a40;
+  border: 1px solid #dee2e6;
 }
 
 .wordsToLearn-section {
@@ -216,13 +250,11 @@
   font-style: italic;
 }
 
-[data-bs-theme="dark"] .wordsToLearn-title,
 [data-bs-theme="dark"] .wordsToLearn-section-title,
 [data-bs-theme="dark"] .wordsToLearn-romaji {
   color: #e9ecef;
 }
 
-[data-bs-theme="dark"] .wordsToLearn-hint,
 [data-bs-theme="dark"] .wordsToLearn-sync,
 [data-bs-theme="dark"] .wordsToLearn-english,
 [data-bs-theme="dark"] .wordsToLearn-empty {
@@ -233,13 +265,11 @@
   border-bottom: 1px solid #868e96;
 }
 
-[data-bs-theme="light"] .wordsToLearn-title,
 [data-bs-theme="light"] .wordsToLearn-section-title,
 [data-bs-theme="light"] .wordsToLearn-romaji {
   color: #343a40;
 }
 
-[data-bs-theme="light"] .wordsToLearn-hint,
 [data-bs-theme="light"] .wordsToLearn-sync,
 [data-bs-theme="light"] .wordsToLearn-english,
 [data-bs-theme="light"] .wordsToLearn-empty {
