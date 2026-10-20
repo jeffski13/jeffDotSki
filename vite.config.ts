@@ -106,6 +106,10 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
+      '/wordsToLearn': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
     },
   },
   test: {

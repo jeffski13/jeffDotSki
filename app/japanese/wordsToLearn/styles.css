@@ -1,0 +1,363 @@
+.wordsToLearn-wrapper {
+  min-height: 100vh;
+  padding: 2rem 0 4rem;
+}
+
+.wordsToLearn-content {
+  max-width: 720px;
+}
+
+.wordsToLearn-statusIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.wordsToLearn-statusIcon-error {
+  color: #dc3545;
+}
+
+.wordsToLearn-statusIcon-warning {
+  color: #ffc107;
+}
+
+.wordsToLearn-statusIcon-success {
+  color: #198754;
+}
+
+.wordsToLearn-statusIcon-syncing svg {
+  animation: wordsToLearn-spin 1s linear infinite;
+}
+
+@keyframes wordsToLearn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordsToLearn-statusIcon-syncing svg {
+    animation: none;
+  }
+}
+
+[data-bs-theme="dark"] .wordsToLearn-statusIcon-syncing {
+  color: #adb5bd;
+}
+
+[data-bs-theme="light"] .wordsToLearn-statusIcon-syncing {
+  color: #6c757d;
+}
+
+.wordsToLearn-search-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.wordsToLearn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.wordsToLearn-new {
+  flex-shrink: 0;
+  min-width: 2.5rem;
+  font-weight: 600;
+}
+
+.wordsToLearn-sync {
+  min-height: 1.25rem;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.wordsToLearn-status {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.wordsToLearn-toast {
+  position: fixed;
+  top: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1080;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  animation: wordsToLearn-toast-in 0.2s ease-out;
+}
+
+.wordsToLearn-toast .wordsToLearn-statusIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes wordsToLearn-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -0.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordsToLearn-toast {
+    animation: none;
+  }
+}
+
+[data-bs-theme="dark"] .wordsToLearn-toast {
+  background: #343a40;
+  color: #e9ecef;
+}
+
+[data-bs-theme="light"] .wordsToLearn-toast {
+  background: #fff;
+  color: #343a40;
+  border: 1px solid #dee2e6;
+}
+
+.wordsToLearn-section {
+  margin-top: 1.5rem;
+}
+
+.wordsToLearn-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.wordsToLearn-section-title {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.wordsToLearn-columns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.25rem;
+}
+
+/* same flex layout as .wordsToLearn-row > .wordsToLearn-text so headers align with the words */
+.wordsToLearn-columns-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  column-gap: 1rem;
+}
+
+.wordsToLearn-columns-spacer {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+}
+
+.wordsToLearn-column {
+  flex: 1 1 10rem;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wordsToLearn-column:hover,
+.wordsToLearn-column-active {
+  text-decoration: underline;
+}
+
+.wordsToLearn-add {
+  margin-bottom: 1.25rem;
+}
+
+.wordsToLearn-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wordsToLearn-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+}
+
+.wordsToLearn-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  /* the text is the long-press target — don't let selection/callouts hijack it */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: default;
+}
+
+.wordsToLearn-romaji {
+  flex: 1 1 10rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.wordsToLearn-english {
+  flex: 1 1 10rem;
+  overflow-wrap: anywhere;
+}
+
+.wordsToLearn-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+
+/* extra small screens: the long-press / right-click menu covers these actions */
+@media (max-width: 575.98px) {
+  .wordsToLearn-actions {
+    display: none;
+  }
+
+  /* keep romaji and english side by side as two equal columns instead of wrapping */
+  .wordsToLearn-text {
+    flex-wrap: nowrap;
+  }
+
+  .wordsToLearn-romaji,
+  .wordsToLearn-english,
+  .wordsToLearn-column {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+.wordsToLearn-empty {
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-section-title,
+[data-bs-theme="dark"] .wordsToLearn-romaji {
+  color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-sync,
+[data-bs-theme="dark"] .wordsToLearn-english,
+[data-bs-theme="dark"] .wordsToLearn-empty {
+  color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-row {
+  border-bottom: 1px solid #868e96;
+}
+
+[data-bs-theme="light"] .wordsToLearn-section-title,
+[data-bs-theme="light"] .wordsToLearn-romaji {
+  color: #343a40;
+}
+
+[data-bs-theme="light"] .wordsToLearn-sync,
+[data-bs-theme="light"] .wordsToLearn-english,
+[data-bs-theme="light"] .wordsToLearn-empty {
+  color: #6c757d;
+}
+
+[data-bs-theme="light"] .wordsToLearn-row {
+  border-bottom: 1px solid #868e96;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-wrapper .form-control,
+[data-bs-theme="light"] .wordsToLearn-wrapper .form-control {
+  border-color: #868e96;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-column {
+  color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-column-active {
+  color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-columns {
+  border-bottom: 2px solid #868e96;
+}
+
+[data-bs-theme="light"] .wordsToLearn-column {
+  color: #6c757d;
+}
+
+[data-bs-theme="light"] .wordsToLearn-column-active {
+  color: #343a40;
+}
+
+[data-bs-theme="light"] .wordsToLearn-columns {
+  border-bottom: 2px solid #868e96;
+}
+
+.wordsToLearn-drag-handle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.15rem;
+  border: none;
+  background: none;
+  color: inherit;
+  opacity: 0.6;
+  cursor: grab;
+  /* the handle is the touch drag target — don't let the page scroll or show callouts */
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+
+.wordsToLearn-row-draggable .wordsToLearn-text {
+  cursor: grab;
+}
+
+.wordsToLearn-list-dragging,
+.wordsToLearn-list-dragging * {
+  cursor: grabbing !important;
+}
+
+.wordsToLearn-list-dragging .wordsToLearn-row {
+  transition: transform 150ms ease;
+}
+
+.wordsToLearn-list-dragging .wordsToLearn-row-dragging {
+  position: relative;
+  z-index: 1;
+  transition: none;
+  background-color: var(--bs-body-bg);
+}
+
+[data-bs-theme="dark"] .wordsToLearn-row-dragging {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+[data-bs-theme="light"] .wordsToLearn-row-dragging {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.wordsToLearn-columns-spacer.wordsToLearn-drag-handle {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.wordsToLearn-updateKey {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
