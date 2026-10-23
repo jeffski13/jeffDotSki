@@ -388,7 +388,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   };
 
   return (
-    <section className="wordsToLearn-section" aria-labelledby={`wordsToLearn-${list}-title`}>
+    <section className={`wordsToLearn-section${shown.length > 0 ? ' wordsToLearn-section-hasMatches' : ''}`} aria-labelledby={`wordsToLearn-${list}-title`}>
       {showAddForm && (
         <AddWordForm
           list={list}
@@ -648,6 +648,9 @@ export default function WordsToLearnPage({
         </div>
 
         {searching && !anyMatches && <p className="wordsToLearn-empty">No matching words.</p>}
+        {/* only shown on phones, where the list titles that would otherwise separate them are hidden;
+            lists with matches get the same separator between them in styles.css */}
+        {searching && anyMatches && <hr className="wordsToLearn-results-separator" data-testid="wordsToLearn-results-separator" />}
 
         {WORD_LISTS.map((list) => (
           <WordSection

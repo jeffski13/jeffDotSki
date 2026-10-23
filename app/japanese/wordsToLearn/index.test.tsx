@@ -241,6 +241,34 @@ describe('WordsToLearnPage', () => {
     expect(screen.queryByText('No matching words.')).not.toBeInTheDocument();
   });
 
+  it('shows the results separator only while a search has matches', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    const separator = () => screen.queryByTestId('wordsToLearn-results-separator');
+    const search = screen.getByLabelText('Search words');
+
+    expect(separator()).not.toBeInTheDocument();
+    fireEvent.change(search, { target: { value: 'stuff' } });
+    expect(separator()).toBeInTheDocument();
+    fireEvent.change(search, { target: { value: 'zzzz' } });
+    expect(separator()).not.toBeInTheDocument();
+    fireEvent.change(search, { target: { value: '' } });
+    expect(separator()).not.toBeInTheDocument();
+  });
+
+  it('marks only the lists that have search matches', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'stuff' } });
+
+    expect(section('Learning')).toHaveClass('wordsToLearn-section-hasMatches');
+    expect(section('Want to Learn')).not.toHaveClass('wordsToLearn-section-hasMatches');
+    expect(section('Culture')).not.toHaveClass('wordsToLearn-section-hasMatches');
+  });
+
   it('shows a single "No matching words." when no list has a match', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
