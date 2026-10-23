@@ -237,8 +237,21 @@ describe('WordsToLearnPage', () => {
 
     expect(romajiIn('Learning')).toEqual(['shouhin']);
     expect(romajiIn('Want to Learn')).toEqual([]);
-    expect(within(section('Want to Learn')).getByText('No matching words.')).toBeInTheDocument();
     expect(romajiIn('Culture')).toEqual([]);
+    expect(screen.queryByText('No matching words.')).not.toBeInTheDocument();
+  });
+
+  it('shows a single "No matching words." when no list has a match', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'zzzz' } });
+
+    expect(screen.getAllByText('No matching words.')).toHaveLength(1);
+    for (const list of ['Learning', 'Want to Learn', 'Culture']) {
+      expect(within(section(list)).queryByText('No matching words.')).not.toBeInTheDocument();
+    }
   });
 
   it('searches the Culture list too', async () => {
@@ -254,7 +267,7 @@ describe('WordsToLearnPage', () => {
 
     fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'katsu' } });
     expect(romajiIn('Culture')).toEqual([]);
-    expect(within(section('Culture')).getByText('No matching words.')).toBeInTheDocument();
+    expect(screen.queryByText('No matching words.')).not.toBeInTheDocument();
   });
 
   it('sorts each list independently by clicking column headers and remembers the choice', async () => {

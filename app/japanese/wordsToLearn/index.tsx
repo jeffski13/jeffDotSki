@@ -407,7 +407,8 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
       </div>
 
       {shown.length === 0 ? (
-        <p className="wordsToLearn-empty">{query.trim() ? 'No matching words.' : 'No words yet.'}</p>
+        // while searching, the page shows a single "No matching words." only when every list is empty
+        !query.trim() && <p className="wordsToLearn-empty">No words yet.</p>
       ) : (
         <>
           <ColumnHeaders list={list} sortMode={sortMode} canReorder={canReorder} onSortChange={onSortChange} />
@@ -606,6 +607,9 @@ export default function WordsToLearnPage({
   const statusRef = useRef<HTMLDivElement>(null);
   const statusOnScreen = useIsOnScreen(statusRef);
 
+  const searching = query.trim().length > 0;
+  const anyMatches = WORD_LISTS.some((list) => visibleWords(words, list, sort[list], query).length > 0);
+
   const handleSortChange = (list: WordList, mode: SortMode) => {
     const next = { ...sort, [list]: mode };
     setSort(next);
@@ -614,7 +618,7 @@ export default function WordsToLearnPage({
 
   return (
     // while searching, phones hide the list titles, column headers and sync message to fit more results
-    <div className={`wordsToLearn-wrapper${query.trim() ? ' wordsToLearn-searching' : ''}`} data-testid="wordsToLearn-wrapper">
+    <div className={`wordsToLearn-wrapper${searching ? ' wordsToLearn-searching' : ''}`} data-testid="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
         <SyncStatusToast status={status} pendingCount={pendingCount} statusOnScreen={statusOnScreen} />
 
@@ -642,6 +646,8 @@ export default function WordsToLearnPage({
 
           <SyncStatusLine status={status} pendingCount={pendingCount} />
         </div>
+
+        {searching && !anyMatches && <p className="wordsToLearn-empty">No matching words.</p>}
 
         {WORD_LISTS.map((list) => (
           <WordSection
