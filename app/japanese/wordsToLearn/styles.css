@@ -243,6 +243,13 @@
     flex: 1 1 0;
     min-width: 0;
   }
+
+  .wordsToLearn-searching .wordsToLearn-section-header,
+  .wordsToLearn-searching .wordsToLearn-columns,
+  .wordsToLearn-searching .wordsToLearn-sync,
+  .wordsToLearn-searching .wordsToLearn-status {
+    display: none;
+  }
 }
 
 .wordsToLearn-empty {

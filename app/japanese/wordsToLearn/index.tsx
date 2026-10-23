@@ -613,7 +613,8 @@ export default function WordsToLearnPage({
   };
 
   return (
-    <div className="wordsToLearn-wrapper">
+    // while searching, phones hide the list titles, column headers and sync message to fit more results
+    <div className={`wordsToLearn-wrapper${query.trim() ? ' wordsToLearn-searching' : ''}`} data-testid="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
         <SyncStatusToast status={status} pendingCount={pendingCount} statusOnScreen={statusOnScreen} />
 

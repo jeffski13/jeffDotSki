@@ -449,6 +449,22 @@ describe('WordsToLearnPage', () => {
     await waitFor(() => expect(server.words.find((w) => w.id === 'w1')?.english).toBe('rapid train'), { timeout: SYNC_DEBOUNCE_MS + 1000 });
   });
 
+  it('marks the page as searching only while the search has text', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    const wrapper = screen.getByTestId('wordsToLearn-wrapper');
+    const search = screen.getByLabelText('Search words');
+
+    expect(wrapper).not.toHaveClass('wordsToLearn-searching');
+    fireEvent.change(search, { target: { value: '   ' } });
+    expect(wrapper).not.toHaveClass('wordsToLearn-searching');
+    fireEvent.change(search, { target: { value: 'kat' } });
+    expect(wrapper).toHaveClass('wordsToLearn-searching');
+    fireEvent.change(search, { target: { value: '' } });
+    expect(wrapper).not.toHaveClass('wordsToLearn-searching');
+  });
+
   it('tapping a word on a touch screen opens the edit form directly', async () => {
     const { api } = createFakeApi();
     render(<WordsToLearnPage api={api} />);
