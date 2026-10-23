@@ -80,9 +80,9 @@ function ColumnHeaders({ list, sortMode, canReorder, onSortChange }: ColumnHeade
       </div>
       {/* invisible copy of a row's buttons so the header columns line up with the word columns */}
       <div className="wordsToLearn-actions wordsToLearn-columns-spacer" aria-hidden="true">
-        <Button size="sm" tabIndex={-1}><EditIcon /></Button>
+        <Button size="sm" className="wordsToLearn-action-wide" tabIndex={-1}><EditIcon /></Button>
         <Button size="sm" tabIndex={-1}><ChangeListIcon /></Button>
-        <Button size="sm" tabIndex={-1}>✕</Button>
+        <Button size="sm" className="wordsToLearn-action-wide" tabIndex={-1}>✕</Button>
       </div>
     </div>
   );
@@ -104,7 +104,7 @@ interface WordRowProps {
 }
 
 function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragStart, onMove, onEdit, onSwitchList, onLearned, onDelete }: WordRowProps) {
-  const longPress = useLongPress(onLearned);
+  const longPress = useLongPress(onLearned, onEdit);
   const switchLabel = `Move to ${LIST_TITLES[OTHER_LIST[word.list]]}`;
 
   // arrow keys on the focused handle move the word without dragging
@@ -139,13 +139,13 @@ function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragS
         <span className="wordsToLearn-english">{word.english}</span>
       </div>
       <div className="wordsToLearn-actions">
-        <Button size="sm" variant="outline-secondary" aria-label={`Edit ${word.romaji}`} title="Edit" onClick={onEdit}>
+        <Button size="sm" variant="outline-secondary" className="wordsToLearn-action-wide" aria-label={`Edit ${word.romaji}`} title="Edit" onClick={onEdit}>
           <EditIcon />
         </Button>
         <Button size="sm" variant="outline-primary" aria-label={`${switchLabel}: ${word.romaji}`} title={switchLabel} onClick={onSwitchList}>
           <ChangeListIcon />
         </Button>
-        <Button size="sm" variant="outline-danger" aria-label={`Delete ${word.romaji}`} onClick={onDelete}>✕</Button>
+        <Button size="sm" variant="outline-danger" className="wordsToLearn-action-wide" aria-label={`Delete ${word.romaji}`} onClick={onDelete}>✕</Button>
       </div>
     </li>
   );
@@ -388,7 +388,7 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
   };
 
   return (
-    <section className="wordsToLearn-section" aria-labelledby={`wordsToLearn-${list}-title`}>
+    <section className={`wordsToLearn-section${shown.length > 0 ? ' wordsToLearn-section-hasMatches' : ''}`} aria-labelledby={`wordsToLearn-${list}-title`}>
       {showAddForm && (
         <AddWordForm
           list={list}
@@ -407,7 +407,8 @@ function WordSection({ list, words, query, sortMode, onSortChange, change, showA
       </div>
 
       {shown.length === 0 ? (
-        <p className="wordsToLearn-empty">{query.trim() ? 'No matching words.' : 'No words yet.'}</p>
+        // while searching, the page shows a single "No matching words." only when every list is empty
+        !query.trim() && <p className="wordsToLearn-empty">No words yet.</p>
       ) : (
         <>
           <ColumnHeaders list={list} sortMode={sortMode} canReorder={canReorder} onSortChange={onSortChange} />
@@ -606,6 +607,9 @@ export default function WordsToLearnPage({
   const statusRef = useRef<HTMLDivElement>(null);
   const statusOnScreen = useIsOnScreen(statusRef);
 
+  const searching = query.trim().length > 0;
+  const anyMatches = WORD_LISTS.some((list) => visibleWords(words, list, sort[list], query).length > 0);
+
   const handleSortChange = (list: WordList, mode: SortMode) => {
     const next = { ...sort, [list]: mode };
     setSort(next);
@@ -613,7 +617,8 @@ export default function WordsToLearnPage({
   };
 
   return (
-    <div className="wordsToLearn-wrapper">
+    // while searching, phones hide the list titles, column headers and sync message to fit more results
+    <div className={`wordsToLearn-wrapper${searching ? ' wordsToLearn-searching' : ''}`} data-testid="wordsToLearn-wrapper">
       <Container className="wordsToLearn-content">
         <SyncStatusToast status={status} pendingCount={pendingCount} statusOnScreen={statusOnScreen} />
 
@@ -641,6 +646,10 @@ export default function WordsToLearnPage({
 
           <SyncStatusLine status={status} pendingCount={pendingCount} />
         </div>
+
+        {searching && !anyMatches && <p className="wordsToLearn-empty">No matching words.</p>}
+        {/* only shown on phones, where the list titles that would otherwise separate them are hidden */}
+        {searching && anyMatches && <hr className="wordsToLearn-results-separator" data-testid="wordsToLearn-results-separator" />}
 
         {WORD_LISTS.map((list) => (
           <WordSection

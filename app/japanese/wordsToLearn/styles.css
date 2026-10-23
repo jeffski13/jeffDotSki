@@ -226,9 +226,13 @@
   gap: 0.5rem;
 }
 
-/* extra small screens: the long-press / right-click menu covers these actions */
+.wordsToLearn-results-separator {
+  display: none;
+}
+
+/* extra small screens: tapping a word edits it and long-pressing opens the menu, so only Change List stays */
 @media (max-width: 575.98px) {
-  .wordsToLearn-actions {
+  .wordsToLearn-actions .wordsToLearn-action-wide {
     display: none;
   }
 
@@ -243,11 +247,44 @@
     flex: 1 1 0;
     min-width: 0;
   }
+
+  .wordsToLearn-searching .wordsToLearn-section-header,
+  .wordsToLearn-searching .wordsToLearn-columns,
+  .wordsToLearn-searching .wordsToLearn-sync,
+  .wordsToLearn-searching .wordsToLearn-status {
+    display: none;
+  }
+
+  .wordsToLearn-results-separator {
+    display: block;
+    /* collapses with the search row's bottom margin, so this is the full gap above the line */
+    margin: 1rem 0 0;
+    border: none;
+    border-top: 2px solid var(--wordsToLearn-separator-color);
+    opacity: 1;
+  }
+
+  .wordsToLearn-searching .wordsToLearn-section {
+    margin-top: 0.75rem;
+  }
+
+  /* space each list with matches apart from the matching list above it */
+  .wordsToLearn-searching .wordsToLearn-section-hasMatches ~ .wordsToLearn-section-hasMatches {
+    margin-top: 2.5rem;
+  }
 }
 
 .wordsToLearn-empty {
   font-size: 0.875rem;
   font-style: italic;
+}
+
+[data-bs-theme="dark"] .wordsToLearn-wrapper {
+  --wordsToLearn-separator-color: #6c757d;
+}
+
+[data-bs-theme="light"] .wordsToLearn-wrapper {
+  --wordsToLearn-separator-color: #adb5bd;
 }
 
 [data-bs-theme="dark"] .wordsToLearn-section-title,

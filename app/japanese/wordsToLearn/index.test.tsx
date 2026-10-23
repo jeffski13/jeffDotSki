@@ -11,7 +11,13 @@ import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
 
 // jsdom has no PointerEvent, so without this button/clientX are dropped from the events
 if (!window.PointerEvent) {
-  window.PointerEvent = class extends MouseEvent {} as typeof PointerEvent;
+  window.PointerEvent = class extends MouseEvent {
+    pointerType: string;
+    constructor(type: string, init: PointerEventInit = {}) {
+      super(type, init);
+      this.pointerType = init.pointerType ?? '';
+    }
+  } as typeof PointerEvent;
 }
 
 const word = (overrides: Partial<Word> = {}): Word => ({
@@ -231,8 +237,49 @@ describe('WordsToLearnPage', () => {
 
     expect(romajiIn('Learning')).toEqual(['shouhin']);
     expect(romajiIn('Want to Learn')).toEqual([]);
-    expect(within(section('Want to Learn')).getByText('No matching words.')).toBeInTheDocument();
     expect(romajiIn('Culture')).toEqual([]);
+    expect(screen.queryByText('No matching words.')).not.toBeInTheDocument();
+  });
+
+  it('shows the results separator only while a search has matches', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    const separator = () => screen.queryByTestId('wordsToLearn-results-separator');
+    const search = screen.getByLabelText('Search words');
+
+    expect(separator()).not.toBeInTheDocument();
+    fireEvent.change(search, { target: { value: 'stuff' } });
+    expect(separator()).toBeInTheDocument();
+    fireEvent.change(search, { target: { value: 'zzzz' } });
+    expect(separator()).not.toBeInTheDocument();
+    fireEvent.change(search, { target: { value: '' } });
+    expect(separator()).not.toBeInTheDocument();
+  });
+
+  it('marks only the lists that have search matches', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'stuff' } });
+
+    expect(section('Learning')).toHaveClass('wordsToLearn-section-hasMatches');
+    expect(section('Want to Learn')).not.toHaveClass('wordsToLearn-section-hasMatches');
+    expect(section('Culture')).not.toHaveClass('wordsToLearn-section-hasMatches');
+  });
+
+  it('shows a single "No matching words." when no list has a match', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'zzzz' } });
+
+    expect(screen.getAllByText('No matching words.')).toHaveLength(1);
+    for (const list of ['Learning', 'Want to Learn', 'Culture']) {
+      expect(within(section(list)).queryByText('No matching words.')).not.toBeInTheDocument();
+    }
   });
 
   it('searches the Culture list too', async () => {
@@ -248,7 +295,7 @@ describe('WordsToLearnPage', () => {
 
     fireEvent.change(screen.getByLabelText('Search words'), { target: { value: 'katsu' } });
     expect(romajiIn('Culture')).toEqual([]);
-    expect(within(section('Culture')).getByText('No matching words.')).toBeInTheDocument();
+    expect(screen.queryByText('No matching words.')).not.toBeInTheDocument();
   });
 
   it('sorts each list independently by clicking column headers and remembers the choice', async () => {
@@ -441,6 +488,49 @@ describe('WordsToLearnPage', () => {
     expect(romajiIn('Want to Learn')).toEqual(['kaisoku densha', 'Akiraka ni']);
     expect(screen.getByText('rapid train')).toBeInTheDocument();
     await waitFor(() => expect(server.words.find((w) => w.id === 'w1')?.english).toBe('rapid train'), { timeout: SYNC_DEBOUNCE_MS + 1000 });
+  });
+
+  it('marks the page as searching only while the search has text', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+    const wrapper = screen.getByTestId('wordsToLearn-wrapper');
+    const search = screen.getByLabelText('Search words');
+
+    expect(wrapper).not.toHaveClass('wordsToLearn-searching');
+    fireEvent.change(search, { target: { value: '   ' } });
+    expect(wrapper).not.toHaveClass('wordsToLearn-searching');
+    fireEvent.change(search, { target: { value: 'kat' } });
+    expect(wrapper).toHaveClass('wordsToLearn-searching');
+    fireEvent.change(search, { target: { value: '' } });
+    expect(wrapper).not.toHaveClass('wordsToLearn-searching');
+  });
+
+  it('tapping a word on a touch screen opens the edit form directly', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    const text = screen.getByText('shouhin');
+    fireEvent.pointerDown(text, { button: 0, pointerType: 'touch', clientX: 0, clientY: 0 });
+    fireEvent.pointerUp(text, { pointerType: 'touch' });
+    fireEvent.click(text);
+
+    expect(within(menu()).queryByRole('button', { name: 'Change List' })).not.toBeInTheDocument();
+    expect(within(menu()).getByLabelText('Romaji')).toHaveValue('shouhin');
+  });
+
+  it('clicking a word with a mouse does not open the menu', async () => {
+    const { api } = createFakeApi();
+    render(<WordsToLearnPage api={api} />);
+    await waitFor(() => expect(romajiIn('Learning')).toHaveLength(2));
+
+    const text = screen.getByText('shouhin');
+    fireEvent.pointerDown(text, { button: 0, pointerType: 'mouse', clientX: 0, clientY: 0 });
+    fireEvent.pointerUp(text, { pointerType: 'mouse' });
+    fireEvent.click(text);
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('the edit button on a row opens the edit form directly and saves the change', async () => {
