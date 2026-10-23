@@ -268,11 +268,9 @@
     margin-top: 0.75rem;
   }
 
-  /* separate each list with matches from the matching list above it */
+  /* space each list with matches apart from the matching list above it */
   .wordsToLearn-searching .wordsToLearn-section-hasMatches ~ .wordsToLearn-section-hasMatches {
-    border-top: 2px solid var(--wordsToLearn-separator-color);
-    margin-top: 1.25rem;
-    padding-top: 1.25rem;
+    margin-top: 2.5rem;
   }
 }
 

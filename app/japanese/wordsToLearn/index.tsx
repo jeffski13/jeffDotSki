@@ -648,8 +648,7 @@ export default function WordsToLearnPage({
         </div>
 
         {searching && !anyMatches && <p className="wordsToLearn-empty">No matching words.</p>}
-        {/* only shown on phones, where the list titles that would otherwise separate them are hidden;
-            lists with matches get the same separator between them in styles.css */}
+        {/* only shown on phones, where the list titles that would otherwise separate them are hidden */}
         {searching && anyMatches && <hr className="wordsToLearn-results-separator" data-testid="wordsToLearn-results-separator" />}
 
         {WORD_LISTS.map((list) => (
