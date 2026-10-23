@@ -80,9 +80,9 @@ function ColumnHeaders({ list, sortMode, canReorder, onSortChange }: ColumnHeade
       </div>
       {/* invisible copy of a row's buttons so the header columns line up with the word columns */}
       <div className="wordsToLearn-actions wordsToLearn-columns-spacer" aria-hidden="true">
-        <Button size="sm" tabIndex={-1}><EditIcon /></Button>
+        <Button size="sm" className="wordsToLearn-action-wide" tabIndex={-1}><EditIcon /></Button>
         <Button size="sm" tabIndex={-1}><ChangeListIcon /></Button>
-        <Button size="sm" tabIndex={-1}>✕</Button>
+        <Button size="sm" className="wordsToLearn-action-wide" tabIndex={-1}>✕</Button>
       </div>
     </div>
   );
@@ -104,7 +104,7 @@ interface WordRowProps {
 }
 
 function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragStart, onMove, onEdit, onSwitchList, onLearned, onDelete }: WordRowProps) {
-  const longPress = useLongPress(onLearned);
+  const longPress = useLongPress(onLearned, onEdit);
   const switchLabel = `Move to ${LIST_TITLES[OTHER_LIST[word.list]]}`;
 
   // arrow keys on the focused handle move the word without dragging
@@ -139,13 +139,13 @@ function WordRow({ word, canReorder, isFirst, isLast, isDragging, style, onDragS
         <span className="wordsToLearn-english">{word.english}</span>
       </div>
       <div className="wordsToLearn-actions">
-        <Button size="sm" variant="outline-secondary" aria-label={`Edit ${word.romaji}`} title="Edit" onClick={onEdit}>
+        <Button size="sm" variant="outline-secondary" className="wordsToLearn-action-wide" aria-label={`Edit ${word.romaji}`} title="Edit" onClick={onEdit}>
           <EditIcon />
         </Button>
         <Button size="sm" variant="outline-primary" aria-label={`${switchLabel}: ${word.romaji}`} title={switchLabel} onClick={onSwitchList}>
           <ChangeListIcon />
         </Button>
-        <Button size="sm" variant="outline-danger" aria-label={`Delete ${word.romaji}`} onClick={onDelete}>✕</Button>
+        <Button size="sm" variant="outline-danger" className="wordsToLearn-action-wide" aria-label={`Delete ${word.romaji}`} onClick={onDelete}>✕</Button>
       </div>
     </li>
   );

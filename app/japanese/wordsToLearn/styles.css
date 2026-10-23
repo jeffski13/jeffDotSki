@@ -226,9 +226,9 @@
   gap: 0.5rem;
 }
 
-/* extra small screens: the long-press / right-click menu covers these actions */
+/* extra small screens: tapping a word edits it and long-pressing opens the menu, so only Change List stays */
 @media (max-width: 575.98px) {
-  .wordsToLearn-actions {
+  .wordsToLearn-actions .wordsToLearn-action-wide {
     display: none;
   }
 
