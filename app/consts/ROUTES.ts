@@ -28,7 +28,6 @@ const ROUTES = {
     furiganaGenerator: '/japanese/furiganaGenerator',
     qrLink: '/japanese/qrLink',
     qrRedirect: '/japanese/qrRedirect',
-    wordsToLearn: '/japanese/wordsToLearn',
   },
   aboutMe: {
     bio: '/aboutme/bio',
@@ -43,7 +42,8 @@ const ROUTES = {
       softwareEngineer: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_Resume_2025_12_15.pdf',
       ingenieroDeSoftware: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_CV_2025_12_15_ES.pdf',
     },
-    certification: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TEFL_Certification.pdf'
+    certification: 'https://s3.us-east-2.amazonaws.com/jeff.ski/resume/JeffSzcinski_TEFL_Certification.pdf',
+    wordsToLearn: 'https://words.jeff.ski',
   }
 };
 export default ROUTES;

@@ -27,7 +27,6 @@
       {"source":"/japanese/furiganaGenerator","destination":"/index.html"},
       {"source":"/japanese/qrLink","destination":"/index.html"},
       {"source":"/japanese/qrRedirect","destination":"/index.html"},
-      {"source":"/japanese/wordsToLearn","destination":"/index.html"},
       {"source":"/aboutme/bio","destination":"/index.html"},
       {"source":"/aboutme/hobbies/drawing","destination":"/index.html"},
       {"source":"/aboutme/hobbies/tvShows","destination":"/index.html"}
