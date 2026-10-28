@@ -141,7 +141,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                             <NavDropdown.Item href={ROUTES.japanese.japaneseBible}>{content.japaneseBible}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.japaneseParenthesesToFurigana}>{content.japaneseParenthesesToFurigana}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.qrLink}>{content.qrLink}</NavDropdown.Item>
-                            <NavDropdown.Item href={ROUTES.japanese.wordsToLearn}>{content.wordsToLearn}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.external.wordsToLearn}>{content.wordsToLearn}</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<><span className="nav-title-full">{content.aboutMe}</span><span className="nav-title-short">{content.aboutMeShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.aboutMe.bio}>{content.aboutBio}</NavDropdown.Item>
