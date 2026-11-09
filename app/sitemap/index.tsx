@@ -51,6 +51,7 @@ const es: ContentPerLanguage = {
         { text: esTitles.japaneseCurrentSong, url: ROUTES.japanese.japanesePracticeLyrics },
         { text: esTitles.japaneseParenthesesToFurigana, url: ROUTES.japanese.japaneseParenthesesToFurigana },
         { text: esTitles.furiganaGenerator, url: ROUTES.japanese.furiganaGenerator },
+        { text: esTitles.massOrder, url: ROUTES.japanese.massOrder },
       ]
     },
     {
@@ -95,6 +96,7 @@ const defaultText: ContentPerLanguage = {
         { text: defaultTextTitles.japaneseCurrentSong, url: ROUTES.japanese.japanesePracticeLyrics },
         { text: defaultTextTitles.japaneseParenthesesToFurigana, url: ROUTES.japanese.japaneseParenthesesToFurigana },
         { text: defaultTextTitles.furiganaGenerator, url: ROUTES.japanese.furiganaGenerator },
+        { text: defaultTextTitles.massOrder, url: ROUTES.japanese.massOrder },
       ]
     },
     {

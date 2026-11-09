@@ -26,6 +26,7 @@ const ROUTES = {
     japaneseMusicCovers: '/japanese/pianoCovers',
     japaneseParenthesesToFurigana: '/japanese/parenthesesToFurigana',
     furiganaGenerator: '/japanese/furiganaGenerator',
+    massOrder: '/japanese/massOrder',
     qrLink: '/japanese/qrLink',
     qrRedirect: '/japanese/qrRedirect',
   },

@@ -25,6 +25,7 @@
       {"source":"/japanese/pianoCovers","destination":"/index.html"},
       {"source":"/japanese/parenthesesToFurigana","destination":"/index.html"},
       {"source":"/japanese/furiganaGenerator","destination":"/index.html"},
+      {"source":"/japanese/massOrder","destination":"/index.html"},
       {"source":"/japanese/qrLink","destination":"/index.html"},
       {"source":"/japanese/qrRedirect","destination":"/index.html"},
       {"source":"/aboutme/bio","destination":"/index.html"},

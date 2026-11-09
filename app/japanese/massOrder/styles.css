@@ -1,0 +1,22 @@
+#japanese-mass-order {
+    padding-top: 20px;
+    padding-bottom: 2rem;
+}
+
+[data-bs-theme="light"] #japanese-mass-order {
+    background-color: #eee;
+}
+
+[data-bs-theme="dark"] #japanese-mass-order {
+    background-color: #1a1e21;
+}
+
+#japanese-mass-order .mass-order-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#japanese-mass-order .mass-order-title-en {
+    font-weight: normal;
+}
