@@ -16,13 +16,15 @@ import departure from "./src/departure";
 import naminoriJohnny from "./src/naminoriJohnny";
 import reason from "./src/reason";
 import aitai from "./src/aitai";
+import countryroad from "./src/countryroad";
 import { charFromPoint, selectWordAt } from "./wordSelect";
 import '../displayControls.css';
 import './styles.css';
 
 export const songs: LyricsSong[] = [
   aitai, 
-  bayCity, 
+  bayCity,
+  countryroad, 
   departure, 
   eikouNoKakehashi, 
   HaikyouNoSofa, 
