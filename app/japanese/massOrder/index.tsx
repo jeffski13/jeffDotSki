@@ -19,8 +19,9 @@ const DEFAULT_DISPLAY_SETTINGS = {
   lineByLine: false,
 };
 
-const lines = zipLines({ furigana: orderOfMass.furigana, english: orderOfMass.english });
-type Line = (typeof lines)[number];
+const sections = orderOfMass.furigana.map((furigana, i) => zipLines({ furigana, english: orderOfMass.english[i] }));
+type Line = (typeof sections)[number][number];
+const isSeparator = (line: Line) => isSeparatorLine(line.furigana) || isSeparatorLine(line.english);
 
 export default function MassOrderPage() {
   const [displaySettings, setDisplaySettings] = usePersistedBooleanSettings(DISPLAY_SETTINGS_KEY, DEFAULT_DISPLAY_SETTINGS);
@@ -63,13 +64,16 @@ export default function MassOrderPage() {
           fontSize={fontSize}
           onFontSizeChange={setFontSize}
         />
-        <ParallelTextView
-          lines={lines}
-          channels={enabledChannels}
-          lineByLine={lineByLine}
-          fontSize={fontSize}
-          isSeparator={(line) => isSeparatorLine(line.furigana) || isSeparatorLine(line.english)}
-        />
+        {sections.map((lines, i) => (
+          <ParallelTextView
+            key={i}
+            lines={lines}
+            channels={enabledChannels}
+            lineByLine={lineByLine}
+            fontSize={fontSize}
+            isSeparator={isSeparator}
+          />
+        ))}
       </Container>
 
       {showScrollTop && <ScrollTopButton floating />}
