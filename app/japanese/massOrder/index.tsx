@@ -19,8 +19,10 @@ const DEFAULT_DISPLAY_SETTINGS = {
   lineByLine: false,
 };
 
-const sections = orderOfMass.furigana.map((furigana, i) => zipLines({ furigana, english: orderOfMass.english[i] }));
-type Line = (typeof sections)[number][number];
+const sections = orderOfMass.furigana.map((subsections, s) =>
+  subsections.map((furigana, sub) => zipLines({ furigana, english: orderOfMass.english[s][sub] })),
+);
+type Line = (typeof sections)[number][number][number];
 const isSeparator = (line: Line) => isSeparatorLine(line.furigana) || isSeparatorLine(line.english);
 
 export default function MassOrderPage() {
@@ -64,15 +66,19 @@ export default function MassOrderPage() {
           fontSize={fontSize}
           onFontSizeChange={setFontSize}
         />
-        {sections.map((lines, i) => (
-          <ParallelTextView
-            key={i}
-            lines={lines}
-            channels={enabledChannels}
-            lineByLine={lineByLine}
-            fontSize={fontSize}
-            isSeparator={isSeparator}
-          />
+        {sections.map((subsections, s) => (
+          <section key={s} className="mass-order-section">
+            {subsections.map((lines, sub) => (
+              <ParallelTextView
+                key={sub}
+                lines={lines}
+                channels={enabledChannels}
+                lineByLine={lineByLine}
+                fontSize={fontSize}
+                isSeparator={isSeparator}
+              />
+            ))}
+          </section>
         ))}
       </Container>
 

@@ -6,10 +6,12 @@ import orderOfMass from './order_of_mass';
 import { furiganaToKanji } from '../shared/furiganaText';
 
 const lineTexts = (el: Element) => Array.from(el.querySelectorAll('.parallel-text-line')).map((p) => p.textContent);
-const allFurigana = orderOfMass.furigana.flat();
-const allEnglish = orderOfMass.english.flat();
+const allFurigana = orderOfMass.furigana.flat(2);
+const allEnglish = orderOfMass.english.flat(2);
+const subsectionsFurigana = orderOfMass.furigana.flat();
 const sectionCount = orderOfMass.furigana.length;
-// Columns of the given channel index, one per section view.
+const viewCount = subsectionsFurigana.length;
+// Columns of the given channel index, one per subsection view.
 const channelColumns = (container: Element, channel: number) =>
   Array.from(container.querySelectorAll('.parallel-text')).map((view) => view.querySelectorAll('.parallel-text-column')[channel]);
 
@@ -19,15 +21,17 @@ describe('order of mass data', () => {
     expect(orderOfMass.english).toHaveLength(sectionCount);
   });
 
-  it('has the same number of Japanese and English lines in each section', () => {
-    orderOfMass.furigana.forEach((section, s) => {
-      expect({ s, length: section.length }).toEqual({ s, length: orderOfMass.english[s].length });
-    });
+  it('has the same subsections and line counts in both languages', () => {
+    const shape = (sections: string[][][]) => sections.map((subs) => subs.map((lines) => lines.length));
+    expect(shape(orderOfMass.english)).toEqual(shape(orderOfMass.furigana));
   });
 
-  it('starts every section with a heading', () => {
-    orderOfMass.furigana.forEach((section, s) => {
-      expect({ s, jp: section[0].startsWith('---'), en: orderOfMass.english[s][0].startsWith('---') }).toEqual({ s, jp: true, en: true });
+  it('starts every subsection with a heading', () => {
+    orderOfMass.furigana.forEach((subs, s) => {
+      subs.forEach((lines, sub) => {
+        const en = orderOfMass.english[s][sub];
+        expect({ s, sub, jp: lines[0].startsWith('---'), en: en[0].startsWith('---') }).toEqual({ s, sub, jp: true, en: true });
+      });
     });
   });
 
@@ -42,8 +46,9 @@ describe('order of mass data', () => {
 });
 
 describe('MassOrderPage', () => {
-  const englishLine = orderOfMass.english[0][3];
-  const kanjiLine = furiganaToKanji(orderOfMass.furigana[0][3]);
+  // Line 1 of the "2. Greeting" subsection.
+  const englishLine = orderOfMass.english[0][1][1];
+  const kanjiLine = furiganaToKanji(orderOfMass.furigana[0][1][1]);
 
   beforeEach(() => window.localStorage.clear());
 
@@ -55,12 +60,13 @@ describe('MassOrderPage', () => {
     expect(screen.getByLabelText('English')).toBeChecked();
     expect(screen.getByLabelText('Line by line')).not.toBeChecked();
 
-    expect(container.querySelectorAll('.parallel-text')).toHaveLength(sectionCount);
-    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(sectionCount * 2);
-    channelColumns(container, 0).forEach((col, s) => {
-      expect(col.querySelectorAll('.parallel-text-line')).toHaveLength(orderOfMass.furigana[s].length);
-      expect(col.querySelectorAll('ruby').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('.mass-order-section')).toHaveLength(sectionCount);
+    expect(container.querySelectorAll('.parallel-text')).toHaveLength(viewCount);
+    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(viewCount * 2);
+    channelColumns(container, 0).forEach((col, v) => {
+      expect(col.querySelectorAll('.parallel-text-line')).toHaveLength(subsectionsFurigana[v].length);
     });
+    expect(channelColumns(container, 0)[1].querySelectorAll('ruby').length).toBeGreaterThan(0);
     expect(channelColumns(container, 1).flatMap(lineTexts)).toEqual(allEnglish);
   });
 
@@ -68,9 +74,9 @@ describe('MassOrderPage', () => {
     const { container } = render(<MassOrderPage />);
     fireEvent.click(screen.getByLabelText('Japanese'));
 
-    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(sectionCount * 3);
+    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(viewCount * 3);
     const jpColumns = channelColumns(container, 1);
-    expect(lineTexts(jpColumns[0])[3]).toBe(kanjiLine);
+    expect(lineTexts(jpColumns[1])[1]).toBe(kanjiLine);
     jpColumns.forEach((col) => expect(col.querySelectorAll('ruby')).toHaveLength(0));
   });
 
@@ -78,7 +84,7 @@ describe('MassOrderPage', () => {
     const { container } = render(<MassOrderPage />);
     fireEvent.click(screen.getByLabelText('English'));
 
-    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(sectionCount);
+    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(viewCount);
     expect(container.textContent).not.toContain(englishLine);
   });
 
