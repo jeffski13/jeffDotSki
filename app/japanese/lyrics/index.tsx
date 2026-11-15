@@ -17,6 +17,7 @@ import naminoriJohnny from "./src/naminoriJohnny";
 import reason from "./src/reason";
 import aitai from "./src/aitai";
 import countryroad from "./src/countryroad";
+import hitoriBocchiNoYoru from "./src/hitoriBocchiNoYoru";
 import { charFromPoint, selectWordAt } from "./wordSelect";
 import '../displayControls.css';
 import './styles.css';
@@ -28,6 +29,7 @@ export const songs: LyricsSong[] = [
   departure, 
   eikouNoKakehashi, 
   HaikyouNoSofa, 
+  hitoriBocchiNoYoru, 
   itsuka, 
   land, 
   nagareboshiKirari, 
