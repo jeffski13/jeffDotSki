@@ -21,8 +21,8 @@ describe('PracticeNihongoLyrics', () => {
     fireEvent.change(select, { target: { value: song.title } });
 
     const expectedRows = Math.max(song.jp.length, song.romaji.length);
-    // Default display settings show Furigana + Romaji columns, skipping any the song has no lines for.
-    const expectedColumns = Number(!!song.furigana?.length) + Number(song.romaji.length > 0);
+    // Default display settings show only the Furigana column, skipped if the song has no furigana lines.
+    const expectedColumns = Number(!!song.furigana?.length);
     expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(expectedColumns);
     container.querySelectorAll('.parallel-text-column').forEach((col) => {
       expect(col.querySelectorAll('.parallel-text-line')).toHaveLength(expectedRows);
@@ -38,16 +38,16 @@ describe('PracticeNihongoLyrics', () => {
       window.localStorage.clear();
     });
 
-    it('defaults to Furigana and Romaji checked, with Japanese unchecked', () => {
+    it('defaults to only Furigana checked, with Japanese and Romaji unchecked', () => {
       const { container } = renderComponent();
       fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       expect(screen.getByLabelText('Japanese')).not.toBeChecked();
       expect(screen.getByLabelText('Furigana')).toBeChecked();
-      expect(screen.getByLabelText('Romaji')).toBeChecked();
+      expect(screen.getByLabelText('Romaji')).not.toBeChecked();
 
       expect(container.textContent).not.toContain(jpLine);
-      expect(container.textContent).toContain(romajiLine);
+      expect(container.textContent).not.toContain(romajiLine);
       expect(container.querySelectorAll('ruby').length).toBeGreaterThan(0);
     });
 
@@ -58,11 +58,11 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.click(screen.getByLabelText('Japanese'));
 
       expect(container.textContent).toContain(jpLine);
-      expect(container.textContent).toContain(romajiLine);
+      expect(container.textContent).not.toContain(romajiLine);
       expect(container.querySelectorAll('ruby').length).toBeGreaterThan(0);
     });
 
-    it('hides the Romaji column when its checkbox is unchecked, leaving the others', () => {
+    it('shows the Romaji column once its checkbox is checked, leaving the others', () => {
       const { container } = renderComponent();
       fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
@@ -70,7 +70,7 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.click(screen.getByLabelText('Romaji'));
 
       expect(container.textContent).toContain(jpLine);
-      expect(container.textContent).not.toContain(romajiLine);
+      expect(container.textContent).toContain(romajiLine);
       expect(container.querySelectorAll('ruby').length).toBeGreaterThan(0);
     });
 
@@ -82,7 +82,7 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.click(screen.getByLabelText('Furigana'));
 
       expect(container.textContent).toContain(jpLine);
-      expect(container.textContent).toContain(romajiLine);
+      expect(container.textContent).not.toContain(romajiLine);
       expect(container.querySelectorAll('ruby')).toHaveLength(0);
     });
 
@@ -106,16 +106,16 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.click(screen.getByLabelText('Romaji'));
 
       const saved = JSON.parse(window.localStorage.getItem('practiceNihongoLyrics.displaySettings')!);
-      expect(saved).toEqual({ showJp: true, showFurigana: true, showRomaji: false, lineByLine: false });
+      expect(saved).toEqual({ showJp: true, showFurigana: true, showRomaji: true, lineByLine: false });
 
       first.unmount();
 
       const second = renderComponent();
       expect(screen.getByLabelText('Japanese')).toBeChecked();
       expect(screen.getByLabelText('Furigana')).toBeChecked();
-      expect(screen.getByLabelText('Romaji')).not.toBeChecked();
+      expect(screen.getByLabelText('Romaji')).toBeChecked();
       expect(second.container.textContent).toContain(jpLine);
-      expect(second.container.textContent).not.toContain(romajiLine);
+      expect(second.container.textContent).toContain(romajiLine);
     });
   });
 
@@ -142,7 +142,7 @@ describe('PracticeNihongoLyrics', () => {
 
       expect(screen.getByLabelText('Romaji')).toBeDisabled();
       expect(screen.getByLabelText('Japanese')).toBeEnabled();
-      // Only the Furigana column remains (Romaji is still checked but has nothing to show).
+      // Only the Furigana column remains.
       expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(1);
     });
 
@@ -153,7 +153,7 @@ describe('PracticeNihongoLyrics', () => {
 
       fireEvent.change(screen.getByRole('combobox'), { target: { value: songsByKey.bayCity.title } });
       expect(screen.getByLabelText('Romaji')).toBeEnabled();
-      expect(screen.getByLabelText('Romaji')).toBeChecked();
+      expect(screen.getByLabelText('Romaji')).not.toBeChecked();
     });
   });
 
@@ -180,6 +180,7 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       fireEvent.click(screen.getByLabelText('Japanese'));
+      fireEvent.click(screen.getByLabelText('Romaji'));
       fireEvent.click(screen.getByLabelText('Line by line'));
 
       expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(0);
@@ -199,9 +200,9 @@ describe('PracticeNihongoLyrics', () => {
       window.localStorage.clear();
     });
 
-    it('defaults to 16px', () => {
+    it('defaults to 30px', () => {
       renderComponent();
-      expect(screen.getByText('16px')).toBeInTheDocument();
+      expect(screen.getByText('30px')).toBeInTheDocument();
     });
 
     it('increases and decreases the font size, disabling buttons at the limits', () => {
@@ -210,11 +211,11 @@ describe('PracticeNihongoLyrics', () => {
       const increase = screen.getByLabelText('Increase text size');
 
       fireEvent.click(increase);
-      expect(screen.getByText('18px')).toBeInTheDocument();
+      expect(screen.getByText('32px')).toBeInTheDocument();
 
       fireEvent.click(decrease);
       fireEvent.click(decrease);
-      expect(screen.getByText('14px')).toBeInTheDocument();
+      expect(screen.getByText('28px')).toBeInTheDocument();
 
       for (let i = 0; i < 10; i++) fireEvent.click(decrease);
       expect(screen.getByText('12px')).toBeInTheDocument();
@@ -230,19 +231,19 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.click(screen.getByLabelText('Increase text size'));
 
       const area = container.querySelector('.parallel-text') as HTMLElement;
-      expect(area.style.fontSize).toBe('18px');
+      expect(area.style.fontSize).toBe('32px');
     });
 
     it('persists the font size to localStorage and restores it on reload', () => {
       const first = renderComponent();
       fireEvent.click(screen.getByLabelText('Increase text size'));
 
-      expect(window.localStorage.getItem('practiceNihongoLyrics.fontSize')).toBe('18');
+      expect(window.localStorage.getItem('practiceNihongoLyrics.fontSize')).toBe('32');
 
       first.unmount();
 
       renderComponent();
-      expect(screen.getByText('18px')).toBeInTheDocument();
+      expect(screen.getByText('32px')).toBeInTheDocument();
     });
   });
 

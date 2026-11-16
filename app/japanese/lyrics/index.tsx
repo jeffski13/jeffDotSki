@@ -61,7 +61,7 @@ const DISPLAY_SETTINGS_KEY = "practiceNihongoLyrics.displaySettings";
 const DEFAULT_DISPLAY_SETTINGS = {
   showJp: false,
   showFurigana: true,
-  showRomaji: true,
+  showRomaji: false,
   lineByLine: false,
 };
 
@@ -108,7 +108,7 @@ export default function WebPage() {
   };
   const [displaySettings, setDisplaySettings] = usePersistedBooleanSettings(DISPLAY_SETTINGS_KEY, DEFAULT_DISPLAY_SETTINGS);
   const { showJp, showFurigana, showRomaji, lineByLine } = displaySettings;
-  const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
+  const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY, { defaultSize: 30 });
   const showScrollTop = useShowScrollTop();
 
   const setSetting = (key: keyof typeof DEFAULT_DISPLAY_SETTINGS) => (checked: boolean) =>
