@@ -26,6 +26,7 @@ export interface ContentPerLanguage {
     japaneseMusicCovers: string;
     japaneseParenthesesToFurigana: string;
     furiganaGenerator: string;
+    massOrder: string;
     qrLink: string;
     wordsToLearn: string;
     aboutMe: string;
@@ -57,6 +58,7 @@ export const es: ContentPerLanguage = {
     japaneseMusicCovers: 'Música Japonesa',
     japaneseParenthesesToFurigana: 'Transformación de Parenthese a Furigana',
     furiganaGenerator: 'Generador de Furigana',
+    massOrder: 'Orden de la Misa',
     qrLink: 'Código QR de Letras',
     wordsToLearn: 'Palabras para Aprender',
     aboutMe: 'Sobre Mí',
@@ -83,6 +85,7 @@ export const defaultText: ContentPerLanguage = {
     japanese: 'Japanese Studies',
     japaneseShort: 'Japanese',
     furiganaGenerator: 'Furigana Generator',
+    massOrder: 'Order of Mass',
     japaneseCurrentSong: 'Lyrics For Studying',
     japaneseBible: 'Bible In Japanese',
     japaneseMusicCovers: 'My Piano Covers',
@@ -137,6 +140,7 @@ export default function NavigationBar({ themeManager }: NavigationBarProps) {
                         <NavDropdown title={<><span className="nav-title-full">{content.japanese}</span><span className="nav-title-short">{content.japaneseShort}</span></>} id="navigationbar-japanese-studies">
                             <NavDropdown.Item href={ROUTES.japanese.japanesePracticeLyrics}>{content.japaneseCurrentSong}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.furiganaGenerator}>{content.furiganaGenerator}</NavDropdown.Item>
+                            <NavDropdown.Item href={ROUTES.japanese.massOrder}>{content.massOrder}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.japaneseMusicCovers}>{content.japaneseMusicCovers}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.japaneseBible}>{content.japaneseBible}</NavDropdown.Item>
                             <NavDropdown.Item href={ROUTES.japanese.japaneseParenthesesToFurigana}>{content.japaneseParenthesesToFurigana}</NavDropdown.Item>

@@ -1,4 +1,5 @@
-import { furiganaToHiragana, type FuriganaLine } from './furiganaGenerator';
+import { type FuriganaLine } from './furiganaGenerator';
+import { furiganaToHiragana } from '../shared/furiganaText';
 import { FURIGANA_TRANSFORMATION_URL } from './apiRoutes';
 
 export async function buildFuriganaLinesFromKanji(kanjiText: string): Promise<FuriganaLine[]> {

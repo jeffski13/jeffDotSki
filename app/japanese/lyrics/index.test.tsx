@@ -22,9 +22,9 @@ describe('PracticeNihongoLyrics', () => {
 
     const expectedRows = Math.max(song.jp.length, song.romaji.length);
     // Default display settings show Furigana + Romaji columns.
-    expect(container.querySelectorAll('.lyrics-column')).toHaveLength(2);
-    container.querySelectorAll('.lyrics-column').forEach((col) => {
-      expect(col.querySelectorAll('.lyric-line')).toHaveLength(expectedRows);
+    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(2);
+    container.querySelectorAll('.parallel-text-column').forEach((col) => {
+      expect(col.querySelectorAll('.parallel-text-line')).toHaveLength(expectedRows);
     });
   });
 
@@ -132,8 +132,8 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
 
       expect(screen.getByLabelText('Line by line')).not.toBeChecked();
-      expect(container.querySelectorAll('.lyrics-column').length).toBeGreaterThan(0);
-      expect(container.querySelectorAll('.lyric-line-group')).toHaveLength(0);
+      expect(container.querySelectorAll('.parallel-text-column').length).toBeGreaterThan(0);
+      expect(container.querySelectorAll('.parallel-text-group')).toHaveLength(0);
     });
 
     it('interleaves furigana, kanji, and romaji per line when checked', () => {
@@ -143,11 +143,11 @@ describe('PracticeNihongoLyrics', () => {
       fireEvent.click(screen.getByLabelText('Japanese'));
       fireEvent.click(screen.getByLabelText('Line by line'));
 
-      expect(container.querySelectorAll('.lyrics-column')).toHaveLength(0);
-      const groups = container.querySelectorAll('.lyric-line-group');
+      expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(0);
+      const groups = container.querySelectorAll('.parallel-text-group');
       expect(groups.length).toBeGreaterThan(0);
 
-      const firstGroupLines = groups[0].querySelectorAll('.lyric-line');
+      const firstGroupLines = groups[0].querySelectorAll('.parallel-text-line');
       expect(firstGroupLines).toHaveLength(3);
       expect(firstGroupLines[0].querySelector('ruby')).not.toBeNull();
       expect(firstGroupLines[1].textContent).toBe(jpLine);
@@ -190,7 +190,7 @@ describe('PracticeNihongoLyrics', () => {
       const { container } = renderComponent();
       fireEvent.click(screen.getByLabelText('Increase text size'));
 
-      const area = container.querySelector('.lyrics-area') as HTMLElement;
+      const area = container.querySelector('.parallel-text') as HTMLElement;
       expect(area.style.fontSize).toBe('18px');
     });
 

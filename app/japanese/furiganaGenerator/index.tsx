@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
 import { Container, Row, Col, Form, Button, Collapse } from 'react-bootstrap';
-import { buildFuriganaLines, furiganaToHiragana, furiganaToKanji, type FuriganaLine } from './furiganaGenerator';
+import { buildFuriganaLines, type FuriganaLine } from './furiganaGenerator';
+import { furiganaToHiragana, furiganaToKanji } from '../shared/furiganaText';
 import { buildFuriganaLinesFromKanji } from './kanjiToHiragana';
 import { applyChorusSeparators } from './chorusSeparators';
 import { downloadLyricsSongFile } from './exportLyricsSong';
 import { renderFuriganaText } from '../shared/furiganaRuby';
 import { useTextSize, TextSizeControl } from '../shared/textSizeControl';
+import { usePersistedBooleanSettings } from '../shared/persistedSettings';
 import { ENV, getEnv } from '../../infra/env';
 import testInfoKanji from './testInfoKanji.txt?raw';
 import testInfoKanjiOnly from './testInfoKanjiOnly.txt?raw';
-import '../displayControls.css';
+import '../shared/displayControls.css';
 import './styles.css';
 
 export const KANJI_PLACEHOLDER = "Ex：今日（きょう）は良（よ）かったです。";
@@ -19,12 +21,7 @@ const DISPLAY_SETTINGS_KEY = 'furiganaGenerator.displaySettings';
 const USE_CHORUS_SEPARATORS_KEY = 'furiganaGenerator.useChorusSeparators';
 const FONT_SIZE_KEY = 'furiganaGenerator.fontSize';
 
-type DisplaySettings = {
-  showKanjiParentheses: boolean;
-  showFuriganaResults: boolean;
-};
-
-const DEFAULT_DISPLAY_SETTINGS: DisplaySettings = {
+const DEFAULT_DISPLAY_SETTINGS = {
   showKanjiParentheses: true,
   showFuriganaResults: true,
 };
@@ -32,27 +29,6 @@ const DEFAULT_DISPLAY_SETTINGS: DisplaySettings = {
 function loadUseChorusSeparators(): boolean {
   if (typeof window === 'undefined') return false;
   return window.localStorage.getItem(USE_CHORUS_SEPARATORS_KEY) === 'true';
-}
-
-function loadDisplaySettings(): DisplaySettings {
-  if (typeof window === 'undefined') return DEFAULT_DISPLAY_SETTINGS;
-  try {
-    const raw = window.localStorage.getItem(DISPLAY_SETTINGS_KEY);
-    if (!raw) return DEFAULT_DISPLAY_SETTINGS;
-    const parsed = JSON.parse(raw);
-    return {
-      showKanjiParentheses:
-        typeof parsed.showKanjiParentheses === 'boolean'
-          ? parsed.showKanjiParentheses
-          : DEFAULT_DISPLAY_SETTINGS.showKanjiParentheses,
-      showFuriganaResults:
-        typeof parsed.showFuriganaResults === 'boolean'
-          ? parsed.showFuriganaResults
-          : DEFAULT_DISPLAY_SETTINGS.showFuriganaResults,
-    };
-  } catch {
-    return DEFAULT_DISPLAY_SETTINGS;
-  }
 }
 
 export default function FuriganaGeneratorPage() {
@@ -64,7 +40,7 @@ export default function FuriganaGeneratorPage() {
   const [isConverting, setIsConverting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [useChorusSeparators, setUseChorusSeparators] = useState(loadUseChorusSeparators);
-  const [displaySettings, setDisplaySettings] = useState<DisplaySettings>(loadDisplaySettings);
+  const [displaySettings, setDisplaySettings] = usePersistedBooleanSettings(DISPLAY_SETTINGS_KEY, DEFAULT_DISPLAY_SETTINGS);
   const { showKanjiParentheses, showFuriganaResults } = displaySettings;
   const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
   const convertButtonRef = useRef<HTMLButtonElement>(null);
@@ -96,10 +72,6 @@ export default function FuriganaGeneratorPage() {
     }
     shouldScrollToResults.current = false;
   }, [convertedLines]);
-
-  useEffect(() => {
-    window.localStorage.setItem(DISPLAY_SETTINGS_KEY, JSON.stringify(displaySettings));
-  }, [displaySettings]);
 
   useEffect(() => {
     window.localStorage.setItem(USE_CHORUS_SEPARATORS_KEY, String(useChorusSeparators));
