@@ -1,7 +1,7 @@
 import type { LyricsSong } from "./types";
 
 const lyrics: LyricsSong = {
-  title: "hitoriBocchiNoYoru",
+  title: "Ue Wo Muite Arukou (上を向いて歩こう)",
   jp: [
     "上を向いて歩こう",
     "涙がこぼれないように",
