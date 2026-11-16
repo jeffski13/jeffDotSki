@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router";
 import { Container, Form } from "react-bootstrap";
 import type { LyricsSong } from "./src/types";
 import { useTextSize, DEFAULT_MAX_FONT_SIZE } from "../shared/textSizeControl";
@@ -24,23 +25,36 @@ import hitoriBocchiNoYoru from "./src/hitoriBocchiNoYoru";
 import '../shared/displayControls.css';
 import './styles.css';
 
-export const songs: LyricsSong[] = [
+// Keys are used as the `?title=` query parameter value for each song.
+export const songsByKey: Record<string, LyricsSong> = {
   aitai,
   bayCity,
-  countryroad, 
-  departure, 
-  eikouNoKakehashi, 
-  HaikyouNoSofa, 
-  hitoriBocchiNoYoru, 
-  itsuka, 
-  land, 
-  nagareboshiKirari, 
-  naminoriJohnny, 
+  countryroad,
+  departure,
+  eikouNoKakehashi,
+  HaikyouNoSofa,
+  hitoriBocchiNoYoru,
+  itsuka,
+  land,
+  nagareboshiKirari,
+  naminoriJohnny,
   reason,
   senNoYoruWoKoete,
   stayWithMe,
-  tegami
-];
+  tegami,
+};
+
+export const songs: LyricsSong[] = Object.values(songsByKey);
+
+export const TITLE_QUERY_PARAM = "title";
+
+function songKeyForTitle(title: string): string | undefined {
+  return Object.keys(songsByKey).find((key) => songsByKey[key].title === title);
+}
+
+function titleForSongKey(key: string | null): string | undefined {
+  return key !== null && Object.hasOwn(songsByKey, key) ? songsByKey[key].title : undefined;
+}
 
 const DISPLAY_SETTINGS_KEY = "practiceNihongoLyrics.displaySettings";
 
@@ -68,7 +82,30 @@ const FONT_SIZE_KEY = "practiceNihongoLyrics.fontSize";
 export const MAX_FONT_SIZE = DEFAULT_MAX_FONT_SIZE;
 
 export default function WebPage() {
-  const [selectedTitle, setSelectedTitle] = useState(() => songs[loadSelectedSongIndex()].title);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryTitle = titleForSongKey(searchParams.get(TITLE_QUERY_PARAM));
+  // A valid ?title= query parameter overrides the song saved in localStorage
+  // (the effect below then overwrites the saved value).
+  const [selectedTitle, setSelectedTitle] = useState(() => queryTitle ?? songs[loadSelectedSongIndex()].title);
+
+  useEffect(() => {
+    if (queryTitle) setSelectedTitle(queryTitle);
+  }, [queryTitle]);
+
+  const selectSong = (title: string) => {
+    setSelectedTitle(title);
+    const key = songKeyForTitle(title);
+    if (key) {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.set(TITLE_QUERY_PARAM, key);
+          return next;
+        },
+        { replace: true }
+      );
+    }
+  };
   const [displaySettings, setDisplaySettings] = usePersistedBooleanSettings(DISPLAY_SETTINGS_KEY, DEFAULT_DISPLAY_SETTINGS);
   const { showJp, showFurigana, showRomaji, lineByLine } = displaySettings;
   const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
@@ -116,7 +153,7 @@ export default function WebPage() {
           leading={
             <Form.Select
               value={selectedTitle}
-              onChange={(e) => setSelectedTitle(e.target.value)}
+              onChange={(e) => selectSong(e.target.value)}
             >
               {songs.map((s) => (
                 <option key={s.title} value={s.title}>

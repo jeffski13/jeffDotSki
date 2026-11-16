@@ -1,9 +1,9 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, useLocation } from 'react-router';
 import HomePage from './index';
-import {songs, MAX_FONT_SIZE} from './index';
+import {songs, songsByKey, MAX_FONT_SIZE} from './index';
 
 const renderComponent = () => render(<MemoryRouter><HomePage /></MemoryRouter>);
 
@@ -204,6 +204,62 @@ describe('PracticeNihongoLyrics', () => {
 
       renderComponent();
       expect(screen.getByText('18px')).toBeInTheDocument();
+    });
+  });
+
+  describe('title query parameter', () => {
+    const SELECTED_SONG_KEY = 'practiceNihongoLyrics.selectedSongIndex';
+    let currentSearch = '';
+    const LocationSpy = () => {
+      currentSearch = useLocation().search;
+      return null;
+    };
+    const renderAt = (url: string) =>
+      render(
+        <MemoryRouter initialEntries={[url]}>
+          <HomePage />
+          <LocationSpy />
+        </MemoryRouter>
+      );
+    const selectedValue = () => (screen.getByRole('combobox') as HTMLSelectElement).value;
+
+    beforeEach(() => {
+      window.localStorage.clear();
+      currentSearch = '';
+    });
+
+    it.each(Object.entries(songsByKey))('selects %s from ?title=', (key, song) => {
+      renderAt(`/?title=${key}`);
+      expect(selectedValue()).toBe(song.title);
+    });
+
+    it('overrides and overwrites the song saved in localStorage', () => {
+      window.localStorage.setItem(SELECTED_SONG_KEY, String(songs.indexOf(songsByKey.tegami)));
+      renderAt('/?title=reason');
+
+      expect(selectedValue()).toBe(songsByKey.reason.title);
+      expect(window.localStorage.getItem(SELECTED_SONG_KEY)).toBe(String(songs.indexOf(songsByKey.reason)));
+    });
+
+    it('falls back to the localStorage song when the query parameter is missing', () => {
+      window.localStorage.setItem(SELECTED_SONG_KEY, String(songs.indexOf(songsByKey.tegami)));
+      renderAt('/');
+      expect(selectedValue()).toBe(songsByKey.tegami.title);
+    });
+
+    it('ignores an unknown title and falls back to the localStorage song', () => {
+      window.localStorage.setItem(SELECTED_SONG_KEY, String(songs.indexOf(songsByKey.tegami)));
+      renderAt('/?title=notASong');
+      expect(selectedValue()).toBe(songsByKey.tegami.title);
+      expect(window.localStorage.getItem(SELECTED_SONG_KEY)).toBe(String(songs.indexOf(songsByKey.tegami)));
+    });
+
+    it('updates the query parameter when a song is chosen from the dropdown', () => {
+      renderAt('/?title=reason');
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: songsByKey.land.title } });
+
+      expect(new URLSearchParams(currentSearch).get('title')).toBe('land');
+      expect(window.localStorage.getItem(SELECTED_SONG_KEY)).toBe(String(songs.indexOf(songsByKey.land)));
     });
   });
 });
