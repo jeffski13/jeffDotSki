@@ -61,7 +61,7 @@ const DISPLAY_SETTINGS_KEY = "practiceNihongoLyrics.displaySettings";
 const DEFAULT_DISPLAY_SETTINGS = {
   showJp: false,
   showFurigana: true,
-  showRomaji: true,
+  showRomaji: false,
   lineByLine: false,
 };
 
@@ -108,7 +108,7 @@ export default function WebPage() {
   };
   const [displaySettings, setDisplaySettings] = usePersistedBooleanSettings(DISPLAY_SETTINGS_KEY, DEFAULT_DISPLAY_SETTINGS);
   const { showJp, showFurigana, showRomaji, lineByLine } = displaySettings;
-  const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY);
+  const [fontSize, setFontSize] = useTextSize(FONT_SIZE_KEY, { defaultSize: 30 });
   const showScrollTop = useShowScrollTop();
 
   const setSetting = (key: keyof typeof DEFAULT_DISPLAY_SETTINGS) => (checked: boolean) =>
@@ -124,7 +124,9 @@ export default function WebPage() {
     [selectedTitle]
   );
 
-  const hasFurigana = !!song.furigana;
+  const hasJp = song.jp.length > 0;
+  const hasRomaji = song.romaji.length > 0;
+  const hasFurigana = (song.furigana?.length ?? 0) > 0;
 
   const lines = useMemo(
     () => zipLines({ jp: song.jp, rom: song.romaji, furigana: song.furigana }),
@@ -137,14 +139,14 @@ export default function WebPage() {
     if (hasFurigana && showFurigana) {
       channels.push({ key: "furigana", render: (line, idx) => renderFuriganaText(line.furigana, `furigana-${idx}`) });
     }
-    if (showJp) {
+    if (hasJp && showJp) {
       channels.push({ key: "jp", render: (line) => line.jp });
     }
-    if (showRomaji) {
+    if (hasRomaji && showRomaji) {
       channels.push({ key: "romaji", render: (line) => line.rom });
     }
     return channels;
-  }, [hasFurigana, showFurigana, showJp, showRomaji]);
+  }, [hasFurigana, showFurigana, hasJp, showJp, hasRomaji, showRomaji]);
 
   return (
     <div id="japanese-lyrics">
@@ -163,9 +165,9 @@ export default function WebPage() {
             </Form.Select>
           }
           options={[
-            { id: "show-jp", label: "Japanese", checked: showJp, onChange: setSetting("showJp") },
+            { id: "show-jp", label: "Japanese", checked: showJp, disabled: !hasJp, onChange: setSetting("showJp") },
             { id: "show-furigana", label: "Furigana", checked: showFurigana, disabled: !hasFurigana, onChange: setSetting("showFurigana") },
-            { id: "show-romaji", label: "Romaji ", checked: showRomaji, onChange: setSetting("showRomaji") },
+            { id: "show-romaji", label: "Romaji ", checked: showRomaji, disabled: !hasRomaji, onChange: setSetting("showRomaji") },
             { id: "line-by-line", label: "Line by line", checked: lineByLine, onChange: setSetting("lineByLine") },
           ]}
           fontSize={fontSize}
