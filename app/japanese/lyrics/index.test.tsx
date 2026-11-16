@@ -21,8 +21,9 @@ describe('PracticeNihongoLyrics', () => {
     fireEvent.change(select, { target: { value: song.title } });
 
     const expectedRows = Math.max(song.jp.length, song.romaji.length);
-    // Default display settings show Furigana + Romaji columns.
-    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(2);
+    // Default display settings show Furigana + Romaji columns, skipping any the song has no lines for.
+    const expectedColumns = Number(!!song.furigana?.length) + Number(song.romaji.length > 0);
+    expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(expectedColumns);
     container.querySelectorAll('.parallel-text-column').forEach((col) => {
       expect(col.querySelectorAll('.parallel-text-line')).toHaveLength(expectedRows);
     });
@@ -115,6 +116,44 @@ describe('PracticeNihongoLyrics', () => {
       expect(screen.getByLabelText('Romaji')).not.toBeChecked();
       expect(second.container.textContent).toContain(jpLine);
       expect(second.container.textContent).not.toContain(romajiLine);
+    });
+  });
+
+  describe('disabling checkboxes for empty lyric arrays', () => {
+    beforeEach(() => {
+      window.localStorage.clear();
+    });
+
+    it.each(songs)('disables checkboxes whose arrays are empty for $title', (song) => {
+      renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
+
+      expect((screen.getByLabelText('Japanese') as HTMLInputElement).disabled).toBe(song.jp.length === 0);
+      expect((screen.getByLabelText('Romaji') as HTMLInputElement).disabled).toBe(song.romaji.length === 0);
+      expect((screen.getByLabelText('Furigana') as HTMLInputElement).disabled).toBe(!song.furigana?.length);
+    });
+
+    it('disables Romaji and hides its column for a song with no romaji lines', () => {
+      const song = songsByKey.aitai;
+      expect(song.romaji).toHaveLength(0);
+
+      const { container } = renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: song.title } });
+
+      expect(screen.getByLabelText('Romaji')).toBeDisabled();
+      expect(screen.getByLabelText('Japanese')).toBeEnabled();
+      // Only the Furigana column remains (Romaji is still checked but has nothing to show).
+      expect(container.querySelectorAll('.parallel-text-column')).toHaveLength(1);
+    });
+
+    it('enables Romaji again when switching to a song that has romaji lines', () => {
+      renderComponent();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: songsByKey.aitai.title } });
+      expect(screen.getByLabelText('Romaji')).toBeDisabled();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: songsByKey.bayCity.title } });
+      expect(screen.getByLabelText('Romaji')).toBeEnabled();
+      expect(screen.getByLabelText('Romaji')).toBeChecked();
     });
   });
 
