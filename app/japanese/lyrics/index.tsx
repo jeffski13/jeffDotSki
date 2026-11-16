@@ -21,7 +21,7 @@ import naminoriJohnny from "./src/naminoriJohnny";
 import reason from "./src/reason";
 import aitai from "./src/aitai";
 import countryroad from "./src/countryroad";
-import hitoriBocchiNoYoru from "./src/hitoriBocchiNoYoru";
+import ueWoMuiteArukou from "./src/ueWoMuiteArukou";
 import '../shared/displayControls.css';
 import './styles.css';
 
@@ -33,7 +33,6 @@ export const songsByKey: Record<string, LyricsSong> = {
   departure,
   eikouNoKakehashi,
   HaikyouNoSofa,
-  hitoriBocchiNoYoru,
   itsuka,
   land,
   nagareboshiKirari,
@@ -42,6 +41,7 @@ export const songsByKey: Record<string, LyricsSong> = {
   senNoYoruWoKoete,
   stayWithMe,
   tegami,
+  ueWoMuiteArukou,
 };
 
 export const songs: LyricsSong[] = Object.values(songsByKey);
