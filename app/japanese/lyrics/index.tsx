@@ -21,8 +21,7 @@ import reason from "./src/reason";
 import aitai from "./src/aitai";
 import countryroad from "./src/countryroad";
 import hitoriBocchiNoYoru from "./src/hitoriBocchiNoYoru";
-import { charFromPoint, selectWordAt } from "./wordSelect";
-import '../displayControls.css';
+import '../shared/displayControls.css';
 import './styles.css';
 
 export const songs: LyricsSong[] = [
