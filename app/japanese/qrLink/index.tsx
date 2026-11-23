@@ -25,6 +25,17 @@ export function getRedirectPageUrl(lanIpOverride?: string): string {
   return `${origin}${ROUTES.japanese.qrRedirect}`;
 }
 
+// 12-hour clock with AM/PM and no leading zero on the hour, e.g. "2:05 PM".
+export function formatUpdatedTime(isoTimestamp: string): string | null {
+  const date = new Date(isoTimestamp);
+  if (Number.isNaN(date.getTime())) return null;
+
+  const hours = date.getHours() % 12 || 12;
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const period = date.getHours() < 12 ? 'AM' : 'PM';
+  return `${hours}:${minutes} ${period}`;
+}
+
 export default function QrLinkPage() {
   const [redirectUrl, setRedirectUrl] = useState(() => (typeof window !== 'undefined' ? getRedirectPageUrl() : ''));
   const [updateKeyInput, setUpdateKeyInput] = useState('');
@@ -95,8 +106,11 @@ export default function QrLinkPage() {
   return (
     <div className="qrLink-wrapper">
       <Container className="qrLink-content">
-        <h1 className="qrLink-title">Lyrics QR Code</h1>
-        <p className="qrLink-subtitle">Scan to jump straight to the lyrics for the current song.</p>
+        <div className="qrLink-updated" data-testid="qrLink-updated">
+          <span className="qrLink-updated-time">
+            {(info?.updatedAt && formatUpdatedTime(info.updatedAt)) || '--:--'}
+          </span>
+        </div>
 
         <div className="qrLink-qr-wrapper">
           {redirectUrl && (

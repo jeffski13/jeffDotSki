@@ -28,6 +28,8 @@ export async function fetchLyricsRedirectUrl(): Promise<string> {
 export interface LyricsQrInfo {
   url: string | null;
   version: string;
+  /** ISO-8601 timestamp of when the url was last set, or null if it never has been. */
+  updatedAt: string | null;
 }
 
 export async function fetchLyricsQrInfo(): Promise<LyricsQrInfo> {
@@ -38,7 +40,7 @@ export async function fetchLyricsQrInfo(): Promise<LyricsQrInfo> {
   }
 
   const data: LyricsQrInfo = await response.json();
-  return { url: data.url ?? null, version: data.version };
+  return { url: data.url ?? null, version: data.version, updatedAt: data.updatedAt ?? null };
 }
 
 export class LyricsQrUpdateForbiddenError extends Error {}

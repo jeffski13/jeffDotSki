@@ -57,19 +57,27 @@ describe('fetchLyricsRedirectUrl', () => {
 });
 
 describe('fetchLyricsQrInfo', () => {
-  it('returns the url and version from the JSON response', async () => {
-    fetchMock.mockResolvedValue(jsonResponse({ url: 'https://example.com/lyrics', version: '1.2.3' }));
+  it('returns the url, version and updatedAt from the JSON response', async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({ url: 'https://example.com/lyrics', version: '1.2.3', updatedAt: '2026-11-23T14:05:00.000Z' }),
+    );
 
     const info = await fetchLyricsQrInfo();
 
     expect(fetchMock).toHaveBeenCalledWith(LYRICS_QR_URL);
-    expect(info).toEqual({ url: 'https://example.com/lyrics', version: '1.2.3' });
+    expect(info).toEqual({ url: 'https://example.com/lyrics', version: '1.2.3', updatedAt: '2026-11-23T14:05:00.000Z' });
   });
 
   it('returns a null url when none has been set', async () => {
-    fetchMock.mockResolvedValue(jsonResponse({ url: null, version: '1.2.3' }));
+    fetchMock.mockResolvedValue(jsonResponse({ url: null, version: '1.2.3', updatedAt: null }));
 
-    expect(await fetchLyricsQrInfo()).toEqual({ url: null, version: '1.2.3' });
+    expect(await fetchLyricsQrInfo()).toEqual({ url: null, version: '1.2.3', updatedAt: null });
+  });
+
+  it('returns a null updatedAt when the server does not send one', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ url: 'https://example.com/lyrics', version: '1.2.3' }));
+
+    expect(await fetchLyricsQrInfo()).toEqual({ url: 'https://example.com/lyrics', version: '1.2.3', updatedAt: null });
   });
 
   it('throws when the service responds with a non-ok status', async () => {

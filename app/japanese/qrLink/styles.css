@@ -17,6 +17,17 @@
   margin-bottom: 1.5rem;
 }
 
+.qrLink-updated {
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.qrLink-updated-time {
+  font-size: 3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 .qrLink-qr-wrapper {
   display: flex;
   justify-content: center;
@@ -78,7 +89,8 @@
 }
 
 [data-bs-theme="dark"] .qrLink-title,
-[data-bs-theme="dark"] .qrLink-subtitle {
+[data-bs-theme="dark"] .qrLink-subtitle,
+[data-bs-theme="dark"] .qrLink-updated {
   color: #e9ecef;
 }
 
@@ -87,7 +99,8 @@
 }
 
 [data-bs-theme="light"] .qrLink-title,
-[data-bs-theme="light"] .qrLink-subtitle {
+[data-bs-theme="light"] .qrLink-subtitle,
+[data-bs-theme="light"] .qrLink-updated {
   color: #343a40;
 }
 

@@ -1,7 +1,7 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import QrLinkPage, { getRedirectPageUrl } from './index';
+import QrLinkPage, { getRedirectPageUrl, formatUpdatedTime } from './index';
 import { ENV } from '../../infra/env';
 import { updateLyricsUrl, fetchLyricsQrInfo, LyricsQrUpdateForbiddenError } from '../shared/lyricsQrApi';
 import { lyricsQrUpdateKeyStoreImpl } from '../shared/lyricsQrUpdateKeyStore';
@@ -28,7 +28,7 @@ beforeEach(() => {
   mockedUpdateLyricsUrl.mockReset();
   mockedFetchDevLanIp.mockReset();
   mockedFetchLyricsQrInfo.mockReset();
-  mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '0.0.0' });
+  mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '0.0.0', updatedAt: null });
   localStorage.clear();
 });
 
@@ -115,7 +115,7 @@ describe('QrLinkPage', () => {
 
   describe('URL and Version info', () => {
     it('fetches and shows the current URL and version when the page loads', async () => {
-      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/lyrics', version: '1.2.3' });
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/lyrics', version: '1.2.3', updatedAt: null });
 
       render(<QrLinkPage />);
 
@@ -127,7 +127,7 @@ describe('QrLinkPage', () => {
     });
 
     it('renders the current URL as a link that opens in a new tab', async () => {
-      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/lyrics', version: '1.2.3' });
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/lyrics', version: '1.2.3', updatedAt: null });
 
       render(<QrLinkPage />);
 
@@ -138,7 +138,7 @@ describe('QrLinkPage', () => {
     });
 
     it('shows "Not set" when no URL has been set yet', async () => {
-      mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '1.2.3' });
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '1.2.3', updatedAt: null });
 
       render(<QrLinkPage />);
 
@@ -149,8 +149,8 @@ describe('QrLinkPage', () => {
     });
 
     it('refreshes the URL and version after a successful update', async () => {
-      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/old', version: '1.0.0' });
-      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/new', version: '1.0.1' });
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/old', version: '1.0.0', updatedAt: null });
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/new', version: '1.0.1', updatedAt: null });
       mockedUpdateLyricsUrl.mockResolvedValue(undefined);
 
       render(<QrLinkPage />);
@@ -170,7 +170,7 @@ describe('QrLinkPage', () => {
     });
 
     it('does not refresh the URL and version when the update fails', async () => {
-      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/old', version: '1.0.0' });
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: 'https://example.com/old', version: '1.0.0', updatedAt: null });
       mockedUpdateLyricsUrl.mockRejectedValue(new Error('network down'));
 
       render(<QrLinkPage />);
@@ -203,6 +203,61 @@ describe('QrLinkPage', () => {
     });
   });
 
+  describe('Updated time', () => {
+    // Local-time constructor so the expectations hold in any test timezone.
+    const at = (hours: number, minutes: number) => new Date(2026, 10, 23, hours, minutes).toISOString();
+
+    it('shows the last updated time above the QR code', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValue({ url: null, version: '1.0.0', updatedAt: at(14, 5) });
+
+      render(<QrLinkPage />);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('qrLink-updated')).toHaveTextContent('2:05 PM');
+      });
+      const updated = screen.getByTestId('qrLink-updated');
+      const qrWrapper = document.querySelector('.qrLink-qr-wrapper')!;
+      expect(updated.compareDocumentPosition(qrWrapper) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it('shows a placeholder when the URL has never been updated', async () => {
+      render(<QrLinkPage />);
+
+      await waitFor(() => expect(mockedFetchLyricsQrInfo).toHaveBeenCalled());
+      expect(screen.getByTestId('qrLink-updated')).toHaveTextContent('--:--');
+    });
+
+    it('refreshes the updated time after a successful update', async () => {
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/old', version: '1.0.0', updatedAt: at(9, 0) });
+      mockedFetchLyricsQrInfo.mockResolvedValueOnce({ url: 'https://example.com/new', version: '1.0.1', updatedAt: at(21, 30) });
+      mockedUpdateLyricsUrl.mockResolvedValue(undefined);
+
+      render(<QrLinkPage />);
+      await waitFor(() => expect(screen.getByTestId('qrLink-updated')).toHaveTextContent('9:00 AM'));
+
+      fireEvent.change(screen.getByLabelText('URL'), { target: { value: 'https://example.com/new' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Update' }));
+
+      await waitFor(() => expect(screen.getByTestId('qrLink-updated')).toHaveTextContent('9:30 PM'));
+    });
+  });
+
+  describe('formatUpdatedTime', () => {
+    const at = (hours: number, minutes: number) => new Date(2026, 10, 23, hours, minutes).toISOString();
+
+    it('uses a 12-hour clock with AM/PM and no leading zero on the hour', () => {
+      expect(formatUpdatedTime(at(0, 0))).toBe('12:00 AM');
+      expect(formatUpdatedTime(at(1, 7))).toBe('1:07 AM');
+      expect(formatUpdatedTime(at(11, 59))).toBe('11:59 AM');
+      expect(formatUpdatedTime(at(12, 0))).toBe('12:00 PM');
+      expect(formatUpdatedTime(at(13, 45))).toBe('1:45 PM');
+      expect(formatUpdatedTime(at(23, 9))).toBe('11:09 PM');
+    });
+
+    it('returns null for an invalid timestamp', () => {
+      expect(formatUpdatedTime('not a date')).toBeNull();
+    });
+  });
 
   describe('getRedirectPageUrl', () => {
     it('builds the redirect URL from the current location by default', () => {
