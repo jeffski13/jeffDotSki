@@ -2,6 +2,7 @@
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen, waitFor } from '@testing-library/react';
 import QrRedirectPage from './index';
+import ROUTES from '../../consts/ROUTES';
 import { fetchLyricsRedirectUrl } from '../shared/lyricsQrApi';
 
 vi.mock('../shared/lyricsQrApi', () => ({
@@ -42,5 +43,23 @@ describe('QrRedirectPage', () => {
     render(<QrRedirectPage />);
 
     expect(await screen.findByText('Could not load the lyrics link. Please try again.')).toBeInTheDocument();
+  });
+
+  it('shows a "Not working?" link back to the QR code page', async () => {
+    mockedFetchLyricsRedirectUrl.mockReturnValue(new Promise(() => {}));
+
+    render(<QrRedirectPage />);
+
+    expect(screen.getByText('Not working?')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Back to QR Code' })).toHaveAttribute('href', ROUTES.japanese.qrLink);
+  });
+
+  it('still shows the link back to the QR code page when the API call fails', async () => {
+    mockedFetchLyricsRedirectUrl.mockRejectedValue(new Error('network down'));
+
+    render(<QrRedirectPage />);
+
+    await screen.findByText('Could not load the lyrics link. Please try again.');
+    expect(screen.getByRole('link', { name: 'Back to QR Code' })).toHaveAttribute('href', ROUTES.japanese.qrLink);
   });
 });
