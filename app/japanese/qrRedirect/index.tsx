@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Spinner, Alert } from 'react-bootstrap';
 import { fetchLyricsRedirectUrl } from '../shared/lyricsQrApi';
+import ROUTES from '../../consts/ROUTES';
 
 export default function QrRedirectPage() {
   const [error, setError] = useState<string | null>(null);
@@ -35,6 +36,8 @@ export default function QrRedirectPage() {
           <p>Redirecting to lyrics…</p>
         </>
       )}
+      <p className="mt-4 mb-0">Not working?</p>
+      <a href={ROUTES.japanese.qrLink}>Back to QR Code</a>
     </Container>
   );
 }
