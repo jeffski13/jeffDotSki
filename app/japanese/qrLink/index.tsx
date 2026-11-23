@@ -118,6 +118,31 @@ export default function QrLinkPage() {
           )}
         </div>
 
+        <dl className="qrLink-info">
+          <div className="qrLink-info-row">
+            <dt>URL</dt>
+            <dd data-testid="qrLink-info-url">
+              {infoError ? (
+                'Unavailable'
+              ) : !info ? (
+                'Loading…'
+              ) : !info.url ? (
+                'Not set'
+              ) : (
+                <a href={info.url} target="_blank" rel="noopener noreferrer">
+                  {info.url}
+                </a>
+              ) }
+            </dd>
+          </div>
+          <div className="qrLink-info-row">
+            <dt>Version</dt>
+            <dd data-testid="qrLink-info-version">
+              {infoError ? 'Unavailable' : info ? info.version : 'Loading…'}
+            </dd>
+          </div>
+        </dl>
+
         <Form
           className="qrLink-form"
           onSubmit={(e) => {
@@ -158,31 +183,6 @@ export default function QrLinkPage() {
             {saving ? 'Updating…' : 'Update'}
           </Button>
         </Form>
-
-        <dl className="qrLink-info">
-          <div className="qrLink-info-row">
-            <dt>URL</dt>
-            <dd data-testid="qrLink-info-url">
-              {infoError ? (
-                'Unavailable'
-              ) : !info ? (
-                'Loading…'
-              ) : !info.url ? (
-                'Not set'
-              ) : (
-                <a href={info.url} target="_blank" rel="noopener noreferrer">
-                  {info.url}
-                </a>
-              ) }
-            </dd>
-          </div>
-          <div className="qrLink-info-row">
-            <dt>Version</dt>
-            <dd data-testid="qrLink-info-version">
-              {infoError ? 'Unavailable' : info ? info.version : 'Loading…'}
-            </dd>
-          </div>
-        </dl>
       </Container>
     </div>
   );
